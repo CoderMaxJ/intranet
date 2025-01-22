@@ -502,13 +502,15 @@ input:focus {
   border-style: ridge;
   border-radius: 4px;
   border-color: #acacac;
+  background-color: transparent;
+
 }
 
 .genrep-btn button {
   padding: 7px;
   border-radius: 4px;
   color: #ffffff;
-  background-color: #09a530;
+  background-color: #008DCC;
   color: white;
   border: #0c8a2b;
   display: inline-block !important;
@@ -516,13 +518,12 @@ input:focus {
 }
 
 .genrep-btn button:hover {
-  background-color: #0fce38;
+  background-color: #0da52e;
   cursor: pointer;
 }
 
 .genrep-btn button:active {
   transform: scale(0.9);
-  background-color: #6d82ca;
 }
 
 .back-btn button {

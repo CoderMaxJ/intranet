@@ -1,6 +1,6 @@
 "use client";
 // index.js or App.js
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState, useEffect } from "react";
 import Router from "next/router";
 import Header from "../component/Header";
@@ -19,8 +19,6 @@ function BreakDataTable() {
   const [durationtime, setDurationTime] = useState<boolean>(false);
   const [loadingPage, setLoadingPage] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
-
-
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
@@ -111,7 +109,7 @@ function BreakDataTable() {
     const startInSeconds =
       parseInt(startParts[0], 10) * 3600 +
       parseInt(startParts[1], 10) * 60 +
-      parseInt(startParts[2], 10)
+      parseInt(startParts[2], 10);
     const endInSeconds =
       parseInt(endParts[0], 10) * 3600 +
       parseInt(endParts[1], 10) * 60 +
@@ -168,8 +166,6 @@ function BreakDataTable() {
     };
   }, []);
 
-
-
   return (
     <div className="workforce">
       <Header />
@@ -186,14 +182,9 @@ function BreakDataTable() {
                 title={fullscreen ? "Compress" : "Fullscreen"}
               >
                 {fullscreen ? (
-                  <i className="bi bi-fullscreen-exit"></i>
-
-
+                  <i className="bi bi-fullscreen-exit fw-bold"></i>
                 ) : (
-
-                  <i className="bi bi-fullscreen"></i>
-
-
+                  <i className="bi bi-fullscreen fw-bold"></i>
                 )}
               </button>
             </div>
@@ -307,10 +298,9 @@ function BreakDataTable() {
 
                     const currentSeconds = Math.floor(
                       (currentTimestamp - new Date().setHours(0, 0, 0, 0)) /
-                      1000
+                        1000
                     );
                     const remainingSeconds = endInSeconds - currentSeconds;
-
 
                     return {
                       ...instance,
@@ -334,7 +324,8 @@ function BreakDataTable() {
                       <td className="blink">{instance.name}</td>
                       <td className="blink">{instance.start}</td>
                       <td className="blink">{instance.end}</td>
-                      <td className="blink"
+                      <td
+                        className="blink"
                         dangerouslySetInnerHTML={{
                           __html: instance.formattedTime,
                         }}

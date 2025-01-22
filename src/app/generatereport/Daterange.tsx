@@ -116,7 +116,7 @@ export default function Daterange() {
                 <button type="submit">Generate Report</button>
               </div>
               <div className="back-btn" onClick={() => history.back()}>
-                <button type="button">Go Back</button>
+                <button type="button">Back</button>
               </div>
             </div>
           </div>

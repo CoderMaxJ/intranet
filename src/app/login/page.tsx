@@ -15,7 +15,7 @@ export default function Login() {
   const [token, setToken] = useState<string>("");
   const [isLogged,setLog] = useState(false)
 
-
+console.log(process.env.NEXT_PUBLIC_BACKEND)
 
 useEffect(() => {
   const storedToken = localStorage.getItem("token");
