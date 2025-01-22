@@ -1,0 +1,584 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  background-color: #e7e7e7;
+}
+
+body {
+  color: var(--foreground);
+
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+.workforce {
+  background-color: #e7e7e7;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* LOG IN FORM */
+.main-div {
+  background-color: rgb(255, 255, 255);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-image: url("/img/Group5.png"), url("/img/Group4.png");
+  background-repeat: no-repeat;
+  background-size: 17% auto, 17% auto;
+  background-position: 36% 25%, 60% 77%;
+}
+
+.login-div {
+  background: solid white (255, 255, 255, 0.9);
+  box-shadow: 0px 0px 5px rgb(87, 86, 86);
+  backdrop-filter: blur(15px);
+  border-radius: 8px;
+  padding: 20px 20px 85px 20px;
+  min-width: 20vw;
+  max-width: 100%;
+  height: 46vh !important;
+  justify-content: center;
+  align-items: center;
+  border: none !important;
+  outline: none !important;
+}
+.login-div label {
+  color: rgb(58, 58, 58);
+  display: block;
+}
+
+.login-div img {
+  width: 85%;
+  margin-top: 1px;
+  margin-bottom: 35px;
+}
+
+.login-div input {
+  font-size: 14px;
+  padding: 10px !important;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  outline: none;
+  width: 17vw;
+}
+
+input:focus {
+  border-color: #0a63d8;
+}
+
+.eye {
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  box-sizing: none;
+  cursor: pointer;
+  margin-left: 290px;
+  margin-top: 12px;
+}
+
+.inp-lab input {
+  background-color: white !important;
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+}
+
+.button-login {
+  background-color: #008dcc;
+  color: #ffffff;
+  border: none;
+  padding: 10px !important;
+  border-radius: 4px !important;
+  cursor: pointer;
+  font-weight: 600;
+  padding-top: 5px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-login:hover {
+  background-color: #0274a8;
+}
+
+.button-login:active {
+  transform: scale(0.95);
+  background-color: #1fe651;
+}
+
+.forgot-password-link {
+  margin-top: 10px !important;
+  justify-content: center;
+  text-align: center;
+  color: #008dcc;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.check-fpass {
+  gap: 8px;
+  background-color: grey;
+}
+
+.check-fpass input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #4caf50;
+}
+
+.check-fpass label {
+  font-size: 14px;
+  font-weight: lighter;
+  color: #333;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  color: rgb(6, 168, 46);
+  text-align: center;
+  margin-bottom: 15px;
+}
+/* SEARCH BAR */
+.header {
+  background-color: #ffffff;
+  height: 80px;
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 50px;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+.left-section {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 300px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.searchbar-wrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.searchbar-container {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchbar {
+  max-width: 330px;
+  margin-top: 1px;
+  width: 25rem;
+  padding: 5px 5px 10px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: white;
+}
+
+.searchbar:focus {
+  color: #000000;
+}
+
+.bi-search {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #8b8b8b;
+  width: 28px;
+  height: 28px;
+  background-color: rgb(216, 216, 216);
+  border-radius: 20px;
+}
+
+.agent-header {
+  text-align: left !important;
+  width: 400px;
+  margin: 0;
+}
+
+/* header-icons */
+.right-section {
+  display: flex;
+
+  margin-right: 7rem;
+  border-radius: 50px;
+}
+
+.dropbtn button {
+  display: block;
+}
+.dropdown {
+  position: relative;
+  display: flex;
+}
+
+.dropbtn {
+  background-color: transparent;
+  border: none;
+  margin-right: 20-px;
+  margin-top: 5px;
+  cursor: pointer;
+  background-color: rgb(0, 0, 0);
+  font-size: 16px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  right: 0; /* Align dropdown content to the right */
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  text-align: left; /* Text aligned to the left inside the dropdown */
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #d8d7d7c9;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #d8d7d7c9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(0, 0, 0);
+  font-size: 16px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  right: 0; /* Align dropdown content to the right */
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  text-align: left; /* Text aligned to the left inside the dropdown */
+  display: block;
+}
+
+/* breaks div */
+
+.breaks-div {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding-top: 20px;
+  margin: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: -2px !important;
+  padding-bottom: 5px !important;
+}
+
+.breaks-div.fullscreen {
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+/* logs main div */
+
+.logs-maindiv {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 95vw;
+  margin-top: 20px;
+  margin-left: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+  padding-top: 15px;
+  margin-bottom: 20px;
+}
+
+.logs-table {
+  margin-bottom: 10px;
+}
+
+.logs-headername {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.searchbarlogs {
+  position: relative;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 30px;
+  border: none;
+  position: relative;
+}
+
+/* generate report */
+.generate-header {
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.gen-maindiv {
+  position: relative;
+  background-image: url("/img/Group5.png"), url("/img/Group4.png");
+  background-repeat: no-repeat;
+  background-size: 17% auto, 17% auto;
+  background-position: 38% 30%, 59% 75%;
+  background-color: #f3f3f3;
+  height: 100vh;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.gen-maindiv.generate-page {
+  height: unset;
+  background-color: white;
+}
+
+.settings-page {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 0px 5px rgb(87, 86, 86);
+  backdrop-filter: blur(15px);
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 20px;
+  width: 340px;
+  height: 43vh;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.settings-page > div {
+  width: 100%;
+}
+
+.settingspage-wrapper > div {
+  margin-bottom: 15px;
+}
+.settingspage-wrapper {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.settings-page label {
+  display: block;
+  margin-left: -275px;
+}
+
+.from {
+  margin-left: -255px !important;
+}
+
+.settings-page input,
+.settings-page button {
+  width: 100%;
+  padding: 7px;
+  border-style: ridge;
+  border-radius: 4px;
+  border-color: #acacac;
+}
+
+.genrep-btn button {
+  padding: 7px;
+  border-radius: 4px;
+  color: #ffffff;
+  background-color: #09a530;
+  color: white;
+  border: #0c8a2b;
+  display: inline-block !important;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.genrep-btn button:hover {
+  background-color: #0fce38;
+  cursor: pointer;
+}
+
+.genrep-btn button:active {
+  transform: scale(0.9);
+  background-color: #6d82ca;
+}
+
+.back-btn button {
+  background-color: #d18a06;
+  padding: 7px;
+  border-radius: 4px;
+  color: white;
+  border: #0c8a2b;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.back-btn button:hover {
+  background-color: #c2af07;
+  cursor: pointer;
+}
+
+.back-btn button:active {
+  transform: scale(0.9);
+  background-color: #76c90b;
+}
+
+.error {
+  justify-content: center;
+  align-items: center;
+}
+
+.tab-header {
+  background-color: #50c4fa;
+  padding: 15px;
+  width: 100%;
+}
+
+
+.blink {
+  animation: blinkAnimation 1s infinite;
+  color: red;
+}
+
+@keyframes blinkAnimation {
+  
+  0% {
+    background-color: #ffeda6; 
+  }
+  50% {
+    background-color: #ffeda6;
+  }
+  100% {
+    opacity: 1;
+  }
+ 
+}
+
+ 
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+

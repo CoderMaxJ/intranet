@@ -1,0 +1,140 @@
+// apiService.ts
+"use client";
+import { useState, useEffect } from "react";
+import TableComponents from "../component/TableComponent";
+
+interface Logs {
+  name: string;
+  login: string;
+  brkin1: string;
+  brkout1: string;
+  ob1: string;
+  lunchin: string;
+  lunchout: string;
+  ob3: string;
+  brkin2: string;
+  brkout2: string;
+  ob2: string;
+  logoff: string;
+}
+
+function LogsDataTable() {
+  const [data, setData] = useState<Logs[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const timer = setTimeout(async () => {
+      async function getLogs() {
+        try {
+          const account_id = await localStorage.getItem("account_id");
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND}/logs/${account_id}/`,
+            {
+              method: "GET",
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          const data = await response.json();
+          setData(data.data);
+        } catch (err: any) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      getLogs();
+    }, 5000);
+    return () => clearTimeout(timer);
+
+  }, []);
+
+  if (loading) return <div style={{ textAlign: "center" }}>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  return (
+    <div className="logs-wrapper">
+      <div className="logs-maindiv">
+        <div className="logs-table" style={{ display: "flex" }}>
+          <h3 className="logs-headername">Agent Logs Today</h3>
+          <div className="searchbarlogs">
+            <input
+              className="searchbar"
+              style={{ backgroundColor: "#f0f0f0", marginLeft: "500px" }}
+              type="text"
+              placeholder="Search by name"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <svg
+              style={{
+                marginLeft: "497px",
+                marginTop: "-0px",
+                display: "flex",
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="currentColor"
+              className="bi-search"
+              viewBox="-7 0 30 16"
+            >
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+            <button
+              type="submit"
+              className="btn btn btn-primary"
+              style={{
+                height: "42px",
+                borderRadius: "4px",
+                marginBottom: "5px",
+                marginLeft: "3px",
+                marginTop: "5px",
+                color: "white",
+              }}
+            >
+              Go
+            </button>
+          </div>
+        </div>
+        <table className="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Name</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Login</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>First Break</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Breakout</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Lunch In</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Lunch Out</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Second Break</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Breakout</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
+              <th style={{ backgroundColor: "#4CBDFF" }}>Log Out</th>
+            </tr>
+          </thead>
+          <TableComponents data={data} filter={null} />
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default LogsDataTable;
