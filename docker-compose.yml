@@ -1,0 +1,19 @@
+
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    networks:
+      - nextjs_network
+
+networks:
+  nextjs_network:
+    driver: bridge

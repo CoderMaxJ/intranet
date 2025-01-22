@@ -229,7 +229,7 @@ export default function Header() {
                 className="updatepass-logo"
                 src="/img/Sos.png"
                 alt="Staff Outsourcing Logo"
-                height={50}
+                height={200}
                 width={290}
               />
               <form onSubmit={handleSubmit}>

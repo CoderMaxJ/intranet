@@ -129,7 +129,7 @@ function BreakDataTable() {
       seconds
     ).padStart(2, "0")}`;
 
-    if (remainingSeconds <= 3240) {
+    if (remainingSeconds <= 300) {
       return `<span class="blink">${formattedTime}</span>`;
     }
 
