@@ -101,10 +101,10 @@ function LogsDataTable() {
               type="submit"
               className="btn btn btn-primary"
               style={{
-                height: "42px",
+                height: "41px",
                 fontFamily: "'Raleway', sans-serif",
                 borderRadius: "4px",
-                marginBottom: "5px",
+                marginBottom: "2px",
                 marginLeft: "3px",
                 marginTop: "5px",
                 color: "white",

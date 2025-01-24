@@ -15,7 +15,7 @@ export default function Login() {
   const [showpassword, setShowPassword] = useState(false);
 
   const togglePassword = () => {
-    setShowPassword((prev)=>!prev);
+    setShowPassword((prev) => !prev);
   };
 
   console.log(process.env.NEXT_PUBLIC_BACKEND);
@@ -117,31 +117,32 @@ export default function Login() {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-            </div>
+          </div>
 
           <div>
             <label htmlFor="password">Password:</label>
             <div style={{ position: "relative", display: "flex" }}>
               <input
                 id="password"
-                 className="password-input"
+                className="password-input"
                 type={password ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              
-              <button
-              type="button"
-              title={showpassword ? "Hide" : "Show"}
-              onClick={togglePassword} 
-              style={{background:'none', border:'none'}}>
-                {showpassword ?
-                (<i className="bi bi-eye-slash"></i>
 
-                ):(
-                <i className="bi bi-eye"></i>)}
-                </button>
+              {/* <button
+                type="button"
+                title={showpassword ? "Hide" : "Show"}
+                onClick={togglePassword}
+                style={{ background: "none", border: "none" }}
+              >
+                {showpassword ? (
+                  <i className="bi bi-eye-slash"></i>
+                ) : (
+                  <i className="bi bi-eye"></i>
+                )}
+              </button> */}
             </div>
           </div>
           <div>

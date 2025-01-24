@@ -119,14 +119,14 @@ a {
   background-size: cover;
   background-image: url("/img/Group5.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
-  background-size: 17% auto, 17% auto;
-  background-position: 36% 25%, 60% 77%;
+  background-size: 20% auto, 20% auto;
+  background-position: 38% 25%, 58% 75%;
 }
 
 .login-div {
-  background: solid white (255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   box-shadow: 0px 0px 5px rgb(87, 86, 86);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(-50px);
   border-radius: 8px;
   padding: 20px 20px 85px 20px;
   min-width: 20vw;
@@ -418,7 +418,7 @@ input:focus {
   margin: 40px;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: -2px !important;
+  margin-top: -8px !important;
   padding-bottom: 5px !important;
 }
 
@@ -442,7 +442,7 @@ input:focus {
 }
 
 .logs-wrapper .table-striped > tbody > tr:nth-of-type(even) > * {
-  background-color: #E2F0F7;
+  background-color: #e2f0f7;
 }
 
 .table-striped th {
@@ -453,14 +453,14 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 95.9vw;
+  width: 95vw;
   margin-top: 20px;
   margin-left: 40px;
   margin-right: 40px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 5px;
-  padding-top: 15px;
+  padding-top: 18px;
   margin-bottom: 20px;
 }
 
@@ -499,8 +499,8 @@ input:focus {
   position: relative;
   background-image: url("/img/Group5.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
-  background-size: 17% auto, 17% auto;
-  background-position: 38% 30%, 59% 75%;
+  background-size: 19% auto, 19% auto;
+  background-position: 41% 30%, 56% 72%;
   background-color: #f3f3f3;
   height: 100vh;
   display: flex;
@@ -516,19 +516,19 @@ input:focus {
 
 .settings-page {
   background: rgba(255, 255, 255, 0.9);
+  /* background-color: transparent; */
+  backdrop-filter: blur(-50px);
   box-shadow: 0px 0px 5px rgb(87, 86, 86);
-  backdrop-filter: blur(15px);
-  background-color: transparent;
   border-radius: 8px;
   padding: 20px;
   width: 340px;
   height: 43vh;
   display: flex;
-  box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0;
+  box-sizing: border-box;
 }
 
 .settings-page > div {
@@ -615,7 +615,7 @@ input:focus {
 .blink {
   animation: blinkAnimation 1s steps(1, end) infinite,
     blink-animation 1s steps(5, start) infinite;
-  background-color: #ffeda6;
+  background-color: #ffeeab;
   color: red;
   font-weight: bold;
   padding: 2px 4px;
@@ -629,7 +629,7 @@ input:focus {
 
 @keyframes blinkAnimation {
   0% {
-    background-color: #ffeeab;
+    background: #ffeeab;
   }
   50% {
     background-color: #ffeeab;

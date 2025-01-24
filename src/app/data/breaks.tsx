@@ -206,7 +206,7 @@ function BreakDataTable() {
                 style={{
                   backgroundColor: "#f0f0f0",
                   fontFamily: "'Raleway', sans-serif",
-                  marginBottom: "5px",
+                  marginBottom: "3px",
                 }}
                 type="text"
                 placeholder="Search by name"
@@ -227,12 +227,12 @@ function BreakDataTable() {
                 type="submit"
                 className="btn btn-primary"
                 style={{
-                  height: "42px",
+                  height: "41px",
                   fontFamily: "'Raleway', sans-serif",
                   borderRadius: "4px",
-                  marginBottom: "5px",
+                  marginBottom: "2px",
                   marginLeft: "3px",
-                  marginTop: "5px",
+                  marginTop: "6px",
                   color: "white",
                 }}
               >
