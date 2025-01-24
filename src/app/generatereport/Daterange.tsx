@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 interface BreaksReport {
   name: string;
   login: string;
@@ -51,7 +50,7 @@ export default function Daterange() {
       setFilteredData(result.data);
       setSuccess(false);
     } catch (e) {
-      setError( "An error occurred while fetching data.");
+      setError("An error occurred while fetching data.");
     }
   };
 
@@ -66,7 +65,6 @@ export default function Daterange() {
   const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(`${e.target.value}`);
     setSearchQuery(e.target.value);
-    
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -77,7 +75,6 @@ export default function Daterange() {
       return;
     }
     getData();
- 
   };
 
   // Function to determine if a row should be highlighted
@@ -116,7 +113,9 @@ export default function Daterange() {
                 <button type="submit">Generate Report</button>
               </div>
               <div className="back-btn" onClick={() => history.back()}>
-                <button type="button">Back</button>
+                <button type="button" style={{backgroundColor:'#008DCC'}}>
+                <i className="bi bi-reply-fill"></i> Back 
+                </button>
               </div>
             </div>
           </div>
@@ -192,7 +191,6 @@ export default function Daterange() {
                   <tr
                     key={index}
                     className={highlightRow(row) ? "highlight-row" : ""}
-
                   >
                     <td>{row.name}</td>
                     <td>{row.login}</td>

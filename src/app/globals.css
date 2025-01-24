@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Bebas+Neue&family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+IN:wght@100..400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -69,6 +71,45 @@ a {
 }
 
 /* LOG IN FORM */
+
+.password-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  max-width: 300px;
+  background-color: #f9f9f9;
+}
+
+.password-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.toggle-password-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 20px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password-button:hover {
+  color: #333;
+}
+
+.password-input:focus {
+  background-color: #fff;
+}
+
 .main-div {
   background-color: rgb(255, 255, 255);
   justify-content: center;
@@ -393,13 +434,29 @@ input:focus {
 
 /* logs main div */
 
+.logs-wrapper .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #ffffff;
+  --bs-table-color-type: #ffffff;
+  --bs-table-bg-type: #ffffff;
+  color: black;
+}
+
+.logs-wrapper .table-striped > tbody > tr:nth-of-type(even) > * {
+  background-color: #E2F0F7;
+}
+
+.table-striped th {
+  background-color: #4cbdff;
+}
+
 .logs-maindiv {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 95vw;
+  width: 95.9vw;
   margin-top: 20px;
   margin-left: 40px;
+  margin-right: 40px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 5px;
@@ -503,14 +560,13 @@ input:focus {
   border-radius: 4px;
   border-color: #acacac;
   background-color: transparent;
-
 }
 
 .genrep-btn button {
   padding: 7px;
   border-radius: 4px;
   color: #ffffff;
-  background-color: #008DCC;
+  background-color: #008dcc;
   color: white;
   border: #0c8a2b;
   display: inline-block !important;
@@ -556,30 +612,46 @@ input:focus {
   width: 100%;
 }
 
-
 .blink {
-  animation: blinkAnimation 1s infinite;
+  animation: blinkAnimation 1s steps(1, end) infinite,
+    blink-animation 1s steps(5, start) infinite;
+  background-color: #ffeda6;
   color: red;
+  font-weight: bold;
+  padding: 2px 4px;
+}
+
+.workforce .blink-row td {
+  animation: blinkRowAnimation 1s steps(1, end) infinite,
+    blink-animation 1s steps(5, start) infinite;
+  background: #ffeeab;
 }
 
 @keyframes blinkAnimation {
-  
   0% {
-    background-color: #ffeda6; 
+    background-color: #ffeeab;
   }
   50% {
-    background-color: #ffeda6;
+    background-color: #ffeeab;
   }
   100% {
     opacity: 1;
   }
- 
 }
 
- 
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.no-blink-row {
+  background-color: white;
+  color: black;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
 }
-

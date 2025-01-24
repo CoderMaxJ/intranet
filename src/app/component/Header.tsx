@@ -1,5 +1,5 @@
 "use client";
-import { useState,} from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import "/public/asset/css/updateps.css";
 import Link from "next/link";
@@ -51,7 +51,7 @@ export default function Header() {
       }
     }
 
-    async function forgotpass() {
+    async function forgotpass(token: string) {
       const id = localStorage.getItem("account_id");
 
       const newAccount = {
@@ -106,7 +106,7 @@ export default function Header() {
           const token = await response.json();
           localStorage.setItem("token", token.access);
           console.log("Token saved:", token.access);
-          forgotpass();
+          forgotpass(token.access);
         } else {
           console.log("Invalid credentials");
         }
@@ -208,11 +208,14 @@ export default function Header() {
 
       {/* Account Offcanvas */}
       <div
-        className="offcanvas offcanvas-end"
+        className="offcanvas offcanvas-start"
         id="offcanvasExample"
         aria-labelledby="offcanvasExampleLabel"
       >
         <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="offcanvasExampleLabel">
+            Offcanvas
+          </h5>
           <button
             type="button"
             className="btn-close text-reset"
@@ -266,9 +269,10 @@ export default function Header() {
                       required
                     />
                     {currentpassword && (
-                      <button onClick={toggleShow} className="cp-button">
-                     
-                      </button>
+                      <button
+                        onClick={toggleShow}
+                        className="cp-button"
+                      ></button>
                     )}
                   </div>
                 </div>
@@ -295,9 +299,10 @@ export default function Header() {
                       required
                     />
                     {password && (
-                      <button onClick={toggleShoww} className="ps-button">
-               
-                      </button>
+                      <button
+                        onClick={toggleShoww}
+                        className="ps-button"
+                      ></button>
                     )}
                   </div>
                 </div>
@@ -325,9 +330,10 @@ export default function Header() {
                       required
                     />{" "}
                     {confirmPassword && (
-                      <button onClick={toggleShowww} className="cnfrm-button">
-                   
-                      </button>
+                      <button
+                        onClick={toggleShowww}
+                        className="cnfrm-button"
+                      ></button>
                     )}
                   </div>
                 </div>

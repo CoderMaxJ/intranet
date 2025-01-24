@@ -71,12 +71,12 @@ function LogsDataTable() {
   return (
     <div className="logs-wrapper">
       <div className="logs-maindiv">
-        <div className="logs-table" style={{ display: "flex" }}>
-          <h3 className="logs-headername">Agent Logs Today</h3>
+        <div className="logs-table" style={{ display: "flex"}}>
+          <h3 className="logs-headername" style={{fontFamily: "'Raleway', sans-serif",  fontWeight:'bold', fontSize:'23px'}}>Agent Logs Today</h3>
           <div className="searchbarlogs">
             <input
               className="searchbar"
-              style={{ backgroundColor: "#f0f0f0", marginLeft: "500px" }}
+              style={{ backgroundColor: "#f0f0f0", marginLeft: "500px", fontFamily: "'Raleway', sans-serif", marginBottom:'5px' }}
               type="text"
               placeholder="Search by name"
               value={searchQuery}
@@ -102,6 +102,7 @@ function LogsDataTable() {
               className="btn btn btn-primary"
               style={{
                 height: "42px",
+                fontFamily: "'Raleway', sans-serif",
                 borderRadius: "4px",
                 marginBottom: "5px",
                 marginLeft: "3px",
@@ -113,21 +114,21 @@ function LogsDataTable() {
             </button>
           </div>
         </div>
-        <table className="table table-bordered table-striped">
+        <table className="table table-bordered table-striped ">
           <thead>
             <tr>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Name</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Login</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>First Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Breakout</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Lunch In</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Lunch Out</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Second Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Breakout</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Log Out</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Login</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>First Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch In</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch Out</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Second Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
             </tr>
           </thead>
           <TableComponents data={data} filter={null} />

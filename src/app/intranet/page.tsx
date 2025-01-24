@@ -8,7 +8,7 @@ export default function Dashboard() {
  
     return (
       <div>
-        <div>
+        <div style={{backgroundColor:'#e7e7e7', paddingBottom:'20px'}}>
           <BreakDataTable />
           <LogsDataTable />
         </div>

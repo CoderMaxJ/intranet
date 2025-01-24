@@ -33,11 +33,7 @@ export default function TableComponents(data: any, filter: string) {
           const isVisible = instance.name.toUpperCase().includes(filter);
           return (
             <tr
-              className={
-                isVisible
-                  ? "table-logs table-striped none"
-                  : "table-logs table-striped"
-              }
+              
               key={_i}
             >
               <td>{instance.name}</td>

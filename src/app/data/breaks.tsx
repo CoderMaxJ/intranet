@@ -130,6 +130,9 @@ function BreakDataTable() {
     if (remainingSeconds <= 300) {
       return `<span class="blink">${formattedTime}</span>`;
     }
+    if (remainingSeconds < 0) {
+      return `<span class="count-up">${formattedTime} (Elapsed)</span>`;
+    }
 
     return formattedTime;
   };
@@ -143,6 +146,7 @@ function BreakDataTable() {
       breakItem.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       breakItem.breaktype.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  console.log(filteredBreaks);
 
   useEffect(() => {
     const start = () => {
@@ -173,7 +177,15 @@ function BreakDataTable() {
         <div>
           <div className="searchbar-wrapper">
             <div className="d-flex align-items-center">
-              <h4 className="agent-header" style={{ marginRight: "10px" }}>
+              <h4
+                className="agent-header"
+                style={{
+                  marginRight: "10px",
+                  fontFamily: "'Raleway', sans-serif",
+                  fontWeight: "bold",
+                  fontSize: "23px",
+                }}
+              >
                 Agent Breaks Monitoring Dashboard
               </h4>
               <button
@@ -191,7 +203,11 @@ function BreakDataTable() {
             <div className="searchbar-container">
               <input
                 className="searchbar"
-                style={{ backgroundColor: "#f0f0f0" }}
+                style={{
+                  backgroundColor: "#f0f0f0",
+                  fontFamily: "'Raleway', sans-serif",
+                  marginBottom: "5px",
+                }}
                 type="text"
                 placeholder="Search by name"
                 value={searchQuery}
@@ -212,6 +228,7 @@ function BreakDataTable() {
                 className="btn btn-primary"
                 style={{
                   height: "42px",
+                  fontFamily: "'Raleway', sans-serif",
                   borderRadius: "4px",
                   marginBottom: "5px",
                   marginLeft: "3px",
@@ -233,8 +250,9 @@ function BreakDataTable() {
                 className="legends"
                 style={{
                   padding: "10px",
+                  fontFamily: "'Raleway', sans-serif",
                   backgroundColor: "#A9E4FF",
-                  marginLeft: "100px",
+                  marginLeft: "90px",
                 }}
               >
                 Lunch
@@ -243,6 +261,7 @@ function BreakDataTable() {
                 style={{
                   padding: "10px",
                   color: "red",
+                  fontFamily: "'Raleway', sans-serif",
                   backgroundColor: "#EDEDED",
                   textAlign: "center",
                   marginLeft: "2px",
@@ -253,6 +272,7 @@ function BreakDataTable() {
               <span
                 style={{
                   padding: "10px",
+                  fontFamily: "'Raleway', sans-serif",
                   backgroundColor: "#FFEDA6",
                   textAlign: "center",
                   marginLeft: "2px",
@@ -263,6 +283,7 @@ function BreakDataTable() {
               <span
                 style={{
                   padding: "10px",
+                  fontFamily: "'Raleway', sans-serif",
                   backgroundColor: "#FBDD64",
                   textAlign: "center",
                   marginLeft: "2px",
@@ -277,11 +298,46 @@ function BreakDataTable() {
             <table className="table table-bordered">
               <thead>
                 <tr>
-                  <th style={{ backgroundColor: "#4CBDFF" }}>Name</th>
-                  <th style={{ backgroundColor: "#4CBDFF" }}>Start</th>
-                  <th style={{ backgroundColor: "#4CBDFF" }}>End</th>
-                  <th style={{ backgroundColor: "#4CBDFF" }}>Duration</th>
-                  <th style={{ backgroundColor: "#4CBDFF" }}>Type</th>
+                  <th
+                    style={{
+                      backgroundColor: "#4CBDFF",
+                      fontFamily: "'Raleway', sans-serif",
+                    }}
+                  >
+                    Name
+                  </th>
+                  <th
+                    style={{
+                      backgroundColor: "#4CBDFF",
+                      fontFamily: "'Raleway', sans-serif",
+                    }}
+                  >
+                    Start
+                  </th>
+                  <th
+                    style={{
+                      backgroundColor: "#4CBDFF",
+                      fontFamily: "'Raleway', sans-serif",
+                    }}
+                  >
+                    End
+                  </th>
+                  <th
+                    style={{
+                      backgroundColor: "#4CBDFF",
+                      fontFamily: "'Raleway', sans-serif",
+                    }}
+                  >
+                    Duration
+                  </th>
+                  <th
+                    style={{
+                      backgroundColor: "#4CBDFF",
+                      fontFamily: "'Raleway', sans-serif",
+                    }}
+                  >
+                    Type
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -306,7 +362,8 @@ function BreakDataTable() {
                       ...instance,
                       formattedTime,
                       remainingSeconds,
-                      isElapsed: remainingSeconds < 0,
+                      isElapsed: remainingSeconds < 300,
+                      isBlinking: remainingSeconds <= 300,
                     };
                   })
                   .sort((a, b) => {
@@ -317,20 +374,17 @@ function BreakDataTable() {
                   .map((instance) => (
                     <tr
                       key={instance.name}
-                      style={{
-                        backgroundColor: "white",
-                      }}
+                      className={instance.isBlinking ? "blink-row" : ""}
                     >
-                      <td className="blink">{instance.name}</td>
-                      <td className="blink">{instance.start}</td>
-                      <td className="blink">{instance.end}</td>
+                      <td>{instance.name}</td>
+                      <td>{instance.start}</td>
+                      <td>{instance.end}</td>
                       <td
-                        className="blink"
                         dangerouslySetInnerHTML={{
                           __html: instance.formattedTime,
                         }}
                       ></td>
-                      <td className="blink">{instance.breaktype}</td>
+                      <td>{instance.breaktype}</td>
                     </tr>
                   ))}
               </tbody>
