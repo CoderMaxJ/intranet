@@ -34,6 +34,7 @@ export default function Login() {
   useEffect(() => {
     setToken(localStorage.getItem("token") ?? "");
   }, [token]);
+
   async function login() {
     const credentials = { username: username, password: password };
     try {

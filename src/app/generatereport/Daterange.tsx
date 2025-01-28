@@ -142,6 +142,7 @@ export default function Daterange() {
                       style={{
                         backgroundColor: "#f0f0f0",
                         paddingLeft: "40px",
+                        fontFamily: "'Raleway', sans-serif"
                       }}
                       type="text"
                       placeholder="Search by Name"
@@ -169,21 +170,22 @@ export default function Daterange() {
               No results found
             </p>
           ) : (
+            <div className="table-container">
             <table className="table table-bordered table-striped">
               <thead>
                 <tr className="tr-header">
-                  <th>Name</th>
-                  <th>Login</th>
-                  <th>First Break</th>
-                  <th>Breakout</th>
-                  <th>Over Break</th>
-                  <th>Lunch In</th>
-                  <th>Lunch Out</th>
-                  <th>Over Break</th>
-                  <th>Second Break</th>
-                  <th>Breakout</th>
-                  <th>Over Break</th>
-                  <th>Log Out</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Login</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>First Break</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch In</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch Out</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Second Break</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
                 </tr>
               </thead>
               <tbody>
@@ -208,6 +210,7 @@ export default function Daterange() {
                 ))}
               </tbody>
             </table>
+            </div>
           )}
         </div>
       )}

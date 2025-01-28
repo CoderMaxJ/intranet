@@ -514,6 +514,36 @@ input:focus {
   background-color: white;
 }
 
+.table-container {
+  max-height: 400px; /* Adjust height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ddd;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  position: sticky;
+  top: 0; /* Stick to the top */
+  background-color: #f8f9fa; /* Background to make it stand out */
+  z-index: 1; /* Ensure it stays above the scrollable content */
+  padding: 8px;
+  border-bottom: 2px solid #ddd;
+}
+
+tbody td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.highlight-row {
+  background-color: #f0f8ff;
+}
+
+
 .settings-page {
   background: rgba(255, 255, 255, 0.9);
   /* background-color: transparent; */
