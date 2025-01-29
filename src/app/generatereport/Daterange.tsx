@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 interface BreaksReport {
@@ -23,11 +23,10 @@ export default function Daterange() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(true);
   const [data, setData] = useState<BreaksReport[]>([]);
-  const [filteredData, setFilteredData] = useState<BreaksReport[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
 
-  const getData = async () => {
+  const handleGenerateAndDownloadCSV = async () => {
     try {
+      setError("");
       const account_id = localStorage.getItem("account_id");
       const token = localStorage.getItem("token");
       const response = await fetch(
@@ -46,174 +45,74 @@ export default function Daterange() {
       }
 
       const result = await response.json();
+      if (!result.data.length) {
+        alert("No data available for the selected date range.");
+        return;
+      }
+
       setData(result.data);
-      setFilteredData(result.data);
-      setSuccess(false);
+      setSuccess(true); // Update this to true after success
+      
+      // Proceed with CSV generation after fetching data
+      const csvContent = [
+        [
+          "Name", "Login", "First Break", "Breakout", "Over Break",
+          "Lunch In", "Lunch Out", "Over Break", "Second Break",
+          "Breakout", "Over Break", "Log Out"
+        ],
+        ...result.data.map((row: BreaksReport) => [
+          row.name,
+          row.login,
+          row.brkin1 || "",
+          row.brkout1 || "",
+          row.ob1 || "",
+          row.lunchin || "",
+          row.lunchout || "",
+          row.ob3 || "",
+          row.brkin2 || "",
+          row.brkout2 || "",
+          row.ob2 || "",
+          row.logout || ""
+        ].map(value => `${value}`).join(","))
+      ].join("\n");
+
+      const blob = new Blob([csvContent], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `report_${start}_${end}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     } catch (e) {
       setError("An error occurred while fetching data.");
     }
   };
 
-  useEffect(() => {
-    console.log(filteredData);
-    setFilteredData(filteredData);
-    if (filteredData) {
-      console.log("report");
-    }
-  }, [filteredData, data]);
-
-  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(`${e.target.value}`);
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (start === "" || end === "") {
-      setError("Please fill in both date fields");
-      return;
-    }
-    getData();
-  };
-
-  // Function to determine if a row should be highlighted
-  const highlightRow = (row: BreaksReport) => {
-    // Example condition: Highlight rows where the "brkin1" is empty (you can change this condition)
-    return row.brkin1 === "";
-  };
-
   return (
     <div className={success ? "gen-maindiv" : "gen-maindiv generate-page"}>
-      {success ? (
-        <form onSubmit={handleSubmit}>
-          <div className="settings-page">
-            <h4 className="generate-header">Daily Reports</h4>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <div className="settingspage-wrapper">
-              <div className="date-start">
-                <label htmlFor="id-start" className="from">
-                  From:
-                </label>
-                <input
-                  type="date"
-                  onChange={(e) => setStart(e.target.value)}
-                  value={start}
-                />
-              </div>
-              <div className="date-end">
-                <label htmlFor="id-end">To:</label>
-                <input
-                  type="date"
-                  onChange={(e) => setEnd(e.target.value)}
-                  value={end}
-                />
-              </div>
-              <div className="genrep-btn">
-                <button type="submit">Generate Report</button>
-              </div>
-              <div className="back-btn" onClick={() => history.back()}>
-                <button type="button" style={{backgroundColor:'#008DCC'}}>
-                <i className="bi bi-reply-fill"></i> Back 
-                </button>
-              </div>
+      <form onSubmit={(e) => { e.preventDefault(); if (start && end) handleGenerateAndDownloadCSV(); else setError("Please fill in both date fields"); }}>
+        <div className="settings-page">
+          <h4 className="generate-header">Daily Reports</h4>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <div className="settingspage-wrapper">
+            <div className="date-start">
+              <label htmlFor="id-start">From:</label>
+              <input type="date" onChange={(e) => setStart(e.target.value)} value={start} />
             </div>
+            <div className="date-end">
+              <label htmlFor="id-end">To:</label>
+              <input type="date" onChange={(e) => setEnd(e.target.value)} value={end} />
+            </div>
+            <button type="submit" className="btngen btn-success mb-3">Generate Report</button>
           </div>
-        </form>
-      ) : (
-        <div style={{ marginLeft: "60px", marginRight: "60px" }}>
-          <header
-            className="tab-header"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-md-6">
-                  <div
-                    className="search-container"
-                    style={{ position: "relative" }}
-                  >
-                    <input
-                      className="form-control search-input"
-                      style={{
-                        backgroundColor: "#f0f0f0",
-                        paddingLeft: "40px",
-                        fontFamily: "'Raleway', sans-serif"
-                      }}
-                      type="text"
-                      placeholder="Search by Name"
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                    />
-                    <i
-                      className="fas fa-search search-icon"
-                      style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "15px",
-                        transform: "translateY(-50%)",
-                        color: "#888",
-                      }}
-                    ></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </header>
-
-          {filteredData.length === 0 ? (
-            <p style={{ textAlign: "center", marginTop: "20px" }}>
-              No results found
-            </p>
-          ) : (
-            <div className="table-container">
-            <table className="table table-bordered table-striped">
-              <thead>
-                <tr className="tr-header">
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Login</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>First Break</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch In</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch Out</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Second Break</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.map((row, index) => (
-                  <tr
-                    key={index}
-                    className={highlightRow(row) ? "highlight-row" : ""}
-                  >
-                    <td>{row.name}</td>
-                    <td>{row.login}</td>
-                    <td>{row.brkin1}</td>
-                    <td>{row.brkout1}</td>
-                    <td>{row.ob1}</td>
-                    <td>{row.lunchin}</td>
-                    <td>{row.lunchout}</td>
-                    <td>{row.ob3}</td>
-                    <td>{row.brkin2}</td>
-                    <td>{row.brkout2}</td>
-                    <td>{row.ob2}</td>
-                    <td>{row.logout}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-          )}
+          <div>
+            <button type="button" onClick={() => window.history.back()} className="back">
+            <i className="bi bi-reply"></i> Back
+            </button>
+          </div>
         </div>
-      )}
+      </form>
     </div>
   );
 }
