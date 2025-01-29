@@ -50,6 +50,7 @@ setToken(localStorage.getItem("token") ?? "")
       if (response.status === 200) {
         const res = await response.json();
         localStorage.setItem("account_id", res.account_id);
+        localStorage.setItem("privilege",res.privilege);
        
      setLog(true);
         
