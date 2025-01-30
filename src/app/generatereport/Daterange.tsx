@@ -93,7 +93,7 @@ export default function Daterange() {
     <div className={success ? "gen-maindiv" : "gen-maindiv generate-page"}>
       <form onSubmit={(e) => { e.preventDefault(); if (start && end) handleGenerateAndDownloadCSV(); else setError("Please fill in both date fields"); }}>
         <div className="settings-page">
-          <h4 className="generate-header">Daily Reports</h4>
+          <h4 className="generate-header" style={{ fontFamily: "'Raleway', sans-serif"}}>Daily Logs</h4>
           {error && <p style={{ color: "red" }}>{error}</p>}
           <div className="settingspage-wrapper">
             <div className="date-start">
@@ -104,13 +104,13 @@ export default function Daterange() {
               <label htmlFor="id-end">To:</label>
               <input type="date" onChange={(e) => setEnd(e.target.value)} value={end} />
             </div>
-            <button type="submit" className="btngen btn-success mb-3">Generate Report</button>
+            <button type="submit" className="btngen btn-success mb-3" style={{backgroundColor:'#0f9b45', color:'white', outline:'none', border: 'none'}}>Generate Report</button>
           </div>
-          <div>
+          {/* <div>
             <button type="button" onClick={() => window.history.back()} className="back">
-            <i className="bi bi-reply"></i> Back
+            <i className="bi bi-arrow-fill"></i> Back
             </button>
-          </div>
+          </div> */}
         </div>
       </form>
     </div>

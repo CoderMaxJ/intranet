@@ -19,6 +19,7 @@ function BreakDataTable() {
   const [durationtime, setDurationTime] = useState<boolean>(false);
   const [loadingPage, setLoadingPage] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+ 
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);

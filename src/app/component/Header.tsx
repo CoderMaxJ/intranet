@@ -1,12 +1,19 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "/public/asset/css/updateps.css";
 import Link from "next/link";
 import Image from "next/image";
+import Daterange from "../generatereport/Daterange";
+
+
+
 
 export default function Header() {
   const [openProfile, setOpenProfile] = useState(false);
+  const [activeTab, setActiveTab] = useState("account"); 
   const [openNotification, setOpenNotification] = useState(false);
   const [drawerState, setDrawerState] = useState(false);
   const [currentpassword, setCurrentPassword] = useState("");
@@ -18,6 +25,8 @@ export default function Header() {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const router = useRouter();
+
+  
 
   const triggerLogout = () => {
     router.push("/");
@@ -94,7 +103,7 @@ export default function Header() {
 
     async function getToken() {
       try {
-        const response = await fetch("http://localhost:8000/api/token/", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/token/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -137,6 +146,7 @@ export default function Header() {
     setShowPassword2((prevState) => !prevState);
   };
 
+ 
   return (
     <header className="header">
       <div className="left-section">
@@ -148,10 +158,17 @@ export default function Header() {
           height={100}
           width={100}
         />
-      </div>
+      </div> 
+
+      <div>
+      <button 
+        className="create-update-delete"
+      >
+        <a href="/crud"> <i className="bi bi-person-fill-add"></i></a>
+      </button>
+    </div>
 
       {/* Profile Dropdown */}
-
       <div
         className="dropdown relative"
         style={{ marginLeft: "108rem", marginTop: "-4rem", display: "flex" }}
@@ -159,12 +176,7 @@ export default function Header() {
         <button
           className="dropbtn"
           id="dropdownMenuButton1"
-          onClick={() =>
-            setOpenProfile((prev) => {
-              setOpenNotification(false);
-              return !prev;
-            })
-          }
+          onClick={() => setOpenProfile((prev) => !prev)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -187,34 +199,49 @@ export default function Header() {
             className="dropdown-content absolute bg-white border rounded-lg shadow-lg"
             style={{ marginTop: "64px", marginRight: "40px" }}
           >
+            {/* Account Link */}
             <Link
-              className="acc-btn"
+              href="#"
+              className="block px-4 py-2 hover:bg-gray-100"
               data-bs-toggle="offcanvas"
-              href="#offcanvasExample"
-              role="button"
-              aria-controls="offcanvasExample"
+              data-bs-target="#offcanvasExample"
+              onClick={() => setActiveTab("account")}
             >
               Account
             </Link>
-            <div>
-              <Link href="/generatereport">Reports</Link>
-            </div>
-            <Link href="/" onClick={triggerLogout}>
+
+            {/* Reports Link */}
+            <Link
+              href="#"
+              className="block px-4 py-2 hover:bg-gray-100"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              onClick={() => setActiveTab("reports")}
+            >
+              Reports
+            </Link>
+
+            {/* Logout Link */}
+            <Link
+              href="/"
+              className="block px-4 py-2 hover:bg-gray-100"
+              onClick={triggerLogout}
+            >
               Log Out
             </Link>
           </div>
         )}
       </div>
 
-      {/* Account Offcanvas */}
+      {/* Offcanvas Drawer (Single for Account & Reports) */}
       <div
-        className="offcanvas offcanvas-start"
+        className="offcanvas offcanvas-end"
         id="offcanvasExample"
         aria-labelledby="offcanvasExampleLabel"
       >
         <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="offcanvasExampleLabel">
-            Offcanvas
+          <h5 className="offcanvas-title">
+            {activeTab === "account" ? "Account" : "Reports"}
           </h5>
           <button
             type="button"
@@ -223,126 +250,76 @@ export default function Header() {
             aria-label="Close"
           ></button>
         </div>
-        <div className="offcanvas-body">
-          {/* Login Content */}
-          <div className="updatepass-div">
-            <div className="login-division">
-              <Image
-                style={{ marginLeft: 45, marginBottom: 30, height: "60px" }}
-                className="updatepass-logo"
-                src="/img/Sos.png"
-                alt="Staff Outsourcing Logo"
-                height={200}
-                width={290}
-              />
-              <form onSubmit={handleSubmit}>
-                {error && (
-                  <div
-                    className={success ? "success-message" : "error-message"}
-                  >
-                    {error}
-                  </div>
-                )}
-                <div className="updatepass-label">
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: 5,
-                    }}
-                    htmlFor="currentpassword"
-                  >
-                    Current Password
-                  </label>
-                  <div style={{ position: "relative" }}>
-                    <input
-                      style={{
-                        marginBottom: 20,
-                        borderRadius: 4,
-                        border: "1px solid gray",
-                        marginRight: "-30px",
-                      }}
-                      className="updatepassword-input"
-                      id="currentpassword"
-                      type={showPassword ? "text" : "password"}
-                      value={currentpassword}
-                      onChange={(e) => setCurrentPassword(e.target.value)}
-                      required
-                    />
-                    {currentpassword && (
-                      <button
-                        onClick={toggleShow}
-                        className="cp-button"
-                      ></button>
-                    )}
-                  </div>
-                </div>
-                <div className="updatepass-label">
-                  <label
-                    style={{ marginLeft: 100, display: "block" }}
-                    htmlFor="password"
-                  >
-                    New Password
-                  </label>
-                  <div style={{ position: "relative" }}>
-                    <input
-                      style={{
-                        marginBottom: 20,
-                        borderRadius: 4,
-                        border: "1px solid gray",
-                        marginRight: "-30px",
-                      }}
-                      className="updatepassword-input"
-                      id="password"
-                      type={showPassword1 ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    {password && (
-                      <button
-                        onClick={toggleShoww}
-                        className="ps-button"
-                      ></button>
-                    )}
-                  </div>
-                </div>
 
-                <div className="updatepass-label">
-                  <label
-                    style={{ marginLeft: 100, display: "block" }}
-                    htmlFor="confirmpassword"
-                  >
-                    Confirm Password
-                  </label>
-                  <div style={{ position: "relative" }}>
-                    <input
-                      style={{
-                        marginBottom: 20,
-                        borderRadius: 4,
-                        border: "1px solid gray",
-                        marginRight: "-30px",
-                      }}
-                      className="updatepassword-input"
-                      id="password"
-                      type={showPassword2 ? "text" : "password"}
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                    />{" "}
-                    {confirmPassword && (
-                      <button
-                        onClick={toggleShowww}
-                        className="cnfrm-button"
-                      ></button>
-                    )}
+        <div>
+          {activeTab === "account" ? (
+            <div className="updatepass-div">
+              <div className="login-division">
+                <Image
+                  style={{ marginLeft: 45, marginBottom: 30, height: "60px" }}
+                  className="updatepass-logo"
+                  src="/img/Sos.png"
+                  alt="Staff Outsourcing Logo"
+                  height={200}
+                  width={290}
+                />
+                <form onSubmit={handleSubmit}>
+                  {error && (
+                    <div className={success ? "success-message" : "error-message"}>
+                      {error}
+                    </div>
+                  )}
+                  <div className="updatepass-label">
+                    <label htmlFor="currentpassword">Current Password</label>
+                    <div style={{ position: "relative" }}>
+                      <input
+                        className="updatepassword-input"
+                        id="currentpassword"
+                        type={showPassword ? "text" : "password"}
+                        value={currentpassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        required
+                      />
+                      {currentpassword && <button onClick={toggleShow} className="cp-button"></button>}
+                    </div>
                   </div>
-                </div>
-                <div className="button-div">
-                  <button onClick={handleSubmit}>Update Account</button>
-                </div>
-              </form>
+                  <div className="updatepass-label">
+                    <label htmlFor="password">New Password</label>
+                    <div style={{ position: "relative" }}>
+                      <input
+                        className="updatepassword-input"
+                        id="password"
+                        type={showPassword1 ? "text" : "password"}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                      {password && <button onClick={toggleShoww} className="ps-button"></button>}
+                    </div>
+                  </div>
+                  <div className="updatepass-label">
+                    <label htmlFor="confirmpassword">Confirm Password</label>
+                    <div style={{ position: "relative" }}>
+                      <input
+                        className="updatepassword-input"
+                        id="confirmpassword"
+                        type={showPassword2 ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                      />
+                      {confirmPassword && <button onClick={toggleShowww} className="cnfrm-button"></button>}
+                    </div>
+                  </div>
+                  <div className="button-div">
+                    <button type="submit">Update Account</button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
+          ) : (
+            <Daterange/>
+          )}
         </div>
       </div>
     </header>

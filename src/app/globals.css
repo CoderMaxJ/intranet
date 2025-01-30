@@ -179,6 +179,7 @@ input:focus {
 .button-div {
   display: flex;
   justify-content: center;
+  margin-left: -6px !important;
 }
 
 .button-login {
@@ -320,6 +321,10 @@ input:focus {
 }
 
 /* header-icons */
+.create-update-delete {
+
+}
+
 .right-section {
   display: flex;
 
@@ -462,6 +467,7 @@ input:focus {
   padding-bottom: 5px;
   padding-top: 18px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .logs-table {
@@ -488,31 +494,45 @@ input:focus {
   border: none;
   position: relative;
 }
+ /* account  */
+.login-division {
+  margin-left: 30px;
+}
 
 /* generate report */
+.back {
+  background-color: #008dcc;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: white;
+}
+
+
+
+
 .generate-header {
   font-weight: 700;
   margin-bottom: 25px;
 }
-
+/* 
 .gen-maindiv {
   position: relative;
   background-image: url("/img/Group5.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
   background-size: 19% auto, 19% auto;
   background-position: 41% 30%, 56% 72%;
-  background-color: #f3f3f3;
   height: 100vh;
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
-}
+} */
 
-.gen-maindiv.generate-page {
+/* .gen-maindiv.generate-page {
   height: unset;
   background-color: white;
-}
+} */
 
 .table-container {
   max-height: 400px; /* Adjust height as needed */
@@ -545,19 +565,16 @@ tbody td {
 
 
 .settings-page {
-  background: rgba(255, 255, 255, 0.9);
-  /* background-color: transparent; */
-  backdrop-filter: blur(-50px);
-  box-shadow: 0px 0px 5px rgb(87, 86, 86);
   border-radius: 8px;
   padding: 20px;
-  width: 340px;
+  width: 295px;
   height: 43vh;
+  margin-top: -50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0;
+  margin-left: 60px !important;
   box-sizing: border-box;
 }
 
@@ -575,7 +592,7 @@ tbody td {
 
 .settings-page label {
   display: block;
-  margin-left: -275px;
+  margin-left: 3px;
 }
 
 .from {
@@ -589,7 +606,6 @@ tbody td {
   border-style: ridge;
   border-radius: 4px;
   border-color: #acacac;
-  background-color: transparent;
 }
 
 .genrep-btn button {
@@ -641,6 +657,50 @@ tbody td {
   padding: 15px;
   width: 100%;
 }
+
+ /* //CRUD|| */
+
+ .crud-maindiv {
+  background-color: #a1a1a1;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  
+ }
+
+ .crud-header {
+  background-color: #333;
+  color: white;
+  padding-left: 800px ;
+  width: 100vw;
+  padding: 15px;
+  padding-left: 800px;
+ }
+
+.add {
+  margin-left: 30px !important;
+  transform: translateY(-45px);
+  padding: 5px;
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background-color: #0da52e;
+  color: white;
+ 
+}
+
+.table {
+
+ margin-right: 20px !important;
+}
+
+
+
+
+
+
+
 
 .blink {
   animation: blinkAnimation 1s steps(1, end) infinite,
