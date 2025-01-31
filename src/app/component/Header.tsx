@@ -150,28 +150,32 @@ export default function Header() {
   return (
     <header className="header">
       <div className="left-section">
+    <div>
         <Image
-          style={{ marginTop: "-5px" }}
+          style={{ marginTop: "-5px", justifyContent: 'center', alignItems:'center', marginRight: "630px", marginLeft:'600px' }}
           src="/img/Sos.png"
           alt="Logo"
           className="logo"
           height={100}
           width={100}
         />
-      </div> 
-
-      <div>
+    </div>
+    <div>
       <button 
         className="create-update-delete"
       >
-        <a href="/crud"> <i className="bi bi-person-fill-add"></i></a>
+        <a href="/crud"> <i className="bi bi-person-fill-add" style={{color:'#000000', fontSize:'30px'}}></i></a>
       </button>
     </div>
+      </div> 
+
+     
+
 
       {/* Profile Dropdown */}
       <div
         className="dropdown relative"
-        style={{ marginLeft: "108rem", marginTop: "-4rem", display: "flex" }}
+        style={{ marginLeft: "108rem", marginTop: "-3.7rem", display: "flex" }}
       >
         <button
           className="dropbtn"

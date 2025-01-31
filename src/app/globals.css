@@ -206,38 +206,6 @@ input:focus {
   background-color: #1fe651;
 }
 
-.forgot-password-link {
-  margin-top: 10px !important;
-  justify-content: center;
-  text-align: center;
-  color: #008dcc;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.forgot-password-link:hover {
-  text-decoration: underline;
-}
-
-.check-fpass {
-  gap: 8px;
-  background-color: grey;
-}
-
-.check-fpass input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  accent-color: #4caf50;
-}
-
-.check-fpass label {
-  font-size: 14px;
-  font-weight: lighter;
-  color: #333;
-  cursor: pointer;
-}
-
 .error-message {
   color: red;
   text-align: center;
@@ -322,8 +290,15 @@ input:focus {
 
 /* header-icons */
 .create-update-delete {
-
+ justify-content: flex-start;
+ margin-right: 20px;
+ border: none;
+ box-shadow: none;
+ outline: none;
+ background: none;
+ margin-top: 10px;
 }
+
 
 .right-section {
   display: flex;
@@ -334,6 +309,7 @@ input:focus {
 
 .dropbtn button {
   display: block;
+ 
 }
 .dropdown {
   position: relative;
@@ -348,6 +324,7 @@ input:focus {
   cursor: pointer;
   background-color: rgb(0, 0, 0);
   font-size: 16px;
+
 }
 
 .dropdown-content {
@@ -662,32 +639,53 @@ tbody td {
 
  .crud-maindiv {
   background-color: #a1a1a1;
-  background-size: cover;
   height: 100vh;
   width: 100vw;
+  position: absolute;
   
  }
 
  .crud-header {
+  margin-top: 30px;
   background-color: #333;
   color: white;
-  padding-left: 800px ;
-  width: 100vw;
-  padding: 15px;
-  padding-left: 800px;
+  width: 96vw;
+  margin-right: 40px;
+  margin-left: 40px;
+  padding: 10px;
+  display: flex;
+  
  }
 
-.add {
-  margin-left: 30px !important;
-  transform: translateY(-45px);
-  padding: 5px;
+ .add {
+  font-size:medium;
+  padding: 10px;
+  padding-bottom: 4px;
+  margin-right: 200px;
   border-radius: 2px;
   outline: none;
+  margin-left: 30px;
   border: none;
   box-shadow: none;
   background-color: #0da52e;
   color: white;
- 
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.add:hover {
+  background-color: #0c8a2b;
+}
+
+.add:active {
+  transform: scale(0.95);
+}
+
+.add:focus {
+  outline: none;
+}
+
+.ManageEmp {
+  margin-left: 550px;
 }
 
 .table {
@@ -695,12 +693,22 @@ tbody td {
  margin-right: 20px !important;
 }
 
+.update {
+  outline: none;
+  background-color: none;
+  box-shadow: none;
+  border: none;
+  color: rgb(14, 206, 100);
+  
+}
 
-
-
-
-
-
+.delete {
+  outline: none;
+  background-color: none;
+  box-shadow: none;
+  border: none;
+  color: rgb(245, 12, 12);
+}
 
 .blink {
   animation: blinkAnimation 1s steps(1, end) infinite,
