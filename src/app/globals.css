@@ -653,7 +653,6 @@ tbody td {
   margin-right: 40px;
   margin-left: 40px;
   padding: 10px;
-  display: flex;
   
  }
 
@@ -708,6 +707,21 @@ tbody td {
   box-shadow: none;
   border: none;
   color: rgb(245, 12, 12);
+}
+
+.edit-button {
+  border: none;
+  box-shadow: none;
+  outline:none;
+  color: rgb(21, 185, 70);
+}
+
+.delete-button{
+  border: none;
+  box-shadow: none;
+  outline: none;
+  color: red;
+  margin-left: 30px !important;
 }
 
 .blink {
