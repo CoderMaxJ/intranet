@@ -57,7 +57,7 @@ export default function CreateUD() {
     setEmpData(currentData);
   };
 
-  const handleDelete = (Empno) => {
+  const handleDelete = (Empno: any) => {
     setEmployees((prevEmployees) =>
       prevEmployees.filter((emp) => emp.Empno !== Empno)
     );

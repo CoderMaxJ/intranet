@@ -150,15 +150,17 @@ export default function Header() {
   return (
     <header className="header">
       <div className="left-section">
+      <h2 style={{marginRight:'70vw'}}>Dashboard</h2>
     <div>
-        <Image
+     
+        {/* <Image
           style={{ marginTop: "-5px", justifyContent: 'center', alignItems:'center', marginRight: "630px", marginLeft:'600px' }}
           src="/img/Sos.png"
           alt="Logo"
           className="logo"
           height={100}
           width={100}
-        />
+        /> */}
     </div>
     <div>
       <button 

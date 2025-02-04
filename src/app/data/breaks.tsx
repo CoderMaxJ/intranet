@@ -4,6 +4,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState, useEffect } from "react";
 import Router from "next/router";
 import Header from "../component/Header";
+import LogsDataTable from "./logs";
 
 interface BreakData {
   name: string;
@@ -175,6 +176,7 @@ function BreakDataTable() {
     <div className="workforce">
       <Header />
       <div className={fullscreen ? "breaks-div fullscreen" : "breaks-div"}>
+ 
         <div>
           <div className="searchbar-wrapper">
             <div className="d-flex align-items-center">
@@ -395,6 +397,7 @@ function BreakDataTable() {
         </div>
       </div>
     </div>
+    
   );
 }
 export default BreakDataTable;

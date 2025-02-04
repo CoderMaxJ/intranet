@@ -1,29 +1,48 @@
 import { useEffect, useState } from "react";
 
+interface AddEmployeeData {
+  empno: string;
+  fname: string;
+  mname: string;
+  lname: string; 
+  position: string;
+  dateofbirth: string;
+  maritalstatus: string;
+  gender: string;
+  contactno: string;
+  address: string;
+}
+
 export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
   const currentData = empData;
   console.log(empData);
-  const [empNo, setEmpNo] = useState(currentData?.empNo || "20251");
-  const [fname, setFname] = useState(currentData?.fname || "John");
-  const [mname, setMname] = useState(currentData?.mname || "C.");
-  const [lname, setLname] = useState(currentData?.lname || "Doe");
+  const [empNo, setEmpNo] = useState(currentData?.empNo || "");
+  const [fname, setFname] = useState(currentData?.fname || "");
+  const [mname, setMname] = useState(currentData?.mname || "");
+  const [lname, setLname] = useState(currentData?.lname || "");
+  const [position, setPosition] = useState(
+    currentData?.position || ""
+  );
   const [dob, setDob] = useState(currentData?.dateofbirth || "");
   const [maritalStatus, setMaritalStatus] = useState("");
-  const [gender, setGender] = useState(currentData?.gender || "");
+  const [gender, setGender] = useState("");
   const [contactNo, setContactNo] = useState(
-    currentData?.contactno || "0987654321"
+    currentData?.contactno || ""
   );
   const [address, setAddress] = useState(currentData?.address || "");
-  const [position, setPosition] = useState(
-    currentData?.position || "Developer"
-  );
-  const [username, setUsername] = useState(currentData?.username || "johnd");
-  const [password, setPassword] = useState(currentData?.password || "pass123");
+  const [username, setUsername] = useState(currentData?.username || "");
+  const [password, setPassword] = useState(currentData?.password || "");
 
   useEffect(() => {
     const currentData2 = currentData;
-    setMaritalStatus(currentData2.maritalstatus);
-  }, [maritalStatus]);
+    if (empData.maritalStatus !== "") {
+      setMaritalStatus(empData.maritalStatus);
+    }
+
+    if (empData.gender !== "") {
+      setGender(empData.gender);
+    }
+  }, [empData]);
 
   function FormInput({
     id,
@@ -57,9 +76,36 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
     );
   }
 
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const timer = setTimeout(async () => {
+  //     async function getLogs() {
+  //       try {
+  //         const account_id = await localStorage.getItem("account_id");
+  //         const response = await fetch(`http://localhost:8000/employees`,
+  //           {
+  //             method: "GET",
+  //             headers: {
+  //               "Content-type": "application/json",
+  //               Authorization: `Bearer ${token}`,
+  //             },
+  //           }
+  //         );
+
+  //         if (!response.ok) {
+  //           throw new Error("Network response was not ok");
+  //         }
+
+  //         const data = await response.json();
+
+  //       }
+  //     )
+
+  // }, []);
+
+
   return (
     <div>
-      {maritalStatus}
       <form className="row">
         <FormInput
           id="fname"
@@ -114,11 +160,11 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
             Gender
           </label>
           <select
-            value={currentData.gender}
-            defaultValue={0}
+            value={gender}
             id="gender"
             className="form-select"
             aria-label="Default select example"
+            onChange={(e) => setGender(e.target.value)}
           >
             <option value="0"></option>
             <option value="Male">Male</option>

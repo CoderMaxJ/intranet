@@ -69,7 +69,7 @@ function LogsDataTable() {
   };
 
   return (
-    <div className="logs-wrapper">
+    <div className="logs-wrapper" style={{backgroundColor:"#e7e7e7"}}>
       <div className="logs-maindiv">
         <div className="logs-table" style={{ display: "flex"}}>
           <h3 className="logs-headername" style={{fontFamily: "'Raleway', sans-serif",  fontWeight:'bold', fontSize:'23px'}}>Agent Logs Today</h3>
