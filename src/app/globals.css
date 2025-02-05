@@ -179,7 +179,8 @@ input:focus {
 .button-div {
   display: flex;
   justify-content: center;
-  margin-left: -6px !important;
+  width: 100%;
+  margin-left: -14px;
 }
 
 .button-login {
@@ -290,15 +291,14 @@ input:focus {
 
 /* header-icons */
 .create-update-delete {
- justify-content: flex-start;
- margin-right: 20px;
- border: none;
- box-shadow: none;
- outline: none;
- background: none;
- margin-top: 10px;
+  justify-content: flex-start;
+  margin-right: 20px;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background: none;
+  margin-top: 10px;
 }
-
 
 .right-section {
   display: flex;
@@ -309,7 +309,6 @@ input:focus {
 
 .dropbtn button {
   display: block;
- 
 }
 .dropdown {
   position: relative;
@@ -324,7 +323,6 @@ input:focus {
   cursor: pointer;
   background-color: rgb(0, 0, 0);
   font-size: 16px;
-
 }
 
 .dropdown-content {
@@ -439,7 +437,7 @@ input:focus {
   margin-top: 20px;
   margin-left: 40px;
   margin-right: 40px;
-  padding-left: 20px;
+  padding-left: 40px;
   padding-right: 20px;
   padding-bottom: 5px;
   padding-top: 18px;
@@ -471,7 +469,7 @@ input:focus {
   border: none;
   position: relative;
 }
- /* account  */
+/* account  */
 .login-division {
   margin-left: 30px;
 }
@@ -485,31 +483,10 @@ input:focus {
   color: white;
 }
 
-
-
-
 .generate-header {
   font-weight: 700;
   margin-bottom: 25px;
 }
-/* 
-.gen-maindiv {
-  position: relative;
-  background-image: url("/img/Group5.png"), url("/img/Group4.png");
-  background-repeat: no-repeat;
-  background-size: 19% auto, 19% auto;
-  background-position: 41% 30%, 56% 72%;
-  height: 100vh;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-} */
-
-/* .gen-maindiv.generate-page {
-  height: unset;
-  background-color: white;
-} */
 
 .table-container {
   max-height: 400px; /* Adjust height as needed */
@@ -539,7 +516,6 @@ tbody td {
 .highlight-row {
   background-color: #f0f8ff;
 }
-
 
 .settings-page {
   border-radius: 8px;
@@ -635,17 +611,16 @@ tbody td {
   width: 100%;
 }
 
- /* //CRUD|| */
+/* //CRUD|| */
 
- .crud-maindiv {
+.crud-maindiv {
   background-color: #a1a1a1;
   height: 100vh;
   width: 100vw;
   position: absolute;
-  
- }
+}
 
- .crud-header {
+.crud-header {
   margin-top: 30px;
   background-color: #333;
   color: white;
@@ -653,11 +628,12 @@ tbody td {
   margin-right: 40px;
   margin-left: 40px;
   padding: 10px;
-  
- }
+}
 
- .add {
-  font-size:medium;
+
+
+.add {
+  font-size: medium;
   padding: 10px;
   padding-bottom: 4px;
   margin-right: 200px;
@@ -666,7 +642,7 @@ tbody td {
   margin-left: 30px;
   border: none;
   box-shadow: none;
-  background-color: #0da52e;
+  background-color: #039422;
   color: white;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
@@ -688,8 +664,7 @@ tbody td {
 }
 
 .table {
-
- margin-right: 20px !important;
+  margin-right: 20px !important;
 }
 
 .update {
@@ -698,7 +673,6 @@ tbody td {
   box-shadow: none;
   border: none;
   color: rgb(14, 206, 100);
-  
 }
 
 .delete {
@@ -712,11 +686,11 @@ tbody td {
 .edit-button {
   border: none;
   box-shadow: none;
-  outline:none;
+  outline: none;
   color: rgb(21, 185, 70);
 }
 
-.delete-button{
+.delete-button {
   border: none;
   box-shadow: none;
   outline: none;
@@ -738,6 +712,101 @@ tbody td {
     blink-animation 1s steps(5, start) infinite;
   background: #ffeeab;
 }
+
+/* logout */
+
+.logout {
+  --bs-link-color-rgb: 0, 0, 0;
+  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  margin-top: 20px;
+}
+
+.logout svg {
+  align-items: center;
+}
+
+.logout a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.reports {
+  --bs-link-color-rgb: 0, 0, 0;
+  color: rgba(0, 0, 0, 1) !important;
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  margin-top: 20px;
+}
+
+.reports svg {
+  margin-right: 20px;
+  color: #000000;
+}
+
+.reports a {
+  text-decoration: none;
+  color: inherit;
+  align-items: center;
+  display: flex;
+}
+
+.admin {
+  display: flex;
+  margin-left: 15px;
+  margin-top: 20px;
+}
+
+.admin svg {
+  margin-right: 20px;
+}
+
+/* Remove border and background */
+.accordion-item {
+  border: none !important;
+  background-color: transparent !important;
+}
+
+/* Remove button border, shadow, and background */
+.accordion-button {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  outline: none !important;
+  color: black !important; /* Ensure text is visible */
+}
+
+/* Remove hover effect */
+.accordion-button:hover {
+  background-color: transparent !important;
+}
+
+/* Remove active/focus effects */
+.accordion-button:focus,
+.accordion-button:active {
+  box-shadow: none !important;
+  outline: none !important;
+  background-color: transparent !important;
+}
+
+.crud-maindiv .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #ffffff;
+  --bs-table-color-type: #ffffff;
+  --bs-table-bg-type: #ffffff;
+  color: black;
+}
+
+.crud-maindiv .table-striped > tbody > tr:nth-of-type(even) > * {
+  background-color: #afe9c1;
+}
+
+
 
 @keyframes blinkAnimation {
   0% {

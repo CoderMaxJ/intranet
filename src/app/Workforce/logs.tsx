@@ -114,7 +114,7 @@ function LogsDataTable() {
             </button>
           </div>
         </div>
-        <table className="table table-bordered table-striped ">
+        <table className="table table-bordered table-striped " >
           <thead>
             <tr>
             <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>

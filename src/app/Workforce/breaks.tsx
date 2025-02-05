@@ -297,8 +297,8 @@ function BreakDataTable() {
             </div>
           </div>
 
-          <div>
-            <table className="table table-bordered">
+          <div >
+            <table className="table table-bordered" >
               <thead>
                 <tr>
                   <th
@@ -343,7 +343,7 @@ function BreakDataTable() {
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
                 {filteredBreaks
                   .map((instance) => {
                     const formattedTime = formatTime2(instance);
@@ -376,6 +376,7 @@ function BreakDataTable() {
                   })
                   .map((instance) => (
                     <tr
+                     
                       key={instance.name}
                       className={instance.isBlinking ? "blink-row" : ""}
                     >

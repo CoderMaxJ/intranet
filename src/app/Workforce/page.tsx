@@ -5,7 +5,7 @@ import Dashboard from "../Dashboard/dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
-export default function MainDashboard() {
+export default function Workforce() {
   return (
     <div style={{ display: "flex", height: "100vh", width: '100vw', backgroundColor: "#e7e7e7" }}>
    

@@ -51,9 +51,8 @@ export default function Daterange() {
       }
 
       setData(result.data);
-      setSuccess(true); // Update this to true after success
-      
-    
+      setSuccess(true);
+
       const csvContent = [
         [
           "Name", "Login", "First Break", "Breakout", "Over Break",
@@ -90,29 +89,44 @@ export default function Daterange() {
   };
 
   return (
-    <div className={success ? "gen-maindiv" : "gen-maindiv generate-page"}>
-      <form onSubmit={(e) => { e.preventDefault(); if (start && end) handleGenerateAndDownloadCSV(); else setError("Please fill in both date fields"); }}>
-        <div className="settings-page">
-          <h4 className="generate-header" style={{ fontFamily: "'Raleway', sans-serif"}}>Daily Logs</h4>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          <div className="settingspage-wrapper">
-            <div className="date-start">
-              <label htmlFor="id-start">From:</label>
-              <input type="date" onChange={(e) => setStart(e.target.value)} value={start} />
+    <div>
+      <a
+        href="#"
+        className="text-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#reportModal"
+      >
+        Reports
+      </a>
+
+      <div className="modal fade" id="reportModal" tabIndex={-1} aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="reportModalLabel">Daily Reports</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div className="date-end">
-              <label htmlFor="id-end">To:</label>
-              <input type="date" onChange={(e) => setEnd(e.target.value)} value={end} />
+            <div className="modal-body">
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              <form onSubmit={(e) => { e.preventDefault(); if (start && end) handleGenerateAndDownloadCSV(); else setError("Please fill in both date fields"); }}>
+                <div className="mb-3">
+                  <label htmlFor="id-start" className="form-label">From:</label>
+                  <input type="date" className="form-control" onChange={(e) => setStart(e.target.value)} value={start} />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="id-end" className="form-label">To:</label>
+                  <input type="date" className="form-control" onChange={(e) => setEnd(e.target.value)} value={end} />
+                </div>
+                <button type="submit" className="btn btn-success" style={{marginLeft:'160px'}}>Generate Report</button>
+              </form>
             </div>
-            <button type="submit" className="btngen btn-success mb-3" style={{backgroundColor:'#0f9b45', color:'white', outline:'none', border: 'none'}}>Generate Report</button>
+            <div className="modal-footer">
+            
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
           </div>
-          {/* <div>
-            <button type="button" onClick={() => window.history.back()} className="back">
-            <i className="bi bi-arrow-fill"></i> Back
-            </button>
-          </div> */}
         </div>
-      </form>
+      </div>
     </div>
   );
 }

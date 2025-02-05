@@ -6,7 +6,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "/public/asset/css/updateps.css";
 import Link from "next/link";
 import Image from "next/image";
-import Daterange from "../generatereport/Daterange";
+import Daterange from "../Generatereport/Daterange";
 
 
 
@@ -28,10 +28,10 @@ export default function Header() {
 
   
 
-  const triggerLogout = () => {
-    router.push("/");
-    localStorage.clear();
-  };
+  // const triggerLogout = () => {
+  //   router.push("/");
+  //   localStorage.clear();
+  // };
 
   const toggleShow = () => {
     setShowPassword((prev) => !prev);
@@ -153,7 +153,7 @@ export default function Header() {
       <h2 style={{marginRight:'70vw'}}>Dashboard</h2>
     <div>
      
-        {/* <Image
+        {/* <img
           style={{ marginTop: "-5px", justifyContent: 'center', alignItems:'center', marginRight: "630px", marginLeft:'600px' }}
           src="/img/Sos.png"
           alt="Logo"
@@ -163,11 +163,11 @@ export default function Header() {
         /> */}
     </div>
     <div>
-      <button 
+      {/* <button 
         className="create-update-delete"
       >
-        <a href="/crud"> <i className="bi bi-person-fill-add" style={{color:'#000000', fontSize:'30px'}}></i></a>
-      </button>
+        <a href="/"> <i className="bi bi-person-fill-add" style={{color:'#000000', fontSize:'30px'}}></i></a>
+      </button> */}
     </div>
       </div> 
 
@@ -205,36 +205,7 @@ export default function Header() {
             className="dropdown-content absolute bg-white border rounded-lg shadow-lg"
             style={{ marginTop: "64px", marginRight: "40px" }}
           >
-            {/* Account Link */}
-            <Link
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasExample"
-              onClick={() => setActiveTab("account")}
-            >
-              Account
-            </Link>
-
-            {/* Reports Link */}
-            <Link
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasExample"
-              onClick={() => setActiveTab("reports")}
-            >
-              Reports
-            </Link>
-
-            {/* Logout Link */}
-            <Link
-              href="/"
-              className="block px-4 py-2 hover:bg-gray-100"
-              onClick={triggerLogout}
-            >
-              Log Out
-            </Link>
+            
           </div>
         )}
       </div>
