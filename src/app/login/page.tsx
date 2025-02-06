@@ -45,7 +45,7 @@ export default function Login() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(credentials),
         }
@@ -68,7 +68,7 @@ export default function Login() {
   async function getToken() {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/api/token/`,
+        `${process.env.NEXT_PUBLIC_BACKEND}/securedlogin/`,
         {
           method: "POST",
           headers: {

@@ -139,16 +139,16 @@ export default function CreateUD() {
         >
           <thead>
             <tr>
-              <th scope="col"  style={{backgroundColor:'#008f2b', color:'#ffffff'}}>#</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>Employee No.</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>First Name</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>Middle Name</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>Last Name</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>User Name</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>Password</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>Position</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>Contact No.</th>
-              <th scope="col" style={{backgroundColor:'#008f2b', color:'#ffffff'}}>Actions</th>
+              <th scope="col"  style={{backgroundColor:'#096dca', color:'#ffffff'}}>#</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Employee No.</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>First Name</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Middle Name</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Last Name</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>User Name</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Password</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Position</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Contact No.</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Actions</th>
             </tr>
           </thead>
           <tbody>

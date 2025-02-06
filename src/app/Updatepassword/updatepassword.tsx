@@ -6,10 +6,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "/public/asset/css/updateps.css";
 import Image from "next/image";
 
-
-export default function Updatepassword(){
+export default function Updatepassword() {
   const [openProfile, setOpenProfile] = useState(false);
-  const [activeTab, setActiveTab] = useState("account"); 
+  const [activeTab, setActiveTab] = useState("account");
   const [openNotification, setOpenNotification] = useState(false);
   const [drawerState, setDrawerState] = useState(false);
   const [currentpassword, setCurrentPassword] = useState("");
@@ -92,13 +91,16 @@ export default function Updatepassword(){
 
     async function getToken() {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/token/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ un: "J.Rio", password: "default000" }),
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND}/api/token/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ un: "J.Rio", password: "default000" }),
+          }
+        );
 
         if (response.ok) {
           const token = await response.json();
@@ -137,20 +139,37 @@ export default function Updatepassword(){
   return (
     <div>
       {/* Link to open modal */}
-      <a href="#" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
+      <a href="#" className="text-dark" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
         Update Password
       </a>
 
       {/* Bootstrap Modal */}
-      <div className="modal fade" id="updatePasswordModal" tabIndex={-1} aria-labelledby="updatePasswordModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="updatePasswordModal"
+        tabIndex={-1}
+        aria-labelledby="updatePasswordModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="updatePasswordModalLabel">Update Password</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <img
+                src="/img/Sos.png"
+                alt="Staff Outsourcing Logo"
+                className="modal-title"
+                id="updatePasswordModalLabel"
+                style={{height:'50px', marginLeft:'50px'}}
+              ></img>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
 
-            <div className="modal-body" style={{marginLeft:'35px'}}>
+            <div className="modal-body" style={{ marginLeft: "35px" }}>
               {error && (
                 <div className={success ? "success-message" : "error-message"}>
                   {error}
@@ -169,7 +188,13 @@ export default function Updatepassword(){
                       onChange={(e) => setCurrentPassword(e.target.value)}
                       required
                     />
-                    {currentpassword && <button type="button" onClick={toggleShow} className="cp-button"></button>}
+                    {currentpassword && (
+                      <button
+                        type="button"
+                        onClick={toggleShow}
+                        className="cp-button"
+                      ></button>
+                    )}
                   </div>
                 </div>
 
@@ -184,7 +209,13 @@ export default function Updatepassword(){
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
-                    {password && <button type="button" onClick={toggleShoww} className="ps-button"></button>}
+                    {password && (
+                      <button
+                        type="button"
+                        onClick={toggleShoww}
+                        className="ps-button"
+                      ></button>
+                    )}
                   </div>
                 </div>
 
@@ -199,21 +230,42 @@ export default function Updatepassword(){
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                     />
-                    {confirmPassword && <button type="button" onClick={toggleShowww} className="cnfrm-button"></button>}
+                    {confirmPassword && (
+                      <button
+                        type="button"
+                        onClick={toggleShowww}
+                        className="cnfrm-button"
+                      ></button>
+                    )}
                   </div>
                 </div>
 
-                <div className="button-div">
-                  <button type="submit" className="btn btn-success">Update Password</button>
+                <div className="button-div" style={{ display: "block" }}>
+                  <div>
+                    {" "}
+                    <button type="submit" className="btn btn-success">
+                      Update Password
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                      style={{ marginTop: "15px" }}
+                    >
+                      <i
+                        className="bi bi-reply-fill"
+                        style={{ marginRight: "5px", fontSize: "16px" }}
+                      ></i>
+                      Back
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
 
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                Close
-              </button>
-            </div>
+            <div className="modal-footer"></div>
           </div>
         </div>
       </div>

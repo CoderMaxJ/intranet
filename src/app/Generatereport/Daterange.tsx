@@ -55,24 +55,37 @@ export default function Daterange() {
 
       const csvContent = [
         [
-          "Name", "Login", "First Break", "Breakout", "Over Break",
-          "Lunch In", "Lunch Out", "Over Break", "Second Break",
-          "Breakout", "Over Break", "Log Out"
+          "Name",
+          "Login",
+          "First Break",
+          "Breakout",
+          "Over Break",
+          "Lunch In",
+          "Lunch Out",
+          "Over Break",
+          "Second Break",
+          "Breakout",
+          "Over Break",
+          "Log Out",
         ],
-        ...result.data.map((row: BreaksReport) => [
-          row.name,
-          row.login,
-          row.brkin1 || "",
-          row.brkout1 || "",
-          row.ob1 || "",
-          row.lunchin || "",
-          row.lunchout || "",
-          row.ob3 || "",
-          row.brkin2 || "",
-          row.brkout2 || "",
-          row.ob2 || "",
-          row.logout || ""
-        ].map(value => `${value}`).join(","))
+        ...result.data.map((row: BreaksReport) =>
+          [
+            row.name,
+            row.login,
+            row.brkin1 || "",
+            row.brkout1 || "",
+            row.ob1 || "",
+            row.lunchin || "",
+            row.lunchout || "",
+            row.ob3 || "",
+            row.brkin2 || "",
+            row.brkout2 || "",
+            row.ob2 || "",
+            row.logout || "",
+          ]
+            .map((value) => `${value}`)
+            .join(",")
+        ),
       ].join("\n");
 
       const blob = new Blob([csvContent], { type: "text/csv" });
@@ -90,40 +103,106 @@ export default function Daterange() {
 
   return (
     <div>
-      <a
-        href="#"
-        className="text-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#reportModal"
-      >
-        Reports
-      </a>
+      <div>
+        <a
+          href="#"
+          className="text-primary text-dark"
+          data-bs-toggle="modal"
+          data-bs-target="#reportModal"
+        >
+          Reports
+        </a>
+      </div>
 
-      <div className="modal fade" id="reportModal" tabIndex={-1} aria-labelledby="reportModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="reportModal"
+        tabIndex={-1}
+        aria-labelledby="reportModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="reportModalLabel">Daily Reports</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5
+                className="modal-title"
+                id="reportModalLabel"
+                style={{ marginLeft: "100px" }}
+              >
+                Daily Reports
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body">
               {error && <p style={{ color: "red" }}>{error}</p>}
-              <form onSubmit={(e) => { e.preventDefault(); if (start && end) handleGenerateAndDownloadCSV(); else setError("Please fill in both date fields"); }}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (start && end) handleGenerateAndDownloadCSV();
+                  else setError("Please fill in both date fields");
+                }}
+              >
                 <div className="mb-3">
-                  <label htmlFor="id-start" className="form-label">From:</label>
-                  <input type="date" className="form-control" onChange={(e) => setStart(e.target.value)} value={start} />
+                  <label
+                    htmlFor="id-start"
+                    className="form-label"
+                    style={{ marginLeft: "30px" }}
+                  >
+                    From:
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    onChange={(e) => setStart(e.target.value)}
+                    value={start}
+                    style={{ marginLeft: "30px", width: "15vw" }}
+                  />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="id-end" className="form-label">To:</label>
-                  <input type="date" className="form-control" onChange={(e) => setEnd(e.target.value)} value={end} />
+                  <label
+                    htmlFor="id-end"
+                    className="form-label"
+                    style={{ marginLeft: "30px" }}
+                  >
+                    To:
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    onChange={(e) => setEnd(e.target.value)}
+                    value={end}
+                    style={{ marginLeft: "30px", width: "15vw" }}
+                  />
                 </div>
-                <button type="submit" className="btn btn-success" style={{marginLeft:'160px'}}>Generate Report</button>
+                <button
+                  type="submit"
+                  className="btn btn-success"
+                  style={{ marginLeft: "30px", width: "15vw" }}
+                >
+                  Generate Report
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  style={{
+                    display: "block",
+                    marginLeft: "30px",
+                    marginTop: "10px",
+                    width: "15vw",
+                  }}
+                >
+                 <i className="bi bi-reply-fill" style={{marginRight:'5px'}}></i>
+                  Back
+                </button>
               </form>
             </div>
-            <div className="modal-footer">
-            
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+            <div className="modal-footer"></div>
           </div>
         </div>
       </div>

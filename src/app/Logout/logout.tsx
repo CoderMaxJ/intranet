@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
 export default function Logout() {
   const router = useRouter();
 
@@ -13,13 +12,13 @@ export default function Logout() {
 
   return (
     <div>
-      <Link
-        href="/"
-        className="block px-4 py-2 hover:bg-gray-100"
-        onClick={triggerLogout}
+      <button
+        className="block hover:bg-gray-100"
+        onClick={triggerLogout }
+        style={{boxShadow:'none', outline:'none', background:'none', border:'none'}}
       >
         Log Out
-      </Link>
+      </button>
     </div>
   );
 }

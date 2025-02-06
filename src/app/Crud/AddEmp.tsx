@@ -4,7 +4,7 @@ interface AddEmployeeData {
   empno: string;
   fname: string;
   mname: string;
-  lname: string; 
+  lname: string;
   position: string;
   dateofbirth: string;
   maritalstatus: string;
@@ -16,19 +16,16 @@ interface AddEmployeeData {
 export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
   const currentData = empData;
   console.log(empData);
+  const [data, setData] = useState<AddEmployeeData[]>([]);
   const [empNo, setEmpNo] = useState(currentData?.empNo || "");
   const [fname, setFname] = useState(currentData?.fname || "");
   const [mname, setMname] = useState(currentData?.mname || "");
   const [lname, setLname] = useState(currentData?.lname || "");
-  const [position, setPosition] = useState(
-    currentData?.position || ""
-  );
+  const [position, setPosition] = useState(currentData?.position || "");
   const [dob, setDob] = useState(currentData?.dateofbirth || "");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [gender, setGender] = useState("");
-  const [contactNo, setContactNo] = useState(
-    currentData?.contactno || ""
-  );
+  const [contactNo, setContactNo] = useState(currentData?.contactno || "");
   const [address, setAddress] = useState(currentData?.address || "");
   const [username, setUsername] = useState(currentData?.username || "");
   const [password, setPassword] = useState(currentData?.password || "");
@@ -76,33 +73,50 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
     );
   }
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   const timer = setTimeout(async () => {
-  //     async function getLogs() {
-  //       try {
-  //         const account_id = await localStorage.getItem("account_id");
-  //         const response = await fetch(`http://localhost:8000/employees`,
-  //           {
-  //             method: "GET",
-  //             headers: {
-  //               "Content-type": "application/json",
-  //               Authorization: `Bearer ${token}`,
-  //             },
-  //           }
-  //         );
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-  //         if (!response.ok) {
-  //           throw new Error("Network response was not ok");
-  //         }
+    async function getAddEmployeeData() {
+      try {
+        const account_id = await localStorage.getItem("account_id");
 
-  //         const data = await response.json();
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND}/create/employee/`,
+          {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  //       }
-  //     )
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
 
-  // }, []);
+        const data = await response.json();
+        setData((prevData) => [...prevData, data]); 
 
+        setEmpNo("");
+        setFname("");
+        setMname("");
+        setLname("");
+        setPosition("");
+        setDob("");
+        setMaritalStatus("");
+        setGender("");
+        setContactNo("");
+        setAddress("");
+        setUsername("");
+        setPassword("");
+      } catch (error) {
+        console.error("Error fetching employee data:", error);
+      }
+    }
+
+    getAddEmployeeData();
+  }, []);
 
   return (
     <div>

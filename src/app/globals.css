@@ -59,7 +59,6 @@ body {
 }
 
 .workforce {
-  background-color: #e7e7e7;
   height: 100%;
   width: 100%;
   z-index: 1;
@@ -437,7 +436,7 @@ input:focus {
   margin-top: 20px;
   margin-left: 40px;
   margin-right: 40px;
-  padding-left: 40px;
+  padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 5px;
   padding-top: 18px;
@@ -475,6 +474,18 @@ input:focus {
 }
 
 /* generate report */
+
+.modal-dialog {
+  --bs-modal-width: 20vw;
+  max-width: var(--bs-modal-width);
+}
+
+.modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - var(--bs-modal-margin)* 2);
+}
+
 .back {
   background-color: #008dcc;
   outline: none !important;
@@ -630,8 +641,6 @@ tbody td {
   padding: 10px;
 }
 
-
-
 .add {
   font-size: medium;
   padding: 10px;
@@ -713,59 +722,180 @@ tbody td {
   background: #ffeeab;
 }
 
-/* logout */
-
-.logout {
-  --bs-link-color-rgb: 0, 0, 0;
-  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
-  text-decoration: none !important;
-  display: flex;
-  align-items: center;
-  margin-left: 15px;
-  margin-top: 20px;
-}
-
-.logout svg {
+.dashboard svg {
   align-items: center;
 }
 
-.logout a {
+.dashboard a {
   display: flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
 }
 
-.reports {
-  --bs-link-color-rgb: 0, 0, 0;
-  color: rgba(0, 0, 0, 1) !important;
-  display: flex;
-  align-items: center;
-  margin-left: 15px;
-  margin-top: 20px;
+.dashboard:hover {
+  background-color: #2193df;
 }
 
-.reports svg {
+.dashboard:hover button,
+.dashboard:hover a {
+  color: white !important;
+}
+
+.dashboard:hover svg {
+  fill: white;
+}
+
+.dashboard:active {
+  background-color: #1a74b8;
+  color: white !important;
+}
+
+.dashboard:active svg {
+  fill: white;
+}
+
+.dashboard {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  padding: 10px;
+  margin-left: 5px;
+  color: black;
+  border-radius: 2px;
+}
+
+.dashboard:hover {
+  background-color: #2193df;
+  color: white !important;
+}
+
+.dashboard svg {
   margin-right: 20px;
-  color: #000000;
+  fill: black;
 }
 
-.reports a {
+.dashboard:hover svg {
+  fill: white;
+}
+
+.dashboard:active {
+  background-color: #1a74b8; 
+  color: white !important;
+}
+
+.dashboard:active svg {
+  fill: white;
+}
+
+.generate svg {
+  align-items: center;
+}
+
+.generate a {
+  display: flex;
+  align-items: center;
   text-decoration: none;
   color: inherit;
-  align-items: center;
+}
+
+.generate:hover {
+  background-color: #2193df;
+}
+
+.generate:hover button,
+.generate:hover a {
+  color: white !important;
+  
+}
+
+.generate:hover svg {
+  fill: white;
+}
+
+.generate {
   display: flex;
+  margin-top: 20px;
+  align-items: center;
+  padding: 10px;
+  margin-left: 5px;
+  color: black;
+  border-radius: 2px;
+}
+.generate svg {
+  margin-right: 20px;
+  fill: black;
+}
+
+/* UPDATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE */
+
+.admin svg {
+  align-items: center;
+}
+
+.admin a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.admin:hover a {
+  background-color: #ffffff;
+}
+.admin:hover {
+  background-color: #2193df;
+}
+.admin:hover a{
+  color: #000000 !important;
+}
+
+
+.admin:hover button{
+  color: white !important;
+}
+
+.admin:hover svg {
+  fill: white;
+}
+
+.admin:active {
+  background-color: #1a74b8;
+  color: white !important;
+}
+
+.admin:active svg {
+  fill: white;
 }
 
 .admin {
   display: flex;
-  margin-left: 15px;
   margin-top: 20px;
+  align-items: center;
+  padding: 10px;
+  margin-left: 5px;
+  color: black;
+  border-radius: 2px;
 }
-
 .admin svg {
   margin-right: 20px;
+  fill: black;
 }
+
+.admin:active svg {
+  fill: white;
+}
+
+/* Apply hover effect only to the Admin button */
+.admin-hover:hover {
+  background-color: lightgray; /* Example hover effect */
+  cursor: pointer;
+}
+
+/* Prevent hover effects inside the accordion */
+.no-hover:hover {
+  background-color: transparent !important;
+  cursor: default !important;
+}
+
 
 /* Remove border and background */
 .accordion-item {
@@ -803,10 +933,27 @@ tbody td {
 }
 
 .crud-maindiv .table-striped > tbody > tr:nth-of-type(even) > * {
-  background-color: #afe9c1;
+  background-color: #c8eaf5;
 }
 
+.nav-link:hover {
+  background-color: #2193df; /* Light gray background */
+  color: #ffffff !important; /* Blue text */
+  /* transition: background-color 0.3s ease, color 0.3s ease; */
+  border-radius: 5px;
+  padding-left: 10px;
+}
 
+.accordion-button:hover {
+  background-color: #32b8f7; /* Slightly darker gray */
+  /* transition: background-color 0.3s ease; */
+}
+
+.reports:hover,
+.logout:hover {
+  /* opacity: 0.8; */
+  /* transition: opacity 0.3s ease; */
+}
 
 @keyframes blinkAnimation {
   0% {

@@ -6,9 +6,7 @@
 
 
 .updatepass-logo {
-  transform: translateY(20px) ;
   height: 47px;
-  margin-left: 12px;
   width: 270px !important;
 }
 
@@ -23,7 +21,6 @@
 
 .updatepass-label label {
   color: #4e4f50;
-  margin-left: 65px !important;
  
 }
 
@@ -33,9 +30,8 @@
   border: 1px solid #cccccc;
   border-radius: 4px;
   margin-bottom: 20px !important;
-  margin-left: 65px !important;
   outline: none;
-  width: 66%;
+  width: 15vw;
   transition: border-color 0.3s ease;
 }
 
@@ -49,7 +45,7 @@
   font-weight: 600;
   padding-top: 5px;
   font-size: 14px;
-  width: 66%;
+  width: 93%;
   margin-left: 12px !important;
   box-sizing: border-box;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -64,9 +60,9 @@
   transform: scale(0.95);
 }
 
-.forgot-password-link:hover {
+/* .forgot-password-link:hover {
   text-decoration: underline;
-}
+} */
 
 .success-message {
   color: rgb(13, 185, 13);
