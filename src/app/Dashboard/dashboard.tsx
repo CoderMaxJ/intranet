@@ -2,11 +2,12 @@
 import Logout from "../Logout/logout";
 import Generatereport from "../Generatereport/page";
 import Updatepassword from "../Updatepassword/updatepassword";
-
+import Createaccount from "../Createaccount/createaccount";
 
 export default function Dashboard() {
   return (
-    <div className="db"
+    <div
+      className="db"
       style={{
         backgroundColor: "#ffffff",
         width: "210px",
@@ -32,22 +33,13 @@ export default function Dashboard() {
               fill="currentColor text-dark"
               className="bi bi-layout-wtf"
               viewBox="0 0 16 16"
-              style={{ marginRight: "20px", marginLeft: "-5px"}}
+              style={{ marginRight: "20px", marginLeft: "-5px" }}
             >
               <path d="M5 1v8H1V1zM1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm13 2v5H9V2zM9 1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM5 13v2H3v-2zm-2-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1zm12-1v2H9v-2zm-6-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1z" />
             </svg>
             Dashboard
           </a>
         </div>
-
-
-
-
-
-
-
-
-        
 
         <div className="admin">
           <div style={{ display: "flex" }}>
@@ -58,7 +50,7 @@ export default function Dashboard() {
               fill="currentColor"
               className="bi bi-person"
               viewBox="0 0 16 16"
-              style={{marginRight:'20px'}}
+              style={{ marginRight: "20px" }}
             >
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
             </svg>
@@ -73,33 +65,31 @@ export default function Dashboard() {
                   data-bs-target="#collapseThree"
                   aria-expanded="true"
                   aria-controls="collapseThree"
-                  style={{marginBottom:'-10px'}}
+                  style={{ marginBottom: "-10px" }}
                 >
                   Admin
                 </button>
               </h2>
-              
+
               <div
                 id="collapseThree"
                 className="accordion-collapse collapse"
                 aria-labelledby="headingThree"
                 data-bs-parent="#accordionExample"
               >
-                
                 <div
                   className="drop accordion-body"
                   style={{
-                    marginTop: "20px"
+                    marginTop: "20px",
                   }}
                 >
                   <ul className="list-unstyled">
-                    
-                    <li style={{ marginTop:'5px' }}>
+                    <li style={{ marginTop: "5px" }}>
                       <a href="/Crud" className="text-dark">
                         Add Employee
                       </a>
                     </li>
-                    <li style={{  marginTop: "10px" }}>
+                    <li style={{ marginTop: "10px" }}>
                       <Updatepassword />
                     </li>
                   </ul>
@@ -108,19 +98,26 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          </div>
-      
+        </div>
 
-
-
-
-
-
-
-
-
-
-
+        <div className="generate text-dark">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-person-plus"
+            viewBox="0 0 16 16"
+            style={{fontSize:'30px'}}
+          >
+            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+            <path
+              fill-rule="evenodd"
+              d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"
+            />
+          </svg>
+          <Createaccount />
+        </div>
 
         <div className="generate text-dark">
           <svg
@@ -138,7 +135,7 @@ export default function Dashboard() {
           </svg>
           <Generatereport />
         </div>
-             
+
         <div className="dashboard">
           <svg
             xmlns="http://www.w3.org/2000/svg"

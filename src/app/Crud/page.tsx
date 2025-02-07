@@ -93,6 +93,24 @@ export default function CreateUD() {
                 </svg>
                 Add New Employee
               </button>
+              <button
+                onClick={() => window.history.back()}
+                type="button"
+                className="gobackbutton btn-primary"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="bi bi-reply-fill"
+                  viewBox="0 0 16 16"
+                  style={{marginBottom:'5px'}}
+                >
+                  <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
+                </svg>{" "}
+                Back
+              </button>
             </header>
           </div>
 
@@ -139,16 +157,66 @@ export default function CreateUD() {
         >
           <thead>
             <tr>
-              <th scope="col"  style={{backgroundColor:'#096dca', color:'#ffffff'}}>#</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Employee No.</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>First Name</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Middle Name</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Last Name</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>User Name</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Password</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Position</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Contact No.</th>
-              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Actions</th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                #
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                Employee No.
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                First Name
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                Middle Name
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                Last Name
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                User Name
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                Password
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                Position
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                Contact No.
+              </th>
+              <th
+                scope="col"
+                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
+              >
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>

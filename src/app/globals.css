@@ -218,6 +218,25 @@ input:focus {
   margin-bottom: 15px;
 }
 /* SEARCH BAR */
+.headerbreaktool {
+  color: white;
+  justify-content: center;
+  text-align: center;
+  transform: translateY(-105px);
+  font-size: 60px;
+  font-weight: 850;
+  margin-top: -10px;
+}
+.headerdown {
+  color: white;
+  justify-content: center;
+  text-align: center;
+  transform: translateY(-115px);
+  font-size: 20px;
+  font-weight: 300;
+  margin-top: -5px;
+  font-style:italic;
+}
 .header {
   background-color: #ffffff;
   height: 80px;
@@ -394,10 +413,11 @@ input:focus {
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding-top: 20px;
-  margin: 40px;
+  margin-left: 30px;
+  margin-right: 60px;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: -8px !important;
+  margin-top: -60px !important;
   padding-bottom: 5px !important;
 }
 
@@ -432,9 +452,9 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 80.8vw;
-  margin-top: 20px;
-  margin-left: 40px;
+  width: 80.2vw;
+  margin-top: 50px;
+  margin-left: 30px;
   margin-right: 40px;
   padding-left: 20px;
   padding-right: 20px;
@@ -639,6 +659,18 @@ tbody td {
   margin-right: 40px;
   margin-left: 40px;
   padding: 10px;
+}
+
+.gobackbutton {
+  width: 5%;
+  border-radius: 2px;
+  padding: 7px;
+  box-shadow: none;
+  outline: none;
+  border: none;
+  color: white;
+  background-color: #008dcc; 
+  margin-left: 66.8vw;
 }
 
 .add {
@@ -965,10 +997,53 @@ tbody td {
   /* transition: background-color 0.3s ease; */
 }
 
-.reports:hover,
-.logout:hover {
-  /* opacity: 0.8; */
-  /* transition: opacity 0.3s ease; */
+.forminput input {
+  display: block;
+  outline-color: #000000;
+  background: none;
+  border-radius: 4px;
+  padding: 10px;
+  margin-left: 80px;
+  margin-bottom: 20px;
+ 
+}
+
+.forminput label {
+  margin-left: 80px;
+}
+
+.dbcreatebutton {
+  display: block;
+  border: none;
+  box-shadow: none;
+  background: none;
+}
+
+.createaccount {
+  display: block;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background-color: #32b8f7;
+  border-radius: 4px;
+  padding: 10px;
+  margin-left: 80px;
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.createbackbutton {
+  display: block;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background-color: #0c8a2b;
+  border-radius: 4px;
+  padding: 10px;
+  margin-left: 100px;
+  margin-left: 80px;
+  width: 200px;
+  margin-bottom: 25px;
 }
 
 @keyframes blinkAnimation {

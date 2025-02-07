@@ -61,7 +61,25 @@ function LogsDataTable() {
 
   }, []);
 
-  if (loading) return <div style={{ textAlign: "center" }}>Loading...</div>;
+  if (loading) 
+    return (
+      <div 
+        className="d-flex justify-content-center align-items-center"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100vh",
+          zIndex: 9999
+        }}
+      >
+        <div className="spinner-border text-info" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  
   if (error) return <div>Error: {error}</div>;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+
 interface AddEmployeeData {
   empno: string;
   fname: string;

@@ -8,12 +8,9 @@ import Link from "next/link";
 import Image from "next/image";
 import Daterange from "../Generatereport/Daterange";
 
-
-
-
 export default function Header() {
   const [openProfile, setOpenProfile] = useState(false);
-  const [activeTab, setActiveTab] = useState("account"); 
+  const [activeTab, setActiveTab] = useState("account");
   const [openNotification, setOpenNotification] = useState(false);
   const [drawerState, setDrawerState] = useState(false);
   const [currentpassword, setCurrentPassword] = useState("");
@@ -25,8 +22,6 @@ export default function Header() {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const router = useRouter();
-
-  
 
   // const triggerLogout = () => {
   //   router.push("/");
@@ -103,13 +98,16 @@ export default function Header() {
 
     async function getToken() {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/token/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ un: "J.Rio", password: "default000" }),
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND}/api/token/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ un: "J.Rio", password: "default000" }),
+          }
+        );
 
         if (response.ok) {
           const token = await response.json();
@@ -146,33 +144,25 @@ export default function Header() {
     setShowPassword2((prevState) => !prevState);
   };
 
- 
   return (
-    <header className="header">
-      <div className="left-section">
-      <h2 style={{marginRight:'70vw'}}>Dashboard</h2>
     <div>
-     
-        {/* <img
-          style={{ marginTop: "-5px", justifyContent: 'center', alignItems:'center', marginRight: "630px", marginLeft:'600px' }}
-          src="/img/Sos.png"
-          alt="Logo"
-          className="logo"
-          height={100}
-          width={100}
-        /> */}
-    </div>
-    <div>
-      {/* <button 
-        className="create-update-delete"
-      >
-        <a href="/"> <i className="bi bi-person-fill-add" style={{color:'#000000', fontSize:'30px'}}></i></a>
-      </button> */}
-    </div>
-      </div> 
-
-     
-
+      <div>
+        <img
+          src="/img/Breaktool.png"
+          style={{
+            borderRadius: "6px",
+            marginTop: "-10px",
+            width: "85vw",
+            height: "15vh",
+            marginBottom: "-10px",
+            marginLeft: "-15px",
+            display:'relative',
+            boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
+          }}
+        />
+        <h1 className="headerbreaktool">WorkPause Manager</h1>
+        <h4 className="headerdown">Optimize Downtime, Maximize Productivity!</h4>
+      </div>
 
       {/* Profile Dropdown */}
       <div
@@ -204,9 +194,7 @@ export default function Header() {
           <div
             className="dropdown-content absolute bg-white border rounded-lg shadow-lg"
             style={{ marginTop: "64px", marginRight: "40px" }}
-          >
-            
-          </div>
+          ></div>
         )}
       </div>
 
@@ -242,7 +230,9 @@ export default function Header() {
                 />
                 <form onSubmit={handleSubmit}>
                   {error && (
-                    <div className={success ? "success-message" : "error-message"}>
+                    <div
+                      className={success ? "success-message" : "error-message"}
+                    >
                       {error}
                     </div>
                   )}
@@ -257,7 +247,12 @@ export default function Header() {
                         onChange={(e) => setCurrentPassword(e.target.value)}
                         required
                       />
-                      {currentpassword && <button onClick={toggleShow} className="cp-button"></button>}
+                      {currentpassword && (
+                        <button
+                          onClick={toggleShow}
+                          className="cp-button"
+                        ></button>
+                      )}
                     </div>
                   </div>
                   <div className="updatepass-label">
@@ -271,7 +266,12 @@ export default function Header() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                       />
-                      {password && <button onClick={toggleShoww} className="ps-button"></button>}
+                      {password && (
+                        <button
+                          onClick={toggleShoww}
+                          className="ps-button"
+                        ></button>
+                      )}
                     </div>
                   </div>
                   <div className="updatepass-label">
@@ -285,7 +285,12 @@ export default function Header() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                       />
-                      {confirmPassword && <button onClick={toggleShowww} className="cnfrm-button"></button>}
+                      {confirmPassword && (
+                        <button
+                          onClick={toggleShowww}
+                          className="cnfrm-button"
+                        ></button>
+                      )}
                     </div>
                   </div>
                   <div className="button-div">
@@ -295,10 +300,10 @@ export default function Header() {
               </div>
             </div>
           ) : (
-            <Daterange/>
+            <Daterange />
           )}
         </div>
       </div>
-    </header>
+    </div>
   );
 }
