@@ -30,13 +30,14 @@ export default function Updatepassword() {
                 alt="Staff Outsourcing Logo"
                 className="modal-title"
                 id="createPasswordModal"
-                style={{ height: "50px", marginLeft: "50px" }}
+                style={{ height: "50px", marginLeft: "60px" }}
               />
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                style={{marginTop:'-45px'}}
               ></button>
             </div>
 

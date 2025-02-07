@@ -932,12 +932,6 @@ tbody td {
   cursor: pointer;
 }
 
-.drop {
-  background-color: white;
- width: -10vw;
-
-}
-
 /* Prevent hover effects inside the accordion */
 .no-hover:hover {
   background-color: transparent !important;
