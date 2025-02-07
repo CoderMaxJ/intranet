@@ -150,8 +150,9 @@ export default function Updatepassword() {
         tabIndex={-1}
         aria-labelledby="updatePasswordModalLabel"
         aria-hidden="true"
+      
       >
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
           <div className="modal-content">
             <div className="modal-header">
               <img
@@ -165,7 +166,7 @@ export default function Updatepassword() {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
+                aria-label="Close" 
               ></button>
             </div>
 

@@ -76,7 +76,7 @@ function LogsDataTable() {
           <div className="searchbarlogs">
             <input
               className="searchbar"
-              style={{ backgroundColor: "#f0f0f0", marginLeft: "500px", fontFamily: "'Raleway', sans-serif", marginBottom:'5px' }}
+              style={{ backgroundColor: "#f0f0f0", marginLeft: "350px", fontFamily: "'Raleway', sans-serif", marginBottom:'5px' }}
               type="text"
               placeholder="Search by name"
               value={searchQuery}
@@ -84,7 +84,7 @@ function LogsDataTable() {
             />
             <svg
               style={{
-                marginLeft: "497px",
+                marginLeft: "350px",
                 marginTop: "-0px",
                 display: "flex",
               }}
