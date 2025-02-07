@@ -199,13 +199,41 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
           classType={"col-md-6"}
           value={currentData.address}
         />
-        <FormInput
+        <div className="col-md-6 mb-3">
+          <label htmlFor="position" className="form-label">
+           Position
+          </label>
+          <select
+            value={position}
+            id="position"
+            className="form-select"
+            aria-label="Default select example"
+            onChange={(e) => setPosition(e.target.value)}
+          >
+            <option value="0"></option>
+            <option value="Manager">Chief Executive Officer</option>
+            <option value="Account Manager">Account Manager</option>
+            <option value="Human Resources Manager">Human Resources Manager</option>
+            <option value="Administrative Assistant">Administrative Assistant</option>
+            <option value="Project Manager">Project Manager</option>
+            <option value="Accountant">Accountant</option>
+            <option value="Call Center Agent">Call Center Agent</option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Data Analyst">Data Analyst</option>
+            <option value="Data Analyst">Data Entry</option>
+            <option value="Cybersecurity Specialist">Cybersecurity Specialist</option>
+            <option value="IT Support Specialist">IT Support Specialist</option>
+            <option value="Web Developer">Web Developer</option>
+            <option value="Registered Nurse">Registered Nurse</option>
+          </select>
+        </div>
+        {/* <FormInput
           id="position"
           type="text"
           label="Position"
           classType={"col-md-6"}
           value={currentData.position}
-        />
+        /> */}
 
         <div
           className="col-md-12"
