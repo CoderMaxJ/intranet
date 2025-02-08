@@ -37,7 +37,7 @@ function LogsDataTable() {
               method: "GET",
               headers: {
                 "Content-type": "application/json",
-                // Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           );
@@ -56,6 +56,7 @@ function LogsDataTable() {
       }
 
       getLogs();
+    
     }, 5000);
     return () => clearTimeout(timer);
 

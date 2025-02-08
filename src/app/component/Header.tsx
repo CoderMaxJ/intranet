@@ -85,7 +85,7 @@ export default function Header() {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         if (response.status === 200) {
           setError("Password updated successfully!");
@@ -114,7 +114,7 @@ export default function Header() {
         if (response.ok) {
           const token = await response.json();
           localStorage.setItem("token", token.access);
-          console.log("Token saved:", token.access);
+          // console.log("Token saved:", token.access);
           forgotpass(token.access);
         } else {
           console.log("Invalid credentials");

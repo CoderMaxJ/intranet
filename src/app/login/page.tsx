@@ -1,42 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "/public/asset/css/login.css";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
+
+
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [token, setToken] = useState<string>("");
-  const [isLogged, setLog] = useState(false);
-  const [showpassword, setShowPassword] = useState(false);
+  const [isLogged,setLog] = useState(false)
 
-  const togglePassword = () => {
-    setShowPassword((prev) => !prev);
-  };
 
-  console.log(process.env.NEXT_PUBLIC_BACKEND);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    setToken(storedToken ?? "");
+useEffect(() => {
+  const storedToken = localStorage.getItem("token");
+  setToken(storedToken ?? "");
+  
+  if(isLogged){
+    redirect("/intranet")
+  }
+  
+  // If storedToken is null, fallback to an empty string
+}, [isLogged]);
 
-    if (isLogged) {
-      redirect("/intranet");
-    }
-
-    // If storedToken is null, fallback to an empty string
-  }, [isLogged]);
-
-  useEffect(() => {
-    setToken(localStorage.getItem("token") ?? "");
-  }, [token]);
-
+useEffect(()=>{
+setToken(localStorage.getItem("token") ?? "")
+},[token])
   async function login() {
-    const credentials = { username: username, password: password };
+    const credentials = { username:username, password: password };
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
@@ -45,7 +41,7 @@ export default function Login() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(credentials),
         }
@@ -54,9 +50,10 @@ export default function Login() {
       if (response.status === 200) {
         const res = await response.json();
         localStorage.setItem("account_id", res.account_id);
-        localStorage.setItem("privilege", res.privilege);
-
-        setLog(true);
+        localStorage.setItem("privilege",res.privilege);
+       
+     setLog(true);
+        
       } else {
         const res = await response.json();
         setError(res.message || "Login failed. Please try again.");
@@ -68,23 +65,22 @@ export default function Login() {
 
   async function getToken() {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/securedlogin/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ un: username, password: password }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/token/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ un: username, password: password }),
+      });
 
       if (response.ok) {
         const token = await response.json();
         localStorage.setItem("token", token.access);
+      
+          login();
 
-        login();
       } else {
+       
         setError("Invalid credentials");
       }
     } catch (error) {
@@ -93,7 +89,7 @@ export default function Login() {
     }
   }
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     getToken();
   };
@@ -126,25 +122,11 @@ export default function Login() {
             <div style={{ position: "relative", display: "flex" }}>
               <input
                 id="password"
-                className="password-input"
                 type={password ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-
-              {/* <button
-                type="button"
-                title={showpassword ? "Hide" : "Show"}
-                onClick={togglePassword}
-                style={{ background: "none", border: "none" }}
-              >
-                {showpassword ? (
-                  <i className="bi bi-eye-slash"></i>
-                ) : (
-                  <i className="bi bi-eye"></i>
-                )}
-              </button> */}
             </div>
           </div>
           <div>
