@@ -58,8 +58,8 @@ function LogsDataTable() {
 
       getLogs();
     
-    }, 5000);
-    return () => clearTimeout(timer);
+    }, );
+    // return () => clearTimeout(timer);
 
   }, []);
 
@@ -73,6 +73,9 @@ function LogsDataTable() {
           left: 0,
           width: "100%",
           height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.5)", 
+          transition: "opacity 0.3s ease", 
+          opacity: 1, 
           zIndex: 9999
         }}
       >

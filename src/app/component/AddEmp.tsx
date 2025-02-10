@@ -78,26 +78,29 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
 
 
   const undoSelect=(value:any,mode:any)=>{
- 
-    if(value && mode == 'edit'){
+    console.log("===================",value)
+    console.log()
+    if(value && mode == 'update'){
       setMaritalStatus(value);
       
     }
   }
 
   const handleSelect=(value:any,mode:any)=>{
-
-    if(value && mode == 'edit'){
+    console.log("===================",value)
+    if(value && mode == 'update'){
       setGender(value);
       
     }
 
   }
-    const handleSelectPosition=(value:any,mode:any)=>{
-      if(value && mode == 'edit'){
-        setPosition(value);
-        
-      }
+
+  const handleSelectPosition=(value:any,mode:any)=>{
+    console.log("===================",value)
+    if(value && mode == 'update'){
+      setPosition(value);
+      
+    }
 
   }
   
@@ -294,11 +297,11 @@ const information = {
             marginTop: "30px",
           }}
         >
-          <button type="button" className="btn btn-danger">
-            Cancel
+          <button type="submit" className="btn btn-danger">
+            Close
           </button>
-          <button type="button" onClick={handleSubmitForm} className="btn btn-primary">
-            {mode == "edit" ? "Edit" : "Create"}
+          <button type="submit" className="btn btn-primary">
+            {mode == "update" ? "Update" : "Create"}
           </button>
         </div>
       </form>
