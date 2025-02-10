@@ -14,3 +14,4 @@ export function Encryptor(token: string): string {
      return originalToken;
  }
  
+console.log(Encryptor("value","johnsen"))

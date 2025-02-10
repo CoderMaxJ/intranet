@@ -118,7 +118,7 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
   const undoSelect=(value:any,mode:any)=>{
     console.log("===================",value)
     console.log()
-    if(value && mode == 'edit'){
+    if(value && mode == 'update'){
       setMaritalStatus(value);
       
     }
@@ -126,7 +126,7 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
 
   const handleSelect=(value:any,mode:any)=>{
     console.log("===================",value)
-    if(value && mode == 'edit'){
+    if(value && mode == 'update'){
       setGender(value);
       
     }
@@ -136,7 +136,7 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
 
   const handleSelectPosition=(value:any,mode:any)=>{
     console.log("===================",value)
-    if(value && mode == 'edit'){
+    if(value && mode == 'update'){
       setPosition(value);
       
     }
@@ -270,10 +270,10 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
           }}
         >
           <button type="submit" className="btn btn-danger">
-            Cancel
+            Close
           </button>
           <button type="submit" className="btn btn-primary">
-            {mode == "edit" ? "Edit" : "Create"}
+            {mode == "update" ? "Update" : "Create"}
           </button>
         </div>
       </form>

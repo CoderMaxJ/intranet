@@ -66,6 +66,7 @@ setToken(localStorage.getItem("token") ?? "")
   async function getToken() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/token/`, {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +98,7 @@ setToken(localStorage.getItem("token") ?? "")
   return (
     <div className="main-div">
       <div className="login-div">
-        <Image
+        <img
           style={{ height: "75px" }}
           src="/img/Sos.png"
           alt="Staff Outsourcing Logo"

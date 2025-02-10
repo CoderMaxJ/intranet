@@ -142,7 +142,7 @@ export default function Updatepassword() {
 
             <div className="modal-body" style={{ marginLeft: "35px" }}>
               {error && (
-                <div className={success ? "success-message" : "error-message"}>
+                <div className={success ? "success-message" : "error-message"} style={{marginLeft:'-20px'}}>
                   {error}
                 </div>
               )}
