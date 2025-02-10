@@ -49,7 +49,7 @@ export default function Updatepassword() {
       }
     }
 
-    async function forgotpass(token: string) {
+    async function changePassword() {
       const id = localStorage.getItem("account_id");
 
       const newAccount = {
@@ -59,7 +59,7 @@ export default function Updatepassword() {
         password2: confirmPassword,
       };
 
-
+  const token = localStorage.getItem("token");
 
       try {
         const response = await fetch(
@@ -68,15 +68,15 @@ export default function Updatepassword() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${Decryptor(localStorage.getItem("token"))}`,
+              Authorization: `Bearer ${Decryptor(token)}`,
             },
             body: JSON.stringify(newAccount),
           }
         );
 
         
-
         if (response.status === 200) {
+          console.log(response)
           setError("Password updated successfully!");
           setSuccess(true);
           setTimeout(() => router.push("/intranet"));
@@ -90,40 +90,8 @@ export default function Updatepassword() {
       }
     }
 
-    async function getToken() {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND}/api/token/`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ un: "J.Rio", password: "default000" }),
-          }
-        );
 
-        if (response.ok) {
-          const token = await response.json();
-          localStorage.setItem("token", token.access);
-      
-          forgotpass(token.access);
-        } else {
- 
-        }
-      } catch (error) {
-        console.error("Error fetching token:", error);
-      }
-    }
-
-    const existingToken = localStorage.getItem("token");
-
-    if (existingToken) {
-
-    } else {
-
-      getToken();
-    }
+   changePassword()
   };
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
