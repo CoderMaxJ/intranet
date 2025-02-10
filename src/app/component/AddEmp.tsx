@@ -1,3 +1,4 @@
+import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
 
 
@@ -12,18 +13,23 @@ interface AddEmployeeData {
   gender: string;
   contactno: string;
   address: string;
+  
 }
 
+
+
 export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
+  
   const currentData = empData;
   const [position, setPosition] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [gender, setGender] = useState("");
+  const [roles,setRoles]=useState<string[]>([]);
 
 
   useEffect(() => {
     const currentData2 = currentData;
-    console.log(empData)
+
     if (empData.maritalstatus !== "") {
 
       setMaritalStatus(empData.maritalstatus);
@@ -70,54 +76,9 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
     );
   }
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   async function getAddEmployeeData() {
-  //     try {
-  //       const account_id = await localStorage.getItem("account_id");
-
-  //       const response = await fetch(
-  //         `${process.env.NEXT_PUBLIC_BACKEND}/create/employee/`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-type": "application/json",
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-
-  //       const data = await response.json();
-  //       setData((prevData) => [...prevData, data]); 
-
-  //       setEmpNo("");
-  //       setFname("");
-  //       setMname("");
-  //       setLname("");
-  //       setPosition("");
-  //       setDob("");
-  //       setMaritalStatus("");
-  //       setGender("");
-  //       setContactNo("");
-  //       setAddress("");
-  //       setUsername("");
-  //       setPassword("");
-  //     } catch (error) {
-  //       console.error("Error fetching employee data:", error);
-  //     }
-  //   }
-
-  //   getAddEmployeeData();
-  // }, []);
 
   const undoSelect=(value:any,mode:any)=>{
-    console.log("===================",value)
-    console.log()
+ 
     if(value && mode == 'edit'){
       setMaritalStatus(value);
       
@@ -125,25 +86,94 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
   }
 
   const handleSelect=(value:any,mode:any)=>{
-    console.log("===================",value)
+
     if(value && mode == 'edit'){
       setGender(value);
       
     }
 
+  }
+    const handleSelectPosition=(value:any,mode:any)=>{
+      if(value && mode == 'edit'){
+        setPosition(value);
+        
+      }
 
   }
+  
 
-  const handleSelectPosition=(value:any,mode:any)=>{
-    console.log("===================",value)
-    if(value && mode == 'edit'){
-      setPosition(value);
-      
+const information = {
+  fname:currentData.fname,
+  mname:currentData.mname,
+  lname:currentData.lname,
+  address:currentData.address,
+  maritalstatus:maritalStatus,
+  dateofbirth:currentData.birthofdate,
+  gender:currentData.gender,
+  position:position,
+  contacto:currentData.contactno
+
+
+}
+
+  const handleSubmitForm = async (e:any)=>{
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    console.log("information",information)
+ 
+   try{
+    const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${Decryptor(token)}`,
+        
+      },
+      body: JSON.stringify(information)
+    }) 
+
+    if(respose.status == 200){
+      console.log("EMPLOYEE CREATED SUCCESSFULLY");
     }
+   }
+   
+   catch(e){
+    console.error(e);
+   }
+  
+  }
+
+
+  const rolesList = async ()=>{
+    const token = localStorage.getItem("token");
+    const cachedRoles = localStorage.getItem("roles");
+    if (cachedRoles) {
+      setRoles(JSON.parse(cachedRoles)); // Load from cache
+      return;
+    }
+    try{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/roles/list/`,{
+        method:"GET",
+        headers:{
+          "Content-Type":"application/json",
+          Authorization: `Bearer ${Decryptor(token)}`
+        }
+      })
+      if(response.status == 200){
+        const data = await response.json();
+        setRoles(data.data);
+        localStorage.setItem("roles", JSON.stringify(data.data));
+      }
+    } catch(e){
+      console.error(e);
+    }
+  }
+
+  // rolesList();
 
   return (
     <div>
-      <form className="row">
+      <form className="row" onSubmit={handleSubmitForm}>
         <FormInput
           id="fname"
           type="text"
@@ -223,32 +253,27 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
           value={currentData.address}
         />
         <div className="col-md-6 mb-3">
-          <label htmlFor="position" className="form-label">
-           Position
-          </label>
-          <select
-            value={position}
-            id="position"
-            className="form-select"
-            aria-label="Default select example"
-            onChange={(e) => handleSelectPosition(e.target.value,mode)}
-          >
-            <option value="0"></option>
-            <option value="Manager">Chief Executive Officer</option>
-            <option value="Account Manager">Account Manager</option>
-            <option value="Human Resources Manager">Human Resources Manager</option>
-            <option value="Administrative Assistant">Administrative Assistant</option>
-            <option value="Project Manager">Project Manager</option>
-            <option value="Accountant">Accountant</option>
-            <option value="Call Center Agent">Call Center Agent</option>
-            <option value="Software Engineer">Software Engineer</option>
-            <option value="Data Analyst">Data Analyst</option>
-            <option value="Data Analyst">Data Entry</option>
-            <option value="Cybersecurity Specialist">Cybersecurity Specialist</option>
-            <option value="IT Support Specialist">IT Support Specialist</option>
-            <option value="Web Developer">Web Developer</option>
-            <option value="Registered Nurse">Registered Nurse</option>
-          </select>
+        
+        <select
+  value={position} // ✅ Should hold a single selected value
+    id="position"
+    className="form-select"
+    aria-label="Default select example"
+    onFocus={rolesList}
+    onChange={(e) => {
+    if (mode === 'edit') {
+      handleSelectPosition(e.target.value, mode);
+    } else {
+      setPosition(e.target.value); // ✅ Update position for non-edit mode
+    }
+  }}
+>
+  <option value="">Select a position</option>
+  {roles.map((role, index) => (
+    <option key={index} value={role}>{role}</option>
+  ))}
+</select>
+
         </div>
         {/* <FormInput
           id="position"
@@ -269,15 +294,14 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
             marginTop: "30px",
           }}
         >
-          <button type="submit" className="btn btn-danger">
+          <button type="button" className="btn btn-danger">
             Cancel
           </button>
-          <button type="submit" className="btn btn-primary">
+          <button type="button" onClick={handleSubmitForm} className="btn btn-primary">
             {mode == "edit" ? "Edit" : "Create"}
           </button>
         </div>
       </form>
     </div>
   );
-}
 }

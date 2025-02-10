@@ -61,6 +61,7 @@ export default function CreateUD() {
   const handleData = (data: any) => {
     console.log("data",data);
     setCurrentMode("edit");
+    
     let {empno,fname,mname,lname,dateofbirth,contactno,address,position,gender,maritalstatus} = data;
     let currentData = {
       empno,fname,mname,lname,dateofbirth,contactno,address,position,gender,maritalstatus
