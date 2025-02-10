@@ -1,65 +1,80 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import AddEmp from "./AddEmp";
-import { useState } from "react";
+import AddEmp from "../component/AddEmp";
+import { useEffect, useState } from "react";
+
+
+interface Information {
+  empno:number;
+  gender:string;
+  fname: string;
+  lname:string;
+  mname:string;
+  maritalstatus:string;
+  dateofbirth:string;
+  address:string;
+  contactno:string;
+  position:string;
+
+}
 
 export default function CreateUD() {
+  const [success,setSuccess]=useState(false);
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
-  const [employees, setEmployees] = useState([
-    {
-      Empno: "20251",
-      fname: "John Cel",
-      mname: "Labajo",
-      lname: "Rio",
-      username: "John",
-      password: "Ipsumlorem",
-      position: "Developer",
-      contactno: "09893776467",
-    },
-    {
-      Empno: "20252",
-      fname: "Johnsen",
-      mname: "Alquizola",
-      lname: "Sopeta",
-      username: "Bombastic",
-      password: "Ipsumlorem2",
-      position: "Developer",
-      contactno: "09893776467",
-    },
-    {
-      Empno: "20253",
-      fname: "Gilbert",
-      mname: "Nonchalant",
-      lname: "Fuentes",
-      username: "Gilberto",
-      password: "Ipsumlorem1",
-      position: "Developer",
-      contactno: "09893776467",
-    },
-  ]);
+  const [employees, setEmployees] = useState<Information[]>([]);
+
+
+  useEffect(()=>{
+    if(employees){
+      
+    }
+    if(!success){
+      GetEmployee();
+    }
+  },[employees]);
+
+
+
+  async function GetEmployee() {
+    const token = localStorage.getItem("token")
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/list/`,{
+      method :"GET",
+      headers:{
+        "Content-Type":"apllication/json",
+        Authorization:`Bearer ${token}`,
+      }
+    })
+
+    if(response.ok){
+      const data = await response.json();
+      console.log(data)
+      setEmployees(data.data);
+      setSuccess(true);
+    }
+
+
+    
+
+
+  }
 
   const handleData = (data: any) => {
+    console.log("data",data);
     setCurrentMode("edit");
+    let {empno,fname,mname,lname,dateofbirth,contactno,address,position,gender,maritalstatus} = data;
     let currentData = {
-      Empno: "212",
-      fname: "john",
-      mname: "sopeta",
-      lname: "alquizola",
-      dateofbirth: "july 31, 2000",
-      contactno: "09318481376",
-      address: "barili",
-      position: "developer",
-      gender: "Male",
-      maritalstatus: "Single",
+      empno,fname,mname,lname,dateofbirth,contactno,address,position,gender,maritalstatus
     };
+    console.log("current data: ", currentData);
+    
     setEmpData(currentData);
   };
 
   const handleDelete = (Empno: any) => {
     setEmployees((prevEmployees) =>
-      prevEmployees.filter((emp) => emp.Empno !== Empno)
+      prevEmployees.filter((emp) => emp.empno !== Empno)
     );
   };
 
@@ -157,6 +172,7 @@ export default function CreateUD() {
         >
           <thead>
             <tr>
+<<<<<<< HEAD
               <th
                 scope="col"
                 style={{ backgroundColor: "#096dca", color: "#ffffff" }}
@@ -217,61 +233,67 @@ export default function CreateUD() {
               >
                 Actions
               </th>
+=======
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Employee No.</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>First Name</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Middle Name</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Last Name</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Address</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Marital Status</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Date of Birth</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Gender</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Position</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Contact No.</th>
+              <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Actions</th>
+>>>>>>> 9b8bc612c16ba0afab1d0cccddd6ad16c118404c
             </tr>
           </thead>
           <tbody>
-            {employees.map((employee, index) => (
-              <tr key={employee.Empno}>
-                <th scope="row">{index + 1}</th>
-                <td>{employee.Empno}</td>
-                <td>{employee.fname}</td>
-                <td>{employee.mname}</td>
-                <td>{employee.lname}</td>
-                <td>{employee.username}</td>
-                <td>{employee.password}</td>
-                <td>{employee.position}</td>
-                <td>{employee.contactno}</td>
+          {employees?.length ? (
+            employees.map((info, index) => (
+              <tr key={info.empno}>
+                <td>{info.empno}</td>
+                <td>{info.fname}</td>
+                <td>{info.mname}</td>
+                <td>{info.lname}</td>
+                <td>{info.address}</td>
+                <td>{info.maritalstatus}</td>
+                <td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>
+                <td>{info.gender}</td>
+                <td>{info.position}</td>
+                <td>{info.contactno}</td>
+
                 <td>
                   <button
-                    type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo"
-                    onClick={(e) => handleData(employee)}
+                    type="button"
                     className="edit-button"
+                   onClick={(e)=>handleData(info)}
+                    style={{ cursor: "pointer" }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      className="bi bi-pencil-square"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                      <path d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                    </svg>
+                    ✏️ Edit
                   </button>
                   <button
                     type="button"
                     className="delete-button"
-                    onClick={() => handleDelete(employee.Empno)}
+                    
+                    style={{ cursor: "pointer" }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      className="bi bi-trash3-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                    </svg>
+                    🗑️ Delete
                   </button>
                 </td>
               </tr>
-            ))}
-          </tbody>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={11} className="text-center">
+                No employees found.
+              </td>
+            </tr>
+          )}
+        </tbody>
         </table>
       </div>
     </div>

@@ -9,7 +9,7 @@ export default function TableComponents(data: any, filter: string) {
   const [empData, setEmpData] = useState(data.data);
 
   useEffect(() => {
-    console.log("report", data);
+    // console.log("report", data);
   }, [empData, filter]);
 
   const formatTime = (time: number) => {

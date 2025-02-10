@@ -16,25 +16,16 @@ interface AddEmployeeData {
 
 export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
   const currentData = empData;
-  console.log(empData);
-  const [data, setData] = useState<AddEmployeeData[]>([]);
-  const [empNo, setEmpNo] = useState(currentData?.empNo || "");
-  const [fname, setFname] = useState(currentData?.fname || "");
-  const [mname, setMname] = useState(currentData?.mname || "");
-  const [lname, setLname] = useState(currentData?.lname || "");
-  const [position, setPosition] = useState(currentData?.position || "");
-  const [dob, setDob] = useState(currentData?.dateofbirth || "");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [gender, setGender] = useState("");
-  const [contactNo, setContactNo] = useState(currentData?.contactno || "");
-  const [address, setAddress] = useState(currentData?.address || "");
-  const [username, setUsername] = useState(currentData?.username || "");
-  const [password, setPassword] = useState(currentData?.password || "");
+
 
   useEffect(() => {
     const currentData2 = currentData;
-    if (empData.maritalStatus !== "") {
-      setMaritalStatus(empData.maritalStatus);
+    console.log(empData)
+    if (empData.maritalstatus !== "") {
+
+      setMaritalStatus(empData.maritalstatus);
     }
 
     if (empData.gender !== "") {
@@ -74,50 +65,58 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
     );
   }
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    async function getAddEmployeeData() {
-      try {
-        const account_id = await localStorage.getItem("account_id");
+  //   async function getAddEmployeeData() {
+  //     try {
+  //       const account_id = await localStorage.getItem("account_id");
 
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND}/create/employee/`,
-          {
-            method: "GET",
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BACKEND}/create/employee/`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-type": "application/json",
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
 
-        const data = await response.json();
-        setData((prevData) => [...prevData, data]); 
+  //       const data = await response.json();
+  //       setData((prevData) => [...prevData, data]); 
 
-        setEmpNo("");
-        setFname("");
-        setMname("");
-        setLname("");
-        setPosition("");
-        setDob("");
-        setMaritalStatus("");
-        setGender("");
-        setContactNo("");
-        setAddress("");
-        setUsername("");
-        setPassword("");
-      } catch (error) {
-        console.error("Error fetching employee data:", error);
-      }
+  //       setEmpNo("");
+  //       setFname("");
+  //       setMname("");
+  //       setLname("");
+  //       setPosition("");
+  //       setDob("");
+  //       setMaritalStatus("");
+  //       setGender("");
+  //       setContactNo("");
+  //       setAddress("");
+  //       setUsername("");
+  //       setPassword("");
+  //     } catch (error) {
+  //       console.error("Error fetching employee data:", error);
+  //     }
+  //   }
+
+  //   getAddEmployeeData();
+  // }, []);
+
+  const undoSelect=(value:any,mode:any)=>{
+    console.log("===================",value)
+    if(value && mode == 'edit'){
+      setMaritalStatus(value);
+      
     }
-
-    getAddEmployeeData();
-  }, []);
+  }
 
   return (
     <div>
@@ -159,7 +158,7 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
             id="gender"
             className="form-select"
             aria-label="Default select example"
-            onChange={(e) => setMaritalStatus(e.target.value)}
+            onChange={(e) => undoSelect(e.target.value,mode)}
           >
             <option value="0"></option>
             <option value="Maried1">Maried</option>

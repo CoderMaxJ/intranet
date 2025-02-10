@@ -47,7 +47,7 @@ function BreakDataTable() {
         }
 
         const data = await response.json();
-        console.log("Fetched data:", data);
+
 
         const adjustedData = data.data.map((item: BreakData) => {
           let duration = parseInt(item.duration.toString(), 10) || 0;
@@ -148,16 +148,16 @@ function BreakDataTable() {
       breakItem.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       breakItem.breaktype.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  console.log(filteredBreaks);
+
 
   useEffect(() => {
     const start = () => {
-      console.log("Loading new page");
+
       setLoadingPage(true);
     };
 
     const end = () => {
-      console.log("Loaded new page!");
+
       setLoadingPage(false);
     };
 

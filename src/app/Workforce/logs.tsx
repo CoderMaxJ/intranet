@@ -56,6 +56,7 @@ function LogsDataTable() {
       }
 
       getLogs();
+    
     }, 5000);
     return () => clearTimeout(timer);
 

@@ -58,7 +58,7 @@ export default function Updatepassword() {
         password2: confirmPassword,
       };
 
-      console.log(newAccount);
+
 
       try {
         const response = await fetch(
@@ -73,7 +73,7 @@ export default function Updatepassword() {
           }
         );
 
-        console.log(response);
+        
 
         if (response.status === 200) {
           setError("Password updated successfully!");
@@ -105,10 +105,10 @@ export default function Updatepassword() {
         if (response.ok) {
           const token = await response.json();
           localStorage.setItem("token", token.access);
-          console.log("Token saved:", token.access);
+      
           forgotpass(token.access);
         } else {
-          console.log("Invalid credentials");
+ 
         }
       } catch (error) {
         console.error("Error fetching token:", error);
@@ -118,9 +118,9 @@ export default function Updatepassword() {
     const existingToken = localStorage.getItem("token");
 
     if (existingToken) {
-      console.log("Token exists, proceeding with login");
+
     } else {
-      console.log("No token found, fetching a new one");
+
       getToken();
     }
   };
