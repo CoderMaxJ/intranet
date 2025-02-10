@@ -1,5 +1,5 @@
 "use client";
-
+import { Encryptor,Decryptor } from "@/security";
 import { useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "/public/asset/css/login.css";
@@ -41,7 +41,7 @@ setToken(localStorage.getItem("token") ?? "")
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+           Authorization: `Bearer ${Decryptor(token)}`
           },
           body: JSON.stringify(credentials),
         }
@@ -75,7 +75,7 @@ setToken(localStorage.getItem("token") ?? "")
 
       if (response.ok) {
         const token = await response.json();
-        localStorage.setItem("token", token.access);
+        localStorage.setItem("token", Encryptor(token.access));
       
           login();
 

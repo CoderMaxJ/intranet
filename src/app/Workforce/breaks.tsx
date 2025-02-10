@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Router from "next/router";
 import Header from "../component/Header";
 import LogsDataTable from "./logs";
+import { Decryptor } from "@/security";
 
 interface BreakData {
   name: string;
@@ -37,7 +38,7 @@ function BreakDataTable() {
             method: "GET",
             headers: {
               "Content-type": "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${Decryptor(token)}`,
             },
           }
         );

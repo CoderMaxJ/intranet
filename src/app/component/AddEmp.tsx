@@ -16,6 +16,7 @@ interface AddEmployeeData {
 
 export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
   const currentData = empData;
+  const [position, setPosition] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [gender, setGender] = useState("");
 
@@ -30,6 +31,10 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
 
     if (empData.gender !== "") {
       setGender(empData.gender);
+    }
+
+    if (empData.position !== "") {
+      setPosition(empData.position);
     }
   }, [empData]);
 
@@ -112,11 +117,29 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
 
   const undoSelect=(value:any,mode:any)=>{
     console.log("===================",value)
+    console.log()
     if(value && mode == 'edit'){
       setMaritalStatus(value);
       
     }
   }
+
+  const handleSelect=(value:any,mode:any)=>{
+    console.log("===================",value)
+    if(value && mode == 'edit'){
+      setGender(value);
+      
+    }
+
+
+  }
+
+  const handleSelectPosition=(value:any,mode:any)=>{
+    console.log("===================",value)
+    if(value && mode == 'edit'){
+      setPosition(value);
+      
+    }
 
   return (
     <div>
@@ -178,7 +201,7 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
             id="gender"
             className="form-select"
             aria-label="Default select example"
-            onChange={(e) => setGender(e.target.value)}
+            onChange={(e) => handleSelect(e.target.value,mode)}
           >
             <option value="0"></option>
             <option value="Male">Male</option>
@@ -208,7 +231,7 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
             id="position"
             className="form-select"
             aria-label="Default select example"
-            onChange={(e) => setPosition(e.target.value)}
+            onChange={(e) => handleSelectPosition(e.target.value,mode)}
           >
             <option value="0"></option>
             <option value="Manager">Chief Executive Officer</option>
@@ -256,4 +279,5 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
       </form>
     </div>
   );
+}
 }

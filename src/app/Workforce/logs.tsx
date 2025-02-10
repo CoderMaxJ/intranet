@@ -2,6 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import TableComponents from "../component/TableComponent";
+import { Decryptor } from "@/security";
 
 interface Logs {
   name: string;
@@ -37,7 +38,7 @@ function LogsDataTable() {
               method: "GET",
               headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${Decryptor(token)}`,
               },
             }
           );

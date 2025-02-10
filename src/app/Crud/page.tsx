@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import AddEmp from "../component/AddEmp";
 import { useEffect, useState } from "react";
 
-
+import { Decryptor } from "@/security";
 interface Information {
   empno:number;
   gender:string;
@@ -43,7 +43,7 @@ export default function CreateUD() {
       method :"GET",
       headers:{
         "Content-Type":"apllication/json",
-        Authorization:`Bearer ${token}`,
+        Authorization:`Bearer ${Decryptor(token)}`,
       }
     })
 
@@ -54,8 +54,6 @@ export default function CreateUD() {
       setSuccess(true);
     }
 
-
-    
 
 
   }
@@ -172,68 +170,6 @@ export default function CreateUD() {
         >
           <thead>
             <tr>
-<<<<<<< HEAD
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                #
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                Employee No.
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                First Name
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                Middle Name
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                Last Name
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                User Name
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                Password
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                Position
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                Contact No.
-              </th>
-              <th
-                scope="col"
-                style={{ backgroundColor: "#096dca", color: "#ffffff" }}
-              >
-                Actions
-              </th>
-=======
               <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Employee No.</th>
               <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>First Name</th>
               <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Middle Name</th>
@@ -245,7 +181,6 @@ export default function CreateUD() {
               <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Position</th>
               <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Contact No.</th>
               <th scope="col" style={{backgroundColor:'#096dca', color:'#ffffff'}}>Actions</th>
->>>>>>> 9b8bc612c16ba0afab1d0cccddd6ad16c118404c
             </tr>
           </thead>
           <tbody>

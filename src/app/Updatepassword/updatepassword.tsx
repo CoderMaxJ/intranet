@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "/public/asset/css/updateps.css";
 import Image from "next/image";
+import { Decryptor } from "@/security";
 
 export default function Updatepassword() {
   const [openProfile, setOpenProfile] = useState(false);
@@ -67,7 +68,7 @@ export default function Updatepassword() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${Decryptor(localStorage.getItem("token"))}`,
             },
             body: JSON.stringify(newAccount),
           }
