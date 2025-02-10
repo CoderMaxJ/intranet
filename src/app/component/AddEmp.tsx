@@ -18,32 +18,35 @@ interface AddEmployeeData {
 
 
 
-export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
+export default function AddEmp({ empData, mode }: { empData: any; mode: any },isClose:void) {
   
   const currentData = empData;
   const [position, setPosition] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [gender, setGender] = useState("");
   const [roles,setRoles]=useState<string[]>([]);
+  const [form2,setForm2]=useState({});
 
+ 
 
   useEffect(() => {
-    const currentData2 = currentData;
-
-    if (empData.maritalstatus !== "") {
+    setForm2(empData)
+   
+    if (empData.maritalstatus) {
 
       setMaritalStatus(empData.maritalstatus);
     }
 
-    if (empData.gender !== "") {
+    if (empData.gender ) {
       setGender(empData.gender);
     }
 
-    if (empData.position !== "") {
+    if (empData.position ) {
       setPosition(empData.position);
     }
   }, [empData]);
 
+console.log("Form 2",form2)
   function FormInput({
     id,
     label,
@@ -58,7 +61,6 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
     value: string;
   }) {
     const [inputValue, setInputValue] = useState(value);
-
     return (
       <div className={`mb-3 ${classType}`}>
         <label htmlFor={id} className="form-label">
@@ -77,32 +79,17 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
   }
 
 
-  const undoSelect=(value:any,mode:any)=>{
-    console.log("===================",value)
-    console.log()
-    if(value && mode == 'update'){
-      setMaritalStatus(value);
-      
-    }
-  }
-
-  const handleSelect=(value:any,mode:any)=>{
-    console.log("===================",value)
-    if(value && mode == 'update'){
-      setGender(value);
-      
-    }
-
-  }
-
-  const handleSelectPosition=(value:any,mode:any)=>{
-    console.log("===================",value)
-    if(value && mode == 'update'){
-      setPosition(value);
-      
-    }
-
-  }
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+  
+    // ✅ Update corresponding state
+    if (name === "maritalstatus") setMaritalStatus(value);
+    if (name === "gender") setGender(value);
+    if (name === "position") setPosition(value);
+  
+    // ✅ Update form2 with dynamic key
+    setForm2((prev) => ({ ...prev, [name]: value }));
+  };
   
 
 const information = {
@@ -122,8 +109,28 @@ const information = {
   const handleSubmitForm = async (e:any)=>{
     e.preventDefault();
     const token = localStorage.getItem("token");
-    console.log("information",information)
- 
+
+    let information: Record<string, string> = {};
+
+    const form = e.target;
+    
+    form.querySelectorAll("input").forEach((input: any) => {
+      const name = input.getAttribute("name");
+      if (name) {
+        information[name] = input.value; 
+      }
+    });
+
+    form.querySelectorAll("select").forEach((select: any) => {
+      const name = select.getAttribute("name");
+      if (name) {
+        information[name] = select.value; 
+      }
+    });
+    
+    console.log("Final Information:", information);
+    
+ console.log("information:" ,information.fname)
    try{
     const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`,{
       method:"POST",
@@ -145,7 +152,6 @@ const information = {
    }
   
   }
-
 
   const rolesList = async ()=>{
     const token = localStorage.getItem("token");
@@ -174,6 +180,7 @@ const information = {
 
   // rolesList();
 
+  
   return (
     <div>
       <form className="row" onSubmit={handleSubmitForm}>
@@ -199,7 +206,7 @@ const information = {
           value={currentData.lname}
         />
         <FormInput
-          id="dob"
+          id="dateofbirth"
           type="date"
           label="Date of Birth"
           classType={"col-md-3"}
@@ -210,15 +217,15 @@ const information = {
             Martital Status
           </label>
           <select
+          name="maritalstatus"
             value={maritalStatus}
             id="gender"
             className="form-select"
             aria-label="Default select example"
-            onChange={(e) => undoSelect(e.target.value,mode)}
+            onChange={handleSelectChange}
           >
-            <option value="0"></option>
-            <option value="Maried1">Maried</option>
             <option value="Single">Single</option>
+            <option value="Maried1">Maried</option>
             <option value="Separated">Separated</option>
             <option value="Widowed">Widowed</option>
             <option value="Divorced">Divorced</option>
@@ -230,11 +237,12 @@ const information = {
             Gender
           </label>
           <select
+          name="gender"
             value={gender}
             id="gender"
             className="form-select"
             aria-label="Default select example"
-            onChange={(e) => handleSelect(e.target.value,mode)}
+            onChange={handleSelectChange}
           >
             <option value="0"></option>
             <option value="Male">Male</option>
@@ -258,18 +266,13 @@ const information = {
         <div className="col-md-6 mb-3">
         
         <select
-  value={position} // ✅ Should hold a single selected value
+    value={position}
+    name="position"
     id="position"
     className="form-select"
     aria-label="Default select example"
     onFocus={rolesList}
-    onChange={(e) => {
-    if (mode === 'edit') {
-      handleSelectPosition(e.target.value, mode);
-    } else {
-      setPosition(e.target.value); // ✅ Update position for non-edit mode
-    }
-  }}
+    onChange={handleSelectChange}
 >
   <option value="">Select a position</option>
   {roles.map((role, index) => (
@@ -297,7 +300,7 @@ const information = {
             marginTop: "30px",
           }}
         >
-          <button type="submit" className="btn btn-danger">
+          <button type="button"  className="btn btn-danger">
             Close
           </button>
           <button type="submit" className="btn btn-primary">
