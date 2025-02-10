@@ -58,8 +58,8 @@ function LogsDataTable() {
 
       getLogs();
     
-    }, );
-    // return () => clearTimeout(timer);
+    }, 5000);
+    return () => clearTimeout(timer);
 
   }, []);
 

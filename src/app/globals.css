@@ -781,10 +781,12 @@ tbody td {
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
 }
-.dashboard svg {
-  align-items: center;
+/* General transition settings */
+.dashboard, .generate, .admin {
+  transition: background-color 0.3s ease, color 0.3s ease, fill 0.3s ease;
 }
 
+/* Styling for dashboard */
 .dashboard a {
   display: flex;
   align-items: center;
@@ -819,14 +821,9 @@ tbody td {
   margin-top: 20px;
   align-items: center;
   padding: 10px;
-  margin-left: 5px;
+  margin-left: -5px;
   color: black;
   border-radius: 2px;
-}
-
-.dashboard:hover {
-  background-color: #2193df;
-  color: white !important;
 }
 
 .dashboard svg {
@@ -834,19 +831,7 @@ tbody td {
   fill: black;
 }
 
-.dashboard:hover svg {
-  fill: white;
-}
-
-.dashboard:active {
-  background-color: #1a74b8; 
-  color: white !important;
-}
-
-.dashboard:active svg {
-  fill: white;
-}
-
+/* Styling for generate */
 .generate svg {
   align-items: center;
 }
@@ -856,7 +841,6 @@ tbody td {
   align-items: center;
   text-decoration: none;
   color: inherit;
-  
 }
 
 .generate:hover {
@@ -866,8 +850,6 @@ tbody td {
 .generate:hover button,
 .generate:hover a {
   color: white !important;
-  
-  
 }
 
 .generate:hover svg {
@@ -879,28 +861,27 @@ tbody td {
   margin-top: 20px;
   align-items: center;
   padding: 10px;
-  margin-left: 5px;
+  margin-left: -5px;
   color: black;
   border-radius: 2px;
 }
+
 .generate svg {
   margin-right: 20px;
   fill: black;
 }
 
-/* UPDATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE */
-
+/* Styling for admin */
 .admin {
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-    padding: 10px;
-    padding-bottom: 10px;
-    margin-left: 5px;
-    color: black;
-    border-radius: 2px;
-  }
-  
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  padding: 10px;
+  padding-bottom: 10px;
+  margin-left: -5px;
+  color: black;
+  border-radius: 2px;
+}
 
 .accordion-collapse:not(.show) .admin {
   background: none !important;
@@ -924,11 +905,9 @@ tbody td {
   background-color: #2193df;
 }
 
-
-.admin:hover button{
+.admin:hover button {
   color: white !important;
 }
-
 
 .admin:hover svg {
   fill: white;
@@ -948,14 +927,11 @@ tbody td {
   fill: black;
 }
 
-.admin:active svg {
-  fill: white;
-}
-
 .admin-hover:hover {
-  background-color: lightgray; 
+  background-color: lightgray;
   cursor: pointer;
 }
+
 
 /* Prevent hover effects inside the accordion */
 .no-hover:hover {
@@ -1000,7 +976,7 @@ tbody td {
 }
 
 .crud-maindiv .table-striped > tbody > tr:nth-of-type(even) > * {
-  background-color: #e6f5f8;
+  background-color: #e8f5f8;
 }
 
 .nav-link:hover {
