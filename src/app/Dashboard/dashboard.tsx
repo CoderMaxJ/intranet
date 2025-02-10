@@ -15,8 +15,8 @@ export default function Dashboard() {
         padding: "10px",
       }}
     >
-      <div style={{ marginBottom: "40px" }}>
-        <img src="/img/Sos.png" height={42} />
+      <div style={{ marginBottom: "40px",marginTop:'15px' }}>
+        <img src="/img/Sos.png" height={43} />
       </div>
       <div>
         <div className="dashboard">
@@ -28,12 +28,12 @@ export default function Dashboard() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               fill="currentColor text-dark"
               className="bi bi-layout-wtf"
               viewBox="0 0 16 16"
-              style={{ marginRight: "20px", marginLeft: "-5px" }}
+              style={{ marginRight: "20px", marginLeft: "5px" }}
             >
               <path d="M5 1v8H1V1zM1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm13 2v5H9V2zM9 1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM5 13v2H3v-2zm-2-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1zm12-1v2H9v-2zm-6-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1z" />
             </svg>
@@ -46,7 +46,7 @@ export default function Dashboard() {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
-              height="19"
+              height="20"
               fill="currentColor"
               className="bi bi-person"
               viewBox="0 0 16 16"
@@ -139,11 +139,12 @@ export default function Dashboard() {
         <div className="dashboard">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="18"
+            height="18"
             fill="currentColor"
             className="bi bi-box-arrow-right"
             viewBox="0 0 16 16"
+            style={{marginRight:'20px'}}
           >
             <path
               fillRule="evenodd"

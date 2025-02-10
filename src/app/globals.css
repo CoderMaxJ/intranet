@@ -781,12 +781,11 @@ tbody td {
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
 }
-/* General transition settings */
-.dashboard, .generate, .admin {
-  transition: background-color 0.3s ease, color 0.3s ease, fill 0.3s ease;
+.dashboard svg {
+  align-items: center;
+  transition: fill 0.3s ease, transform 0.3s ease; /* Smooth fill color change */
 }
 
-/* Styling for dashboard */
 .dashboard a {
   display: flex;
   align-items: center;
@@ -794,8 +793,20 @@ tbody td {
   color: inherit;
 }
 
+.dashboard {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  padding: 10px;
+  margin-left: 5px;
+  color: black;
+  border-radius: 2px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth background & text color change */
+}
+
 .dashboard:hover {
   background-color: #2193df;
+  color: white !important;
 }
 
 .dashboard:hover button,
@@ -804,7 +815,7 @@ tbody td {
 }
 
 .dashboard:hover svg {
-  fill: white;
+  fill: white; /* Smooth fill change */
 }
 
 .dashboard:active {
@@ -816,24 +827,9 @@ tbody td {
   fill: white;
 }
 
-.dashboard {
-  display: flex;
-  margin-top: 20px;
-  align-items: center;
-  padding: 10px;
-  margin-left: -5px;
-  color: black;
-  border-radius: 2px;
-}
-
-.dashboard svg {
-  margin-right: 20px;
-  fill: black;
-}
-
-/* Styling for generate */
 .generate svg {
   align-items: center;
+  transition: fill 0.3s ease, transform 0.3s ease; /* Smooth fill color change */
 }
 
 .generate a {
@@ -841,6 +837,17 @@ tbody td {
   align-items: center;
   text-decoration: none;
   color: inherit;
+}
+
+.generate {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  padding: 10px;
+  margin-left: 5px;
+  color: black;
+  border-radius: 2px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth background & text color change */
 }
 
 .generate:hover {
@@ -856,31 +863,21 @@ tbody td {
   fill: white;
 }
 
-.generate {
-  display: flex;
-  margin-top: 20px;
-  align-items: center;
-  padding: 10px;
-  margin-left: -5px;
-  color: black;
-  border-radius: 2px;
-}
-
 .generate svg {
   margin-right: 20px;
   fill: black;
 }
 
-/* Styling for admin */
 .admin {
   display: flex;
   margin-top: 20px;
   align-items: center;
   padding: 10px;
   padding-bottom: 10px;
-  margin-left: -5px;
+  margin-left: 5px;
   color: black;
   border-radius: 2px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth background & text color change */
 }
 
 .accordion-collapse:not(.show) .admin {
@@ -894,6 +891,7 @@ tbody td {
 
 .admin svg {
   align-items: center;
+  transition: fill 0.3s ease, transform 0.3s ease; /* Smooth fill color change */
 }
 
 .admin a {
@@ -910,7 +908,7 @@ tbody td {
 }
 
 .admin:hover svg {
-  fill: white;
+  fill: white; /* Smooth fill change */
 }
 
 .admin:active {
@@ -925,6 +923,10 @@ tbody td {
 .admin svg {
   margin-right: 20px;
   fill: black;
+}
+
+.admin:active svg {
+  fill: white;
 }
 
 .admin-hover:hover {

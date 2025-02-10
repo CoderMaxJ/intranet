@@ -150,12 +150,11 @@ export default function Header() {
         <img
           src="/img/Breaktool.png"
           style={{
-            borderRadius: "6px",
-            marginTop: "-10px",
-            width: "85vw",
+            marginTop: "-20px",
+            width: "90vw",
             height: "15vh",
             marginBottom: "-10px",
-            marginLeft: "-15px",
+            marginLeft: "-60px",
             display:'relative',
             boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
           }}
