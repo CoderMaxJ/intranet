@@ -160,8 +160,8 @@ export default function Header() {
             boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
           }}
         />
-        <h1 className="headerbreaktool">WorkPause Manager</h1>
-        <h4 className="headerdown">Optimize Downtime, Maximize Productivity!</h4>
+        <h1 className="headerbreaktool">BREAKTIME OPTIMIZER</h1>
+        <h4 className="headerdown">Manage Breaks, Boost Productivity!</h4>
       </div>
 
       {/* Profile Dropdown */}
