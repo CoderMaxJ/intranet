@@ -1,5 +1,7 @@
+import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
 
+const token = localStorage.getItem("token");
 
 interface AddEmployeeData {
   empno: string;
@@ -12,180 +14,229 @@ interface AddEmployeeData {
   gender: string;
   contactno: string;
   address: string;
+  acctid:number;
 }
 
-export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
-  const currentData = empData;
-  const [position, setPosition] = useState("");
-  const [maritalStatus, setMaritalStatus] = useState("");
-  const [gender, setGender] = useState("");
+interface AddEmpProps {
+  empData: AddEmployeeData;
+  mode: string;
+  isClose: () => void;
+}
 
+export default function AddEmp({ empData, mode}: AddEmpProps) {
+
+
+  const [formData, setFormData] = useState<AddEmployeeData>(empData);
+  const [roles, setRoles] = useState<string[]>([]);
+  const [accounts, setAccounts] = useState<{acctid:number,acctname:string, status:number}[]>([]);
+  const [selectedAccount,SetSelectedAccount]=useState("");
 
   useEffect(() => {
-    const currentData2 = currentData;
-    console.log(empData)
-    if (empData.maritalstatus !== "") {
-
-      setMaritalStatus(empData.maritalstatus);
+    if(empData){
+      setFormData(empData);
     }
-
-    if (empData.gender !== "") {
-      setGender(empData.gender);
-    }
-
-    if (empData.position !== "") {
-      setPosition(empData.position);
-    }
+    
   }, [empData]);
 
-  function FormInput({
-    id,
-    label,
-    type,
-    classType,
-    value,
-  }: {
-    id: string;
-    label: string;
-    type: string;
-    classType: string;
-    value: string;
-  }) {
-    const [inputValue, setInputValue] = useState(value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    SetSelectedAccount(e.target.value);
+  };
 
-    return (
-      <div className={`mb-3 ${classType}`}>
-        <label htmlFor={id} className="form-label">
-          {label}
-        </label>
-        <input
-          type={type}
-          name={id}
-          className="form-control"
-          id={id}
-          defaultValue={inputValue ? inputValue : ""}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-      </div>
-    );
+
+  const fetchRoles = async () => {
+
+    const cachedRoles = localStorage.getItem("roles");
+    if (cachedRoles) {
+      setRoles(JSON.parse(cachedRoles));
+      return;
+    }
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/roles/list/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token)}`,
+        },
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        setRoles(data.data);
+        localStorage.setItem("roles", JSON.stringify(data.data));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const fetchAccounts = async () => {
+
+    const cachedRoles = localStorage.getItem("accounts");
+    if (cachedRoles) {
+      setRoles(JSON.parse(cachedRoles));
+      return;
+    }
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token)}`,
+        },
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        setAccounts(data.data);
+        console.log(accounts)
+        localStorage.setItem("Accounts", JSON.stringify(data.data));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  
+  useEffect(() => {
+    fetchRoles();
+    fetchAccounts();
+  }, []);
+
+
+
+async function Create(){
+  console.log("=================================",formData)
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Decryptor(token)}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.status === 201) {
+      alert("Created successfully!")
+     // Close the form after successful submission
+    }
+  } catch (e) {
+    console.error(e);
+    alert(e);
   }
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
+}
 
-  //   async function getAddEmployeeData() {
-  //     try {
-  //       const account_id = await localStorage.getItem("account_id");
 
-  //       const response = await fetch(
-  //         `${process.env.NEXT_PUBLIC_BACKEND}/create/employee/`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-type": "application/json",
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
 
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
+async function Update(){
+  
+  const empno = empData.empno;
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/update/${empno}/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Decryptor(token)}`,
+      },
+      body: JSON.stringify(formData),
+    });
 
-  //       const data = await response.json();
-  //       setData((prevData) => [...prevData, data]); 
+    if (response.status === 200) {
+      alert("Updated successfully!")
 
-  //       setEmpNo("");
-  //       setFname("");
-  //       setMname("");
-  //       setLname("");
-  //       setPosition("");
-  //       setDob("");
-  //       setMaritalStatus("");
-  //       setGender("");
-  //       setContactNo("");
-  //       setAddress("");
-  //       setUsername("");
-  //       setPassword("");
-  //     } catch (error) {
-  //       console.error("Error fetching employee data:", error);
-  //     }
-  //   }
-
-  //   getAddEmployeeData();
-  // }, []);
-
-  const undoSelect=(value:any,mode:any)=>{
-    console.log("===================",value)
-    console.log()
-    if(value && mode == 'update'){
-      setMaritalStatus(value);
-      
     }
+  } catch (e) {
+    console.error(e);
+    alert(e);
   }
 
-  const handleSelect=(value:any,mode:any)=>{
-    console.log("===================",value)
-    if(value && mode == 'update'){
-      setGender(value);
-      
+}
+
+
+  const handleSubmitForm = async (e: React.FormEvent) => {
+  
+    e.preventDefault();
+    if(mode === 'edit'){
+      Update();
+    }else{
+      Create();
     }
+    
+ 
+  };
 
+const closeModal=()=>{
 
-  }
-
-  const handleSelectPosition=(value:any,mode:any)=>{
-    console.log("===================",value)
-    if(value && mode == 'update'){
-      setPosition(value);
-      
-    }
-
+}
   return (
     <div>
-      <form className="row">
-        <FormInput
-          id="fname"
-          type="text"
-          label="First Name"
-          classType={"col-md-4"}
-          value={currentData.fname}
-        />
-        <FormInput
-          id="mname"
-          type="text"
-          label="Middle Name"
-          classType={"col-md-4"}
-          value={currentData.mname}
-        />
-        <FormInput
-          id="lname"
-          type="text"
-          label="Last Name"
-          classType={"col-md-4"}
-          value={currentData.lname}
-        />
-        <FormInput
-          id="dob"
-          type="date"
-          label="Date of Birth"
-          classType={"col-md-3"}
-          value={currentData.dateofbirth}
-        />
+      <form className="row" onSubmit={handleSubmitForm}>
+        <div className="col-md-4 mb-3">
+          <label htmlFor="fname" className="form-label">
+            First Name
+          </label>
+          <input
+            type="text"
+            name="fname"
+            className="form-control"
+            id="fname"
+            value={formData.fname}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-4 mb-3">
+          <label htmlFor="mname" className="form-label">
+            Middle Name
+          </label>
+          <input
+            type="text"
+            name="mname"
+            className="form-control"
+            id="mname"
+            value={formData.mname}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-4 mb-3">
+          <label htmlFor="lname" className="form-label">
+            Last Name
+          </label>
+          <input
+            type="text"
+            name="lname"
+            className="form-control"
+            id="lname"
+            value={formData.lname}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-3 mb-3">
+          <label htmlFor="dateofbirth" className="form-label">
+            Date of Birth
+          </label>
+          <input
+            type="date"
+            name="dateofbirth"
+            className="form-control"
+            id="dateofbirth"
+            value={formData.dateofbirth}
+            onChange={handleInputChange}
+          />
+        </div>
         <div className="col-md-2 mb-3">
-          <label htmlFor="gender" className="form-label">
-            Martital Status
+          <label htmlFor="maritalstatus" className="form-label">
+            Marital Status
           </label>
           <select
-            value={maritalStatus}
-            id="gender"
+            name="maritalstatus"
+            value={formData.maritalstatus}
+            id="maritalstatus"
             className="form-select"
-            aria-label="Default select example"
-            onChange={(e) => undoSelect(e.target.value,mode)}
+            onChange={handleInputChange}
           >
-            <option value="0"></option>
-            <option value="Maried1">Maried</option>
             <option value="Single">Single</option>
+            <option value="Married">Married</option>
             <option value="Separated">Separated</option>
             <option value="Widowed">Widowed</option>
             <option value="Divorced">Divorced</option>
@@ -197,66 +248,81 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
             Gender
           </label>
           <select
-            value={gender}
+            name="gender"
+            value={formData.gender}
             id="gender"
             className="form-select"
-            aria-label="Default select example"
-            onChange={(e) => handleSelect(e.target.value,mode)}
+            onChange={handleInputChange}
           >
-            <option value="0"></option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
         </div>
-        <FormInput
-          id="contact"
-          type="number"
-          label="Contact No"
-          classType={"col-md-5"}
-          value={currentData.contactno}
-        />
-        <FormInput
-          id="address"
-          type="text"
-          label="Address"
-          classType={"col-md-6"}
-          value={currentData.address}
-        />
-        <div className="col-md-6 mb-3">
+        <div className="col-md-5 mb-3">
+          <label htmlFor="contactno" className="form-label">
+            Contact No
+          </label>
+          <input
+            type="number"
+            name="contactno"
+            className="form-control"
+            id="contactno"
+            value={formData.contactno}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-5 mb-3">
+          <label htmlFor="address" className="form-label">
+            Address
+          </label>
+          <input
+            type="text"
+            name="address"
+            className="form-control"
+            id="address"
+            value={formData.address}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-3 mb-3">
           <label htmlFor="position" className="form-label">
-           Position
+            Position
           </label>
           <select
-            value={position}
+            name="position"
+            value={formData.position}
             id="position"
             className="form-select"
-            aria-label="Default select example"
-            onChange={(e) => handleSelectPosition(e.target.value,mode)}
+            onChange={handleInputChange}
           >
-            <option value="0"></option>
-            <option value="Manager">Chief Executive Officer</option>
-            <option value="Account Manager">Account Manager</option>
-            <option value="Human Resources Manager">Human Resources Manager</option>
-            <option value="Administrative Assistant">Administrative Assistant</option>
-            <option value="Project Manager">Project Manager</option>
-            <option value="Accountant">Accountant</option>
-            <option value="Call Center Agent">Call Center Agent</option>
-            <option value="Software Engineer">Software Engineer</option>
-            <option value="Data Analyst">Data Analyst</option>
-            <option value="Data Analyst">Data Entry</option>
-            <option value="Cybersecurity Specialist">Cybersecurity Specialist</option>
-            <option value="IT Support Specialist">IT Support Specialist</option>
-            <option value="Web Developer">Web Developer</option>
-            <option value="Registered Nurse">Registered Nurse</option>
+            <option value="">Select a position</option>
+            {roles.map((role, index) => (
+              <option key={index} value={role}>
+                {role}
+              </option>
+            ))}
           </select>
         </div>
-        {/* <FormInput
-          id="position"
-          type="text"
-          label="Position"
-          classType={"col-md-6"}
-          value={currentData.position}
-        /> */}
+
+        <div className="col-md-4 mb-3">
+          <label htmlFor="position" className="form-label">
+            Account
+          </label>
+          <select
+            name="acctid"
+            value={selectedAccount}
+            id="acctid"
+            className="form-select"
+            onChange={handleInputChange}
+          >
+            <option value="">Select Account</option>
+            {accounts.map((account) => (
+              <option key={account.acctid} value={account.acctid}>
+                {account.acctname}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div
           className="col-md-12"
@@ -269,15 +335,14 @@ export default function AddEmp({ empData, mode }: { empData: any; mode: any }) {
             marginTop: "30px",
           }}
         >
-          <button type="submit" className="btn btn-danger">
+          <button type="button" onClick={closeModal} className="btn btn-danger">
             Close
           </button>
           <button type="submit" className="btn btn-primary">
-            {mode == "update" ? "Update" : "Create"}
+            {mode === "edit" ? "Update" : "Create"}
           </button>
         </div>
       </form>
     </div>
   );
-}
 }
