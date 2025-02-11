@@ -25,9 +25,11 @@ export default function CreateUD() {
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
   const [employees, setEmployees] = useState<Information[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [hide,hidden]=useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
   const [departmentSearchTerm, setDepartmentSearch] = useState("");
 
+  const token = localStorage.getItem("token")
 
   useEffect(() => {
     if (employees) {
@@ -68,10 +70,40 @@ export default function CreateUD() {
 
   }
 
+  const handleDelete = (firstname:string,lastname:string,empno:number)=>{
+   const response = confirm("Are you sure you want to delete "+ ""+ firstname +" "+lastname);
+   if(response == true){
+    Delete();
+   }
+    
+    async function Delete(){
+      
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Decryptor(token)}`,
+          },
+        });
+    
+        if (response.status === 200) {
+          alert("Deleted successfully!")
+        }
+      } catch (e) {
+        console.error(e);
+        alert(e);
+      }
+    }
+    
+    }
+
+
   const handleData = (data: any) => {
     console.log("data", data);
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus } = data;
+    
+    let {empno,fname,mname,lname,dateofbirth,contactno,address,position,gender,maritalstatus} = data;
     let currentData = {
       empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus
     };
@@ -80,11 +112,9 @@ export default function CreateUD() {
     setEmpData(currentData);
   };
 
-  const handleDelete = (Empno: any) => {
-    setEmployees((prevEmployees) =>
-      prevEmployees.filter((emp) => emp.empno !== Empno)
-    );
-  };
+  const closeModal=()=>{
+    hidden(true);
+  }
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7" }}>
@@ -203,29 +233,12 @@ export default function CreateUD() {
           >
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
-                <div
-                  style={{
-                    justifyContent: "center",
-                    display: "flex",
-                    marginTop: "10px",
-                  }}
-                >
-                  <h1>Employee Registration Form</h1>
-                </div>
-                <div
-                  style={{
-                    justifyContent: "center",
-                    display: "flex",
-                    marginBottom: "70px",
-                  }}
-                >
-                  {/* <label htmlFor="emp-info" style={{ marginBottom: "-25px" }}>
-                    {" "}
-                    Please fill in the information requested below in order to
-                    complete the employee registration. Thank You!
-                  </label> */}
-                </div>
-                <AddEmp empData={empData} mode={currentMode} />
+              
+          
+               
+                  <AddEmp empData={empData} mode={currentMode}/>
+                
+                
               </div>
             </div>
           </div>
@@ -271,43 +284,43 @@ export default function CreateUD() {
                     <td>{info.position}</td>
                     <td>{info.contactno}</td>
 
-                    <td>
-                      <button
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        data-bs-whatever="@mdo"
-                        type="button"
-                        className="edit-button"
-                        onClick={(e) => handleData(info)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-fill" viewBox="0 0 16 16">
-                          <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
-                        </svg>
-                      </button>
-                      <button
-                        type="button"
-                        className="delete-button"
-
-                        style={{ cursor: "pointer" }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
-                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={11} className="text-center">
-                    No employees found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                <td>
+                  <button
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal"
+                          data-bs-whatever="@mdo"
+                          type="button"
+                          className="edit-button"
+                        onClick={(e)=>handleData(info)}
+                          style={{ cursor: "pointer" }}
+                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                      </svg> 
+                  </button>
+                  <button
+                    type="button"
+                    className="delete-button"
+                    onClick={()=>handleDelete(info.fname,info.lname,info.empno)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
+                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                    </svg> 
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={11} className="text-center">
+                No employees found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+        </table>
       </div>
     </div>
   );
