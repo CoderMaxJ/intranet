@@ -15,7 +15,7 @@ interface AddEmployeeData {
   gender: string;
   contactno: string;
   address: string;
-  acctid:number;
+  acctid: number;
 }
 
 interface AddEmpProps {
@@ -24,19 +24,19 @@ interface AddEmpProps {
   isClose: () => void;
 }
 
-export default function AddEmp({ empData, mode}: AddEmpProps) {
+export default function AddEmp({ empData, mode }: AddEmpProps) {
 
 
   const [formData, setFormData] = useState<AddEmployeeData>(empData);
   const [roles, setRoles] = useState<string[]>([]);
-  const [accounts, setAccounts] = useState<{acctid:number,acctname:string, status:number}[]>([]);
-  const [selectedAccount,SetSelectedAccount]=useState("");
+  const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
+  const [selectedAccount, SetSelectedAccount] = useState("");
 
   useEffect(() => {
-    if(empData){
+    if (empData) {
       setFormData(empData);
     }
-    
+
   }, [empData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -97,7 +97,7 @@ export default function AddEmp({ empData, mode}: AddEmpProps) {
     }
   };
 
-  
+
   useEffect(() => {
     fetchRoles();
     fetchAccounts();
@@ -105,76 +105,88 @@ export default function AddEmp({ empData, mode}: AddEmpProps) {
 
 
 
-async function Create(){
-  console.log("=================================",formData)
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token)}`,
-      },
-      body: JSON.stringify(formData),
-    });
+  async function Create() {
+    console.log("=================================", formData)
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token)}`,
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (response.status === 201) {
-      alert("Created successfully!")
-     // Close the form after successful submission
+      if (response.status === 201) {
+        alert("Created successfully!")
+        // Close the form after successful submission
+      }
+    } catch (e) {
+      console.error(e);
+      alert(e);
     }
-  } catch (e) {
-    console.error(e);
-    alert(e);
+
   }
 
-}
 
 
+  async function Update() {
 
-async function Update(){
-  
-  const empno = empData.empno;
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/update/${empno}/`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token)}`,
-      },
-      body: JSON.stringify(formData),
-    });
+    const empno = empData.empno;
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/update/${empno}/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token)}`,
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (response.status === 200) {
-      alert("Updated successfully!")
+      if (response.status === 200) {
+        alert("Updated successfully!")
 
+      }
+    } catch (e) {
+      console.error(e);
+      alert(e);
     }
-  } catch (e) {
-    console.error(e);
-    alert(e);
-  }
 
-}
+  }
 
 
   const handleSubmitForm = async (e: React.FormEvent) => {
-  
+
     e.preventDefault();
-    if(mode === 'edit'){
+    if (mode === 'edit') {
       Update();
-    }else{
+    } else {
       Create();
     }
-    
- 
+
+
   };
 
-const closeModal=()=>{
+  const closeModal = () => {
 
-}
+  }
   return (
     <div>
-     
-      <form className="row" onSubmit={handleSubmitForm}>
+
+      <form className="row" onSubmit={handleSubmitForm} >
         <div className="col-md-4 mb-3">
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              marginTop: '-1px'
+            }}
+          ></button>
           <label htmlFor="fname" className="form-label">
             First Name
           </label>
@@ -329,21 +341,27 @@ const closeModal=()=>{
         <div
           className="col-md-12"
           style={{
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-            gap: "50px",
             marginBottom: "30px",
             marginTop: "30px",
           }}
         >
-          <button type="button" onClick={closeModal} className="btn btn-danger">
-            Close
-          </button>
-          <button type="submit" className="btn btn-primary">
-            {mode === "edit" ? "Update" : "Create"}
-          </button>
+          <div className="d-flex justify-content-between">
+            <button
+              type="submit"
+              className="btn btn-primary"
+            >
+              {mode === "update" ? "Update" : "Create"}
+            </button>
+            <button
+              type="button"
+              onClick={closeModal}
+              className="btn btn-danger"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
+
       </form>
     </div>
   );

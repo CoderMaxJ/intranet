@@ -138,6 +138,52 @@ export default function CreateUD() {
                 color: 'white'
               }}
             >
+             
+
+              <input
+                className="search-input"
+                id="search-employee"
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleSearch}
+                style={{
+                  padding: '8px 12px',
+                  borderRadius: '5px',
+                  border: '1px solid #ccc',
+                  marginRight: '20px',
+                  marginLeft:'600px',
+                  flexGrow: 1,
+                }}
+              />
+
+              <select
+                className="select-departments"
+                onChange={handleSearchDepartment}
+                style={{
+                  padding: '8px 12px',
+                  borderRadius: '5px',
+                  border: '1px solid #ccc',
+                  marginRight: '300px',
+                }}
+              >
+                <option value="0">All Departments</option>
+                <option value="developer">Developer</option>
+                <option value="quality assurance">Quality Assurance</option>
+                <option value="manager">Chief Executive Officer</option>
+                <option value="account manager">Account Manager</option>
+                <option value="human resources manager">Human Resources Manager</option>
+                <option value="administrative assistant">Administrative Assistant</option>
+                <option value="project manager">Project Manager</option>
+                <option value="accountant">Accountant</option>
+                <option value="call center agent">Call Center Agent</option>
+                <option value="software engineer">Software Engineer</option>
+                <option value="data analyst">Data Analyst</option>
+                <option value="data entry">Data Entry</option>
+                <option value="cybersecurity specialist">Cybersecurity Specialist</option>
+                <option value="it support specialist">IT Support Specialist</option>
+                <option value="registered nurse">Registered Nurse</option>
+              </select>
               <button
                 type="button"
                 className="add"
@@ -156,54 +202,9 @@ export default function CreateUD() {
                 >
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                 </svg>
+                
                 Add New Employee
               </button>
-
-              <input
-                className="search-input"
-                id="search-employee"
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearch}
-                style={{
-                  padding: '8px 12px',
-                  borderRadius: '5px',
-                  border: '1px solid #ccc',
-                  marginRight: '20px',
-                  flexGrow: 1,
-                }}
-              />
-
-              <select
-                className="select-departments"
-                onChange={handleSearchDepartment}
-                style={{
-                  padding: '8px 12px',
-                  borderRadius: '5px',
-                  border: '1px solid #ccc',
-                  marginRight: '600px',
-                }}
-              >
-                <option value="0">All Departments</option>
-                <option value="quality assurance">Quality Assurance</option>
-                <option value="web developer">Web Developer</option>
-                <option value="manager">Chief Executive Officer</option>
-                <option value="account manager">Account Manager</option>
-                <option value="human resources manager">Human Resources Manager</option>
-                <option value="administrative assistant">Administrative Assistant</option>
-                <option value="project manager">Project Manager</option>
-                <option value="accountant">Accountant</option>
-                <option value="call center agent">Call Center Agent</option>
-                <option value="software engineer">Software Engineer</option>
-                <option value="data analyst">Data Analyst</option>
-                <option value="data entry">Data Entry</option>
-                <option value="cybersecurity specialist">Cybersecurity Specialist</option>
-                <option value="it support specialist">IT Support Specialist</option>
-                <option value="developer">Developer</option>
-                <option value="registered nurse">Registered Nurse</option>
-              </select>
-
               <button
                 onClick={() => window.history.back()}
                 type="button"

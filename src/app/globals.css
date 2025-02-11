@@ -696,17 +696,16 @@ tbody td {
 
 .gobackbutton {
   position: absolute;
-  top: 15px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   width: 5%;
   border-radius: 4px;
-  padding: 5px;
+  padding: 7px;
   box-shadow: none;
   outline: none;
   border: none;
   color: white;
   background-color: hsl(220, 2%, 32%); 
-  margin-left: 66.8vw;
   
 }
 
@@ -728,7 +727,7 @@ tbody td {
   font-size: medium;
   padding: 10px;
   padding-bottom: 7px;
-  margin-right: 200px;
+  margin-right: 100px;
   border-radius: 2px;
   outline: none;
   margin-left: 5px;

@@ -189,20 +189,6 @@ export default function Daterange() {
                 >
                   Generate Report
                 </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-bs-dismiss="modal"
-                  style={{
-                    display: "block",
-                    marginLeft: "30px",
-                    marginTop: "10px",
-                    width: "15vw",
-                  }}
-                >
-                 <i className="bi bi-reply-fill" style={{marginRight:'5px'}}></i>
-                  Back
-                </button>
               </form>
             </div>
             <div className="modal-footer"></div>
