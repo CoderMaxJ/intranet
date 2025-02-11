@@ -1,6 +1,7 @@
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
 
+const token = localStorage.getItem("token");
 
 interface AddEmployeeData {
   empno: string;
@@ -13,219 +14,229 @@ interface AddEmployeeData {
   gender: string;
   contactno: string;
   address: string;
-  
+  acctid:number;
 }
 
+interface AddEmpProps {
+  empData: AddEmployeeData;
+  mode: string;
+  isClose: () => void;
+}
+
+export default function AddEmp({ empData, mode}: AddEmpProps) {
 
 
-export default function AddEmp({ empData, mode }: { empData: any; mode: any },isClose:void) {
-  
-  const currentData = empData;
-  const [position, setPosition] = useState("");
-  const [maritalStatus, setMaritalStatus] = useState("");
-  const [gender, setGender] = useState("");
-  const [roles,setRoles]=useState<string[]>([]);
-  const [form2,setForm2]=useState({});
-
- 
+  const [formData, setFormData] = useState<AddEmployeeData>(empData);
+  const [roles, setRoles] = useState<string[]>([]);
+  const [accounts, setAccounts] = useState<{acctid:number,acctname:string, status:number}[]>([]);
+  const [selectedAccount,SetSelectedAccount]=useState("");
 
   useEffect(() => {
-    setForm2(empData)
-   
-    if (empData.maritalstatus) {
-
-      setMaritalStatus(empData.maritalstatus);
+    if(empData){
+      setFormData(empData);
     }
-
-    if (empData.gender ) {
-      setGender(empData.gender);
-    }
-
-    if (empData.position ) {
-      setPosition(empData.position);
-    }
+    
   }, [empData]);
 
-console.log("Form 2",form2)
-  function FormInput({
-    id,
-    label,
-    type,
-    classType,
-    value,
-  }: {
-    id: string;
-    label: string;
-    type: string;
-    classType: string;
-    value: string;
-  }) {
-    const [inputValue, setInputValue] = useState(value);
-    return (
-      <div className={`mb-3 ${classType}`}>
-        <label htmlFor={id} className="form-label">
-          {label}
-        </label>
-        <input
-          type={type}
-          name={id}
-          className="form-control"
-          id={id}
-          defaultValue={inputValue ? inputValue : ""}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-      </div>
-    );
-  }
-
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-  
-    // ✅ Update corresponding state
-    if (name === "maritalstatus") setMaritalStatus(value);
-    if (name === "gender") setGender(value);
-    if (name === "position") setPosition(value);
-  
-    // ✅ Update form2 with dynamic key
-    setForm2((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    SetSelectedAccount(e.target.value);
   };
-  
-
-const information = {
-  fname:currentData.fname,
-  mname:currentData.mname,
-  lname:currentData.lname,
-  address:currentData.address,
-  maritalstatus:maritalStatus,
-  dateofbirth:currentData.birthofdate,
-  gender:currentData.gender,
-  position:position,
-  contacto:currentData.contactno
 
 
-}
+  const fetchRoles = async () => {
 
-  const handleSubmitForm = async (e:any)=>{
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-
-    let information: Record<string, string> = {};
-
-    const form = e.target;
-    
-    form.querySelectorAll("input").forEach((input: any) => {
-      const name = input.getAttribute("name");
-      if (name) {
-        information[name] = input.value; 
-      }
-    });
-
-    form.querySelectorAll("select").forEach((select: any) => {
-      const name = select.getAttribute("name");
-      if (name) {
-        information[name] = select.value; 
-      }
-    });
-    
-    console.log("Final Information:", information);
-    
- console.log("information:" ,information.fname)
-   try{
-    const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        Authorization:`Bearer ${Decryptor(token)}`,
-        
-      },
-      body: JSON.stringify(information)
-    }) 
-
-    if(respose.status == 200){
-      console.log("EMPLOYEE CREATED SUCCESSFULLY");
-    }
-   }
-   
-   catch(e){
-    console.error(e);
-   }
-  
-  }
-
-  const rolesList = async ()=>{
-    const token = localStorage.getItem("token");
     const cachedRoles = localStorage.getItem("roles");
     if (cachedRoles) {
-      setRoles(JSON.parse(cachedRoles)); // Load from cache
+      setRoles(JSON.parse(cachedRoles));
       return;
     }
-    try{
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/roles/list/`,{
-        method:"GET",
-        headers:{
-          "Content-Type":"application/json",
-          Authorization: `Bearer ${Decryptor(token)}`
-        }
-      })
-      if(response.status == 200){
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/roles/list/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token)}`,
+        },
+      });
+      if (response.status === 200) {
         const data = await response.json();
         setRoles(data.data);
         localStorage.setItem("roles", JSON.stringify(data.data));
       }
-    } catch(e){
+    } catch (e) {
       console.error(e);
     }
-  }
+  };
 
-  // rolesList();
+  const fetchAccounts = async () => {
+
+    const cachedRoles = localStorage.getItem("accounts");
+    if (cachedRoles) {
+      setRoles(JSON.parse(cachedRoles));
+      return;
+    }
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token)}`,
+        },
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        setAccounts(data.data);
+        console.log(accounts)
+        localStorage.setItem("Accounts", JSON.stringify(data.data));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   
+  useEffect(() => {
+    fetchRoles();
+    fetchAccounts();
+  }, []);
+
+
+
+async function Create(){
+  console.log("=================================",formData)
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Decryptor(token)}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.status === 201) {
+      alert("Created successfully!")
+     // Close the form after successful submission
+    }
+  } catch (e) {
+    console.error(e);
+    alert(e);
+  }
+
+}
+
+
+
+async function Update(){
+  
+  const empno = empData.empno;
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/update/${empno}/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Decryptor(token)}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.status === 200) {
+      alert("Updated successfully!")
+
+    }
+  } catch (e) {
+    console.error(e);
+    alert(e);
+  }
+
+}
+
+
+  const handleSubmitForm = async (e: React.FormEvent) => {
+  
+    e.preventDefault();
+    if(mode === 'edit'){
+      Update();
+    }else{
+      Create();
+    }
+    
+ 
+  };
+
+const closeModal=()=>{
+
+}
   return (
     <div>
       <form className="row" onSubmit={handleSubmitForm}>
-        <FormInput
-          id="fname"
-          type="text"
-          label="First Name"
-          classType={"col-md-4"}
-          value={currentData.fname}
-        />
-        <FormInput
-          id="mname"
-          type="text"
-          label="Middle Name"
-          classType={"col-md-4"}
-          value={currentData.mname}
-        />
-        <FormInput
-          id="lname"
-          type="text"
-          label="Last Name"
-          classType={"col-md-4"}
-          value={currentData.lname}
-        />
-        <FormInput
-          id="dateofbirth"
-          type="date"
-          label="Date of Birth"
-          classType={"col-md-3"}
-          value={currentData.dateofbirth}
-        />
+        <div className="col-md-4 mb-3">
+          <label htmlFor="fname" className="form-label">
+            First Name
+          </label>
+          <input
+            type="text"
+            name="fname"
+            className="form-control"
+            id="fname"
+            value={formData.fname}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-4 mb-3">
+          <label htmlFor="mname" className="form-label">
+            Middle Name
+          </label>
+          <input
+            type="text"
+            name="mname"
+            className="form-control"
+            id="mname"
+            value={formData.mname}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-4 mb-3">
+          <label htmlFor="lname" className="form-label">
+            Last Name
+          </label>
+          <input
+            type="text"
+            name="lname"
+            className="form-control"
+            id="lname"
+            value={formData.lname}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-3 mb-3">
+          <label htmlFor="dateofbirth" className="form-label">
+            Date of Birth
+          </label>
+          <input
+            type="date"
+            name="dateofbirth"
+            className="form-control"
+            id="dateofbirth"
+            value={formData.dateofbirth}
+            onChange={handleInputChange}
+          />
+        </div>
         <div className="col-md-2 mb-3">
-          <label htmlFor="gender" className="form-label">
-            Martital Status
+          <label htmlFor="maritalstatus" className="form-label">
+            Marital Status
           </label>
           <select
-          name="maritalstatus"
-            value={maritalStatus}
-            id="gender"
+            name="maritalstatus"
+            value={formData.maritalstatus}
+            id="maritalstatus"
             className="form-select"
-            aria-label="Default select example"
-            onChange={handleSelectChange}
+            onChange={handleInputChange}
           >
             <option value="Single">Single</option>
-            <option value="Maried1">Maried</option>
+            <option value="Married">Married</option>
             <option value="Separated">Separated</option>
             <option value="Widowed">Widowed</option>
             <option value="Divorced">Divorced</option>
@@ -237,57 +248,81 @@ const information = {
             Gender
           </label>
           <select
-          name="gender"
-            value={gender}
+            name="gender"
+            value={formData.gender}
             id="gender"
             className="form-select"
-            aria-label="Default select example"
-            onChange={handleSelectChange}
+            onChange={handleInputChange}
           >
-            <option value="0"></option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
         </div>
-        <FormInput
-          id="contact"
-          type="number"
-          label="Contact No"
-          classType={"col-md-5"}
-          value={currentData.contactno}
-        />
-        <FormInput
-          id="address"
-          type="text"
-          label="Address"
-          classType={"col-md-6"}
-          value={currentData.address}
-        />
-        <div className="col-md-6 mb-3">
-        
-        <select
-    value={position}
-    name="position"
-    id="position"
-    className="form-select"
-    aria-label="Default select example"
-    onFocus={rolesList}
-    onChange={handleSelectChange}
->
-  <option value="">Select a position</option>
-  {roles.map((role, index) => (
-    <option key={index} value={role}>{role}</option>
-  ))}
-</select>
-
+        <div className="col-md-5 mb-3">
+          <label htmlFor="contactno" className="form-label">
+            Contact No
+          </label>
+          <input
+            type="number"
+            name="contactno"
+            className="form-control"
+            id="contactno"
+            value={formData.contactno}
+            onChange={handleInputChange}
+          />
         </div>
-        {/* <FormInput
-          id="position"
-          type="text"
-          label="Position"
-          classType={"col-md-6"}
-          value={currentData.position}
-        /> */}
+        <div className="col-md-5 mb-3">
+          <label htmlFor="address" className="form-label">
+            Address
+          </label>
+          <input
+            type="text"
+            name="address"
+            className="form-control"
+            id="address"
+            value={formData.address}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-md-3 mb-3">
+          <label htmlFor="position" className="form-label">
+            Position
+          </label>
+          <select
+            name="position"
+            value={formData.position}
+            id="position"
+            className="form-select"
+            onChange={handleInputChange}
+          >
+            <option value="">Select a position</option>
+            {roles.map((role, index) => (
+              <option key={index} value={role}>
+                {role}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="col-md-4 mb-3">
+          <label htmlFor="position" className="form-label">
+            Account
+          </label>
+          <select
+            name="acctid"
+            value={selectedAccount}
+            id="acctid"
+            className="form-select"
+            onChange={handleInputChange}
+          >
+            <option value="">Select Account</option>
+            {accounts.map((account) => (
+              <option key={account.acctid} value={account.acctid}>
+                {account.acctname}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div
           className="col-md-12"
@@ -300,11 +335,11 @@ const information = {
             marginTop: "30px",
           }}
         >
-          <button type="button"  className="btn btn-danger">
+          <button type="button" onClick={closeModal} className="btn btn-danger">
             Close
           </button>
           <button type="submit" className="btn btn-primary">
-            {mode == "update" ? "Update" : "Create"}
+            {mode === "edit" ? "Update" : "Create"}
           </button>
         </div>
       </form>
