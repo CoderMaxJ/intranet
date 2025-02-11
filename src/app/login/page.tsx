@@ -1,5 +1,5 @@
 "use client";
-
+import { Encryptor,Decryptor } from "@/security";
 import { useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "/public/asset/css/login.css";
@@ -32,7 +32,7 @@ useEffect(()=>{
 setToken(localStorage.getItem("token") ?? "")
 },[token])
   async function login() {
-    const credentials = { username: username, password: password };
+    const credentials = { username:username, password: password };
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
@@ -41,7 +41,7 @@ setToken(localStorage.getItem("token") ?? "")
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+           Authorization: `Bearer ${Decryptor(token)}`
           },
           body: JSON.stringify(credentials),
         }
@@ -66,6 +66,7 @@ setToken(localStorage.getItem("token") ?? "")
   async function getToken() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/token/`, {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +76,7 @@ setToken(localStorage.getItem("token") ?? "")
 
       if (response.ok) {
         const token = await response.json();
-        localStorage.setItem("token", token.access);
+        localStorage.setItem("token", Encryptor(token.access));
       
           login();
 
@@ -97,7 +98,7 @@ setToken(localStorage.getItem("token") ?? "")
   return (
     <div className="main-div">
       <div className="login-div">
-        <Image
+        <img
           style={{ height: "75px" }}
           src="/img/Sos.png"
           alt="Staff Outsourcing Logo"
