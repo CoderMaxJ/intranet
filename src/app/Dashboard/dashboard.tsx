@@ -5,6 +5,8 @@ import Updatepassword from "../Updatepassword/updatepassword";
 import Createaccount from "../Createaccount/createaccount";
 
 export default function Dashboard() {
+  const handleReport = () => {
+  };
   return (
     <div
       className="db"
@@ -15,92 +17,83 @@ export default function Dashboard() {
         padding: "10px",
       }}
     >
-      <div style={{ marginBottom: "40px",marginTop:'15px' }}>
+      <div style={{ marginBottom: "40px", marginTop: '15px' }}>
         <img src="/img/Sos.png" height={43} />
       </div>
       <div>
-        <div className="dashboard">
+        <div className="dashboard" >
           <a
             style={{ textDecoration: "none" }}
-            className="active text-dark"
-            aria-current="page"
             href="/Workforce"
+            role="button"
+            aria-current="page"
+            aria-expanded="true"
+            aria-controls="collapseThree"
+
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              fill="currentColor text-dark"
-              className="bi bi-layout-wtf"
-              viewBox="0 0 16 16"
-              style={{ marginRight: "20px", marginLeft: "5px" }}
-            >
-              <path d="M5 1v8H1V1zM1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm13 2v5H9V2zM9 1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM5 13v2H3v-2zm-2-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1zm12-1v2H9v-2zm-6-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1z" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{ marginRight: "20px", marginLeft: "5px" }}>
+              <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
             </svg>
             Dashboard
           </a>
         </div>
 
+
+
+
         <div className="admin">
-          <div style={{ display: "flex" }}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              className="bi bi-person"
-              viewBox="0 0 16 16"
-              style={{ marginRight: "20px" }}
-            >
-              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+
+          {/* <div className="accordion" id="accordionExample"> */}
+          <div className="accordion-item d-flex w-100 " data-bs-toggle="collapse" data-bs-target="#collapseThree" style={{ padding: "10px" }}>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" className="bi bi-person-gear" viewBox="0 0 16 16"  style={{ marginRight: "20px" }}>
+              <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
             </svg>
-            {/* <div className="accordion" id="accordionExample"> */}
+            <h2 className="accordion-header" id="headingThree">
+              <button
+                className="accordion-button collapsed"
+                type="button"
 
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headingThree">
-                <button
-                  className="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree"
-                  aria-expanded="true"
-                  aria-controls="collapseThree"
-                  style={{ marginBottom: "-10px" }}
-                >
-                  Admin
-                </button>
-              </h2>
-
-              <div
-                id="collapseThree"
-                className="accordion-collapse collapse"
-                aria-labelledby="headingThree"
-                data-bs-parent="#accordionExample"
+                aria-expanded="true"
+                aria-controls="collapseThree"
+                style={{ marginBottom: "-10px" }}
               >
-                <div
-                  className="drop accordion-body"
-                  style={{
-                    marginTop: "20px",
-                  }}
-                >
-                  <ul className="list-unstyled">
-                    <li style={{ marginTop: "5px" }}>
-                      <a href="/Crud" className="text-dark">
-                        Add Employee
-                      </a>
-                    </li>
-                    <li style={{ marginTop: "10px" }}>
-                      <Updatepassword />
-                    </li>
-                  </ul>
-                  <a />
-                </div>
-              </div>
-            </div>
+                Admin
+              </button>
+            </h2>
+          </div>
+        </div>
+        <div
+          id="collapseThree"
+          className="accordion-collapse collapse"
+          aria-labelledby="headingThree"
+          data-bs-parent="#accordionExample"
+        >
+          <div
+            className="drop accordion-body"
+            style={{
+              marginTop: "20px",
+            }}
+          >
+            <ul className="list-unstyled" >
+              <li style={{ marginTop: "5px", marginLeft: '40px' }}>
+                <a href="/Crud" className="text-dark" style={{ textDecoration: 'none' }}>
+                  Add Employee
+                </a>
+              </li>
+              <li style={{ marginTop: "10px", marginLeft: '40px' }}>
+                <Updatepassword />
+              </li>
+            </ul>
+            <a />
           </div>
         </div>
 
-        <div className="generate text-dark">
+
+
+
+        <div className="generate text-dark" role="button"
+          aria-pressed="false" onClick={handleReport}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -114,6 +107,7 @@ export default function Dashboard() {
               d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"
             />
           </svg>
+
           <Generatereport />
         </div>
 
@@ -125,7 +119,7 @@ export default function Dashboard() {
             fill="currentColor"
             className="bi bi-person-plus"
             viewBox="0 0 16 16"
-            style={{fontSize:'30px'}}
+            style={{ fontSize: '30px' }}
           >
             <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
             <path
@@ -136,7 +130,7 @@ export default function Dashboard() {
           <Createaccount />
         </div>
 
-        <div className="dashboard">
+        <div className="dashboard" >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -144,7 +138,7 @@ export default function Dashboard() {
             fill="currentColor"
             className="bi bi-box-arrow-right"
             viewBox="0 0 16 16"
-            style={{marginRight:'20px'}}
+            style={{ marginRight: '20px' }}
           >
             <path
               fillRule="evenodd"

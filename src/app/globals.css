@@ -651,22 +651,41 @@ tbody td {
 }
 
 /* //CRUD|| */
+.search-input {
+  margin-right: 20px;
+  margin-left: 310px;
+  border-radius: 4px;
+  padding-inline: 60px;
+  padding-left: 20px;
+  border: 0;
+}
+
+.select-departments {
+  border-radius: 4px;
+  padding-left: 20px;
+}
+
+.employee-information {
+  margin-left: 300px;
+}
+
 
 .crud-maindiv {
-  background-color: #a1a1a1;
+  background-color: #266bc5;
   height: 100vh;
   width: 100vw;
   position: absolute;
 }
 
 .crud-header {
-  background-color: #333;
+  background-color: #1167b3;
   color: white;
   width: 96vw;
   margin-right: 40px;
   margin-left: 40px;
   padding: 10px;
   position: sticky;
+  display: flex;
   top: 0;
   z-index: 10;
 }
@@ -674,15 +693,18 @@ tbody td {
 
 .gobackbutton {
   position: absolute;
+  top: 15px;
+  right: 10px;
   width: 5%;
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 5px;
   box-shadow: none;
   outline: none;
   border: none;
   color: white;
-  background-color: #008dcc; 
+  background-color: hsl(220, 2%, 32%); 
   margin-left: 66.8vw;
+  
 }
 
 .gobackbutton:active {
@@ -698,6 +720,7 @@ tbody td {
   background: none;
  
 }
+
 .add {
   font-size: medium;
   padding: 10px;
@@ -705,7 +728,8 @@ tbody td {
   margin-right: 200px;
   border-radius: 2px;
   outline: none;
-  margin-left: 30px;
+  margin-left: 5px;
+  border-radius: 4px;
   border: none;
   box-shadow: none;
   background-color: #039422;
@@ -872,8 +896,6 @@ tbody td {
   display: flex;
   margin-top: 20px;
   align-items: center;
-  padding: 10px;
-  padding-bottom: 10px;
   margin-left: 5px;
   color: black;
   border-radius: 2px;

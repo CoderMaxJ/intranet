@@ -108,7 +108,7 @@ export default function Updatepassword() {
   return (
     <div>
       {/* Link to open modal */}
-      <a href="#" className="text-dark" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
+      <a href="#" className="text-dark" data-bs-toggle="modal" data-bs-target="#updatePasswordModal" style={{textDecoration:'none'}}>
         Update Password
       </a>
 

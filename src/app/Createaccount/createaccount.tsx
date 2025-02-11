@@ -44,7 +44,7 @@ export default function Updatepassword() {
             <div className="modal-body" style={{ marginLeft: "35px" }}>
               <form>
                 <div className="updatepass-label">
-                  <label htmlFor="password">New Password</label>
+                  <label htmlFor="password">Username</label>
                   <div style={{ position: "relative" }}>
                     <input
                       className="updatepassword-input"
@@ -57,7 +57,7 @@ export default function Updatepassword() {
                 </div>
 
                 <div className="updatepass-label">
-                  <label htmlFor="confirmpassword">Confirm Password</label>
+                  <label htmlFor="confirmpassword">Password</label>
                   <div style={{ position: "relative" }}>
                     <input
                       className="updatepassword-input"
