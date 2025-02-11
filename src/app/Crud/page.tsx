@@ -128,14 +128,14 @@ export default function CreateUD() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                padding: '10px',
+                padding: '20px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 position: 'sticky',
                 top: 0,
                 zIndex: 10,
-                color: 'white',
+                color: 'white'
               }}
             >
               <button
@@ -144,6 +144,7 @@ export default function CreateUD() {
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
               >
+                
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -151,6 +152,7 @@ export default function CreateUD() {
                   fill="#ffffff"
                   className="bi bi-plus-circle-fill"
                   viewBox="0 0 16 16"
+                  style={{marginBottom:'5px', marginRight:'5px'}}
                 >
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                 </svg>

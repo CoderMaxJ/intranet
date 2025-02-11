@@ -651,6 +651,9 @@ tbody td {
 }
 
 /* //CRUD|| */
+.row {
+  padding-top: 40px;
+}
 .search-input {
   margin-right: 20px;
   margin-left: 310px;
