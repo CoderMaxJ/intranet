@@ -3,10 +3,27 @@ import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
 import Createaccount from "../Createaccount/createaccount";
 import Viewreports from "../Viewreports/page";
+import { useState } from "react";
+import { IdentifyUser } from "../user_identifier";
 
 
 export default function Dashboard() {
   const privilege = localStorage.getItem("privilege");
+  const [user_privilege, setUserPrivilege] = useState([""]);
+
+  const user_hash_privilege = localStorage.getItem("user_privilege");
+  
+
+
+
+  if(user_hash_privilege){
+      const array_privilege = IdentifyUser(user_hash_privilege);
+      array_privilege.forEach((data)=>{
+        user_privilege.push(data);
+      })
+  }
+
+
   const handleReport = () => {
   };
 
@@ -32,10 +49,8 @@ export default function Dashboard() {
           Dashboard
 
         </div>
-
-
-
-        {privilege === "super_admin" && (
+        
+        {user_privilege.includes("manage_users") && (
           <div>
 
             <div className="admin">
@@ -76,7 +91,7 @@ export default function Dashboard() {
                   <li style={{ marginTop: "5px", marginLeft: '40px' }}>
 
                     <a href="#" className="text-dark" style={{ textDecoration: 'none' }}>
-                     Accounts
+                      Accounts
                     </a>
                     <li>
                       <a href="/Crud" className="text-dark" style={{ textDecoration: 'none' }}>
