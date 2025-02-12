@@ -2,6 +2,7 @@
 import { Encryptor, Decryptor } from "@/security";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmp";
 import { useEffect, useState } from "react";
 import SuccessMessage from "../component/Successmessage";
@@ -158,11 +159,12 @@ export default function CreateUD() {
   }
 
   return (
-    <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7" }}>
+    <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display:'flex' }}>
       {isDelete && (
         <SuccessMessage/>
       )}
-      
+       <Dashboard />
+    
       <div>
         <div>
           <div>
@@ -176,7 +178,6 @@ export default function CreateUD() {
                 padding: '20px',
                 display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'center',
                 position: 'sticky',
                 top: 0,
                 zIndex: 10,
@@ -292,11 +293,11 @@ export default function CreateUD() {
           </div>
         </div>
 
-        <div style={{ overflowY: 'auto', maxHeight: '900px' }}>
+        <div className="managereport" style={{ overflowY: 'auto', maxHeight: '900px'}}>
           <table
             className="table table-striped table-hover"
             id="table-employee"
-            style={{ marginLeft: "40px", marginRight: "40px", width: "96vw" }}
+            style={{ marginLeft: 0, marginRight: "40px", width: "88.4vw"}}
           >
             <thead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#266bc5' }}>
               <tr>

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Encryptor, Decryptor } from "@/security";
 import Generatereport from "../Generatereport/Daterange";
+import Dashboard from "../Dashboard/dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 interface BreaksReport {
@@ -33,14 +34,14 @@ export default function Daterange() {
         const fetchData = async () => {
             try {
                 setError(""); // Reset error before making request
-                const account_id = localStorage.getItem("account_id");
+                const account_id = localStorage.getItem("user_id");
                 const token = localStorage.getItem("token");
 
                 // Replace with your desired endpoint and date range or pass in parameters
                 const start = "2025-01-01";  // Example start date
                 const end = "2025-01-31";    // Example end date
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${account_id}/${start}/${end}/`,
+                    `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/${start}/${end}/`,
                     {
                         method: "GET",
                         headers: {
@@ -71,12 +72,16 @@ export default function Daterange() {
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
-            <div className="container">
 
+            <div className="container">
+                <div  className="viewdashboard">
+                <Dashboard />
                 <Generatereport />
+                </div>
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
-                    <div className="table-responsive" style={{ height: '100vh', margin: '0 -290px', marginRight: "-290px", marginLeft: '-280px' }}>
+                    <div style={{ height: '99vh', marginLeft: '80px', width: '79vw' }}>
+
                         <div>
                             <header style={{
                                 backgroundImage: "url('/img/Breaktool.png')",
@@ -90,7 +95,9 @@ export default function Daterange() {
                                 position: 'sticky',
                                 top: 0,
                                 zIndex: 10,
-                                color: 'white'
+                                color: 'white',
+                                marginLeft:'-80px',
+                                width:'88.5vw'
                             }}>
 
                                 <input
@@ -138,46 +145,48 @@ export default function Daterange() {
 
                             </header>
                         </div>
-                        <table className="table table-striped table-border">
-                            <thead>
-                                <tr >
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout1</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob1</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchin</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchout</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob3</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin2</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout2</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob2</th>
-                                    <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div style={{ overflowY: 'auto', height: '870px', marginLeft:'-81.1px', marginRight:'-105px' }}>
+                            <table className="table table-striped table-bordered" style={{ position: 'sticky', top: 0, zIndex: 1, width:'87.9vw'}}>
+                                <thead>
+                                    <tr >
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout1</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob1</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchin</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchout</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob3</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin2</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout2</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob2</th>
+                                        <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                {data
-                                    .filter((report) => report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm))
-                                    .map((report, index) => (
-                                        <tr key={index}>
-                                            <td>{report.name}</td>
-                                            <td>{report.login}</td>
-                                            <td>{report.brkin1}</td>
-                                            <td>{report.brkout1}</td>
-                                            <td>{report.ob1}</td>
-                                            <td>{report.lunchin}</td>
-                                            <td>{report.lunchout}</td>
-                                            <td>{report.ob3}</td>
-                                            <td>{report.brkin2}</td>
-                                            <td>{report.brkout2}</td>
-                                            <td>{report.ob2}</td>
-                                            <td>{report.logout}</td>
-                                        </tr>
+                                    {data
+                                        .filter((report) => report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm))
+                                        .map((report, index) => (
+                                            <tr key={index}>
+                                                <td>{report.name}</td>
+                                                <td>{report.login}</td>
+                                                <td>{report.brkin1}</td>
+                                                <td>{report.brkout1}</td>
+                                                <td>{report.ob1}</td>
+                                                <td>{report.lunchin}</td>
+                                                <td>{report.lunchout}</td>
+                                                <td>{report.ob3}</td>
+                                                <td>{report.brkin2}</td>
+                                                <td>{report.brkout2}</td>
+                                                <td>{report.ob2}</td>
+                                                <td>{report.logout}</td>
+                                            </tr>
 
-                                    ))}
-                            </tbody>
-                        </table>
+                                        ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 ) : (
                     <p>No data to display</p>
