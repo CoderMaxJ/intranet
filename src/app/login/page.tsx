@@ -1,10 +1,11 @@
 "use client";
-import { Encryptor,Decryptor } from "@/security";
-import { useEffect, useState} from "react";
+import { Encryptor, Decryptor } from "@/security";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "/public/asset/css/login.css";
 import Image from "next/image";
-import { redirect } from 'next/navigation'
+import { IdentifyUser } from "../user_identifier";
 
 
 
@@ -12,48 +13,46 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [token, setToken] = useState<string>("");
-  const [isLogged,setLog] = useState(false)
-
-
-
-useEffect(() => {
-  const storedToken = localStorage.getItem("token");
-  setToken(storedToken ?? "");
+  const [isLogged, setLog] = useState(false);
+  const router = useRouter();
   
-  if(isLogged){
-    redirect("/intranet")
-  }
-  
-  // If storedToken is null, fallback to an empty string
-}, [isLogged]);
+  useEffect(() => {
+    if (typeof window !== "undefined" ) {
+      const token = localStorage.getItem("token");
+      if (token) {
+        setLog(true);
+      }
+    }
+  }, []);
 
-useEffect(()=>{
-setToken(localStorage.getItem("token") ?? "")
-},[token])
+  useEffect(() => {
+    if (isLogged) {
+      router.push("/intranet");
+    }
+  }, [isLogged, router]);
+
+
   async function login() {
-    const credentials = { username:username, password: password };
+    const credentials = { username, password };
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/intranet/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-           Authorization: `Bearer ${Decryptor(token)}`
-          },
-          body: JSON.stringify(credentials),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/intranet/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token)}`,
+        },
+        body: JSON.stringify(credentials),
+      });
 
       if (response.status === 200) {
         const res = await response.json();
-        localStorage.setItem("account_id", res.account_id);
-        localStorage.setItem("privilege",res.privilege);
-       
-     setLog(true);
-        
+        console.log("asdsdsd")
+       console.log(res.user_privilege);
+        localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
+        localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
+        localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
+        setLog(true);
       } else {
         const res = await response.json();
         setError(res.message || "Login failed. Please try again.");
@@ -66,26 +65,23 @@ setToken(localStorage.getItem("token") ?? "")
   async function getToken() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/token/`, {
-
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ un: username, password: password }),
+        body: JSON.stringify({ un: username, password }),
       });
 
       if (response.ok) {
         const token = await response.json();
         localStorage.setItem("token", Encryptor(token.access));
-      
-          login();
-
+        localStorage.setItem("refresh_token", Encryptor(token.access));
+        login();
       } else {
-       
-        setError("Invalid credentials");
+        console.log("sdsd")
+     
       }
     } catch (error) {
-      console.error("Error fetching token:", error);
       setError("Error fetching token");
     }
   }
@@ -98,7 +94,7 @@ setToken(localStorage.getItem("token") ?? "")
   return (
     <div className="main-div">
       <div className="login-div">
-        <img
+        <Image
           style={{ height: "75px" }}
           src="/img/Sos.png"
           alt="Staff Outsourcing Logo"
@@ -117,7 +113,6 @@ setToken(localStorage.getItem("token") ?? "")
               required
             />
           </div>
-
           <div>
             <label htmlFor="password">Password:</label>
             <div style={{ position: "relative", display: "flex" }}>
@@ -139,4 +134,5 @@ setToken(localStorage.getItem("token") ?? "")
       </div>
     </div>
   );
+
 }
