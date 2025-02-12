@@ -38,7 +38,7 @@ function LogsDataTable() {
               method: "GET",
               headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${Decryptor(token)}`,
+                Authorization: `Bearer ${Decryptor(token || "")}`,
               },
             }
           );

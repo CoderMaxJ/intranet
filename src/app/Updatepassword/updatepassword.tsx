@@ -68,7 +68,7 @@ export default function Updatepassword() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${Decryptor(token)}`,
+              Authorization: `Bearer ${Decryptor(token || "")}`,
             },
             body: JSON.stringify(newAccount),
           }

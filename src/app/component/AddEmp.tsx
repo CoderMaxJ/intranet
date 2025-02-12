@@ -58,7 +58,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token)}`,
+          Authorization: `Bearer ${Decryptor(token || "")}`,
         },
       });
       if (response.status === 200) {
@@ -83,7 +83,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token)}`,
+          Authorization: `Bearer ${Decryptor(token || "")}`,
         },
       });
       if (response.status === 200) {
@@ -112,7 +112,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token)}`,
+          Authorization: `Bearer ${Decryptor(token || "")}`,
         },
         body: JSON.stringify(formData),
       });
@@ -138,7 +138,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token)}`,
+          Authorization: `Bearer ${Decryptor(token || "")}`,
         },
         body: JSON.stringify(formData),
       });

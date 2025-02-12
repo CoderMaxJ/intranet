@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Encryptor,Decryptor } from "@/security";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 interface BreaksReport {
   name: string;
@@ -36,7 +37,7 @@ export default function Daterange() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-           Authorization: `Bearer ${Decryptor(token)}`
+           Authorization: `Bearer ${Decryptor(token || "")}`
           },
         }
       );
@@ -106,16 +107,7 @@ export default function Daterange() {
 
   
     <div>
-      <div>
-        <a
-          href="#"
-          className="text-primary text-dark"
-          data-bs-toggle="modal"
-          data-bs-target="#reportModal"
-        >
-          Reports
-        </a>
-      </div>
+      
 
       <div
         className="modal fade"

@@ -1,13 +1,15 @@
 "useclient";
 import Logout from "../Logout/logout";
-import Generatereport from "../Generatereport/page";
 import Updatepassword from "../Updatepassword/updatepassword";
 import Createaccount from "../Createaccount/createaccount";
+import Viewreports from "../Viewreports/page";
+
 
 export default function Dashboard() {
   const privilege = localStorage.getItem("privilege");
   const handleReport = () => {
   };
+
   return (
     <div
       className="db"
@@ -51,9 +53,9 @@ export default function Dashboard() {
 
                     aria-expanded="true"
                     aria-controls="collapseThree"
-                    style={{ marginBottom: "-10px" }}
+                    style={{ marginBottom: "-5px" }}
                   >
-                    Accounts
+                    Manage
                   </button>
                 </h2>
               </div>
@@ -73,8 +75,8 @@ export default function Dashboard() {
                 <ul className="list-unstyled" >
                   <li style={{ marginTop: "5px", marginLeft: '40px' }}>
 
-                    <a href="/Crud" className="text-dark" style={{ textDecoration: 'none' }}>
-                      Manage
+                    <a href="#" className="text-dark" style={{ textDecoration: 'none' }}>
+                     Accounts
                     </a>
                     <li>
                       <a href="/Crud" className="text-dark" style={{ textDecoration: 'none' }}>
@@ -131,27 +133,29 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      {/* aria-pressed="false" onClick={handleReport}> */}
 
-      <div className="generate text-dark" role="button"
-        aria-pressed="false" onClick={handleReport}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor text-dark"
-          className="bi bi-graph-up "
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"
-          />
-        </svg>
-
-        <Generatereport />
+      <div className="generate text-dark">
+        <a href="/Viewreports">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-graph-up"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"
+            />
+          </svg>
+          Reports
+        </a>
       </div>
 
       <div className="generate text-dark">
+
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -167,7 +171,9 @@ export default function Dashboard() {
             d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"
           />
         </svg>
+
         <Createaccount />
+
       </div>
 
       <div className="dashboard" >

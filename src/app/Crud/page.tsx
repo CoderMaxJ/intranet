@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import AddEmp from "../component/AddEmp";
 import { useEffect, useState } from "react";
+import SuccessMessage from "../component/Successmessage";
 
 
 interface Information {
@@ -17,7 +18,6 @@ interface Information {
   address: string;
   contactno: string;
   position: string;
-
 }
 
 export default function CreateUD() {
@@ -25,10 +25,12 @@ export default function CreateUD() {
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
   const [employees, setEmployees] = useState<Information[]>([]);
-  const [hide,hidden]=useState(true);
-    const [searchTerm, setSearchTerm] = useState("");
+  const [hide, hidden] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const [departmentSearchTerm, setDepartmentSearch] = useState("");
-
+  const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
+  const [isChecked, setIsChecked] =useState(false);
+  const [isDelete, setIsDeleted] =useState(false);
   const token = localStorage.getItem("token")
 
   useEffect(() => {
@@ -39,6 +41,35 @@ export default function CreateUD() {
       GetEmployee();
     }
   }, [employees, searchTerm]);
+
+  const handleCheckboxChange = (empno: number) => {
+    setSelectedEmployees((prevSelected) => {
+      if (prevSelected.includes(empno)) {
+        return prevSelected.filter((id) => id !== empno); // Deselect the employee
+      } else {
+        return [...prevSelected, empno]; // Select the employee
+      }
+    });
+  };
+
+  const handleSelectAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      setSelectedEmployees(employees.map((emp) => emp.empno)); // Select all employees
+    } else {
+      setSelectedEmployees([]); // Deselect all employees
+    }
+  };
+
+  // Check if all employees are selected
+  const isAllSelected = employees.length && selectedEmployees.length === employees.length;
+
+  
+
+  const handleDeleteMultiple = (selectedEmployees: Information[]) => {
+    selectedEmployees.forEach((employee) => {
+      handleDelete(employee.fname, employee.lname, employee.empno);
+    });
+  };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value.toLowerCase());
@@ -57,7 +88,7 @@ export default function CreateUD() {
       method: "GET",
       headers: {
         "Content-Type": "apllication/json",
-        Authorization: `Bearer ${Decryptor(token)}`
+        Authorization: `Bearer ${Decryptor(token || "")}`
       }
     })
 
@@ -69,41 +100,51 @@ export default function CreateUD() {
     }
 
   }
+  const handleDelete = (firstname: string, lastname: string, empno: number) => {
+    if (firstname && lastname && empno ) {
+      const account_id = empno; // Assuming empno is the id or you have a way to get the id
+      console.log(`Deleted account for ${firstname} ${lastname} (Employee No: ${empno}, ID: ${account_id})`);
+    } else {
+      console.log("Invalid data provided, deletion not performed.");
+    }
+    setIsDeleted(true);
 
-  const handleDelete = (firstname:string,lastname:string,empno:number)=>{
-   const response = confirm("Are you sure you want to delete "+ ""+ firstname +" "+lastname);
-   if(response == true){
-    Delete();
-   }
+  
+  
+  
+        // You can optionally prompt for confirmation
+    // const response = confirm("Are you sure you want to delete " + firstname + " " + lastname);
+    // if (response == true) {
+    //   Delete();
+    // }
     
-    async function Delete(){
-      
+
+
+    async function Delete() {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${Decryptor(token)}`,
+            Authorization: `Bearer ${Decryptor(token || "")}`,
           },
         });
-    
+
         if (response.status === 200) {
-          alert("Deleted successfully!")
+          alert("Deleted successfully!");
         }
       } catch (e) {
         console.error(e);
         alert(e);
       }
     }
-    
-    }
-
+  }
 
   const handleData = (data: any) => {
     console.log("data", data);
     setCurrentMode("edit");
-    
-    let {empno,fname,mname,lname,dateofbirth,contactno,address,position,gender,maritalstatus} = data;
+
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus } = data;
     let currentData = {
       empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus
     };
@@ -112,12 +153,16 @@ export default function CreateUD() {
     setEmpData(currentData);
   };
 
-  const closeModal=()=>{
+  const closeModal = () => {
     hidden(true);
   }
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7" }}>
+      {isDelete && (
+        <SuccessMessage/>
+      )}
+      
       <div>
         <div>
           <div>
@@ -138,7 +183,7 @@ export default function CreateUD() {
                 color: 'white'
               }}
             >
-             
+
 
               <input
                 className="search-input"
@@ -152,7 +197,7 @@ export default function CreateUD() {
                   borderRadius: '5px',
                   border: '1px solid #ccc',
                   marginRight: '20px',
-                  marginLeft:'600px',
+                  marginLeft: '600px',
                   flexGrow: 1,
                 }}
               />
@@ -190,7 +235,7 @@ export default function CreateUD() {
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
               >
-                
+
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -198,11 +243,11 @@ export default function CreateUD() {
                   fill="#ffffff"
                   className="bi bi-plus-circle-fill"
                   viewBox="0 0 16 16"
-                  style={{marginBottom:'5px', marginRight:'5px'}}
+                  style={{ marginBottom: '5px', marginRight: '5px' }}
                 >
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                 </svg>
-                
+
                 Add New Employee
               </button>
               <button
@@ -236,27 +281,34 @@ export default function CreateUD() {
           >
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
-              
-          
-               
-                  <AddEmp empData={empData} mode={currentMode}/>
-                
-                
+
+
+
+                <AddEmp empData={empData} mode={currentMode} />
+
+
               </div>
             </div>
           </div>
         </div>
 
         <div style={{ overflowY: 'auto', maxHeight: '900px' }}>
-
-
           <table
             className="table table-striped table-hover"
             id="table-employee"
             style={{ marginLeft: "40px", marginRight: "40px", width: "96vw" }}
           >
             <thead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#266bc5' }}>
-              <tr >
+              <tr>
+                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>
+                   <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    checked={isAllSelected}
+                    onChange={handleSelectAllChange}
+                  />
+                </th>
                 <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>First Name</th>
                 <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Middle Name</th>
@@ -276,6 +328,14 @@ export default function CreateUD() {
                   `${info.empno} ${info.fname} ${info.mname} ${info.lname} ${info.position} `.toLowerCase().includes(searchTerm) && (departmentSearchTerm === "0" || info.position.toLowerCase().includes(departmentSearchTerm.toLowerCase()))
                 ).map((info, index) => (
                   <tr key={info.empno}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={selectedEmployees.includes(info.empno)}
+                        onChange={() => handleCheckboxChange(info.empno)}
+                      />
+                    </td>
                     <td>{info.empno}</td>
                     <td>{info.fname}</td>
                     <td>{info.mname}</td>
@@ -287,45 +347,45 @@ export default function CreateUD() {
                     <td>{info.position}</td>
                     <td>{info.contactno}</td>
 
-                <td>
-                  <button
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
-                          data-bs-whatever="@mdo"
-                          type="button"
-                          className="edit-button"
-                        onClick={(e)=>handleData(info)}
-                          style={{ cursor: "pointer" }}
-                        >
+                    <td>
+                      <button
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo"
+                        type="button"
+                        className="edit-button"
+                        onClick={(e) => handleData(info)}
+                        style={{ cursor: "pointer" }}
+                      >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
-                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                          <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                      </svg> 
-                  </button>
-                  <button
-                    type="button"
-                    className="delete-button"
-                    onClick={()=>handleDelete(info.fname,info.lname,info.empno)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
-                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                    </svg> 
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={11} className="text-center">
-                No employees found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-        </table>
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                          <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        className="delete-button"
+                        onClick={() => handleDelete(info.fname, info.lname, info.empno)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
+                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={11} className="text-center">
+                    No employees found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
     </div>
   );
