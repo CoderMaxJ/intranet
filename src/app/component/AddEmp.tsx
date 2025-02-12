@@ -16,6 +16,7 @@ interface AddEmployeeData {
   contactno: string;
   address: string;
   acctid: number;
+  un:string;
 }
 
 interface AddEmpProps {
@@ -31,6 +32,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
+  const [breaktool_user,setBreaktoolUser]=useState("");
 
   useEffect(() => {
     if (empData) {
@@ -39,12 +41,36 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   }, [empData]);
 
+  // console.log(formData)
+
+ 
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     SetSelectedAccount(e.target.value);
+   
+   
+    const getInitials = (name:string) => {
+      if (!name || typeof name !== "string") return "";
+      return name
+        .trim()
+        .split(/\s+/) 
+        .map((word) => word.charAt(0).toUpperCase()) 
+        .join(""); 
+    };
+      
+    
+  setBreaktoolUser(getInitials(formData.fname));
+
+  setFormData((prev) => ({ ...prev, un: breaktool_user+"."+formData.lname}));
+
   };
 
+const updateValue=()=>{
+alert("");
+}
 
   const fetchRoles = async () => {
 
@@ -106,7 +132,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
 
   async function Create() {
-    console.log("=================================", formData)
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
         method: "POST",
@@ -154,7 +180,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   }
 
-
+console.log(formData);
   const handleSubmitForm = async (e: React.FormEvent) => {
 
     e.preventDefault();
@@ -197,6 +223,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="fname"
             value={formData.fname}
             onChange={handleInputChange}
+            placeholder="Juan"
           />
         </div>
         <div className="col-md-4 mb-3">
@@ -210,6 +237,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="mname"
             value={formData.mname}
             onChange={handleInputChange}
+            placeholder="Montenegro"
           />
         </div>
         <div className="col-md-4 mb-3">
@@ -223,6 +251,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="lname"
             value={formData.lname}
             onChange={handleInputChange}
+            placeholder="Dela Cruz"
           />
         </div>
         <div className="col-md-3 mb-3">
@@ -283,6 +312,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="contactno"
             value={formData.contactno}
             onChange={handleInputChange}
+            placeholder="+63 02 6645 9723"
           />
         </div>
         <div className="col-md-5 mb-3">
@@ -296,6 +326,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="address"
             value={formData.address}
             onChange={handleInputChange}
+            placeholder="Zapatera, Cebu City"
           />
         </div>
         <div className="col-md-3 mb-3">
@@ -337,7 +368,22 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             ))}
           </select>
         </div>
-
+        <div className="col-md-5 mb-3">
+          <label htmlFor="address" className="form-label">
+            Generated username for Breaktool
+          </label>
+          <input
+            readOnly
+            disabled={true}
+            type="text"
+            name="un"
+            className="form-control"
+            id="un"
+            value={`${breaktool_user}${formData.lname ? `.${formData.lname}` : ""}`}
+            onChange={handleInputChange}
+            placeholder='e.g. "J.Sopeta" '
+          />
+        </div>
         <div
           className="col-md-12"
           style={{

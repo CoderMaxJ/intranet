@@ -33,14 +33,14 @@ export default function Daterange() {
         const fetchData = async () => {
             try {
                 setError(""); // Reset error before making request
-                const account_id = localStorage.getItem("account_id");
+                const account_id = localStorage.getItem("user_id");
                 const token = localStorage.getItem("token");
 
                 // Replace with your desired endpoint and date range or pass in parameters
                 const start = "2025-01-01";  // Example start date
                 const end = "2025-01-31";    // Example end date
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${account_id}/${start}/${end}/`,
+                    `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/${start}/${end}/`,
                     {
                         method: "GET",
                         headers: {

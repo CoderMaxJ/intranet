@@ -93,11 +93,12 @@ export default function Dashboard() {
                     <a href="#" className="text-dark" style={{ textDecoration: 'none' }}>
                       Accounts
                     </a>
+                    </li>
+
                     <li>
                       <a href="/Crud" className="text-dark" style={{ textDecoration: 'none' }}>
                         Manage Employee
                       </a>
-                    </li>
                   </li>
                 </ul>
                 <a />
