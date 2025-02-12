@@ -29,7 +29,7 @@ export default function Daterange() {
   const handleGenerateAndDownloadCSV = async () => {
     try {
       setError("");
-      const account_id = localStorage.getItem("account_id");
+      const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${account_id}/${start}/${end}/`,

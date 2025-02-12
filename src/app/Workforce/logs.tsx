@@ -31,9 +31,9 @@ function LogsDataTable() {
     const timer = setTimeout(async () => {
       async function getLogs() {
         try {
-          const account_id = await localStorage.getItem("account_id");
+          const account_id = await localStorage.getItem("user_id");
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND}/logs/${account_id}/`,
+            `${process.env.NEXT_PUBLIC_BACKEND}/logs/${Decryptor(account_id || "")}/`,
             {
               method: "GET",
               headers: {
