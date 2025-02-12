@@ -31,14 +31,14 @@ function BreakDataTable() {
     const token = localStorage.getItem("token");
     async function getBreakData() {
       try {
-        const account_id = await localStorage.getItem("account_id");
+        const account_id = await localStorage.getItem("user_id");
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${account_id}/`,
+          `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${ Decryptor(account_id || "")}/`,
           {
             method: "GET",
             headers: {
               "Content-type": "application/json",
-              Authorization: `Bearer ${Decryptor(token)}`,
+              Authorization: `Bearer ${Decryptor(token || "")}`,
             },
           }
         );

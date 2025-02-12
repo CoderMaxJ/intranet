@@ -68,7 +68,7 @@ export default function Updatepassword() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${Decryptor(token)}`,
+              Authorization: `Bearer ${Decryptor(token || "")}`,
             },
             body: JSON.stringify(newAccount),
           }
@@ -108,7 +108,7 @@ export default function Updatepassword() {
   return (
     <div>
       {/* Link to open modal */}
-      <a href="#" className="text-dark" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
+      <a href="#" className="text-dark" data-bs-toggle="modal" data-bs-target="#updatePasswordModal" style={{textDecoration:'none'}}>
         Update Password
       </a>
 
@@ -219,18 +219,6 @@ export default function Updatepassword() {
                     </button>
                   </div>
                   <div>
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                      style={{ marginTop: "15px" }}
-                    >
-                      <i
-                        className="bi bi-reply-fill"
-                        style={{ marginRight: "5px", fontSize: "16px" }}
-                      ></i>
-                      Back
-                    </button>
                   </div>
                 </div>
               </form>

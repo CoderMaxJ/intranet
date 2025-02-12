@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
+import { Encryptor,Decryptor } from "@/security";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 interface BreaksReport {
   name: string;
@@ -27,7 +29,7 @@ export default function Daterange() {
   const handleGenerateAndDownloadCSV = async () => {
     try {
       setError("");
-      const account_id = localStorage.getItem("account_id");
+      const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${account_id}/${start}/${end}/`,
@@ -35,7 +37,7 @@ export default function Daterange() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+           Authorization: `Bearer ${Decryptor(token || "")}`
           },
         }
       );
@@ -105,16 +107,7 @@ export default function Daterange() {
 
   
     <div>
-      <div>
-        <a
-          href="#"
-          className="text-primary text-dark"
-          data-bs-toggle="modal"
-          data-bs-target="#reportModal"
-        >
-          Reports
-        </a>
-      </div>
+      
 
       <div
         className="modal fade"
@@ -129,7 +122,7 @@ export default function Daterange() {
               <h5
                 className="modal-title"
                 id="reportModalLabel"
-                style={{ marginLeft: "100px" }}
+                style={{ marginLeft: "100px"}}
               >
                 Daily Reports
               </h5>
@@ -141,7 +134,7 @@ export default function Daterange() {
               ></button>
             </div>
             <div className="modal-body">
-              {error && <p style={{ color: "red" }}>{error}</p>}
+              {error && <p style={{ color: "red", textAlign:'center' }}>{error}</p>}
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -187,20 +180,6 @@ export default function Daterange() {
                   style={{ marginLeft: "30px", width: "15vw" }}
                 >
                   Generate Report
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-bs-dismiss="modal"
-                  style={{
-                    display: "block",
-                    marginLeft: "30px",
-                    marginTop: "10px",
-                    width: "15vw",
-                  }}
-                >
-                 <i className="bi bi-reply-fill" style={{marginRight:'5px'}}></i>
-                  Back
                 </button>
               </form>
             </div>
