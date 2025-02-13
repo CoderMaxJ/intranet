@@ -11,6 +11,7 @@ export default function TableComponents(data: any, filter: string) {
   useEffect(() => {
     // console.log("report", data);
   }, [empData, filter]);
+  
 
   const formatTime = (time: number) => {
     const hours = Math.floor(time / 3600);

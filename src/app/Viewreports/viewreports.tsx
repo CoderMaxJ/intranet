@@ -96,7 +96,7 @@ export default function Daterange() {
                                 top: 0,
                                 zIndex: 10,
                                 color: 'white',
-                                marginLeft: '-80px',
+                                marginLeft: '-78px',
                                 width: '88.5vw'
                             }}>
                                 <div className="search-div">
@@ -142,30 +142,12 @@ export default function Daterange() {
                                     </svg>
                                     Generate  Reports
                                 </a>
-
-                                <div>
-                                    <button className="viewback" onClick={() => window.history.back()}>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            fill="currentColor"
-                                            className="bi bi-reply-fill"
-                                            viewBox="0 0 16 16"
-                                            style={{ marginBottom: '5px' }}
-                                        >
-                                            <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
-                                        </svg>{" "}
-                                        Back
-                                    </button>
-                                </div>
-
                             </header>
                         </div>
-                        <div style={{ overflowY: 'auto', height: '870px', marginLeft: '-81.1px', marginRight: '-105px' }}>
+                        <div style={{ overflowY: 'auto', height: '880px', marginRight: '-105px', marginLeft:'-79px' }}>
                             <table className="table table-striped table-bordered" style={{ position: 'sticky', top: 0, zIndex: 1, width: '87.9vw' }}>
                                 <thead>
-                                    <tr >
+                                    <tr>
                                         <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
                                         <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
                                         <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>

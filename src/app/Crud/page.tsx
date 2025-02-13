@@ -6,7 +6,6 @@ import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmp";
 import { useEffect, useState } from "react";
 import SuccessMessage from "../component/Successmessage";
-import { useRouter } from "next/navigation";
 
 
 interface Information {
@@ -34,10 +33,6 @@ export default function CreateUD() {
   const [isChecked, setIsChecked] = useState(false);
   const [isDelete, setIsDeleted] = useState(false);
   const token = localStorage.getItem("token")
-  const [openform,setOpenForm]=useState(false);
-
-
-  const router = useRouter();
 
   useEffect(() => {
     if (employees) {
@@ -115,6 +110,17 @@ export default function CreateUD() {
     }
     setIsDeleted(true);
 
+
+
+
+    // You can optionally prompt for confirmation
+    // const response = confirm("Are you sure you want to delete " + firstname + " " + lastname);
+    // if (response == true) {
+    //   Delete();
+    // }
+
+
+
     async function Delete() {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`, {
@@ -152,16 +158,12 @@ export default function CreateUD() {
     hidden(true);
   }
 
-  const triggerForm = ()=>{
-    setOpenForm(true);
-    
-  }
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: 'flex' }}>
       {isDelete && (
         <SuccessMessage />
       )}
-      <Dashboard />
+     <div className="db-employee"><Dashboard /></div>
 
       <div>
         <div>
@@ -173,13 +175,12 @@ export default function CreateUD() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                padding: '20px',
+                padding: '15px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 position: 'sticky',
-                top: 0,
-                zIndex: 10,
-                color: 'white'
+                zIndex: 1,
+                color: 'white',
               }}
             >
 
@@ -246,10 +247,8 @@ export default function CreateUD() {
                 className="add"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                onClick={triggerForm}
+                style={{marginRight:'10px'}}
               >
-
-
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -261,32 +260,12 @@ export default function CreateUD() {
                 >
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                 </svg>
-                
-                Add New Employee
-              </button>
 
-              <button
-                type="button"
-                className="gobackbutton btn-primary"
-                onClick={()=>router.push('/intranet')}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-reply-fill"
-                  viewBox="0 0 16 16"
-                  style={{ marginBottom: '5px' }}
-                >
-                  <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
-                </svg>{" "}
-                Back
+                Add New Employee
               </button>
             </header>
 
           </div>
-
           <div
             className="modal fade"
             id="exampleModal"
@@ -297,10 +276,7 @@ export default function CreateUD() {
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
 
-                {openform && (
-                  <AddEmp empData={empData} mode={currentMode} />
-                )}
-                
+                <AddEmp empData={empData} mode={currentMode} />
               </div>
             </div>
           </div>
@@ -310,7 +286,7 @@ export default function CreateUD() {
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{ marginLeft: 0, marginRight: "40px", width: "89vw" }}
+            style={{ marginLeft: "1px", marginRight: "40px", width: "88.8vw" }}
           >
             <thead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#266bc5' }}>
               <tr>

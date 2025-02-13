@@ -77,7 +77,7 @@ export default function Login() {
         localStorage.setItem("refresh_token", Encryptor(token.access));
         login();
       } else {
-        console.log("sdsd")
+        setError("Invalid Credentials");
      
       }
     } catch (error) {

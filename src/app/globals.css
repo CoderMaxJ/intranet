@@ -133,6 +133,7 @@ a {
   height: 46vh !important;
   justify-content: center;
   align-items: center;
+
   border: none !important;
   outline: none !important;
 }
@@ -651,6 +652,9 @@ tbody td {
 }
 
 /* //CRUD|| */
+.db-employee {
+  margin-left: 12px;
+}
 .search-employee {
   position: absolute;
 }
@@ -688,9 +692,9 @@ tbody td {
 .crud-header {
   background-color: #1167b3;
   color: white;
-  width: 89vw;
+  width: 88.9vw;
   margin-right: 40px;
-  margin-left: 0px;
+  margin-left: 2px;
   padding: 10px;
   position: sticky;
   display: flex;
@@ -812,9 +816,9 @@ tbody td {
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
 }
-.dashboard svg {
+.dashboard svg { 
   align-items: center;
-  transition: fill 0.3s ease, transform 0.3s ease; /* Smooth fill color change */
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease; /* Updated transition */
 }
 
 .dashboard a {
@@ -832,7 +836,7 @@ tbody td {
   margin-left: 5px;
   color: black;
   border-radius: 2px;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth background & text color change */
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease; /* Updated transition */
 }
 
 .dashboard:hover {
@@ -847,20 +851,23 @@ tbody td {
 
 .dashboard:hover svg {
   fill: white; /* Smooth fill change */
+  
 }
 
 .dashboard:active {
   background-color: #1a74b8;
   color: white !important;
+
 }
 
 .dashboard:active svg {
   fill: white;
+
 }
 
 .generate svg {
   align-items: center;
-  transition: fill 0.3s ease, transform 0.3s ease; /* Smooth fill color change */
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease; /* Updated transition */
 }
 
 .generate a {
@@ -878,7 +885,7 @@ tbody td {
   margin-left: 5px;
   color: black;
   border-radius: 2px;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth background & text color change */
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease; /* Updated transition */
 }
 
 .generate:hover {
@@ -899,6 +906,7 @@ tbody td {
   fill: black;
 }
 
+/* Existing styles */
 .admin {
   display: flex;
   margin-top: 20px;
@@ -906,7 +914,7 @@ tbody td {
   margin-left: 5px;
   color: black;
   border-radius: 2px;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth background & text color change */
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease; 
 }
 
 .accordion-collapse:not(.show) .admin {
@@ -920,12 +928,13 @@ tbody td {
 
 .admin svg {
   align-items: center;
-  transition: fill 0.3s ease, transform 0.3s ease; /* Smooth fill color change */
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease; 
 }
 
 .admin a {
   align-items: center;
   text-decoration: none;
+  
 }
 
 .admin:hover {
@@ -937,7 +946,7 @@ tbody td {
 }
 
 .admin:hover svg {
-  fill: white; /* Smooth fill change */
+  fill: white; 
 }
 
 .admin:active {
@@ -961,6 +970,48 @@ tbody td {
 .admin-hover:hover {
   background-color: lightgray;
   cursor: pointer;
+}
+
+.admin .accordion-button:hover {
+  background-color:  #2193df;
+  color: white;
+}
+
+.admin .accordion-button:active {
+  background-color:  #2193df;
+  color: white;
+}
+
+.manage-hover a:hover {
+  color: white;
+}
+
+.manage-hover:hover {
+  border-radius: 2px;
+  padding: 10px;
+  background-color:  #2193df; 
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.manage-hover a:hover {
+  color: white;  
+}
+
+.manage-hover:hover {
+  color: white; 
+}
+
+.update-password-hover:hover {
+  background-color: #2193df; 
+  color: white; 
+  padding: 10px; 
+  border-radius: 2px; 
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.update-password-hover:hover .update-password {
+  color: white;
 }
 
 

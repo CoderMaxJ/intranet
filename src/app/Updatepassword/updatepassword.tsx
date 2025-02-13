@@ -50,10 +50,10 @@ export default function Updatepassword() {
     }
 
     async function changePassword() {
-      const id = localStorage.getItem("account_id");
+      const id = localStorage.getItem("user_id");
 
       const newAccount = {
-        empno: id,
+        empno: Decryptor(id || ""),
         oldpassword: currentpassword,
         newpassword: password,
         password2: confirmPassword,

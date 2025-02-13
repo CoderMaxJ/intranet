@@ -154,13 +154,13 @@ export default function Header() {
             width: "90vw",
             height: "15vh",
             marginBottom: "-10px",
-            marginLeft: "-65px",
+            marginLeft: "-61px",
             display: 'relative',
             boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
           }}
         />
-        <h1 className="headerbreaktool">BREAKTIME OPTIMIZER</h1>
-        <h4 className="headerdown">Manage Breaks, Boost Productivity!</h4>
+        <h1 className="headerbreaktool">IntraNetwork</h1>
+        <h4 className="headerdown">Connecting Teams, Driving Results</h4>
       </div>
       <Daterange />
     </div>
