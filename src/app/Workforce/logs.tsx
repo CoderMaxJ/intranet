@@ -2,6 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import TableComponents from "../component/TableComponent";
+import { Decryptor } from "@/security";
 
 interface Logs {
   name: string;
@@ -30,14 +31,14 @@ function LogsDataTable() {
     const timer = setTimeout(async () => {
       async function getLogs() {
         try {
-          const account_id = await localStorage.getItem("account_id");
+          const account_id = await localStorage.getItem("user_id");
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND}/logs/${account_id}/`,
+            `${process.env.NEXT_PUBLIC_BACKEND}/logs/${Decryptor(account_id || "")}/`,
             {
               method: "GET",
               headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${Decryptor(token || "")}`,
               },
             }
           );
@@ -56,12 +57,34 @@ function LogsDataTable() {
       }
 
       getLogs();
-    }, 5000);
+    
+    }, 1000);
     return () => clearTimeout(timer);
 
   }, []);
 
-  if (loading) return <div style={{ textAlign: "center" }}>Loading...</div>;
+  if (loading) 
+    return (
+      <div 
+        className="d-flex justify-content-center align-items-center"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.5)", 
+          transition: "opacity 0.3s ease", 
+          opacity: 1, 
+          zIndex: 9999
+        }}
+      >
+        <div className="spinner-border text-info" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  
   if (error) return <div>Error: {error}</div>;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,14 +92,14 @@ function LogsDataTable() {
   };
 
   return (
-    <div className="logs-wrapper">
+    <div className="logs-wrapper" style={{backgroundColor:"#e7e7e7"}}>
       <div className="logs-maindiv">
-        <div className="logs-table" style={{ display: "flex" }}>
-          <h3 className="logs-headername">Agent Logs Today</h3>
+        <div className="logs-table" style={{ display: "flex"}}>
+          <h3 className="logs-headername" style={{fontFamily: "'Raleway', sans-serif",  fontWeight:'bold', fontSize:'23px'}}>Agent Logs Today</h3>
           <div className="searchbarlogs">
             <input
               className="searchbar"
-              style={{ backgroundColor: "#f0f0f0", marginLeft: "500px" }}
+              style={{ backgroundColor: "#f0f0f0", marginLeft: "350px", fontFamily: "'Raleway', sans-serif", marginBottom:'5px' }}
               type="text"
               placeholder="Search by name"
               value={searchQuery}
@@ -84,7 +107,7 @@ function LogsDataTable() {
             />
             <svg
               style={{
-                marginLeft: "497px",
+                marginLeft: "350px",
                 marginTop: "-0px",
                 display: "flex",
               }}
@@ -101,9 +124,10 @@ function LogsDataTable() {
               type="submit"
               className="btn btn btn-primary"
               style={{
-                height: "42px",
+                height: "41px",
+                fontFamily: "'Raleway', sans-serif",
                 borderRadius: "4px",
-                marginBottom: "5px",
+                marginBottom: "2px",
                 marginLeft: "3px",
                 marginTop: "5px",
                 color: "white",
@@ -113,21 +137,21 @@ function LogsDataTable() {
             </button>
           </div>
         </div>
-        <table className="table table-bordered table-striped">
+        <table className="table table-bordered table-striped " >
           <thead>
             <tr>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Name</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Login</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>First Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Breakout</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Lunch In</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Lunch Out</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Second Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Breakout</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF" }}>Log Out</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Login</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>First Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch In</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch Out</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Second Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+            <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
             </tr>
           </thead>
           <TableComponents data={data} filter={null} />

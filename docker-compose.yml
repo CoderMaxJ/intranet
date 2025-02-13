@@ -1,5 +1,4 @@
 
-
 services:
   app:
     build:
@@ -9,7 +8,9 @@ services:
     environment:
       - NODE_ENV=development
     volumes:
+      - ./:/app
       - ./src:/app/src
+      - ./public:/app/public
       - /app/node_modules
     networks:
       - nextjs_network

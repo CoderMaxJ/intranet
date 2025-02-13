@@ -1,9 +1,9 @@
-
-FROM node:18
+FROM node:22.13-bookworm-slim
 
 
 WORKDIR /app
 
+RUN  mkdir -p src public
 
 COPY package*.json ./
 

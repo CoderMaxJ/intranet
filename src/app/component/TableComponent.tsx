@@ -9,8 +9,9 @@ export default function TableComponents(data: any, filter: string) {
   const [empData, setEmpData] = useState(data.data);
 
   useEffect(() => {
-    console.log("report", data);
+    // console.log("report", data);
   }, [empData, filter]);
+  
 
   const formatTime = (time: number) => {
     const hours = Math.floor(time / 3600);
@@ -33,11 +34,7 @@ export default function TableComponents(data: any, filter: string) {
           const isVisible = instance.name.toUpperCase().includes(filter);
           return (
             <tr
-              className={
-                isVisible
-                  ? "table-logs table-striped none"
-                  : "table-logs table-striped"
-              }
+              
               key={_i}
             >
               <td>{instance.name}</td>
