@@ -89,17 +89,19 @@ const router = useRouter();
                 }}
               >
                 <ul className="list-unstyled" >
-                  <li style={{ marginTop: "5px", marginLeft: '55px' }}>
-                    <a href="#" className="text-dark" style={{ textDecoration: 'none' }}>
+                  <li  onClick={()=>router.push("/ManageDepartment")} style={{ marginTop: "5px", marginLeft: '55px', cursor:"pointer" }}>
+                    <a  className="text-dark" style={{ textDecoration: 'none' }}>
                       Accounts
                     </a>
                     </li>
 
-                    <li onClick={()=>router.push("/Crud")} style={{cursor:"pointer"}}>
+                    <li onClick={()=>router.push("/Crud")} style={{cursor:"pointer", textAlign:"center"}}>
                       <a className="text-dark" style={{ textDecoration: 'none' }}>
                         Manage Employee
                       </a>
+                    
                   </li>
+                
                 </ul>
                 <a />
               </div>

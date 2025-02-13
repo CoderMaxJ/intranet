@@ -55,6 +55,7 @@ export default function Login() {
       } else {
         const res = await response.json();
         setError(res.message || "Login failed. Please try again.");
+        setError("Invalid Credentials");
       }
     } catch {
       setError("Invalid Credentials");
@@ -78,6 +79,7 @@ export default function Login() {
         login();
       } else {
         console.log("sdsd")
+        setError("Invalid Credentials");
      
       }
     } catch (error) {
