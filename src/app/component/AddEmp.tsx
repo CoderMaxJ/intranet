@@ -16,6 +16,8 @@ interface AddEmployeeData {
   contactno: string;
   address: string;
   acctid: number;
+  un:string;
+  pw:string;
 }
 
 interface AddEmpProps {
@@ -31,6 +33,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
+  const [breaktool_user,setBreaktoolUser]=useState("");
 
   useEffect(() => {
     if (empData) {
@@ -39,11 +42,47 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   }, [empData]);
 
+  // console.log(formData)
+
+ 
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     SetSelectedAccount(e.target.value);
+   
+   
+    setFormData((prev) => {
+      let updatedFormData = { ...prev, [name]: value };
+  
+      // Automatically update breaktool_user and un when first name or last name changes
+      if (name === "fname") {
+        const initials = getInitials(value);
+        setBreaktoolUser(initials);
+        updatedFormData.un = `${initials}.${updatedFormData.lname || ""}`.trim();
+      }
+  
+      if (name === "lname") {
+        updatedFormData.un = `${breaktool_user}.${value}`.trim();
+      }
+      if(name === "pw") {
+        updatedFormData.pw = "default000";
+      }
+  
+      return updatedFormData;
+    });
   };
+  
+  const getInitials = (name: string) => {
+    if (!name || typeof name !== "string") return "";
+    return name
+      .trim()
+      .split(/\s+/)
+      .map((word) => word.charAt(0).toUpperCase())
+      .join("");
+  };
+  
 
 
   const fetchRoles = async () => {
@@ -106,7 +145,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
 
   async function Create() {
-    console.log("=================================", formData)
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
         method: "POST",
@@ -167,7 +206,29 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   };
 
-  const closeModal = () => {
+  const clearInputs=()=>{
+    setFormData({
+      empno: "",
+      fname: "",
+      mname: "",
+      lname: "",
+      position: "",
+      dateofbirth: "",
+      maritalstatus: "",
+      gender: "",
+      contactno: "",
+      address: "",
+      acctid: 0,
+      un: "",
+      pw:""
+    });
+  
+    // Reset the username state
+    setBreaktoolUser("");
+  
+    // Optionally reset selected account
+    SetSelectedAccount("");
+    mode="create"
 
   }
   return (
@@ -185,8 +246,12 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
               top: '10px',
               right: '10px',
               marginTop: '-1px'
-            }}
-          ></button>
+            
+            }
+          }
+          onClick={clearInputs}
+          >
+          </button>
           <label htmlFor="fname" className="form-label">
             First Name
           </label>
@@ -197,6 +262,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="fname"
             value={formData.fname}
             onChange={handleInputChange}
+            placeholder="Juan"
           />
         </div>
         <div className="col-md-4 mb-3">
@@ -210,6 +276,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="mname"
             value={formData.mname}
             onChange={handleInputChange}
+            placeholder="Montenegro"
           />
         </div>
         <div className="col-md-4 mb-3">
@@ -223,6 +290,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="lname"
             value={formData.lname}
             onChange={handleInputChange}
+            placeholder="Dela Cruz"
           />
         </div>
         <div className="col-md-3 mb-3">
@@ -283,6 +351,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="contactno"
             value={formData.contactno}
             onChange={handleInputChange}
+            placeholder="+63 02 6645 9723"
           />
         </div>
         <div className="col-md-5 mb-3">
@@ -296,6 +365,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             id="address"
             value={formData.address}
             onChange={handleInputChange}
+            placeholder="Zapatera, Cebu City"
           />
         </div>
         <div className="col-md-3 mb-3">
@@ -337,7 +407,24 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             ))}
           </select>
         </div>
-
+        
+        <div className="col-md-5 mb-3">
+          <label htmlFor="address" className="form-label">
+            Generated username for Breaktool account
+          </label>
+          <input
+            readOnly
+            disabled={true}
+            type="text"
+            name="un"
+            className="form-control"
+            id="un"
+            value={`${breaktool_user}${formData.lname ? `.${formData.lname}` : ""}`}
+            onChange={handleInputChange}
+            placeholder='e.g. "J.Sopeta" '
+          />
+        </div>
+        <input type="hidden" name="pw" value={formData.pw ? "default000" : "default000"} />
         <div
           className="col-md-12"
           style={{
@@ -350,14 +437,14 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
               type="submit"
               className="btn btn-primary"
             >
-              {mode === "update" ? "Update" : "Create"}
+              {mode === "edit" ? "Update" : "Create"}
             </button>
             <button
               type="button"
-              onClick={closeModal}
               className="btn btn-danger"
+              onClick={clearInputs}
             >
-              Cancel
+              Clear
             </button>
           </div>
         </div>

@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "/public/asset/css/login.css";
 import Image from "next/image";
-import { IdentifyUser } from "../user_identifier";
 
 
 
