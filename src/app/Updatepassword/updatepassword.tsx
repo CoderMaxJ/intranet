@@ -169,7 +169,7 @@ export default function Updatepassword() {
                   </div>
                 </div>
 
-                <div className="updatepass-label">
+                <div className="updatepass-label1">
                   <label htmlFor="password">New Password</label>
                   <div style={{ position: "relative" }}>
                     <input

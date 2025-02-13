@@ -914,7 +914,7 @@ tbody td {
   margin-left: 5px;
   color: black;
   border-radius: 2px;
-  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease; 
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
 .accordion-collapse:not(.show) .admin {
@@ -928,13 +928,14 @@ tbody td {
 
 .admin svg {
   align-items: center;
-  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease; 
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
+  margin-right: 20px;
+  fill: black;
 }
 
 .admin a {
   align-items: center;
   text-decoration: none;
-  
 }
 
 .admin:hover {
@@ -946,7 +947,7 @@ tbody td {
 }
 
 .admin:hover svg {
-  fill: white; 
+  fill: white;
 }
 
 .admin:active {
@@ -958,16 +959,7 @@ tbody td {
   fill: white;
 }
 
-.admin svg {
-  margin-right: 20px;
-  fill: black;
-}
-
-.admin:active svg {
-  fill: white;
-}
-
-.admin-hover:hover {
+.manage-hover:hover {
   background-color: lightgray;
   cursor: pointer;
 }
@@ -982,35 +974,65 @@ tbody td {
   color: white;
 }
 
+.manage-hover {
+  width: 100%;
+  text-align: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 0; 
+  padding: 10px; 
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transition for smooth hover effect */
+}
+
+.manage-hover a {
+  display: block;
+  text-decoration: none;
+  color: inherit; 
+  transition: color 0.3s ease; 
+}
+
+.manage-hover:hover {
+  background-color: #2193df; 
+  color: white; 
+}
+
+.manage-hover:hover a {
+  color: white;
+}
+
 .manage-hover a:hover {
   color: white;
 }
 
-.manage-hover:hover {
-  border-radius: 2px;
-  padding: 10px;
-  background-color:  #2193df; 
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease; 
+.update-password-hover {
+  width: 100%;
+  text-align: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 0; 
+  padding: 10px; 
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.manage-hover a:hover {
-  color: white;  
-}
-
-.manage-hover:hover {
-  color: white; 
+.update-password-hover a {
+  display: block;
+  text-decoration: none;
+  color: inherit; 
+  transition: color 0.3s ease; 
 }
 
 .update-password-hover:hover {
   background-color: #2193df; 
   color: white; 
-  padding: 10px; 
-  border-radius: 2px; 
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.update-password-hover:hover .update-password {
+.update-password-hover:hover a {
+  color: white;
+}
+
+.update-password-hover a:hover {
   color: white;
 }
 
