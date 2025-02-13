@@ -17,6 +17,7 @@ interface AddEmployeeData {
   address: string;
   acctid: number;
   un:string;
+  pw:string;
 }
 
 interface AddEmpProps {
@@ -52,25 +53,37 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
     SetSelectedAccount(e.target.value);
    
    
-    const getInitials = (name:string) => {
-      if (!name || typeof name !== "string") return "";
-      return name
-        .trim()
-        .split(/\s+/) 
-        .map((word) => word.charAt(0).toUpperCase()) 
-        .join(""); 
-    };
-      
-    
-  setBreaktoolUser(getInitials(formData.fname));
-
-  setFormData((prev) => ({ ...prev, un: breaktool_user+"."+formData.lname}));
-
+    setFormData((prev) => {
+      let updatedFormData = { ...prev, [name]: value };
+  
+      // Automatically update breaktool_user and un when first name or last name changes
+      if (name === "fname") {
+        const initials = getInitials(value);
+        setBreaktoolUser(initials);
+        updatedFormData.un = `${initials}.${updatedFormData.lname || ""}`.trim();
+      }
+  
+      if (name === "lname") {
+        updatedFormData.un = `${breaktool_user}.${value}`.trim();
+      }
+      if(name === "pw") {
+        updatedFormData.pw = "default000";
+      }
+  
+      return updatedFormData;
+    });
   };
+  
+  const getInitials = (name: string) => {
+    if (!name || typeof name !== "string") return "";
+    return name
+      .trim()
+      .split(/\s+/)
+      .map((word) => word.charAt(0).toUpperCase())
+      .join("");
+  };
+  
 
-const updateValue=()=>{
-alert("");
-}
 
   const fetchRoles = async () => {
 
@@ -180,7 +193,7 @@ alert("");
 
   }
 
-console.log(formData);
+
   const handleSubmitForm = async (e: React.FormEvent) => {
 
     e.preventDefault();
@@ -193,7 +206,29 @@ console.log(formData);
 
   };
 
-  const closeModal = () => {
+  const clearInputs=()=>{
+    setFormData({
+      empno: "",
+      fname: "",
+      mname: "",
+      lname: "",
+      position: "",
+      dateofbirth: "",
+      maritalstatus: "",
+      gender: "",
+      contactno: "",
+      address: "",
+      acctid: 0,
+      un: "",
+      pw:""
+    });
+  
+    // Reset the username state
+    setBreaktoolUser("");
+  
+    // Optionally reset selected account
+    SetSelectedAccount("");
+    mode="create"
 
   }
   return (
@@ -211,8 +246,12 @@ console.log(formData);
               top: '10px',
               right: '10px',
               marginTop: '-1px'
-            }}
-          ></button>
+            
+            }
+          }
+          onClick={clearInputs}
+          >
+          </button>
           <label htmlFor="fname" className="form-label">
             First Name
           </label>
@@ -368,9 +407,10 @@ console.log(formData);
             ))}
           </select>
         </div>
+        
         <div className="col-md-5 mb-3">
           <label htmlFor="address" className="form-label">
-            Generated username for Breaktool
+            Generated username for Breaktool account
           </label>
           <input
             readOnly
@@ -384,6 +424,7 @@ console.log(formData);
             placeholder='e.g. "J.Sopeta" '
           />
         </div>
+        <input type="hidden" name="pw" value={formData.pw ? "default000" : "default000"} />
         <div
           className="col-md-12"
           style={{
@@ -396,14 +437,14 @@ console.log(formData);
               type="submit"
               className="btn btn-primary"
             >
-              {mode === "update" ? "Update" : "Create"}
+              {mode === "edit" ? "Update" : "Create"}
             </button>
             <button
               type="button"
-              onClick={closeModal}
               className="btn btn-danger"
+              onClick={clearInputs}
             >
-              Cancel
+              Clear
             </button>
           </div>
         </div>

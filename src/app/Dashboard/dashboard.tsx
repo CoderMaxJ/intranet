@@ -5,6 +5,7 @@ import Createaccount from "../Createaccount/createaccount";
 import Viewreports from "../Viewreports/page";
 import { useState } from "react";
 import { IdentifyUser } from "../user_identifier";
+import { useRouter } from "next/navigation";
 
 
 export default function Dashboard() {
@@ -15,7 +16,7 @@ export default function Dashboard() {
   
 
 
-
+const router = useRouter();
   if(user_hash_privilege){
       const array_privilege = IdentifyUser(user_hash_privilege);
       array_privilege.forEach((data)=>{
@@ -95,8 +96,8 @@ export default function Dashboard() {
                     </a>
                     </li>
 
-                    <li>
-                      <a href="/Crud" className="text-dark" style={{ textDecoration: 'none' }}>
+                    <li onClick={()=>router.push("/Crud")} style={{cursor:"pointer"}}>
+                      <a className="text-dark" style={{ textDecoration: 'none' }}>
                         Manage Employee
                       </a>
                   </li>

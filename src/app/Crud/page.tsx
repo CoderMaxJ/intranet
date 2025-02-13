@@ -5,6 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import AddEmp from "../component/AddEmp";
 import { useEffect, useState } from "react";
 import SuccessMessage from "../component/Successmessage";
+import { useRouter } from "next/navigation";
 
 
 interface Information {
@@ -32,6 +33,10 @@ export default function CreateUD() {
   const [isChecked, setIsChecked] =useState(false);
   const [isDelete, setIsDeleted] =useState(false);
   const token = localStorage.getItem("token")
+  const [openform,setOpenForm]=useState(false);
+
+
+  const router = useRouter();
 
   useEffect(() => {
     if (employees) {
@@ -109,17 +114,6 @@ export default function CreateUD() {
     }
     setIsDeleted(true);
 
-  
-  
-  
-        // You can optionally prompt for confirmation
-    // const response = confirm("Are you sure you want to delete " + firstname + " " + lastname);
-    // if (response == true) {
-    //   Delete();
-    // }
-    
-
-
     async function Delete() {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`, {
@@ -157,6 +151,10 @@ export default function CreateUD() {
     hidden(true);
   }
 
+  const triggerForm = ()=>{
+    setOpenForm(true);
+    
+  }
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7" }}>
       {isDelete && (
@@ -234,6 +232,7 @@ export default function CreateUD() {
                 className="add"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
+                onClick={triggerForm}
               >
 
                 <svg
@@ -247,13 +246,14 @@ export default function CreateUD() {
                 >
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                 </svg>
-
+                
                 Add New Employee
               </button>
+
               <button
-                onClick={() => window.history.back()}
                 type="button"
                 className="gobackbutton btn-primary"
+                onClick={()=>router.push('/intranet')}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -282,11 +282,10 @@ export default function CreateUD() {
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
 
-
-
-                <AddEmp empData={empData} mode={currentMode} />
-
-
+                {openform && (
+                  <AddEmp empData={empData} mode={currentMode} />
+                )}
+                
               </div>
             </div>
           </div>
