@@ -30,8 +30,8 @@ export default function CreateUD() {
   const [searchTerm, setSearchTerm] = useState("");
   const [departmentSearchTerm, setDepartmentSearch] = useState("");
   const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
-  const [isChecked, setIsChecked] =useState(false);
-  const [isDelete, setIsDeleted] =useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isDelete, setIsDeleted] = useState(false);
   const token = localStorage.getItem("token")
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function CreateUD() {
   // Check if all employees are selected
   const isAllSelected = employees.length && selectedEmployees.length === employees.length;
 
-  
+
 
   const handleDeleteMultiple = (selectedEmployees: Information[]) => {
     selectedEmployees.forEach((employee) => {
@@ -102,7 +102,7 @@ export default function CreateUD() {
 
   }
   const handleDelete = (firstname: string, lastname: string, empno: number) => {
-    if (firstname && lastname && empno ) {
+    if (firstname && lastname && empno) {
       const account_id = empno; // Assuming empno is the id or you have a way to get the id
       console.log(`Deleted account for ${firstname} ${lastname} (Employee No: ${empno}, ID: ${account_id})`);
     } else {
@@ -110,15 +110,15 @@ export default function CreateUD() {
     }
     setIsDeleted(true);
 
-  
-  
-  
-        // You can optionally prompt for confirmation
+
+
+
+    // You can optionally prompt for confirmation
     // const response = confirm("Are you sure you want to delete " + firstname + " " + lastname);
     // if (response == true) {
     //   Delete();
     // }
-    
+
 
 
     async function Delete() {
@@ -159,12 +159,12 @@ export default function CreateUD() {
   }
 
   return (
-    <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display:'flex' }}>
+    <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: 'flex' }}>
       {isDelete && (
-        <SuccessMessage/>
+        <SuccessMessage />
       )}
-       <Dashboard />
-    
+      <Dashboard />
+
       <div>
         <div>
           <div>
@@ -185,57 +185,72 @@ export default function CreateUD() {
               }}
             >
 
+              <div className="search-employee">
+                <input
+                  className="search-input"
+                  id="search-employee"
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  style={{
+                    padding:'8px 60px',
+                    borderRadius:'5px',
+                    border: '1px solid #ccc',
+                    position:'relative',
+                    marginLeft:'490px',     
+                  }}
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  fill="currentColor"
+                  className="bi-search"
+                  viewBox="-7 0 30 16"
+                  style={{ color: '#595b5c', transform:'translateX(490px)', top:'7px' }}
+                >
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+                </div>
 
-              <input
-                className="search-input"
-                id="search-employee"
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearch}
-                style={{
-                  padding: '8px 12px',
-                  borderRadius: '5px',
-                  border: '1px solid #ccc',
-                  marginRight: '20px',
-                  marginLeft: '600px',
-                  flexGrow: 1,
-                }}
-              />
-
-              <select
-                className="select-departments"
-                onChange={handleSearchDepartment}
-                style={{
-                  padding: '8px 12px',
-                  borderRadius: '5px',
-                  border: '1px solid #ccc',
-                  marginRight: '300px',
-                }}
-              >
-                <option value="0">All Departments</option>
-                <option value="developer">Developer</option>
-                <option value="quality assurance">Quality Assurance</option>
-                <option value="manager">Chief Executive Officer</option>
-                <option value="account manager">Account Manager</option>
-                <option value="human resources manager">Human Resources Manager</option>
-                <option value="administrative assistant">Administrative Assistant</option>
-                <option value="project manager">Project Manager</option>
-                <option value="accountant">Accountant</option>
-                <option value="call center agent">Call Center Agent</option>
-                <option value="software engineer">Software Engineer</option>
-                <option value="data analyst">Data Analyst</option>
-                <option value="data entry">Data Entry</option>
-                <option value="cybersecurity specialist">Cybersecurity Specialist</option>
-                <option value="it support specialist">IT Support Specialist</option>
-                <option value="registered nurse">Registered Nurse</option>
-              </select>
+                <select
+                  className="select-departments"
+                  onChange={handleSearchDepartment}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '5px',
+                    border: '1px solid #ccc',
+                    marginRight: '300px',
+                  }}
+                >
+                  
+                  <option value="0">All Departments</option>
+                  <option value="developer">Developer</option>
+                  <option value="quality assurance">Quality Assurance</option>
+                  <option value="manager">Chief Executive Officer</option>
+                  <option value="account manager">Account Manager</option>
+                  <option value="human resources manager">Human Resources Manager</option>
+                  <option value="administrative assistant">Administrative Assistant</option>
+                  <option value="project manager">Project Manager</option>
+                  <option value="accountant">Accountant</option>
+                  <option value="call center agent">Call Center Agent</option>
+                  <option value="software engineer">Software Engineer</option>
+                  <option value="data analyst">Data Analyst</option>
+                  <option value="data entry">Data Entry</option>
+                  <option value="cybersecurity specialist">Cybersecurity Specialist</option>
+                  <option value="it support specialist">IT Support Specialist</option>
+                  <option value="registered nurse">Registered Nurse</option>
+                </select>
+             
               <button
                 type="button"
                 className="add"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
+                style={{marginRight:'120px'}}
               >
+
 
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +266,7 @@ export default function CreateUD() {
 
                 Add New Employee
               </button>
-              <button
+              <button 
                 onClick={() => window.history.back()}
                 type="button"
                 className="gobackbutton btn-primary"
@@ -293,16 +308,16 @@ export default function CreateUD() {
           </div>
         </div>
 
-        <div className="managereport" style={{ overflowY: 'auto', maxHeight: '900px'}}>
+        <div className="managereport" style={{ overflowY: 'auto', maxHeight: '888px', position: 'fixed' }}>
           <table
-            className="table table-striped table-hover"
+            className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{ marginLeft: 0, marginRight: "40px", width: "88.4vw"}}
+            style={{ marginLeft: 0, marginRight: "40px", width: "89vw" }}
           >
             <thead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#266bc5' }}>
               <tr>
                 <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>
-                   <input
+                  <input
                     className="form-check-input"
                     type="checkbox"
                     value=""

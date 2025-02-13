@@ -40,7 +40,7 @@ export default function Login() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token)}`,
+          Authorization: `Bearer ${Decryptor(token || "")}`,
         },
         body: JSON.stringify(credentials),
       });
@@ -86,7 +86,7 @@ export default function Login() {
     }
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     getToken();
   };
@@ -94,11 +94,10 @@ export default function Login() {
   return (
     <div className="main-div">
       <div className="login-div">
-        <Image
-          style={{ height: "75px" }}
+        <img
           src="/img/Sos.png"
           alt="Staff Outsourcing Logo"
-          height={100}
+          height={90}
           width={100}
         />
         <form className="username" onSubmit={handleSubmit}>

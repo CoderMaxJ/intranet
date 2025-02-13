@@ -154,7 +154,7 @@ export default function Header() {
             width: "90vw",
             height: "15vh",
             marginBottom: "-10px",
-            marginLeft: "-60px",
+            marginLeft: "-65px",
             display: 'relative',
             boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
           }}

@@ -74,9 +74,9 @@ export default function Daterange() {
         <div style={{ backgroundColor: '#e7e7e7' }}>
 
             <div className="container">
-                <div  className="viewdashboard">
-                <Dashboard />
-                <Generatereport />
+                <div className="viewdashboard">
+                    <Dashboard />
+                    <Generatereport />
                 </div>
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
@@ -96,26 +96,39 @@ export default function Daterange() {
                                 top: 0,
                                 zIndex: 10,
                                 color: 'white',
-                                marginLeft:'-80px',
-                                width:'88.5vw'
+                                marginLeft: '-80px',
+                                width: '88.5vw'
                             }}>
+                                <div className="search-div">
+                                    <input
+                                        className="search-input"
+                                        id="search-employee"
+                                        type="text"
+                                        placeholder="Search..."
+                                        value={searchTerm}
+                                        onChange={handleSearch}
+                                        style={{
+                                            padding: '8px 60px',
+                                            borderRadius: '5px',
+                                            border: '1px solid #ccc',
+                                            width: '25vw',
+                                            position: 'relative'
+                                        }}
 
-                                <input
-                                    className="search-input"
-                                    id="search-employee"
-                                    type="text"
-                                    placeholder="Search..."
-                                    value={searchTerm}
-                                    onChange={handleSearch}
-                                    style={{
-                                        padding: '8px 12px',
-                                        borderRadius: '5px',
-                                        border: '1px solid #ccc',
-                                        marginRight: '20px',
-                                        marginLeft: '620px',
-                                        width: '30vw'
-                                    }}
-                                />
+                                    />
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="14"
+                                        height="14"
+                                        fill="currentColor"
+                                        className="bi-search"
+                                        viewBox="-7 0 30 16"
+                                        style={{ color: '#595b5c' }}
+                                    >
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+
+                                </div>
 
                                 <a
                                     href="#"
@@ -123,6 +136,10 @@ export default function Daterange() {
                                     data-bs-toggle="modal"
                                     data-bs-target="#reportModal"
                                 >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16" style={{marginRight:'10px',}}>
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                    </svg>
                                     Generate  Reports
                                 </a>
 
@@ -145,8 +162,8 @@ export default function Daterange() {
 
                             </header>
                         </div>
-                        <div style={{ overflowY: 'auto', height: '870px', marginLeft:'-81.1px', marginRight:'-105px' }}>
-                            <table className="table table-striped table-bordered" style={{ position: 'sticky', top: 0, zIndex: 1, width:'87.9vw'}}>
+                        <div style={{ overflowY: 'auto', height: '870px', marginLeft: '-81.1px', marginRight: '-105px' }}>
+                            <table className="table table-striped table-bordered" style={{ position: 'sticky', top: 0, zIndex: 1, width: '87.9vw' }}>
                                 <thead>
                                     <tr >
                                         <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>

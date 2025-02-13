@@ -104,11 +104,7 @@ export default function Daterange() {
   };
 
   return (
-
-  
     <div>
-      
-
       <div
         className="modal fade"
         id="reportModal"
