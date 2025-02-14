@@ -8,6 +8,7 @@ interface DepartmentProps {
     acctid: number;
     acctname: string;
     status: number;
+    manager:string;
 }
 
 interface ManagerProps {
@@ -22,7 +23,7 @@ export default function ManageDepartment() {
     const [manager, setManager] = useState<ManagerProps[]>([]);
     const [showform, setShowForm] = useState(false);
     const [accountName, setAccountName] = useState("");
-    const [selectedManagerID, setSelectedManager] = useState(Number);
+    const [selectedManagerIDs, setSelectedManagerIDs] = useState<{ [key: number]: number }>({});
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
@@ -83,8 +84,8 @@ export default function ManageDepartment() {
         try {
             const requestBody = {
                 acctname: accountName,
-                acctid: selectedManagerID,
-                status:1
+                acctid: selectedManagerIDs[0], // Default to the first manager if none selected
+                status: 1
             };
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/create/account/project/`, {
                 method: "POST",
@@ -104,6 +105,56 @@ export default function ManageDepartment() {
         }
     };
 
+    const handleCreateManager = (acctid: number) => {
+        CreateManager(acctid);
+    };
+
+    const CreateManager = async (acctid: number) => {
+        const selectedManagerID = selectedManagerIDs[acctid];
+        const request_data = {
+            empno: selectedManagerID,
+            acctid: acctid
+        };
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/create/account/manager/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(request_data)
+            });
+            if (response.status === 201) {
+                alert("Manager Created");
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+
+    const deleteAccount = async (empno: number) => {
+  
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/delete/${empno}/`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                
+            });
+            if (response.status === 204) {
+                alert("Deleted Successfully!");
+                fetchAccountList();
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+
+
     const formShow = () => {
         setShowForm(true);
     };
@@ -112,20 +163,26 @@ export default function ManageDepartment() {
         setShowForm(false);
     };
 
-    console.log(accountName, selectedManagerID)
+    const handleManagerChange = (acctid: number, empno: number) => {
+        setSelectedManagerIDs(prevState => ({
+            ...prevState,
+            [acctid]: empno
+        }));
+    };
+
     return (
         <div className="container-fluid vh-100">
             <div>
                 <center>
-                    <h3 className="py-2">Manage Department</h3>
+                    <h3 className="py-2">Manage account</h3>
                 </center>
             </div>
             <div className="d-flex align-items-center rounded px-3 py-1">
                 <button
-                    className="fs-6 fw-light text-dark mb-0 border border-1 rounded btn btn-success text-white p-1"
+                    className="fs-6 btn-sm fw-light text-dark mb-0 border  rounded btn btn-success text-white p-1"
                     onClick={formShow}
                 >
-                    Add account <i className="bi bi-plus-circle text-white ms-2 fs-5"></i>
+                    Add account <i className="bi bi-plus-circle text-white ms-2 fs-6"></i>
                 </button>
             </div>
             {showform && (
@@ -146,19 +203,7 @@ export default function ManageDepartment() {
                                 className="form-control p-2 px-3 ml-3"
                                 placeholder="Account Name"
                             />
-                            <select
-                                className="form-select w-50"
-                                value={selectedManagerID}
-                                onChange={(e) => setSelectedManager(e.target.value)}
-                            >
-                                <option value="">Select Manager</option>
-                                {manager.map((manager) => (
-                                    <option key={manager.empno} value={manager.empno}>
-                                        {manager.fname + " " + manager.lname}
-                                    </option>
-                                ))}
-                            </select>
-                            <button className="btn btn-success" type="submit">
+                            <button className="btn btn-success btn-sm" type="submit">
                                 Create
                             </button>
                         </div>
@@ -174,7 +219,8 @@ export default function ManageDepartment() {
                             <th className="px-1">Account Name</th>
                             <th className="px-1">Status</th>
                             <th className="px-1">Manager/Supervisor</th>
-                            <th className="px-1">Action</th>
+                            <th></th>
+                            <th className="px-1 ">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -183,6 +229,42 @@ export default function ManageDepartment() {
                                 <td>{instance.acctid}</td>
                                 <td>{instance.acctname}</td>
                                 <td>{instance.status === 1 ? "Active" : "Not Active"}</td>
+                                {
+                                    instance.manager && instance.manager.fname ? (
+                                        <td>
+                                              <select
+                                                className="form-select w-100 p-1"
+                                                value={selectedManagerIDs[instance.acctid] || ""}
+                                                onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
+                                            >
+                                                <option value="">{instance.manager.fname}</option>
+                                                {manager.map((manager) => (
+                                                    <option key={manager.empno} value={manager.empno}>
+                                                        {manager.fname + " " + manager.lname}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </td>
+                                        
+                                    ) : (
+                                        <td>
+                                            <select
+                                                className="form-select w-100 p-1"
+                                                value={selectedManagerIDs[instance.acctid] || ""}
+                                                onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
+                                            >
+                                                <option value="">Unassigned</option>
+                                                {manager.map((manager) => (
+                                                    <option key={manager.empno} value={manager.empno}>
+                                                        {manager.fname + " " + manager.lname}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </td>
+                                    )
+                                }
+                                <td><button className="btn btn-danger btn-sm" onClick={()=>deleteAccount(instance.acctid)}>Delete</button></td>
+                                <td><button onClick={() => handleCreateManager(instance.acctid)} className="btn btn-primary btn-sm ">Update</button></td>
                             </tr>
                         ))}
                     </tbody>
