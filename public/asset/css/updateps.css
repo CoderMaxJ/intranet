@@ -21,6 +21,13 @@
 
 .updatepass-label label {
   color: #4e4f50;
+  margin-right: 180px;
+ 
+}
+
+.updatepass-label1 label {
+  color: #4e4f50;
+  margin-right: 200px;
  
 }
 
@@ -30,6 +37,7 @@
   border: 1px solid #cccccc;
   border-radius: 4px;
   margin-bottom: 20px !important;
+  margin-right: 20px;
   outline: none;
   width: 15vw;
   transition: border-color 0.3s ease;

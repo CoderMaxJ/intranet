@@ -20,6 +20,7 @@ export default function Updatepassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const router = useRouter();
 
   const toggleShow = () => {
@@ -59,7 +60,7 @@ export default function Updatepassword() {
         password2: confirmPassword,
       };
 
-  const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
       try {
         const response = await fetch(
@@ -74,7 +75,7 @@ export default function Updatepassword() {
           }
         );
 
-        
+
         if (response.status === 200) {
           console.log(response)
           setError("Password updated successfully!");
@@ -91,7 +92,7 @@ export default function Updatepassword() {
     }
 
 
-   changePassword()
+    changePassword()
   };
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -108,9 +109,17 @@ export default function Updatepassword() {
   return (
     <div>
       {/* Link to open modal */}
-      <a href="#" className="text-dark" data-bs-toggle="modal" data-bs-target="#updatePasswordModal" style={{textDecoration:'none'}}>
+      <div className="updatepassword-hvr" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
+        style={{
+          textDecoration: 'none',
+          color: hovered ? 'white' : '#000000',
+          cursor: 'pointer',
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         Update Password
-      </a>
+      </div>
 
       {/* Bootstrap Modal */}
       <div
@@ -119,7 +128,7 @@ export default function Updatepassword() {
         tabIndex={-1}
         aria-labelledby="updatePasswordModalLabel"
         aria-hidden="true"
-      
+
       >
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
           <div className="modal-content">
@@ -129,24 +138,40 @@ export default function Updatepassword() {
                 alt="Staff Outsourcing Logo"
                 className="modal-title"
                 id="updatePasswordModalLabel"
-                style={{height:'50px', marginLeft:'60px'}}
+                style={{ height: '50px', marginLeft: '60px' }}
               ></img>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close" 
-                style={{marginTop:'-45px'}}
+                aria-label="Close"
+                style={{ marginTop: '-45px' }}
               ></button>
             </div>
 
-            <div className="modal-body" style={{ marginLeft: "35px" }}>
-              {error && (
-                <div className={success ? "success-message" : "error-message"} style={{marginLeft:'-20px'}}>
-                  {error}
-                </div>
-              )}
+            {success ? (
+              <div>
+                <p style={{ color: 'green' }}>
+                  <span>
+                    <i className="bi bi-check-circle" style={{ color: 'green', marginRight: '15px', marginLeft: '10px', paddingTop: '20px' }}></i>
+                    Password updated successfully!
+                  </span>
+                </p>
+              </div>
+            ) : error ? (
+              <div>
+                <p style={{ color: 'red' }}>
+                  <span>
+                    <i className="bi bi-x-circle" style={{ color: 'red', marginRight: '15px', marginLeft: '10px', paddingTop: '20px' }}></i>
+                    {error}
+                  </span>
+                </p>
+              </div>
+            ) : (
+              <div></div>
+            )}
 
+            <div className="modal-body" style={{ marginLeft: "35px" }}>
               <form onSubmit={handleSubmit}>
                 <div className="updatepass-label">
                   <label htmlFor="currentpassword">Current Password</label>
@@ -169,7 +194,7 @@ export default function Updatepassword() {
                   </div>
                 </div>
 
-                <div className="updatepass-label">
+                <div className="updatepass-label1">
                   <label htmlFor="password">New Password</label>
                   <div style={{ position: "relative" }}>
                     <input

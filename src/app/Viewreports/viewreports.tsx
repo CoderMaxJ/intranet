@@ -75,7 +75,7 @@ export default function Daterange() {
 
             <div className="container">
                 <div className="viewdashboard">
-                    <Dashboard />
+                    <div className="dashboard-view"><Dashboard /></div>
                     <Generatereport />
                 </div>
                 {error && <div className="alert alert-danger">{error}</div>}
@@ -144,7 +144,7 @@ export default function Daterange() {
                                 </a>
                             </header>
                         </div>
-                        <div style={{ overflowY: 'auto', height: '880px', marginRight: '-105px', marginLeft:'-79px' }}>
+                        <div style={{ overflowY: 'auto', height: '890px', marginRight: '-105px', marginLeft:'-79px' }}>
                             <table className="table table-striped table-bordered" style={{ position: 'sticky', top: 0, zIndex: 1, width: '87.9vw' }}>
                                 <thead>
                                     <tr>
