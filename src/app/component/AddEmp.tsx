@@ -432,51 +432,53 @@ console.log("number", generatedNumber)
           />
         </div>
          
-        <div className="col-md-6 mb-1  w-50">
-            <div className="mb-3">
-              <label htmlFor="">Privileges</label>
-            </div>
-            <input
-              type="checkbox"
-              style={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "4px", // Rounded edges
-                border: "1px solid #ccc",
-                cursor: "pointer",
-                marginLeft:"10px",
-              }}
-            />
-            <label style={{marginLeft:"7px"}} htmlFor="">Manage Employee</label>
-            
-            <input
-              type="checkbox"
-              style={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "4px", // Rounded edges
-                border: "1px solid #ccc",
-                cursor: "pointer",
-                marginLeft:"10px",
-              }}
-            />
-          <label style={{marginLeft:"7px"}} htmlFor="">View Intranet</label>
-            <input
-              type="checkbox"
-              style={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "4px", // Rounded edges
-                border: "1px solid #ccc",
-                cursor: "pointer",
-                marginLeft:"10px",
-              }}
-            />
-            <label style={{marginLeft:"7px"}} htmlFor=""></label>
-        </div>
+         {mode === 'edit' && (
+             <div className="col-md-6 mb-1  w-50">
+             <div className="mb-3">
+               <label htmlFor="">Privileges</label>
+             </div>
+             <input
+               type="checkbox"
+               style={{
+                 width: "20px",
+                 height: "20px",
+                 borderRadius: "4px", // Rounded edges
+                 border: "1px solid #ccc",
+                 cursor: "pointer",
+                 marginLeft:"10px",
+               }}
+             />
+             <label style={{marginLeft:"7px"}} htmlFor="">Manage Employee</label>
+             
+             <input
+               type="checkbox"
+               style={{
+                 width: "20px",
+                 height: "20px",
+                 borderRadius: "4px", // Rounded edges
+                 border: "1px solid #ccc",
+                 cursor: "pointer",
+                 marginLeft:"10px",
+               }}
+             />
+           <label style={{marginLeft:"7px"}} htmlFor="">View Intranet</label>
+             <input
+               type="checkbox"
+               style={{
+                 width: "20px",
+                 height: "20px",
+                 borderRadius: "4px", // Rounded edges
+                 border: "1px solid #ccc",
+                 cursor: "pointer",
+                 marginLeft:"10px",
+               }}
+             />
+             <label style={{marginLeft:"7px"}} htmlFor="">Create Breaktool account</label>
+ 
+         </div>
 
-        
-      
+         )}
+       
         <input type="hidden" name="pw" value={formData.pw ? "default000" : "default000"} />
         <div
           className="col-md-12"
@@ -484,7 +486,7 @@ console.log("number", generatedNumber)
             marginBottom: "30px",
             marginTop: "30px",
           }}
-        >
+        > 
           <div className="d-flex justify-content-between">
             <button
               type="submit"

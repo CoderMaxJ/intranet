@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
+import { useRouter} from "next/navigation";
 
 interface DepartmentProps {
     acctid: number;
@@ -25,6 +26,7 @@ export default function ManageDepartment() {
     const [accountName, setAccountName] = useState("");
     const [selectedManagerIDs, setSelectedManagerIDs] = useState<{ [key: number]: number }>({});
 
+    const router = useRouter();
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
         if (storedToken) {
@@ -125,7 +127,7 @@ export default function ManageDepartment() {
                 body: JSON.stringify(request_data)
             });
             if (response.status === 201) {
-                alert("Manager Created");
+                alert("Account assigned with manager")
             }
         } catch (e) {
             console.log(e);
@@ -133,8 +135,11 @@ export default function ManageDepartment() {
     };
 
 
+
     const deleteAccount = async (empno: number) => {
-  
+        const  response = confirm("Are you sure you want toy delete?");
+        if(response){
+
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/delete/${empno}/`, {
                 method: "DELETE",
@@ -145,12 +150,13 @@ export default function ManageDepartment() {
                 
             });
             if (response.status === 204) {
-                alert("Deleted Successfully!");
+              
                 fetchAccountList();
             }
         } catch (e) {
             console.log(e);
         }
+    }
     };
 
 
@@ -172,10 +178,12 @@ export default function ManageDepartment() {
 
     return (
         <div className="container-fluid vh-100">
+            <button className="btn btn-secondary" onClick={()=>router.push("/intranet")} style={{marginLeft:"1840px", marginTop:"2px"}} >Back</button>
             <div>
                 <center>
                     <h3 className="py-2">Manage account</h3>
                 </center>
+                
             </div>
             <div className="d-flex align-items-center rounded px-3 py-1">
                 <button
@@ -219,7 +227,6 @@ export default function ManageDepartment() {
                             <th className="px-1">Account Name</th>
                             <th className="px-1">Status</th>
                             <th className="px-1">Manager/Supervisor</th>
-                            <th></th>
                             <th className="px-1 ">Action</th>
                         </tr>
                     </thead>
@@ -237,7 +244,7 @@ export default function ManageDepartment() {
                                                 value={selectedManagerIDs[instance.acctid] || ""}
                                                 onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
                                             >
-                                                <option value="">{instance.manager.fname}</option>
+                                                <option value="">{`${instance.manager.fname} ${instance.manager.lname}`}</option>
                                                 {manager.map((manager) => (
                                                     <option key={manager.empno} value={manager.empno}>
                                                         {manager.fname + " " + manager.lname}
@@ -263,8 +270,36 @@ export default function ManageDepartment() {
                                         </td>
                                     )
                                 }
-                                <td><button className="btn btn-danger btn-sm" onClick={()=>deleteAccount(instance.acctid)}>Delete</button></td>
-                                <td><button onClick={() => handleCreateManager(instance.acctid)} className="btn btn-primary btn-sm ">Update</button></td>
+
+                                <td> 
+                                    
+                                <button
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo"
+                        type="button"
+                        className="edit-button"
+                        onClick={() => handleCreateManager(instance.acctid)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                          <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                        </svg>
+                      </button>
+                                    
+                                      <button
+                        type="button"
+                        className="delete-button"
+                 
+                        onClick={()=>deleteAccount(instance.acctid)}
+
+                        style={{ cursor: "pointer" }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
+                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                        </svg>
+                      </button></td>
                             </tr>
                         ))}
                     </tbody>
