@@ -12,11 +12,12 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const [isLogged, setLog] = useState(false);
   const router = useRouter();
-  
+
   useEffect(() => {
-    if (typeof window !== "undefined" ) {
+    if (typeof window !== "undefined") {
       const token = localStorage.getItem("token");
       if (token) {
         setLog(true);
@@ -47,7 +48,7 @@ export default function Login() {
       if (response.status === 200) {
         const res = await response.json();
         console.log("asdsdsd")
-       console.log(res.user_privilege);
+        console.log(res.user_privilege);
         localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
         localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
         localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
@@ -81,7 +82,7 @@ export default function Login() {
         console.log("sdsd")
         setError("Invalid Credentials");
         setError("Invalid Credentials");
-     
+
       }
     } catch (error) {
       setError("Error fetching token");
@@ -102,6 +103,7 @@ export default function Login() {
           height={70}
           width={100}
         />
+  
         <form className="username" onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           <div className="inp-lab">
