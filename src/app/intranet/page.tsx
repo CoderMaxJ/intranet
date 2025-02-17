@@ -1,6 +1,6 @@
 "use client";
-import BreakDataTable from "../Workforce/breaks";
-import LogsDataTable from "../Workforce/logs";
+import BreakDataTable from "../data/Breaks/break";
+import LogsDataTable from "../data/Logs/logs";
 import Dashboard from "../Dashboard/dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 

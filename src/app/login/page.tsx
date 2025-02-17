@@ -121,7 +121,8 @@ export default function Login() {
             <div style={{ position: "relative", display: "flex" }}>
               <input
                 id="password"
-                type={password ? "text" : "password"}
+                type="password"
+                // type={password ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

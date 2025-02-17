@@ -1,10 +1,8 @@
 "use client";
-// index.js or App.js
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState, useEffect } from "react";
-import Router from "next/router";
-import Header from "../component/Header";
-import LogsDataTable from "./logs";
+import "../../style/breaks.css";
+import Header from "@/app/component/Header";
 import { Decryptor } from "@/security";
 
 interface BreakData {
@@ -18,71 +16,78 @@ interface BreakData {
 function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [durationtime, setDurationTime] = useState<boolean>(false);
   const [loadingPage, setLoadingPage] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
- 
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    async function getBreakData() {
-      try {
-        const account_id = await localStorage.getItem("user_id");
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${ Decryptor(account_id || "")}/`,
-          {
-            method: "GET",
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${Decryptor(token || "")}`,
-            },
-          }
-        );
+  const token = localStorage.getItem("token");
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  // Fetch break data from the server
+  const fetchBreakData = async () => {
+    try {
+      const account_id = localStorage.getItem("user_id");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${Decryptor(token || "")}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      const adjustedData = data.data.map((item: BreakData) => {
+        // Create a unique key for each break start time
+        const startTimeKey = `break_start_${item.name}_${item.breaktype}`;
+        let startTime = localStorage.getItem(startTimeKey);
+
+        if (!startTime) {
+        
+          startTime = Math.floor(Date.now() / 1000).toString();
+          localStorage.setItem(startTimeKey, startTime);
         }
 
-        const data = await response.json();
+        const currentTime = Math.floor(Date.now() / 1000);
+        const elapsedTime = currentTime - parseInt(startTime, 10);
+        const remainingDuration = item.duration - elapsedTime; 
 
+        return {
+          ...item,
+          duration: remainingDuration, // No Math.max constraint
+        };
+      });
 
-        const adjustedData = data.data.map((item: BreakData) => {
-          let duration = parseInt(item.duration.toString(), 10) || 0;
-          if (item.breaktype === "lunch") {
-            duration -= 3600;
-          } else if (item.breaktype === "break") {
-            duration -= 900;
-          }
-
-          const formattedStart = formatTime(parseInt(item.start, 10) || 0);
-          const formattedEnd = formatTime(parseInt(item.end, 10) || 0);
-
-          return {
-            ...item,
-            duration,
-            formattedStart,
-            formattedEnd,
-          };
-        });
-        setBreaks(adjustedData);
-      } catch (error) {
-        console.error("Failed to fetch break data:", error);
-      }
+      setBreaks(adjustedData);
+    } catch (error) {
+      console.error("Failed to fetch break data:", error);
     }
+  };
 
-    getBreakData();
+  // Polling for real-time updates
+  useEffect(() => {
+    fetchBreakData(); // Initial fetch
+
+    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
+  // Countdown timer
   useEffect(() => {
     const interval = setInterval(() => {
       setBreaks((prevBreaks) =>
         prevBreaks.map((item) => ({
           ...item,
-          duration: item.duration > 0 ? item.duration - 1 : 0,
+          duration: item.duration - 1, // Allow negative values
         }))
       );
     }, 1000);
@@ -90,94 +95,33 @@ function BreakDataTable() {
     return () => clearInterval(interval);
   }, []);
 
+  // Format time for display
   const formatTime = (time: number) => {
-    const hours = Math.floor(time / 3600);
-    const minutes = Math.floor((time % 3600) / 60);
-    const seconds = time % 60;
+    const isNegative = time < 0;
+    const absoluteTime = Math.abs(time);
+    const hours = Math.floor(absoluteTime / 3600);
+    const minutes = Math.floor((absoluteTime % 3600) / 60);
+    const seconds = absoluteTime % 60;
 
-    const period = hours >= 12 ? "PM" : "AM";
-    const adjustedHours = hours % 12 || 12;
-
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )}:${String(seconds).padStart(2, "0")}`;
+    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
-  const formatTime2 = (time: { start: string; end: string; type: string }) => {
-    const currentTimestamp = new Date().getTime();
-    const startParts = time.start.split(":");
-    const endParts = time.end.split(":");
-
-    const startInSeconds =
-      parseInt(startParts[0], 10) * 3600 +
-      parseInt(startParts[1], 10) * 60 +
-      parseInt(startParts[2], 10);
-    const endInSeconds =
-      parseInt(endParts[0], 10) * 3600 +
-      parseInt(endParts[1], 10) * 60 +
-      parseInt(endParts[2], 10);
-
-    const currentSeconds = Math.floor(
-      (currentTimestamp - new Date().setHours(0, 0, 0, 0)) / 1000
-    );
-    const remainingSeconds = endInSeconds - currentSeconds;
-
-    const minutes = Math.floor(Math.abs(remainingSeconds) / 60);
-    const seconds = Math.abs(remainingSeconds) % 60;
-
-    const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
-      seconds
-    ).padStart(2, "0")}`;
-
-    if (remainingSeconds <= 300) {
-      return `<span class="blink">${formattedTime}</span>`;
-    }
-    if (remainingSeconds < 0) {
-      return `<span class="count-up">${formattedTime} (Elapsed)</span>`;
-    }
-
-    return formattedTime;
-  };
-
+  // Handle search input
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
+  // Filter breaks based on search query
   const filteredBreaks = breaks.filter(
     (breakItem) =>
       breakItem.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       breakItem.breaktype.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
-  useEffect(() => {
-    const start = () => {
-
-      setLoadingPage(true);
-    };
-
-    const end = () => {
-
-      setLoadingPage(false);
-    };
-
-    Router.events.on("routeChangeStart", start);
-    Router.events.on("routeChangeComplete", end);
-    Router.events.on("routeChangeError", end);
-
-    return () => {
-      Router.events.off("routeChangeStart", start);
-      Router.events.off("routeChangeComplete", end);
-      Router.events.off("routeChangeError", end);
-    };
-  }, []);
-
   return (
     <div className="workforce">
       <Header />
       <div className={fullscreen ? "breaks-div fullscreen" : "breaks-div"}>
- 
         <div>
           <div className="searchbar-wrapper">
             <div className="d-flex align-items-center">
@@ -243,7 +187,6 @@ function BreakDataTable() {
                 Go
               </button>
             </div>
-
             <div
               style={{
                 fontWeight: "bold",
@@ -298,8 +241,10 @@ function BreakDataTable() {
             </div>
           </div>
 
-          <div >
-            <table className="table table-bordered" >
+          </div>
+
+          <div>
+            <table className="table table-bordered">
               <thead>
                 <tr>
                   <th
@@ -344,62 +289,37 @@ function BreakDataTable() {
                   </th>
                 </tr>
               </thead>
-              <tbody >
-                {filteredBreaks
-                  .map((instance) => {
-                    const formattedTime = formatTime2(instance);
+              <tbody>
+                {filteredBreaks.map((instance) => (
+                  <tr 
+                   style={{backgroundColor: instance.duration > 500 && instance.breaktype === "" ? "skyblue":"" }}
+                   key={instance.name}>
+                    <td style={{backgroundColor:"inherit"}} 
+                        className={instance.duration < 300 ? "blink-background" : ""} >
+                        {instance.name}
+                    </td>
 
-                    const currentTimestamp = new Date().getTime();
-                    const endParts = instance.end.split(":");
-                    const endInSeconds =
-                      parseInt(endParts[0], 10) * 3600 +
-                      parseInt(endParts[1], 10) * 60 +
-                      parseInt(endParts[2], 10);
-
-                    const currentSeconds = Math.floor(
-                      (currentTimestamp - new Date().setHours(0, 0, 0, 0)) /
-                        1000
-                    );
-                    const remainingSeconds = endInSeconds - currentSeconds;
-
-                    return {
-                      ...instance,
-                      formattedTime,
-                      remainingSeconds,
-                      isElapsed: remainingSeconds < 300,
-                      isBlinking: remainingSeconds <= 300,
-                    };
-                  })
-                  .sort((a, b) => {
-                    if (a.isElapsed && !b.isElapsed) return -1;
-                    if (!a.isElapsed && b.isElapsed) return 1;
-                    return 0;
-                  })
-                  .map((instance) => (
-                    <tr
-                     
-                      key={instance.name}
-                      className={instance.isBlinking ? "blink-row" : ""}
+                    <td className={instance.duration < 300 ? "blink-background" : ""} >{instance.start}</td>
+                    <td className={instance.duration < 300 ? "blink-background" : ""} >{instance.end}</td>
+                 
+                    <td className={instance.duration < 300 ? "blink-background" : ""} 
+                      style={{
+                        color: instance.duration < 0 ? "red" : "inherit",
+                        fontWeight: instance.duration < 300 ? "bold" : "normal", 
+                      }}
                     >
-                      <td>{instance.name}</td>
-                      <td>{instance.start}</td>
-                      <td>{instance.end}</td>
-                      <td
-                        dangerouslySetInnerHTML={{
-                          __html: instance.formattedTime,
-                        }}
-                      ></td>
-                      <td>{instance.breaktype}</td>
-                    </tr>
-                  ))}
+                    {formatTime(instance.duration)}
+                    </td>
+                    <td className={instance.duration < 300 ? "blink-background" : ""} >{instance.breaktype}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
-            <div style={{ display: "flex", justifyContent: "center" }}></div>
           </div>
         </div>
       </div>
-    </div>
     
   );
 }
+
 export default BreakDataTable;
