@@ -159,7 +159,7 @@ export default function Header() {
             boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
           }}
         />
-        <h1 className="headerbreaktool">INTRANET</h1>
+        <h1 className="headerbreaktool">WORKFORCE MONITORING</h1>
         <h4 className="headerdown">Connecting Teams, Empowering Innovation</h4>
       </div>
       <Daterange />
