@@ -30,7 +30,6 @@ export default function CreateUD() {
   const [searchTerm, setSearchTerm] = useState("");
   const [departmentSearchTerm, setDepartmentSearch] = useState("");
   const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
-  const [isChecked, setIsChecked] = useState(false);
   const [isDelete, setIsDeleted] = useState(false);
   const token = localStorage.getItem("token")
 
@@ -43,34 +42,6 @@ export default function CreateUD() {
     }
   }, [employees, searchTerm]);
 
-  const handleCheckboxChange = (empno: number) => {
-    setSelectedEmployees((prevSelected) => {
-      if (prevSelected.includes(empno)) {
-        return prevSelected.filter((id) => id !== empno); // Deselect the employee
-      } else {
-        return [...prevSelected, empno]; // Select the employee
-      }
-    });
-  };
-
-  const handleSelectAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      setSelectedEmployees(employees.map((emp) => emp.empno)); // Select all employees
-    } else {
-      setSelectedEmployees([]); // Deselect all employees
-    }
-  };
-
-  // Check if all employees are selected
-  const isAllSelected = employees.length && selectedEmployees.length === employees.length;
-
-
-
-  const handleDeleteMultiple = (selectedEmployees: Information[]) => {
-    selectedEmployees.forEach((employee) => {
-      handleDelete(employee.fname, employee.lname, employee.empno);
-    });
-  };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value.toLowerCase());
@@ -110,17 +81,11 @@ export default function CreateUD() {
     }
     setIsDeleted(true);
 
-
-
-
     // You can optionally prompt for confirmation
     // const response = confirm("Are you sure you want to delete " + firstname + " " + lastname);
     // if (response == true) {
     //   Delete();
     // }
-
-
-
     async function Delete() {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`, {
@@ -290,15 +255,6 @@ export default function CreateUD() {
           >
             <thead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#266bc5' }}>
               <tr>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=""
-                    checked={isAllSelected}
-                    onChange={handleSelectAllChange}
-                  />
-                </th>
                 <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>First Name</th>
                 <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Middle Name</th>
@@ -312,20 +268,12 @@ export default function CreateUD() {
                 <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="table-data">
               {employees?.length ? (
                 employees.filter((info) =>
                   `${info.empno} ${info.fname} ${info.mname} ${info.lname} ${info.position} `.toLowerCase().includes(searchTerm) && (departmentSearchTerm === "0" || info.position.toLowerCase().includes(departmentSearchTerm.toLowerCase()))
                 ).map((info, index) => (
                   <tr key={info.empno}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={selectedEmployees.includes(info.empno)}
-                        onChange={() => handleCheckboxChange(info.empno)}
-                      />
-                    </td>
                     <td>{info.empno}</td>
                     <td>{info.fname}</td>
                     <td>{info.mname}</td>

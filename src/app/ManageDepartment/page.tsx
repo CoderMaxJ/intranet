@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
-import { useRouter} from "next/navigation";
+import Dashboard from "../Dashboard/dashboard";
 
 interface DepartmentProps {
     acctid: number;
@@ -177,15 +177,20 @@ export default function ManageDepartment() {
     };
 
     return (
-        <div className="container-fluid vh-100">
-            <button className="btn btn-secondary" onClick={()=>router.push("/intranet")} style={{marginLeft:"1840px", marginTop:"2px"}} >Back</button>
+        <div className="container-fluid vh-50" >  
+         
+
+           <div className="manage-department">
+           <div className="dash"><Dashboard/></div>
             <div>
-                <center>
+            <div className="manage-header">
+                <center >
                     <h3 className="py-2">Manage account</h3>
                 </center>
                 
             </div>
-            <div className="d-flex align-items-center rounded px-3 py-1">
+            
+            <div className="d-flex align-items-center rounded px-3 py-1" >
                 <button
                     className="fs-6 btn-sm fw-light text-dark mb-0 border  rounded btn btn-success text-white p-1"
                     onClick={formShow}
@@ -218,6 +223,8 @@ export default function ManageDepartment() {
                     </div>
                 </form>
             )}
+
+
 
             <div className="ms-3 mt-4">
                 <table className="table table-light w-50 table-hover">
@@ -306,5 +313,8 @@ export default function ManageDepartment() {
                 </table>
             </div>
         </div>
+    </div>
+    </div>
+        
     );
 }

@@ -5,10 +5,15 @@ import Link from "next/link";
 export default function Logout() {
   const router = useRouter();
 
+
   const triggerLogout = () => {
-    router.push("/");
-    localStorage.clear();
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      localStorage.clear();
+      router.push("/");
+    }
   };
+
 
   return (
     <div>

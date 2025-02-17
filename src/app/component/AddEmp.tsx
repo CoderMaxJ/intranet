@@ -488,18 +488,22 @@ console.log("number", generatedNumber)
           }}
         > 
           <div className="d-flex justify-content-between">
+            
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={clearInputs}
+              style={{marginLeft:'930px', marginRight:'20px'}}
+            >
+              Clear
+            </button>
             <button
               type="submit"
               className="btn btn-primary"
+              style={{marginRight:"30px"}}
+              
             >
               {mode === "edit" ? "Update" : "Create"}
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={clearInputs}
-            >
-              Clear
             </button>
           </div>
         </div>

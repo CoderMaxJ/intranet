@@ -17,13 +17,15 @@ interface BreaksReport {
     brkin2: string;
     brkout2: string;
     ob2: string;
-    logout: string;
+    logoff: string;
 }
 
 export default function Daterange() {
     const [data, setData] = useState<BreaksReport[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [error, setError] = useState("");
+    const [start, setStart] = useState("2025-01-01");
+    const [end, setEnd] = useState("2025-03-30");
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value.toLowerCase());
@@ -38,8 +40,7 @@ export default function Daterange() {
                 const token = localStorage.getItem("token");
 
                 // Replace with your desired endpoint and date range or pass in parameters
-                const start = "2025-01-01";  // Example start date
-                const end = "2025-01-31";    // Example end date
+   
                 const response = await fetch(
                     `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/${start}/${end}/`,
                     {
@@ -99,6 +100,41 @@ export default function Daterange() {
                                 marginLeft: '-78px',
                                 width: '88.5vw'
                             }}>
+                                <div >
+                                    <form className="input-daterange">
+                                        <div className="start">
+                                            <label
+                                                htmlFor="from"
+                                                className="formlabel"
+                                            >From:</label>
+                                            <input
+                                                type="date"
+                                                className="form-control"
+                                                value={start}
+                                                onChange={(e) => setStart(e.target.value)} />
+                                        </div>
+
+                                        <div className="end">
+                                            <label
+                                                htmlFor="to"
+                                                className="formlabel"
+                                            >To:</label>
+                                            <input
+                                                type="date"
+                                                className="form-control"
+                                                value={end}
+                                                onChange={(e) => setEnd(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="report-button">
+                                            <button
+                                                type="submit"
+                                                className="report-button btn btn-success"
+                                            >Go</button>
+                                        </div>
+                                    </form>
+                                </div>
+
                                 <div className="search-div">
                                     <input
                                         className="search-input"
@@ -136,7 +172,7 @@ export default function Daterange() {
                                     data-bs-toggle="modal"
                                     data-bs-target="#reportModal"
                                 >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16" style={{marginRight:'10px',}}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16" style={{ marginRight: '10px', }}>
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
                                         <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
                                     </svg>
@@ -144,7 +180,7 @@ export default function Daterange() {
                                 </a>
                             </header>
                         </div>
-                        <div style={{ overflowY: 'auto', height: '890px', marginRight: '-105px', marginLeft:'-79px' }}>
+                        <div style={{ overflowY: 'auto', height: '890px', marginRight: '-105px', marginLeft: '-79px' }}>
                             <table className="table table-striped table-bordered" style={{ position: 'sticky', top: 0, zIndex: 1, width: '87.9vw' }}>
                                 <thead>
                                     <tr>
@@ -162,8 +198,8 @@ export default function Daterange() {
                                         <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
                                     </tr>
                                 </thead>
-                                <tbody>
 
+                                <tbody className="table-data">
                                     {data
                                         .filter((report) => report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm))
                                         .map((report, index) => (
@@ -179,7 +215,7 @@ export default function Daterange() {
                                                 <td>{report.brkin2}</td>
                                                 <td>{report.brkout2}</td>
                                                 <td>{report.ob2}</td>
-                                                <td>{report.logout}</td>
+                                                <td>{report.logoff}</td>
                                             </tr>
 
                                         ))}

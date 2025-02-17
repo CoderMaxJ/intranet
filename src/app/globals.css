@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Bebas+Neue&family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+IN:wght@100..400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Bebas+Neue&family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+IN:wght@100..400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"); */
 
 :root {
   --background: #ffffff;
@@ -513,7 +513,37 @@ input:focus {
 }
 
 /* generate report */
+.table-data {
+ font-size: smaller;
+}
 
+.input-daterange {
+  display: flex;
+}
+
+.start {
+  display: flex;
+}
+
+.start label {
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.end {
+  display: flex;
+}
+
+.end label {
+  margin-left: 20px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.report-button button {
+  background-color: #0ebb39;
+  margin-left: 5px;
+}
 .modal-dialog {
   --bs-modal-width: 20vw;
   max-width: var(--bs-modal-width);
@@ -668,6 +698,10 @@ tbody td {
 }
 
 /* //CRUD|| */
+
+.addemp .row {
+  width: 30vw;
+}
 .db-employee {
   margin-left: 0;
 }
@@ -686,6 +720,7 @@ tbody td {
   border: 0;
 }
 
+.
 .search-div {
   position: absolute;
   margin-left: 600px;
@@ -764,7 +799,7 @@ tbody td {
   border-radius: 4px;
   border: none;
   box-shadow: none;
-  background-color: #039422;
+  background-color:  #0ebb39;
   color: white;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
@@ -892,7 +927,7 @@ tbody td {
 
 /* dashboard view report  */
 .dashboard-view {
-  margin-left: -9px;
+  margin-left: -8px;
 }
 
 .generate svg {
@@ -912,11 +947,11 @@ tbody td {
   display: flex;
   align-items: center;
   padding: 10px;
+  margin-top: 10px;
   margin-left: 5px;
   color: black;
   border-radius: 2px;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
-  /* Updated transition */
 }
 
 .generate:hover {
@@ -939,7 +974,6 @@ tbody td {
 
 /* Existing styles */
 .admin {
-  margin-top: 5px;
   display: flex;
   align-items: center;
   margin-left: 5px;
@@ -1025,9 +1059,16 @@ tbody td {
   text-decoration: none;
 }
 
-.manage-hover:hover {
+.manage-hover:hover, 
+.manage-menu a:hover{
   background-color: #2193df;
-  color: white;
+  color: white !important;
+  cursor: pointer;
+}
+
+.manage-menu  a{
+  padding: 10px;
+  border-radius: 2px;
 }
 
 .updatepass-hover {
@@ -1177,7 +1218,7 @@ tbody td {
 /* viewreports */
 .viewreports {
   text-decoration: none;
-  background-color: #0c8a2b;
+  background-color:  #0ebb39;
   width: 9.5vw;
   padding: 9px;
   padding-left: 15px;
@@ -1213,6 +1254,19 @@ tbody td {
   margin-right: -0px;
 }
 
+      /* manage department */
+.manage-department {
+  display: flex;
+  top: 0;
+}
+
+.manage-header {
+  margin-left: 750px;
+}
+
+.dash {
+  margin-left: -12px;
+}
 
 @keyframes blinkAnimation {
   0% {
