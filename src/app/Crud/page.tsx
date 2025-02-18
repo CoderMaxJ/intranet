@@ -7,7 +7,6 @@ import AddEmp from "../component/AddEmp";
 import { useEffect, useState } from "react";
 import SuccessMessage from "../component/Successmessage";
 
-
 interface Information {
   empno: number;
   gender: string;
@@ -31,80 +30,77 @@ export default function CreateUD() {
   const [departmentSearchTerm, setDepartmentSearch] = useState("");
   const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
   const [isDelete, setIsDeleted] = useState(false);
-  const token = localStorage.getItem("token")
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const [totalPages, setTotalPages] = useState(1);
+  const [targetID,setTargetID]=useState(0); // Total pages state
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    if (employees) {
-
-    }
     if (!success) {
-      GetEmployee();
+      GetEmployee(currentPage); // Fetch data for the current page
     }
-  }, [employees, searchTerm]);
-
+  }, [currentPage, searchTerm, departmentSearchTerm]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value.toLowerCase());
-    console.log(event.target.value.toLowerCase());
+    setCurrentPage(1); // Reset to the first page when searching
   };
 
   const handleSearchDepartment = (event: any) => {
     setDepartmentSearch(event.target.value.toLowerCase());
-    console.log(event.target.value.toLowerCase());
+    setCurrentPage(1); // Reset to the first page when filtering by department
   };
 
-
-  async function GetEmployee() {
-    const token = localStorage.getItem("token")
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/list/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "apllication/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`
+  async function GetEmployee(page: number) {
+    const token = localStorage.getItem("token");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/?page=${page}&search=${searchTerm}&department=${departmentSearchTerm}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token || "")}`,
+        },
       }
-    })
+    );
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data)
-      setEmployees(data.data);
+      console.log(data);
+      setEmployees(data.data); 
+      setTotalPages(data.num_pages); 
       setSuccess(true);
     }
-
   }
-  const handleDelete = (firstname: string, lastname: string, empno: number) => {
-    if (firstname && lastname && empno) {
-      const account_id = empno; // Assuming empno is the id or you have a way to get the id
-      console.log(`Deleted account for ${firstname} ${lastname} (Employee No: ${empno}, ID: ${account_id})`);
-    } else {
-      console.log("Invalid data provided, deletion not performed.");
-    }
-    setIsDeleted(true);
 
-    // You can optionally prompt for confirmation
-    // const response = confirm("Are you sure you want to delete " + firstname + " " + lastname);
-    // if (response == true) {
-    //   Delete();
-    // }
+  const handleDelete = (empno: number) => {
+  
     async function Delete() {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${Decryptor(token || "")}`,
-          },
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${Decryptor(token || "")}`,
+            },
+          }
+        );
 
         if (response.status === 200) {
           alert("Deleted successfully!");
+          GetEmployee(currentPage);
+
         }
       } catch (e) {
         console.error(e);
         alert(e);
       }
     }
-  }
+    Delete();
+    
+  };
 
   const handleData = (data: any) => {
     console.log("data", data);
@@ -112,7 +108,16 @@ export default function CreateUD() {
 
     let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus } = data;
     let currentData = {
-      empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus
+      empno,
+      fname,
+      mname,
+      lname,
+      dateofbirth,
+      contactno,
+      address,
+      position,
+      gender,
+      maritalstatus,
     };
     console.log("current data: ", currentData);
 
@@ -121,34 +126,58 @@ export default function CreateUD() {
 
   const closeModal = () => {
     hidden(true);
-  }
+  };
+
+  // Pagination controls
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page); // Update the current page
+    GetEmployee(page); // Fetch data for the new page
+  };
 
   return (
-    <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: 'flex' }}>
-      {isDelete && (
-        <SuccessMessage />
-      )}
-     <div className="db-employee"><Dashboard /></div>
+    <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
+      <div className="db-employee">
+        <Dashboard />
+      </div>
 
+
+      <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Are you sure you want to delete?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button onClick={() => handleDelete(targetID)} type="button" className="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
       <div>
+       
         <div>
+          
           <div>
             <header
               className="crud-header"
               style={{
                 backgroundImage: "url('/img/Breaktool.png')",
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                padding: '15px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                position: 'sticky',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                padding: "15px",
+                display: "flex",
+                justifyContent: "space-between",
+                position: "sticky",
                 zIndex: 1,
-                color: 'white',
+                color: "white",
               }}
             >
-
               <div className="search-employee">
                 <input
                   className="search-input"
@@ -158,11 +187,11 @@ export default function CreateUD() {
                   value={searchTerm}
                   onChange={handleSearch}
                   style={{
-                    padding:'8px 60px',
-                    borderRadius:'5px',
-                    border: '1px solid #ccc',
-                    position:'relative',
-                    marginLeft:'490px',     
+                    padding: "8px 60px",
+                    borderRadius: "5px",
+                    border: "1px solid #ccc",
+                    position: "relative",
+                    marginLeft: "490px",
                   }}
                 />
                 <svg
@@ -172,47 +201,68 @@ export default function CreateUD() {
                   fill="currentColor"
                   className="bi-search"
                   viewBox="-7 0 30 16"
-                  style={{ color: '#595b5c', transform:'translateX(490px)', top:'7px' }}
+                  style={{ color: "#595b5c", transform: "translateX(490px)", top: "7px" }}
                 >
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                 </svg>
-                </div>
+              </div>
+              
+          <nav aria-label="Page navigation">
+            <ul className="pagination">
+              <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
+                  Previous
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li key={i + 1} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
+                  <button className="page-link" onClick={() => handlePageChange(i + 1)}>
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+              <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
+        
+              {/* <select
+                className="select-departments"
+                onChange={handleSearchDepartment}
+                style={{
+                  padding: "8px 12px",
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                  marginRight: "300px",
+                }}
+              >
+                <option value="0">All Departments</option>
+                <option value="developer">Developer</option>
+                <option value="quality assurance">Quality Assurance</option>
+                <option value="manager">Chief Executive Officer</option>
+                <option value="account manager">Account Manager</option>
+                <option value="human resources manager">Human Resources Manager</option>
+                <option value="administrative assistant">Administrative Assistant</option>
+                <option value="project manager">Project Manager</option>
+                <option value="accountant">Accountant</option>
+                <option value="call center agent">Call Center Agent</option>
+                <option value="software engineer">Software Engineer</option>
+                <option value="data analyst">Data Analyst</option>
+                <option value="data entry">Data Entry</option>
+                <option value="cybersecurity specialist">Cybersecurity Specialist</option>
+                <option value="it support specialist">IT Support Specialist</option>
+                <option value="registered nurse">Registered Nurse</option>
+              </select> */}
 
-                <select
-                  className="select-departments"
-                  onChange={handleSearchDepartment}
-                  style={{
-                    padding: '8px 12px',
-                    borderRadius: '5px',
-                    border: '1px solid #ccc',
-                    marginRight: '300px',
-                  }}
-                >
-                  
-                  <option value="0">All Departments</option>
-                  <option value="developer">Developer</option>
-                  <option value="quality assurance">Quality Assurance</option>
-                  <option value="manager">Chief Executive Officer</option>
-                  <option value="account manager">Account Manager</option>
-                  <option value="human resources manager">Human Resources Manager</option>
-                  <option value="administrative assistant">Administrative Assistant</option>
-                  <option value="project manager">Project Manager</option>
-                  <option value="accountant">Accountant</option>
-                  <option value="call center agent">Call Center Agent</option>
-                  <option value="software engineer">Software Engineer</option>
-                  <option value="data analyst">Data Analyst</option>
-                  <option value="data entry">Data Entry</option>
-                  <option value="cybersecurity specialist">Cybersecurity Specialist</option>
-                  <option value="it support specialist">IT Support Specialist</option>
-                  <option value="registered nurse">Registered Nurse</option>
-                </select>
-             
               <button
                 type="button"
-                className="add"
+                className="add btn-success btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                style={{marginRight:'10px'}}
+                style={{ marginRight: "10px" }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -221,15 +271,13 @@ export default function CreateUD() {
                   fill="#ffffff"
                   className="bi bi-plus-circle-fill"
                   viewBox="0 0 16 16"
-                  style={{ marginBottom: '5px', marginRight: '5px' }}
+                  style={{ marginBottom: "5px", marginRight: "5px" }}
                 >
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                 </svg>
-
                 Add New Employee
               </button>
             </header>
-
           </div>
           <div
             className="modal fade"
@@ -240,39 +288,36 @@ export default function CreateUD() {
           >
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
-
                 <AddEmp empData={empData} mode={currentMode} />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="managereport" style={{ overflowY: 'auto', maxHeight: '888px', position: 'fixed' }}>
+        <div className="managereport" style={{ overflowY: "auto", maxHeight: "888px", position: "fixed" }}>
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
             style={{ marginLeft: "1px", marginRight: "40px", width: "88.8vw" }}
           >
-            <thead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#266bc5' }}>
+            <thead style={{ position: "sticky", top: 0, zIndex: 1, backgroundColor: "#266bc5" }}>
               <tr>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Employee No.</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>First Name</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Middle Name</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Last Name</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Address</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Marital Status</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Date of Birth</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Gender</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Position</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Contact No.</th>
-                <th scope="col" style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Actions</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Middle Name</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Last Name</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Address</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Marital Status</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Date of Birth</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Gender</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Position</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
               </tr>
             </thead>
             <tbody className="table-data">
               {employees?.length ? (
-                employees.filter((info) =>
-                  `${info.empno} ${info.fname} ${info.mname} ${info.lname} ${info.position} `.toLowerCase().includes(searchTerm) && (departmentSearchTerm === "0" || info.position.toLowerCase().includes(departmentSearchTerm.toLowerCase()))
-                ).map((info, index) => (
+                employees.map((info, index) => (
                   <tr key={info.empno}>
                     <td>{info.empno}</td>
                     <td>{info.fname}</td>
@@ -284,7 +329,6 @@ export default function CreateUD() {
                     <td>{info.gender}</td>
                     <td>{info.position}</td>
                     <td>{info.contactno}</td>
-
                     <td>
                       <button
                         data-bs-toggle="modal"
@@ -301,9 +345,10 @@ export default function CreateUD() {
                         </svg>
                       </button>
                       <button
+                        data-bs-toggle="modal" data-bs-target="#deleteModal"
                         type="button"
                         className="delete-button"
-                        onClick={() => handleDelete(info.fname, info.lname, info.empno)}
+                        onClick={() => {setTargetID(info.empno)}}
                         style={{ cursor: "pointer" }}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
@@ -323,8 +368,10 @@ export default function CreateUD() {
             </tbody>
           </table>
         </div>
-      </div>
 
+        {/* Pagination Controls */}
+      
+      </div>
     </div>
   );
 }

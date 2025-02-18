@@ -244,7 +244,7 @@ function BreakDataTable() {
           </div>
 
           <div>
-            <table className="table table-bordered">
+            <table className="table table-bordered" style={{borderCollapse: "collapse"}}>
               <thead>
                 <tr>
                   <th
@@ -292,25 +292,33 @@ function BreakDataTable() {
               <tbody>
                 {filteredBreaks.map((instance) => (
                   <tr 
-                   style={{backgroundColor: instance.duration > 500 && instance.breaktype === "" ? "skyblue":"" }}
+                  style={{
+                    backgroundColor: 
+                      instance.duration
+                        ? instance.breaktype === "First Break"
+                          ? "#FFEDA6"
+                          : instance.breaktype === "Second Break"
+                          ? "#FBDD64"
+                          : instance.breaktype === "Lunch"
+                          ? "#A9E4FF"
+                          : ""
+                        : ""
+                  }}
                    key={instance.name}>
                     <td style={{backgroundColor:"inherit"}} 
                         className={instance.duration < 300 ? "blink-background" : ""} >
                         {instance.name}
                     </td>
 
-                    <td className={instance.duration < 300 ? "blink-background" : ""} >{instance.start}</td>
-                    <td className={instance.duration < 300 ? "blink-background" : ""} >{instance.end}</td>
+                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.start}</td>
+                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.end}</td>
                  
-                    <td className={instance.duration < 300 ? "blink-background" : ""} 
-                      style={{
-                        color: instance.duration < 0 ? "red" : "inherit",
-                        fontWeight: instance.duration < 300 ? "bold" : "normal", 
-                      }}
+                    <td style={{backgroundColor:"inherit", color: instance.duration < 0 ? "#be1243 ": "", fontWeight: instance.duration < 0 ? "bold": ""}}   className={instance.duration < 300 ? "blink-background" : ""} 
+                     
                     >
                     {formatTime(instance.duration)}
                     </td>
-                    <td className={instance.duration < 300 ? "blink-background" : ""} >{instance.breaktype}</td>
+                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.breaktype}</td>
                   </tr>
                 ))}
               </tbody>
