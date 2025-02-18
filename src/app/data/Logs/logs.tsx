@@ -175,10 +175,10 @@ function LogsDataTable() {
                  <td style={{color:"red", fontWeight:"bold"}}>{logs.ob1}</td>
                  <td>{logs.lunchin}</td>
                  <td>{logs.lunchout}</td>
-                 <td style={{color:"red", fontWeight:"bold"}}>{logs.ob1}{logs.ob3}</td>
+                 <td style={{color:"red", fontWeight:"bold"}}>{logs.ob3}</td>
                  <td>{logs.brkin2}</td>
                  <td>{logs.brkout2}</td>
-                 <td style={{color:"red", fontWeight:"bold"}}>{logs.ob1}{logs.ob2}</td>
+                 <td style={{color:"red", fontWeight:"bold"}}>{logs.ob2}</td>
                  <td>{logs.logoff}</td>
                </tr>
               ))}

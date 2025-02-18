@@ -1,15 +1,16 @@
 @keyframes blink {
-    0% {
-      background-color: rgba(255, 0, 0, 0.3); /* Light red background */
-    }
-    50% {
-      background-color: rgba(255, 0, 0, 0.1); /* Lighter red background */
-    }
-    100% {
-      background-color:lightgreen; /* Light red background */
-    }
+  0% {
+    background-color: rgba(255, 0, 0, 0.30); /* Light red with low opacity */
   }
-  
-  .blink-background {
-    animation: blink 0.80s infinite; /* Apply the blink animation */
+  50% {
+    background-color: rgba(255, 165, 0, 0.1); /* Light orange with low opacity */
   }
+  100% {
+    background-color: rgba(0, 102, 0, 0.1); /* Light green with low opacity */
+  }
+}
+
+.blink-background {
+  animation: blink 1s infinite ease-in-out;
+  animation-timing-function: ease-in-out;
+}
