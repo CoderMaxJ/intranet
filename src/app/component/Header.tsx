@@ -4,9 +4,7 @@ import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "/public/asset/css/updateps.css";
-import Link from "next/link";
-import Image from "next/image";
-import Daterange from "../Generatereport/Daterange";
+
 
 export default function Header() {
   const [openProfile, setOpenProfile] = useState(false);
@@ -151,10 +149,10 @@ export default function Header() {
           src="/img/Breaktool.png"
           style={{
             marginTop: "-20px",
-            width: "90vw",
+            width: "89vw",
             height: "15vh",
             marginBottom: "-10px",
-            marginLeft: "-61px",
+            marginLeft: "-51px",
             display: 'relative',
             boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
           }}
@@ -162,7 +160,6 @@ export default function Header() {
         <h1 className="headerbreaktool">WORKFORCE MONITORING</h1>
         <h4 className="headerdown">Connecting Teams, Empowering Innovation</h4>
       </div>
-      <Daterange />
     </div>
   );
 }
