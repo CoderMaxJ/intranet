@@ -1,6 +1,7 @@
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/dashboard";
+import { set } from "date-fns";
 
 const token = localStorage.getItem("token");
 
@@ -18,6 +19,7 @@ interface AddEmployeeData {
   acctid: number;
   un:string;
   role_id:number;
+  is_dayshift:boolean
 }
 
 interface AddEmpProps {
@@ -35,6 +37,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
   const [selectedAccount, SetSelectedAccount] = useState("");
   const [breaktool_user,setBreaktoolUser]=useState("");
   const [generatedNumber,setGeneratedNumber]=useState(Number);
+  const [is_dayshift,setIsDayShift]=useState(0);
 
   useEffect(() => {
     if (empData) {
@@ -55,27 +58,37 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+  
+    // Handle checkbox separately
+    if (type === "checkbox") {
+      const isChecked = (e.target as HTMLInputElement).checked;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: isChecked ? 1 : 0, // Convert boolean to 1 or 0
+      }));
+      return;
+    }
+  
+    // Handle other inputs
     setFormData((prev) => ({ ...prev, [name]: value }));
-    SetSelectedAccount(e.target.value);
-   
-   generateRandomNumber();
-    setFormData((prev) => {
-      let updatedFormData = { ...prev, [name]: value };
   
-      // Automatically update breaktool_user and un when first name or last name changes
-      if (name === "fname") {
-        const initials = getInitials(value);
-        setBreaktoolUser(initials);
-        updatedFormData.un = `${initials}.${updatedFormData.lname || ""}`.trim();
-      }
+    // Automatically update breaktool_user and un when first name or last name changes
+    if (name === "fname") {
+      const initials = getInitials(value);
+      setBreaktoolUser(initials);
+      setFormData((prev) => ({
+        ...prev,
+        un: `${initials}.${prev.lname || ""}`.trim(),
+      }));
+    }
   
-      if (name === "lname") {
-        updatedFormData.un = `${breaktool_user}.${value}`.trim();
-      }
-      return updatedFormData;
-    });
+    if (name === "lname") {
+      setFormData((prev) => ({
+        ...prev,
+        un: `${breaktool_user}.${value}`.trim(),
+      }));
+    }
   };
   
   const getInitials = (name: string) => {
@@ -211,6 +224,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   };
 
+console.log("8888888888888888888888888888888888", formData)
   const clearInputs=()=>{
     setFormData({
       empno: "",
@@ -225,7 +239,8 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
       address: "",
       acctid: 0,
       un: "",
-      role_id:0
+      role_id:0,
+      is_dayshift:0
     });
   
     // Reset the username state
@@ -359,7 +374,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             placeholder="+63 02 6645 9723"
           />
         </div>
-        <div className="col-md-5 mb-3">
+        <div className="col-md-4 mb-3">
           <label htmlFor="address" className="form-label">
             Address
           </label>
@@ -392,8 +407,8 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             ))}
           </select>
         </div>
-
-        <div className="col-md-4 mb-3">
+            
+        <div className="col-md-3 mb-3">
           <label htmlFor="position" className="form-label">
             Account
           </label>
@@ -411,9 +426,35 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
               </option>
             ))}
           </select>
+       
         </div>
+        <div className="col-md-2 mt-3  d-flex justify-content-center align-items-center">
+          <label htmlFor="is_dayshift" className="form-label">
+            Day Shift
+            <span className="ms-2">  
+            <input
+             style={{
+              width: "20px",
+              height: "20px",
+              borderRadius: "4px", // Rounded edges
+              border: "1px solid #ccc",
+              cursor: "pointer",
+              marginLeft:"10px",
+            }}
+            type="checkbox"
+            name="is_dayshift"
+            className="form-check-input "
+            id="is_dayshift"
+            value={formData.is_dayshift}
+            checked={formData.is_dayshift===1}
+            onChange={handleInputChange}
+          /></span>
+          </label>
         
-        <div className="col-md-5 mb-3">
+       
+        </div>
+      
+        <div className="col-md-4 mb-3">
           <label htmlFor="address" className="form-label">
             Generated username for Breaktool account
           </label>
