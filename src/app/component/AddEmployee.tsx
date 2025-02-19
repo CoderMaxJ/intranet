@@ -18,6 +18,7 @@ interface AddEmployeeData {
   acctid: number;
   un:string;
   pw:string;
+  role_id:number;
 }
 
 interface AddEmpProps {
@@ -52,9 +53,10 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
     const random = Math.floor(Math.random() * (max - min + 4)) + min;
     setGeneratedNumber(random);
   };
-console.log("number", generatedNumber)
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     SetSelectedAccount(e.target.value);
@@ -117,6 +119,7 @@ console.log("number", generatedNumber)
     }
   };
 
+
   const fetchAccounts = async () => {
 
     const cachedRoles = localStorage.getItem("accounts");
@@ -177,7 +180,7 @@ console.log("number", generatedNumber)
 
 
   async function Update() {
-
+    alert(formData.role_id)
     const empno = empData.empno;
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/update/${empno}/`, {
@@ -227,7 +230,8 @@ console.log("number", generatedNumber)
       address: "",
       acctid: 0,
       un: "",
-      pw:""
+      pw:"",
+      role_id:0
     });
   
     // Reset the username state
@@ -420,6 +424,7 @@ console.log("number", generatedNumber)
             Generated username for Breaktool account
           </label>
           <input
+          
             readOnly
             disabled={true}
             type="text"
@@ -437,6 +442,8 @@ console.log("number", generatedNumber)
               <label htmlFor="">Privileges</label>
             </div>
             <input
+            
+            value={formData.role_id}
               type="checkbox"
               style={{
                 width: "20px",
@@ -450,6 +457,8 @@ console.log("number", generatedNumber)
             <label style={{marginLeft:"7px"}} htmlFor="">Manage Employee</label>
             
             <input
+              name="role_id"
+              value={formData.role_id}
               type="checkbox"
               style={{
                 width: "20px",
@@ -460,23 +469,8 @@ console.log("number", generatedNumber)
                 marginLeft:"10px",
               }}
             />
-          <label style={{marginLeft:"7px"}} htmlFor="">View Intranet</label>
-            <input
-              type="checkbox"
-              style={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "4px", // Rounded edges
-                border: "1px solid #ccc",
-                cursor: "pointer",
-                marginLeft:"10px",
-              }}
-            />
-            <label style={{marginLeft:"7px"}} htmlFor=""></label>
+          <label style={{marginLeft:"7px"}} htmlFor="">View Workforce Monitoring</label>
         </div>
-
-        
-      
         <input type="hidden" name="pw" value={formData.pw ? "default000" : "default000"} />
         <div
           className="col-md-12"

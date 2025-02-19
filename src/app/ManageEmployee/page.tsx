@@ -3,7 +3,7 @@ import { Encryptor, Decryptor } from "@/security";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Dashboard from "../Dashboard/dashboard";
-import AddEmp from "../component/AddEmp";
+import AddEmp from "../component/AddEmployee";
 import { useEffect, useState } from "react";
 import SuccessMessage from "../component/Successmessage";
 

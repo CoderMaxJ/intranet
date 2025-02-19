@@ -24,8 +24,6 @@ export default function Dashboard() {
   }
 
 
-  const handleReport = () => {
-  };
 
   return (
     <div
@@ -85,7 +83,7 @@ export default function Dashboard() {
                       Accounts
                     </a>
 
-                    <a onClick={() => router.push("/Crud")} style={{ textDecoration: 'none', justifyContent: 'center', display: 'block', paddingLeft: "35px" }}>
+                    <a onClick={() => router.push("/ManageEmployee")} style={{ textDecoration: 'none', justifyContent: 'center', display: 'block', paddingLeft: "35px" }}>
                       Employee
                     </a>
                   </div>
