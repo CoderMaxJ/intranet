@@ -206,57 +206,7 @@ export default function CreateUD() {
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                 </svg>
               </div>
-              
-          <nav aria-label="Page navigation">
-            <ul className="pagination">
-              <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
-                  Previous
-                </button>
-              </li>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <li key={i + 1} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
-                  <button className="page-link" onClick={() => handlePageChange(i + 1)}>
-                    {i + 1}
-                  </button>
-                </li>
-              ))}
-              <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
-                  Next
-                </button>
-              </li>
-            </ul>
-          </nav>
-        
-              {/* <select
-                className="select-departments"
-                onChange={handleSearchDepartment}
-                style={{
-                  padding: "8px 12px",
-                  borderRadius: "5px",
-                  border: "1px solid #ccc",
-                  marginRight: "300px",
-                }}
-              >
-                <option value="0">All Departments</option>
-                <option value="developer">Developer</option>
-                <option value="quality assurance">Quality Assurance</option>
-                <option value="manager">Chief Executive Officer</option>
-                <option value="account manager">Account Manager</option>
-                <option value="human resources manager">Human Resources Manager</option>
-                <option value="administrative assistant">Administrative Assistant</option>
-                <option value="project manager">Project Manager</option>
-                <option value="accountant">Accountant</option>
-                <option value="call center agent">Call Center Agent</option>
-                <option value="software engineer">Software Engineer</option>
-                <option value="data analyst">Data Analyst</option>
-                <option value="data entry">Data Entry</option>
-                <option value="cybersecurity specialist">Cybersecurity Specialist</option>
-                <option value="it support specialist">IT Support Specialist</option>
-                <option value="registered nurse">Registered Nurse</option>
-              </select> */}
-
+     
               <button
                 type="button"
                 className="add btn-success btn-sm"
@@ -367,6 +317,31 @@ export default function CreateUD() {
               )}
             </tbody>
           </table>
+              <div style={{display:"flex", justifyContent:"flex-end",width:"88.8vw",marginRight:"40px"}}>
+                                   
+          <nav className="border border" aria-label="Page navigation" style={{marginRight:"20px"}}>
+            <ul className="pagination">
+              <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
+                  Previous
+                </button>
+              </li>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li key={i + 1} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
+                  <button className="page-link" onClick={() => handlePageChange(i + 1)}>
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+              <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
+        
+              </div>
         </div>
 
         {/* Pagination Controls */}

@@ -19,7 +19,7 @@ interface AddEmployeeData {
   acctid: number;
   un:string;
   role_id:number;
-  is_dayshift:boolean
+  is_dayshift:number
 }
 
 interface AddEmpProps {
@@ -31,7 +31,22 @@ interface AddEmpProps {
 export default function AddEmp({ empData, mode }: AddEmpProps) {
 
 
-  const [formData, setFormData] = useState<AddEmployeeData>(empData);
+  const [formData, setFormData] = useState<AddEmployeeData>({
+    empno: empData.empno || "",
+    fname: empData.fname || "",
+    mname: empData.mname || "",
+    lname: empData.lname || "",
+    position: empData.position || "",
+    dateofbirth: empData.dateofbirth || "",
+    maritalstatus: empData.maritalstatus || "",
+    gender: empData.gender || "",
+    contactno: empData.contactno || "",
+    address: empData.address || "",
+    acctid: empData.acctid || 0,
+    un: empData.un || "",
+    role_id: empData.role_id || 0,
+    is_dayshift: empData.is_dayshift || 0,
+  });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
@@ -48,7 +63,27 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   // console.log(formData)
 
- 
+  useEffect(() => {
+    if (empData) {
+      setFormData({
+        empno: empData.empno || "",
+        fname: empData.fname || "",
+        mname: empData.mname || "",
+        lname: empData.lname || "",
+        position: empData.position || "",
+        dateofbirth: empData.dateofbirth || "",
+        maritalstatus: empData.maritalstatus || "",
+        gender: empData.gender || "",
+        contactno: empData.contactno || "",
+        address: empData.address || "",
+        acctid: empData.acctid || 0,
+        un: empData.un || "",
+        role_id: empData.role_id || 0,
+        is_dayshift: empData.is_dayshift || 0,
+      });
+    }
+  }, [empData]);
+
   const generateRandomNumber = () => {
     const min = 1000; 
     const max = 9999; 
@@ -59,6 +94,11 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value === "" && name === "dateofbirth" ? null : value,
+    }));
   
     // Handle checkbox separately
     if (type === "checkbox") {
@@ -90,7 +130,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
       }));
     }
   };
-  
+
   const getInitials = (name: string) => {
     if (!name || typeof name !== "string") return "";
     return name
@@ -476,24 +516,13 @@ console.log("8888888888888888888888888888888888", formData)
             <div className="mb-3">
               <label htmlFor="">Privileges</label>
             </div>
-            <input
-            
-            value={formData.role_id}
-              type="checkbox"
-              style={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "4px", // Rounded edges
-                border: "1px solid #ccc",
-                cursor: "pointer",
-                marginLeft:"10px",
-              }}
-            />
-            <label style={{marginLeft:"7px"}} htmlFor="">Manage Employee</label>
+
             
             <input
               name="role_id"
               value={formData.role_id}
+              checked={formData.role_id===1}
+              onChange={handleInputChange}
               type="checkbox"
               style={{
                 width: "20px",
@@ -504,7 +533,7 @@ console.log("8888888888888888888888888888888888", formData)
                 marginLeft:"10px",
               }}
             />
-          <label style={{marginLeft:"7px"}} htmlFor="">View Workforce Monitoring</label>
+          <label style={{marginLeft:"7px"}} htmlFor="">Manage Employee</label>
         </div>
         <div
           className="col-md-12"
