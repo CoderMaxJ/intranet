@@ -21,11 +21,6 @@ export default function Header() {
   const [showPassword2, setShowPassword2] = useState(false);
   const router = useRouter();
 
-  // const triggerLogout = () => {
-  //   router.push("/");
-  //   localStorage.clear();
-  // };
-
   const toggleShow = () => {
     setShowPassword((prev) => !prev);
   };
@@ -150,7 +145,7 @@ export default function Header() {
           style={{
             marginTop: "-20px",
             width: "89vw",
-            height: "15vh",
+            height: "12vh",
             marginBottom: "-10px",
             marginLeft: "-51px",
             display: 'relative',
