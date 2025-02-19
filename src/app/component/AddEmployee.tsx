@@ -17,7 +17,6 @@ interface AddEmployeeData {
   address: string;
   acctid: number;
   un:string;
-  pw:string;
   role_id:number;
 }
 
@@ -75,10 +74,6 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
       if (name === "lname") {
         updatedFormData.un = `${breaktool_user}.${value}`.trim();
       }
-      if(name === "pw") {
-        updatedFormData.pw = "default000";
-      }
-  
       return updatedFormData;
     });
   };
@@ -168,6 +163,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
       if (response.status === 201) {
         alert("Created successfully!")
+        clearInputs();
         // Close the form after successful submission
       }
     } catch (e) {
@@ -180,7 +176,6 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
 
   async function Update() {
-    alert(formData.role_id)
     const empno = empData.empno;
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/update/${empno}/`, {
@@ -230,7 +225,6 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
       address: "",
       acctid: 0,
       un: "",
-      pw:"",
       role_id:0
     });
   
@@ -471,7 +465,6 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
             />
           <label style={{marginLeft:"7px"}} htmlFor="">View Workforce Monitoring</label>
         </div>
-        <input type="hidden" name="pw" value={formData.pw ? "default000" : "default000"} />
         <div
           className="col-md-12"
           style={{
