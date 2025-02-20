@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "/public/asset/css/login.css";
-import Image from "next/image";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -27,9 +27,26 @@ export default function Login() {
   
   useEffect(() => {
     if (isLogged) {
-      router.push("/intranet");
+      setTimeout(() => {
+        router.push("/dashboard");
+      }
+      , 2000);
+     
     }
   }, [isLogged, router]);
+
+
+
+  const successToast = (msg:string) => toast.success(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    
+  });
 
 
   async function login() {
@@ -52,6 +69,7 @@ export default function Login() {
         localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
         localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
         localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
+        successToast("Login Successful");
         setLog(true);
       } else {
         const res = await response.json();
@@ -96,6 +114,7 @@ export default function Login() {
 
   return (
     <div className="main-div">
+      <ToastContainer />
       <div className="login-div">
         <img
           src="/img/Sos.png"

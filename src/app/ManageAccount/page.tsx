@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import SuccessMessage from "../component/SuccessModal/success";
 
 
+
 interface DepartmentProps {
     acctid: number;
     acctname: string;
@@ -178,7 +179,6 @@ export default function ManageDepartment() {
 
     return (
         <div className="container-fluid vh-50 d-flex">
-         
             <div> 
                 <Dashboard/>
             </div>

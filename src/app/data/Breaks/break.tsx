@@ -68,18 +68,25 @@ function BreakDataTable() {
 
       setBreaks(adjustedData);
     } catch (error) {
+    
       console.error("Failed to fetch break data:", error);
+      return ;
     }
   };
 
-  // Polling for real-time updates
-  useEffect(() => {
-    fetchBreakData(); // Initial fetch
-
-    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
-
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []);
+  
+    useEffect(() => {
+      if(!token){
+        return;
+      }
+      fetchBreakData(); // Initial fetch
+  
+      const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
+  
+      return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }, []);
+  
+ 
 
   // Countdown timer
   useEffect(() => {

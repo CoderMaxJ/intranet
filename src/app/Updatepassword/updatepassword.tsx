@@ -17,6 +17,7 @@ export default function Updatepassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [message,setMessage]=useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -44,7 +45,7 @@ export default function Updatepassword() {
       return;
     } else {
       if (currentpassword == confirmPassword || currentpassword == password) {
-        setError("New password must not match the current password.");
+        setError("New password must not the same to current password.");
         setSuccess(false);
         return;
       }
@@ -77,13 +78,20 @@ export default function Updatepassword() {
 
 
         if (response.status === 200) {
+          const message = await response.json();
           console.log(response)
-          setError("Password updated successfully!");
+          setMessage(message.res);
+          setCurrentPassword("");
+          setPassword("");
+          setConfirmPassword("");
           setSuccess(true);
-          setTimeout(() => router.push("/intranet"));
+          setTimeout(()=>{
+           setMessage("");
+          },2000)
+         
         } else {
           const res = await response.json();
-          setError(res.message || "Unable to changepassword");
+          setMessage(res.res);
           setSuccess(false);
         }
       } catch {
@@ -106,6 +114,12 @@ export default function Updatepassword() {
     setShowPassword2((prevState) => !prevState);
   };
 
+  const clearInputs=()=>{
+    setCurrentPassword("");
+    setPassword("");
+    setConfirmPassword("");
+    setMessage("");
+  }
   return (
     <div>
       {/* Link to open modal */}
@@ -144,6 +158,7 @@ export default function Updatepassword() {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
+                onClick={clearInputs}
                 aria-label="Close"
                 style={{ marginTop: '-45px' }}
               ></button>
@@ -151,26 +166,17 @@ export default function Updatepassword() {
 
             {success ? (
               <div>
-                <p style={{ color: 'green' }}>
-                  <span>
-                    <i className="bi bi-check-circle" style={{ color: 'green', marginRight: '15px', marginLeft: '10px', paddingTop: '20px' }}></i>
-                    Password updated successfully!
-                  </span>
-                </p>
-              </div>
-            ) : error ? (
-              <div>
-                <p style={{ color: 'red' }}>
-                  <span>
-                    <i className="bi bi-x-circle" style={{ color: 'red', marginRight: '15px', marginLeft: '10px', paddingTop: '20px' }}></i>
-                    {error}
-                  </span>
+                <p style={{ color: 'green' ,fontSize:"15px"}}>
+                    {message}
                 </p>
               </div>
             ) : (
-              <div></div>
-            )}
-
+              <div>
+                <p style={{ color: '#FF3131',fontSize:"15px" }}>
+                    {error}
+                </p>
+              </div>
+            ) }
             <div className="modal-body" style={{ marginLeft: "35px" }}>
               <form onSubmit={handleSubmit}>
                 <div className="updatepass-label">
