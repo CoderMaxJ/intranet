@@ -44,16 +44,6 @@ useEffect(() => {
     GetEmployee(currentPage);
   }, [currentPage]);
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value.toLowerCase());
-    setCurrentPage(1); // Reset to the first page when searching
-  };
-
-  const handleSearchDepartment = (event: any) => {
-    setDepartmentSearch(event.target.value.toLowerCase());
-    setCurrentPage(1); // Reset to the first page when filtering by department
-  };
-
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
     const response = await fetch(
@@ -88,7 +78,9 @@ useEffect(() => {
     
   });
   
-
+const refresh = ()=>{
+  GetEmployee(currentPage);
+}
 
   const handleDelete = async (empno: number) => {
     try {
@@ -304,7 +296,7 @@ const search = (e:any)=>{
        
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
-                <AddEmp empData={empData} mode={currentMode}  isClose={() => setCurrentMode("create")} />
+                <AddEmp empData={empData} mode={currentMode}  isClose={() => setCurrentMode("create")} onButtonClick={refresh} />
               </div>
             </div>
           </div>

@@ -26,9 +26,10 @@ interface AddEmpProps {
   empData: AddEmployeeData;
   mode: string;
   isClose: () => void;
+  onButtonClick: (action: string) => void;
 }
 
-export default function AddEmp({ empData, mode ,isClose}: AddEmpProps) {
+export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpProps) {
 
 
   const [formData, setFormData] = useState<AddEmployeeData>({
@@ -267,10 +268,11 @@ const successToast = (msg:string) => toast.success(msg, {
   const handleSubmitForm = async (e: React.FormEvent) => {
 
     e.preventDefault();
+    onButtonClick("clicked");
     if (mode === 'edit') {
-      Update();
+     await Update();
     } else {
-      Create();
+     await Create();
     }
 
 
