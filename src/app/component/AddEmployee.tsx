@@ -1,7 +1,7 @@
 import { Decryptor } from "@/security";
+import { ms } from "date-fns/locale";
 import { useEffect, useState } from "react";
-import Dashboard from "../Dashboard/dashboard";
-import { set } from "date-fns";
+import { ToastContainer, toast } from 'react-toastify';
 
 const token = localStorage.getItem("token");
 
@@ -28,7 +28,7 @@ interface AddEmpProps {
   isClose: () => void;
 }
 
-export default function AddEmp({ empData, mode }: AddEmpProps) {
+export default function AddEmp({ empData, mode ,isClose}: AddEmpProps) {
 
 
   const [formData, setFormData] = useState<AddEmployeeData>({
@@ -52,7 +52,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
   const [selectedAccount, SetSelectedAccount] = useState("");
   const [breaktool_user,setBreaktoolUser]=useState("");
   const [generatedNumber,setGeneratedNumber]=useState(Number);
-  const [is_dayshift,setIsDayShift]=useState(0);
+
 
   useEffect(() => {
     if (empData) {
@@ -61,7 +61,6 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   }, [empData]);
 
-  // console.log(formData)
 
   useEffect(() => {
     if (empData) {
@@ -94,7 +93,6 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       [name]: value === "" && name === "dateofbirth" ? null : value,
@@ -114,6 +112,11 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   
     // Automatically update breaktool_user and un when first name or last name changes
+
+    if(name === "acctid"){
+      SetSelectedAccount(value)
+    }
+
     if (name === "fname") {
       const initials = getInitials(value);
       setBreaktoolUser(initials);
@@ -122,7 +125,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
         un: `${initials}.${prev.lname || ""}`.trim(),
       }));
     }
-  
+  if(mode==="create"){
     if (name === "lname") {
       setFormData((prev) => ({
         ...prev,
@@ -130,6 +133,7 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
       }));
     }
   };
+}
 
   const getInitials = (name: string) => {
     if (!name || typeof name !== "string") return "";
@@ -201,6 +205,16 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
   }, []);
 
 
+const successToast = (msg:string) => toast.success(msg, {
+  position: "top-right",
+  autoClose: 2000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+});
+
 
   async function Create() {
 
@@ -215,9 +229,9 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
       });
 
       if (response.status === 201) {
-        alert("Created successfully!")
+        successToast("Created successfully!");
         clearInputs();
-        // Close the form after successful submission
+        
       }
     } catch (e) {
       console.error(e);
@@ -241,12 +255,10 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
       });
 
       if (response.status === 200) {
-        alert("Updated successfully!")
-
+        successToast("Updated successfully!");
       }
     } catch (e) {
       console.error(e);
-      alert(e);
     }
 
   }
@@ -264,7 +276,6 @@ export default function AddEmp({ empData, mode }: AddEmpProps) {
 
   };
 
-console.log("8888888888888888888888888888888888", formData)
   const clearInputs=()=>{
     setFormData({
       empno: "",
@@ -282,6 +293,9 @@ console.log("8888888888888888888888888888888888", formData)
       role_id:0,
       is_dayshift:0
     });
+    
+    isClose();
+  
   
     // Reset the username state
     setBreaktoolUser("");
@@ -293,7 +307,7 @@ console.log("8888888888888888888888888888888888", formData)
   }
   return (
     <div>
-
+<ToastContainer/>
       <form className="row" onSubmit={handleSubmitForm} >
         <div className="col-md-4 mb-3">
           <button
@@ -448,6 +462,7 @@ console.log("8888888888888888888888888888888888", formData)
           </select>
         </div>
             
+      
         <div className="col-md-3 mb-3">
           <label htmlFor="position" className="form-label">
             Account
@@ -459,15 +474,18 @@ console.log("8888888888888888888888888888888888", formData)
             className="form-select"
             onChange={handleInputChange}
           >
-            <option value="">Select Account</option>
-            {accounts.map((account) => (
-              <option key={account.acctid} value={account.acctid}>
+            <option value="">{selectedAccount}</option>
+            {accounts.map((account,index) => (
+              <option key={index} value={account.acctid}>
                 {account.acctname}
               </option>
             ))}
           </select>
        
         </div>
+
+
+
         <div className="col-md-2 mt-3  d-flex justify-content-center align-items-center">
           <label htmlFor="is_dayshift" className="form-label">
             Day Shift
