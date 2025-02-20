@@ -40,8 +40,14 @@ export default function Daterange() {
         setSearchTerm(event.target.value.toLowerCase());
     };
           
-   
+   useEffect(()=>{
+    if(data){
+        fetchData();
+    }
+   })
+
     const handleGenerateAndDownloadCSV = async () => {
+       
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
@@ -127,7 +133,43 @@ export default function Daterange() {
             setError("An error occurred while fetching data.");
         }
     };
-       
+
+    const handleView = async () => {
+        console.log("--------");
+        try {
+            setError("");
+            const account_id = localStorage.getItem("user_id");
+            const token = localStorage.getItem("token");
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/${start}/${end}/`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${Decryptor(token || "")}`,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch data");
+            }
+
+            const result = await response.json();
+            if (!result.data.length) {
+                alert("No data available for the selected date range.");
+                return;
+            }
+
+            if(start != "" || end != ""){
+                setData(result.data);
+            }
+          
+        } catch (e) {
+            setError("An error occurred while fetching data.");
+        }
+    };
+
     const fetchData = async () => {
         try {
             setError(""); 
@@ -154,16 +196,15 @@ export default function Daterange() {
                 alert("No data available for the selected date range.");
                 return;
             }
-
-            setData(result.data);
+            if(start == "" || end == ""){
+                setData(result.data);
+            }
+            
         } catch (e) {
             setError("An error occurred while fetching data.");
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
@@ -190,10 +231,10 @@ export default function Daterange() {
                                     position: 'sticky',
                                     padding: '15px',
                                     zIndex: 10,
-                                    marginTop: '40px',
+                                    marginTop: '20px',
                                     color: 'white',
-                                    marginLeft: '-60px',
-                                    width: '80.5vw'
+                                    marginLeft: '-80px',
+                                    width: '82.4vw'
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
                                     <form
@@ -235,7 +276,7 @@ export default function Daterange() {
                                                     value={end}
                                                     style={{ marginLeft: "10px", width: "10vw" }}
                                                 />
-                                                <button type="button" className="daterange-button" onClick={fetchData}>
+                                                <button type="button" className="daterange-button" onClick={handleView}>
                                                     View
                                                 </button>
                                             </div>
@@ -284,10 +325,10 @@ export default function Daterange() {
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '590px', marginLeft: '40px', position: 'fixed', width: '80.5vw', backgroundColor:'#ffffff' }}>
-                                <table className="table table-striped" style={{ position: 'sticky', top: 0, zIndex: 1, width: '81vw' }}>
+                            <div style={{ overflowY: 'auto', height: '650px', marginLeft: '20px', position: 'fixed', width: '82.4vw', backgroundColor:'#ffffff' }}>
+                                <table className="table table-striped" style={{ position: 'sticky', top: 0, zIndex: 1, width: '83vw' }}>
                                     <thead>
-                                        <tr>
+                                        <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Shift Date</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
@@ -312,7 +353,7 @@ export default function Daterange() {
                                             })
                                             .sort((a, b) => a.name.localeCompare(b.name))
                                             .map((report, index) => (
-                                                <tr key={index}>
+                                                <tr key={index} className="report-data">
                                                     <td>{report.name}</td>
                                                     <td>{report.shiftdate}</td>
                                                     <td>{report.login}</td>

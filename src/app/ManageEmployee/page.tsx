@@ -151,7 +151,7 @@ const successToast = (msg:string) => toast.success(msg, {
       </div>
       <ToastContainer />
       {/* Delete Confirmation Modal */}
-      <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
