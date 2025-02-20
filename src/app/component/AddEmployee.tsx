@@ -474,11 +474,10 @@ const successToast = (msg:string) => toast.success(msg, {
             className="form-select"
             onChange={handleInputChange}
           >
-            <option value="">{selectedAccount}</option>
+            <option value="">Select Account</option>
             {accounts.map((account,index) => (
-              <option key={index} value={account.acctid}>
-                {account.acctname}
-              </option>
+
+              <option key={index} value={account.acctid}> {account.acctname} </option>
             ))}
           </select>
        
