@@ -8,6 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 interface BreaksReport {
     name: string;
+    shiftdate: string;
     login: string;
     brkin1: string;
     brkout1: string;
@@ -27,17 +28,19 @@ export default function Daterange() {
     nextMonth.setMonth(today.getMonth());
     const [originalData, setOriginalData] = useState<BreaksReport[]>([]);
     const [data, setData] = useState<BreaksReport[]>([]);
+    const [dataToDownload, setDataToDownload] = useState<BreaksReport[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(true);
     const [buttonFilter, setButtonFilter] = useState("");
-    const [start, setStart] = useState(today.toISOString().split("T")[0]);
-    const [end, setEnd] = useState(nextMonth.toISOString().split("T")[0]);
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value.toLowerCase());
     };
-
+          
+   
     const handleGenerateAndDownloadCSV = async () => {
         try {
             setError("");
@@ -75,6 +78,7 @@ export default function Daterange() {
             const csvContent = [
                 [
                     "Name",
+                    "Shift Date",
                     "Login",
                     "First Break",
                     "Breakout",
@@ -90,7 +94,8 @@ export default function Daterange() {
                 ...filteredData.map((row: BreaksReport) =>
                     [
                         row.name,
-                        row.login,
+                        row.shiftdate,
+                        row.login || "",
                         row.brkin1 || "",
                         row.brkout1 || "",
                         row.ob1 || "",
@@ -122,15 +127,15 @@ export default function Daterange() {
             setError("An error occurred while fetching data.");
         }
     };
-
+       
     const fetchData = async () => {
         try {
-            setError(""); // Reset error before making request
+            setError(""); 
             const account_id = localStorage.getItem("user_id");
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/${start}/${end}/`,
+                `${process.env.NEXT_PUBLIC_BACKEND}/report/${Decryptor(account_id || "")}/`,
                 {
                     method: "GET",
                     headers: {
@@ -280,10 +285,11 @@ export default function Daterange() {
                                 </header>
                             </div>
                             <div style={{ overflowY: 'auto', height: '590px', marginLeft: '40px', position: 'fixed', width: '80.5vw', backgroundColor:'#ffffff' }}>
-                                <table className="table table-striped table-bordered" style={{ position: 'sticky', top: 0, zIndex: 1, width: '81vw' }}>
+                                <table className="table table-striped" style={{ position: 'sticky', top: 0, zIndex: 1, width: '81vw' }}>
                                     <thead>
                                         <tr>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Shift Date</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout1</th>
@@ -308,6 +314,7 @@ export default function Daterange() {
                                             .map((report, index) => (
                                                 <tr key={index}>
                                                     <td>{report.name}</td>
+                                                    <td>{report.shiftdate}</td>
                                                     <td>{report.login}</td>
                                                     <td>{report.brkin1}</td>
                                                     <td>{report.brkout1}</td>
