@@ -731,7 +731,20 @@ tbody td {
   width: 100%;
 }
 
-/* //CRUD|| */
+.container-fluid .table-striped>tbody>tr:nth-of-type(odd)>* {
+  background-color: #ffffff;
+  --bs-table-color-type: #ffffff;
+  --bs-table-bg-type: #ffffff;
+  color: black;
+}
+
+.container-fluid .table-striped>tbody>tr:nth-of-type(even)>* {
+  background-color: #e2f0f7;
+}
+
+.table-striped th {
+  background-color: #4cbdff;
+}
 .background-overlay {
   position: fixed;
   top: 0;

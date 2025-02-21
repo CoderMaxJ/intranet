@@ -592,6 +592,10 @@ const errorToast = (msg: string) => toast.error(msg, {
           />
         </div>
          )}
+         {mode === "edit" && (
+
+
+        
         <div className="col-md-4 mb-1">
             <div className="mb-3">
               <label htmlFor="">Assign Privileges</label>
@@ -624,6 +628,7 @@ const errorToast = (msg: string) => toast.error(msg, {
               }}
             />  */}
         </div>
+         )}
         <div
           className="col-md-12"
           style={{
