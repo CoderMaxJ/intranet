@@ -23,6 +23,7 @@ useEffect(()=>{
 })
 
   const router = useRouter();
+  
   if (user_hash_privilege) {
     const array_privilege = IdentifyUser(user_hash_privilege);
     array_privilege.forEach((data) => {

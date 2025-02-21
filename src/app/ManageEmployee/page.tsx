@@ -7,6 +7,7 @@ import AddEmp from "../component/AddEmployee";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import LoadingSpinner from "../component/LoadSpinner/spinner";
+import { IdentifyUser } from "../user_identifier";
 
 
 interface Information {
@@ -37,6 +38,8 @@ export default function CreateUD() {
   const [targetID, setTargetID] = useState<number | null>(null); // Employee ID to delete
   const [total,setTotal]=useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  const user_privilege=[]
 
   const token = localStorage.getItem("token");
 
@@ -109,13 +112,22 @@ const refresh = ()=>{
   }
 
 
+const user_hash_privilege = localStorage.getItem("user_privilege");
+
+ if (user_hash_privilege) {
+    const array_privilege = IdentifyUser(user_hash_privilege);
+    array_privilege.forEach((data) => {
+      user_privilege.push(data);
+    })
+  }
+
 
 const id = localStorage.getItem("user_id");
 
 const search = (e:any)=>{
-
   e.preventDefault();
   async function SearchData(name:string) {
+    
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${name}/`,{
       method: "GET",
       headers:{

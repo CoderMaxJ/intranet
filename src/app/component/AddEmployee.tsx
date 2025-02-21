@@ -1,5 +1,5 @@
 import { Decryptor } from "@/security";
-import { ms } from "date-fns/locale";
+import { da, ms } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -29,6 +29,11 @@ interface AddEmpProps {
   onButtonClick: (action: string) => void;
 }
 
+
+interface PrivilegesType {
+  name:string,
+  id:number
+}
 export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpProps) {
 
 
@@ -53,6 +58,8 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
   const [selectedAccount, SetSelectedAccount] = useState("");
   const [breaktool_user,setBreaktoolUser]=useState("");
   const [generatedNumber,setGeneratedNumber]=useState(Number);
+  const [privileges,setPrivileges]=useState<PrivilegesType[]>([]);
+  const [selectedPrivilege,setSelectedPrivilege]=useState(Number);
 
 
   useEffect(() => {
@@ -61,6 +68,8 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
     }
 
   }, [empData]);
+
+
 
 
   useEffect(() => {
@@ -93,6 +102,7 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+
     const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -108,7 +118,7 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
       }));
       return;
     }
-  
+  console.log(formData)
     // Handle other inputs
     setFormData((prev) => ({ ...prev, [name]: value }));
   
@@ -117,7 +127,12 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
     if(name === "acctid"){
       SetSelectedAccount(value)
     }
-
+    if (name === "role_id") {
+      setFormData((prev) => ({
+        ...prev,
+        role_id: Number(value), // Ensure it's stored as a number
+      }));
+    }
     if (name === "fname") {
       const initials = getInitials(value);
       setBreaktoolUser(initials);
@@ -145,7 +160,29 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
       .join("");
   };
   
+const fetchPrivileges = async ()=>{
+  try{
 
+
+  const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/role/list/`,{
+    method:"GET",
+    headers:{
+      "Content-Type":"application/json",
+      Authorization: `Bearer ${Decryptor(token || "")}`
+    }
+  })
+  if(respose.status === 200){
+    const data = await respose.json();
+    setPrivileges(data.data);
+
+  }else{
+    console.log("Error while fetching privileges");
+  }
+  }
+catch(e){
+  console.error(e)
+}
+}
 
   const fetchRoles = async () => {
 
@@ -203,10 +240,21 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
   useEffect(() => {
     fetchRoles();
     fetchAccounts();
+    fetchPrivileges();
   }, []);
 
 
 const successToast = (msg:string) => toast.success(msg, {
+  position: "top-right",
+  autoClose: 2000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+});
+
+const errorToast = (msg: string) => toast.error(msg, {
   position: "top-right",
   autoClose: 2000,
   hideProgressBar: true,
@@ -233,6 +281,8 @@ const successToast = (msg:string) => toast.success(msg, {
         successToast("Created successfully!");
         clearInputs();
         
+      }else{
+        errorToast("Unable to create employee!")
       }
     } catch (e) {
       console.error(e);
@@ -257,9 +307,12 @@ const successToast = (msg:string) => toast.success(msg, {
 
       if (response.status === 200) {
         successToast("Updated successfully!");
+      }else{
+        errorToast("Unable to update records!")
       }
     } catch (e) {
       console.error(e);
+   
     }
 
   }
@@ -332,6 +385,7 @@ const successToast = (msg:string) => toast.success(msg, {
             First Name
           </label>
           <input
+            required
             type="text"
             name="fname"
             className="form-control"
@@ -360,6 +414,8 @@ const successToast = (msg:string) => toast.success(msg, {
             Last Name
           </label>
           <input
+
+            required
             type="text"
             name="lname"
             className="form-control"
@@ -374,6 +430,7 @@ const successToast = (msg:string) => toast.success(msg, {
             Date of Birth
           </label>
           <input
+            required
             type="date"
             name="dateofbirth"
             className="form-control"
@@ -387,6 +444,7 @@ const successToast = (msg:string) => toast.success(msg, {
             Marital Status
           </label>
           <select
+            required
             name="maritalstatus"
             value={formData.maritalstatus}
             id="maritalstatus"
@@ -406,6 +464,7 @@ const successToast = (msg:string) => toast.success(msg, {
             Gender
           </label>
           <select
+            required
             name="gender"
             value={formData.gender}
             id="gender"
@@ -435,6 +494,7 @@ const successToast = (msg:string) => toast.success(msg, {
             Address
           </label>
           <input
+            required
             type="text"
             name="address"
             className="form-control"
@@ -449,6 +509,7 @@ const successToast = (msg:string) => toast.success(msg, {
             Position
           </label>
           <select
+            required
             name="position"
             value={formData.position}
             id="position"
@@ -470,6 +531,7 @@ const successToast = (msg:string) => toast.success(msg, {
             Account
           </label>
           <select
+            required
             name="acctid"
             value={selectedAccount}
             id="acctid"
@@ -530,13 +592,23 @@ const successToast = (msg:string) => toast.success(msg, {
           />
         </div>
          )}
-        <div className="col-md-6 mb-1  w-50">
+        <div className="col-md-4 mb-1">
             <div className="mb-3">
-              <label htmlFor="">Privileges</label>
+              <label htmlFor="">Assign Privileges</label>
             </div>
-
+            <select name="role_id"
+            value={formData.role_id}
+             onChange={handleInputChange}
+             id=""
+             className="form-select"
+             >
+              <option value="">Select privilege</option>
+                  {privileges.map((role,index)=>(
+                        <option key={index} value={role.id}>{role.name}</option>
+                    ))}
+            </select>
             
-            <input
+            {/* <input
               name="role_id"
               value={formData.role_id}
               checked={formData.role_id===1}
@@ -550,8 +622,7 @@ const successToast = (msg:string) => toast.success(msg, {
                 cursor: "pointer",
                 marginLeft:"10px",
               }}
-            />
-          <label style={{marginLeft:"7px"}} htmlFor="">Manage Employee</label>
+            />  */}
         </div>
         <div
           className="col-md-12"
