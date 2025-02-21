@@ -11,6 +11,7 @@ export default function Logout() {
     if (confirmLogout) {
       localStorage.clear();
       router.push("/");
+     
     }
   };
 

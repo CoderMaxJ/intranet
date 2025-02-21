@@ -2,9 +2,11 @@
 import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
 import Viewreports from "../Viewreports/page";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
+import { Decryptor } from "@/security";
+
 
 
 export default function Dashboard() {
@@ -13,7 +15,12 @@ export default function Dashboard() {
 
   const user_hash_privilege = localStorage.getItem("user_privilege");
 
-
+const token = localStorage.getItem("token");
+useEffect(()=>{
+  if(!token){
+    router.push("/")
+  }
+})
 
   const router = useRouter();
   if (user_hash_privilege) {
@@ -27,7 +34,7 @@ export default function Dashboard() {
 
   return (
     <div
-      className="db"
+      className="db "
       style={{
         backgroundColor: "#ffffff",
         width: "217px",
@@ -39,12 +46,14 @@ export default function Dashboard() {
       <div style={{ marginBottom: "40px", marginTop: '15px' }}>
         <img src="/img/Sos.png" height={45} />
       </div>
+     
+        <div style={{ marginLeft: '10px' }}>
       <div>
         <div style={{ marginLeft: "5px", marginBottom:'-10px', paddingLeft:'5px' }} className="generate">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{ marginRight: "17px", marginLeft: "5px", marginBottom: '5px' }}>
             <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
           </svg>
-          <button onClick={() => router.push("/")} style={{ border: "none", background: "transparent" }}>
+          <button onClick={() => router.push("/dashboard")} style={{ border: "none", background: "transparent" }}>
             Dashboard
           </button>
 
@@ -140,8 +149,9 @@ export default function Dashboard() {
             d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
           />
         </svg>
-        <Logout />
+          <Logout />  
       </div>
+    </div>
     </div>
 
   );

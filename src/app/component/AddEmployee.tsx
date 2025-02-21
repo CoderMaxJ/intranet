@@ -26,9 +26,10 @@ interface AddEmpProps {
   empData: AddEmployeeData;
   mode: string;
   isClose: () => void;
+  onButtonClick: (action: string) => void;
 }
 
-export default function AddEmp({ empData, mode ,isClose}: AddEmpProps) {
+export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpProps) {
 
 
   const [formData, setFormData] = useState<AddEmployeeData>({
@@ -267,10 +268,11 @@ const successToast = (msg:string) => toast.success(msg, {
   const handleSubmitForm = async (e: React.FormEvent) => {
 
     e.preventDefault();
+    onButtonClick("clicked");
     if (mode === 'edit') {
-      Update();
+     await Update();
     } else {
-      Create();
+     await Create();
     }
 
 
@@ -307,7 +309,7 @@ const successToast = (msg:string) => toast.success(msg, {
   }
   return (
     <div>
-<ToastContainer/>
+
       <form className="row" onSubmit={handleSubmitForm} >
         <div className="col-md-4 mb-3">
           <button
@@ -476,7 +478,6 @@ const successToast = (msg:string) => toast.success(msg, {
           >
             <option value="">Select Account</option>
             {accounts.map((account,index) => (
-
               <option key={index} value={account.acctid}> {account.acctname} </option>
             ))}
           </select>
@@ -510,7 +511,7 @@ const successToast = (msg:string) => toast.success(msg, {
         
        
         </div>
-      
+          {mode !== "edit" && (
         <div className="col-md-4 mb-3">
           <label htmlFor="address" className="form-label">
             Generated username for Breaktool account
@@ -528,7 +529,7 @@ const successToast = (msg:string) => toast.success(msg, {
             placeholder='e.g. "J.Sopeta" '
           />
         </div>
-         
+         )}
         <div className="col-md-6 mb-1  w-50">
             <div className="mb-3">
               <label htmlFor="">Privileges</label>

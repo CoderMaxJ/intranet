@@ -6,6 +6,7 @@ import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmployee";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
+import LoadingSpinner from "../component/LoadSpinner/spinner";
 
 
 interface Information {
@@ -34,23 +35,14 @@ export default function CreateUD() {
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const [totalPages, setTotalPages] = useState(1); // Total pages state
   const [targetID, setTargetID] = useState<number | null>(null); // Employee ID to delete
+  const [total,setTotal]=useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (employees) {
-      GetEmployee(currentPage); // Fetch data for the current page
-    }
-  }, []);
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value.toLowerCase());
-    setCurrentPage(1); // Reset to the first page when searching
-  };
-
-  const handleSearchDepartment = (event: any) => {
-    setDepartmentSearch(event.target.value.toLowerCase());
-    setCurrentPage(1); // Reset to the first page when filtering by department
-  };
+useEffect(() => {
+    GetEmployee(currentPage);
+  }, [currentPage]);
 
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
@@ -70,8 +62,25 @@ export default function CreateUD() {
       console.log(data);
       setEmployees(data.data); // Set employee data
       setTotalPages(data.num_pages); // Set total pages
+      setTotal(data.total);
     }
   }
+
+
+  const successToast = (msg:string) => toast.success(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    
+  });
+  
+const refresh = ()=>{
+  GetEmployee(currentPage);
+}
 
   const handleDelete = async (empno: number) => {
     try {
@@ -87,9 +96,9 @@ export default function CreateUD() {
       );
 
       if (response.status === 204) {
-        GetEmployee(currentPage); 
-        successToast("Employee deleted successfully.");
-        setTargetID(0);
+        successToast("Deleted successfully.");
+        GetEmployee(currentPage);
+
       } else {
         alert("Failed to delete employee.");
       }
@@ -97,10 +106,41 @@ export default function CreateUD() {
       console.error(e);
       alert("An error occurred while deleting the employee.");
     }
-  };
+  }
+
+
+
+const id = localStorage.getItem("user_id");
+
+const search = (e:any)=>{
+
+  e.preventDefault();
+  async function SearchData(name:string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${name}/`,{
+      method: "GET",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${Decryptor(token || '')}`
+      }
+    })
+    if(response.status == 200){
+      const data = await response.json();
+      setEmployees(data.data);
+    }else{
+      console.log("error ");
+    }
+  }
+  if(searchTerm !== ""){
+    SearchData(searchTerm);
+  }else{
+    GetEmployee(currentPage);
+  }
+  
+  console.log(searchTerm);
+}
+
 
   const handleData = (data: any) => {
-    console.log("data", data);
     setCurrentMode("edit");
 
     let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus } = data;
@@ -116,7 +156,7 @@ export default function CreateUD() {
       gender,
       maritalstatus,
     };
-    console.log("current data: ", currentData);
+   
 
     setEmpData(currentData);
   };
@@ -131,25 +171,21 @@ export default function CreateUD() {
     GetEmployee(page); // Fetch data for the new page
   };
 
+  const test = async (e:any)=>{
+  e.preventDefault();
+  
+    search(e);
+ 
 
-const successToast = (msg:string) => toast.success(msg, {
-  position: "top-right",
-  autoClose: 2000,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-});
-
+    }
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
-    
       <div className="db-employee">
         <Dashboard />
       </div>
       <ToastContainer />
+    
       {/* Delete Confirmation Modal */}
       <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div className="modal-dialog">
@@ -181,6 +217,8 @@ const successToast = (msg:string) => toast.success(msg, {
       </div>
 
       <div>
+  
+     
         <div>
           <div>
             <header
@@ -233,7 +271,10 @@ const successToast = (msg:string) => toast.success(msg, {
                   type="text"
                   placeholder="Search..."
                   value={searchTerm}
-                  onChange={handleSearch}
+                  onChange={(e)=>setSearchTerm(e.target.value)}
+                  onKeyUp={test}
+            
+                  
                   style={{
                     padding: "8px 60px",
                     borderRadius: "5px",
@@ -242,7 +283,6 @@ const successToast = (msg:string) => toast.success(msg, {
                     marginLeft: "1100px",
                   }}
                 />
-                <button className="btn btn-primary ms-2 border">Search</button>
               </div>
             </header>
           </div>
@@ -253,9 +293,10 @@ const successToast = (msg:string) => toast.success(msg, {
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
           >
+       
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
-                <AddEmp empData={empData} mode={currentMode}  isClose={() => setCurrentMode("create")} />
+                <AddEmp empData={empData} mode={currentMode}  isClose={() => setCurrentMode("create")} onButtonClick={refresh} />
               </div>
             </div>
           </div>
@@ -267,7 +308,9 @@ const successToast = (msg:string) => toast.success(msg, {
             id="table-employee"
             style={{ marginLeft: "40px", marginRight: "40px", width: "85vw", borderCollapse: "collapse" }}
           >
+       
             <thead style={{ position: "sticky", top: "20" }}>
+             
               <tr>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
@@ -282,7 +325,9 @@ const successToast = (msg:string) => toast.success(msg, {
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
               </tr>
             </thead>
+   
             <tbody className="table-data">
+              
               {employees?.length ? (
                 employees.map((info, index) => (
                   <tr key={info.empno}>
@@ -336,6 +381,7 @@ const successToast = (msg:string) => toast.success(msg, {
             </tbody>
           </table>
           <div className="border border" style={{ display: "flex", justifyContent: "flex-end", width: "88.8vw", marginRight: "40px" }}>
+            <p>{total}</p>
             <nav className="border border" aria-label="Page navigation" style={{ marginRight: "20px" }}>
               <ul className="pagination">
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>

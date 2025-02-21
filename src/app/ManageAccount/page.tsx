@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/dashboard";
 import { useRouter } from "next/navigation";
 import SuccessMessage from "../component/SuccessModal/success";
+import { ToastContainer,toast } from "react-toastify";
+
 
 
 interface DepartmentProps {
@@ -45,6 +47,20 @@ export default function ManageDepartment() {
             fetchManagerList();
         }
     }, [token]);
+
+
+  const successToast = (msg:string) => toast.success(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    
+  });
+  
+
 
     const fetchAccountList = async () => {
         try {
@@ -103,7 +119,7 @@ export default function ManageDepartment() {
                 body: JSON.stringify(requestBody),
             });
             if (response.status === 201) {
-                alert("Account Created!");
+               successToast("Account created successfully.");
                 setShowForm(false);
                 fetchAccountList(); // Refresh account list
             }
@@ -132,7 +148,7 @@ export default function ManageDepartment() {
                 body: JSON.stringify(request_data)
             });
             if (response.status === 201) {
-                alert("Manager Assigned!");
+                successToast("Manager Assigned.")
                 fetchAccountList();
             }
         } catch (e) {
@@ -152,7 +168,7 @@ export default function ManageDepartment() {
                 },
             });
             if (response.status === 204) {
-                alert("Account Deleted!");
+                successToast("Account deleted successfully.")
                 fetchAccountList();
             }
         } catch (e) {
@@ -178,7 +194,7 @@ export default function ManageDepartment() {
 
     return (
         <div className="container-fluid vh-50 d-flex">
-
+            <ToastContainer/>
             <div className="manageaccount-dashboard">
                 <Dashboard />
             </div>
