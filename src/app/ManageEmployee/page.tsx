@@ -314,7 +314,7 @@ const search = (e:any)=>{
           </div>
         </div>
 
-        <div className="managereport" style={{ overflowY: "auto", maxHeight: "888px", position: "fixed" }}>
+        <div className="managereport" style={{ overflowY: "auto", maxHeight: "800px", position: "fixed" }}>
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
@@ -392,8 +392,8 @@ const search = (e:any)=>{
               )}
             </tbody>
           </table>
-          <div className="border border" style={{ display: "flex", justifyContent: "flex-end", width: "88.8vw", marginRight: "40px" }}>
-            <p>{total}</p>
+          <div className="border border"  style={{ display: "flex", justifyContent: "flex-end", width: "88.8vw", marginRight: "40px" }}>
+            <p className="mt-2">Total: <span>{total}</span></p>
             <nav className="border border" aria-label="Page navigation" style={{ marginRight: "20px" }}>
               <ul className="pagination">
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
