@@ -70,7 +70,7 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
   }, [empData]);
 
 
-
+console.log(empData);
 
   useEffect(() => {
     if (empData) {
@@ -360,6 +360,7 @@ const errorToast = (msg: string) => toast.error(msg, {
     mode="create"
 
   }
+
   return (
     <div>
 
@@ -451,12 +452,12 @@ const errorToast = (msg: string) => toast.error(msg, {
             className="form-select"
             onChange={handleInputChange}
           >
-            <option value="Single">Single</option>
-            <option value="Married">Married</option>
-            <option value="Separated">Separated</option>
-            <option value="Widowed">Widowed</option>
-            <option value="Divorced">Divorced</option>
-            <option value="Other">Other</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="Separated">Separated</option>
+              <option value="Widowed">Widowed</option>
+              <option value="Divorced">Divorced</option>
+              <option value="Other">Other</option>
           </select>
         </div>
         <div className="col-md-2 mb-3">
@@ -533,7 +534,7 @@ const errorToast = (msg: string) => toast.error(msg, {
           <select
             required
             name="acctid"
-            value={selectedAccount}
+            value={formData.acctid}
             id="acctid"
             className="form-select"
             onChange={handleInputChange}
@@ -593,9 +594,6 @@ const errorToast = (msg: string) => toast.error(msg, {
         </div>
          )}
          {mode === "edit" && (
-
-
-        
         <div className="col-md-4 mb-1">
             <div className="mb-3">
               <label htmlFor="">Assign Privileges</label>
@@ -612,21 +610,6 @@ const errorToast = (msg: string) => toast.error(msg, {
                     ))}
             </select>
             
-            {/* <input
-              name="role_id"
-              value={formData.role_id}
-              checked={formData.role_id===1}
-              onChange={handleInputChange}
-              type="checkbox"
-              style={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "4px", // Rounded edges
-                border: "1px solid #ccc",
-                cursor: "pointer",
-                marginLeft:"10px",
-              }}
-            />  */}
         </div>
          )}
         <div

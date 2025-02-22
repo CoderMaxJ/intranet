@@ -155,7 +155,7 @@ const search = (e:any)=>{
   const handleData = (data: any) => {
     setCurrentMode("edit");
 
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus } = data;
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus,acctid } = data;
     let currentData = {
       empno,
       fname,
@@ -167,6 +167,7 @@ const search = (e:any)=>{
       position,
       gender,
       maritalstatus,
+      acctid
     };
    
 
@@ -176,6 +177,8 @@ const search = (e:any)=>{
   const closeModal = () => {
     hidden(true);
   };
+
+
 
   // Pagination controls
   const handlePageChange = (page: number) => {

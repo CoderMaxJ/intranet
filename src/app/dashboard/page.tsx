@@ -3,9 +3,10 @@ import BreakDataTable from "../data/Breaks/break";
 import LogsDataTable from "../data/Logs/logs";
 import Dashboard from "../Dashboard/dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { Decryptor } from "@/security";
 
 export default function MainDashboard() {
+// alert(Decryptor(localStorage.getItem("user_id") || ""))
   return (
     <div style={{ display: "flex", height: "100vh", width: '100vw', backgroundColor: "#e7e7e7" }}>
    

@@ -129,8 +129,10 @@ export default function ManageDepartment() {
     };
 
     const handleCreateManager = (acctid: number) => {
+
         CreateManager(acctid);
     };
+
 
     const CreateManager = async (acctid: number) => {
         const selectedManagerID = selectedManagerIDs[acctid];
