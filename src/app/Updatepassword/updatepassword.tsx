@@ -6,6 +6,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "/public/asset/css/updateps.css";
 import Image from "next/image";
 import { Decryptor } from "@/security";
+import { ToastContainer,toast } from "react-toastify";
+
+  
 
 export default function Updatepassword() {
   const [openProfile, setOpenProfile] = useState(false);
@@ -36,31 +39,20 @@ export default function Updatepassword() {
     setShowPassword2((prev) => !prev);
   };
 
+  const empno = localStorage.getItem("user_id"); 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      setSuccess(false);
-      return;
-    } else {
-      if (currentpassword == confirmPassword || currentpassword == password) {
-        setError("New password must not the same to current password.");
-        setSuccess(false);
-        return;
-      }
-    }
 
     async function changePassword() {
       const id = localStorage.getItem("user_id");
 
       const newAccount = {
-        empno: Decryptor(id || ""),
+        empno: Decryptor(empno || ""),
         oldpassword: currentpassword,
         newpassword: password,
         password2: confirmPassword,
       };
-
+console.log(newAccount)
       const token = localStorage.getItem("token");
 
       try {
@@ -78,7 +70,9 @@ export default function Updatepassword() {
 
 
         if (response.status === 200) {
+          
           const message = await response.json();
+          successToast(message.res);
           console.log(response)
           setMessage(message.res);
           setCurrentPassword("");
@@ -91,17 +85,43 @@ export default function Updatepassword() {
          
         } else {
           const res = await response.json();
+          console.log(res.res)
           setMessage(res.res);
           setSuccess(false);
+          errorToast(res.res)
         }
       } catch {
-        setError("An error occurred. Please try again.");
+        
       }
     }
 
 
     changePassword()
   };
+
+
+  const successToast = (msg:string) => toast.success(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    
+  });
+
+
+    const errorToast = (msg: string) => toast.error(msg, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -122,6 +142,7 @@ export default function Updatepassword() {
   }
   return (
     <div>
+      <ToastContainer/>
       {/* Link to open modal */}
       <div className="updatepassword-hvr" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
         style={{

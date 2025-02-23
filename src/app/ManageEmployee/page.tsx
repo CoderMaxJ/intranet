@@ -83,36 +83,15 @@ useEffect(() => {
     
   });
   
-// const refresh = ()=>{
-//   console.log("HEy")
-
-//     async function ReflectUpdate() {
-//       const token = localStorage.getItem("token");
-//       const response = await fetch(
-//         `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/`,
-//         {
-//           method: "GET",
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${Decryptor(token || "")}`,
-//           },
-//         }
-//       );
-  
-//       if (response.ok) {
-//         const data = await response.json();
-//         setEmployees(data.data); // Set employee data
-//         console.log("=====",data.data)
-  
-//       }
-//     }
-
-//     ReflectUpdate();
-  
-
-
- 
-// }
+  const errorToast = (msg: string) => toast.error(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   const handleDelete = async (empno: number) => {
     try {

@@ -10,11 +10,13 @@ import { ToastContainer,toast } from "react-toastify";
 
 
 
+
 interface DepartmentProps {
     acctid: number;
     acctname: string;
     status: number;
     manager: string;
+    empno:number;
 }
 
 interface ManagerProps {
@@ -31,8 +33,11 @@ export default function ManageDepartment() {
     const [accountName, setAccountName] = useState("");
     const [selectedManagerIDs, setSelectedManagerIDs] = useState<{ [key: number]: number }>({});
     const [targetID, setTargetID] = useState<number>(0);
+    const [showModal,setShowModal]=useState(false);
+    const [showDropDown,setShowDropdown]=useState(false);
+    const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
 
-
+   
     const router = useRouter();
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
@@ -61,6 +66,15 @@ export default function ManageDepartment() {
   });
   
 
+  const errorToast = (msg: string) => toast.error(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
     const fetchAccountList = async () => {
         try {
@@ -129,10 +143,12 @@ export default function ManageDepartment() {
     };
 
     const handleCreateManager = (acctid: number) => {
+       setOpenDropdownId(0);
         CreateManager(acctid);
     };
 
     const CreateManager = async (acctid: number) => {
+        console.log(acctid)
         const selectedManagerID = selectedManagerIDs[acctid];
         const request_data = {
             empno: selectedManagerID,
@@ -150,6 +166,11 @@ export default function ManageDepartment() {
             if (response.status === 201) {
                 successToast("Manager Assigned.")
                 fetchAccountList();
+                setShowModal(false);
+            }else{
+                const error = await response.json();
+                errorToast(error.warning);
+                
             }
         } catch (e) {
             console.log(e);
@@ -177,6 +198,25 @@ export default function ManageDepartment() {
 
     };
 
+const removeManager = async (empno:number,acctid:number)=>{
+const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/remove/manager/${empno}/${acctid}/`,{
+    method:"DELETE",
+    headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${token}`
+    },
+
+})
+    if(response.status === 204){
+        successToast("Manager successfully remove.")
+        fetchAccountList();
+    }else{
+       const error = await response.json();
+       errorToast(error.warning);
+    }
+
+}
+
     const formShow = () => {
         setShowForm(true);
     };
@@ -186,14 +226,20 @@ export default function ManageDepartment() {
     };
 
     const handleManagerChange = (acctid: number, empno: number) => {
+        setShowModal(true);
+        setTargetID(acctid); // Ensure targetID is updated
         setSelectedManagerIDs(prevState => ({
             ...prevState,
             [acctid]: empno
         }));
-    };
+    };  
+    const handleShowDropdown = (acctid: number) => {
+        setOpenDropdownId(openDropdownId === acctid ? null : acctid); // Toggle dropdown for the clicked row
+      };
 
     return (
         <div className="container-fluid vh-50 d-flex">
+      
             <ToastContainer/>
             <div className="manageaccount-dashboard">
                 <Dashboard />
@@ -218,23 +264,30 @@ export default function ManageDepartment() {
             </div>
 
             {/* Save Confirmation Modal */}
-            <div className="modal fade" id="saveModal" aria-labelledby="saveModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="saveModalLabel">Confirmation</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Are you sure you want to save changes?</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onClick={() => handleCreateManager(targetID)} type="button" data-bs-dismiss="modal" className="btn btn-success">Save changes</button>
+            {showModal && (
+
+                    <div className="modal show d-block" id="saveModal" aria-labelledby="saveModalLabel">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="saveModalLabel">Confirmation</h1>
+                                <button type="button" className="btn-close" onClick={()=>setShowModal(false)} aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Are you sure you want to save changes?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" onClick={()=>setShowModal(false)}  className="btn btn-secondary">Close</button>
+                                <button onClick={() => handleCreateManager(targetID)} type="button" className="btn btn-success">
+                                    Save changes
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    </div>
+            )}
+         
+
 
             <div className="manage-department" >
                 <div>
@@ -328,81 +381,140 @@ export default function ManageDepartment() {
                         <div className="ms-3 mt-4 vw-50">
 
                             <table className="manage-table table table-light table-hover table-striped border">
-                                <thead style={{tableLayout: "fixed", display:'table', width:"98.9%"}}>
+                                <thead style={{tableLayout: "fixed", display:'table', width:"100%"}}>
                                     <tr>
-                                        <th className="px-1">Account ID</th>
-                                        <th className="px-1">Account Name</th>
-                                        <th className="px-1">Status</th>
-                                        <th className="px-1">Manager/Supervisor</th>
-                                        <th className="px-5">Action</th>
+                                        <th style={{width:"200px"}} className="px-1">Account ID</th>
+                                        <th style={{width:"200px"}} className="px-1">Account Name</th>
+                                        <th style={{width:"200px"}} className="px-1">Status</th>
+                                        <th style={{width:"200px"}} className="px-1">Manager/Supervisor</th>
+                                        <th style={{width:"120px"}} className="px-1"></th>
+                                        <th style={{width:"200px"}} className="px-1"></th>
+                                        <th className="border border" style={{marginLeft:"15vw"}}>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody style={{ display: 'block', maxHeight: '720px', overflowY: 'scroll' }}>
-            {department.map((instance) => (
-              <tr key={instance.acctid} style={{ display: 'table', width: '100%', tableLayout: 'fixed' }}>
-                                            <td  >{instance.acctid}</td>
-                                            <td >{instance.acctname}</td>
-                                            <td >{instance.status === 1 ? "Active" : "Not Active"}</td>
-                                            {
-                                                instance.manager && instance.manager.fname ? (
-                                                    <td>
-                                                        <select
-                                                            className="form-select w-100 p-1"
-                                                            value={selectedManagerIDs[instance.acctid] || ""}
-                                                            onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
+                                
+                                {department.map((instance) => (
+                                    <tr key={instance.acctid} style={{ display: 'table', width: '100%', tableLayout: 'fixed' }}>
+                                    <td style={{width:"200px"}}>{instance.acctid}</td>
+                                    <td style={{width:"200px"}}>{instance.acctname}</td>
+                                    <td style={{width:"200px"}}>{instance.status === 1 ? "Active" : "Not Active"}</td>
+                                    <td>
+                                        {/* Display managers */}
+                                        {instance.manager && instance.manager.length > 0 ? (
+                                        // If managers are assigned, display them in a flex container
+                                        <div style={{ display: 'flex',justifyContent:"flex-start",alignItems:"center",  gap: '15px', flexWrap: 'wrap',margin:"0px",padding:"0px",height:"40px" }} >
+                                          <form>
+                                                {instance.manager.map((manager, index) => (
+                                                          
+                                                    <div
+                                                        key={index}
+                                                        style={{ position: "relative", display: "inline-block", margin: "8px" }} // Wrapper for positioning
                                                         >
-                                                            <option  value="">{`${instance.manager.fname} ${instance.manager.lname}`}</option>
-                                                            {manager.map((manager) => (
-                                                                <option key={manager.empno} value={manager.empno}>
-                                                                    {manager.fname + " " + manager.lname}
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                    </td>
-
-                                                ) : (
-                                                    <td >
-                                                        <select
-                                                            className="form-select w-100 p-1"
-                                                            value={selectedManagerIDs[instance.acctid] || ""}
-                                                            onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
+                                                        {/* Small "x" button */}
+                                                       
+                                                        <button
+                                                            type="button"
+                                                            style={{
+                                                            position: "absolute",
+                                                            top: "-8px",
+                                                            right: "-8px",
+                                                            backgroundColor: "#FAA0A0",
+                                                            color: "red",
+                                                            border: "none",
+                                                            borderRadius: "50%",
+                                                            width: "20px",
+                                                            height: "20px",
+                                                            fontSize: "14px",
+                                                            cursor: "pointer",
+                                                            display: "flex",
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                            }}
+                                                            onClick={()=>removeManager(manager.empno, instance.acctid)}
                                                         >
-                                                            <option value="" >Unassigned</option>
-                                                            {manager.map((manager) => (
-                                                                <option key={manager.empno} value={manager.empno}>
-                                                                    {manager.fname + " " + manager.lname}
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                    </td>
-                                                )
-                                            }
-
-                                            <td>
-                                                <div className="actions">
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => { setTargetID(instance.acctid); }}
-                                                        className="accounts-edit" data-bs-toggle="modal" data-bs-target="#saveModal"
-                                                        style={{ cursor: "pointer" }}
-                                                    >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" className="manageaccount-edit bi bi-pencil-square" viewBox="0 0 16 16">
-                                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                            <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                                        </svg>
-                                                    </button>
-                                                    <button
-                                                        onClick={() => { setTargetID(instance.acctid); }}
-                                                        type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                                    >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" className="manageaccount-delete bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                                                        </svg>
-                                                    </button>
+                                                            ×
+                                                        </button>
+                                                        {/* Manager name div */}
+                                                        <div
+                                                            className="rounded d-flex justify-content-center align-items-center"
+                                                            style={{ 
+                                                            backgroundColor: "#9fedba", 
+                                                            height: "30px", 
+                                                            padding: "0 10px", 
+                                                            borderRadius: "5px",
+                                                            }}
+                                                        >
+                                                            <p className="m-0 text-center">
+                                                            {manager.fname} {manager.lname}
+                                                            </p>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                ))}
+                                                </form> 
+                                         <div>
+                                            {openDropdownId === instance.acctid && (
+                                                <div>
+                                        <select
+                                                className="form-select w-100 p-1"
+                                                value={selectedManagerIDs[instance.acctid] || ""}
+                                                onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
+                                            >
+                                                <option value="">Unassigned</option>
+                                                {manager.map((manager) => (
+                                                <option key={manager.empno} value={manager.empno}>
+                                                    {manager.fname} {manager.lname}
+                                                </option>
+                                                ))}
+                                        </select>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                            )}
+                                    
+                                         </div>
+                                    
+                                        </div>
+                                        
+                                        ) : (
+                                        // If no managers are assigned, show a dropdown
+                                        <select
+                                            className="form-select w-20 p-1"
+                                            style={{width:"130px"}}
+                                            value={selectedManagerIDs[instance.acctid] || ""}
+                                            onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
+                                        >
+                                            <option value="">Unassigned</option>
+                                            {manager.map((manager) => (
+                                            <option key={manager.empno} value={manager.empno}>
+                                                {manager.fname} {manager.lname}
+                                            </option>
+                                            ))}
+                                        </select>
+                                        )}
+                                    </td>
+                                    <td>
+                                        <div className="actions">
+                                        <button
+                                            onClick={() => handleShowDropdown(instance.acctid)} 
+                                            type="button"
+                                            className="accounts-edit" 
+                                            style={{ cursor: "pointer" }}
+                                        >
+                                           <i className="bi bi-plus-square"></i>
+                                        </button>
+                                        <button
+                                            onClick={() => { setTargetID(instance.acctid); }}
+                                            type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" className="manageaccount-delete bi bi-trash3-fill" viewBox="0 0 16 16">
+                                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                                            </svg>
+                                        </button>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                ))
+                                }
                                 </tbody>
                             </table>
                         </div>
