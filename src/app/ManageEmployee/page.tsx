@@ -21,6 +21,7 @@ interface Information {
   address: string;
   contactno: string;
   position: string;
+  acctid:number;
 }
 
 export default function CreateUD() {
@@ -31,26 +32,27 @@ export default function CreateUD() {
   const [hide, hidden] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [departmentSearchTerm, setDepartmentSearch] = useState("");
-  const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
-  const [isDelete, setIsDeleted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const [totalPages, setTotalPages] = useState(1); // Total pages state
   const [targetID, setTargetID] = useState<number | null>(null); // Employee ID to delete
   const [total,setTotal]=useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [listener,setListener]=useState(false);
+
 
   const user_privilege=[]
-
   const token = localStorage.getItem("token");
 
 useEffect(() => {
     GetEmployee(currentPage);
-  }, [currentPage]);
+    setTimeout(()=>{
+      setListener(false);
+    },2000)
+  }, [listener]);
 
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/?page=${page}&search=${searchTerm}&department=${departmentSearchTerm}`,
+      `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -81,9 +83,36 @@ useEffect(() => {
     
   });
   
-const refresh = ()=>{
-  GetEmployee(currentPage);
-}
+// const refresh = ()=>{
+//   console.log("HEy")
+
+//     async function ReflectUpdate() {
+//       const token = localStorage.getItem("token");
+//       const response = await fetch(
+//         `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/`,
+//         {
+//           method: "GET",
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${Decryptor(token || "")}`,
+//           },
+//         }
+//       );
+  
+//       if (response.ok) {
+//         const data = await response.json();
+//         setEmployees(data.data); // Set employee data
+//         console.log("=====",data.data)
+  
+//       }
+//     }
+
+//     ReflectUpdate();
+  
+
+
+ 
+// }
 
   const handleDelete = async (empno: number) => {
     try {
@@ -311,7 +340,7 @@ const search = (e:any)=>{
        
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
-                <AddEmp empData={empData} mode={currentMode}  isClose={() => setCurrentMode("create")} onButtonClick={refresh} />
+                <AddEmp empData={empData} mode={currentMode}  isClose={() => setCurrentMode("create")} onButtonClick={()=>setListener(true)} />
               </div>
             </div>
           </div>

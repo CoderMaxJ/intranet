@@ -3,6 +3,8 @@ import { da, ms } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
+
+
 const token = localStorage.getItem("token");
 
 interface AddEmployeeData {
@@ -70,7 +72,6 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
   }, [empData]);
 
 
-console.log(empData);
 
   useEffect(() => {
     if (empData) {
