@@ -129,10 +129,8 @@ export default function ManageDepartment() {
     };
 
     const handleCreateManager = (acctid: number) => {
-
         CreateManager(acctid);
     };
-
 
     const CreateManager = async (acctid: number) => {
         const selectedManagerID = selectedManagerIDs[acctid];
@@ -238,7 +236,7 @@ export default function ManageDepartment() {
                 </div>
             </div>
 
-            <div className="manage-department" style={{height:'auto',overflow:"hidden"}}>
+            <div className="manage-department" >
                 <div>
 
                     <div className="manageaccounts-bg">
@@ -250,7 +248,17 @@ export default function ManageDepartment() {
                                         className="addhover fs-6 btn-sm fw-light text-dark mb-0 border  rounded btn text-white p-1"
                                         onClick={formShow}
                                     >
-                                        <i className="add-icon bi bi-plus-circle text-white"></i>  Add account
+                                         <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="#ffffff"
+                          className="bi bi-plus-circle-fill me-2"
+                          viewBox="0 0 16 16"
+                          style={{ marginBottom: "2px" }}
+                        >
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                        </svg>  Add Account
                                     </button>
                                 </div>
                             </header>
@@ -317,24 +325,24 @@ export default function ManageDepartment() {
                             </>
                         )}
 
-                        <div className="ms-3 mt-4 vw-100">
+                        <div className="ms-3 mt-4 vw-50">
 
                             <table className="manage-table table table-light table-hover table-striped border">
-                                <thead>
+                                <thead style={{tableLayout: "fixed", display:'table', width:"98.9%"}}>
                                     <tr>
                                         <th className="px-1">Account ID</th>
                                         <th className="px-1">Account Name</th>
                                         <th className="px-1">Status</th>
                                         <th className="px-1">Manager/Supervisor</th>
-                                        <th className="px-5 ">Action</th>
+                                        <th className="px-5">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {department.map((instance) => (
-                                        <tr key={instance.acctid}>
-                                            <td >{instance.acctid}</td>
-                                            <td>{instance.acctname}</td>
-                                            <td>{instance.status === 1 ? "Active" : "Not Active"}</td>
+                                <tbody style={{ display: 'block', maxHeight: '720px', overflowY: 'scroll' }}>
+            {department.map((instance) => (
+              <tr key={instance.acctid} style={{ display: 'table', width: '100%', tableLayout: 'fixed' }}>
+                                            <td  >{instance.acctid}</td>
+                                            <td >{instance.acctname}</td>
+                                            <td >{instance.status === 1 ? "Active" : "Not Active"}</td>
                                             {
                                                 instance.manager && instance.manager.fname ? (
                                                     <td>
@@ -343,7 +351,7 @@ export default function ManageDepartment() {
                                                             value={selectedManagerIDs[instance.acctid] || ""}
                                                             onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
                                                         >
-                                                            <option value="">{`${instance.manager.fname} ${instance.manager.lname}`}</option>
+                                                            <option  value="">{`${instance.manager.fname} ${instance.manager.lname}`}</option>
                                                             {manager.map((manager) => (
                                                                 <option key={manager.empno} value={manager.empno}>
                                                                     {manager.fname + " " + manager.lname}
@@ -353,13 +361,13 @@ export default function ManageDepartment() {
                                                     </td>
 
                                                 ) : (
-                                                    <td>
+                                                    <td >
                                                         <select
                                                             className="form-select w-100 p-1"
                                                             value={selectedManagerIDs[instance.acctid] || ""}
                                                             onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
                                                         >
-                                                            <option value="">Unassigned</option>
+                                                            <option value="" >Unassigned</option>
                                                             {manager.map((manager) => (
                                                                 <option key={manager.empno} value={manager.empno}>
                                                                     {manager.fname + " " + manager.lname}
@@ -375,22 +383,21 @@ export default function ManageDepartment() {
                                                     <button
                                                         type="button"
                                                         onClick={() => { setTargetID(instance.acctid); }}
-                                                        className="accounts-edit btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#saveModal"
+                                                        className="accounts-edit" data-bs-toggle="modal" data-bs-target="#saveModal"
                                                         style={{ cursor: "pointer" }}
                                                     >
-                                                        Update                                                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" className="manageaccount-edit bi bi-pencil-square" viewBox="0 0 16 16">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" className="manageaccount-edit bi bi-pencil-square" viewBox="0 0 16 16">
                                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                                             <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                                        </svg> */}
+                                                        </svg>
                                                     </button>
                                                     <button
                                                         onClick={() => { setTargetID(instance.acctid); }}
-                                                        type="button" className="accounts-button btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                                        type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     >
-                                                        Delete
-                                                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" className="manageaccount-delete bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" className="manageaccount-delete bi bi-trash3-fill" viewBox="0 0 16 16">
                                                             <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                                                        </svg> */}
+                                                        </svg>
                                                     </button>
                                                 </div>
                                             </td>
