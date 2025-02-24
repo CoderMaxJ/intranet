@@ -127,7 +127,6 @@ function BreakDataTable() {
 
   return (
     <div className="workforce">
-      <Header />
       <div className={fullscreen ? "breaks-div fullscreen" : "breaks-div"}>
         <div>
           <div className="searchbar-wrapper">

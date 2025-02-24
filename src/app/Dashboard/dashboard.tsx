@@ -54,12 +54,11 @@ useEffect(()=>{
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{ marginRight: "17px", marginLeft: "5px", marginBottom: '5px' }}>
             <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
           </svg>
-          <button onClick={() => router.push("/dashboard")} style={{ border: "none", background: "transparent" }}>
+          <button onClick={() => router.push("/WorkforceMonitoring")} style={{ border: "none", background: "transparent" }}>
             Dashboard
           </button>
 
         </div>
-
         <div className="generate text-dark">
           <a href="/Viewreports">
             <svg
@@ -126,7 +125,33 @@ useEffect(()=>{
                 </div>
               </div>
             </div>
+            
           </div>
+          
+        </div>
+        <div>
+          <div className="manage-menu"
+            style={{ marginTop: '20px' }}>
+            <div>
+              <div>
+                <div style={{ position: "relative", border: '2px solid rgb(207 207 207)', padding: '15px', borderRadius:'2px' }}>
+                  <span style={{ position: "absolute", top: "-12px", left: "8px", display: "flex", alignItems: "center", background: "#ffffff" }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16" style={{marginRight: "18px" }}>
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                      <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    </svg>Breaktool</span>
+                  <div style={{ marginTop: "10px" }}>
+                   <a onClick={() => router.push("/ManageBreaktool")} style={{ textDecoration: 'none', justifyContent: 'center', display: 'block', paddingLeft: "35px" }}>
+                      Accounts
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          
         </div>
 
 

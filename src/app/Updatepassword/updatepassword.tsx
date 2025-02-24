@@ -6,7 +6,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "/public/asset/css/updateps.css";
 import Image from "next/image";
 import { Decryptor } from "@/security";
-import { ToastContainer,toast } from "react-toastify";
+
 
   
 
@@ -72,7 +72,7 @@ console.log(newAccount)
         if (response.status === 200) {
           
           const message = await response.json();
-          successToast(message.res);
+          setMessage(message.res);
           console.log(response)
           setMessage(message.res);
           setCurrentPassword("");
@@ -87,8 +87,6 @@ console.log(newAccount)
           const res = await response.json();
           console.log(res.res)
           setMessage(res.res);
-          setSuccess(false);
-          errorToast(res.res)
         }
       } catch {
         
@@ -99,29 +97,6 @@ console.log(newAccount)
     changePassword()
   };
 
-
-  const successToast = (msg:string) => toast.success(msg, {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    
-  });
-
-
-    const errorToast = (msg: string) => toast.error(msg, {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -142,7 +117,7 @@ console.log(newAccount)
   }
   return (
     <div>
-      <ToastContainer/>
+    
       {/* Link to open modal */}
       <div className="updatepassword-hvr" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
         style={{
@@ -194,7 +169,7 @@ console.log(newAccount)
             ) : (
               <div>
                 <p style={{ color: '#FF3131',fontSize:"15px" }}>
-                    {error}
+                    {message}
                 </p>
               </div>
             ) }

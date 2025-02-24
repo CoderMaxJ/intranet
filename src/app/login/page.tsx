@@ -28,7 +28,7 @@ export default function Login() {
   useEffect(() => {
     if (isLogged) {
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push("/WorkforceMonitoring");
       }
       , 2000);
      

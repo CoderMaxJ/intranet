@@ -2,6 +2,7 @@
 import BreakDataTable from "../data/Breaks/break";
 import LogsDataTable from "../data/Logs/logs";
 import Dashboard from "../Dashboard/dashboard";
+import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Decryptor } from "@/security";
 
@@ -15,6 +16,7 @@ export default function MainDashboard() {
       </div>
     
       <div style={{ flex: 1, padding: "20px", backgroundColor: "#e7e7e7", width:'50vw' }}>
+        <Header title="WORKFORCE MONITORING" text="Connecting Teams, Empowering Innovation"/>
         <div>
           <BreakDataTable />
         
