@@ -180,7 +180,6 @@ console.log(newAccount)
                   <div style={{ position: "relative" }}>
                     <input
                       className="updatepassword-input"
-                      id="currentpassword"
                       type={showPassword ? "text" : "password"}
                       value={currentpassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
@@ -201,7 +200,6 @@ console.log(newAccount)
                   <div style={{ position: "relative" }}>
                     <input
                       className="updatepassword-input"
-                      id="password"
                       type={showPassword1 ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -222,7 +220,7 @@ console.log(newAccount)
                   <div style={{ position: "relative" }}>
                     <input
                       className="updatepassword-input"
-                      id="confirmpassword"
+ 
                       type={showPassword2 ? "text" : "password"}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}

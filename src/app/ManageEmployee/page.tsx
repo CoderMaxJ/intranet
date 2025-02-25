@@ -22,6 +22,7 @@ interface Information {
   contactno: string;
   position: string;
   acctid:number;
+  un:string;
 }
 
 export default function CreateUD() {
@@ -37,9 +38,10 @@ export default function CreateUD() {
   const [targetID, setTargetID] = useState<number | null>(null); // Employee ID to delete
   const [total,setTotal]=useState(0);
   const [listener,setListener]=useState(false);
+  const [user_privilege, setUserPrivilege] = useState([""]);
 
 
-  const user_privilege=[]
+
   const token = localStorage.getItem("token");
 
 useEffect(() => {
@@ -51,8 +53,9 @@ useEffect(() => {
 
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/?page=${page}`,
+      `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/${Decryptor(user_id || "")}/?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -198,9 +201,34 @@ const search = (e:any)=>{
   e.preventDefault();
   
     search(e);
- 
-
     }
+
+    const handleResetPassword = (empno:number,fname:string) =>{
+       
+      async function resetPassword(){
+          const data = {empno:empno}
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reset/password/`,{
+              method:"PATCH",
+              headers:{
+                  "Content-Type":"application/json",
+                  Authorization: `Bearer ${Decryptor(token || "")}`
+              },
+              body:JSON.stringify(data)
+          })
+          if(response.status === 204){
+              successToast("Password has been reset");
+          }else{
+              const warning = await response.json();
+              errorToast(warning.warning);
+              console.log("error");
+          }
+      }
+      const response = confirm(`Are you sure you want to reset the password of ? ${fname}`);
+      if(response){
+        resetPassword();
+      }
+
+  }
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
@@ -208,6 +236,10 @@ const search = (e:any)=>{
         <Dashboard />
       </div>
       <ToastContainer />
+
+
+
+      
     
       {/* Delete Confirmation Modal */}
       <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -239,7 +271,10 @@ const search = (e:any)=>{
         </div>
       </div>
 
-      <div className="manageemployee-background" >
+
+
+      <div>
+  
   
      
         <div>
@@ -262,37 +297,9 @@ const search = (e:any)=>{
             >
               
               <div className="search-employee w-100 d-flex" style={{ marginTop: "30px" }}>
-                <div className="manageemployee-title"><h1>MANAGE EMPLOYEE</h1></div>
-                <div className="manage-input">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                fill="currentColor"
-                className="bi-search"
-                viewBox="-7 0 30 16"
-                style={{marginLeft:'34.5vw', zIndex:1, marginTop:'-5px'}}
-              >
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-              </svg>
-              <input
-                  className="search-input"
-                  id="search-employee"
-                  type="text"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e)=>setSearchTerm(e.target.value)}
-                  onKeyUp={test}
-                  style={{
-                    padding: "10px 100px 10px 50px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
-                    marginLeft: "260px",
-                    marginRight:'360px', 
-                  }}
-                />
-                </div >
-                <div className="addemployee-button">
+                {user_privilege.includes("manage_users") && (
+
+             
                 <button
                   type="button"
                   className="btn btn-success btn-sm d-flex align-items-center ms-4"
@@ -307,7 +314,9 @@ const search = (e:any)=>{
                     border:'none',
                     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                   }}
-                >
+                >{user_privilege.includes("manage_users")}{
+                  
+                }
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -320,7 +329,25 @@ const search = (e:any)=>{
                   </svg>
                   Add Employee
                 </button>
-                </div>
+                   )}
+                <input
+                  className="search-input"
+                  id="search-employee"
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e)=>setSearchTerm(e.target.value)}
+                  onKeyUp={test}
+            
+                  
+                  style={{
+                    padding: "8px 60px",
+                    borderRadius: "5px",
+                    border: "1px solid #ccc",
+                    position: "relative",
+                    marginLeft: "1100px",
+                  }}
+                />
               </div>
             </header>
           </div>
@@ -354,13 +381,17 @@ const search = (e:any)=>{
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Middle Name</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Last Name</th>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Address</th>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Marital Status</th>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Date of Birth</th>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Gender</th>
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Address</th> )}
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Marital Status</th>)}
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Date of Birth</th>)}
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Gender</th>)}
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Position</th>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>)}
+                {user_privilege.includes("update_breaktool_account") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Username</th>) }
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
+                
+             
+         
               </tr>
             </thead>
    
@@ -373,13 +404,29 @@ const search = (e:any)=>{
                     <td>{info.fname}</td>
                     <td>{info.mname}</td>
                     <td>{info.lname}</td>
-                    <td>{info.address}</td>
-                    <td>{info.maritalstatus}</td>
-                    <td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>
-                    <td>{info.gender}</td>
+                    {user_privilege.includes("manage_users") && (<td>{info.address}</td>)}
+                    {user_privilege.includes("manage_users") && (<td>{info.maritalstatus}</td>)}
+                    {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
+                    {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
                     <td>{info.position}</td>
-                    <td>{info.contactno}</td>
-                    <td>
+                    {user_privilege.includes("update_breaktool_account") && ( <td>{info.un}</td> )}
+                    {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
+                    {user_privilege.includes("update_breaktool_account") && (
+                      <td>
+                      <button
+                        
+                        className="ms-4"
+                        type="button"
+                        onClick={() => handleResetPassword(info.empno,info.fname)}
+                        style={{ border: "none",backgroundColor:"transparent" }}
+                      >
+                        <img src="img/reset.png" alt="" height={25} width={25} />
+                      </button>
+                    </td>
+                    )}
+                
+
+                      {user_privilege.includes("manage_users") && ( <td>
                       <button
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
@@ -407,6 +454,7 @@ const search = (e:any)=>{
                         </svg>
                       </button>
                     </td>
+                    )}
                   </tr>
                 ))
               ) : (
