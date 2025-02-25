@@ -95,6 +95,7 @@ export default function Login() {
         const token = await response.json();
         localStorage.setItem("token", Encryptor(token.access));
         localStorage.setItem("refresh_token", Encryptor(token.access));
+        localStorage.setItem("status","login");
         login();
       } else {
         console.log("sdsd")

@@ -11,11 +11,10 @@ export default function Logout() {
     if (confirmLogout) {
       localStorage.clear();
       router.push("/");
+      localStorage.setItem("status","logout");
      
     }
   };
-
-
   return (
     <div>
       <button

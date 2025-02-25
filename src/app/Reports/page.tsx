@@ -53,7 +53,7 @@ export default function Daterange() {
             const account_id = localStorage.getItem("user_id");
             const token = localStorage.getItem("token");
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/${start}/${end}/`,
+                `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id || "")}/${start}/${end}/`,
                 {
                     method: "GET",
                     headers: {
@@ -134,14 +134,15 @@ export default function Daterange() {
         }
     };
 
+
     const handleView = async () => {
-        console.log("--------");
+
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
             const token = localStorage.getItem("token");
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/${start}/${end}/`,
+                `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id || "")}/${start}/${end}/`,
                 {
                     method: "GET",
                     headers: {
@@ -177,7 +178,7 @@ export default function Daterange() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND}/report/${Decryptor(account_id || "")}/`,
+                `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/`,
                 {
                     method: "GET",
                     headers: {

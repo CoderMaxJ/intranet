@@ -203,7 +203,7 @@ const search = (e:any)=>{
     search(e);
     }
 
-    const handleResetPassword = (empno:number) =>{
+    const handleResetPassword = (empno:number,fname:string) =>{
        
       async function resetPassword(){
           const data = {empno:empno}
@@ -223,14 +223,12 @@ const search = (e:any)=>{
               console.log("error");
           }
       }
-      const response = confirm("Are you sure you want to reset this password of this account? ");
+      const response = confirm(`Are you sure you want to reset the password of ? ${fname}`);
       if(response){
         resetPassword();
       }
 
   }
-
-
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
@@ -300,6 +298,9 @@ const search = (e:any)=>{
             >
               
               <div className="search-employee w-100 d-flex" style={{ marginTop: "30px" }}>
+                {user_privilege.includes("manage_users") && (
+
+             
                 <button
                   type="button"
                   className="btn btn-success btn-sm d-flex align-items-center ms-4"
@@ -311,7 +312,9 @@ const search = (e:any)=>{
                     fontWeight: "500",
                     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                   }}
-                >
+                >{user_privilege.includes("manage_users")}{
+                  
+                }
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -325,6 +328,7 @@ const search = (e:any)=>{
                   </svg>
                   Add
                 </button>
+                   )}
                 <input
                   className="search-input"
                   id="search-employee"
@@ -409,9 +413,11 @@ const search = (e:any)=>{
                     {user_privilege.includes("update_breaktool_account") && (
                       <td>
                       <button
+                        
+                        className="ms-4"
                         type="button"
-                        onClick={() => handleResetPassword(info.empno)}
-                        style={{ border: "none" }}
+                        onClick={() => handleResetPassword(info.empno,info.fname)}
+                        style={{ border: "none",backgroundColor:"transparent" }}
                       >
                         <img src="img/reset.png" alt="" height={25} width={25} />
                       </button>

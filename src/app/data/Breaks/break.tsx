@@ -18,10 +18,48 @@ function BreakDataTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingPage, setLoadingPage] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+  const [checker,setChecker]=useState(false);
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
+
+
+  
+  useEffect(() => {
+    if(!token){
+      
+      return;
+     
+    }else{
+      fetchBreakData();
+    }
+  
+     // Initial fetch
+
+    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
+
+
+
+// Countdown timer
+useEffect(() => {
+  const interval = setInterval(() => {
+    setBreaks((prevBreaks) =>
+      prevBreaks.map((item) => ({
+        ...item,
+        duration: item.duration - 1, // Allow negative values
+      }))
+    );
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, []);
+
+
+
 
   const token = localStorage.getItem("token");
 
@@ -74,33 +112,6 @@ function BreakDataTable() {
     }
   };
 
-  
-    useEffect(() => {
-      if(!token){
-        return;
-      }
-      fetchBreakData(); // Initial fetch
-  
-      const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
-  
-      return () => clearInterval(intervalId); // Cleanup interval on component unmount
-    }, []);
-  
- 
-
-  // Countdown timer
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBreaks((prevBreaks) =>
-        prevBreaks.map((item) => ({
-          ...item,
-          duration: item.duration - 1, // Allow negative values
-        }))
-      );
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   // Format time for display
   const formatTime = (time: number) => {
