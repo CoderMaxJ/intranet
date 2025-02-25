@@ -266,43 +266,25 @@ const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/remove/manager/
             {/* Save Confirmation Modal */}
             {showModal && (
 
-              <>
-                <div className="modal-backdrop fade show"></div>
-                    <div className="modal fade show d-block" id="saveModal" aria-labelledby="saveModalLabel">
+                    <div className="modal show d-block" id="saveModal" aria-labelledby="saveModalLabel">
                     <div className="modal-dialog">
                         <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="saveModalLabel">Confirmation</h1>
-                            <button
-                            type="button"
-                            className="btn-close"
-                            onClick={() => setShowModal(false)}
-                            aria-label="Close"
-                            ></button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Are you sure you want to save changes?</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                            type="button"
-                            onClick={() => setShowModal(false)}
-                            className="btn btn-secondary"
-                            >
-                            Close
-                            </button>
-                            <button
-                            onClick={() => handleCreateManager(targetID)}
-                            type="button"
-                            className="btn btn-success"
-                            >
-                            Save changes
-                            </button>
-                        </div>
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="saveModalLabel">Confirmation</h1>
+                                <button type="button" className="btn-close" onClick={()=>setShowModal(false)} aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Are you sure you want to save changes?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" onClick={()=>setShowModal(false)}  className="btn btn-secondary">Close</button>
+                                <button onClick={() => handleCreateManager(targetID)} type="button" className="btn btn-success">
+                                    Save changes
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-              </>
+                    </div>
             )}
             <div className="manage-department" >
                 <div>

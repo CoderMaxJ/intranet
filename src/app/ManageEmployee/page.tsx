@@ -162,7 +162,6 @@ const search = (e:any)=>{
   console.log(searchTerm);
 }
 
-
   const handleData = (data: any) => {
     setCurrentMode("edit");
 
@@ -179,9 +178,7 @@ const search = (e:any)=>{
       gender,
       maritalstatus,
       acctid
-    };
-   
-
+    };  
     setEmpData(currentData);
   };
 
@@ -189,9 +186,6 @@ const search = (e:any)=>{
     hidden(true);
   };
 
-
-
-  // Pagination controls
   const handlePageChange = (page: number) => {
     setCurrentPage(page); // Update the current page
     GetEmployee(page); // Fetch data for the new page
@@ -236,12 +230,6 @@ const search = (e:any)=>{
         <Dashboard />
       </div>
       <ToastContainer />
-
-
-
-      
-    
-      {/* Delete Confirmation Modal */}
       <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -270,17 +258,10 @@ const search = (e:any)=>{
           </div>
         </div>
       </div>
-
-
-
-      <div>
-  
-  
-     
-        <div>
+      <div className="manageemployee-division">
+        <div >
           <div>
             <header
-
               className="crud-header"
               style={{
                 backgroundImage: "url('/img/Breaktool.png')",
@@ -294,15 +275,47 @@ const search = (e:any)=>{
                 color: "white",
                 height: "100px",
               }}
-            >
-              
+            >  
+            <div className="manageemployee-title"><h1>MANAGE EMPLOYEE</h1></div>
               <div className="search-employee w-100 d-flex" style={{ marginTop: "30px" }}>
+              <svg
+              style={{
+                marginLeft: "630px",
+                marginTop: "1px",
+                display: "flex",
+                zIndex:1,
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="currentColor"
+              className="bi-search"
+              viewBox="-7 0 30 16"
+            >
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+                 <input
+                  className="search-input"
+                  id="search-employee"
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e)=>setSearchTerm(e.target.value)}
+                  onKeyUp={test}         
+                  style={{
+                    padding: "8px 90px 0px 60px",
+                    paddingBottom:'10px',
+                    borderRadius: "5px",
+                    border: "1px solid #ccc",
+                    position: "relative",
+                    marginLeft: "1100px",
+                  }}
+                />
                 {user_privilege.includes("manage_users") && (
-
-             
+              <div className="manageemployee-button">
                 <button
                   type="button"
-                  className="btn btn-success btn-sm d-flex align-items-center ms-4"
+                  className=" btn btn-success btn-sm d-flex align-items-center ms-4"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
                   style={{
@@ -329,25 +342,8 @@ const search = (e:any)=>{
                   </svg>
                   Add Employee
                 </button>
+                </div>
                    )}
-                <input
-                  className="search-input"
-                  id="search-employee"
-                  type="text"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e)=>setSearchTerm(e.target.value)}
-                  onKeyUp={test}
-            
-                  
-                  style={{
-                    padding: "8px 60px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
-                    position: "relative",
-                    marginLeft: "1100px",
-                  }}
-                />
               </div>
             </header>
           </div>
@@ -357,8 +353,7 @@ const search = (e:any)=>{
             role="dialog"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
-          >
-       
+          >   
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
                 <AddEmp empData={empData} mode={currentMode}  isClose={() => setCurrentMode("create")} onButtonClick={()=>setListener(true)} />
@@ -366,16 +361,13 @@ const search = (e:any)=>{
             </div>
           </div>
         </div>
-
-        <div className="managereport" style={{ overflowY: "auto", maxHeight: "660px", position: "fixed" }}>
+        <div className="managereport" style={{ overflowY: "auto", maxHeight: "735px", position: "fixed" }}>
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{ marginLeft: "35px", marginRight: "40px", width: "80.5vw", borderCollapse: "collapse" }}
+            style={{ marginLeft:"15px",marginRight: "40px", width: "81vw", borderCollapse: "collapse", position:'relative' }}
           >
-       
-            <thead style={{ position: "sticky", top: "20" }}>
-             
+            <thead style={{ position: "sticky", top: "20" }}>  
               <tr>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
@@ -388,15 +380,10 @@ const search = (e:any)=>{
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Position</th>
                 {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>)}
                 {user_privilege.includes("update_breaktool_account") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Username</th>) }
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
-                
-             
-         
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>      
               </tr>
             </thead>
-   
-            <tbody className="table-data">
-              
+            <tbody className="table-data">    
               {employees?.length ? (
                 employees.map((info, index) => (
                   <tr key={info.empno}>
