@@ -41,10 +41,10 @@ export default function Daterange() {
     };
           
    useEffect(()=>{
-    if(data){
+    
         fetchData();
-    }
-   })
+  
+   },[])
 
     const handleGenerateAndDownloadCSV = async () => {
        
