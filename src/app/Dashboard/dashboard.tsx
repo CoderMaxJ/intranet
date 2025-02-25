@@ -1,11 +1,7 @@
 "useclient";
 import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
-<<<<<<< HEAD
 import Reports from "../Reports/page";
-=======
-import Viewreports from "../Reports/page";
->>>>>>> back-up
 import { use, useEffect, useState } from "react";
 import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
@@ -62,11 +58,7 @@ useEffect(()=>{
 
         </div>
         <div className="generate text-dark">
-<<<<<<< HEAD
-          <a onClick={()=> router.push('/Reports')}>
-=======
           <a  onClick={() => router.push("/Reports")}>
->>>>>>> back-up
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -139,21 +131,9 @@ useEffect(()=>{
           
         </div>
         <div>
-<<<<<<< HEAD
-          <div className="manage-menu"
-            style={{ marginTop: '20px' }}>
-            <div>
-             
-              </div>
-            </div>
-            
-          </div>
-          
-=======
->>>>>>> back-up
         </div>
 
-
+      </div>
       </div>
       <div className="dashboard" >
         <svg
@@ -179,4 +159,5 @@ useEffect(()=>{
     </div>
 
   );
+  
 }

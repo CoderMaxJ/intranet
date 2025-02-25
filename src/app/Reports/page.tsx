@@ -42,19 +42,11 @@ export default function Daterange() {
         setSearchTerm(event.target.value.toLowerCase());
     };
           
-<<<<<<< HEAD
 useEffect(()=>{
     if(checker){
         fetchData();
     }
 },[data])
-=======
-   useEffect(()=>{
-    
-        fetchData();
-  
-   },[])
->>>>>>> back-up
 
         
     const handleGenerateAndDownloadCSV = async () => {
