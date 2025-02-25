@@ -539,7 +539,7 @@ input:focus {
 
 .background-report {
   border-radius: 4px;
-  margin-top: 125px;
+  margin-top: 145px;
   height: 83vh;
   margin-left: -55px;
   width: 84.5vw;
@@ -807,7 +807,7 @@ margin-left: 35px;
 }
 
 .manage-table th {
-background-color: #50c4fa !important;
+background-color: #4391f7 !important;
 position: sticky;
 top: 0; /* Makes the header stick to the top */
 background-color: #fff; /* Make sure the header has a solid background */
@@ -911,8 +911,8 @@ z-index: 1;
 }
 
 .employee-pagination nav {
-  margin-top: 675px;
-  margin-right: 122px ;
+  margin-top: 710px;
+  margin-right: 125px ;
 }
 
 .employee-total p{
@@ -929,7 +929,7 @@ z-index: 1;
 }
 
 .addemployee-button button:hover {
-  background-color: #76c90b;
+  background-color:  #0da52e !important;
   transform: scale(0.95);
 }
 
@@ -959,6 +959,8 @@ z-index: 1;
   position: sticky;
   display: flex;
   margin-top: 20px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   z-index: 10;
 }
 .manageemployee-title h1 {

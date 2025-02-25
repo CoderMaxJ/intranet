@@ -292,7 +292,7 @@ const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/remove/manager/
                     <div className="manageaccounts-bg">
                         <div className="employee-header">
                             <header>
-                                <h1 >MANAGE ACCOUNTS</h1>
+                                <h1>MANAGE ACCOUNTS</h1>
                                 <div className="add-account d-flex align-items-center rounded px-3 py-1">
                                     <button
                                         className="addhover btn-sm text-dark mb-0 border  rounded btn text-white p-1"
@@ -379,13 +379,13 @@ const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/remove/manager/
                             <table className="manage-table table table-light table-hover table-striped border">
                                 <thead style={{tableLayout: "fixed", display:'table', width:"100%"}}>
                                     <tr>
-                                        <th style={{width:"200px"}} className="px-1">Account ID</th>
-                                        <th style={{width:"200px"}} className="px-1">Account Name</th>
-                                        <th style={{width:"200px"}} className="px-1">Status</th>
-                                        <th style={{width:"200px"}} className="px-1">Manager/Supervisor</th>
-                                        <th style={{width:"120px"}} className="px-1"></th>
-                                        <th style={{width:"200px"}} className="px-1"></th>
-                                        <th className="border border" style={{marginLeft:"15vw"}}>Action</th>
+                                        <th style={{width:"200px", color:'#ffffff'}} className="px-1">Account ID</th>
+                                        <th style={{width:"200px", color:'#ffffff'}} className="px-1">Account Name</th>
+                                        <th style={{width:"200px", color:'#ffffff'}} className="px-1">Status</th>
+                                        <th style={{width:"200px", color:'#ffffff'}} className="px-1">Manager/Supervisor</th>
+                                        <th style={{width:"120px", color:'#ffffff'}} className="px-1"></th>
+                                        <th style={{width:"200px", color:'#ffffff'}} className="px-1"></th>
+                                        <th className="border border" style={{marginLeft:"15vw", color:'#ffffff'}}>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody style={{ display: 'block', maxHeight: '720px', overflowY: 'scroll' }}>

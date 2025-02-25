@@ -6,8 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "/public/asset/css/login.css";
 import { ToastContainer, toast } from 'react-toastify';
 
-
-
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,8 +32,6 @@ export default function Login() {
      
     }
   }, [isLogged, router]);
-
-
 
   const successToast = (msg:string) => toast.success(msg, {
     position: "top-right",
