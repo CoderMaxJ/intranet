@@ -1,7 +1,7 @@
 "useclient";
 import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
-import Viewreports from "../Viewreports/page";
+import Reports from "../Reports/page";
 import { use, useEffect, useState } from "react";
 import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
@@ -60,7 +60,7 @@ useEffect(()=>{
 
         </div>
         <div className="generate text-dark">
-          <a href="/Viewreports">
+          <a href="/Reports">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

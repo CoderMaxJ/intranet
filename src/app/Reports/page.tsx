@@ -72,8 +72,7 @@ export default function Daterange() {
                 alert("No data available for the selected date range.");
                 return;
             }
-
-            // Filter the data based on searchTerm before setting it for CSV download
+            
             const filteredData = result.data.filter((report: any) =>
                 report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
             );

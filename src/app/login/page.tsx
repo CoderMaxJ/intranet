@@ -30,7 +30,7 @@ export default function Login() {
       setTimeout(() => {
         router.push("/WorkforceMonitoring");
       }
-      , 2000);
+      , 1000);
      
     }
   }, [isLogged, router]);
@@ -47,8 +47,6 @@ export default function Login() {
     progress: undefined,
     
   });
-
-
   async function login() {
 
     const credentials = { username, password };
@@ -140,8 +138,7 @@ export default function Login() {
             <div style={{ position: "relative", display: "flex" }}>
               <input
                 id="password"
-                type="password"
-                // type={password ? "text" : "password"}
+                type={password ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

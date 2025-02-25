@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-// import TableComponents from "../component/TableComponent";
 import { Decryptor } from "@/security";
 import { tr } from "date-fns/locale";
 
@@ -24,8 +23,22 @@ function LogsDataTable() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [filter, setFilter] =useState("");
   const token = localStorage.getItem("token");
+
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(e.target.value.toUpperCase());
+    setFilter(e.target.value.toLowerCase());
+  };
+
+  const filteredRows = data.filter((row) =>
+    Object.values(row)
+      .join(" ")
+      .toUpperCase()
+      .toLowerCase()
+      .includes(filter)
+  );
 
   const fetchLogs = async () => {
     try {
@@ -55,14 +68,15 @@ function LogsDataTable() {
   };
 
   useEffect(() => {
-    fetchLogs(); // Initial fetch
+    fetchLogs(); 
 
-    const intervalId = setInterval(fetchLogs, 5000); // Poll every 5 seconds
+    const intervalId = setInterval(fetchLogs, 5000);
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    return () => clearInterval(intervalId); 
   }, []);
 
   if (loading)
+
     return (
       <div
         className="d-flex justify-content-center align-items-center"
@@ -100,24 +114,18 @@ function LogsDataTable() {
           >
             Agent Logs Today
           </h3>
-          <div className="searchbarlogs">
+          <div className="searchbarlogs" style={{display:'flex', alignItems:"center"}}>
             <input
-              className="searchbar"
-              style={{
-                backgroundColor: "#f0f0f0",
-                marginLeft: "350px",
-                fontFamily: "'Raleway', sans-serif",
-                marginBottom: "5px",
-              }}
+              id="myInput"
               type="text"
-              placeholder="Search by name"
-              // value={searchQuery}
-              // onChange={handleSearchChange}
+              placeholder="Search..."
+              value={filter}
+              onChange={handleSearchChange}
             />
             <svg
               style={{
                 marginLeft: "350px",
-                marginTop: "-0px",
+                marginTop: "1px",
                 display: "flex",
               }}
               xmlns="http://www.w3.org/2000/svg"
@@ -137,8 +145,9 @@ function LogsDataTable() {
                 fontFamily: "'Raleway', sans-serif",
                 borderRadius: "4px",
                 marginBottom: "2px",
+           
                 marginLeft: "3px",
-                marginTop: "5px",
+                marginTop: "4px",
                 color: "white",
               }}
             >
@@ -164,9 +173,8 @@ function LogsDataTable() {
               <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
             </tr>
           </thead>
-
           <tbody>
-              {data.map((logs)=>(
+              {filteredRows.map((logs)=>(
                 <tr key={logs.name}>
                  <td>{logs.name}</td>
                  <td>{logs.login}</td>
@@ -181,13 +189,11 @@ function LogsDataTable() {
                  <td style={{color:"red", fontWeight:"bold"}}>{logs.ob2}</td>
                  <td>{logs.logoff}</td>
                </tr>
-              ))}
-        
+              ))}    
           </tbody>
         </table>
       </div>
-      </div>
-  
+      </div> 
   );
 }
 

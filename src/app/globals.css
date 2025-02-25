@@ -128,12 +128,10 @@ a {
   backdrop-filter: blur(-50px);
   border-radius: 8px;
   padding: 20px 20px 85px 20px;
-  min-width: 20vw;
-  max-width: 100%;
+  width: 20vw !important;
   height: 46vh !important;
   justify-content: center;
   align-items: center;
-
   border: none !important;
   outline: none !important;
 }
@@ -228,6 +226,12 @@ input:focus {
 }
 
 /* SEARCH BAR */
+.headerbreaktool {
+  margin-top: -20px !important;
+}
+.headerdown {
+  margin-top: -5px !important;
+}
 .headerbreaktool {
   color: white;
   justify-content: center;
@@ -494,6 +498,17 @@ input:focus {
 
 .searchbarlogs {
   position: relative;
+}
+
+.searchbarlogs input {
+  padding: 5px 70px 10px !important;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 350px;
+  background-color: #f0f0f0;
+  border: 2px solid lightgray;
+
 }
 
 /* Dropdown Button */
@@ -775,6 +790,7 @@ tbody td {
   width: 7vw;
   border: none !important;
   box-shadow: none;
+  font-weight: 500;
   white-space: nowrap;
   outline: none;
   background-color: #0ebb39;
@@ -894,7 +910,38 @@ z-index: 1;
   margin-left: 300px;
 }
 
+.employee-pagination nav {
+  margin-top: 675px;
+  margin-right: 122px ;
+}
 
+.employee-total p{
+  background-color: #4391f7;  
+  margin-top: 73.7vh;
+  padding: 6px;
+  border-radius: 4px;
+  color: white;
+  margin-right: 64.5vw;
+}
+.addemployee-button {
+  padding: -10px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.addemployee-button button:hover {
+  background-color: #76c90b;
+  transform: scale(0.95);
+}
+
+.manageemployee-background {
+  background-color: white;
+  margin-top: 30px;
+  margin-left: 40px;
+  height: 93vh;
+  width: 84.5vw;
+  border-radius: 4px;
+  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
+}
 .crud-maindiv {
   background-color: #266bc5;
   height: 100vh;
@@ -905,17 +952,24 @@ z-index: 1;
 .crud-header {
   background-color: #1167b3;
   color: white;
-  width: 88.9vw;
+  width: 80.4vw;
   margin-right: 40px;
-  margin-left: 2px;
-  padding: 10px;
+  margin-left: 35.5px;
+  padding: -7px;
   position: sticky;
   display: flex;
-  top: 0;
+  margin-top: 20px;
   z-index: 10;
 }
+.manageemployee-title h1 {
+  margin-left: 20px;
+  font-weight: bolder;
+  white-space: nowrap;
+}
 
-
+.manage-input input {
+  position: relative;
+}
 .gobackbutton {
   position: absolute;
   top: 20px;

@@ -286,9 +286,6 @@ const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/remove/manager/
                     </div>
                     </div>
             )}
-         
-
-
             <div className="manage-department" >
                 <div>
 
@@ -298,7 +295,7 @@ const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/remove/manager/
                                 <h1 >MANAGE ACCOUNTS</h1>
                                 <div className="add-account d-flex align-items-center rounded px-3 py-1">
                                     <button
-                                        className="addhover fs-6 btn-sm fw-light text-dark mb-0 border  rounded btn text-white p-1"
+                                        className="addhover btn-sm text-dark mb-0 border  rounded btn text-white p-1"
                                         onClick={formShow}
                                     >
                                          <svg
@@ -319,7 +316,6 @@ const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/remove/manager/
 
                         {showform && (
                             <>
-                                {/* Background Overlay */}
                                 <div
                                     className="background-overlay"
                                     style={{

@@ -239,7 +239,7 @@ const search = (e:any)=>{
         </div>
       </div>
 
-      <div>
+      <div className="manageemployee-background" >
   
      
         <div>
@@ -252,7 +252,6 @@ const search = (e:any)=>{
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
-                padding: "15px",
                 display: "flex",
                 justifyContent: "space-between",
                 position: "sticky",
@@ -263,15 +262,49 @@ const search = (e:any)=>{
             >
               
               <div className="search-employee w-100 d-flex" style={{ marginTop: "30px" }}>
+                <div className="manageemployee-title"><h1>MANAGE EMPLOYEE</h1></div>
+                <div className="manage-input">
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                fill="currentColor"
+                className="bi-search"
+                viewBox="-7 0 30 16"
+                style={{marginLeft:'34.5vw', zIndex:1, marginTop:'-5px'}}
+              >
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+              </svg>
+              <input
+                  className="search-input"
+                  id="search-employee"
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e)=>setSearchTerm(e.target.value)}
+                  onKeyUp={test}
+                  style={{
+                    padding: "10px 100px 10px 50px",
+                    borderRadius: "5px",
+                    border: "1px solid #ccc",
+                    marginLeft: "260px",
+                    marginRight:'360px', 
+                  }}
+                />
+                </div >
+                <div className="addemployee-button">
                 <button
                   type="button"
                   className="btn btn-success btn-sm d-flex align-items-center ms-4"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
                   style={{
-                    padding: "8px 12px",
                     borderRadius: "4px",
                     fontWeight: "500",
+                    padding:'10px',
+                    whiteSpace:'nowrap',
+                    backgroundColor:'#0ebb39',
+                    border:'none',
                     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                   }}
                 >
@@ -282,30 +315,12 @@ const search = (e:any)=>{
                     fill="#ffffff"
                     className="bi bi-plus-circle-fill me-2"
                     viewBox="0 0 16 16"
-                    style={{ marginBottom: "2px" }}
                   >
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                   </svg>
-                  Add
+                  Add Employee
                 </button>
-                <input
-                  className="search-input"
-                  id="search-employee"
-                  type="text"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e)=>setSearchTerm(e.target.value)}
-                  onKeyUp={test}
-            
-                  
-                  style={{
-                    padding: "8px 60px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
-                    position: "relative",
-                    marginLeft: "1100px",
-                  }}
-                />
+                </div>
               </div>
             </header>
           </div>
@@ -325,11 +340,11 @@ const search = (e:any)=>{
           </div>
         </div>
 
-        <div className="managereport" style={{ overflowY: "auto", maxHeight: "800px", position: "fixed" }}>
+        <div className="managereport" style={{ overflowY: "auto", maxHeight: "660px", position: "fixed" }}>
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{ marginLeft: "40px", marginRight: "40px", width: "85vw", borderCollapse: "collapse" }}
+            style={{ marginLeft: "35px", marginRight: "40px", width: "80.5vw", borderCollapse: "collapse" }}
           >
        
             <thead style={{ position: "sticky", top: "20" }}>
@@ -403,9 +418,11 @@ const search = (e:any)=>{
               )}
             </tbody>
           </table>
-          <div className="border border"  style={{ display: "flex", justifyContent: "flex-end", width: "88.8vw", marginRight: "40px" }}>
-            <p className="mt-2">Total: <span>{total}</span></p>
-            <nav className="border border" aria-label="Page navigation" style={{ marginRight: "20px" }}>
+      </div>
+      <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end", width: "88.8vw" }}>
+            <div className="employee-total"><p>Total: <span>{total}</span></p></div>
+            <div className="employee-pagination">
+            <nav aria-label="Page navigation" >
               <ul className="pagination">
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
                   <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
@@ -426,9 +443,9 @@ const search = (e:any)=>{
                 </li>
               </ul>
             </nav>
+            </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }

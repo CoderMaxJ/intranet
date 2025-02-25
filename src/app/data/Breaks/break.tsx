@@ -163,7 +163,7 @@ function BreakDataTable() {
                   marginBottom: "3px",
                 }}
                 type="text"
-                placeholder="Search by name"
+                placeholder="Search..."
                 value={searchQuery}
                 onChange={handleSearchChange}
               />

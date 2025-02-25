@@ -29,8 +29,8 @@ export default function Header({ title, text }: HeaderProps) {
         />
       </div>
       <div className="header-text-container">
-        <h1 className="headerbreaktool fw-bolde">{title}</h1>
-        <h4 className="headerdown  p-2 fw-bolder">{text}</h4>
+        <h1 className="headerbreaktool fw-bolder">{title}</h1>
+        <h4 className="headerdown  p-2">{text}</h4>
       </div>
     </div>
   );
