@@ -5,6 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmployee";
 import { useEffect, useState } from "react";
+import Header from "../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
 import LoadingSpinner from "../component/LoadSpinner/spinner";
 import { IdentifyUser } from "../user_identifier";
@@ -226,9 +227,10 @@ const search = (e:any)=>{
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
-      <div className="db-employee">
+      <div className="db-employee">  
         <Dashboard />
       </div>
+      <div className="manageemp-headerr"><Header title="MANAGE EMPLOYEE"/></div>
       <ToastContainer />
       <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div className="modal-dialog">
@@ -263,54 +265,34 @@ const search = (e:any)=>{
           <div>
             <header
               className="crud-header"
-              style={{
-                backgroundImage: "url('/img/Breaktool.png')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                display: "flex",
-                justifyContent: "space-between",
-                position: "sticky",
-                zIndex: 1,
-                color: "white",
-                height: "100px",
-              }}
+        
             >  
-            <div className="manageemployee-title"><h1>MANAGE EMPLOYEE</h1></div>
               <div className="search-employee w-100 d-flex" style={{ marginTop: "30px" }}>
+              <div className="searchbar-containerr">
+              <input
+                className="searchbar"
+                 id="search-employee"
+                style={{
+                  backgroundColor: "#f0f0f0",
+                }}
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e)=>setSearchTerm(e.target.value)}
+                onKeyUp={test}  
+              />
               <svg
-              style={{
-                marginLeft: "630px",
-                marginTop: "1px",
-                display: "flex",
-                zIndex:1,
-              }}
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              fill="currentColor"
-              className="bi-search"
-              viewBox="-7 0 30 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-                 <input
-                  className="search-input"
-                  id="search-employee"
-                  type="text"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e)=>setSearchTerm(e.target.value)}
-                  onKeyUp={test}         
-                  style={{
-                    padding: "8px 90px 0px 60px",
-                    paddingBottom:'10px',
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
-                    position: "relative",
-                    marginLeft: "1100px",
-                  }}
-                />
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                fill="currentColor"
+                className="bi-search"
+                viewBox="-7 0 30 16"
+              >
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+              </svg>
+            </div>
+             
                 {user_privilege.includes("manage_users") && (
               <div className="manageemployee-button">
                 <button
@@ -361,29 +343,29 @@ const search = (e:any)=>{
             </div>
           </div>
         </div>
-        <div className="managereport" style={{ overflowY: "auto", maxHeight: "735px", position: "fixed" }}>
+        <div className="managereport" style={{ maxHeight: "670px", position: "fixed" }}>
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{ marginLeft:"15px",marginRight: "40px", width: "81vw", borderCollapse: "collapse", position:'relative' }}
+            style={{ marginLeft:"15px",marginRight: "40px", width: "81vw", borderCollapse: "collapse", position:'relative', marginTop: '40px' }}
           >
-            <thead style={{ position: "sticky", top: "20" }}>  
+            <thead style={{ position: "fixed", top: "20", zIndex: 1, textAlign:'center', justifyContent: 'center'}}>  
               <tr>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Middle Name</th>
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Last Name</th>
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Address</th> )}
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Marital Status</th>)}
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Date of Birth</th>)}
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Gender</th>)}
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Position</th>
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>)}
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>Employee No.</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>First Name</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px'}}>Middle Name</th>
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px'}}>Last Name</th>
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>Address</th> )}
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>Marital Status</th>)}
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>Date of Birth</th>)}
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>Gender</th>)}
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>Position</th>
+                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>Contact No.</th>)}
                 {user_privilege.includes("update_breaktool_account") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Username</th>) }
-                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>      
+                <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", padding:'15px' }}>Actions</th>      
               </tr>
             </thead>
-            <tbody className="table-data">    
+            <tbody className="table-data" style={{ display: "block", maxHeight: "600px", overflowY: "auto" }}>   
               {employees?.length ? (
                 employees.map((info, index) => (
                   <tr key={info.empno}>

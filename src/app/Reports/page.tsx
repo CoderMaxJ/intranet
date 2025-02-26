@@ -304,7 +304,7 @@ console.log(start,end)
 
                                     <div className="search-div" style={{ transform: "translateY(-40px)", position: 'fixed', marginLeft: '700px' }}>
                                         <input
-                                            className="search-input"
+                                            className="search-input1"
                                             id="search-employee"
                                             type="text"
                                             placeholder="Search..."
@@ -366,13 +366,13 @@ console.log(start,end)
                                                     <td>{report.login}</td>
                                                     <td>{report.brkin1}</td>
                                                     <td>{report.brkout1}</td>
-                                                    <td>{report.ob1}</td>
+                                                    <td className={report.ob1 ? "overbreak-red" : ""}>{report.ob1}</td>
                                                     <td>{report.lunchin}</td>
                                                     <td>{report.lunchout}</td>
-                                                    <td>{report.ob3}</td>
+                                                    <td className={report.ob3 ? "overbreak-red" : ""}>{report.ob3}</td>
                                                     <td>{report.brkin2}</td>
                                                     <td>{report.brkout2}</td>
-                                                    <td>{report.ob2}</td>
+                                                    <td className={report.ob2 ? "overbreak-red" : ""}>{report.ob2}</td>
                                                     <td>{report.logoff}</td>
                                                 </tr>
                                             ))}

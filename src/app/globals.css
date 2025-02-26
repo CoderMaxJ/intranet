@@ -825,13 +825,23 @@ tbody td {
 }
 
 
+.addhover {
+  background-color: #0da52e !important;
+  padding: 7px !important;
+  color: white;
+  border: none;
+  margin-left: 76.4vw !important;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
 .manageaccounts-bg {
   background-color: #ffffff;
-  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
-  margin-top: 10px;
+  box-shadow: 0px 5px 5px  rgb(0, 0, 0, 0.2);
+  margin-top: -40px;
   padding-bottom: 10px !important;
   padding-top: 15px !important;
-  margin-left: 40px;
+  margin-left: 30px;
   border-radius: 4px;
   width: 85vw;
 }
@@ -849,7 +859,7 @@ tbody td {
 .employee-header header {
   background-image: url("/img/Breaktool.png");
   padding: 20px;
-  width: 85vw;
+  width: 88vw !important;
   margin-top: -15px !important;
   display: flex;
   border-top-left-radius: 4px;
@@ -889,12 +899,25 @@ tbody td {
 .db-employee {
   margin-left: 0;
 }
+.searchbar-containerr {
+  margin-top: -38px;
+  margin-left: 33vw;
+}
+.searchbar-containerr svg{
+ margin-top: -24px;
+ margin-left: 33vw;
+}
 
 .search-employee {
   position: absolute;
 }
-
+.search-employee input {
+  margin-top: -49px;
+}
+ 
 .manageemployee-button {
+  margin-top: -45px;
+  margin-left: 390px;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -903,6 +926,10 @@ tbody td {
   transform: scale(0.9);
 }
 
+.overbreak-red {
+  color: red !important;
+  font-weight: bold;
+}
 
 .row {
   padding-top: 40px;
@@ -937,7 +964,7 @@ tbody td {
 }
 
 .employee-pagination nav {
-  margin-top: 78vh;
+  margin-top: 72.4vh;
   margin-right: 100px;
 }
 
@@ -945,14 +972,13 @@ tbody td {
   font-weight: bolder;
   justify-content: center;
   display: flex;
-  margin-top: 25px;
 }
 
 .manageemployee-division {
   background-color: white;
-  margin-top: 20px;
+  margin-top: 145px;
   margin-left: 245px;
-  height: 96vh;
+  height: 82vh;
   width: 86vw;
   position: absolute;
   border-radius: 4px;
@@ -962,11 +988,11 @@ tbody td {
 
 .employee-total p {
   background-color: #4391f7;
-  margin-top: 78vh;
+  margin-top: 72.4vh;
   padding: 6px;
   border-radius: 4px;
   color: white;
-  margin-right: 64.5vw;
+  margin-right: 64.7vw;
 }
 
 .addemployee-button {
@@ -989,6 +1015,11 @@ tbody td {
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
 }
 
+.manageemp-headerr {
+  margin-left: 53px;
+  margin-top: 20px;
+}
+
 .crud-maindiv {
   background-color: #266bc5;
   height: 100vh;
@@ -1002,10 +1033,10 @@ tbody td {
   width: 80.9vw;
   margin-right: 40px;
   margin-left: 49px;
-  padding: -7px;
+  padding: -20px !important;
   position: sticky;
   display: flex;
-  margin-top: 20px;
+  margin-top:30px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   z-index: 10;
@@ -1554,6 +1585,10 @@ tbody td {
   margin-left: 33px !important;
 }
 
+.manageaccounts-header {
+  margin-top: 20px;
+}
+
 /* manage department */
 .manage-department {
   top: 0;
@@ -1563,6 +1598,7 @@ tbody td {
   margin-left: 5px;
   margin-right: 10px;
 }
+
 
 .manage-header {
   margin-left: 750px;
