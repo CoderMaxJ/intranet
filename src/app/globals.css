@@ -291,6 +291,7 @@ input:focus {
   align-items: center;
 }
 
+
 .searchbar {
   max-width: 330px;
   margin-top: 1px;
@@ -438,9 +439,10 @@ input:focus {
   padding-top: 20px;
   margin-left: 30px;
   margin-right: 60px;
+  width: 85.7vw;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: -60px !important;
+  margin-top: -77px !important;
   padding-bottom: 5px !important;
 }
 
@@ -476,8 +478,8 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 80.2vw;
-  margin-top: 50px;
+  width: 85.7vw;
+  margin-top: 40px;
   margin-left: 30px;
   margin-right: 40px;
   padding-left: 20px;
@@ -512,6 +514,8 @@ input:focus {
   border: 2px solid lightgray;
 
 }
+
+
 
 /* Dropdown Button */
 .dropbtn {
@@ -814,6 +818,24 @@ tbody td {
   color: #0da52e;
 }
 
+.rotate-acc-icon {
+  rotate: 180deg;
+  transition: 0.3s all ease-in-out;
+}
+
+.bi-chevron-up {
+  transition: 0.3s all ease-in-out;
+}
+
+.custom-accordion-btn {
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: white;
+}
+
 .manage-table th {
   background-color: #4391f7 !important;
   position: sticky;
@@ -823,6 +845,31 @@ tbody td {
   /* Make sure the header has a solid background */
   z-index: 1;
 }
+
+table {
+  border-collapse: collapse;
+  /* Ensures borders are collapsed together */
+  width: 100%;
+  /* Optional: adjust the table width */
+}
+
+.manage-tbody td,
+.manage-tbody th {
+  padding: -45px !important;
+  /* Adjust padding for cells */
+}
+
+.manage-tbody {
+  font-size: 11px;
+  /* Font size adjustment */
+}
+
+.table.table-striped.table-hover.table-bordered td,
+.table.table-striped.table-hover.table-bordered th {
+  padding: 4px;
+  /* Adjust this value to your desired padding */
+}
+
 
 
 .addhover {
@@ -837,13 +884,13 @@ tbody td {
 
 .manageaccounts-bg {
   background-color: #ffffff;
-  box-shadow: 0px 5px 5px  rgb(0, 0, 0, 0.2);
-  margin-top: -40px;
+  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
+  margin-top: -53px;
   padding-bottom: 10px !important;
   padding-top: 15px !important;
   margin-left: 30px;
   border-radius: 4px;
-  width: 85vw;
+  width: 85.7vw;
 }
 
 .manage-table {
@@ -881,6 +928,11 @@ tbody td {
   background-color: #e7e7e7;
 }
 
+.main-divv {
+  width: calc(100% - 177px);
+  background-color: #e7e7e7;
+}
+
 .accounts-button {
   border: none;
   background: none;
@@ -888,9 +940,6 @@ tbody td {
   margin-left: 20px;
 }
 
-.manageaccount-dashboard {
-  margin-left: -12px;
-}
 
 .addemp .row {
   width: 30vw;
@@ -899,22 +948,36 @@ tbody td {
 .db-employee {
   margin-left: 0;
 }
+
 .searchbar-containerr {
   margin-top: -38px;
   margin-left: 33vw;
 }
-.searchbar-containerr svg{
- margin-top: -24px;
- margin-left: 33vw;
+
+.searchbar-containerr svg {
+  margin-top: -24px;
+  margin-left: 33vw;
 }
+
+.searchbar-container1 {
+  margin-top: -2px;
+  margin-left: 425px
+}
+
+.searchbar-container1 svg {
+  margin-top: -112px;
+  margin-left: 645px;
+}
+
 
 .search-employee {
   position: absolute;
 }
+
 .search-employee input {
   margin-top: -49px;
 }
- 
+
 .manageemployee-button {
   margin-top: -45px;
   margin-left: 390px;
@@ -964,8 +1027,17 @@ tbody td {
 }
 
 .employee-pagination nav {
-  margin-top: 72.4vh;
+  margin-top: 77.5vh;
   margin-right: 100px;
+}
+
+.employee-total p {
+
+  margin-top: 77.5vh;
+  padding: 6px;
+  border-radius: 4px;
+  color: rgb(88, 87, 87);
+  margin-right: 10px;
 }
 
 .manageemployee-title h1 {
@@ -976,24 +1048,16 @@ tbody td {
 
 .manageemployee-division {
   background-color: white;
-  margin-top: 145px;
-  margin-left: 245px;
-  height: 82vh;
-  width: 86vw;
+  margin-top: 120px;
+  margin-left: 246px;
+  height: 86vh;
+  width: 85.7vw;
   position: absolute;
   border-radius: 4px;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
 
 }
 
-.employee-total p {
-  background-color: #4391f7;
-  margin-top: 72.4vh;
-  padding: 6px;
-  border-radius: 4px;
-  color: white;
-  margin-right: 64.7vw;
-}
 
 .addemployee-button {
   padding: -10px;
@@ -1015,11 +1079,6 @@ tbody td {
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
 }
 
-.manageemp-headerr {
-  margin-left: 53px;
-  margin-top: 20px;
-}
-
 .crud-maindiv {
   background-color: #266bc5;
   height: 100vh;
@@ -1036,7 +1095,7 @@ tbody td {
   padding: -20px !important;
   position: sticky;
   display: flex;
-  margin-top:30px;
+  margin-top: 30px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   z-index: 10;
@@ -1166,6 +1225,7 @@ tbody td {
 
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
+  background-color: #2590f3;
 }
 
 .dashboard svg {
@@ -1186,7 +1246,7 @@ tbody td {
   align-items: center;
   padding: 10px;
   margin-left: 5px;
-  color: black;
+  color: rgb(255, 255, 255);
   border-radius: 2px;
   margin-top: 10px;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
@@ -1194,29 +1254,29 @@ tbody td {
 }
 
 .dashboard:hover {
-  background-color: #2193df;
-  color: white !important;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0) !important;
 }
 
 .dashboard:hover button,
 .dashboard:hover a {
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 .dashboard:hover svg {
-  fill: white;
+  fill: rgb(0, 0, 0);
   /* Smooth fill change */
 
 }
 
 .dashboard:active {
-  background-color: #1a74b8;
+  background-color: #ffffff;
   color: white !important;
 
 }
 
 .dashboard:active svg {
-  fill: white;
+  fill: rgb(0, 0, 0);
 
 }
 
@@ -1240,29 +1300,29 @@ tbody td {
   align-items: center;
   padding: 10px;
   margin-top: 10px;
-  margin-left: 5px;
-  color: black;
+  color: white;
   cursor: pointer;
   border-radius: 2px;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
 .generate:hover {
-  background-color: #2193df;
+  background-color: #ffffff;
+  color: #000000 !important;
 }
 
 .generate:hover button,
 .generate:hover a {
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 .generate:hover svg {
-  fill: white;
+  fill: rgb(0, 0, 0);
 }
 
 .generate svg {
   margin-right: 20px;
-  fill: black;
+  fill: rgb(255, 255, 255);
 }
 
 /* Existing styles */
@@ -1317,6 +1377,15 @@ tbody td {
   fill: white;
 }
 
+.undermanage-hover {
+  border-radius: 2px !important;
+}
+
+.undermanage-hover a:hover {
+  color: black !important;
+  background-color: white;
+}
+
 .manage-hover:hover {
   background-color: lightgray;
   cursor: pointer;
@@ -1352,16 +1421,27 @@ tbody td {
   text-decoration: none;
 }
 
-.manage-hover:hover,
-.manage-menu a:hover {
-  background-color: #2193df;
-  color: white !important;
+.manage-hover:hover {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0) !important;
+  cursor: pointer;
+}
+
+.manage-menu:hover {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0) !important;
   cursor: pointer;
 }
 
 .manage-menu a {
-  padding: 10px;
   border-radius: 2px;
+}
+
+.prof-hover:hover {
+  border-radius: 2px;
+  padding-top: 7px;
+  color: #000000 !important;
+  background-color: white !important;
 }
 
 .updatepass-hover {
@@ -1373,23 +1453,29 @@ tbody td {
   align-items: center;
   margin: 8px 0;
   padding: 10px;
-  margin-left: 5px;
+
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .updatepass-hover a {
   display: block;
   text-decoration: none;
+  color: inherit;
 }
 
 .updatepass-hover:hover {
-  background-color: #2193df;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0) !important;
 }
 
+.updatepass-hover:hover a {
+  color: rgb(0, 0, 0) !important;
+}
+
+
 .updatepassword-hvr:hover {
-  color: white;
-  /* Change text color to white on hover */
+  color: rgb(0, 0, 0) !important;
+
 }
 
 
@@ -1571,9 +1657,8 @@ tbody td {
 }
 
 .reportheader {
+  width: 100%;
   position: fixed;
-  margin-left: -42px;
-  top: 20px;
 }
 
 .viewdashboard {
@@ -1585,23 +1670,19 @@ tbody td {
   margin-left: 33px !important;
 }
 
-.manageaccounts-header {
-  margin-top: 20px;
-}
 
 /* manage department */
 .manage-department {
-  top: 0;
-  max-height: 96vh;
-  position: sticky;
-  overflow-y: auto;
-  margin-left: 5px;
-  margin-right: 10px;
+  width: calc(100% - 177px);
 }
 
 
 .manage-header {
   margin-left: 750px;
+}
+
+.manageaccounts-div {
+  background-color: #e7e7e7;
 }
 
 .dash {

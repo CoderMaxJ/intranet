@@ -9,9 +9,6 @@ import Header from "../component/Header";
 import SuccessMessage from "../component/SuccessModal/success";
 import { ToastContainer, toast } from "react-toastify";
 
-
-
-
 interface DepartmentProps {
     acctid: number;
     acctname: string;
@@ -239,14 +236,14 @@ export default function ManageDepartment() {
     };
 
     return (
-        <div className="container-fluid vh-50 d-flex">
+        <div className="manageaccounts-div d-flex">
 
             <ToastContainer />
             <div className="manageaccount-dashboard">
                 <Dashboard />
             </div>
 
-            <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div className="modal fade " id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -287,7 +284,7 @@ export default function ManageDepartment() {
                 </div>
             )}
 
-            <div className="manage-department" >
+            <div className="manage-department">
                 <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" /></div>
                 <div>
                     <div className="manageaccounts-bg">

@@ -114,31 +114,49 @@ function LogsDataTable() {
           >
             Agent Logs Today
           </h3>
-          <div className="searchbarlogs" style={{display:'flex', alignItems:"center"}}>
-            <input
-              id="myInput"
-              type="text"
-              placeholder="Search..."
-              value={filter}
-              onChange={handleSearchChange}
-            />
-            <svg
-              style={{
-                marginLeft: "350px",
-                marginTop: "1px",
-                display: "flex",
-              }}
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              fill="currentColor"
-              className="bi-search"
-              viewBox="-7 0 30 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-          </div>
-         
+          <div
+  className="searchbar-container1"
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    position: 'relative', // Ensure positioning context
+  }}
+>
+  <input
+    className="searchbar"
+    style={{
+      backgroundColor: "#f0f0f0",
+      fontFamily: "'Raleway', sans-serif",
+      marginBottom: "3px",
+      paddingRight: '30px', // Create space for the icon
+    }}
+    type="text"
+    placeholder="Search..."
+    value={filter}
+    onChange={handleSearchChange}
+  />
+  <div
+    style={{
+      position: 'absolute',
+      right: '10px', // Position the icon to the right of the input
+      pointerEvents: 'none', // Ensure clicking through the icon to the input
+    }}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      fill="currentColor"
+      className="bi-search"
+      viewBox="-7 0 30 16"
+      style={{ cursor: 'pointer' }}
+    >
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+    </svg>
+  </div>
+</div>
+
         </div>
         <table className="table table-bordered table-striped">
           <thead>

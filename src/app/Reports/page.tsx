@@ -214,7 +214,7 @@ useEffect(()=>{
 console.log(start,end)
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
-            <div className="container">
+            <div className="container" >
                 <div className="viewdashboard">
                    
                     <div className="dashboard-view"><Dashboard /></div>
