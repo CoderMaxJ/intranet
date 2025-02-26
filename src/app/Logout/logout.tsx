@@ -20,7 +20,7 @@ export default function Logout() {
       <button
         className="block hover:bg-gray-100"
         onClick={triggerLogout }
-        style={{boxShadow:'none', outline:'none', background:'none', border:'none'}}
+        style={{boxShadow:'none', outline:'none', background:'none', border:'none', color:'#ffffff'}}
       >
         Log Out
       </button>

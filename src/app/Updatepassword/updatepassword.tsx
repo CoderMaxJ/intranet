@@ -122,13 +122,16 @@ console.log(newAccount)
       <div className="updatepassword-hvr" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
         style={{
           textDecoration: 'none',
-          color: hovered ? 'white' : '#000000',
-          cursor: 'pointer',
+          // color: hovered ? 'white' : '#000000',
+          color:'#ffffff',
+          cursor: 'pointer'
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        Update Password
+     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{marginLeft:'-8px', marginRight:'20px'}}>
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+</svg>   Update Password
       </div>
 
       {/* Bootstrap Modal */}
