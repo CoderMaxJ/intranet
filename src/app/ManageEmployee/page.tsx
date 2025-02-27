@@ -219,7 +219,7 @@ export default function CreateUD() {
         console.log("error");
       }
     }
-    const response = confirm(`Are you sure you want to reset the password of ? ${fname}`);
+    const response = confirm(`Are you sure you want to reset the password of ${fname} ?`);
     if (response) {
       resetPassword();
     }

@@ -121,7 +121,7 @@ export default function Login() {
         <form className="username" onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           <div className="inp-lab">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="username">Username</label>
             <input
               id="username"
               type="text"
@@ -131,7 +131,7 @@ export default function Login() {
             />
           </div>
           <div>
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">Password</label>
             <div style={{ position: "relative", display: "flex" }}>
               <input
                 id="password"

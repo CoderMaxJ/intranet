@@ -50,6 +50,7 @@ useEffect(()=>{
 
         
     const handleGenerateAndDownloadCSV = async () => {
+
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
@@ -71,9 +72,12 @@ useEffect(()=>{
 
             const result = await response.json();
             if (!result.data.length) {
-                alert("No data available for the selected date range.");
                 return;
             }
+
+            if(start == "" && end == ""){
+                setData(data);
+            }else{}
             
             const filteredData = result.data.filter((report: any) =>
                 report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
@@ -211,7 +215,7 @@ useEffect(()=>{
             setError("An error occurred while fetching data.");
         }
     };
-console.log(start,end)
+
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
             <div className="container" >

@@ -14,6 +14,7 @@ export default function Dashboard() {
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [accordionIcon, setAccordionIcon] = useState(false);
   const [accordionIconn, setAccordionIconn] = useState(false);
+  const [logout,setLogout]=useState(false);
 
 
   const token = localStorage.getItem("token");
@@ -32,7 +33,54 @@ export default function Dashboard() {
     })
   }
 
+  const handleLogout = ()=>{
+    localStorage.clear();
+    router.push("/")
+  }
+
   return (
+    <>
+    {logout && (
+        <div
+          className="modal fade show"
+          style={{ display: "block", background: "rgba(0,0,0,0.5)" }}
+          tabIndex="-1"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirm Logout</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={()=>setLogout(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p>Are you sure you want to log out?</p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={()=>setLogout(false)}
+             
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={handleLogout}
+       
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     <div
       className="db "
       style={{
@@ -152,7 +200,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="dashboard" style={{ marginTop: '-11px', transform:'translateX(-5px)', width:'10.3vw' }}>
+      <div onClick={()=>setLogout(true)} className="dashboard" style={{ marginTop: '-11px', transform:'translateX(-5px)', width:'10.3vw' }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -174,6 +222,8 @@ export default function Dashboard() {
         <Logout />
       </div>
     </div>
+    </>
+   
 
   );
 
