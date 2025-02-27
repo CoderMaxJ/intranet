@@ -174,7 +174,7 @@ useEffect(()=>{
             }
      
         } catch (e) {
-            setError("An error occurred while fetching data.");
+            alert("No data found in this given date range!")
         }
     };
 
@@ -261,6 +261,7 @@ useEffect(()=>{
                                                     From:
                                                 </label>
                                                 <input
+                                                    required
                                                     type="date"
                                                     className="form-control"
                                                     onChange={(e) => setStart(e.target.value)}
@@ -277,6 +278,7 @@ useEffect(()=>{
                                                     To:
                                                 </label>
                                                 <input
+                                                    required
                                                     type="date"
                                                     className="form-control"
                                                     onChange={(e) => setEnd(e.target.value)}
