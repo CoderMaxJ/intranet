@@ -95,8 +95,10 @@ const btnClose = document.getElementById("btn-close");
       }
     }
 
-
-    changePassword()
+    if(passwordStrength === true){
+      changePassword();
+    }
+    
   };
 
   const togglePasswordVisibility = () => {
@@ -166,7 +168,7 @@ const btnClose = document.getElementById("btn-close");
 
       >
         <div className="modal-dialog">
-          <div className="modal-content">
+          <div className="modal-content" style={{marginTop:"250px"}}>
         
             <div className="modal-header">
               <img
@@ -191,15 +193,20 @@ const btnClose = document.getElementById("btn-close");
 
             {success ? (
               <div>
+                <center>
                 <p style={{ color: 'green' ,fontSize:"15px"}}>
                     {message}
                 </p>
+                </center>
               </div>
             ) : (
               <div>
+                <center>
                 <p style={{ color: '#FF3131',fontSize:"15px" }}>
                     {message}
                 </p>
+                </center>
+              
               </div>
             ) }
             <div className="modal-body" style={{ marginLeft: "35px" }}>
@@ -237,8 +244,8 @@ const btnClose = document.getElementById("btn-close");
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check" viewBox="0 0 16 16">
   <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
 </svg>
-                            </label> <label htmlFor="" style={{fontSize:"13px",marginTop:"-45px",color: passwordStrength === true ? "green":"gray"}}>8 to 20 characters </label><br />
-                           <label  htmlFor="" style={{fontSize:"13px",marginBottom:"10px" , color:passwordStrength === true ? "green":""}}> Letters,numbers, and special characters</label>
+                            </label> <label htmlFor="" style={{fontSize:"13px",marginTop:"-45px",color: passwordStrength === true ? "green":"grey"}}>8 to 20 characters </label><br />
+                           <label  htmlFor="" style={{fontSize:"13px",marginBottom:"10px" , color:passwordStrength === true ? "green":"grey"}}> Letters,numbers, and special characters</label>
                       </div>
         
                     )}
@@ -251,6 +258,7 @@ const btnClose = document.getElementById("btn-close");
                   <label htmlFor="confirmpassword">Confirm Password</label>
                   <div style={{ position: "relative" }}>
                     <input
+                      
                       className="updatepassword-input"
                       onFocus={()=>setFocus(false)}
                       type={showPassword2 ? "text" : "password"}

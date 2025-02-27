@@ -9,7 +9,7 @@ interface BreakData {
   name: string;
   start: string;
   end: string;
-  duration: number;
+  duration: number; // Duration in seconds
   breaktype: string;
 }
 
@@ -18,55 +18,18 @@ function BreakDataTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loadingPage, setLoadingPage] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
-  const [checker,setChecker]=useState(false);
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
 
-
-  
-  useEffect(() => {
-    if(!token){
-      
-      return;
-     
-    }else{
-      fetchBreakData();
-    }
-  
-     // Initial fetch
-
-    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
-
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []);
-
-
-
-// Countdown timer
-useEffect(() => {
-  const interval = setInterval(() => {
-    setBreaks((prevBreaks) =>
-      prevBreaks.map((item) => ({
-        ...item,
-        duration: item.duration - 1, // Allow negative values
-      }))
-    );
-  }, 1000);
-
-  return () => clearInterval(interval);
-}, []);
-
-
-
-
-  const token = localStorage.getItem("token");
-
   // Fetch break data from the server
   const fetchBreakData = async () => {
+    
     try {
       const account_id = localStorage.getItem("user_id");
+      const token = localStorage.getItem("token");
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/`,
         {
@@ -83,35 +46,22 @@ useEffect(() => {
       }
 
       const data = await response.json();
-      const adjustedData = data.data.map((item: BreakData) => {
-        // Create a unique key for each break start time
-        const startTimeKey = `break_start_${item.name}_${item.breaktype}`;
-        let startTime = localStorage.getItem(startTimeKey);
-
-        if (!startTime) {
-        
-          startTime = Math.floor(Date.now() / 1000).toString();
-          localStorage.setItem(startTimeKey, startTime);
-        }
-
-        const currentTime = Math.floor(Date.now() / 1000);
-        const elapsedTime = currentTime - parseInt(startTime, 10);
-        const remainingDuration = item.duration - elapsedTime; 
-
-        return {
-          ...item,
-          duration: remainingDuration, // No Math.max constraint
-        };
-      });
-
-      setBreaks(adjustedData);
+      setBreaks(data.data); // Set the fetched break data
     } catch (error) {
-    
       console.error("Failed to fetch break data:", error);
-      return ;
     }
   };
+const token = localStorage.getItem("token");
+const status = localStorage.getItem("status");
+  // Fetch data initially and set up polling
+  useEffect(() => {
+    if (status != "login") return;
 
+    fetchBreakData(); // Initial fetch
+    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
 
   // Format time for display
   const formatTime = (time: number) => {
@@ -121,7 +71,7 @@ useEffect(() => {
     const minutes = Math.floor((absoluteTime % 3600) / 60);
     const seconds = absoluteTime % 60;
 
-    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(Math.abs(minutes)).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
   // Handle search input
@@ -243,56 +193,19 @@ useEffect(() => {
             </div>
           </div>
 
-          </div>
-
           <div>
-            <table className="table table-bordered" style={{borderCollapse: "collapse"}}>
+            <table className="table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
                 <tr>
-                  <th
-                    style={{
-                      backgroundColor: "#4CBDFF",
-                      fontFamily: "'Raleway', sans-serif",
-                    }}
-                  >
-                    Name
-                  </th>
-                  <th
-                    style={{
-                      backgroundColor: "#4CBDFF",
-                      fontFamily: "'Raleway', sans-serif",
-                    }}
-                  >
-                    Start
-                  </th>
-                  <th
-                    style={{
-                      backgroundColor: "#4CBDFF",
-                      fontFamily: "'Raleway', sans-serif",
-                    }}
-                  >
-                    End
-                  </th>
-                  <th
-                    style={{
-                      backgroundColor: "#4CBDFF",
-                      fontFamily: "'Raleway', sans-serif",
-                    }}
-                  >
-                    Duration
-                  </th>
-                  <th
-                    style={{
-                      backgroundColor: "#4CBDFF",
-                      fontFamily: "'Raleway', sans-serif",
-                    }}
-                  >
-                    Type
-                  </th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Start</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>End</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Duration</th>
+                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Type</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredBreaks.map((instance) => (
+              {filteredBreaks.map((instance) => (
                   <tr 
                   style={{
                     backgroundColor: 
@@ -323,12 +236,13 @@ useEffect(() => {
                     <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.breaktype}</td>
                   </tr>
                 ))}
+
               </tbody>
             </table>
           </div>
         </div>
       </div>
-    
+    </div>
   );
 }
 

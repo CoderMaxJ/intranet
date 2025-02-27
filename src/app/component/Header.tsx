@@ -13,8 +13,8 @@ interface HeaderProps {
 export default function Header({ title, text }: HeaderProps) {
 
   return (
-    <div className="header-container " style={{marginBottom:"10px"}}>
-      <div className="header-image-container">
+    <div className="header-container "  style={{marginBottom:"10px",width:"100%"}}>
+      <div className="header-image-container" style={{width:"100%"}}>
         <img
         src="/img/Breaktool.png"
         style={{
@@ -22,7 +22,6 @@ export default function Header({ title, text }: HeaderProps) {
           width: "100%",
           height: "11vh",
           marginBottom: "0px",
-       
           display: 'relative',
           boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
         }}
