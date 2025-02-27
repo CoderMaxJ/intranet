@@ -233,7 +233,7 @@ useEffect(() => {
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#FBDD64",
+                  backgroundColor: "#e8e8b5",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -300,7 +300,7 @@ useEffect(() => {
                         ? instance.breaktype === "First Break"
                           ? "#FFEDA6"
                           : instance.breaktype === "Second Break"
-                          ? "#FBDD64"
+                          ? "#e8e8b5"
                           : instance.breaktype === "Lunch"
                           ? "#A9E4FF"
                           : ""
