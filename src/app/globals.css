@@ -1022,18 +1022,23 @@ table {
   transform: translateX(800px);
 }
 
+.accounts-table {
+  margin-left: 20px !important;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
 .employee-information {
   margin-left: 300px;
 }
 
 .employee-pagination nav {
-  margin-top: 77.5vh;
+  margin-top: 77vh;
   margin-right: 100px;
 }
 
 .employee-total p {
 
-  margin-top: 77.5vh;
+  margin-top: 77vh;
   padding: 6px;
   border-radius: 4px;
   color: rgb(88, 87, 87);
@@ -1048,7 +1053,7 @@ table {
 
 .manageemployee-division {
   background-color: white;
-  margin-top: 120px;
+  margin-top: 119px;
   margin-left: 246px;
   height: 86vh;
   width: 85.7vw;

@@ -366,9 +366,7 @@ export default function ManageDepartment() {
                                 </form>
                             </>
                         )}
-
-                        <div className="ms-3 mt-4 vw-50">
-
+                        <div className="accounts-table">
                             <table className="manage-table table table-light table-hover table-striped border">
                                 <thead style={{ tableLayout: "fixed", display: 'table', width: "100%" }}>
                                     <tr>
