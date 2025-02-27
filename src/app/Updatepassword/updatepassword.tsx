@@ -230,7 +230,7 @@ const btnClose = document.getElementById("btn-close");
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
-                   <i className="bi bi-check"></i>
+                   
                     {focus === true && (
                       <div>
                            <label htmlFor="" style={{fontSize:"13px",color: passwordStrength === true ? "green":"grey"}}> 
