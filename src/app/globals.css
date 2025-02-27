@@ -545,10 +545,10 @@ input:focus {
 
 .background-report {
   border-radius: 4px;
-  margin-top: 145px;
-  height: 83vh;
-  margin-left: -55px;
-  width: 84.5vw;
+  margin-top: 130px;
+  height: 84vh;
+  margin-left: -65px;
+  width: 85.6vw;
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
 }
@@ -1229,6 +1229,7 @@ table {
 }
 
 .dashboard svg {
+  margin-left: -3px;
   align-items: center;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
   /* Updated transition */
@@ -1299,7 +1300,7 @@ table {
   display: flex;
   align-items: center;
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 15px;
   color: white;
   cursor: pointer;
   border-radius: 2px;
@@ -1377,8 +1378,11 @@ table {
   fill: white;
 }
 
-.undermanage-hover {
+ .undermanage-hover a{
   border-radius: 2px !important;
+  cursor: pointer !important;
+  width: 10.3vw !important;
+  transform: translateX(-20px);
 }
 
 .undermanage-hover a:hover {
@@ -1444,73 +1448,30 @@ table {
   background-color: white !important;
 }
 
-.updatepass-hover {
-  width: 97.5%;
-  text-align: center;
-  display: flex;
-  border-radius: 2px;
-  justify-content: center;
-  align-items: center;
-  margin: 8px 0;
-  padding: 10px;
-
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.updatepass-hover a {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-
-.updatepass-hover:hover {
-  background-color: #ffffff;
-  color: rgb(0, 0, 0) !important;
-}
-
-.updatepass-hover:hover a {
-  color: rgb(0, 0, 0) !important;
-}
-
-
-.updatepassword-hvr:hover {
-  color: rgb(0, 0, 0) !important;
-
-}
-
 
 .no-hover:hover {
   background-color: transparent !important;
   cursor: default !important;
 }
 
-.updatepassword-hvr:hover {
-  color: white;
-}
 
-
-/* Remove border and background */
 .accordion-item {
   border: none !important;
   background-color: transparent !important;
 }
 
-/* Remove button border, shadow, and background */
 .accordion-button {
   border: none !important;
   box-shadow: none !important;
   background-color: transparent !important;
   outline: none !important;
   color: black !important;
-  /* Ensure text is visible */
 }
 
-/* Remove hover effect */
 .accordion-button:hover {
   background-color: transparent !important;
 }
 
-/* Remove active/focus effects */
 .accordion-button:focus,
 .accordion-button:active {
   box-shadow: none !important;
@@ -1658,6 +1619,7 @@ table {
 
 .reportheader {
   width: 100%;
+
   position: fixed;
 }
 
