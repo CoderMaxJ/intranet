@@ -213,16 +213,13 @@ useEffect(()=>{
     };
 console.log(start,end)
     return (
-        <div style={{ backgroundColor: '#e7e7e7' }}>
-            <div className="container" >
-                <div className="viewdashboard">
-                   
-                    <div className="dashboard-view"><Dashboard /></div>
-                 
-                </div>
+        <div style={{ backgroundColor: '#e7e7e7'}}>
+            <div className="d-flex" style={{height:"100%", position:"absolute", width:'100%'}} >
+                
+            <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
-                    <div> 
+                    <div className="main-divv"> 
                         <div className="reportheader"><Header title="DAILY REPORTS"/></div>
                         <div className="background-report">
                        
@@ -236,7 +233,7 @@ console.log(start,end)
                                     transform: 'translateX(100px)',
                                     position: 'sticky',
                                     padding: '15px',
-                                    zIndex: 10,
+                                    // zIndex: 10,
                                     marginTop: '20px',
                                     color: 'white',
                                     marginLeft: '-80px',
@@ -332,8 +329,9 @@ console.log(start,end)
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '685px', marginLeft: '20px', position: 'fixed', width: '82.4vw', backgroundColor:'#ffffff' }}>
-                                <table className="table table-striped" style={{ position: 'sticky', top: 0, zIndex: 1, width: '83vw' }}>
+                            <div style={{ overflowY: 'auto', height: '690px', marginLeft: '20px', position: 'fixed', width: '82.4vw', backgroundColor:'#ffffff' }}>
+                            {/* //zIndex: 1, */}
+                                <table className="table table-striped" style={{ position: 'sticky', top: 0, width: '83vw' }}> 
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>

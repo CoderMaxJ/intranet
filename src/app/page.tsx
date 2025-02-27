@@ -1,5 +1,5 @@
 "use client"
-import "bootstrap/dist/css/bootstrap.min.css";
+
 
 import Login from "./login/page";
 import { ToastContainer,toast } from "react-toastify";

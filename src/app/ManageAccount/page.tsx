@@ -1,6 +1,5 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/dashboard";
