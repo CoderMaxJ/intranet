@@ -157,6 +157,42 @@ a {
   width: 17vw;
 }
 
+.main-div{
+     height: 100vh;
+     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     
+}
+.login-div{
+     width: 30%;
+     height: 30vh;
+     border: 0.60px solid gray;
+     border-radius: 4px;
+     display: grid;
+     place-items: center;
+}
+
+.login-div input{
+     padding: 5px;
+     margin-top: 5px;
+}
+
+.login-div .button-div{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+     height: 20%;
+     margin-top: 5px;
+ 
+}
+.login-div button{
+     padding: 3px;
+     text-align: center;
+}
+
 input:focus {
   border-color: #0a63d8;
 }
@@ -226,32 +262,23 @@ input:focus {
 }
 
 /* SEARCH BAR */
-.headerbreaktool {
-  margin-top: -20px !important;
-}
 
-.headerdown {
-  margin-top: -5px !important;
-}
 
 .headerbreaktool {
   color: white;
   justify-content: center;
   text-align: center;
-  transform: translateY(-85px);
   font-size: 60px;
   font-weight: 850;
-  margin-top: -15px;
+  line-height: 1;
 }
 
 .headerdown {
   color: white;
   justify-content: center;
   text-align: center;
-  transform: translateY(-99px);
   font-size: 20px;
   font-weight: 300;
-  margin-top: 10px;
   font-style: italic;
 }
 
@@ -307,17 +334,20 @@ input:focus {
   color: #000000;
 }
 
+.searchbar-containerr {
+  position: relative;
+}
+
 .bi-search {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
   pointer-events: none;
   color: #8b8b8b;
   width: 28px;
   height: 28px;
   background-color: rgb(216, 216, 216);
   border-radius: 20px;
+  position: absolute;
+  left: 15px;
+  top: 8px;
 }
 
 .agent-header {
@@ -440,9 +470,9 @@ input:focus {
   margin-left: 30px;
   margin-right: 60px;
   width: 85.7vw;
+  margin-top: 20px !important;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: -77px !important;
   padding-bottom: 5px !important;
 }
 
@@ -479,14 +509,12 @@ input:focus {
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 85.7vw;
-  margin-top: 40px;
-  margin-left: 30px;
-  margin-right: 40px;
+  margin: 32px auto;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 5px;
   padding-top: 18px;
-  margin-bottom: 20px;
+
   position: relative;
 }
 
@@ -545,10 +573,10 @@ input:focus {
 
 .background-report {
   border-radius: 4px;
-  margin-top: 130px;
-  height: 84vh;
-  margin-left: -65px;
-  width: 85.6vw;
+  margin:auto;
+  margin-top: 20px !important;
+  height: 84.5vh;
+  width: 86vw;
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
 }
@@ -840,37 +868,34 @@ tbody td {
   background-color: #4391f7 !important;
   position: sticky;
   top: 0;
-  /* Makes the header stick to the top */
   background-color: #fff;
-  /* Make sure the header has a solid background */
   z-index: 1;
 }
 
 table {
   border-collapse: collapse;
-  /* Ensures borders are collapsed together */
   width: 100%;
-  /* Optional: adjust the table width */
 }
 
-.manage-tbody td,
-.manage-tbody th {
-  padding: -45px !important;
-  /* Adjust padding for cells */
+.accounts-table .table-striped>tbody>tr:nth-of-type(odd)>* {
+  background-color: #ffffff;
+  --bs-table-color-type: #ffffff;
+  --bs-table-bg-type: #ffffff;
+  color: black;
 }
 
-.manage-tbody {
-  font-size: 11px;
-  /* Font size adjustment */
+.accounts-table .table-striped>tbody>tr:nth-of-type(even)>* {
+  background-color: #e2f0f7;
+}
+
+.table-striped th {
+  background-color: #4cbdff;
 }
 
 .table.table-striped.table-hover.table-bordered td,
 .table.table-striped.table-hover.table-bordered th {
   padding: 4px;
-  /* Adjust this value to your desired padding */
 }
-
-
 
 .addhover {
   background-color: #0da52e !important;
@@ -881,16 +906,18 @@ table {
   border-radius: 4px;
   font-weight: 500;
 }
-
+.manage-tbody {
+  height: 68vh;
+}
 .manageaccounts-bg {
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
-  margin-top: -53px;
+  margin: 20px auto;
   padding-bottom: 10px !important;
   padding-top: 15px !important;
-  margin-left: 30px;
   border-radius: 4px;
-  width: 85.7vw;
+  width: 96%;
+  height: 85vh;
 }
 
 .manage-table {
@@ -940,7 +967,6 @@ table {
   margin-left: 20px;
 }
 
-
 .addemp .row {
   width: 30vw;
 }
@@ -948,27 +974,6 @@ table {
 .db-employee {
   margin-left: 0;
 }
-
-.searchbar-containerr {
-  margin-top: -38px;
-  margin-left: 33vw;
-}
-
-.searchbar-containerr svg {
-  margin-top: -24px;
-  margin-left: 33vw;
-}
-
-.searchbar-container1 {
-  margin-top: -2px;
-  margin-left: 425px
-}
-
-.searchbar-container1 svg {
-  margin-top: -112px;
-  margin-left: 645px;
-}
-
 
 .search-employee {
   position: absolute;
@@ -979,8 +984,8 @@ table {
 }
 
 .manageemployee-button {
-  margin-top: -45px;
-  margin-left: 390px;
+  position: absolute;
+  right: 2.5%;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -1022,22 +1027,34 @@ table {
   transform: translateX(800px);
 }
 
+.accounts-table {
+  margin-left: 20px !important;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+
 .employee-information {
   margin-left: 300px;
 }
 
-.employee-pagination nav {
-  margin-top: 77.5vh;
-  margin-right: 100px;
-}
 
 .employee-total p {
-
-  margin-top: 77.5vh;
   padding: 6px;
   border-radius: 4px;
   color: rgb(88, 87, 87);
-  margin-right: 10px;
+  right: 300px !important;
+  position: relative;
+  top:6px;
+}
+
+.employee-pagination {
+  position:absolute;
+  right: 40px;
+  top:6px;
+}
+
+.manageemployee-div {
+  position: relative;
 }
 
 .manageemployee-title h1 {
@@ -1048,16 +1065,11 @@ table {
 
 .manageemployee-division {
   background-color: white;
-  margin-top: 120px;
-  margin-left: 246px;
-  height: 86vh;
-  width: 85.7vw;
-  position: absolute;
+  margin: 25px auto;
+  width: 96%;
   border-radius: 4px;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
-
 }
-
 
 .addemployee-button {
   padding: -10px;
@@ -1081,8 +1093,8 @@ table {
 
 .crud-maindiv {
   background-color: #266bc5;
-  height: 100vh;
   width: 100vw;
+  height: 100%;
   position: absolute;
 }
 
@@ -1173,9 +1185,6 @@ table {
   margin-left: 550px;
 }
 
-.table {
-  margin-right: 20px !important;
-}
 
 .update {
   outline: none;
@@ -1225,8 +1234,10 @@ table {
 
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
-  background-color: #2590f3;
+  background-color: #3f8afa;
+  height: 100% !important;
 }
+
 
 .dashboard svg {
   margin-left: -3px;
@@ -1378,7 +1389,7 @@ table {
   fill: white;
 }
 
- .undermanage-hover a{
+.undermanage-hover a {
   border-radius: 2px !important;
   cursor: pointer !important;
   width: 10.3vw !important;
@@ -1617,10 +1628,15 @@ table {
   display: flex;
 }
 
-.reportheader {
-  width: 100%;
+.header-text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  position: fixed;
+.reportheader {
+  position: relative;
 }
 
 .viewdashboard {
@@ -1628,9 +1644,7 @@ table {
   left: 0;
 }
 
-.managereport {
-  margin-left: 33px !important;
-}
+
 
 
 /* manage department */

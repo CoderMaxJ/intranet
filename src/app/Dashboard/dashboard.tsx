@@ -1,22 +1,36 @@
-"useclient";
+"use client";
 import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
-import Reports from "../Reports/page";
 import { use, useEffect, useState } from "react";
 import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
-import { Decryptor } from "@/security";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 
 
 export default function Dashboard() {
   const privilege = localStorage.getItem("privilege");
   const [user_privilege, setUserPrivilege] = useState([""]);
-  const [accordionIcon, setAccordionIcon] = useState(false);
-  const [accordionIconn, setAccordionIconn] = useState(false);
-  const [logout,setLogout]=useState(false);
+  const [accordionIcon, setAccordionIcon] = useState(true);
+  const [accordionIconn, setAccordionIconn] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
 
+  const toggleShow = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const toggleShoww = () => {
+    setShowPassword1((prev) => !prev);
+  };
+
+  const toggleShowww = () => {
+    setShowPassword2((prev) => !prev);
+  };
   const token = localStorage.getItem("token");
   useEffect(() => {
     if (!token) {
@@ -83,15 +97,19 @@ export default function Dashboard() {
       )}
     <div
       className="db "
+
       style={{
         width: "217px",
-        height: "100vh",
+        height: "100%",
         padding: "10px",
       }}
     >
+
+<Updatepassword />
       <div style={{ marginBottom: "40px", marginTop: '15px' }}>
         <img src="/img/Sos.png" height={45} />
       </div>
+
 
 
       <div className="accordion"  >
@@ -112,7 +130,7 @@ export default function Dashboard() {
               fill="currentColor"
               className="bi bi-graph-up"
               viewBox="0 0 16 16"
-              style={{marginRight:'24px'}}
+              style={{ marginRight: '24px' }}
             >
               <path
                 fillRule="evenodd"
@@ -124,7 +142,7 @@ export default function Dashboard() {
         </div>
 
         <div className=" accordion-item">
-          <div style={{marginTop:'5px'}}>
+          <div style={{ marginTop: '5px' }}>
             <div className="manage-menu d-flex justify-content-between"
               data-bs-toggle="collapse"
               data-bs-target="#panelsStayOpen-collapseOne"
@@ -152,10 +170,11 @@ export default function Dashboard() {
                   <a onClick={() => router.push("/ManageAccount")} style={{ color: '#ffffff', textDecoration: 'none', display: 'block', marginTop: '12px', padding: '10px' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    </svg> Accounts
+                    </svg>
+                     Accounts
                   </a>
                 )}
-                <a onClick={() => router.push("/ManageEmployee")} style={{ color: '#ffffff', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop:'5px' }}>
+                <a onClick={() => router.push("/ManageEmployee")} style={{ color: '#ffffff', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop: '5px' }}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                   </svg> Employee
@@ -191,8 +210,30 @@ export default function Dashboard() {
               >
                 <div className="accordion-body user-updatepassword-button"
                 >
-                  <Updatepassword />
+                  <div className="updatepassword-hvr" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
+                    style={{
+                      textDecoration: 'none',
+                      color: hovered ? 'black' : '#ffffff',
+                      backgroundColor: hovered ? '#ffffff' : '',
+                      padding: '10px',
+                      whiteSpace: 'nowrap',
+                      borderRadius: '2px',
+                      width: '10.3vw',
+                      marginTop: '-14px',
+                      transform: 'translateX(-20px)',
+                      cursor: 'pointer',
+                    }}
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16" style={{ marginRight: '19px' }}>
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                      <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    </svg>   Update Password
+                  </div>
+
                 </div>
+                
               </div>
             </div>
           </div>
@@ -200,7 +241,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div onClick={()=>setLogout(true)} className="dashboard" style={{ marginTop: '-11px', transform:'translateX(-5px)', width:'10.3vw' }}>
+      <div className="dashboard" style={{ marginTop: '-11px', transform: 'translateX(-5px)', width: '10.3vw' }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -208,7 +249,7 @@ export default function Dashboard() {
           fill="currentColor"
           className="bi bi-box-arrow-right"
           viewBox="0 0 16 16"
-          style={{ marginRight: '23px', marginLeft:'2px' }}
+          style={{ marginRight: '23px', marginLeft: '2px' }}
         >
           <path
             fillRule="evenodd"

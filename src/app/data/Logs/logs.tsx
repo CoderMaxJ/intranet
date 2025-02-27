@@ -102,8 +102,8 @@ function LogsDataTable() {
 
   return (
     <div className="logs-wrapper" style={{ backgroundColor: "#e7e7e7" }}>
-      <div className="logs-maindiv">
-        <div className="logs-table" style={{ display: "flex" }}>
+      <div className="logs-maindiv" >
+        <div className="logs-table" style={{ display: "flex", position:'relative' }}>
           <h3
             className="logs-headername"
             style={{
@@ -120,6 +120,7 @@ function LogsDataTable() {
               display: 'flex',
               alignItems: 'center',
               position: 'relative', 
+               alignContent:'center'
             }}
           >
             <input
@@ -129,6 +130,8 @@ function LogsDataTable() {
                 fontFamily: "'Raleway', sans-serif",
                 marginBottom: "3px",
                 paddingRight: '30px',
+                position:'absolute',
+                left:'425px',
               }}
               type="text"
               placeholder="Search..."
@@ -149,7 +152,7 @@ function LogsDataTable() {
                 fill="currentColor"
                 className="bi-search"
                 viewBox="-7 0 30 16"
-                style={{ cursor: 'pointer', marginTop:'-2px', marginLeft:'-320px' }}
+                style={{ cursor: 'pointer', position:'absolute', transform:'translateY(-24px)', margin:'0 auto', marginLeft:'430px' }}
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>

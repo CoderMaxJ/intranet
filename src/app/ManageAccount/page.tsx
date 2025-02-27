@@ -1,6 +1,5 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/dashboard";
@@ -366,9 +365,7 @@ export default function ManageDepartment() {
                                 </form>
                             </>
                         )}
-
-                        <div className="ms-3 mt-4 vw-50">
-
+                        <div className="accounts-table">
                             <table className="manage-table table table-light table-hover table-striped border">
                                 <thead style={{ tableLayout: "fixed", display: 'table', width: "100%" }}>
                                     <tr>

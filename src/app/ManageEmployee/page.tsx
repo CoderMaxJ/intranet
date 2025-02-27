@@ -1,13 +1,10 @@
 "use client";
 import { Encryptor, Decryptor } from "@/security";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmployee";
 import { useEffect, useState } from "react";
 import Header from "../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
-import LoadingSpinner from "../component/LoadSpinner/spinner";
 import { IdentifyUser } from "../user_identifier";
 
 
@@ -34,9 +31,9 @@ export default function CreateUD() {
   const [hide, hidden] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [departmentSearchTerm, setDepartmentSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1); // Current page state
-  const [totalPages, setTotalPages] = useState(1); // Total pages state
-  const [targetID, setTargetID] = useState<number | null>(null); // Employee ID to delete
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1); 
+  const [targetID, setTargetID] = useState<number | null>(null);
   const [total, setTotal] = useState(0);
   const [listener, setListener] = useState(false);
   const [user_privilege, setUserPrivilege] = useState([""]);
@@ -231,44 +228,16 @@ export default function CreateUD() {
       <div className="db-employee">
         <Dashboard />
       </div>
-      <div className="main-divv"><Header title="MANAGE EMPLOYEE" /></div>
-      <ToastContainer />
-      <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              <p>Are you sure you want to delete this employee?</p>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                data-bs-dismiss="modal"
-                onClick={() => {
-                  if (targetID !== null) {
-                    handleDelete(targetID);
-                  }
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="manageemployee-division">
+      <div className="main-divv">
+        <Header title="MANAGE EMPLOYEE" />
+        <div className="manageemployee-division">
         <div >
           <div>
             <header
-              className="crud-header"
+              className=""
 
             >
-              <div className="search-employee w-100 d-flex" style={{ marginTop: "30px" }}>
+              <div className="w-100 d-flex justify-content-center py-2 px-2" style={{ width:'86vw', margin:'auto', position:'relative'}}>
                 <div className="searchbar-containerr">
                   <input
                     className="searchbar"
@@ -344,14 +313,13 @@ export default function CreateUD() {
             </div>
           </div>
         </div>
-        <div className="managereport" style={{ maxHeight: "670px", position: 'absolute' }}>
+        <div className="managereport" >
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{ marginLeft: "15px", marginRight: "40px", width: "81vw", marginTop: '40px' }}
+            style={{width:'95%', margin:'0 auto'}}
           >
             <thead>
-
               <tr>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
@@ -371,7 +339,7 @@ export default function CreateUD() {
               {employees?.length ? (
                 employees.map((info, index) => (
                   <tr key={info.empno}>
-                    <td>{info.empno}</td>
+                    <td className="p">{info.empno}</td>
                     <td>{info.fname}</td>
                     <td>{info.mname}</td>
                     <td>{info.lname}</td>
@@ -394,8 +362,6 @@ export default function CreateUD() {
                         </button>
                       </td>
                     )}
-
-
                     {user_privilege.includes("manage_users") && (<td>
                       <button
                         data-bs-toggle="modal"
@@ -437,7 +403,7 @@ export default function CreateUD() {
             </tbody>
           </table>
         </div>
-        <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end", width: "88.8vw" }}>
+        <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end"}}>
           <div className="employee-total">
             <p>Total: <span>{total}</span></p>
           </div>
@@ -472,6 +438,37 @@ export default function CreateUD() {
           </div>
         </div>
       </div>
+        </div>
+      <ToastContainer />
+      <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>Are you sure you want to delete this employee?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+                onClick={() => {
+                  if (targetID !== null) {
+                    handleDelete(targetID);
+                  }
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
   );
 }
