@@ -133,24 +133,27 @@ const btnClose = document.getElementById("btn-close");
 
   return (
     <div>
-
-      {/* Link to open modal */}
-      <div className="updatepassword-hvr" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
+      <div data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
         style={{
           textDecoration: 'none',
-          // color: hovered ? 'white' : '#000000',
-          color:'#ffffff',
+          color: hovered ? 'black' : '#ffffff',
+          backgroundColor: hovered ? '#ffffff':'',
+          padding:'10px',
+          whiteSpace:'nowrap',
+          borderRadius:'2px',
+          width:'10.3vw',
+          marginTop:'-14px',
+          transform:'translateX(-20px)',
           cursor: 'pointer'
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{marginLeft:'-8px', marginRight:'20px'}}>
-  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16" style={{marginRight:'19px'}}>
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+  <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
 </svg>   Update Password
       </div>
-
-      {/* Bootstrap Modal */}
       <div
         className="modal fade"
         id="updatePasswordModal"
