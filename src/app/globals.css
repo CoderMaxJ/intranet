@@ -157,40 +157,42 @@ a {
   width: 17vw;
 }
 
-.main-div{
-     height: 100vh;
-     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-     
-}
-.login-div{
-     width: 30%;
-     height: 30vh;
-     border: 0.60px solid gray;
-     border-radius: 4px;
-     display: grid;
-     place-items: center;
+.main-div {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
-.login-div input{
-     padding: 5px;
-     margin-top: 5px;
+.login-div {
+  width: 30%;
+  height: 30vh;
+  border: 0.60px solid gray;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
 }
 
-.login-div .button-div{
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     width: 100%;
-     height: 20%;
-     margin-top: 5px;
- 
+.login-div input {
+  padding: 5px;
+  margin-top: 5px;
 }
-.login-div button{
-     padding: 3px;
-     text-align: center;
+
+.login-div .button-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+  margin-top: 5px;
+
+}
+
+.login-div button {
+  padding: 3px;
+  text-align: center;
 }
 
 input:focus {
@@ -573,7 +575,7 @@ input:focus {
 
 .background-report {
   border-radius: 4px;
-  margin:auto;
+  margin: auto;
   margin-top: 20px !important;
   height: 84.5vh;
   width: 86vw;
@@ -902,13 +904,17 @@ table {
   padding: 7px !important;
   color: white;
   border: none;
-  margin-left: 76.4vw !important;
+  margin: 0 auto;
+  right: 60px;
   border-radius: 4px;
   font-weight: 500;
+  position: absolute;
 }
+
 .manage-tbody {
   height: 68vh;
 }
+
 .manageaccounts-bg {
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
@@ -921,9 +927,11 @@ table {
 }
 
 .manage-table {
-  margin-left: 15px;
-  margin-top: -10px;
   width: 82vw !important;
+  position: absolute;
+  margin: 30px auto;
+
+
 }
 
 .employee-header button {
@@ -985,7 +993,7 @@ table {
 
 .manageemployee-button {
   position: absolute;
-  right: 2.5%;
+  right: 1.5%;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -1044,13 +1052,13 @@ table {
   color: rgb(88, 87, 87);
   right: 300px !important;
   position: relative;
-  top:6px;
+  top: 6px;
 }
 
 .employee-pagination {
-  position:absolute;
+  position: absolute;
   right: 40px;
-  top:6px;
+  top: 6px;
 }
 
 .manageemployee-div {
@@ -1637,6 +1645,7 @@ table {
 
 .reportheader {
   position: relative;
+  margin: 10px auto;
 }
 
 .viewdashboard {

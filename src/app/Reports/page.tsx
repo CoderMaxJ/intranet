@@ -241,7 +241,7 @@ useEffect(()=>{
                                     marginTop: '20px',
                                     color: 'white',
                                     marginLeft: '-80px',
-                                    width: '82.4vw'
+                                    width: '84vw'
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
                                     <form
@@ -333,7 +333,7 @@ useEffect(()=>{
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '690px', marginLeft: '20px', position: 'fixed', width: '82.4vw', backgroundColor:'#ffffff' }}>
+                            <div style={{ overflowY: 'auto', height: '690px', marginLeft: '20px', position: 'fixed', width: '84vw', backgroundColor:'#ffffff' }}>
                             {/* //zIndex: 1, */}
                                 <table className="table table-striped" style={{ position: 'sticky', top: 0, width: '83vw' }}> 
                                     <thead>
