@@ -17,6 +17,7 @@ export default function Dashboard() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [logout,setLogout]=useState(false);
   const [hovered, setHovered] = useState(false);
 
 
@@ -241,7 +242,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="dashboard" style={{ marginTop: '-11px', transform: 'translateX(-5px)', width: '10.3vw' }}>
+      <div onClick={()=>setLogout(true)} className="dashboard" style={{ marginTop: '-11px', transform: 'translateX(-5px)', width: '10.3vw' }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
