@@ -192,10 +192,11 @@ export default function CreateUD() {
     GetEmployee(page); // Fetch data for the new page
   };
 
-  const test = async (e: any) => {
+  const searchKeyword = async (e: any) => {
     e.preventDefault();
-
-    search(e);
+    
+      search(e);
+    
   }
 
   const handleResetPassword = (empno: number, fname: string) => {
@@ -279,7 +280,7 @@ export default function CreateUD() {
                     placeholder="Search..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    onKeyUp={test}
+                    onKeyUp={searchKeyword}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -265,7 +265,7 @@ const errorToast = (msg: string) => toast.error(msg, {
   progress: undefined,
 });
 
-
+const btnClose = document.getElementById("buttonclose");
   async function Create() {
 
     try {
@@ -280,6 +280,7 @@ const errorToast = (msg: string) => toast.error(msg, {
 
       if (response.status === 201) {
         successToast("Created successfully!");
+        btnClose?.click();
         clearInputs();
         
       }else{
@@ -308,6 +309,7 @@ const errorToast = (msg: string) => toast.error(msg, {
 
       if (response.status === 200) {
         successToast("Updated successfully!");
+        btnClose?.click();
       }else{
         errorToast("Unable to update records!")
       }
@@ -331,6 +333,7 @@ const errorToast = (msg: string) => toast.error(msg, {
 
 
   };
+  //
 
   const clearInputs=()=>{
     setFormData({
@@ -368,6 +371,7 @@ const errorToast = (msg: string) => toast.error(msg, {
       <form className="row" onSubmit={handleSubmitForm} >
         <div className="col-md-4 mb-3">
           <button
+            id = "buttonclose"
             type="button"
             className="btn-close"
             data-bs-dismiss="modal"
@@ -439,6 +443,7 @@ const errorToast = (msg: string) => toast.error(msg, {
             id="dateofbirth"
             value={formData.dateofbirth}
             onChange={handleInputChange}
+            max="2006-12-31" 
           />
         </div>
         <div className="col-md-2 mb-3">
@@ -620,19 +625,21 @@ const errorToast = (msg: string) => toast.error(msg, {
             marginTop: "30px",
           }}
         >
-          <div className="d-flex justify-content-between">
+          <div style={{display:"flex",justifyContent:"flex-end",gap:"15px"}}>
+           
+            <button
+              type="button"
+              data-bs-dismiss="modal"
+              className="btn btn-danger"
+              onClick={clearInputs}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               className="btn btn-primary"
             >
               {mode === "edit" ? "Update" : "Create"}
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={clearInputs}
-            >
-              Clear
             </button>
           </div>
         </div>
