@@ -174,7 +174,7 @@ useEffect(() => {
                   marginBottom: "3px",
                 }}
                 type="text"
-                placeholder="Search by name"
+                placeholder="Search..."
                 value={searchQuery}
                 onChange={handleSearchChange}
               />
@@ -188,21 +188,6 @@ useEffect(() => {
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{
-                  height: "41px",
-                  fontFamily: "'Raleway', sans-serif",
-                  borderRadius: "4px",
-                  marginBottom: "2px",
-                  marginLeft: "3px",
-                  marginTop: "6px",
-                  color: "white",
-                }}
-              >
-                Go
-              </button>
             </div>
             <div
               style={{
@@ -248,7 +233,7 @@ useEffect(() => {
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#FBDD64",
+                  backgroundColor: "#e8e8b5",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -315,7 +300,7 @@ useEffect(() => {
                         ? instance.breaktype === "First Break"
                           ? "#FFEDA6"
                           : instance.breaktype === "Second Break"
-                          ? "#FBDD64"
+                          ? "#e8e8b5"
                           : instance.breaktype === "Lunch"
                           ? "#A9E4FF"
                           : ""

@@ -18,14 +18,14 @@ export default function Updatepassword() {
   const [currentpassword, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [message,setMessage]=useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const router = useRouter();
+  const [passwordStrength,setPasswordStrength]=useState(Boolean);
+
 
   const toggleShow = () => {
     setShowPassword((prev) => !prev);
@@ -52,7 +52,7 @@ export default function Updatepassword() {
         newpassword: password,
         password2: confirmPassword,
       };
-console.log(newAccount)
+const btnClose = document.getElementById("btn-close");
       const token = localStorage.getItem("token");
 
       try {
@@ -70,7 +70,7 @@ console.log(newAccount)
 
 
         if (response.status === 200) {
-          
+        
           const message = await response.json();
           setMessage(message.res);
           console.log(response)
@@ -81,6 +81,7 @@ console.log(newAccount)
           setSuccess(true);
           setTimeout(()=>{
            setMessage("");
+           btnClose?.click();
           },2000)
          
         } else {
@@ -115,20 +116,38 @@ console.log(newAccount)
     setConfirmPassword("");
     setMessage("");
   }
+
+  const validate = () =>{
+    function isValidPassword(password:string) {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      return regex.test(password);
+  }
+  const result = isValidPassword(password);
+  if(result === true){
+    setPasswordStrength(true);
+  }else{
+    setPasswordStrength(false);
+  }
+  console.log(result);
+  }
+
   return (
     <div>
-    
+
       {/* Link to open modal */}
       <div className="updatepassword-hvr" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
         style={{
           textDecoration: 'none',
-          color: hovered ? 'white' : '#000000',
-          cursor: 'pointer',
+          // color: hovered ? 'white' : '#000000',
+          color:'#ffffff',
+          cursor: 'pointer'
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        Update Password
+     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{marginLeft:'-8px', marginRight:'20px'}}>
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+</svg>   Update Password
       </div>
 
       {/* Bootstrap Modal */}
@@ -140,8 +159,9 @@ console.log(newAccount)
         aria-hidden="true"
 
       >
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
+        <div className="modal-dialog">
           <div className="modal-content">
+  
             <div className="modal-header">
               <img
                 src="/img/Sos.png"
@@ -152,12 +172,14 @@ console.log(newAccount)
               ></img>
               <button
                 type="button"
+                id = "btn-close"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 onClick={clearInputs}
                 aria-label="Close"
                 style={{ marginTop: '-45px' }}
               ></button>
+ 
             </div>
 
             {success ? (
@@ -174,6 +196,15 @@ console.log(newAccount)
               </div>
             ) }
             <div className="modal-body" style={{ marginLeft: "35px" }}>
+            <label style={{fontSize:"13px"}}>
+  Password must be at least 8 characters and include:
+  <ul>
+    <li style={{color:"red"}}>One lowercase letter</li>
+    <li style={{color:"red"}}>One uppercase letter</li>
+    <li style={{color:"red"}}>One number</li>
+    <li style={{color:"red"}}>One special character (@$!%*?&)</li>
+  </ul>
+</label>
               <form onSubmit={handleSubmit}>
                 <div className="updatepass-label">
                   <label htmlFor="currentpassword">Current Password</label>
@@ -196,9 +227,10 @@ console.log(newAccount)
                 </div>
 
                 <div className="updatepass-label1">
-                  <label htmlFor="password">New Password</label>
+                  <label htmlFor="password">New Password {password != "" && (<span style={{color: passwordStrength === true ? "green":"red",fontSize:"13px",marginLeft:"80px"}}>{passwordStrength === true ? "Strong password": "Weak password"}</span>)}</label>
                   <div style={{ position: "relative" }}>
                     <input
+                      onKeyUp={validate}
                       className="updatepassword-input"
                       type={showPassword1 ? "text" : "password"}
                       value={password}

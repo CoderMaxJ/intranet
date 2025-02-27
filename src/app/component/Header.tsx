@@ -18,19 +18,19 @@ export default function Header({ title, text }: HeaderProps) {
         <img
         src="/img/Breaktool.png"
         style={{
-          marginTop: "-20px",
-          width: "89vw",
-          height: "13vh",
-          marginBottom: "-10px",
-          marginLeft: "-51px",
+          marginLeft:'1px',
+          width: "100%",
+          height: "11vh",
+          marginBottom: "0px",
+       
           display: 'relative',
           boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
         }}
         />
       </div>
       <div className="header-text-container">
-        <h1 className="headerbreaktool fw-bolde">{title}</h1>
-        <h4 className="headerdown  p-2 fw-bolder">{text}</h4>
+        <h1 className="headerbreaktool fw-bolder">{title}</h1>
+        <h4 className="headerdown  p-2">{text}</h4>
       </div>
     </div>
   );

@@ -128,12 +128,10 @@ a {
   backdrop-filter: blur(-50px);
   border-radius: 8px;
   padding: 20px 20px 85px 20px;
-  min-width: 20vw;
-  max-width: 100%;
+  width: 20vw !important;
   height: 46vh !important;
   justify-content: center;
   align-items: center;
-
   border: none !important;
   outline: none !important;
 }
@@ -229,6 +227,14 @@ input:focus {
 
 /* SEARCH BAR */
 .headerbreaktool {
+  margin-top: -20px !important;
+}
+
+.headerdown {
+  margin-top: -5px !important;
+}
+
+.headerbreaktool {
   color: white;
   justify-content: center;
   text-align: center;
@@ -284,6 +290,7 @@ input:focus {
   justify-content: center;
   align-items: center;
 }
+
 
 .searchbar {
   max-width: 330px;
@@ -432,9 +439,10 @@ input:focus {
   padding-top: 20px;
   margin-left: 30px;
   margin-right: 60px;
+  width: 85.7vw;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: -60px !important;
+  margin-top: -77px !important;
   padding-bottom: 5px !important;
 }
 
@@ -470,8 +478,8 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 80.2vw;
-  margin-top: 50px;
+  width: 85.7vw;
+  margin-top: 40px;
   margin-left: 30px;
   margin-right: 40px;
   padding-left: 20px;
@@ -495,6 +503,19 @@ input:focus {
 .searchbarlogs {
   position: relative;
 }
+
+.searchbarlogs input {
+  padding: 5px 70px 10px !important;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 350px;
+  background-color: #f0f0f0;
+  border: 2px solid lightgray;
+
+}
+
+
 
 /* Dropdown Button */
 .dropbtn {
@@ -524,7 +545,7 @@ input:focus {
 
 .background-report {
   border-radius: 4px;
-  margin-top: 125px;
+  margin-top: 145px;
   height: 83vh;
   margin-left: -55px;
   width: 84.5vw;
@@ -533,13 +554,13 @@ input:focus {
 }
 
 .daterange-button {
-margin-left: 10px;
-width: 70px;
-border: none;
-border-radius: 4px;
-color: white;
-background-color: #0ebb39;
-transition: background-color 0.3s ease
+  margin-left: 10px;
+  width: 70px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  background-color: #0ebb39;
+  transition: background-color 0.3s ease
 }
 
 .daterange-button:hover {
@@ -548,7 +569,7 @@ transition: background-color 0.3s ease
 }
 
 .table-data {
- font-size: smaller;
+  font-size: smaller;
 }
 
 .input-daterange {
@@ -578,6 +599,7 @@ transition: background-color 0.3s ease
   background-color: #0ebb39;
   margin-left: 5px;
 }
+
 .modal-dialog {
   --bs-modal-width: 20vw;
   max-width: var(--bs-modal-width);
@@ -745,6 +767,7 @@ tbody td {
 .table-striped th {
   background-color: #4cbdff;
 }
+
 .background-overlay {
   position: fixed;
   top: 0;
@@ -753,13 +776,16 @@ tbody td {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9998;
-  opacity: 0; /* Initially hidden */
-  transition: opacity 0.3s ease; /* Smooth fade-in/fade-out effect */
+  opacity: 0;
+  /* Initially hidden */
+  transition: opacity 0.3s ease;
+  /* Smooth fade-in/fade-out effect */
 }
 
 .add-icon {
-  margin-right: 2px ;
+  margin-right: 2px;
 }
+
 .add-account {
   margin-left: 238px !important;
   transition: background-color 0.3s ease
@@ -775,13 +801,15 @@ tbody td {
   width: 7vw;
   border: none !important;
   box-shadow: none;
+  font-weight: 500;
   white-space: nowrap;
   outline: none;
   background-color: #0ebb39;
-  
+
 }
+
 .actions {
-margin-left: 35px;
+  margin-left: 35px;
 }
 
 .accounts-edit {
@@ -790,24 +818,79 @@ margin-left: 35px;
   color: #0da52e;
 }
 
-.manage-table th {
-background-color: #50c4fa !important;
-position: sticky;
-top: 0; /* Makes the header stick to the top */
-background-color: #fff; /* Make sure the header has a solid background */
-z-index: 1; 
+.rotate-acc-icon {
+  rotate: 180deg;
+  transition: 0.3s all ease-in-out;
 }
 
+.bi-chevron-up {
+  transition: 0.3s all ease-in-out;
+}
+
+.custom-accordion-btn {
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: white;
+}
+
+.manage-table th {
+  background-color: #4391f7 !important;
+  position: sticky;
+  top: 0;
+  /* Makes the header stick to the top */
+  background-color: #fff;
+  /* Make sure the header has a solid background */
+  z-index: 1;
+}
+
+table {
+  border-collapse: collapse;
+  /* Ensures borders are collapsed together */
+  width: 100%;
+  /* Optional: adjust the table width */
+}
+
+.manage-tbody td,
+.manage-tbody th {
+  padding: -45px !important;
+  /* Adjust padding for cells */
+}
+
+.manage-tbody {
+  font-size: 11px;
+  /* Font size adjustment */
+}
+
+.table.table-striped.table-hover.table-bordered td,
+.table.table-striped.table-hover.table-bordered th {
+  padding: 4px;
+  /* Adjust this value to your desired padding */
+}
+
+
+
+.addhover {
+  background-color: #0da52e !important;
+  padding: 7px !important;
+  color: white;
+  border: none;
+  margin-left: 76.4vw !important;
+  border-radius: 4px;
+  font-weight: 500;
+}
 
 .manageaccounts-bg {
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
-  margin-top:10px;
+  margin-top: -53px;
   padding-bottom: 10px !important;
-  padding-top:  15px !important;
-  margin-left: 40px;
+  padding-top: 15px !important;
+  margin-left: 30px;
   border-radius: 4px;
-  width:85vw;
+  width: 85.7vw;
 }
 
 .manage-table {
@@ -817,13 +900,13 @@ z-index: 1;
 }
 
 .employee-header button {
- margin-left: 40vw;
- }
+  margin-left: 40vw;
+}
 
-.employee-header header{
+.employee-header header {
   background-image: url("/img/Breaktool.png");
   padding: 20px;
-  width: 85vw;
+  width: 88vw !important;
   margin-top: -15px !important;
   display: flex;
   border-top-left-radius: 4px;
@@ -834,6 +917,7 @@ z-index: 1;
   color: white;
   font-weight: bolder;
 }
+
 .employee-heade {
   position: sticky;
   top: 0;
@@ -843,25 +927,71 @@ z-index: 1;
 .container-fluid {
   background-color: #e7e7e7;
 }
+
+.main-divv {
+  width: calc(100% - 177px);
+  background-color: #e7e7e7;
+}
+
 .accounts-button {
   border: none;
   background: none;
   color: red;
   margin-left: 20px;
 }
-.manageaccount-dashboard {
-  margin-left: -12px;
-}
+
 
 .addemp .row {
   width: 30vw;
 }
+
 .db-employee {
   margin-left: 0;
 }
 
+.searchbar-containerr {
+  margin-top: -38px;
+  margin-left: 33vw;
+}
+
+.searchbar-containerr svg {
+  margin-top: -24px;
+  margin-left: 33vw;
+}
+
+.searchbar-container1 {
+  margin-top: -2px;
+  margin-left: 425px
+}
+
+.searchbar-container1 svg {
+  margin-top: -112px;
+  margin-left: 645px;
+}
+
+
 .search-employee {
   position: absolute;
+}
+
+.search-employee input {
+  margin-top: -49px;
+}
+
+.manageemployee-button {
+  margin-top: -45px;
+  margin-left: 390px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.manageemployee-button button:hover {
+  background-color: #22af10 !important;
+  transform: scale(0.9);
+}
+
+.overbreak-red {
+  color: red !important;
+  font-weight: bold;
 }
 
 .row {
@@ -872,9 +1002,11 @@ z-index: 1;
   border-radius: 4px;
   padding-inline: 60px;
   border: 0;
-  margin-left: 5px;
+  margin-left: 33vw !important;
   position: fixed;
+  margin-right: 400px;
 }
+
 .search-input svg {
   position: fixed;
 }
@@ -894,6 +1026,58 @@ z-index: 1;
   margin-left: 300px;
 }
 
+.employee-pagination nav {
+  margin-top: 77.5vh;
+  margin-right: 100px;
+}
+
+.employee-total p {
+
+  margin-top: 77.5vh;
+  padding: 6px;
+  border-radius: 4px;
+  color: rgb(88, 87, 87);
+  margin-right: 10px;
+}
+
+.manageemployee-title h1 {
+  font-weight: bolder;
+  justify-content: center;
+  display: flex;
+}
+
+.manageemployee-division {
+  background-color: white;
+  margin-top: 120px;
+  margin-left: 246px;
+  height: 86vh;
+  width: 85.7vw;
+  position: absolute;
+  border-radius: 4px;
+  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
+
+}
+
+
+.addemployee-button {
+  padding: -10px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.addemployee-button button:hover {
+  background-color: #0da52e !important;
+  transform: scale(0.95);
+}
+
+.manageemployee-background {
+  background-color: white;
+  margin-top: 30px;
+  margin-left: 40px;
+  height: 93vh;
+  width: 84.5vw;
+  border-radius: 4px;
+  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
+}
 
 .crud-maindiv {
   background-color: #266bc5;
@@ -905,16 +1089,27 @@ z-index: 1;
 .crud-header {
   background-color: #1167b3;
   color: white;
-  width: 88.9vw;
+  width: 80.9vw;
   margin-right: 40px;
-  margin-left: 2px;
-  padding: 10px;
+  margin-left: 49px;
+  padding: -20px !important;
   position: sticky;
   display: flex;
-  top: 0;
+  margin-top: 30px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   z-index: 10;
 }
 
+.manageemployee-title h1 {
+  margin-left: 20px;
+  font-weight: bolder;
+  white-space: nowrap;
+}
+
+.manage-input input {
+  position: relative;
+}
 
 .gobackbutton {
   position: absolute;
@@ -957,7 +1152,7 @@ z-index: 1;
   border-radius: 4px;
   border: none;
   box-shadow: none;
-  background-color:  #0ebb39;
+  background-color: #0ebb39;
   color: white;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
@@ -1030,6 +1225,7 @@ z-index: 1;
 
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
+  background-color: #2590f3;
 }
 
 .dashboard svg {
@@ -1050,7 +1246,7 @@ z-index: 1;
   align-items: center;
   padding: 10px;
   margin-left: 5px;
-  color: black;
+  color: rgb(255, 255, 255);
   border-radius: 2px;
   margin-top: 10px;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
@@ -1058,29 +1254,29 @@ z-index: 1;
 }
 
 .dashboard:hover {
-  background-color: #2193df;
-  color: white !important;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0) !important;
 }
 
 .dashboard:hover button,
 .dashboard:hover a {
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 .dashboard:hover svg {
-  fill: white;
+  fill: rgb(0, 0, 0);
   /* Smooth fill change */
 
 }
 
 .dashboard:active {
-  background-color: #1a74b8;
+  background-color: #ffffff;
   color: white !important;
 
 }
 
 .dashboard:active svg {
-  fill: white;
+  fill: rgb(0, 0, 0);
 
 }
 
@@ -1104,29 +1300,29 @@ z-index: 1;
   align-items: center;
   padding: 10px;
   margin-top: 10px;
-  margin-left: 5px;
-  color: black;
+  color: white;
   cursor: pointer;
   border-radius: 2px;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
 .generate:hover {
-  background-color: #2193df;
+  background-color: #ffffff;
+  color: #000000 !important;
 }
 
 .generate:hover button,
 .generate:hover a {
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 .generate:hover svg {
-  fill: white;
+  fill: rgb(0, 0, 0);
 }
 
 .generate svg {
   margin-right: 20px;
-  fill: black;
+  fill: rgb(255, 255, 255);
 }
 
 /* Existing styles */
@@ -1181,6 +1377,15 @@ z-index: 1;
   fill: white;
 }
 
+.undermanage-hover {
+  border-radius: 2px !important;
+}
+
+.undermanage-hover a:hover {
+  color: black !important;
+  background-color: white;
+}
+
 .manage-hover:hover {
   background-color: lightgray;
   cursor: pointer;
@@ -1216,16 +1421,27 @@ z-index: 1;
   text-decoration: none;
 }
 
-.manage-hover:hover, 
-.manage-menu a:hover{
-  background-color: #2193df;
-  color: white !important;
+.manage-hover:hover {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0) !important;
   cursor: pointer;
 }
 
-.manage-menu  a{
-  padding: 10px;
+.manage-menu:hover {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0) !important;
+  cursor: pointer;
+}
+
+.manage-menu a {
   border-radius: 2px;
+}
+
+.prof-hover:hover {
+  border-radius: 2px;
+  padding-top: 7px;
+  color: #000000 !important;
+  background-color: white !important;
 }
 
 .updatepass-hover {
@@ -1237,23 +1453,29 @@ z-index: 1;
   align-items: center;
   margin: 8px 0;
   padding: 10px;
-  margin-left: 5px;
+
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .updatepass-hover a {
   display: block;
   text-decoration: none;
+  color: inherit;
 }
 
 .updatepass-hover:hover {
-  background-color: #2193df;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0) !important;
 }
 
+.updatepass-hover:hover a {
+  color: rgb(0, 0, 0) !important;
+}
+
+
 .updatepassword-hvr:hover {
-  color: white;
-  /* Change text color to white on hover */
+  color: rgb(0, 0, 0) !important;
+
 }
 
 
@@ -1375,7 +1597,7 @@ z-index: 1;
 /* viewreports */
 .download-reports {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
 }
 
 .download-reports button {
@@ -1390,7 +1612,7 @@ z-index: 1;
 .download {
   outline: none;
   border: none;
-  background-color:  #0ebb39;
+  background-color: #0ebb39;
   color: white;
   padding: 7px;
   border-radius: 4px;
@@ -1398,7 +1620,7 @@ z-index: 1;
   margin-right: 10px !important;
   transition: background-color 0.3s ease
 }
-    
+
 .download:hover {
   background-color: #22af10;
   transform: scale(0.95)
@@ -1407,7 +1629,7 @@ z-index: 1;
 
 .viewreports {
   text-decoration: none;
-  background-color:  #0ebb39;
+  background-color: #0ebb39;
   width: 9.5vw;
   padding: 9px;
   padding-left: 15px;
@@ -1435,9 +1657,8 @@ z-index: 1;
 }
 
 .reportheader {
+  width: 100%;
   position: fixed;
-  margin-left: -42px;
-  top: 20px;
 }
 
 .viewdashboard {
@@ -1446,21 +1667,22 @@ z-index: 1;
 }
 
 .managereport {
-  margin-right: -0px;
+  margin-left: 33px !important;
 }
 
-      /* manage department */
+
+/* manage department */
 .manage-department {
-  top: 0;
-  max-height: 96vh; 
-  position: sticky;
-  overflow-y: auto;
-  margin-left: 5px;
-  margin-right: 10px;
+  width: calc(100% - 177px);
 }
+
 
 .manage-header {
   margin-left: 750px;
+}
+
+.manageaccounts-div {
+  background-color: #e7e7e7;
 }
 
 .dash {

@@ -11,11 +11,11 @@ export default function MainDashboard() {
   return (
     <div style={{ display: "flex", height: "100vh", width: '100vw', backgroundColor: "#e7e7e7" }}>
    
-      <div style={{ width: "250px",  height: "100vh" }}>
+      <div>
         <Dashboard />
       </div>
     
-      <div style={{ flex: 1, padding: "20px", backgroundColor: "#e7e7e7", width:'50vw' }}>
+      <div style={{ flex: 1, backgroundColor: "#e7e7e7", width:'50vw' }}>
         <Header title="WORKFORCE MONITORING" text="Connecting Teams, Empowering Innovation"/>
         <div>
           <BreakDataTable />

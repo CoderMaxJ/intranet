@@ -5,6 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmployee";
 import { useEffect, useState } from "react";
+import Header from "../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
 import LoadingSpinner from "../component/LoadSpinner/spinner";
 import { IdentifyUser } from "../user_identifier";
@@ -21,8 +22,8 @@ interface Information {
   address: string;
   contactno: string;
   position: string;
-  acctid:number;
-  un:string;
+  acctid: number;
+  un: string;
 }
 
 export default function CreateUD() {
@@ -36,19 +37,19 @@ export default function CreateUD() {
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const [totalPages, setTotalPages] = useState(1); // Total pages state
   const [targetID, setTargetID] = useState<number | null>(null); // Employee ID to delete
-  const [total,setTotal]=useState(0);
-  const [listener,setListener]=useState(false);
+  const [total, setTotal] = useState(0);
+  const [listener, setListener] = useState(false);
   const [user_privilege, setUserPrivilege] = useState([""]);
 
 
 
   const token = localStorage.getItem("token");
 
-useEffect(() => {
+  useEffect(() => {
     GetEmployee(currentPage);
-    setTimeout(()=>{
+    setTimeout(() => {
       setListener(false);
-    },2000)
+    }, 2000)
   }, [listener]);
 
   async function GetEmployee(page: number) {
@@ -75,7 +76,7 @@ useEffect(() => {
   }
 
 
-  const successToast = (msg:string) => toast.success(msg, {
+  const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
     hideProgressBar: true,
@@ -83,9 +84,9 @@ useEffect(() => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    
+
   });
-  
+
   const errorToast = (msg: string) => toast.error(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -123,9 +124,9 @@ useEffect(() => {
   }
 
 
-const user_hash_privilege = localStorage.getItem("user_privilege");
+  const user_hash_privilege = localStorage.getItem("user_privilege");
 
- if (user_hash_privilege) {
+  if (user_hash_privilege) {
     const array_privilege = IdentifyUser(user_hash_privilege);
     array_privilege.forEach((data) => {
       user_privilege.push(data);
@@ -133,40 +134,39 @@ const user_hash_privilege = localStorage.getItem("user_privilege");
   }
 
 
-const id = localStorage.getItem("user_id");
+  const id = localStorage.getItem("user_id");
 
-const search = (e:any)=>{
-  e.preventDefault();
-  async function SearchData(name:string) {
-    
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${name}/`,{
-      method: "GET",
-      headers:{
-        "Content-Type":"application/json",
-        Authorization:`Bearer ${Decryptor(token || '')}`
+  const search = (e: any) => {
+    e.preventDefault();
+    async function SearchData(name: string) {
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${name}/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token || '')}`
+        }
+      })
+      if (response.status == 200) {
+        const data = await response.json();
+        setEmployees(data.data);
+      } else {
+        console.log("error ");
       }
-    })
-    if(response.status == 200){
-      const data = await response.json();
-      setEmployees(data.data);
-    }else{
-      console.log("error ");
     }
-  }
-  if(searchTerm !== ""){
-    SearchData(searchTerm);
-  }else{
-    GetEmployee(currentPage);
-  }
-  
-  console.log(searchTerm);
-}
+    if (searchTerm !== "") {
+      SearchData(searchTerm);
+    } else {
+      GetEmployee(currentPage);
+    }
 
+    console.log(searchTerm);
+  }
 
   const handleData = (data: any) => {
     setCurrentMode("edit");
 
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus,acctid } = data;
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid } = data;
     let currentData = {
       empno,
       fname,
@@ -180,8 +180,6 @@ const search = (e:any)=>{
       maritalstatus,
       acctid
     };
-   
-
     setEmpData(currentData);
   };
 
@@ -189,44 +187,42 @@ const search = (e:any)=>{
     hidden(true);
   };
 
-
-
-  // Pagination controls
   const handlePageChange = (page: number) => {
     setCurrentPage(page); // Update the current page
     GetEmployee(page); // Fetch data for the new page
   };
 
-  const test = async (e:any)=>{
-  e.preventDefault();
-  
-    search(e);
-    }
+  const searchKeyword = async (e: any) => {
+    e.preventDefault();
+    
+      search(e);
+    
+  }
 
-    const handleResetPassword = (empno:number,fname:string) =>{
-       
-      async function resetPassword(){
-          const data = {empno:empno}
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reset/password/`,{
-              method:"PATCH",
-              headers:{
-                  "Content-Type":"application/json",
-                  Authorization: `Bearer ${Decryptor(token || "")}`
-              },
-              body:JSON.stringify(data)
-          })
-          if(response.status === 204){
-              successToast("Password has been reset");
-          }else{
-              const warning = await response.json();
-              errorToast(warning.warning);
-              console.log("error");
-          }
+  const handleResetPassword = (empno: number, fname: string) => {
+
+    async function resetPassword() {
+      const data = { empno: empno }
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reset/password/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token || "")}`
+        },
+        body: JSON.stringify(data)
+      })
+      if (response.status === 204) {
+        successToast("Password has been reset");
+      } else {
+        const warning = await response.json();
+        errorToast(warning.warning);
+        console.log("error");
       }
-      const response = confirm(`Are you sure you want to reset the password of ? ${fname}`);
-      if(response){
-        resetPassword();
-      }
+    }
+    const response = confirm(`Are you sure you want to reset the password of ? ${fname}`);
+    if (response) {
+      resetPassword();
+    }
 
   }
 
@@ -235,13 +231,8 @@ const search = (e:any)=>{
       <div className="db-employee">
         <Dashboard />
       </div>
+      <div className="main-divv"><Header title="MANAGE EMPLOYEE" /></div>
       <ToastContainer />
-
-
-
-      
-    
-      {/* Delete Confirmation Modal */}
       <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -270,83 +261,72 @@ const search = (e:any)=>{
           </div>
         </div>
       </div>
-
-
-
-      <div>
-  
-  
-     
-        <div>
+      <div className="manageemployee-division">
+        <div >
           <div>
             <header
-
               className="crud-header"
-              style={{
-                backgroundImage: "url('/img/Breaktool.png')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                padding: "15px",
-                display: "flex",
-                justifyContent: "space-between",
-                position: "sticky",
-                zIndex: 1,
-                color: "white",
-                height: "100px",
-              }}
-            >
-              
-              <div className="search-employee w-100 d-flex" style={{ marginTop: "30px" }}>
-                {user_privilege.includes("manage_users") && (
 
-             
-                <button
-                  type="button"
-                  className="btn btn-success btn-sm d-flex align-items-center ms-4"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  style={{
-                    padding: "8px 12px",
-                    borderRadius: "4px",
-                    fontWeight: "500",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                  }}
-                >{user_privilege.includes("manage_users")}{
-                  
-                }
+            >
+              <div className="search-employee w-100 d-flex" style={{ marginTop: "30px" }}>
+                <div className="searchbar-containerr">
+                  <input
+                    className="searchbar"
+                    id="search-employee"
+                    style={{
+                      backgroundColor: "#f0f0f0",
+                    }}
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyUp={searchKeyword}
+                  />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="#ffffff"
-                    className="bi bi-plus-circle-fill me-2"
-                    viewBox="0 0 16 16"
-                    style={{ marginBottom: "2px" }}
+                    width="14"
+                    height="14"
+                    fill="currentColor"
+                    className="bi-search"
+                    viewBox="-7 0 30 16"
                   >
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                   </svg>
-                  Add
-                </button>
-                   )}
-                <input
-                  className="search-input"
-                  id="search-employee"
-                  type="text"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e)=>setSearchTerm(e.target.value)}
-                  onKeyUp={test}
-            
-                  
-                  style={{
-                    padding: "8px 60px",
-                    borderRadius: "5px",
-                    border: "1px solid #ccc",
-                    position: "relative",
-                    marginLeft: "1100px",
-                  }}
-                />
+                </div>
+
+                {user_privilege.includes("manage_users") && (
+                  <div className="manageemployee-button">
+                    <button
+                      type="button"
+                      className=" btn btn-success btn-sm d-flex align-items-center ms-4"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      style={{
+                        borderRadius: "4px",
+                        fontWeight: "500",
+                        padding: '10px',
+                        whiteSpace: 'nowrap',
+                        backgroundColor: '#0ebb39',
+                        border: 'none',
+                        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >{user_privilege.includes("manage_users")}{
+
+                      }
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="#ffffff"
+                        className="bi bi-plus-circle-fill me-2"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                      </svg>
+                      Add Employee
+                    </button>
+                  </div>
+                )}
               </div>
             </header>
           </div>
@@ -357,45 +337,37 @@ const search = (e:any)=>{
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
           >
-       
             <div className="modal-dialog modal-xl" role="document">
               <div className="modal-content px-4">
-                <AddEmp empData={empData} mode={currentMode}  isClose={() => setCurrentMode("create")} onButtonClick={()=>setListener(true)} />
+                <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
               </div>
             </div>
           </div>
         </div>
-
-        <div className="managereport" style={{ overflowY: "auto", maxHeight: "800px", position: "fixed" }}>
+        <div className="managereport" style={{ maxHeight: "670px", position: 'absolute' }}>
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{ marginLeft: "40px", marginRight: "40px", width: "85vw", borderCollapse: "collapse" }}
+            style={{ marginLeft: "15px", marginRight: "40px", width: "81vw", marginTop: '40px' }}
           >
-       
-            <thead style={{ position: "sticky", top: "20" }}>
-             
+            <thead>
+
               <tr>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Middle Name</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Last Name</th>
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Address</th> )}
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Marital Status</th>)}
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Date of Birth</th>)}
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Gender</th>)}
+                {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff", }}>Address</th>)}
+                {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Marital Status</th>)}
+                {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Date of Birth</th>)}
+                {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Gender</th>)}
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Position</th>
-                {user_privilege.includes("manage_users") && ( <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>)}
-                {user_privilege.includes("update_breaktool_account") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Username</th>) }
+                {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>)}
+                {user_privilege.includes("update_breaktool_account") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Username</th>)}
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
-                
-             
-         
               </tr>
             </thead>
-   
-            <tbody className="table-data">
-              
+            <tbody className="manage-tbody table-data" >
               {employees?.length ? (
                 employees.map((info, index) => (
                   <tr key={info.empno}>
@@ -408,24 +380,24 @@ const search = (e:any)=>{
                     {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
                     {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
                     <td>{info.position}</td>
-                    {user_privilege.includes("update_breaktool_account") && ( <td>{info.un}</td> )}
+                    {user_privilege.includes("update_breaktool_account") && (<td>{info.un}</td>)}
                     {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
                     {user_privilege.includes("update_breaktool_account") && (
                       <td>
-                      <button
-                        
-                        className="ms-4"
-                        type="button"
-                        onClick={() => handleResetPassword(info.empno,info.fname)}
-                        style={{ border: "none",backgroundColor:"transparent" }}
-                      >
-                        <img src="img/reset.png" alt="" height={25} width={25} />
-                      </button>
-                    </td>
-                    )}
-                
+                        <button
 
-                      {user_privilege.includes("manage_users") && ( <td>
+                          className="ms-4"
+                          type="button"
+                          onClick={() => handleResetPassword(info.empno, info.fname)}
+                          style={{ border: "none", backgroundColor: "transparent" }}
+                        >
+                          <img src="img/reset.png" alt="" height={25} width={25} />
+                        </button>
+                      </td>
+                    )}
+
+
+                    {user_privilege.includes("manage_users") && (<td>
                       <button
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
@@ -465,10 +437,20 @@ const search = (e:any)=>{
               )}
             </tbody>
           </table>
-          <div className="border border"  style={{ display: "flex", justifyContent: "flex-end", width: "88.8vw", marginRight: "40px" }}>
-            <p className="mt-2">Total: <span>{total}</span></p>
-            <nav className="border border" aria-label="Page navigation" style={{ marginRight: "20px" }}>
+        </div>
+        <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end", width: "88.8vw" }}>
+          <div className="employee-total">
+            <p>Total: <span>{total}</span></p>
+          </div>
+          <div className="employee-pagination">
+            <nav aria-label="Page navigation">
               <ul className="pagination">
+
+                 <li className="page-item">
+                  <span className="page-link" style={{whiteSpace:'nowrap'}}>
+                   Page {currentPage} of {totalPages}
+                  </span>
+                </li>
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
                   <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
                     Previous
@@ -481,6 +463,7 @@ const search = (e:any)=>{
                     </button>
                   </li>
                 ))}
+
                 <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
                   <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
                     Next

@@ -5,6 +5,7 @@ import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { da } from "date-fns/locale";
 
 interface BreaksReport {
     name: string;
@@ -35,19 +36,20 @@ export default function Daterange() {
     const [buttonFilter, setButtonFilter] = useState("");
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
+    const [checker,setChecker]=useState(true);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value.toLowerCase());
     };
           
-   useEffect(()=>{
-    
+useEffect(()=>{
+    if(checker){
         fetchData();
-  
-   },[])
+    }
+},[data])
 
+        
     const handleGenerateAndDownloadCSV = async () => {
-       
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
@@ -72,8 +74,7 @@ export default function Daterange() {
                 alert("No data available for the selected date range.");
                 return;
             }
-
-            // Filter the data based on searchTerm before setting it for CSV download
+            
             const filteredData = result.data.filter((report: any) =>
                 report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
             );
@@ -164,14 +165,17 @@ export default function Daterange() {
 
             if(start != "" || end != ""){
                 setData(result.data);
+            }else{
+                setData(originalData);
             }
-          
+     
         } catch (e) {
             setError("An error occurred while fetching data.");
         }
     };
 
     const fetchData = async () => {
+        
         try {
             setError(""); 
             const account_id = localStorage.getItem("user_id");
@@ -197,19 +201,20 @@ export default function Daterange() {
                 alert("No data available for the selected date range.");
                 return;
             }
-            if(start == "" || end == ""){
+
+            if(response.status == 200){
                 setData(result.data);
+                setChecker(false);
             }
             
         } catch (e) {
             setError("An error occurred while fetching data.");
         }
     };
-
-
+console.log(start,end)
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
-            <div className="container">
+            <div className="container" >
                 <div className="viewdashboard">
                    
                     <div className="dashboard-view"><Dashboard /></div>
@@ -218,7 +223,7 @@ export default function Daterange() {
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
                     <div> 
-                        <div className="reportheader"><Header/></div>
+                        <div className="reportheader"><Header title="DAILY REPORTS"/></div>
                         <div className="background-report">
                        
                             <div style={{ display: 'flex' }}>
@@ -286,6 +291,7 @@ export default function Daterange() {
                                             <button
                                                 type="submit"
                                                 className="download"
+                                                onClick={handleGenerateAndDownloadCSV}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16" style={{ marginTop: '5px', marginRight: '5px' }}>
                                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
@@ -298,7 +304,7 @@ export default function Daterange() {
 
                                     <div className="search-div" style={{ transform: "translateY(-40px)", position: 'fixed', marginLeft: '700px' }}>
                                         <input
-                                            className="search-input"
+                                            className="search-input1"
                                             id="search-employee"
                                             type="text"
                                             placeholder="Search..."
@@ -326,7 +332,7 @@ export default function Daterange() {
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '650px', marginLeft: '20px', position: 'fixed', width: '82.4vw', backgroundColor:'#ffffff' }}>
+                            <div style={{ overflowY: 'auto', height: '685px', marginLeft: '20px', position: 'fixed', width: '82.4vw', backgroundColor:'#ffffff' }}>
                                 <table className="table table-striped" style={{ position: 'sticky', top: 0, zIndex: 1, width: '83vw' }}>
                                     <thead>
                                         <tr className="report-header">
@@ -360,13 +366,13 @@ export default function Daterange() {
                                                     <td>{report.login}</td>
                                                     <td>{report.brkin1}</td>
                                                     <td>{report.brkout1}</td>
-                                                    <td>{report.ob1}</td>
+                                                    <td className={report.ob1 ? "overbreak-red" : ""}>{report.ob1}</td>
                                                     <td>{report.lunchin}</td>
                                                     <td>{report.lunchout}</td>
-                                                    <td>{report.ob3}</td>
+                                                    <td className={report.ob3 ? "overbreak-red" : ""}>{report.ob3}</td>
                                                     <td>{report.brkin2}</td>
                                                     <td>{report.brkout2}</td>
-                                                    <td>{report.ob2}</td>
+                                                    <td className={report.ob2 ? "overbreak-red" : ""}>{report.ob2}</td>
                                                     <td>{report.logoff}</td>
                                                 </tr>
                                             ))}

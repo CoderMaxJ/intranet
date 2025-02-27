@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-// import TableComponents from "../component/TableComponent";
 import { Decryptor } from "@/security";
 import { tr } from "date-fns/locale";
 
@@ -24,8 +23,22 @@ function LogsDataTable() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [filter, setFilter] =useState("");
   const token = localStorage.getItem("token");
+
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(e.target.value.toUpperCase());
+    setFilter(e.target.value.toLowerCase());
+  };
+
+  const filteredRows = data.filter((row) =>
+    Object.values(row)
+      .join(" ")
+      .toUpperCase()
+      .toLowerCase()
+      .includes(filter)
+  );
 
   const fetchLogs = async () => {
     try {
@@ -55,14 +68,15 @@ function LogsDataTable() {
   };
 
   useEffect(() => {
-    fetchLogs(); // Initial fetch
+    fetchLogs(); 
 
-    const intervalId = setInterval(fetchLogs, 5000); // Poll every 5 seconds
+    const intervalId = setInterval(fetchLogs, 5000);
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    return () => clearInterval(intervalId); 
   }, []);
 
   if (loading)
+
     return (
       <div
         className="d-flex justify-content-center align-items-center"
@@ -100,52 +114,49 @@ function LogsDataTable() {
           >
             Agent Logs Today
           </h3>
-          <div className="searchbarlogs">
-            <input
-              className="searchbar"
-              style={{
-                backgroundColor: "#f0f0f0",
-                marginLeft: "350px",
-                fontFamily: "'Raleway', sans-serif",
-                marginBottom: "5px",
-              }}
-              type="text"
-              placeholder="Search by name"
-              // value={searchQuery}
-              // onChange={handleSearchChange}
-            />
-            <svg
-              style={{
-                marginLeft: "350px",
-                marginTop: "-0px",
-                display: "flex",
-              }}
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              fill="currentColor"
-              className="bi-search"
-              viewBox="-7 0 30 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-            <button
-              type="submit"
-              className="btn btn btn-primary"
-              style={{
-                height: "41px",
-                fontFamily: "'Raleway', sans-serif",
-                borderRadius: "4px",
-                marginBottom: "2px",
-                marginLeft: "3px",
-                marginTop: "5px",
-                color: "white",
-              }}
-            >
-              Go
-            </button>
-          </div>
-         
+          <div
+  className="searchbar-container1"
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    position: 'relative', // Ensure positioning context
+  }}
+>
+  <input
+    className="searchbar"
+    style={{
+      backgroundColor: "#f0f0f0",
+      fontFamily: "'Raleway', sans-serif",
+      marginBottom: "3px",
+      paddingRight: '30px', // Create space for the icon
+    }}
+    type="text"
+    placeholder="Search..."
+    value={filter}
+    onChange={handleSearchChange}
+  />
+  <div
+    style={{
+      position: 'absolute',
+      right: '10px', // Position the icon to the right of the input
+      pointerEvents: 'none', // Ensure clicking through the icon to the input
+    }}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      fill="currentColor"
+      className="bi-search"
+      viewBox="-7 0 30 16"
+      style={{ cursor: 'pointer' }}
+    >
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+    </svg>
+  </div>
+</div>
+
         </div>
         <table className="table table-bordered table-striped">
           <thead>
@@ -164,9 +175,8 @@ function LogsDataTable() {
               <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
             </tr>
           </thead>
-
           <tbody>
-              {data.map((logs)=>(
+              {filteredRows.map((logs)=>(
                 <tr key={logs.name}>
                  <td>{logs.name}</td>
                  <td>{logs.login}</td>
@@ -181,13 +191,11 @@ function LogsDataTable() {
                  <td style={{color:"red", fontWeight:"bold"}}>{logs.ob2}</td>
                  <td>{logs.logoff}</td>
                </tr>
-              ))}
-        
+              ))}    
           </tbody>
         </table>
       </div>
-      </div>
-  
+      </div> 
   );
 }
 
