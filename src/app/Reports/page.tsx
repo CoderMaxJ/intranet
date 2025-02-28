@@ -5,7 +5,7 @@ import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { da } from "date-fns/locale";
+import useBreaksData from "../OptimizeData/page";
 
 interface BreaksReport {
     name: string;
@@ -219,8 +219,8 @@ useEffect(()=>{
     return (
         <div style={{ backgroundColor: '#e7e7e7'}}>
             <div className="d-flex" style={{height:"100%", position:"absolute", width:'100%'}} >
-                
-            <Dashboard />
+              
+              <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
                     <div className="main-divv"> 

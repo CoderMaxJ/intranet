@@ -5,6 +5,7 @@ import "../../style/breaks.css";
 import Header from "@/app/component/Header";
 import { Decryptor } from "@/security";
 
+
 interface BreakData {
   name: string;
   start: string;
@@ -12,6 +13,7 @@ interface BreakData {
   duration: number; // Duration in seconds
   breaktype: string;
 }
+
 
 function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
