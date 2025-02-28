@@ -1,13 +1,13 @@
-// components/Router.js
-"use client"
-import { useRouter } from 'next/router';
-import Dashboard from '../intranet/page';
+// // components/Router.js
+// "use client"
+// import { useRouter } from 'next/router';
+// import Dashboard from '../intranet/page';
 
-// Another page component
+// // Another page component
 
-function Router() {
+// function Router() {
 
   
-}
+// }
 
-export default Router;
+// export default Router;

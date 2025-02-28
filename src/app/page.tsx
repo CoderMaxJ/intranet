@@ -1,15 +1,8 @@
 "use client"
-import "bootstrap/dist/css/bootstrap.min.css";
+import { redirect } from "next/navigation";
 
-import Login from "./login/page";
+export default function Home() {
 
-export default function Page() {
-
-  return (
-   
-      <div>
-      <Login/>
-      </div>
-    );
+redirect("/login");
 
 }

@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/Crud",
+    "src/app/ManageEmployee",
     "src/app/CreateEmployee.tsx"
   ],
   "exclude": ["node_modules"]
