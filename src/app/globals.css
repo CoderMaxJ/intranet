@@ -344,6 +344,7 @@ input:focus {
 
 .searchbar-containerr {
   position: relative;
+  top: 5px;
 }
 
 .bi-search {
@@ -919,10 +920,12 @@ table {
   display: flex !important;
   justify-content: flex-end !important;
   padding: 2px 20px 15px;
+
 }
 .managereport {
   overflow-y: scroll;
   height: calc(83.5vh - 144px);
+  margin: 10px auto;
 }
 .manageaccounts-bg {
   background-color: #ffffff;
@@ -986,13 +989,13 @@ table {
 }
 
 .search-employee input {
-  margin-top: -49px;
+  margin-top: -4px;
 }
 
 .manageemployee-button {
   position: absolute;
-  right: 1.3%;
-  top: 10px;
+  right: 2.3%;
+  top: 15px;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -1028,6 +1031,10 @@ table {
   margin-left: 600px;
 }
 
+.search-div svg {
+  top:6px;
+}
+
 .select-departments {
   border-radius: 4px;
   padding-left: 20px;
@@ -1053,13 +1060,13 @@ table {
   color: rgb(88, 87, 87);
   right: 300px !important;
   position: relative;
-  top: 30px;
+  top: 7px;
 }
 
 .employee-pagination {
   position: absolute;
   right: 35px;
-  top: 30px;
+  top: 7px;
 }
 
 .manageemployee-div {

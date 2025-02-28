@@ -36,56 +36,56 @@ export default function Daterange() {
     const [buttonFilter, setButtonFilter] = useState("");
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
-    const [checker,setChecker]=useState(true);
+    const [checker, setChecker] = useState(true);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value.toLowerCase());
     };
-          
-useEffect(()=>{
-    if(checker){
-        fetchData();
-    }
-},[data])
 
-        
+    useEffect(() => {
+        if (checker) {
+            fetchData();
+        }
+    }, [data])
+
+
     const handleGenerateAndDownloadCSV = async () => {
-
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
             const token = localStorage.getItem("token");
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id || "")}/${start}/${end}/`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${Decryptor(token || "")}`,
-                    },
-                }
-            );
+            let result;
+            if (start === "" && end === "") {
+                result = { data: data }; 
+            } else {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id || "")}/${start}/${end}/`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${Decryptor(token || "")}`,
+                        },
+                    }
+                );
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch data");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+
+                result = await response.json();
             }
 
-            const result = await response.json();
             if (!result.data.length) {
                 return;
             }
 
-            if(start == "" && end == ""){
-                setData(data);
-            }else{}
-            
             const filteredData = result.data.filter((report: any) =>
                 report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
             );
 
             setData(filteredData);
             setSuccess(true);
-
             const csvContent = [
                 [
                     "Name",
@@ -122,26 +122,21 @@ useEffect(()=>{
                         .join(",")
                 ),
             ].join("\n");
-
             const blob = new Blob([csvContent], { type: "text/csv" });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `report_${start}_${end}.csv`;
+            a.download = `report_${start || "all"}_${end || "all"}.csv`; 
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-
             setOriginalData(result.data);
             setData(result.data);
         } catch (e) {
             setError("An error occurred while fetching data.");
         }
     };
-
-
     const handleView = async () => {
-
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
@@ -156,32 +151,28 @@ useEffect(()=>{
                     },
                 }
             );
-
             if (!response.ok) {
                 throw new Error("Failed to fetch data");
             }
-
             const result = await response.json();
             if (!result.data.length) {
                 alert("No data available for the selected date range.");
                 return;
             }
 
-            if(start != "" || end != ""){
+            if (start != "" || end != "") {
                 setData(result.data);
-            }else{
+            } else {
                 setData(originalData);
             }
-     
         } catch (e) {
             alert("No data found in this given date range!")
         }
     };
 
     const fetchData = async () => {
-        
         try {
-            setError(""); 
+            setError("");
             const account_id = localStorage.getItem("user_id");
             const token = localStorage.getItem("token");
 
@@ -195,40 +186,33 @@ useEffect(()=>{
                     },
                 }
             );
-
             if (!response.ok) {
                 throw new Error("Failed to fetch data");
             }
-
             const result = await response.json();
             if (!result.data.length) {
                 alert("No data available for the selected date range.");
                 return;
             }
-
-            if(response.status == 200){
+            if (response.status == 200) {
                 setData(result.data);
                 setChecker(false);
             }
-            
         } catch (e) {
             setError("An error occurred while fetching data.");
         }
     };
 
     return (
-        <div style={{ backgroundColor: '#e7e7e7'}}>
-            <div className="d-flex" style={{height:"100%", position:"absolute", width:'100%'}} >
-              
-              <Dashboard />
+        <div style={{ backgroundColor: '#e7e7e7' }}>
+            <div className="d-flex" style={{ height: "100%", position: "absolute", width: '100%' }} >
+                <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
-                    <div className="main-divv"> 
-                        <div className="reportheader"><Header title="DAILY REPORTS"/></div>
+                    <div className="main-divv">
+                        <div className="reportheader"><Header title="DAILY REPORTS" /></div>
                         <div className="background-report">
-                       
                             <div style={{ display: 'flex' }}>
-                                
                                 <header style={{
                                     backgroundImage: "url('/img/Breaktool.png')",
                                     backgroundSize: 'cover',
@@ -303,7 +287,6 @@ useEffect(()=>{
                                             </button>
                                         </div>
                                     </form>
-
                                     <div className="search-div" style={{ transform: "translateY(-40px)", position: 'fixed', marginLeft: '700px' }}>
                                         <input
                                             className="search-input1"
@@ -334,9 +317,8 @@ useEffect(()=>{
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '690px', marginLeft: '20px', position: 'fixed', width: '84vw', backgroundColor:'#ffffff' }}>
-                            {/* //zIndex: 1, */}
-                                <table className="table table-striped" style={{ position: 'sticky', top: 0, width: '83vw' }}> 
+                            <div style={{ overflowY: 'auto', height: '690px', marginLeft: '20px', position: 'fixed', width: '84vw', backgroundColor: '#ffffff' }}>
+                                <table className="table table-striped" style={{ position: 'sticky', top: 0, width: '84vw' }}>
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
@@ -354,7 +336,6 @@ useEffect(()=>{
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
                                         </tr>
                                     </thead>
-
                                     <tbody className="table-data">
                                         {data
                                             .filter((report) => {

@@ -99,7 +99,6 @@ export default function Dashboard() {
       )}
     <div
       className="db "
-
       style={{
         width: "217px",
         height: "100%",
@@ -108,8 +107,8 @@ export default function Dashboard() {
     >
 
 <Updatepassword />
-      <div style={{ marginBottom: "40px", marginTop: '15px' }}>
-        <img src="/img/Sos.png" height={45} />
+      <div style={{ marginBottom: "30px", marginTop: '5px', marginLeft:'40px' }}>
+        <img src="/img/sooos.png" height={70} />
       </div>
 
 <title>Intranet Workfore</title>
@@ -119,12 +118,12 @@ export default function Dashboard() {
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{ marginRight: "21px", marginLeft: "5px", marginBottom: '5px' }}>
             <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
           </svg>
-          <button onClick={() => router.push("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
+          <button onClick={() => router.push("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#000000' }}>
             Dashboard
           </button>
         </div>
         <div className="generate text-dark">
-          <a onClick={() => router.push("/Reports")} style={{ color: '#ffffff' }}>
+          <a onClick={() => router.push("/Reports")} style={{ color: '#000000' }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -155,7 +154,7 @@ export default function Dashboard() {
                 position: "relative",
                 padding: '10px',
                 borderRadius: '2px',
-                color: '#ffffff',
+                color: '#000000',
               }}
             >  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="21" fill="currentColor" className="bi bi-person-gear" viewBox="0 0 16 16" style={{ marginRight: "18px", marginLeft: '-3px' }}>
                 <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
@@ -169,14 +168,14 @@ export default function Dashboard() {
               <div className="undermanage-hover accordion-body">
                 {user_privilege.includes("manage_users") && (
 
-                  <a onClick={() => router.push("/ManageAccount")} style={{ color: '#ffffff', textDecoration: 'none', display: 'block', marginTop: '12px', padding: '10px' }}>
+                  <a onClick={() => router.push("/ManageAccount")} style={{ color: '#000000', textDecoration: 'none', display: 'block', marginTop: '12px', padding: '10px' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                     </svg>
                      Accounts
                   </a>
                 )}
-                <a onClick={() => router.push("/ManageEmployee")} style={{ color: '#ffffff', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop: '5px' }}>
+                <a onClick={() => router.push("/ManageEmployee")} style={{ color: '#000000', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop: '5px' }}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                   </svg> Employee
@@ -215,7 +214,7 @@ export default function Dashboard() {
                   <div className="updatepassword-hvr" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
                     style={{
                       textDecoration: 'none',
-                      color: hovered ? 'black' : '#ffffff',
+                      color:  '#ffffff',
                       backgroundColor: hovered ? '#ffffff' : '',
                       padding: '10px',
                       whiteSpace: 'nowrap',

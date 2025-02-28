@@ -319,7 +319,7 @@ export default function CreateUD() {
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{width:'97.7%', margin:'auto'}}
+            style={{width:'97.7%', margin:' auto'}}
           >
             <thead style={{position:'sticky', top:0}}>
               <tr>
@@ -360,15 +360,7 @@ export default function CreateUD() {
                             onClick={() => handleResetPassword(info.empno, info.fname)}
                             style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
                           >
-                            <img
-                              src="img/reset.png"
-                              alt="Reset Password"
-                              height={25}
-                              width={25}
-                              style={{ transition: "filter 0.2s ease", filter: "brightness(1)" }}
-                              onMouseEnter={(e) => (e.currentTarget.style.filter = "brightness(1.2)")}
-                              onMouseLeave={(e) => (e.currentTarget.style.filter = "brightness(1)")}
-                            />
+                            <i className="bi bi-arrow-counterclockwise" style={{ fontSize:'19px', color:'#033dfc'}}></i>
                           </button>
                         )}
 

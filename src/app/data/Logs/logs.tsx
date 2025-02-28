@@ -143,6 +143,7 @@ function LogsDataTable() {
                 position: 'absolute',
                 right: '10px', 
                 pointerEvents: 'none', 
+         
               }}
             >
               <svg
@@ -161,7 +162,7 @@ function LogsDataTable() {
 
         </div>
         <table className="table table-bordered table-striped">
-          <thead>
+          <thead  style={{position:'sticky', top:0}}>
             <tr>
               <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
               <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Login</th>
@@ -177,7 +178,7 @@ function LogsDataTable() {
               <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style={{overflowY:'auto'}}>
             {filteredRows.map((logs) => (
               <tr key={logs.name}>
                 <td>{logs.name}</td>

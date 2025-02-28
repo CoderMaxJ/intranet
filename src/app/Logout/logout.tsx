@@ -11,7 +11,7 @@ export default function Logout() {
       <button
         className="block hover:bg-gray-100"
          data-bs-target="modal"
-        style={{boxShadow:'none', outline:'none', background:'none', border:'none', color:'#ffffff'}}
+        style={{boxShadow:'none', outline:'none', background:'none', border:'none', color:'#000000'}}
       >
         Log Out
       </button>
