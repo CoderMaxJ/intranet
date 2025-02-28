@@ -1,18 +1,8 @@
 "use client"
+import { redirect } from "next/navigation";
 
+export default function Home() {
 
-import Login from "./login/page";
-import { ToastContainer,toast } from "react-toastify";
-
-export default function Page() {
-
-  return (
-   
-      <div>
-         <Login/>
-      <ToastContainer/>
-     
-      </div>
-    );
+redirect("/login");
 
 }
