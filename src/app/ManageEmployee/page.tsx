@@ -228,7 +228,7 @@ export default function CreateUD() {
       <div className="db-employee">
         <Dashboard />
       </div>
-      <div className="main-divv">
+      <div className="main-divv" >
         <Header title="MANAGE EMPLOYEE" />
         <div className="manageemployee-division">
         <div >
@@ -313,13 +313,14 @@ export default function CreateUD() {
             </div>
           </div>
         </div>
-        <div className="managereport" >
+        <div className="managereport" 
+        >
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{width:'97.5%', margin:'0 auto'}}
+            style={{width:'97.7%', margin:'auto'}}
           >
-            <thead>
+            <thead style={{position:'sticky', top:0}}>
               <tr>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
@@ -335,7 +336,7 @@ export default function CreateUD() {
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
               </tr>
             </thead>
-            <tbody className="manage-tbody table-data" >
+            <tbody className="manage-tbody table-data" style={{overflowY:'auto'}} >
               {employees?.length ? (
                 employees.map((info, index) => (
                   <tr key={info.empno}>

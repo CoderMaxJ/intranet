@@ -366,31 +366,29 @@ export default function ManageDepartment() {
                         )}
                         <div className="accounts-table">
                             <table className="manage-table table table-light table-hover table-striped border">
-                                <thead style={{ tableLayout: "fixed", display: 'table', width: "100%", position:'sticky' }}>
+                                <thead style={{position:'sticky', transform:'translatey(-12px)' }}>
                                     <tr>
-                                        <th style={{ width: "200px", color: '#ffffff', padding:'15px' }} className="px-1">Account ID</th>
-                                        <th style={{ width: "200px", color: '#ffffff', padding:'15px' }} className="px-1">Account Name</th>
-                                        <th style={{ width: "200px", color: '#ffffff', padding:'15px' }} className="px-1">Status</th>
-                                        <th style={{ width: "200px", color: '#ffffff', padding:'15px' }} className="px-1">Manager/Supervisor</th>
-                                        <th style={{ width: "120px", color: '#ffffff', padding:'15px' }} className="px-1"></th>
-                                        <th style={{ width: "200px", color: '#ffffff', padding:'15px' }} className="px-1"></th>
-                                        <th className="border border" style={{ marginLeft: "15vw", color: '#ffffff' }}>Action</th>
+                                        <th style={{  color: '#ffffff', padding:'15px', width:'200px' }} className="px-1">Account ID</th>
+                                        <th style={{  color: '#ffffff', padding:'15px', width:'200px' }} className="px-1">Account Name</th>
+                                        <th style={{  color: '#ffffff', padding:'15px', width:'200px' }} className="px-1">Status</th>
+                                        <th style={{  color: '#ffffff', padding:'15px', width:'50%' }} className="px-1">Manager/Supervisor</th>
+                                        <th className="border border" style={{ color: '#ffffff', width:'100px' }} >Action</th>
                                     </tr>
                                 </thead>
-                                <tbody style={{ display: 'block', maxHeight: '720px', overflowY: 'auto' }}>
+                                <tbody style={{ maxHeight: '70vh', overflowY: 'auto', }}>
 
                                     {department.map((instance) => (
-                                        <tr key={instance.acctid} style={{ display: 'table', width: '100%', tableLayout: 'fixed' }}>
-                                            <td style={{ width: "200px" }}>{instance.acctid}</td>
-                                            <td style={{ width: "200px" }}>{instance.acctname}</td>
-                                            <td style={{ width: "200px" }}>{instance.status === 1 ? "Active" : "Not Active"}</td>
+                                        <tr key={instance.acctid}>
+                                            <td >{instance.acctid}</td>
+                                            <td >{instance.acctname}</td>
+                                            <td >{instance.status === 1 ? "Active" : "Not Active"}</td>
                                             <td>
                                                 {/* Display managers */}
                                                 {instance.manager && instance.manager.length > 0 ? (
                                                     // If managers are assigned, display them in a flex container
                                                     <div style={{ display: 'flex', justifyContent: "flex-start", alignItems: "center", gap: '15px', flexWrap: 'wrap', margin: "0px", padding: "0px", height: "40px" }} >
                                                         <form>
-                                                            {instance.manager.map((manager, index) => (
+                                                            {instance.manager.map((manager: any, index: any) => (
 
                                                                 <div
                                                                     key={index}
@@ -477,7 +475,7 @@ export default function ManageDepartment() {
                                                     </select>
                                                 )}
                                             </td>
-                                            <td>
+                                            <td >
                                                 <div className="actions">
                                                     <button
                                                         onClick={() => handleShowDropdown(instance.acctid)}
