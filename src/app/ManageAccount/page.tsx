@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Header from "../component/Header";
 import SuccessMessage from "../component/SuccessModal/success";
 import { ToastContainer, toast } from "react-toastify";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface DepartmentProps {
     acctid: number;
@@ -364,7 +365,7 @@ export default function ManageDepartment() {
                                 </form>
                             </>
                         )}
-                        <div className="accounts-table">
+                        <div className="accounts-table" style={{position:'relative'}}>
                             <table className="manage-table table table-light table-hover table-striped border">
                                 <thead style={{position:'sticky', transform:'translatey(-12px)' }}>
                                     <tr>

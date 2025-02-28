@@ -4,26 +4,20 @@ import "/public/asset/css/updateps.css";
 import Image from "next/image";
 import { Decryptor } from "@/security";
 
-
-  
-
 export default function Updatepassword() {
-  const [openProfile, setOpenProfile] = useState(false);
-  const [activeTab, setActiveTab] = useState("account");
-  const [openNotification, setOpenNotification] = useState(false);
-  const [drawerState, setDrawerState] = useState(false);
   const [currentpassword, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState(false);
-  const [message,setMessage]=useState("");
+  const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [passwordStrength,setPasswordStrength]=useState(Boolean);
-  const [focus,setFocus]=useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(false);
+  const [focus, setFocus] = useState(false);
 
+  // Check if passwords match
+  const passwordsMatch = password === confirmPassword && confirmPassword !== "";
 
   const toggleShow = () => {
     setShowPassword((prev) => !prev);
@@ -37,20 +31,19 @@ export default function Updatepassword() {
     setShowPassword2((prev) => !prev);
   };
 
-  const empno = localStorage.getItem("user_id"); 
+  const empno = localStorage.getItem("user_id");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     async function changePassword() {
-      const id = localStorage.getItem("user_id");
-
       const newAccount = {
         empno: Decryptor(empno || ""),
         oldpassword: currentpassword,
         newpassword: password,
         password2: confirmPassword,
       };
-const btnClose = document.getElementById("btn-close");
+
       const token = localStorage.getItem("token");
 
       try {
@@ -66,130 +59,96 @@ const btnClose = document.getElementById("btn-close");
           }
         );
 
-
         if (response.status === 200) {
-        
           const message = await response.json();
-          setMessage(message.res);
-          console.log(response)
           setMessage(message.res);
           setCurrentPassword("");
           setPassword("");
           setConfirmPassword("");
           setSuccess(true);
-          setTimeout(()=>{
-           setMessage("");
-           btnClose?.click();
-          },2000)
-         
+          setTimeout(() => {
+            setMessage("");
+            document.getElementById("btn-close")?.click();
+          }, 2000);
         } else {
           const res = await response.json();
-          console.log(res.res)
           setMessage(res.res);
         }
-      } catch {
-        
+      } catch (error) {
+        console.error("Error:", error);
       }
     }
 
-    if(passwordStrength === true){
+    if (passwordStrength === true && passwordsMatch) {
       changePassword();
     }
-    
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState);
-  };
-
-  const togglePassword = () => {
-    setShowPassword1((prevState) => !prevState);
-  };
-
-  const togglePasswordV = () => {
-    setShowPassword2((prevState) => !prevState);
-  };
-
-  const clearInputs=()=>{
+  const clearInputs = () => {
     setCurrentPassword("");
     setPassword("");
     setConfirmPassword("");
     setMessage("");
-  }
+  };
 
-  const validate = () =>{
-    function isValidPassword(password:string) {
+  const validate = () => {
+    const isValidPassword = (password: string) => {
       const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       return regex.test(password);
-  }
-  const result = isValidPassword(password);
-  if(result === true){
-    setPasswordStrength(true);
-  }else{
-    setPasswordStrength(false);
-  }
-  console.log(result);
-  }
+    };
+    const result = isValidPassword(password);
+    setPasswordStrength(result);
+  };
 
   return (
     <div>
-
       {/* Link to open modal */}
-      
       <div
         className="modal fade"
         id="updatePasswordModal"
         tabIndex={-1}
         aria-labelledby="updatePasswordModalLabel"
         aria-hidden="true"
-        style={{zIndex:99999}}
-
+        style={{ zIndex: 10000 }}
       >
         <div className="modal-dialog">
-          <div className="modal-content" style={{marginTop:"250px"}}>
-        
+          <div className="modal-content" style={{ marginTop: "250px" }}>
             <div className="modal-header">
               <img
                 src="/img/Sos.png"
                 alt="Staff Outsourcing Logo"
                 className="modal-title"
                 id="updatePasswordModalLabel"
-                style={{ height: '50px', marginLeft: '60px' }}
-              ></img>
-
+                style={{ height: "50px", marginLeft: "60px" }}
+              />
               <button
                 type="button"
-                id = "btn-close"
+                id="btn-close"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 onClick={clearInputs}
                 aria-label="Close"
-                style={{ marginTop: '-45px' }}
-              ></button>
- 
+                style={{ marginTop: "-45px" }}
+              />
             </div>
 
             {success ? (
               <div>
                 <center>
-                <p style={{ color: 'green' ,fontSize:"15px"}}>
-                    {message}
-                </p>
+                  <p style={{ color: "green", fontSize: "15px" }}>{message}</p>
                 </center>
               </div>
             ) : (
               <div>
                 <center>
-                <p style={{ color: '#FF3131',fontSize:"15px" }}>
-                    {message}
-                </p>
+                  <p style={{ color: "#FF3131", fontSize: "15px" }}>{message}</p>
                 </center>
-              
               </div>
-            ) }
+            )}
+
             <div className="modal-body" style={{ marginLeft: "35px" }}>
-            
               <form onSubmit={handleSubmit}>
+                {/* Current Password Field */}
                 <div className="updatepass-label">
                   <label htmlFor="currentpassword">Current Password</label>
                   <div style={{ position: "relative" }}>
@@ -203,58 +162,105 @@ const btnClose = document.getElementById("btn-close");
                   </div>
                 </div>
 
+                {/* New Password Field */}
                 <div className="updatepass-label1">
-                  <label htmlFor="password">New Password {password != "" && (<span style={{color: passwordStrength === true ? "green":"red",fontSize:"13px",marginLeft:"80px"}}>{passwordStrength === true ? "Strong password": "Weak password"}</span>)}</label>
+                  <label htmlFor="password">
+                    New Password{" "}
+                    {password !== "" && (
+                      <span
+                        style={{
+                          color: passwordStrength ? "green" : "red",
+                          fontSize: "13px",
+                          marginLeft: "80px",
+                        }}
+                      >
+                        {passwordStrength ? "Strong password" : "Weak password"}
+                      </span>
+                    )}
+                  </label>
                   <div style={{ position: "relative" }}>
                     <input
-                      onFocus={()=>setFocus(true)}
+                      onFocus={() => setFocus(true)}
                       onKeyUp={validate}
                       className="updatepassword-input1"
                       type={showPassword1 ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
+                      style={{
+                        border: passwordsMatch ? "1px solid green" : "1px solid #ccc",
+                      }}
                     />
-                   
                     {focus === true && (
                       <div>
-                           <label htmlFor="" style={{fontSize:"13px",color: passwordStrength === true ? "green":"grey"}}> 
-                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check" viewBox="0 0 16 16">
-  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
-</svg>
-                            </label> <label htmlFor="" style={{fontSize:"13px",marginTop:"-45px",color: passwordStrength === true ? "green":"grey"}}>8 to 20 characters </label><br />
-                           <label  htmlFor="" style={{fontSize:"13px",marginBottom:"10px" , color:passwordStrength === true ? "green":"grey"}}> Letters,numbers, and special characters</label>
+                        <label
+                          htmlFor=""
+                          style={{
+                            fontSize: "13px",
+                            color: password.length >= 8 ? "green" : "grey",
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className="bi bi-check"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+                          </svg>
+                        </label>{" "}
+                        <label
+                          htmlFor=""
+                          style={{
+                            fontSize: "13px",
+                            marginTop: "-45px",
+                            color: password.length >= 8 ? "green" : "grey",
+                          }}
+                        >
+                          8 to 20 characters
+                        </label>
+                        <br />
+                        <label
+                          htmlFor=""
+                          style={{
+                            fontSize: "13px",
+                            marginBottom: "10px",
+                            color: passwordStrength ? "green" : "grey",
+                          }}
+                        >
+                          Letters, numbers, and special characters
+                        </label>
                       </div>
-        
                     )}
-         
                   </div>
-              
                 </div>
 
+                {/* Confirm Password Field */}
                 <div className="updatepass-label">
                   <label htmlFor="confirmpassword">Confirm Password</label>
                   <div style={{ position: "relative" }}>
                     <input
-                      
                       className="updatepassword-input"
-                      onFocus={()=>setFocus(false)}
+                      onFocus={() => setFocus(false)}
                       type={showPassword2 ? "text" : "password"}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
+                      style={{
+                        border: passwordsMatch ? "1px solid green" : "1px solid #ccc",
+                      }}
                     />
                   </div>
                 </div>
 
+                {/* Submit Button */}
                 <div className="button-div" style={{ display: "block" }}>
                   <div>
-                    {" "}
                     <button type="submit" className="btn btn-success">
                       Update Password
                     </button>
-                  </div>
-                  <div>
                   </div>
                 </div>
               </form>

@@ -112,7 +112,7 @@ export default function Dashboard() {
         <img src="/img/Sos.png" height={45} />
       </div>
 
-
+<title>Intranet Workfore</title>
 
       <div className="accordion"  >
         <div style={{ marginBottom: '-10px', paddingLeft: '5px' }} className="generate">
