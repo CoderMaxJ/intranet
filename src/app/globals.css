@@ -112,17 +112,17 @@ a {
 }
 
 .main-div {
-  background-color: #e7e7e7;
+  background-color: white;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  background-image: url("/img/sooos.png");
+  /* background-image: url("/img/sooos.png"); */
   background-size: cover;
-  /* background-image: url("/img/Group5.png"), url("/img/Group4.png"); */
+  background-image: url("/img/Group5.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
-  background-size: 10% auto;
-  background-position: 50% 16%
+  background-size: 23% auto, 25% auto; 
+  background-position: 37% 25%, 58% 75%
 }
 
 .login-div {
@@ -132,7 +132,7 @@ a {
   border-radius: 8px;
   padding: 20px 20px 85px 20px;
   width: 20vw !important;
-  height: 42vh !important;
+  height: 45vh !important;
   justify-content: center;
   align-items: center;
   border: none !important;
