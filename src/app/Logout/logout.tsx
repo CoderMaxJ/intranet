@@ -9,9 +9,10 @@ export default function Logout() {
   return (
     <div>
       <button
-        className="block hover:bg-gray-100"
+        className="nav-font"
+     
          data-bs-target="modal"
-        style={{boxShadow:'none', outline:'none', background:'none', border:'none', color:'#000000'}}
+        style={{boxShadow:'none', outline:'none', background:'none', border:'none', color:'#ffffff'}}
       >
         Log Out
       </button>

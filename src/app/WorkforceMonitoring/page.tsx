@@ -10,7 +10,7 @@ import Logout from "../Logout/logout";
 export default function MainDashboard() {
 
   return (
-    <div style={{ display: "flex", height: "100vh", width: '100vw', backgroundColor: "#e7e7e7" }}>
+    <div style={{ display: "flex", width: '100vw', backgroundColor: "#e7e7e7" }}>
    
       <div>
         <Dashboard />

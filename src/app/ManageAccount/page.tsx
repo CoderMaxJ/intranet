@@ -317,7 +317,7 @@ export default function ManageDepartment() {
                                         width: '100%',
                                         height: '100%',
                                         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                        zIndex: 9998,
+                                        // zIndex: 9998,
                                         opacity: showform ? 1 : 0,
                                         transition: 'opacity 4.3s ease',
                                     }}
@@ -333,7 +333,7 @@ export default function ManageDepartment() {
                                             left: "50%",
                                             transform: showform ? 'translate(-50%, -50%)' : 'translate(-50%, -100%)',
                                             transition: 'transform 3.5s ease, top 3.5s ease',
-                                            zIndex: 9999,
+                                            // zIndex: 9999,
                                             backgroundColor: '#ffffff',
                                         }}
                                     >
@@ -490,9 +490,7 @@ export default function ManageDepartment() {
                                                         onClick={() => { setTargetID(instance.acctid); }}
                                                         type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" className="manageaccount-delete bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                                                        </svg>
+                                                      <i className="bi bi-trash3"></i>
                                                     </button>
                                                 </div>
                                             </td>
