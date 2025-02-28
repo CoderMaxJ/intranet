@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Header from "../component/Header";
 import SuccessMessage from "../component/SuccessModal/success";
 import { ToastContainer, toast } from "react-toastify";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface DepartmentProps {
     acctid: number;
