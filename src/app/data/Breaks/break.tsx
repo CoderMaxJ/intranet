@@ -161,7 +161,7 @@ const status = localStorage.getItem("status");
                   padding: "10px",
                   color: "red",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#EDEDED",
+                  backgroundColor: "#f4ebf7",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -183,7 +183,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#e8e8b5",
+                  backgroundColor: "#d6f294",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}

@@ -317,7 +317,7 @@ export default function CreateUD() {
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{width:'97%', margin:'0 auto'}}
+            style={{width:'97.5%', margin:'0 auto'}}
           >
             <thead>
               <tr>

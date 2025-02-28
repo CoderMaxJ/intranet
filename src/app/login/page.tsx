@@ -111,12 +111,13 @@ export default function Login() {
     <div className="main-div">
       <ToastContainer />
       <div className="login-div">
-        <img
+        <h1 style={{fontWeight:'600', marginBottom:'30px', color:'#626063'}}>Login</h1>
+        {/* <img
           src="/img/Sos.png"
           alt="Staff Outsourcing Logo"
           height={70}
           width={100}
-        />
+        /> */}
   
         <form className="username" onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}

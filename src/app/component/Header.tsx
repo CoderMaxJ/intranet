@@ -17,10 +17,11 @@ export default function Header({ title, text }: HeaderProps) {
         <img
         src="/img/Breaktool.png"
         style={{
-          marginLeft:'1px',
-          width: "100%",
+          transform: "translateX(30px)",
+          margin:'auto',
+          width: "96.5%",
+          borderRadius:'4px',
           height: "11vh",
-          display: 'relative',
           boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
         }}
         />

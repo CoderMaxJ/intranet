@@ -237,7 +237,6 @@ useEffect(()=>{
                                     transform: 'translateX(100px)',
                                     position: 'sticky',
                                     padding: '15px',
-                                    // zIndex: 10,
                                     marginTop: '20px',
                                     color: 'white',
                                     marginLeft: '-80px',

@@ -292,17 +292,16 @@ export default function ManageDepartment() {
                                 className="addhover"
                                 onClick={formShow}
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="#ffffff"
-                                    className="bi bi-plus-circle-fill me-2"
-                                    viewBox="0 0 16 16"
-                                    style={{ marginBottom: "2px" }}
-                                >
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                </svg>  Add Account
+                               <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="#ffffff"
+                        className="bi bi-plus-circle-fill me-2"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                      </svg> Add Account
                             </button>
                         </div>
 
@@ -365,9 +364,9 @@ export default function ManageDepartment() {
                                 </form>
                             </>
                         )}
-                        <div className="accounts-table" style={{position:'relative'}}>
+                        <div className="accounts-table">
                             <table className="manage-table table table-light table-hover table-striped border">
-                                <thead style={{ tableLayout: "fixed", display: 'table', width: "100%" }}>
+                                <thead style={{ tableLayout: "fixed", display: 'table', width: "100%", position:'sticky' }}>
                                     <tr>
                                         <th style={{ width: "200px", color: '#ffffff', padding:'15px' }} className="px-1">Account ID</th>
                                         <th style={{ width: "200px", color: '#ffffff', padding:'15px' }} className="px-1">Account Name</th>
@@ -378,7 +377,7 @@ export default function ManageDepartment() {
                                         <th className="border border" style={{ marginLeft: "15vw", color: '#ffffff' }}>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody style={{ display: 'block', maxHeight: '720px', overflowY: 'scroll' }}>
+                                <tbody style={{ display: 'block', maxHeight: '720px', overflowY: 'auto' }}>
 
                                     {department.map((instance) => (
                                         <tr key={instance.acctid} style={{ display: 'table', width: '100%', tableLayout: 'fixed' }}>

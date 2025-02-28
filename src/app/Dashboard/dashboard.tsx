@@ -55,11 +55,12 @@ export default function Dashboard() {
 
   return (
     <>
+  <title>Intranet Workforce</title>
     {logout && (
         <div
           className="modal fade show"
           style={{ display: "block", background: "rgba(0,0,0,0.5)" }}
-          tabIndex="-1"
+         
         >
           <div className="modal-dialog">
             <div className="modal-content">
