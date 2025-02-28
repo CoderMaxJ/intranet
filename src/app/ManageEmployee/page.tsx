@@ -363,11 +363,8 @@ export default function CreateUD() {
                             <img
                               src="img/reset.png"
                               alt="Reset Password"
-                              height={25}
-                              width={25}
-                              style={{ transition: "filter 0.2s ease", filter: "brightness(1)" }}
-                              onMouseEnter={(e) => (e.currentTarget.style.filter = "brightness(1.2)")}
-                              onMouseLeave={(e) => (e.currentTarget.style.filter = "brightness(1)")}
+                              height={20}
+                              width={20}
                             />
                           </button>
                         )}
