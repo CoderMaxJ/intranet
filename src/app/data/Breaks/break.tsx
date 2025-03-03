@@ -56,8 +56,8 @@ function BreakDataTable() {
         console.log('updatedBreaksMap');
         return Array.from(updatedBreaksMap.values());
       });
-
-      if (data.data.length > 0 || forceUpdate) {
+      console.log("===========",forceUpdate)
+      if (data.data.length > 0 || forceUpdate || localStorage.getItem("lastUpdated") == "") {
         localStorage.setItem("lastUpdated", new Date().toISOString()); // Update timestamp
         console.log("===========",forceUpdate)
       }
