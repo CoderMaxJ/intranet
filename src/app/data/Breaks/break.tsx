@@ -74,7 +74,7 @@ const status = localStorage.getItem("status");
     if (status != "login") return;
 
     fetchBreakData(); // Initial fetch
-    const intervalId = setInterval(fetchBreakData, 10000); // Poll every 1 second
+    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
@@ -199,7 +199,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#d6f294",
+                  backgroundColor: "#b29971",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -229,7 +229,7 @@ const status = localStorage.getItem("status");
                         ? instance.breaktype === "First Break"
                           ? "#FFEDA6"
                           : instance.breaktype === "Second Break"
-                          ? "#e8e8b5"
+                          ? "#b29971"
                           : instance.breaktype === "Lunch"
                           ? "#A9E4FF"
                           : ""
