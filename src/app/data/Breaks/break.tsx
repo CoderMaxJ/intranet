@@ -1,6 +1,6 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import "../../style/breaks.css";
 import Header from "@/app/component/Header";
 import { Decryptor } from "@/security";
@@ -26,41 +26,55 @@ function BreakDataTable() {
   };
 
   // Fetch break data from the server
-  const fetchBreakData = async () => {
-    
+  const fetchBreakData = useCallback(async (forceUpdate = false) => {
     try {
+      setLoadingPage(true);
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
+      const url = `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/?since=${forceUpdate ? "" : localStorage.getItem("lastUpdated") || ""}`;
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${Decryptor(token || "")}`,
-          },
-        }
-      );
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${Decryptor(token || "")}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
-      setBreaks(data.data); // Set the fetched break data
+
+      setBreaks((prevBreaks) => {
+        const updatedBreaksMap = new Map(prevBreaks.map((item) => [item.name, item]));
+
+        data.data.forEach((item: BreakData) => {
+          updatedBreaksMap.set(item.name, item); // Update existing or add new
+        });
+        console.log('updatedBreaksMap');
+        return Array.from(updatedBreaksMap.values());
+      });
+
+      if (data.data.length > 0 || forceUpdate) {
+        localStorage.setItem("lastUpdated", new Date().toISOString()); // Update timestamp
+        console.log("===========",forceUpdate)
+      }
     } catch (error) {
       console.error("Failed to fetch break data:", error);
+    } finally {
+      setLoadingPage(false);
     }
-  };
-const token = localStorage.getItem("token");
+  }, []);
+  
 const status = localStorage.getItem("status");
   // Fetch data initially and set up polling
   useEffect(() => {
     if (status != "login") return;
 
     fetchBreakData(); // Initial fetch
-    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
+    const intervalId = setInterval(fetchBreakData, 10000); // Poll every 1 second
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
@@ -152,7 +166,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#a9fff7",
+                  backgroundColor: "#b5e48c",
                   marginLeft: "90px",
                 }}
               >
@@ -163,7 +177,7 @@ const status = localStorage.getItem("status");
                   padding: "10px",
                   color: "red",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#f4ebf7",
+                  backgroundColor: "#ffdccc",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -185,7 +199,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#d8e1ff",
+                  backgroundColor: "#ffeedd",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -215,9 +229,9 @@ const status = localStorage.getItem("status");
                         ? instance.breaktype === "First Break"
                           ? "#FFEDA6"
                           : instance.breaktype === "Second Break"
-                          ? "#d8e1ff"
+                          ? "#ffeedd"
                           : instance.breaktype === "Lunch"
-                          ? "#a9fff7"
+                          ? "#b5e48c"
                           : ""
                         : ""
                   }}

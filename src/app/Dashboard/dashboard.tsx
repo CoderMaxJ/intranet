@@ -7,19 +7,16 @@ import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-
-
 export default function Dashboard() {
   const privilege = localStorage.getItem("privilege");
   const [user_privilege, setUserPrivilege] = useState([""]);
-  const [accordionIcon, setAccordionIcon] = useState(true);
+  // const [accordionIcon, setAccordionIcon] = useState(true);
   const [accordionIconn, setAccordionIconn] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [logout,setLogout]=useState(false);
   const [hovered, setHovered] = useState(false);
-
 
   const toggleShow = () => {
     setShowPassword((prev) => !prev);
@@ -57,11 +54,11 @@ export default function Dashboard() {
     <>
   <title>Intranet Workforce</title>
 
+  <Updatepassword />
     {logout && (
         <div
           className="modal fade show"
-          style={{ display: "block", background: "rgba(0,0,0,0.5)" }}
-         
+          style={{ display: "block", background: "rgba(0,0,0,0.5)" }}  
         >
           <div className="modal-dialog">
             <div className="modal-content">
@@ -81,7 +78,6 @@ export default function Dashboard() {
                   type="button"
                   className="btn btn-secondary"
                   onClick={()=>setLogout(false)}
-             
                 >
                   Cancel
                 </button>
@@ -89,7 +85,6 @@ export default function Dashboard() {
                   type="button"
                   className="btn btn-danger"
                   onClick={handleLogout}
-       
                 >
                   Logout
                 </button>
@@ -102,18 +97,12 @@ export default function Dashboard() {
       className="db "
       style={{
         width: "217px",
-        height: "100%",
-        padding: "10px",
       }}
     >
-
-<Updatepassword />
-      <div style={{ marginBottom: "30px", marginTop: '5px', marginLeft:'40px' }}>
-        <img src="/img/sooos.png" height={70} />
+      <div style={{ marginBottom: "30px",marginLeft:'40px', transform:'translateY(-10px)' }}>
+        <img src="/img/sos1.png" height={100} />
       </div>
-
 <title>Intranet Workfore</title>
-
       <div className="accordion"  >
         <div style={{ marginBottom: '-10px', paddingLeft: '5px' }} className="generate">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{ marginRight: "21px", marginLeft: "5px", marginBottom: '5px' }}>
@@ -142,7 +131,6 @@ export default function Dashboard() {
             Reports
           </a>
         </div>
-
         <div className=" accordion-item">
           <div style={{ marginTop: '5px' }}>
             <div className="manage-menu d-flex justify-content-between"
@@ -157,11 +145,11 @@ export default function Dashboard() {
                 borderRadius: '2px',
                 color: '#000000',
               }}
-            >  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="21" fill="currentColor" className="bi bi-person-gear" viewBox="0 0 16 16" style={{ marginRight: "18px", marginLeft: '-3px' }}>
+            >  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="21" fill="currentColor" className="bi bi-person-gear" viewBox="0 0 16 16" style={{ marginRight: "18px", marginLeft: '-3px', color:'#ffffff' }}>
                 <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
               </svg>
               <span style={{ marginLeft: '-55px' }}  className="nav-font">Manage</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className={`bi bi-chevron-up ${accordionIconn ? "rotate-acc-icon" : ""}`} viewBox="0 0 16 16">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className={`bi bi-chevron-up ${accordionIconn ? "rotate-acc-icon" : ""}`} viewBox="0 0 16 16" style={{color:'#ffffff'}}>
                 <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
               </svg>
             </div>
@@ -186,7 +174,6 @@ export default function Dashboard() {
           </div>
         </div>
         <div>
-
           <div className="manage-menu accordion-item">
             <div
               style={{
@@ -202,7 +189,7 @@ export default function Dashboard() {
                 aria-expanded="true"
                 aria-controls="panelsStayOpen-collapseOnee"
                 style={{ color: '#ffffff' }}
-                onClick={(e) => setAccordionIcon(!accordionIcon)}
+                // onClick={(e) => setAccordionIcon(!accordionIcon)}
               >
                 <div>
                 </div>
@@ -229,9 +216,7 @@ export default function Dashboard() {
                       <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>  <label className="nav-font" htmlFor="" >Update password</label>
                   </div>
-
                 </div>
-                
               </div>
             </div>
           </div>
@@ -239,7 +224,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div onClick={()=>setLogout(true)} className="generate" style={{ marginTop: '-11px', transform: 'translateX(-5px)', width: '10.3vw' }}>
+      <div onClick={()=>setLogout(true)} className="generate" style={{ marginTop: '-11px', width: '10.3vw' }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -247,7 +232,7 @@ export default function Dashboard() {
           fill="currentColor"
           className="bi bi-box-arrow-right"
           viewBox="0 0 16 16"
-          style={{ marginRight: '23px', marginLeft: '2px' }}
+          style={{ marginRight: '23px' }}
         >
           <path
             fillRule="evenodd"
@@ -262,8 +247,5 @@ export default function Dashboard() {
       </div>
     </div>
     </>
-   
-
   );
-
 }

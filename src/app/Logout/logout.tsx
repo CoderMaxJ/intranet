@@ -12,7 +12,7 @@ export default function Logout() {
         className="nav-font"
      
          data-bs-target="modal"
-        style={{boxShadow:'none', outline:'none', background:'none', border:'none', color:'#000000'}}
+        style={{boxShadow:'none', outline:'none', background:'none', border:'none', color:'#ffffff'}}
       >
         Log Out
       </button>
