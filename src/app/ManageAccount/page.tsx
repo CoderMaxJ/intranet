@@ -266,7 +266,7 @@ export default function ManageDepartment() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5">Create Account</h1>
-                            <button type="button" onClick={() => setShowModal(false)} ></button>
+                            {/* <button type="button" onClick={() => setShowModal(false)} ></button> */}
                         </div>
                         <div className="modal-body" style={{display:"flex",justifyContent:'center'}}>
                             <form onSubmit={handleSubmit}>
@@ -292,7 +292,7 @@ export default function ManageDepartment() {
 
                                     </div>
                                     <div className="buttons1">
-                                        <a className="closebutton" data-bs-dismiss="modal">CLOSE</a>
+                                        <a className="closebutton" data-bs-dismiss="modal">Close</a>
                                         <button className="btn btn-success btn-sm" type="submit">
                                             Create
                                         </button>
