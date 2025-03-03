@@ -266,7 +266,7 @@ export default function ManageDepartment() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5">Create Account</h1>
-                            <button type="button" onClick={() => setShowModal(false)} ></button>
+                            {/* <button type="button" onClick={() => setShowModal(false)} ></button> */}
                         </div>
                         <div className="modal-body" style={{display:"flex",justifyContent:'center'}}>
                             <form onSubmit={handleSubmit}>
@@ -292,7 +292,7 @@ export default function ManageDepartment() {
 
                                     </div>
                                     <div className="buttons1">
-                                        <a className="closebutton" data-bs-dismiss="modal">CLOSE</a>
+                                        <a className="closebutton" data-bs-dismiss="modal">Close</a>
                                         <button className="btn btn-success btn-sm" type="submit">
                                             Create
                                         </button>
@@ -374,7 +374,7 @@ export default function ManageDepartment() {
                         )}
                         <div className="accounts-table" style={{ position: 'relative' }}>
                             <table className="manage-table table table-light table-hover table-striped border">
-                                <thead style={{ position: 'sticky', transform: 'translatey(-12px)' }}>
+                                <thead style={{ position: 'sticky', transform: 'translatey(-12px)', zIndex:10 }}>
                                     <tr>
                                         <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account ID</th>
                                         <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account Name</th>
