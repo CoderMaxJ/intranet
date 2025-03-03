@@ -19,10 +19,11 @@ export default function Header({ title, text }: HeaderProps) {
         style={{
           transform: "translateX(30px)",
           margin:'auto',
-          width: "96.5%",
+          width: "85.7%",
           borderRadius:'4px',
           height: "11vh",
-          boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)"
+          boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.3)", 
+          marginLeft:'216px'
         }}
         />
       </div>

@@ -10,7 +10,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 export default function Dashboard() {
   const privilege = localStorage.getItem("privilege");
   const [user_privilege, setUserPrivilege] = useState([""]);
-  const [accordionIcon, setAccordionIcon] = useState(true);
+  // const [accordionIcon, setAccordionIcon] = useState(true);
   const [accordionIconn, setAccordionIconn] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
@@ -54,6 +54,7 @@ export default function Dashboard() {
     <>
   <title>Intranet Workforce</title>
 
+  <Updatepassword />
     {logout && (
         <div
           className="modal fade show"
@@ -96,13 +97,10 @@ export default function Dashboard() {
       className="db "
       style={{
         width: "217px",
-        height: "100%",
-        padding: "10px",
       }}
     >
-<Updatepassword />
-      <div style={{ marginBottom: "30px", marginTop: '5px', marginLeft:'40px' }}>
-        <img src="/img/sooos.png" height={70} />
+      <div style={{ marginBottom: "30px",marginLeft:'40px', transform:'translateY(-10px)' }}>
+        <img src="/img/sos1.png" height={100} />
       </div>
 <title>Intranet Workfore</title>
       <div className="accordion"  >
@@ -191,7 +189,7 @@ export default function Dashboard() {
                 aria-expanded="true"
                 aria-controls="panelsStayOpen-collapseOnee"
                 style={{ color: '#ffffff' }}
-                onClick={(e) => setAccordionIcon(!accordionIcon)}
+                // onClick={(e) => setAccordionIcon(!accordionIcon)}
               >
                 <div>
                 </div>
@@ -226,7 +224,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div onClick={()=>setLogout(true)} className="generate" style={{ marginTop: '-11px', transform: 'translateX(-5px)', width: '10.3vw' }}>
+      <div onClick={()=>setLogout(true)} className="generate" style={{ marginTop: '-11px', width: '10.3vw' }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -234,7 +232,7 @@ export default function Dashboard() {
           fill="currentColor"
           className="bi bi-box-arrow-right"
           viewBox="0 0 16 16"
-          style={{ marginRight: '23px', marginLeft: '5px' }}
+          style={{ marginRight: '23px' }}
         >
           <path
             fillRule="evenodd"

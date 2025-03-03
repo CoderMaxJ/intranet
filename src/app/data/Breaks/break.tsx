@@ -177,7 +177,7 @@ const status = localStorage.getItem("status");
                   padding: "10px",
                   color: "red",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#f4ebf7",
+                  backgroundColor: "#ffdccc",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -199,7 +199,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#d8e1ff",
+                  backgroundColor: "#ffe566",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -229,9 +229,9 @@ const status = localStorage.getItem("status");
                         ? instance.breaktype === "First Break"
                           ? "#FFEDA6"
                           : instance.breaktype === "Second Break"
-                          ? "#d8e1ff"
+                          ? "#e8e8b5"
                           : instance.breaktype === "Lunch"
-                          ? "#a9fff7"
+                          ? "#b5e48c"
                           : ""
                         : ""
                   }}

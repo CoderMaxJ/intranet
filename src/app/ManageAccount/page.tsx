@@ -261,6 +261,50 @@ export default function ManageDepartment() {
                 </div>
             </div>
 
+            <div className="modal fade" id="addAccountModal" aria-labelledby="addAccountModal">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5">Create Account</h1>
+                            <button type="button" onClick={() => setShowModal(false)} ></button>
+                        </div>
+                        <div className="modal-body" style={{display:"flex",justifyContent:'center'}}>
+                            <form onSubmit={handleSubmit}>
+                                <div
+                                    className=""
+                                    style={{
+                                        backgroundColor: '#ffffff',
+                                    }}
+                                >
+
+                                    <div className="d-flex align-items-center gap-3 mt-5">
+                                        <input
+                                            value={accountName}
+                                            onChange={(e) => setAccountName(e.target.value)}
+                                            type="text"
+                                            className="form-control p-2 px-3 ml-3"
+                                            placeholder="Account Name"
+                                            style={{
+                                                width: '300px',
+                                                fontSize: '16px',
+                                            }}
+                                        />
+
+                                    </div>
+                                    <div className="buttons1">
+                                        <a className="closebutton" data-bs-dismiss="modal">CLOSE</a>
+                                        <button className="btn btn-success btn-sm" type="submit">
+                                            Create
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {showModal && (
 
                 <div className="modal show d-block" id="saveModal" aria-labelledby="saveModalLabel">
@@ -291,18 +335,19 @@ export default function ManageDepartment() {
                         <div className="employee-header">
                             <button
                                 className="addhover"
-                                onClick={formShow}
+                                data-bs-toggle="modal"
+                                data-bs-target="#addAccountModal"
                             >
-                               <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="#ffffff"
-                        className="bi bi-plus-circle-fill me-2"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                      </svg> Add Account
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="#ffffff"
+                                    className="bi bi-plus-circle-fill me-2"
+                                    viewBox="0 0 16 16"
+                                >
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                                </svg> Add Account
                             </button>
                         </div>
 
@@ -317,7 +362,6 @@ export default function ManageDepartment() {
                                         width: '100%',
                                         height: '100%',
                                         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                        // zIndex: 9998,
                                         opacity: showform ? 1 : 0,
                                         transition: 'opacity 4.3s ease',
                                     }}
@@ -325,55 +369,18 @@ export default function ManageDepartment() {
                                 ></div>
 
 
-                                <form onSubmit={handleSubmit}>
-                                    <div
-                                        className="ms-3 w-40 mt-2 p-3 border border rounded position-absolute"
-                                        style={{
-                                            top: "25%",
-                                            left: "50%",
-                                            transform: showform ? 'translate(-50%, -50%)' : 'translate(-50%, -100%)',
-                                            transition: 'transform 3.5s ease, top 3.5s ease',
-                                            // zIndex: 9999,
-                                            backgroundColor: '#ffffff',
-                                        }}
-                                    >
-                                        <button
-                                            onClick={formClose}
-                                            type="button"
-                                            className="btn-close position-absolute fs-6"
-                                            style={{ top: '10px', right: '10px' }}
-                                            aria-label="Close"
-                                        ></button>
 
-                                        <div className="d-flex align-items-center gap-3 mt-5">
-                                            <input
-                                                value={accountName}
-                                                onChange={(e) => setAccountName(e.target.value)}
-                                                type="text"
-                                                className="form-control p-2 px-3 ml-3"
-                                                placeholder="Account Name"
-                                                style={{
-                                                    width: '300px',  
-                                                    fontSize: '16px', 
-                                                }}
-                                            />
-                                            <button className="btn btn-success btn-sm" type="submit">
-                                                Create
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
                             </>
                         )}
-                        <div className="accounts-table" style={{position:'relative'}}>
+                        <div className="accounts-table" style={{ position: 'relative' }}>
                             <table className="manage-table table table-light table-hover table-striped border">
-                                <thead style={{position:'sticky', transform:'translatey(-12px)' }}>
+                                <thead style={{ position: 'sticky', transform: 'translatey(-12px)' }}>
                                     <tr>
-                                        <th style={{  color: '#ffffff', padding:'15px', width:'200px' }} className="px-1">Account ID</th>
-                                        <th style={{  color: '#ffffff', padding:'15px', width:'200px' }} className="px-1">Account Name</th>
-                                        <th style={{  color: '#ffffff', padding:'15px', width:'200px' }} className="px-1">Status</th>
-                                        <th style={{  color: '#ffffff', padding:'15px', width:'50%' }} className="px-1">Manager/Supervisor</th>
-                                        <th className="border border" style={{ color: '#ffffff', width:'100px' }} >Action</th>
+                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account ID</th>
+                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account Name</th>
+                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Status</th>
+                                        <th style={{ color: '#ffffff', padding: '15px', width: '50%' }} className="px-1">Manager/Supervisor</th>
+                                        <th className="border border" style={{ color: '#ffffff', width: '100px' }} >Action</th>
                                     </tr>
                                 </thead>
                                 <tbody style={{ maxHeight: '70vh', overflowY: 'auto', }}>
@@ -490,7 +497,7 @@ export default function ManageDepartment() {
                                                         onClick={() => { setTargetID(instance.acctid); }}
                                                         type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     >
-                                                      <i className="bi bi-trash3"></i>
+                                                        <i className="bi bi-trash3"></i>
                                                     </button>
                                                 </div>
                                             </td>

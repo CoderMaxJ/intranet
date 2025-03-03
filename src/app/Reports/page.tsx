@@ -5,7 +5,7 @@ import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import useBreaksData from "../OptimizeData/page";
+// import useBreaksData from "../OptimizeData/page";
 
 interface BreaksReport {
     name: string;
@@ -317,7 +317,7 @@ export default function Daterange() {
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '690px', marginLeft: '20px', position: 'fixed', width: '84vw', backgroundColor: '#ffffff' }}>
+                            <div style={{ overflowY: 'auto', height: '690px', position: 'fixed', width: '84vw', backgroundColor: '#ffffff', marginLeft:'20px' }}>
                                 <table className="table table-striped" style={{ position: 'sticky', top: 0, width: '84vw' }}>
                                     <thead>
                                         <tr className="report-header">

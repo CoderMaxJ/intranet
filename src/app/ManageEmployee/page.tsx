@@ -314,14 +314,14 @@ export default function CreateUD() {
             </div>
           </div>
         </div>
-        <div className="managereport" 
+        <div className="emp-table" 
         >
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
-            style={{width:'97.7%', margin:' auto'}}
+            style={{width:'97.7%', margin:'auto'}}
           >
-            <thead style={{position:'sticky', top:0}}>
+            <thead style={{position:'sticky', padding:'15px'}}>
               <tr>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>

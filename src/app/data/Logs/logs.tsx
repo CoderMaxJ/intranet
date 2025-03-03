@@ -153,7 +153,7 @@ function LogsDataTable() {
                 fill="currentColor"
                 className="bi-search"
                 viewBox="-7 0 30 16"
-                style={{ cursor: 'pointer', position:'absolute', transform:'translateY(-24px)', margin:'0 auto', marginLeft:'430px' }}
+                style={{ cursor: 'pointer', position:'absolute', transform:'translateY(-24px)', margin:'0 auto', marginLeft:'435px' }}
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>
@@ -161,6 +161,7 @@ function LogsDataTable() {
           </div>
 
         </div>
+        <div className="logs-tablee">
         <table className="table table-bordered table-striped">
           <thead  style={{position:'sticky', top:0}}>
             <tr>
@@ -197,6 +198,7 @@ function LogsDataTable() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );
