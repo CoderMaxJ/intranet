@@ -166,7 +166,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#a9fff7",
+                  backgroundColor: "#b5e48c",
                   marginLeft: "90px",
                 }}
               >
@@ -199,7 +199,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#ffe566",
+                  backgroundColor: "#e8e8b5",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
