@@ -56,8 +56,8 @@ function BreakDataTable() {
         console.log('updatedBreaksMap');
         return Array.from(updatedBreaksMap.values());
       });
-
-      if (data.data.length > 0 || forceUpdate) {
+      console.log("===========",forceUpdate)
+      if (data.data.length > 0 || forceUpdate || localStorage.getItem("lastUpdated") == "") {
         localStorage.setItem("lastUpdated", new Date().toISOString()); // Update timestamp
         console.log("===========",forceUpdate)
       }
@@ -74,7 +74,7 @@ const status = localStorage.getItem("status");
     if (status != "login") return;
 
     fetchBreakData(); // Initial fetch
-    const intervalId = setInterval(fetchBreakData, 10000); // Poll every 1 second
+    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
@@ -199,7 +199,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#ffeedd",
+                  backgroundColor: "#FAD5A5",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -229,7 +229,7 @@ const status = localStorage.getItem("status");
                         ? instance.breaktype === "First Break"
                           ? "#FFEDA6"
                           : instance.breaktype === "Second Break"
-                          ? "#ffeedd"
+                          ? "			#FAD5A5"
                           : instance.breaktype === "Lunch"
                           ? "#b5e48c"
                           : ""

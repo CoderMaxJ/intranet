@@ -13,19 +13,21 @@
 }
 
 
+
 @font-face {
-  font-family: 'CustomFont';
-  src: url('././fonts/Questrial-Regular.ttf') format('truetype');
-  font-weight: normal;
+  font-family: 'roboto';
+  src: url('././fonts/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
+  font-weight: medium;
   font-style: normal;
 }
 
 
-.nav-font {
-  font-family: "CustomeFont";
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: #fbfff1;
+.nav-font{
+  font-family:"roboto";
+  font-weight:400;
+  color:#fbfff1;
+  letter-spacing: 0.50px;
+  
 }
 
 .nav-font:hover {

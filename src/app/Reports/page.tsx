@@ -5,7 +5,6 @@ import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-// import useBreaksData from "../OptimizeData/page";
 
 interface BreaksReport {
     name: string;
@@ -227,13 +226,7 @@ export default function Daterange() {
                                     width: '84vw'
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
-                                    <form
-                                        onSubmit={(e) => {
-                                            e.preventDefault();
-                                            if (start && end) handleGenerateAndDownloadCSV();
-                                            else setError("Please fill in both date fields");
-                                        }}
-                                    >
+                                    <form>
                                         <div style={{ display: 'flex', marginTop: '5px' }}>
                                             <div style={{ display: 'flex' }}>
                                                 <label
@@ -275,7 +268,7 @@ export default function Daterange() {
                                         </div>
                                         <div className="download-reports">
                                             <button
-                                                type="submit"
+                                                type="button"
                                                 className="download"
                                                 onClick={handleGenerateAndDownloadCSV}
                                             >
