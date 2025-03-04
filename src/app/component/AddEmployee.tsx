@@ -95,7 +95,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       }));
       return;
     }
-    console.log(formData)
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (name === "acctid") {
       SetSelectedAccount(value)
@@ -177,7 +176,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         const data = await response.json();
         setAccounts(data.data);
-        console.log(accounts)
         localStorage.setItem("Accounts", JSON.stringify(data.data));
       }
     } catch (e) {
