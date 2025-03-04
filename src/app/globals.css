@@ -1132,13 +1132,13 @@ table {
   color: rgb(88, 87, 87);
   right: 300px !important;
   position: relative;
-  top: 10px;
+  top: 8px;
 }
 
 .employee-pagination {
   position: absolute;
   right: 18px;
-  top: 10px;
+  top: 8px;
 }
 
 .manageemployee-div {
@@ -1147,6 +1147,7 @@ table {
 
 .emp-table {
   padding-top: 0px;
+  position: relative;
 }
 
 
