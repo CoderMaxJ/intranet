@@ -370,7 +370,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             id="dateofbirth"
             value={formData.dateofbirth}
             onChange={handleInputChange}
-            max="2006-12-31"
+            max="2015-12-31"
           />
         </div>
         <div className="col-md-2 mb-3">

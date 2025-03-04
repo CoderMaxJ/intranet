@@ -172,7 +172,7 @@ function BreakDataTable() {
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#FFEDA6",
+                  backgroundColor: "#ffffb7",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -183,7 +183,7 @@ function BreakDataTable() {
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#ffdea9",
+                  backgroundColor: "#FFEDA6",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -212,9 +212,9 @@ function BreakDataTable() {
                         backgroundColor:
                           instance.duration
                             ? instance.breaktype === "First Break"
-                              ? "#FFEDA6"
+                              ? "#ffffb7"
                               : instance.breaktype === "Second Break"
-                                ? "			#ffdea9"
+                                ? "			#FFEDA6"
                                 : instance.breaktype === "Lunch"
                                   ? "#A9E4FF"
                                   : ""

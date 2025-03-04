@@ -36,6 +36,7 @@ export default function CreateUD() {
   const [total, setTotal] = useState(0);
   const [listener, setListener] = useState(false);
   const [user_privilege, setUserPrivilege] = useState([""]);
+  const [resetPassword, setResetPassword] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -332,6 +333,7 @@ export default function CreateUD() {
                             type="button"
                             onClick={() => handleResetPassword(info.empno, info.fname)}
                             style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
+                            title={resetPassword ? "" : "Reset Password"}                           
                           >
                             <i className="bi bi-arrow-counterclockwise" style={{ fontSize:'19px', color:'#033dfc'}}></i>
                           </button>

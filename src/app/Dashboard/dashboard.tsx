@@ -10,7 +10,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 export default function Dashboard() {
   const privilege = localStorage.getItem("privilege");
   const [user_privilege, setUserPrivilege] = useState([""]);
-  const [accordionIconn, setAccordionIconn] = useState(false);
+  const [accordionIconn, setAccordionIconn] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
