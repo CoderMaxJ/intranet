@@ -2,9 +2,7 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState, useEffect } from "react";
 import "../../style/breaks.css";
-import Header from "@/app/component/Header";
 import { Decryptor } from "@/security";
-
 
 interface BreakData {
   name: string;
@@ -13,7 +11,6 @@ interface BreakData {
   duration: number; // Duration in seconds
   breaktype: string;
 }
-
 
 function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
@@ -153,7 +150,7 @@ function BreakDataTable() {
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#c6ebbe",
+                  backgroundColor: "#A9E4FF",
                   marginLeft: "90px",
                 }}
               >
@@ -219,7 +216,7 @@ function BreakDataTable() {
                               : instance.breaktype === "Second Break"
                                 ? "			#ffdea9"
                                 : instance.breaktype === "Lunch"
-                                  ? "#e5f9e0"
+                                  ? "#A9E4FF"
                                   : ""
                             : ""
                       }}
