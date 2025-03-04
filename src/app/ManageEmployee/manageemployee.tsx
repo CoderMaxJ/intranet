@@ -22,7 +22,7 @@ interface Information {
   acctid: number;
   un: string;
 }
-//
+
 export default function CreateUD() {
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
