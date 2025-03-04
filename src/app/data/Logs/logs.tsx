@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
-import { tr } from "date-fns/locale";
 
 interface Logs {
   name: string;
@@ -25,7 +24,6 @@ function LogsDataTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
   const token = localStorage.getItem("token");
-
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value.toUpperCase());
@@ -97,13 +95,12 @@ function LogsDataTable() {
         </div>
       </div>
     );
-
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="logs-wrapper" style={{ backgroundColor: "#e7e7e7" }}>
       <div className="logs-maindiv" >
-        <div className="logs-table" style={{ display: "flex", position:'relative' }}>
+        <div className="logs-table" style={{ display: "flex", position: 'relative' }}>
           <h3
             className="logs-headername"
             style={{
@@ -119,8 +116,8 @@ function LogsDataTable() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              position: 'relative', 
-               alignContent:'center'
+              position: 'relative',
+              alignContent: 'center'
             }}
           >
             <input
@@ -130,8 +127,8 @@ function LogsDataTable() {
                 fontFamily: "'Raleway', sans-serif",
                 marginBottom: "3px",
                 paddingRight: '30px',
-                position:'absolute',
-                left:'425px',
+                position: 'absolute',
+                left: '425px',
               }}
               type="text"
               placeholder="Search..."
@@ -141,8 +138,9 @@ function LogsDataTable() {
             <div
               style={{
                 position: 'absolute',
-                right: '10px', 
-                pointerEvents: 'none', 
+                right: '10px',
+                pointerEvents: 'none',
+
               }}
             >
               <svg
@@ -152,50 +150,51 @@ function LogsDataTable() {
                 fill="currentColor"
                 className="bi-search"
                 viewBox="-7 0 30 16"
-                style={{ cursor: 'pointer', position:'absolute', transform:'translateY(-24px)', margin:'0 auto', marginLeft:'430px' }}
+                style={{ cursor: 'pointer', position: 'absolute', transform: 'translateY(-24px)', margin: '0 auto', marginLeft: '435px' }}
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>
             </div>
           </div>
-
         </div>
-        <table className="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Login</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>First Break</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch In</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch Out</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Second Break</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
-              <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredRows.map((logs) => (
-              <tr key={logs.name}>
-                <td>{logs.name}</td>
-                <td>{logs.login}</td>
-                <td>{logs.brkin1}</td>
-                <td>{logs.brkout1}</td>
-                <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob1}</td>
-                <td>{logs.lunchin}</td>
-                <td>{logs.lunchout}</td>
-                <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob3}</td>
-                <td>{logs.brkin2}</td>
-                <td>{logs.brkout2}</td>
-                <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob2}</td>
-                <td>{logs.logoff}</td>
+        <div className="logs-tablee">
+          <table className="table table-bordered table-striped">
+            <thead style={{ position: 'sticky', top: 0 }}>
+              <tr>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Login</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>First Break</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch In</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Lunch Out</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Second Break</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Breakout</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Over Break</th>
+                <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody style={{ overflowY: 'auto' }}>
+              {filteredRows.map((logs) => (
+                <tr key={logs.name}>
+                  <td>{logs.name}</td>
+                  <td>{logs.login}</td>
+                  <td>{logs.brkin1}</td>
+                  <td>{logs.brkout1}</td>
+                  <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob1}</td>
+                  <td>{logs.lunchin}</td>
+                  <td>{logs.lunchout}</td>
+                  <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob3}</td>
+                  <td>{logs.brkin2}</td>
+                  <td>{logs.brkout2}</td>
+                  <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob2}</td>
+                  <td>{logs.logoff}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

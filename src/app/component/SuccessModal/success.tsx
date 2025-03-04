@@ -8,17 +8,14 @@ interface SuccessMessageProps {
 
 export default function SuccessMessage({ message }: SuccessMessageProps) {
     const [showModal, setShowModal] = useState(true); // State to control modal visibility
-
     const closeModal = () => {
         setShowModal(false); // Function to close the modal
     };
-
     useEffect(() => {
         // Automatically close the modal after a certain time (optional)
         const timer = setTimeout(() => {
             closeModal();
         }, 3000); // Close after 3 seconds
-
         return () => clearTimeout(timer); // Cleanup the timer on unmount
     }, []);
 
@@ -26,7 +23,7 @@ export default function SuccessMessage({ message }: SuccessMessageProps) {
         <div>
             {/* Modal Structure */}
             {showModal && (
-                <div className="modal fade show" id="successModal" tabIndex="-1" aria-labelledby="successModalLabel" style={{ display: "block" }}>
+                <div className="modal fade show" id="successModal" aria-labelledby="successModalLabel" style={{ display: "block" }}>
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">

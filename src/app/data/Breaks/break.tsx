@@ -2,9 +2,7 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState, useEffect } from "react";
 import "../../style/breaks.css";
-import Header from "@/app/component/Header";
 import { Decryptor } from "@/security";
-
 
 interface BreakData {
   name: string;
@@ -13,7 +11,6 @@ interface BreakData {
   duration: number; // Duration in seconds
   breaktype: string;
 }
-
 
 function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
@@ -27,7 +24,7 @@ function BreakDataTable() {
 
   // Fetch break data from the server
   const fetchBreakData = async () => {
-    
+
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
@@ -53,8 +50,8 @@ function BreakDataTable() {
       console.error("Failed to fetch break data:", error);
     }
   };
-const token = localStorage.getItem("token");
-const status = localStorage.getItem("status");
+  const token = localStorage.getItem("token");
+  const status = localStorage.getItem("status");
   // Fetch data initially and set up polling
   useEffect(() => {
     if (status != "login") return;
@@ -147,6 +144,7 @@ const status = localStorage.getItem("status");
                 width: "460px",
               }}
             >
+
               <span
                 className="legends"
                 style={{
@@ -163,7 +161,7 @@ const status = localStorage.getItem("status");
                   padding: "10px",
                   color: "red",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#f4ebf7",
+                  backgroundColor: "#ffdccc",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -185,7 +183,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#d6f294",
+                  backgroundColor: "#ffdea9",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -194,7 +192,6 @@ const status = localStorage.getItem("status");
               </span>
             </div>
           </div>
-
           <div>
             <table className="table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
@@ -207,37 +204,39 @@ const status = localStorage.getItem("status");
                 </tr>
               </thead>
               <tbody>
-              {filteredBreaks.map((instance) => (
-                  <tr 
-                  style={{
-                    backgroundColor: 
-                      instance.duration
-                        ? instance.breaktype === "First Break"
-                          ? "#FFEDA6"
-                          : instance.breaktype === "Second Break"
-                          ? "#e8e8b5"
-                          : instance.breaktype === "Lunch"
-                          ? "#A9E4FF"
-                          : ""
-                        : ""
-                  }}
-                   key={instance.name}>
-                    <td style={{backgroundColor:"inherit"}} 
+                {filteredBreaks
+                  .sort((a, b) => a.duration < 300 ? -1 : b.duration < 300 ? 1 : 0)
+                  .map((instance) => (
+                    <tr
+                      style={{
+                        backgroundColor:
+                          instance.duration
+                            ? instance.breaktype === "First Break"
+                              ? "#FFEDA6"
+                              : instance.breaktype === "Second Break"
+                                ? "			#ffdea9"
+                                : instance.breaktype === "Lunch"
+                                  ? "#A9E4FF"
+                                  : ""
+                            : ""
+                      }}
+                      key={instance.name}>
+                      <td style={{ backgroundColor: "inherit" }}
                         className={instance.duration < 300 ? "blink-background" : ""} >
                         {instance.name}
-                    </td>
+                      </td>
 
-                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.start}</td>
-                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.end}</td>
-                 
-                    <td style={{backgroundColor:"inherit", color: instance.duration < 0 ? "#be1243 ": "", fontWeight: instance.duration < 0 ? "bold": ""}}   className={instance.duration < 300 ? "blink-background" : ""} 
-                     
-                    >
-                    {formatTime(instance.duration)}
-                    </td>
-                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.breaktype}</td>
-                  </tr>
-                ))}
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""} >{instance.start}</td>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""} >{instance.end}</td>
+
+                      <td style={{ backgroundColor: "inherit", color: instance.duration < 0 ? "#be1243 " : "", fontWeight: instance.duration < 0 ? "bold" : "" }} className={instance.duration < 300 ? "blink-background" : ""}
+
+                      >
+                        {formatTime(instance.duration)}
+                      </td>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""} >{instance.breaktype}</td>
+                    </tr>
+                  ))}
 
               </tbody>
             </table>

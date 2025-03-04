@@ -4,24 +4,19 @@ import LogsDataTable from "../data/Logs/logs";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logout from "../Logout/logout";
-
 
 export default function MainDashboard() {
-
   return (
-    <div style={{ display: "flex", height: "100vh", width: '100vw', backgroundColor: "#e7e7e7" }}>
-   
+    <div style={{ display: "flex", width: '100vw', backgroundColor: "#e7e7e7" }}>
       <div>
         <Dashboard />
       </div>
-      <div style={{ flex: 1, backgroundColor: "#e7e7e7", width:'50vw' }}>
-        <Header title="WORKFORCE MONITORING" text="Connecting Teams, Empowering Innovation"/>
+      <div style={{ flex: 1, backgroundColor: "#e7e7e7", width: '50vw' }}>
+        <Header title="WORKFORCE MONITORING" text="Connecting Teams, Empowering Innovation" />
         <div>
           <BreakDataTable />
-        
         </div>
-        <div style={{ marginTop: "-10px"}}> 
+        <div style={{ marginTop: "-10px" }}>
           <LogsDataTable />
         </div>
       </div>

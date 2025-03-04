@@ -3,8 +3,6 @@ import { da, ms } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
-
-
 const token = localStorage.getItem("token");
 
 interface AddEmployeeData {
@@ -19,9 +17,9 @@ interface AddEmployeeData {
   contactno: string;
   address: string;
   acctid: number;
-  un:string;
-  role_id:number;
-  is_dayshift:number
+  un: string;
+  role_id: number;
+  is_dayshift: number
 }
 
 interface AddEmpProps {
@@ -31,13 +29,11 @@ interface AddEmpProps {
   onButtonClick: (action: string) => void;
 }
 
-
 interface PrivilegesType {
-  name:string,
-  id:number
+  name: string,
+  id: number
 }
-export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpProps) {
-
+export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmpProps) {
 
   const [formData, setFormData] = useState<AddEmployeeData>({
     empno: empData.empno || "",
@@ -58,11 +54,10 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
-  const [breaktool_user,setBreaktoolUser]=useState("");
-  const [generatedNumber,setGeneratedNumber]=useState(Number);
-  const [privileges,setPrivileges]=useState<PrivilegesType[]>([]);
-  const [selectedPrivilege,setSelectedPrivilege]=useState(Number);
-
+  const [breaktool_user, setBreaktoolUser] = useState("");
+  const [generatedNumber, setGeneratedNumber] = useState(Number);
+  const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
+  const [selectedPrivilege, setSelectedPrivilege] = useState(Number);
 
   useEffect(() => {
     if (empData) {
@@ -70,8 +65,6 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
     }
 
   }, [empData]);
-
-
 
   useEffect(() => {
     if (empData) {
@@ -95,43 +88,36 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
   }, [empData]);
 
   const generateRandomNumber = () => {
-    const min = 1000; 
-    const max = 9999; 
+    const min = 1000;
+    const max = 9999;
     const random = Math.floor(Math.random() * (max - min + 4)) + min;
     setGeneratedNumber(random);
   };
 
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-
     const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value === "" && name === "dateofbirth" ? null : value,
     }));
-  
-    // Handle checkbox separately
+
     if (type === "checkbox") {
       const isChecked = (e.target as HTMLInputElement).checked;
       setFormData((prev) => ({
         ...prev,
-        [name]: isChecked ? 1 : 0, // Convert boolean to 1 or 0
+        [name]: isChecked ? 1 : 0,
       }));
       return;
     }
-  console.log(formData)
-    // Handle other inputs
+    console.log(formData)
     setFormData((prev) => ({ ...prev, [name]: value }));
-  
-    // Automatically update breaktool_user and un when first name or last name changes
-
-    if(name === "acctid"){
+    if (name === "acctid") {
       SetSelectedAccount(value)
     }
     if (name === "role_id") {
       setFormData((prev) => ({
         ...prev,
-        role_id: Number(value), // Ensure it's stored as a number
+        role_id: Number(value),
       }));
     }
     if (name === "fname") {
@@ -142,15 +128,15 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
         un: `${initials}.${prev.lname || ""}`.trim(),
       }));
     }
-  if(mode==="create"){
-    if (name === "lname") {
-      setFormData((prev) => ({
-        ...prev,
-        un: `${breaktool_user}.${value}`.trim(),
-      }));
-    }
-  };
-}
+    if (mode === "create") {
+      if (name === "lname") {
+        setFormData((prev) => ({
+          ...prev,
+          un: `${breaktool_user}.${value}`.trim(),
+        }));
+      }
+    };
+  }
 
   const getInitials = (name: string) => {
     if (!name || typeof name !== "string") return "";
@@ -160,30 +146,28 @@ export default function AddEmp({ empData, mode ,isClose,onButtonClick}: AddEmpPr
       .map((word) => word.charAt(0).toUpperCase())
       .join("");
   };
-  
-const fetchPrivileges = async ()=>{
-  try{
 
+  const fetchPrivileges = async () => {
+    try {
+      const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/role/list/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token || "")}`
+        }
+      })
+      if (respose.status === 200) {
+        const data = await respose.json();
+        setPrivileges(data.data);
 
-  const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/role/list/`,{
-    method:"GET",
-    headers:{
-      "Content-Type":"application/json",
-      Authorization: `Bearer ${Decryptor(token || "")}`
+      } else {
+        console.log("Error while fetching privileges");
+      }
     }
-  })
-  if(respose.status === 200){
-    const data = await respose.json();
-    setPrivileges(data.data);
-
-  }else{
-    console.log("Error while fetching privileges");
+    catch (e) {
+      console.error(e)
+    }
   }
-  }
-catch(e){
-  console.error(e)
-}
-}
 
   const fetchRoles = async () => {
 
@@ -210,9 +194,7 @@ catch(e){
     }
   };
 
-
   const fetchAccounts = async () => {
-
     const cachedRoles = localStorage.getItem("accounts");
     if (cachedRoles) {
       setRoles(JSON.parse(cachedRoles));
@@ -237,37 +219,34 @@ catch(e){
     }
   };
 
-
   useEffect(() => {
     fetchRoles();
     fetchAccounts();
     fetchPrivileges();
   }, []);
 
+  const successToast = (msg: string) => toast.success(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
-const successToast = (msg:string) => toast.success(msg, {
-  position: "top-right",
-  autoClose: 2000,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-});
+  const errorToast = (msg: string) => toast.error(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
-const errorToast = (msg: string) => toast.error(msg, {
-  position: "top-right",
-  autoClose: 2000,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-});
-
-const btnClose = document.getElementById("buttonclose");
+  const btnClose = document.getElementById("buttonclose");
   async function Create() {
-
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
         method: "POST",
@@ -282,18 +261,15 @@ const btnClose = document.getElementById("buttonclose");
         successToast("Created successfully!");
         btnClose?.click();
         clearInputs();
-        
-      }else{
+
+      } else {
         errorToast("Unable to create employee!")
       }
     } catch (e) {
       console.error(e);
       alert(e);
     }
-
   }
-
-
 
   async function Update() {
     const empno = empData.empno;
@@ -310,32 +286,26 @@ const btnClose = document.getElementById("buttonclose");
       if (response.status === 200) {
         successToast("Updated successfully!");
         btnClose?.click();
-      }else{
+      } else {
         errorToast("Unable to update records!")
       }
     } catch (e) {
       console.error(e);
-   
     }
-
   }
-
 
   const handleSubmitForm = async (e: React.FormEvent) => {
 
     e.preventDefault();
     onButtonClick("clicked");
     if (mode === 'edit') {
-     await Update();
+      await Update();
     } else {
-     await Create();
+      await Create();
     }
-
-
   };
-  //
 
-  const clearInputs=()=>{
+  const clearInputs = () => {
     setFormData({
       empno: "",
       fname: "",
@@ -349,29 +319,23 @@ const btnClose = document.getElementById("buttonclose");
       address: "",
       acctid: 0,
       un: "",
-      role_id:0,
-      is_dayshift:0
+      role_id: 0,
+      is_dayshift: 0
     });
-    
     isClose();
-  
-  
-    // Reset the username state
-    setBreaktoolUser("");
-  
-    // Optionally reset selected account
-    SetSelectedAccount("");
-    mode="create"
 
+    setBreaktoolUser("");
+
+    SetSelectedAccount("");
+    mode = "create"
   }
 
   return (
     <div>
-
       <form className="row" onSubmit={handleSubmitForm} >
         <div className="col-md-4 mb-3">
           <button
-            id = "buttonclose"
+            id="buttonclose"
             type="button"
             className="btn-close"
             data-bs-dismiss="modal"
@@ -381,10 +345,9 @@ const btnClose = document.getElementById("buttonclose");
               top: '10px',
               right: '10px',
               marginTop: '-1px'
-            
             }
-          }
-          onClick={clearInputs}
+            }
+            onClick={clearInputs}
           >
           </button>
           <label htmlFor="fname" className="form-label">
@@ -420,7 +383,6 @@ const btnClose = document.getElementById("buttonclose");
             Last Name
           </label>
           <input
-
             required
             type="text"
             name="lname"
@@ -443,7 +405,7 @@ const btnClose = document.getElementById("buttonclose");
             id="dateofbirth"
             value={formData.dateofbirth}
             onChange={handleInputChange}
-            max="2006-12-31" 
+            max="2006-12-31"
           />
         </div>
         <div className="col-md-2 mb-3">
@@ -458,12 +420,12 @@ const btnClose = document.getElementById("buttonclose");
             className="form-select"
             onChange={handleInputChange}
           >
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-              <option value="Separated">Separated</option>
-              <option value="Widowed">Widowed</option>
-              <option value="Divorced">Divorced</option>
-              <option value="Other">Other</option>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Separated">Separated</option>
+            <option value="Widowed">Widowed</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div className="col-md-2 mb-3">
@@ -531,8 +493,7 @@ const btnClose = document.getElementById("buttonclose");
             ))}
           </select>
         </div>
-            
-      
+
         <div className="col-md-3 mb-3">
           <label htmlFor="position" className="form-label">
             Account
@@ -546,78 +507,71 @@ const btnClose = document.getElementById("buttonclose");
             onChange={handleInputChange}
           >
             <option value="">Select Account</option>
-            {accounts.map((account,index) => (
+            {accounts.map((account, index) => (
               <option key={index} value={account.acctid}> {account.acctname} </option>
             ))}
           </select>
-       
         </div>
-
-
 
         <div className="col-md-2 mt-3  d-flex justify-content-center align-items-center">
           <label htmlFor="is_dayshift" className="form-label">
             Day Shift
-            <span className="ms-2">  
+            <span className="ms-2">
+              <input
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                  cursor: "pointer",
+                  marginLeft: "10px",
+                }}
+                type="checkbox"
+                name="is_dayshift"
+                className="form-check-input "
+                id="is_dayshift"
+                value={formData.is_dayshift}
+                checked={formData.is_dayshift === 1}
+                onChange={handleInputChange}
+              /></span>
+          </label>
+        </div>
+        {mode !== "edit" && (
+          <div className="col-md-4 mb-3">
+            <label htmlFor="address" className="form-label">
+              Generated username for Breaktool account
+            </label>
             <input
-             style={{
-              width: "20px",
-              height: "20px",
-              borderRadius: "4px", // Rounded edges
-              border: "1px solid #ccc",
-              cursor: "pointer",
-              marginLeft:"10px",
-            }}
-            type="checkbox"
-            name="is_dayshift"
-            className="form-check-input "
-            id="is_dayshift"
-            value={formData.is_dayshift}
-            checked={formData.is_dayshift===1}
-            onChange={handleInputChange}
-          /></span>
-          </label>
-        
-       
-        </div>
-          {mode !== "edit" && (
-        <div className="col-md-4 mb-3">
-          <label htmlFor="address" className="form-label">
-            Generated username for Breaktool account
-          </label>
-          <input
-          
-            readOnly
-            disabled={true}
-            type="text"
-            name="un"
-            className="form-control"
-            id="un"
-            value={`${breaktool_user}${formData.lname ? `.${formData.lname}` : ""}`}
-            onChange={handleInputChange}
-            placeholder='e.g. "J.Sopeta" '
-          />
-        </div>
-         )}
-         {mode === "edit" && (
-        <div className="col-md-4 mb-1">
+              readOnly
+              disabled={true}
+              type="text"
+              name="un"
+              className="form-control"
+              id="un"
+              value={`${breaktool_user}${formData.lname ? `.${formData.lname}` : ""}`}
+              onChange={handleInputChange}
+              placeholder='e.g. "J.Sopeta" '
+            />
+          </div>
+        )}
+        {mode === "edit" && (
+          <div className="col-md-4 mb-1">
             <div className="mb-3">
               <label htmlFor="">Assign Privileges</label>
             </div>
             <select name="role_id"
-            value={formData.role_id}
-             onChange={handleInputChange}
-             id=""
-             className="form-select"
-             >
+              value={formData.role_id}
+              onChange={handleInputChange}
+              id=""
+              className="form-select"
+            >
               <option value="">Select privilege</option>
-                  {privileges.map((role,index)=>(
-                        <option key={index} value={role.id}>{role.name}</option>
-                    ))}
+              {privileges.map((role, index) => (
+                <option key={index} value={role.id}>{role.name}</option>
+              ))}
             </select>
-            
-        </div>
-         )}
+          </div>
+        )}
         <div
           className="col-md-12"
           style={{
@@ -625,8 +579,7 @@ const btnClose = document.getElementById("buttonclose");
             marginTop: "30px",
           }}
         >
-          <div style={{display:"flex",justifyContent:"flex-end",gap:"15px"}}>
-           
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: "15px" }}>
             <button
               type="button"
               data-bs-dismiss="modal"
@@ -643,7 +596,6 @@ const btnClose = document.getElementById("buttonclose");
             </button>
           </div>
         </div>
-
       </form>
     </div>
   );
