@@ -17,7 +17,6 @@ interface AddEmployeeData {
   contactno: string;
   address: string;
   acctid: number;
-  un: string;
   role_id: number;
   is_dayshift: number
 }
@@ -47,7 +46,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     contactno: empData.contactno || "",
     address: empData.address || "",
     acctid: empData.acctid || 0,
-    un: empData.un || "",
     role_id: empData.role_id || 0,
     is_dayshift: empData.is_dayshift || 0,
   });
@@ -55,16 +53,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
   const [breaktool_user, setBreaktoolUser] = useState("");
-  const [generatedNumber, setGeneratedNumber] = useState(Number);
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
-  const [selectedPrivilege, setSelectedPrivilege] = useState(Number);
+ 
 
-  useEffect(() => {
-    if (empData) {
-      setFormData(empData);
-    }
 
-  }, [empData]);
 
   useEffect(() => {
     if (empData) {
@@ -80,21 +72,15 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         contactno: empData.contactno || "",
         address: empData.address || "",
         acctid: empData.acctid || 0,
-        un: empData.un || "",
         role_id: empData.role_id || 0,
         is_dayshift: empData.is_dayshift || 0,
       });
     }
   }, [empData]);
 
-  const generateRandomNumber = () => {
-    const min = 1000;
-    const max = 9999;
-    const random = Math.floor(Math.random() * (max - min + 4)) + min;
-    setGeneratedNumber(random);
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+
     const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -120,32 +106,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         role_id: Number(value),
       }));
     }
-    if (name === "fname") {
-      const initials = getInitials(value);
-      setBreaktoolUser(initials);
-      setFormData((prev) => ({
-        ...prev,
-        un: `${initials}.${prev.lname || ""}`.trim(),
-      }));
-    }
-    if (mode === "create") {
-      if (name === "lname") {
-        setFormData((prev) => ({
-          ...prev,
-          un: `${breaktool_user}.${value}`.trim(),
-        }));
-      }
-    };
+
+
+ 
+  
   }
 
-  const getInitials = (name: string) => {
-    if (!name || typeof name !== "string") return "";
-    return name
-      .trim()
-      .split(/\s+/)
-      .map((word) => word.charAt(0).toUpperCase())
-      .join("");
-  };
 
   const fetchPrivileges = async () => {
     try {
@@ -318,7 +284,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       contactno: "",
       address: "",
       acctid: 0,
-      un: "",
       role_id: 0,
       is_dayshift: 0
     });
@@ -419,7 +384,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             id="maritalstatus"
             className="form-select"
             onChange={handleInputChange}
-          >
+          > <option value="">-- SELECT --</option>
             <option value="Single">Single</option>
             <option value="Married">Married</option>
             <option value="Separated">Separated</option>
@@ -439,7 +404,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             id="gender"
             className="form-select"
             onChange={handleInputChange}
-          >
+          > 
+            <option value="">-- SELECT --</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
@@ -536,24 +502,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               /></span>
           </label>
         </div>
-        {mode !== "edit" && (
-          <div className="col-md-4 mb-3">
-            <label htmlFor="address" className="form-label">
-              Generated username for Breaktool account
-            </label>
-            <input
-              readOnly
-              disabled={true}
-              type="text"
-              name="un"
-              className="form-control"
-              id="un"
-              value={`${breaktool_user}${formData.lname ? `.${formData.lname}` : ""}`}
-              onChange={handleInputChange}
-              placeholder='e.g. "J.Sopeta" '
-            />
-          </div>
-        )}
+  
         {mode === "edit" && (
           <div className="col-md-4 mb-1">
             <div className="mb-3">
