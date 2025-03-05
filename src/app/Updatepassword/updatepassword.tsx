@@ -29,6 +29,9 @@ export default function Updatepassword() {
   const empno = localStorage.getItem("user_id");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (password != confirmPassword) {
+      setMessage("Password Mismatch");
+    }
     async function changePassword() {
       const newAccount = {
         empno: Decryptor(empno || ""),
@@ -78,6 +81,7 @@ export default function Updatepassword() {
     setConfirmPassword("");
     setMessage("");
   };
+ 
   const validate = () => {
     const isValidPassword = (password: string) => {
       const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;

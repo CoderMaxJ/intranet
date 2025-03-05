@@ -302,7 +302,7 @@ input:focus {
   left: 50%;
   padding-left: 250px;
   white-space: nowrap;
-  transform: translate(0px, -6px);
+  transform: translate(0px, -3px);
 }
 
 .headerdown {
@@ -312,6 +312,7 @@ input:focus {
   font-size: 20px;
   font-weight: 300;
   padding-left: 250px;
+  transform: translateY(-6px);
   font-style: italic;
 }
 
@@ -937,7 +938,7 @@ table {
 
 .addhover {
   background-color: #0ebb39 !important;
-  padding: 8px !important;
+  padding: 10px !important;
   color: white;
   border: none;
   border-radius: 4px;
@@ -1130,7 +1131,7 @@ table {
   padding: 7px;
   border-radius: 4px;
   color: rgb(88, 87, 87);
-  right: 300px !important;
+  right: 190px !important;
   position: relative;
   top: 8px;
 }

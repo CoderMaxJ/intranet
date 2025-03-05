@@ -32,6 +32,7 @@ export default function ManageDepartment() {
     const [showModal, setShowModal] = useState(false);
     const [showDropDown, setShowDropdown] = useState(false);
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
+    const [add, setAdd] = useState(false);
 
     const router = useRouter();
     useEffect(() => {
@@ -446,6 +447,7 @@ export default function ManageDepartment() {
                                                         type="button"
                                                         className="accounts-edit"
                                                         style={{ cursor: "pointer" }}
+                                                        title={add ? "" : "Add"}
                                                     >
                                                         <i className="bi bi-plus-square"></i>
                                                     </button>

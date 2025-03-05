@@ -37,6 +37,7 @@ export default function CreateUD() {
   const [listener, setListener] = useState(false);
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [resetPassword, setResetPassword] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -333,7 +334,7 @@ export default function CreateUD() {
                             style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
                             title={resetPassword ? "" : "Reset Password"}                           
                           >
-                            <i className="bi bi-arrow-counterclockwise" style={{ fontSize:'19px', color:'#033dfc'}}></i>
+                            <img src="/img/resetpassword.png" height={22} width={22}/>
                           </button>
                         )}
                         {user_privilege.includes("manage_users") && (
@@ -344,6 +345,7 @@ export default function CreateUD() {
                             className="edit-button ms-4"
                             onClick={() => handleData(info)}
                             style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
+                            title={update ? "" : "Update"}
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -379,24 +381,24 @@ export default function CreateUD() {
         </div>
         <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end"}}>
           <div className="employee-total">
-            <p>Total: <span>{total}</span></p>
+            <p><i className="bi bi-people-fill"></i><span> Total: {total}</span></p>
           </div>
           <div className="employee-pagination">
             <nav aria-label="Page navigation">
               <ul className="pagination">
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
                   <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
-                    Previous
+                  <i className="bi bi-caret-left"></i>
                   </button>
                 </li>
                  <li className="page-item">
                   <span className="page-link" style={{whiteSpace:'nowrap'}}>
-                   Page {currentPage} of {totalPages}
+                  {currentPage} of {totalPages}
                   </span>
                 </li>
                 <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
                   <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
-                    Next
+                  <i className="bi bi-caret-right"></i>
                   </button>
                 </li>
               </ul>
