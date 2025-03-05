@@ -57,10 +57,10 @@ export default function Login() {
       });
       if (response.status === 200) {
         const res = await response.json();
-        console.log(res.user_privilege);
         localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
         localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
         localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
+        localStorage.setItem("name",res.name);
         successToast("Login Successful");
         setLog(true);
       } else {
@@ -90,7 +90,6 @@ export default function Login() {
         localStorage.setItem("status", "login");
         login();
       } else {
-        console.log("sdsd")
         setError("Invalid Credentials");
         setError("Invalid Credentials");
       }

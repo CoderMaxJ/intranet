@@ -95,7 +95,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       }));
       return;
     }
-    console.log(formData)
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (name === "acctid") {
       SetSelectedAccount(value)
@@ -177,7 +176,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         const data = await response.json();
         setAccounts(data.data);
-        console.log(accounts)
         localStorage.setItem("Accounts", JSON.stringify(data.data));
       }
     } catch (e) {
@@ -370,7 +368,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             id="dateofbirth"
             value={formData.dateofbirth}
             onChange={handleInputChange}
-            max="2006-12-31"
+            max="2015-12-31"
           />
         </div>
         <div className="col-md-2 mb-3">

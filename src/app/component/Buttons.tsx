@@ -3,13 +3,11 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export default function Buttons() {
   const handleEdit = () => {
-    console.log("Edit button clicked");
     alert("Edit action triggered!");
 
   };
 
   const handleDelete = () => {
-    console.log("Delete button clicked");
     if (window.confirm("Are you sure you want to delete this item?")) {
       alert("Delete action triggered!");
 
