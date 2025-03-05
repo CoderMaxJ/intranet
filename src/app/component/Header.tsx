@@ -3,7 +3,8 @@ import "/public/asset/css/updateps.css";
 
 interface HeaderProps {
   title: string;
-  text: string;
+  text?: string;
+
 }
 
 export default function Header({ title, text }: HeaderProps) {

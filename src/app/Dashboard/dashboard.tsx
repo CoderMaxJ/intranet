@@ -39,7 +39,6 @@ export default function Dashboard() {
 
   return (
     <>
-      <title>Intranet Workforce</title>
       <Updatepassword />
       {logout && (
         <div
@@ -88,7 +87,6 @@ export default function Dashboard() {
         <div style={{ marginBottom: "30px", marginLeft: '40px', transform: 'translateY(-10px)' }}>
           <img src="/img/sos1.png" height={100} />
         </div>
-        <title>Intranet Workfore</title>
         <div className="accordion"  >
           <div style={{ marginBottom: '-10px', paddingLeft: '5px' }} className="generate">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{ marginRight: "21px", marginLeft: "5px", marginBottom: '5px' }}>

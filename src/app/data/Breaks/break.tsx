@@ -16,8 +16,8 @@ function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [fullscreen, setFullscreen] = useState(false);
-  const [latestUpdate, setLatestUpdate] = useState<string | null>(null); // Track last update
-  const breaksRef = useRef<BreakData[]>([]); // Ref to store breaks data
+  const [latestUpdate, setLatestUpdate] = useState<string | null>(null); 
+  const breaksRef = useRef<BreakData[]>([]); 
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
@@ -50,7 +50,7 @@ function BreakDataTable() {
           setBreaks(parsedData);
           breaksRef.current = parsedData;
         }
-        console.log("No updates since last fetch");
+        
         return;
       }
 
@@ -59,8 +59,7 @@ function BreakDataTable() {
       }
 
       const data = await response.json();
-      console.log(data.data);
-
+     
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
       const storedBreaks = storedData ? JSON.parse(storedData) : [];
@@ -106,7 +105,7 @@ function BreakDataTable() {
     fetchBreakData();
 
    
-    const fetchIntervalId = setInterval(fetchBreakData, 1000);
+    const fetchIntervalId = setInterval(fetchBreakData, 2000);
 
     return () => clearInterval(fetchIntervalId); 
   }, [latestUpdate]); 
@@ -219,7 +218,7 @@ function BreakDataTable() {
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#FFEDA6",
+                  backgroundColor: "#ffffb7",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -230,7 +229,7 @@ function BreakDataTable() {
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#ffdea9",
+                  backgroundColor: "#FFEDA6",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -259,13 +258,13 @@ function BreakDataTable() {
                         backgroundColor:
                           instance.duration
                             ? instance.breaktype === "First Break"
-                              ? "#FFEDA6"
+                              ? "#ffffb7"
                               : instance.breaktype === "Second Break"
-                              ? "#ffdea9"
-                              : instance.breaktype === "Lunch"
-                              ? "#A9E4FF"
-                              : ""
-                            : "",
+                                ? "			#FFEDA6"
+                                : instance.breaktype === "Lunch"
+                                  ? "#A9E4FF"
+                                  : ""
+                            : ""
                       }}
                       key={instance.name}
                     >

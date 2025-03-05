@@ -65,7 +65,7 @@ function LogsDataTable() {
           setData(parsedData);
           logData.current = parsedData;
         }
-        console.log("No logs updates since last fetch");
+
         return;
       }
 
@@ -74,7 +74,7 @@ function LogsDataTable() {
       }
       console.log(logData)
       const fetchedData = await response.json();
-      console.log(fetchedData.data);
+
       setLatestUpdate(fetchedData.latest_update);
 
       // Merge fetched data with the current state
