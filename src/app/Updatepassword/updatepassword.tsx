@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import "/public/asset/css/updateps.css";
-import Image from "next/image";
 import { Decryptor } from "@/security";
 
 export default function Updatepassword() {
@@ -18,24 +17,18 @@ export default function Updatepassword() {
 
   // Check if passwords match
   const passwordsMatch = password === confirmPassword && confirmPassword !== "";
-
   const toggleShow = () => {
     setShowPassword((prev) => !prev);
   };
-
   const toggleShoww = () => {
     setShowPassword1((prev) => !prev);
   };
-
   const toggleShowww = () => {
     setShowPassword2((prev) => !prev);
   };
-
   const empno = localStorage.getItem("user_id");
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     async function changePassword() {
       const newAccount = {
         empno: Decryptor(empno || ""),
@@ -43,9 +36,7 @@ export default function Updatepassword() {
         newpassword: password,
         password2: confirmPassword,
       };
-
       const token = localStorage.getItem("token");
-
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND}/change/password/`,
@@ -58,7 +49,6 @@ export default function Updatepassword() {
             body: JSON.stringify(newAccount),
           }
         );
-
         if (response.status === 200) {
           const message = await response.json();
           setMessage(message.res);
@@ -78,19 +68,16 @@ export default function Updatepassword() {
         console.error("Error:", error);
       }
     }
-
     if (passwordStrength === true && passwordsMatch) {
       changePassword();
     }
   };
-
   const clearInputs = () => {
     setCurrentPassword("");
     setPassword("");
     setConfirmPassword("");
     setMessage("");
   };
-
   const validate = () => {
     const isValidPassword = (password: string) => {
       const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -102,7 +89,6 @@ export default function Updatepassword() {
 
   return (
     <div>
-      {/* Link to open modal */}
       <div
         className="modal fade"
         id="updatePasswordModal"
@@ -131,7 +117,6 @@ export default function Updatepassword() {
                 style={{ marginTop: "-45px" }}
               />
             </div>
-
             {success ? (
               <div>
                 <center>
@@ -145,10 +130,8 @@ export default function Updatepassword() {
                 </center>
               </div>
             )}
-
             <div className="modal-body" style={{ marginLeft: "35px" }}>
               <form onSubmit={handleSubmit}>
-                {/* Current Password Field */}
                 <div className="updatepass-label">
                   <label htmlFor="currentpassword">Current Password</label>
                   <div style={{ position: "relative" }}>
@@ -161,8 +144,6 @@ export default function Updatepassword() {
                     />
                   </div>
                 </div>
-
-                {/* New Password Field */}
                 <div className="updatepass-label1">
                   <label htmlFor="password">
                     New Password{" "}
@@ -236,8 +217,6 @@ export default function Updatepassword() {
                     )}
                   </div>
                 </div>
-
-                {/* Confirm Password Field */}
                 <div className="updatepass-label">
                   <label htmlFor="confirmpassword">Confirm Password</label>
                   <div style={{ position: "relative" }}>
@@ -254,8 +233,6 @@ export default function Updatepassword() {
                     />
                   </div>
                 </div>
-
-                {/* Submit Button */}
                 <div className="button-div" style={{ display: "block" }}>
                   <div>
                     <button type="submit" className="btn btn-success">
@@ -265,7 +242,6 @@ export default function Updatepassword() {
                 </div>
               </form>
             </div>
-
             <div className="modal-footer"></div>
           </div>
         </div>

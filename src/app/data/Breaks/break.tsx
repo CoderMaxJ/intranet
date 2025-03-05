@@ -1,85 +1,116 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState, useEffect,useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../../style/breaks.css";
-import Header from "@/app/component/Header";
 import { Decryptor } from "@/security";
-
 
 interface BreakData {
   name: string;
   start: string;
   end: string;
-  duration: number; // Duration in seconds
+  duration: number;
   breaktype: string;
 }
-
 
 function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [loadingPage, setLoadingPage] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+  const [latestUpdate, setLatestUpdate] = useState<string | null>(null); // Track last update
+  const breaksRef = useRef<BreakData[]>([]); // Ref to store breaks data
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
 
-  // Fetch break data from the server
-  const fetchBreakData = useCallback(async (forceUpdate = false) => {
+  const fetchBreakData = async () => {
     try {
-      setLoadingPage(true);
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
-      const url = `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/?since=${forceUpdate ? "" : localStorage.getItem("lastUpdated") || ""}`;
 
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/?last_update=${latestUpdate || ""}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${Decryptor(token || "")}`,
+          },
+        }
+      );
+
+      if (response.status === 204) {
+        const message = await response.text();
+        console.log(message);
+
+        // No new data, use data from local storage
+        const storedData = localStorage.getItem("breakData");
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          setBreaks(parsedData);
+          breaksRef.current = parsedData;
+        }
+        console.log("No updates since last fetch");
+        return;
+      }
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
+      console.log(data.data);
 
-      setBreaks((prevBreaks) => {
-        const updatedBreaksMap = new Map(prevBreaks.map((item) => [item.name, item]));
-
-        data.data.forEach((item: BreakData) => {
-          updatedBreaksMap.set(item.name, item); // Update existing or add new
-        });
-        console.log('updatedBreaksMap');
-        return Array.from(updatedBreaksMap.values());
+      // Merge fetched data with the current countdown state
+      const storedData = localStorage.getItem("breakData");
+      const storedBreaks = storedData ? JSON.parse(storedData) : [];
+      const updatedBreaks = data.data.map((newBreak: BreakData) => {
+        const existingBreak = storedBreaks.find((b: BreakData) => b.name === newBreak.name);
+        return existingBreak ? { ...newBreak, duration: existingBreak.duration } : newBreak;
       });
-      console.log("===========",forceUpdate)
-      if (data.data.length > 0 || forceUpdate || localStorage.getItem("lastUpdated") == "") {
-        localStorage.setItem("lastUpdated", new Date().toISOString()); // Update timestamp
-        console.log("===========",forceUpdate)
-      }
+
+      setBreaks(updatedBreaks);
+      breaksRef.current = updatedBreaks;
+      setLatestUpdate(data.latest_update); // Update timestamp
+
+      // Store the new data in local storage
+      localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
     } catch (error) {
       console.error("Failed to fetch break data:", error);
-    } finally {
-      setLoadingPage(false);
     }
-  }, []);
-  
-const status = localStorage.getItem("status");
-  // Fetch data initially and set up polling
+  };
+
+  // Countdown logic: Decrease duration every second
   useEffect(() => {
-    if (status != "login") return;
+    const countdownIntervalId = setInterval(() => {
+      setBreaks((prevBreaks) => {
+        const updatedBreaks = prevBreaks.map((breakItem) => ({
+          ...breakItem,
+          duration: breakItem.duration > 0 ? breakItem.duration - 1 : breakItem.duration,
+        }));
+        breaksRef.current = updatedBreaks; // Update the ref
+        localStorage.setItem("breakData", JSON.stringify(updatedBreaks)); 
+        return updatedBreaks;
+      });
+    }, 1000);
 
-    fetchBreakData(); // Initial fetch
-    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
-
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    return () => clearInterval(countdownIntervalId); 
   }, []);
 
-  // Format time for display
+  const status = localStorage.getItem("status");
+
+  useEffect(() => {
+    if (status !== "login") return;
+
+    // Initial fetch
+    fetchBreakData();
+
+   
+    const fetchIntervalId = setInterval(fetchBreakData, 1000);
+
+    return () => clearInterval(fetchIntervalId); 
+  }, [latestUpdate]); 
+
   const formatTime = (time: number) => {
     const isNegative = time < 0;
     const absoluteTime = Math.abs(time);
@@ -87,15 +118,15 @@ const status = localStorage.getItem("status");
     const minutes = Math.floor((absoluteTime % 3600) / 60);
     const seconds = absoluteTime % 60;
 
-    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(Math.abs(minutes)).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(
+      Math.abs(minutes)
+    ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
-  // Handle search input
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
-  // Filter breaks based on search query
   const filteredBreaks = breaks.filter(
     (breakItem) =>
       breakItem.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -177,7 +208,7 @@ const status = localStorage.getItem("status");
                   padding: "10px",
                   color: "red",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#f4ebf7",
+                  backgroundColor: "#ffdccc",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -199,7 +230,7 @@ const status = localStorage.getItem("status");
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#FAD5A5",
+                  backgroundColor: "#ffdea9",
                   textAlign: "center",
                   marginLeft: "2px",
                 }}
@@ -208,7 +239,6 @@ const status = localStorage.getItem("status");
               </span>
             </div>
           </div>
-
           <div>
             <table className="table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
@@ -221,38 +251,48 @@ const status = localStorage.getItem("status");
                 </tr>
               </thead>
               <tbody>
-              {filteredBreaks.map((instance) => (
-                  <tr 
-                  style={{
-                    backgroundColor: 
-                      instance.duration
-                        ? instance.breaktype === "First Break"
-                          ? "#FFEDA6"
-                          : instance.breaktype === "Second Break"
-                          ? "			#FAD5A5"
-                          : instance.breaktype === "Lunch"
-                          ? "#A9E4FF"
-                          : ""
-                        : ""
-                  }}
-                   key={instance.name}>
-                    <td style={{backgroundColor:"inherit"}} 
-                        className={instance.duration < 300 ? "blink-background" : ""} >
-                        {instance.name}
-                    </td>
-
-                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.start}</td>
-                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.end}</td>
-                 
-                    <td style={{backgroundColor:"inherit", color: instance.duration < 0 ? "#be1243 ": "", fontWeight: instance.duration < 0 ? "bold": ""}}   className={instance.duration < 300 ? "blink-background" : ""} 
-                     
+                {filteredBreaks
+                  .sort((a, b) => (a.duration < 300 ? -1 : b.duration < 300 ? 1 : 0))
+                  .map((instance) => (
+                    <tr
+                      style={{
+                        backgroundColor:
+                          instance.duration
+                            ? instance.breaktype === "First Break"
+                              ? "#FFEDA6"
+                              : instance.breaktype === "Second Break"
+                              ? "#ffdea9"
+                              : instance.breaktype === "Lunch"
+                              ? "#A9E4FF"
+                              : ""
+                            : "",
+                      }}
+                      key={instance.name}
                     >
-                    {formatTime(instance.duration)}
-                    </td>
-                    <td style={{backgroundColor:"inherit"}}  className={instance.duration < 300 ? "blink-background" : ""} >{instance.breaktype}</td>
-                  </tr>
-                ))}
-
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                        {instance.name}
+                      </td>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                        {instance.start}
+                      </td>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                        {instance.end}
+                      </td>
+                      <td
+                        style={{
+                          backgroundColor: "inherit",
+                          color: instance.duration < 0 ? "#be1243 " : "",
+                          fontWeight: instance.duration < 0 ? "bold" : "",
+                        }}
+                        className={instance.duration < 300 ? "blink-background" : ""}
+                      >
+                        {formatTime(instance.duration)}
+                      </td>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                        {instance.breaktype}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>

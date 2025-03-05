@@ -6,14 +6,12 @@ interface UpdateModalConfirmationProps {
 }
 
 export default function UpdateModalConfirmation({ onConfirm, onClose }: UpdateModalConfirmationProps) {
-
     return (
         <div>
             <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Update
             </button>
-
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

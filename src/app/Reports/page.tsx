@@ -36,7 +36,6 @@ export default function Daterange() {
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
     const [checker, setChecker] = useState(true);
-
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value.toLowerCase());
     };
@@ -47,7 +46,6 @@ export default function Daterange() {
         }
     }, [data])
 
-
     const handleGenerateAndDownloadCSV = async () => {
         try {
             setError("");
@@ -55,7 +53,7 @@ export default function Daterange() {
             const token = localStorage.getItem("token");
             let result;
             if (start === "" && end === "") {
-                result = { data: data }; 
+                result = { data: data };
             } else {
                 const response = await fetch(
                     `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id || "")}/${start}/${end}/`,
@@ -67,22 +65,17 @@ export default function Daterange() {
                         },
                     }
                 );
-
                 if (!response.ok) {
                     throw new Error("Failed to fetch data");
                 }
-
                 result = await response.json();
             }
-
             if (!result.data.length) {
                 return;
             }
-
             const filteredData = result.data.filter((report: any) =>
                 report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
             );
-
             setData(filteredData);
             setSuccess(true);
             const csvContent = [
@@ -125,7 +118,7 @@ export default function Daterange() {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `report_${start || "all"}_${end || "all"}.csv`; 
+            a.download = `report_${start || "all"}_${end || "all"}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -158,7 +151,6 @@ export default function Daterange() {
                 alert("No data available for the selected date range.");
                 return;
             }
-
             if (start != "" || end != "") {
                 setData(result.data);
             } else {
@@ -168,7 +160,6 @@ export default function Daterange() {
             alert("No data found in this given date range!")
         }
     };
-
     const fetchData = async () => {
         try {
             setError("");
@@ -310,7 +301,7 @@ export default function Daterange() {
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '690px', marginLeft: '20px', position: 'fixed', width: '84vw', backgroundColor: '#ffffff' }}>
+                            <div style={{ overflowY: 'auto', height: '690px', position: 'fixed', width: '84vw', backgroundColor: '#ffffff', marginLeft: '20px' }}>
                                 <table className="table table-striped" style={{ position: 'sticky', top: 0, width: '84vw' }}>
                                     <thead>
                                         <tr className="report-header">

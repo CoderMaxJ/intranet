@@ -22,18 +22,18 @@ export default function Login() {
       }
     }
   }, []);
-  
+
   useEffect(() => {
     if (isLogged) {
       setTimeout(() => {
         router.push("/WorkforceMonitoring");
       }
-      , 1000);
-     
+        , 1000);
+
     }
   }, [isLogged, router]);
 
-  const successToast = (msg:string) => toast.success(msg, {
+  const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
     hideProgressBar: true,
@@ -41,7 +41,6 @@ export default function Login() {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    
   });
   async function login() {
 
@@ -56,13 +55,13 @@ export default function Login() {
         },
         body: JSON.stringify(credentials),
       });
-
       if (response.status === 200) {
         const res = await response.json();
-       console.log(res.user_privilege);
+        console.log(res.user_privilege);
         localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
         localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
         localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
+        localStorage.setItem("name",res.name);
         successToast("Login Successful");
         setLog(true);
       } else {
@@ -89,19 +88,17 @@ export default function Login() {
         const token = await response.json();
         localStorage.setItem("token", Encryptor(token.access));
         localStorage.setItem("refresh_token", Encryptor(token.access));
-        localStorage.setItem("status","login");
+        localStorage.setItem("status", "login");
         login();
       } else {
         console.log("sdsd")
         setError("Invalid Credentials");
         setError("Invalid Credentials");
-
       }
     } catch (error) {
       setError("Error fetching token");
     }
   }
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     getToken();
@@ -111,14 +108,12 @@ export default function Login() {
     <div className="main-div">
       <ToastContainer />
       <div className="login-div">
-      
         <img
           src="/img/Sos.png"
           alt="Staff Outsourcing Logo"
           height={70}
           width={100}
         />
-  
         <form className="username" onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           <div className="inp-lab">

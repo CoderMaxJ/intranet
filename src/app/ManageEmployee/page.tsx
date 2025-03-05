@@ -8,7 +8,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-
 interface Information {
   empno: number;
   gender: string;
@@ -25,7 +24,6 @@ interface Information {
 }
 
 export default function CreateUD() {
-
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
   const [employees, setEmployees] = useState<Information[]>([]);
@@ -39,8 +37,6 @@ export default function CreateUD() {
   const [listener, setListener] = useState(false);
   const [user_privilege, setUserPrivilege] = useState([""]);
 
-
-
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -49,7 +45,6 @@ export default function CreateUD() {
       setListener(false);
     }, 2000)
   }, [listener]);
-
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
@@ -63,16 +58,14 @@ export default function CreateUD() {
         },
       }
     );
-
     if (response.ok) {
       const data = await response.json();
       console.log(data);
-      setEmployees(data.data); // Set employee data
-      setTotalPages(data.num_pages); // Set total pages
+      setEmployees(data.data);
+      setTotalPages(data.num_pages); 
       setTotal(data.total);
     }
   }
-
 
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
@@ -82,7 +75,6 @@ export default function CreateUD() {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-
   });
 
   const errorToast = (msg: string) => toast.error(msg, {
@@ -107,11 +99,9 @@ export default function CreateUD() {
           },
         }
       );
-
       if (response.status === 204) {
         successToast("Deleted successfully.");
         GetEmployee(currentPage);
-
       } else {
         alert("Failed to delete employee.");
       }
@@ -120,7 +110,6 @@ export default function CreateUD() {
       alert("An error occurred while deleting the employee.");
     }
   }
-
 
   const user_hash_privilege = localStorage.getItem("user_privilege");
 
@@ -131,13 +120,10 @@ export default function CreateUD() {
     })
   }
 
-
   const id = localStorage.getItem("user_id");
-
   const search = (e: any) => {
     e.preventDefault();
     async function SearchData(name: string) {
-
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${name}/`, {
         method: "GET",
         headers: {
@@ -157,13 +143,10 @@ export default function CreateUD() {
     } else {
       GetEmployee(currentPage);
     }
-
     console.log(searchTerm);
   }
-
   const handleData = (data: any) => {
     setCurrentMode("edit");
-
     let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid } = data;
     let currentData = {
       empno,
@@ -180,11 +163,9 @@ export default function CreateUD() {
     };
     setEmpData(currentData);
   };
-
   const closeModal = () => {
     hidden(true);
   };
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page); // Update the current page
     GetEmployee(page); // Fetch data for the new page
@@ -192,13 +173,10 @@ export default function CreateUD() {
 
   const searchKeyword = async (e: any) => {
     e.preventDefault();
-    
       search(e);
-    
   }
 
   const handleResetPassword = (empno: number, fname: string) => {
-
     async function resetPassword() {
       const data = { empno: empno }
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reset/password/`, {
@@ -221,7 +199,6 @@ export default function CreateUD() {
     if (response) {
       resetPassword();
     }
-
   }
 
   return (
@@ -236,7 +213,6 @@ export default function CreateUD() {
           <div>
             <header
               className=""
-
             >
               <div className="w-100 d-flex justify-content-center py-2 px-2" style={{ width:'86vw', margin:'auto', position:'relative'}}>
                 <div className="searchbar-containerr">
@@ -263,7 +239,6 @@ export default function CreateUD() {
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                   </svg>
                 </div>
-
                 {user_privilege.includes("manage_users") && (
                   <div className="manageemployee-button">
                     <button
@@ -281,7 +256,6 @@ export default function CreateUD() {
                         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                       }}
                     >{user_privilege.includes("manage_users")}{
-
                       }
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -314,14 +288,13 @@ export default function CreateUD() {
             </div>
           </div>
         </div>
-        <div className="managereport" 
-        >
+        <div className="emp-table"   style={{ position: 'relative', height: '90%', overflowY: 'auto' }}> 
           <table
             className="table table-striped table-hover table-bordered"
             id="table-employee"
             style={{width:'97.7%', margin:'auto'}}
           >
-            <thead style={{position:'sticky', top:0}}>
+            <thead style={{position:'sticky', padding:'15px', zIndex:10 }}>
               <tr>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
@@ -337,7 +310,7 @@ export default function CreateUD() {
                 <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
               </tr>
             </thead>
-            <tbody className="manage-tbody table-data" style={{overflowY:'auto'}} >
+            <tbody className="manage-tbody table-data"style={{ overflowY: 'auto'}} >
               {employees?.length ? (
                 employees.map((info, index) => (
                   <tr key={info.empno}>
@@ -360,15 +333,9 @@ export default function CreateUD() {
                             onClick={() => handleResetPassword(info.empno, info.fname)}
                             style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
                           >
-                            <img
-                              src="img/reset.png"
-                              alt="Reset Password"
-                              height={20}
-                              width={20}
-                            />
+                            <i className="bi bi-arrow-counterclockwise" style={{ fontSize:'19px', color:'#033dfc'}}></i>
                           </button>
                         )}
-
                         {user_privilege.includes("manage_users") && (
                           <button
                             data-bs-toggle="modal"
@@ -384,7 +351,6 @@ export default function CreateUD() {
                             </svg>
                           </button>
                         )}
-
                         {user_privilege.includes("manage_users") && (
                           <button
                             data-bs-toggle="modal"
@@ -399,8 +365,6 @@ export default function CreateUD() {
                         )}
                       </div>
                     </td>
-
-                    
                   </tr>
                 ))
               ) : (
@@ -425,19 +389,11 @@ export default function CreateUD() {
                     Previous
                   </button>
                 </li>
-                {/* {Array.from({ length: totalPages }, (_, i) => (
-                  <li key={i + 1} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
-                    <button className="page-link" onClick={() => handlePageChange(i + 1)}>
-                      {i + 1}
-                    </button>
-                  </li>
-                ))} */}
                  <li className="page-item">
                   <span className="page-link" style={{whiteSpace:'nowrap'}}>
                    Page {currentPage} of {totalPages}
                   </span>
                 </li>
-
                 <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
                   <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
                     Next
@@ -478,7 +434,6 @@ export default function CreateUD() {
           </div>
         </div>
       </div>
-      
     </div>
   );
 }
