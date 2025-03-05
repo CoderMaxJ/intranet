@@ -1026,6 +1026,23 @@ table {
   font-weight: bolder;
 }
 
+.profile-div{
+  margin-top:500px;
+  display: grid;
+  place-items: center;
+  border:0.60px solid white;
+  border-radius: 4px;
+
+}
+
+.username-label-profile{
+  color:white;
+  font-family: 'roboto';
+  font-size: 17px;
+  letter-spacing:1px;
+  font-weight:bold;
+
+}
 .employee-heade {
   position: sticky;
   top: 0;
