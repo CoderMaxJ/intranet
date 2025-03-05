@@ -61,6 +61,7 @@ export default function Login() {
         localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
         localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
         localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
+        localStorage.setItem("name",res.name);
         successToast("Login Successful");
         setLog(true);
       } else {

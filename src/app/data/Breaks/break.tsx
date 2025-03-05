@@ -1,6 +1,6 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 
@@ -8,29 +8,28 @@ interface BreakData {
   name: string;
   start: string;
   end: string;
-  duration: number; // Duration in seconds
+  duration: number;
   breaktype: string;
 }
 
 function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [loadingPage, setLoadingPage] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+  const [latestUpdate, setLatestUpdate] = useState<string | null>(null); // Track last update
+  const breaksRef = useRef<BreakData[]>([]); // Ref to store breaks data
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
 
-  // Fetch break data from the server
   const fetchBreakData = async () => {
-
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/`,
+        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/?last_update=${latestUpdate || ""}`,
         {
           method: "GET",
           headers: {
@@ -40,29 +39,78 @@ function BreakDataTable() {
         }
       );
 
+      if (response.status === 204) {
+        const message = await response.text();
+        console.log(message);
+
+        // No new data, use data from local storage
+        const storedData = localStorage.getItem("breakData");
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          setBreaks(parsedData);
+          breaksRef.current = parsedData;
+        }
+        console.log("No updates since last fetch");
+        return;
+      }
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
-      setBreaks(data.data); // Set the fetched break data
+      console.log(data.data);
+
+      // Merge fetched data with the current countdown state
+      const storedData = localStorage.getItem("breakData");
+      const storedBreaks = storedData ? JSON.parse(storedData) : [];
+      const updatedBreaks = data.data.map((newBreak: BreakData) => {
+        const existingBreak = storedBreaks.find((b: BreakData) => b.name === newBreak.name);
+        return existingBreak ? { ...newBreak, duration: existingBreak.duration } : newBreak;
+      });
+
+      setBreaks(updatedBreaks);
+      breaksRef.current = updatedBreaks;
+      setLatestUpdate(data.latest_update); // Update timestamp
+
+      // Store the new data in local storage
+      localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
     } catch (error) {
       console.error("Failed to fetch break data:", error);
     }
   };
-  const token = localStorage.getItem("token");
-  const status = localStorage.getItem("status");
-  // Fetch data initially and set up polling
+
+  // Countdown logic: Decrease duration every second
   useEffect(() => {
-    if (status != "login") return;
+    const countdownIntervalId = setInterval(() => {
+      setBreaks((prevBreaks) => {
+        const updatedBreaks = prevBreaks.map((breakItem) => ({
+          ...breakItem,
+          duration: breakItem.duration > 0 ? breakItem.duration - 1 : breakItem.duration,
+        }));
+        breaksRef.current = updatedBreaks; // Update the ref
+        localStorage.setItem("breakData", JSON.stringify(updatedBreaks)); 
+        return updatedBreaks;
+      });
+    }, 1000);
 
-    fetchBreakData(); // Initial fetch
-    const intervalId = setInterval(fetchBreakData, 1000); // Poll every 1 second
-
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    return () => clearInterval(countdownIntervalId); 
   }, []);
 
-  // Format time for display
+  const status = localStorage.getItem("status");
+
+  useEffect(() => {
+    if (status !== "login") return;
+
+    // Initial fetch
+    fetchBreakData();
+
+   
+    const fetchIntervalId = setInterval(fetchBreakData, 1000);
+
+    return () => clearInterval(fetchIntervalId); 
+  }, [latestUpdate]); 
+
   const formatTime = (time: number) => {
     const isNegative = time < 0;
     const absoluteTime = Math.abs(time);
@@ -70,15 +118,15 @@ function BreakDataTable() {
     const minutes = Math.floor((absoluteTime % 3600) / 60);
     const seconds = absoluteTime % 60;
 
-    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(Math.abs(minutes)).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(
+      Math.abs(minutes)
+    ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
-  // Handle search input
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
-  // Filter breaks based on search query
   const filteredBreaks = breaks.filter(
     (breakItem) =>
       breakItem.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -144,7 +192,6 @@ function BreakDataTable() {
                 width: "460px",
               }}
             >
-
               <span
                 className="legends"
                 style={{
@@ -205,7 +252,7 @@ function BreakDataTable() {
               </thead>
               <tbody>
                 {filteredBreaks
-                  .sort((a, b) => a.duration < 300 ? -1 : b.duration < 300 ? 1 : 0)
+                  .sort((a, b) => (a.duration < 300 ? -1 : b.duration < 300 ? 1 : 0))
                   .map((instance) => (
                     <tr
                       style={{
@@ -214,30 +261,38 @@ function BreakDataTable() {
                             ? instance.breaktype === "First Break"
                               ? "#FFEDA6"
                               : instance.breaktype === "Second Break"
-                                ? "			#ffdea9"
-                                : instance.breaktype === "Lunch"
-                                  ? "#A9E4FF"
-                                  : ""
-                            : ""
+                              ? "#ffdea9"
+                              : instance.breaktype === "Lunch"
+                              ? "#A9E4FF"
+                              : ""
+                            : "",
                       }}
-                      key={instance.name}>
-                      <td style={{ backgroundColor: "inherit" }}
-                        className={instance.duration < 300 ? "blink-background" : ""} >
+                      key={instance.name}
+                    >
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
                         {instance.name}
                       </td>
-
-                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""} >{instance.start}</td>
-                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""} >{instance.end}</td>
-
-                      <td style={{ backgroundColor: "inherit", color: instance.duration < 0 ? "#be1243 " : "", fontWeight: instance.duration < 0 ? "bold" : "" }} className={instance.duration < 300 ? "blink-background" : ""}
-
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                        {instance.start}
+                      </td>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                        {instance.end}
+                      </td>
+                      <td
+                        style={{
+                          backgroundColor: "inherit",
+                          color: instance.duration < 0 ? "#be1243 " : "",
+                          fontWeight: instance.duration < 0 ? "bold" : "",
+                        }}
+                        className={instance.duration < 300 ? "blink-background" : ""}
                       >
                         {formatTime(instance.duration)}
                       </td>
-                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""} >{instance.breaktype}</td>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                        {instance.breaktype}
+                      </td>
                     </tr>
                   ))}
-
               </tbody>
             </table>
           </div>
