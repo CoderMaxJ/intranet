@@ -16,8 +16,8 @@ function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [fullscreen, setFullscreen] = useState(false);
-  const [latestUpdate, setLatestUpdate] = useState<string | null>(null); // Track last update
-  const breaksRef = useRef<BreakData[]>([]); // Ref to store breaks data
+  const [latestUpdate, setLatestUpdate] = useState<string | null>(null); 
+  const breaksRef = useRef<BreakData[]>([]); 
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
@@ -50,7 +50,7 @@ function BreakDataTable() {
           setBreaks(parsedData);
           breaksRef.current = parsedData;
         }
-        console.log("No updates since last fetch");
+        
         return;
       }
 
@@ -59,8 +59,7 @@ function BreakDataTable() {
       }
 
       const data = await response.json();
-      console.log(data.data);
-
+     
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
       const storedBreaks = storedData ? JSON.parse(storedData) : [];
@@ -106,7 +105,7 @@ function BreakDataTable() {
     fetchBreakData();
 
    
-    const fetchIntervalId = setInterval(fetchBreakData, 1000);
+    const fetchIntervalId = setInterval(fetchBreakData, 10000);
 
     return () => clearInterval(fetchIntervalId); 
   }, [latestUpdate]); 
