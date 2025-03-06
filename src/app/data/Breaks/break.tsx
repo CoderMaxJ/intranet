@@ -25,6 +25,7 @@ function BreakDataTable() {
   };
 
   const fetchBreakData = async () => {
+    console.log("fetching");
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
@@ -113,7 +114,7 @@ function BreakDataTable() {
     fetchBreakData();
 
 
-    const fetchIntervalId = setInterval(fetchBreakData, 2000);
+    const fetchIntervalId = setInterval(fetchBreakData, 5000);
 
     return () => clearInterval(fetchIntervalId); 
   }, [latestUpdate]); 
