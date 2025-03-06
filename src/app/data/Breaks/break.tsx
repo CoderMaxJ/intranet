@@ -10,20 +10,22 @@ interface BreakData {
   end: string;
   duration: number;
   breaktype: string;
+  overbreak: number; // Add overbreak duration to the interface
 }
 
 function BreakDataTable() {
   const [breaks, setBreaks] = useState<BreakData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [fullscreen, setFullscreen] = useState(false);
-  const [latestUpdate, setLatestUpdate] = useState<string | null>(null); 
-  const breaksRef = useRef<BreakData[]>([]); 
+  const [latestUpdate, setLatestUpdate] = useState<string | null>(null);
+  const breaksRef = useRef<BreakData[]>([]);
 
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
 
   const fetchBreakData = async () => {
+    console.log("fetching");
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
@@ -41,7 +43,6 @@ function BreakDataTable() {
 
       if (response.status === 204) {
         const message = await response.text();
-        console.log(message);
 
         // No new data, use data from local storage
         const storedData = localStorage.getItem("breakData");
@@ -50,7 +51,6 @@ function BreakDataTable() {
           setBreaks(parsedData);
           breaksRef.current = parsedData;
         }
-        
         return;
       }
 
@@ -59,18 +59,27 @@ function BreakDataTable() {
       }
 
       const data = await response.json();
-     
+
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
       const storedBreaks = storedData ? JSON.parse(storedData) : [];
       const updatedBreaks = data.data.map((newBreak: BreakData) => {
         const existingBreak = storedBreaks.find((b: BreakData) => b.name === newBreak.name);
+
+        // If the user is overbreak, use the overbreak duration from the backend
+        if (newBreak.duration <= 0) {
+          return {
+            ...newBreak,
+            duration: -newBreak.overbreak, // Set duration to negative overbreak
+          };
+        }
+
         return existingBreak ? { ...newBreak, duration: existingBreak.duration } : newBreak;
       });
 
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
-      setLatestUpdate(data.latest_update); // Update timestamp
+      setLatestUpdate(data.latest_update); 
 
       // Store the new data in local storage
       localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
@@ -79,16 +88,16 @@ function BreakDataTable() {
     }
   };
 
-  // Countdown logic: Decrease duration every second
+ 
   useEffect(() => {
     const countdownIntervalId = setInterval(() => {
       setBreaks((prevBreaks) => {
         const updatedBreaks = prevBreaks.map((breakItem) => ({
           ...breakItem,
-          duration: breakItem.duration - 1
+          duration: breakItem.duration - 1, 
         }));
         breaksRef.current = updatedBreaks; // Update the ref
-        localStorage.setItem("breakData", JSON.stringify(updatedBreaks)); 
+        localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
         return updatedBreaks;
       });
     }, 1000);
@@ -101,11 +110,11 @@ function BreakDataTable() {
   useEffect(() => {
     if (status !== "login") return;
 
-    // Initial fetch
+  
     fetchBreakData();
 
-   
-    const fetchIntervalId = setInterval(fetchBreakData, 2000);
+
+    const fetchIntervalId = setInterval(fetchBreakData, 5000);
 
     return () => clearInterval(fetchIntervalId); 
   }, [latestUpdate]); 
@@ -277,11 +286,11 @@ function BreakDataTable() {
                             ? instance.breaktype === "First Break"
                               ? "#ffffb7"
                               : instance.breaktype === "Second Break"
-                                ? "			#FFEDA6"
-                                : instance.breaktype === "Lunch"
-                                  ? "#A9E4FF"
-                                  : ""
-                            : ""
+                              ? "#FFEDA6"
+                              : instance.breaktype === "Lunch"
+                              ? "#A9E4FF"
+                              : ""
+                            : "",
                       }}
                       key={instance.name}
                     >
