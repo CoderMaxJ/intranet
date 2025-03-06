@@ -231,13 +231,11 @@ export default function Dashboard() {
         <center>
         <div className="profile-div">
           <center>
-          <i className="bi bi-person text-white fs-1"></i>
+          <i className="bi bi-person-circle text-white fs-1"></i>
           </center>
               <p className="username-label-profile">{localStorage.getItem("name")}</p>
         </div>
-        </center>
-        
-        
+        </center>  
       </div>
     </>
   );

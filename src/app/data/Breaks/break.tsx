@@ -191,36 +191,14 @@ function BreakDataTable() {
                 width: "460px",
               }}
             >
-              <span
-                className="legends"
-                style={{
-                  padding: "10px",
-                  fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#A9E4FF",
-                  marginLeft: "90px",
-                }}
-              >
-                Lunch
-              </span>
-              <span
-                style={{
-                  padding: "10px",
-                  color: "red",
-                  fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#ffdccc",
-                  textAlign: "center",
-                  marginLeft: "2px",
-                }}
-              >
-                Over Break
-              </span>
+              <div style={{transform:'translateX(90px)'}}>
               <span
                 style={{
                   padding: "10px",
                   fontFamily: "'Raleway', sans-serif",
                   backgroundColor: "#ffffb7",
                   textAlign: "center",
-                  marginLeft: "2px",
+                  marginRight:'-90px'
                 }}
               >
                 1st Break
@@ -231,11 +209,36 @@ function BreakDataTable() {
                   fontFamily: "'Raleway', sans-serif",
                   backgroundColor: "#FFEDA6",
                   textAlign: "center",
-                  marginLeft: "2px",
+                  marginLeft: "92px",
+                  marginRight:'2px'
                 }}
               >
                 2nd Break
               </span>
+              <span
+                className="legends"
+                style={{
+                  padding: "10px",
+                  fontFamily: "'Raleway', sans-serif",
+                  backgroundColor: "#A9E4FF",
+                  marginRight:'2px' 
+                }}
+              >
+                Lunch
+              </span>
+              <span
+                style={{
+                  padding: "10px",
+                  color: "red",
+                  fontFamily: "'Raleway', sans-serif",
+                  backgroundColor: "#ffdccc",
+                  textAlign: "center", 
+                               
+                }}
+              >
+                Over Break
+              </span>
+              </div>
             </div>
           </div>
           <div>
@@ -250,8 +253,22 @@ function BreakDataTable() {
                 </tr>
               </thead>
               <tbody>
-                {filteredBreaks
-                  .sort((a, b) => (a.duration < 300 ? -1 : b.duration < 300 ? 1 : 0))
+              {filteredBreaks
+  .sort((a, b) => {
+    // First, sort by duration (less than 300 first)
+    if (a.duration < 300 && b.duration >= 300) return -1;
+    if (a.duration >= 300 && b.duration < 300) return 1;
+
+    // Then, sort by break type (First Break, Second Break, Lunch)
+    const breakOrder = {
+      "First Break": 1,
+      "Second Break": 2,
+      "Lunch": 3
+    };
+
+    return breakOrder[a.breaktype as keyof typeof breakOrder] - breakOrder[b.breaktype as keyof typeof breakOrder];
+  })
+                 
                   .map((instance) => (
                     <tr
                       style={{
