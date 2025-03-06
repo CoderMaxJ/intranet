@@ -6,28 +6,16 @@ import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { truncateSync } from "node:fs";
 
 export default function Dashboard() {
   const privilege = localStorage.getItem("privilege");
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [accordionIconn, setAccordionIconn] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
   const [logout, setLogout] = useState(false);
   const [hovered, setHovered] = useState(false);
 
-  const toggleShow = () => {
-    setShowPassword((prev) => !prev);
-  };
 
-  const toggleShoww = () => {
-    setShowPassword1((prev) => !prev);
-  };
-
-  const toggleShowww = () => {
-    setShowPassword2((prev) => !prev);
-  };
   const token = localStorage.getItem("token");
   useEffect(() => {
     if (!token) {
@@ -240,6 +228,16 @@ export default function Dashboard() {
           </svg>
           <Logout />
         </div>
+        <center>
+        <div className="profile-div">
+          <center>
+          <i className="bi bi-person text-white fs-1"></i>
+          </center>
+              <p className="username-label-profile">{localStorage.getItem("name")}</p>
+        </div>
+        </center>
+        
+        
       </div>
     </>
   );

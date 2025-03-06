@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "Accounts",
+    title: "Manage Accounts",
     description: "Monitoring System",
 };
 

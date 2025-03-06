@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Decryptor } from "@/security";
 
 interface Logs {
@@ -24,6 +24,8 @@ function LogsDataTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
   const token = localStorage.getItem("token");
+  const [latestUpdate, setLatestUpdate] = useState("");
+  const logData = useRef<Logs[]>([]); // Ref to store logs data
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value.toUpperCase());
@@ -42,7 +44,7 @@ function LogsDataTable() {
     try {
       const account_id = await localStorage.getItem("user_id");
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/logs/${Decryptor(account_id || "")}/`,
+        `${process.env.NEXT_PUBLIC_BACKEND}/logs/${Decryptor(account_id || "")}/?last_update=${latestUpdate || ""}`,
         {
           method: "GET",
           headers: {
@@ -52,12 +54,42 @@ function LogsDataTable() {
         }
       );
 
+      if (response.status === 204) {
+        const message = await response.text();
+        console.log(message);
+
+        // No new data, use data from local storage
+        const storedData = localStorage.getItem("logsData");
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          setData(parsedData);
+          logData.current = parsedData;
+        }
+
+        return;
+      }
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      console.log(logData)
+      const fetchedData = await response.json();
 
-      const data = await response.json();
-      setData(data.data);
+      setLatestUpdate(fetchedData.latest_update);
+
+      // Merge fetched data with the current state
+      const storedData = localStorage.getItem("logsData");
+      const storedLogs = storedData ? JSON.parse(storedData) : [];
+      const updatedLogs = fetchedData.data.map((newLog: Logs) => {
+        const existingLog = storedLogs.find((log: Logs) => log.name === newLog.name);
+        return existingLog ? { ...newLog } : newLog;
+      });
+
+      setData(updatedLogs);
+      logData.current = updatedLogs;
+
+      // Store the new data in local storage
+      localStorage.setItem("logsData", JSON.stringify(updatedLogs));
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -66,15 +98,15 @@ function LogsDataTable() {
   };
 
   useEffect(() => {
+    
     fetchLogs();
 
-    const intervalId = setInterval(fetchLogs, 5000);
+    const intervalId = setInterval(fetchLogs, 3000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => clearInterval(intervalId); // Cleanup interval
+  }, [latestUpdate]); 
 
   if (loading)
-
     return (
       <div
         className="d-flex justify-content-center align-items-center"
@@ -95,12 +127,13 @@ function LogsDataTable() {
         </div>
       </div>
     );
+
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="logs-wrapper" style={{ backgroundColor: "#e7e7e7" }}>
-      <div className="logs-maindiv" >
-        <div className="logs-table" style={{ display: "flex", position: 'relative' }}>
+      <div className="logs-maindiv">
+        <div className="logs-table" style={{ display: "flex", position: "relative" }}>
           <h3
             className="logs-headername"
             style={{
@@ -114,10 +147,10 @@ function LogsDataTable() {
           <div
             className="searchbar-container1"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              alignContent: 'center'
+              display: "flex",
+              alignItems: "center",
+              position: "relative",
+              alignContent: "center",
             }}
           >
             <input
@@ -126,9 +159,9 @@ function LogsDataTable() {
                 backgroundColor: "#f0f0f0",
                 fontFamily: "'Raleway', sans-serif",
                 marginBottom: "3px",
-                paddingRight: '30px',
-                position: 'absolute',
-                left: '425px',
+                paddingRight: "30px",
+                position: "absolute",
+                left: "425px",
               }}
               type="text"
               placeholder="Search..."
@@ -137,10 +170,9 @@ function LogsDataTable() {
             />
             <div
               style={{
-                position: 'absolute',
-                right: '10px',
-                pointerEvents: 'none',
-
+                position: "absolute",
+                right: "10px",
+                pointerEvents: "none",
               }}
             >
               <svg
@@ -150,7 +182,7 @@ function LogsDataTable() {
                 fill="currentColor"
                 className="bi-search"
                 viewBox="-7 0 30 16"
-                style={{ cursor: 'pointer', position: 'absolute', transform: 'translateY(-24px)', margin: '0 auto', marginLeft: '435px' }}
+                style={{ cursor: "pointer", position: "absolute", transform: "translateY(-24px)", margin: "0 auto", marginLeft: "435px" }}
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>
@@ -159,7 +191,7 @@ function LogsDataTable() {
         </div>
         <div className="logs-tablee">
           <table className="table table-bordered table-striped">
-            <thead style={{ position: 'sticky', top: 0 }}>
+            <thead style={{ position: "sticky", top: 0 }}>
               <tr>
                 <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
                 <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Login</th>
@@ -175,7 +207,7 @@ function LogsDataTable() {
                 <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Log Out</th>
               </tr>
             </thead>
-            <tbody style={{ overflowY: 'auto' }}>
+            <tbody style={{ overflowY: "auto" }}>
               {filteredRows.map((logs) => (
                 <tr key={logs.name}>
                   <td>{logs.name}</td>
