@@ -56,7 +56,7 @@ function LogsDataTable() {
 
       if (response.status === 204) {
         const message = await response.text();
-        console.log(message);
+     
 
         // No new data, use data from local storage
         const storedData = localStorage.getItem("logsData");
@@ -72,7 +72,6 @@ function LogsDataTable() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      console.log(logData)
       const fetchedData = await response.json();
 
       setLatestUpdate(fetchedData.latest_update);
