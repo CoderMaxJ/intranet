@@ -297,7 +297,7 @@ export default function CreateUD() {
               id="table-employee"
               style={{ width: '97.7%', margin: 'auto' }}
             >
-              <thead style={{ position: 'sticky', padding: '15px', zIndex: 10 }}>
+              <thead style={{ position: 'sticky', padding: '15px', zIndex: 10, transform:"translateY(-1px)" }}>
                 <tr>
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
@@ -313,7 +313,7 @@ export default function CreateUD() {
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
                 </tr>
               </thead>
-              <tbody className="manage-tbody table-data" style={{ overflowY: 'auto' }}>
+              <tbody className="manage-tbody table-data" style={{ overflowY: 'auto', height:"300px" }}>
                 {employees?.length ? (
                   employees.map((info, index) => (
                     <tr key={info.empno}>

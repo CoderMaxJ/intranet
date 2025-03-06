@@ -85,7 +85,7 @@ function BreakDataTable() {
       setBreaks((prevBreaks) => {
         const updatedBreaks = prevBreaks.map((breakItem) => ({
           ...breakItem,
-          duration: breakItem.duration > 0 ? breakItem.duration - 1 : breakItem.duration,
+          duration: breakItem.duration - 1
         }));
         breaksRef.current = updatedBreaks; // Update the ref
         localStorage.setItem("breakData", JSON.stringify(updatedBreaks)); 
