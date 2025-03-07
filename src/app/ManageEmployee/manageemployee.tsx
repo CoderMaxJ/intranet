@@ -22,7 +22,7 @@ interface Information {
   acctid: number;
   un: string;
 }
-
+//
 export default function CreateUD() {
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
@@ -409,7 +409,6 @@ export default function CreateUD() {
               </tbody>
             </table>
           </div>
-       
             {searchTerm =="" && (
                    <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end" }}>
                    <div className="employee-total">
@@ -438,8 +437,6 @@ export default function CreateUD() {
                 </div>
                 </div>
             )}
-         
-       
         </div>
       </div>
       <ToastContainer />
