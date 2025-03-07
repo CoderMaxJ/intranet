@@ -500,8 +500,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               /></span>
           </label>
         </div>
-  
-        {mode === "edit" && (
+          {mode === 'edit' && (
           <div className="col-md-4 mb-1">
             <div className="mb-3">
               <label htmlFor="">Assign Privileges</label>
@@ -518,7 +517,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               ))}
             </select>
           </div>
-        )}
+         )}
         <div
           className="col-md-12"
           style={{

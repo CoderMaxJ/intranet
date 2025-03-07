@@ -61,11 +61,21 @@ export default function Login() {
         localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
         localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
         localStorage.setItem("name",res.name);
+        localStorage.setItem("position",res.position);
         successToast("Login Successful");
         setLog(true);
-      } else {
+      }else if(response.status === 403){
+        const message = await response.json();
+        console.log(message)
+        setError(message.warning);
+        localStorage.clear();
+      }else if(response.status === 401){
+        const message = await response.json();
+        setError(message.warning);
+      }
+      else {
         const res = await response.json();
-        setError(res.message || "Login failed. Please try again.");
+        
         setError("Invalid Credentials");
       }
     } catch {
@@ -90,11 +100,11 @@ export default function Login() {
         localStorage.setItem("status", "login");
         login();
       } else {
-        setError("Invalid Credentials");
-        setError("Invalid Credentials");
+        const message = await response.json();
+        setError(message.warning);
       }
     } catch (error) {
-      setError("Error fetching token");
+      setError("Something went wrong while connecting to server!");
     }
   }
   const handleSubmit = async (e: any) => {

@@ -7,17 +7,27 @@ import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { truncateSync } from "node:fs";
+import { profile } from "node:console";
 
 export default function Dashboard() {
-  const privilege = localStorage.getItem("privilege");
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [accordionIconn, setAccordionIconn] = useState(true);
   const [logout, setLogout] = useState(false);
-  const [hovered, setHovered] = useState(false);
+  const [upload,setUpload]=useState(false);
+  const [profile,setProfile]=useState(null)
+  const [open,setOpen]=useState(false);
+  
 
+  useEffect(() => {
+    const savedImage = localStorage.getItem("profileImage");
+    if (savedImage) {
+      setProfile(savedImage);
+    }
+  }, []);
 
   const token = localStorage.getItem("token");
   useEffect(() => {
+    
     if (!token) {
       router.push("/")
     }
@@ -31,11 +41,42 @@ export default function Dashboard() {
       user_privilege.push(data);
     })
   }
-
+ const profileImg = localStorage.getItem("profileImage") 
   const handleLogout = () => {
+    
     localStorage.clear();
+  if(profileImg){
+    localStorage.setItem("profileImage",profileImg)
+  }
     router.push("/")
   }
+const toggleinput = () =>{
+  if(upload == false){
+    setUpload(true)
+  }else{
+    setUpload(false);
+  }
+}
+const handleImageUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result;
+      localStorage.setItem("profileImage", base64String);
+      setProfile(base64String);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const openClose =()=>{
+  if(open == false){
+    setOpen(true);
+  }else{
+    setOpen(false);
+  }
+}
 
   return (
     <>
@@ -227,15 +268,51 @@ export default function Dashboard() {
             />
           </svg>
           <Logout />
+          
         </div>
+        {open && (
+               <img
+               onClick={()=>setOpen(false)}
+               src={profile}
+               alt="Enlarged Profile"
+               className=""
+               height={200}
+               width={200}
+               style={{borderRadius:"50%",marginTop:"150px"}}
+             />
+            )}
         <center>
+          {open === false && (
+
+         
         <div className="profile-div">
-          <center>
-          <i className="bi bi-person-circle text-white fs-1"></i>
-          </center>
-              <p className="username-label-profile">{localStorage.getItem("name")}</p>
+        <div className="dot-div">
+        <i onClick={toggleinput} className="dots bi bi-camera fs-5 text-light"></i>
         </div>
+        {upload === true && (
+          <div>
+            <input className="input-image" type="file" accept="image/*" onChange={handleImageUpload}  />
+          </div>
+        )}
+            <div className="profile-circle">
+              {profile ?  (
+                   <img onClick={openClose} className="profile-picture" src={profile} alt="" height={70} width={70}/>
+              ):(<p className="username-label-profile">{localStorage.getItem("name")?.charAt(0)}</p>)}
+            </div>
+            <div className="online"></div>
+        </div>
+        
+        )}
+        {profile != null && (
+          <div>
+              <p className="name">{localStorage.getItem("name")}</p>
+              <p className="name">{localStorage.getItem("position")}</p>
+          </div>
+         
+
+        )}
         </center>  
+      
       </div>
     </>
   );

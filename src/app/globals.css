@@ -1027,20 +1027,51 @@ table {
 }
 
 .profile-div{
-  margin-top:415px;
-  display: grid;
-  place-items: center;
+  margin-top:400px;
   border:0.60px solid white;
   border-radius: 4px;
+  height: 120px;
+  width: 70%;
 
 }
-
+.profile-picture{
+  border-radius: 50%;
+}
 .username-label-profile{
   color:white;
   font-family: 'roboto';
-  font-size: 17px;
+  font-size: 40px;
   letter-spacing:1px;
   font-weight:bold;
+  margin-top: 15px;
+
+}
+.input-image{
+  height: 20px;
+  width: 100px;
+  font-size: 10px;
+
+  position: absolute;
+
+}
+
+.dot-div{
+  width: 90%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.profile-circle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: #05668d;
 
 }
 .employee-heade {
@@ -1311,7 +1342,21 @@ table {
   border: none;
   color: rgb(14, 206, 100);
 }
+.online{
+  height: 15px;
+  width: 15px;
+  margin-left: 70px;
+  border-radius: 50%;
+  background-color: #00FF40;
 
+}
+.name{
+  padding-top: 5px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: white;
+  font-family: "roboto";
+}
 .delete {
   outline: none;
   background-color: none;
