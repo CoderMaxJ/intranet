@@ -372,7 +372,7 @@ export default function CreateUD() {
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModal"
                               type="button"
-                              className="edit-button ms-4"
+                              className="edit-button ms-3"
                               onClick={() => handleData(info)}
                               style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
                               title={update ? "" : "Update"}
@@ -383,7 +383,7 @@ export default function CreateUD() {
                               </svg>
                             </button>
                           )}
-                          {user_privilege.includes("manage_users") && (
+                          {/* {user_privilege.includes("manage_users") && (
                             <button
                               data-bs-toggle="modal"
                               data-bs-target="#deleteModal"
@@ -394,7 +394,7 @@ export default function CreateUD() {
                             >
                               <i className="bi bi-trash3"></i>
                             </button>
-                          )}
+                          )} */}
                         </div>
                       </td>
                     </tr>
