@@ -109,7 +109,7 @@ export default function Login() {
         <img
           src="/img/Sos.png"
           alt="Staff Outsourcing Logo"
-          height={70}
+          height={60}
           width={100}
         />
         <form className="username" onSubmit={handleSubmit}>

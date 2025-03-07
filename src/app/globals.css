@@ -1054,9 +1054,8 @@ table {
 }
 
 .main-divv {
-  width: calc(100% - 177px);
+  width: calc(100% - 5px);
   background-color: #e7e7e7;
-  width: 110.1%;
 }
 
 .accounts-button {
@@ -1150,13 +1149,13 @@ table {
   color: rgb(88, 87, 87);
   right: 190px !important;
   position: relative;
-  top: 8px;
+  top: 13px;
 }
 
 .employee-pagination {
   position: absolute;
   right: 18px;
-  top: 8px;
+  top: 13px;
 }
 
 .manageemployee-div {
@@ -1182,7 +1181,7 @@ table {
 .manageemployee-division {
   background-color: white;
   margin: 20px auto 0 245px;
-  height: 114.4%;
+  height: auto;
   width: 85.8%;
   padding-bottom: 10px;
   border-radius: 4px;
