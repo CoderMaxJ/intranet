@@ -1,6 +1,6 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 
@@ -88,7 +88,6 @@ function BreakDataTable() {
     }
   };
 
- 
   useEffect(() => {
     const countdownIntervalId = setInterval(() => {
       setBreaks((prevBreaks) => {
@@ -114,7 +113,7 @@ function BreakDataTable() {
     fetchBreakData();
 
 
-    const fetchIntervalId = setInterval(fetchBreakData, 5000);
+    const fetchIntervalId = setInterval(fetchBreakData, 1000);
 
     return () => clearInterval(fetchIntervalId); 
   }, [latestUpdate]); 

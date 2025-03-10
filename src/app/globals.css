@@ -1027,20 +1027,51 @@ table {
 }
 
 .profile-div{
-  margin-top:415px;
-  display: grid;
-  place-items: center;
+  margin-top:400px;
   border:0.60px solid white;
   border-radius: 4px;
+  height: 120px;
+  width: 70%;
 
 }
-
+.profile-picture{
+  border-radius: 50%;
+}
 .username-label-profile{
   color:white;
   font-family: 'roboto';
-  font-size: 17px;
+  font-size: 40px;
   letter-spacing:1px;
   font-weight:bold;
+  margin-top: 15px;
+
+}
+.input-image{
+  height: 20px;
+  width: 100px;
+  font-size: 10px;
+
+  position: absolute;
+
+}
+
+.dot-div{
+  width: 90%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.profile-circle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: #05668d;
 
 }
 .employee-heade {
@@ -1054,9 +1085,8 @@ table {
 }
 
 .main-divv {
-  width: calc(100% - 177px);
+  width: calc(100% - 5px);
   background-color: #e7e7e7;
-  width: 110.1%;
 }
 
 .accounts-button {
@@ -1150,13 +1180,13 @@ table {
   color: rgb(88, 87, 87);
   right: 190px !important;
   position: relative;
-  top: 8px;
+  top: 13px;
 }
 
 .employee-pagination {
   position: absolute;
   right: 18px;
-  top: 8px;
+  top: 13px;
 }
 
 .manageemployee-div {
@@ -1182,7 +1212,7 @@ table {
 .manageemployee-division {
   background-color: white;
   margin: 20px auto 0 245px;
-  height: 114.4%;
+  height: auto;
   width: 85.8%;
   padding-bottom: 10px;
   border-radius: 4px;
@@ -1311,7 +1341,21 @@ table {
   border: none;
   color: rgb(14, 206, 100);
 }
+.online{
+  height: 15px;
+  width: 15px;
+  margin-left: 70px;
+  border-radius: 50%;
+  background-color: #00FF40;
 
+}
+.name{
+  padding-top: 5px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: white;
+  font-family: "roboto";
+}
 .delete {
   outline: none;
   background-color: none;

@@ -22,7 +22,7 @@ interface Information {
   acctid: number;
   un: string;
 }
-
+////
 export default function CreateUD() {
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
@@ -211,6 +211,30 @@ export default function CreateUD() {
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
+       <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="resetPasswordModalLabel">Confirmation</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>Are you sure you want to reset the password?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+                onClick={TriggerReset}
+              >
+                Reset Password
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="db-employee">
         <Dashboard />
       </div>
@@ -291,13 +315,13 @@ export default function CreateUD() {
               </div>
             </div>
           </div>
-          <div className="emp-table" style={{ position: 'relative', height: '90%', overflowY: 'auto' }}>
+          <div className="emp-table" style={{ position: 'relative', height: 'auto'}}>
             <table
               className="table table-striped table-hover table-bordered"
               id="table-employee"
               style={{ width: '97.7%', margin: 'auto' }}
             >
-              <thead style={{ position: 'sticky', padding: '15px', zIndex: 10 }}>
+              <thead style={{ position: 'sticky', padding: '15px', zIndex: 10, transform:"translateY(-1px)" }}>
                 <tr>
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
@@ -313,7 +337,7 @@ export default function CreateUD() {
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
                 </tr>
               </thead>
-              <tbody className="manage-tbody table-data" style={{ overflowY: 'auto' }}>
+              <tbody className="manage-tbody table-data">
                 {employees?.length ? (
                   employees.map((info, index) => (
                     <tr key={info.empno}>
@@ -348,7 +372,7 @@ export default function CreateUD() {
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModal"
                               type="button"
-                              className="edit-button ms-4"
+                              className="edit-button ms-3"
                               onClick={() => handleData(info)}
                               style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
                               title={update ? "" : "Update"}
@@ -359,7 +383,7 @@ export default function CreateUD() {
                               </svg>
                             </button>
                           )}
-                          {user_privilege.includes("manage_users") && (
+                          {/* {user_privilege.includes("manage_users") && (
                             <button
                               data-bs-toggle="modal"
                               data-bs-target="#deleteModal"
@@ -370,7 +394,7 @@ export default function CreateUD() {
                             >
                               <i className="bi bi-trash3"></i>
                             </button>
-                          )}
+                          )} */}
                         </div>
                       </td>
                     </tr>
@@ -385,32 +409,34 @@ export default function CreateUD() {
               </tbody>
             </table>
           </div>
-          <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end" }}>
-            <div className="employee-total">
-              <p><i className="bi bi-people-fill"></i><span> Total: {total}</span></p>
-            </div>
-            <div className="employee-pagination">
-              <nav aria-label="Page navigation">
-                <ul className="pagination">
-                  <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                    <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
-                      <i className="bi bi-caret-left"></i>
-                    </button>
-                  </li>
-                  <li className="page-item">
-                    <span className="page-link" style={{ whiteSpace: 'nowrap' }}>
-                      {currentPage} of {totalPages}
-                    </span>
-                  </li>
-                  <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                    <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
-                      <i className="bi bi-caret-right"></i>
-                    </button>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
+            {searchTerm =="" && (
+                   <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end" }}>
+                   <div className="employee-total">
+                     <p><i className="bi bi-people-fill"></i><span> Total: {total}</span></p>
+                   </div>
+                  <div className="employee-pagination">
+                  <nav aria-label="Page navigation">
+                    <ul className="pagination">
+                      <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                        <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
+                          <i className="bi bi-caret-left"></i>
+                        </button>
+                      </li>
+                      <li className="page-item">
+                        <span className="page-link" style={{ whiteSpace: 'nowrap' }}>
+                          {currentPage} of {totalPages}
+                        </span>
+                      </li>
+                      <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                        <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
+                          <i className="bi bi-caret-right"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+                </div>
+            )}
         </div>
       </div>
       <ToastContainer />
@@ -437,31 +463,6 @@ export default function CreateUD() {
                 }}
               >
                 Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="resetPasswordModalLabel">Confirmation</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              <p>Are you sure you want to reset the password?</p>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                data-bs-dismiss="modal"
-                onClick={TriggerReset}
-              >
-                Reset Password
               </button>
             </div>
           </div>
