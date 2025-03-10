@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [token,setToken]=useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [isLogged, setLog] = useState(false);
@@ -24,6 +25,7 @@ export default function Login() {
   }, []);
 
   useEffect(() => {
+    
     if (isLogged) {
       setTimeout(() => {
         router.push("/WorkforceMonitoring");
@@ -44,7 +46,7 @@ export default function Login() {
   });
   async function login() {
 
-    const credentials = { username, password };
+    const credentials = { username:username, password:password,token:token };
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/intranet/`, {
@@ -90,11 +92,12 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ un: username, password }),
+        body: JSON.stringify({ un: username, password:password }),
       });
 
       if (response.ok) {
         const token = await response.json();
+        setToken(token.access);
         localStorage.setItem("token", Encryptor(token.access));
         localStorage.setItem("refresh_token", Encryptor(token.access));
         localStorage.setItem("status", "login");
