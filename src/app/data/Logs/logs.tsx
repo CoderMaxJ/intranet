@@ -100,7 +100,7 @@ function LogsDataTable() {
     
     fetchLogs();
 
-    const intervalId = setInterval(fetchLogs, 5000);
+    const intervalId = setInterval(fetchLogs, 1000);
 
     return () => clearInterval(intervalId); // Cleanup interval
   }, [latestUpdate]); 

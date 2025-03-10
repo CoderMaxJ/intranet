@@ -113,7 +113,7 @@ function BreakDataTable() {
     fetchBreakData();
 
 
-    const fetchIntervalId = setInterval(fetchBreakData, 5000);
+    const fetchIntervalId = setInterval(fetchBreakData, 1000);
 
     return () => clearInterval(fetchIntervalId); 
   }, [latestUpdate]); 
