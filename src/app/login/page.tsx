@@ -10,7 +10,6 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
   const [isLogged, setLog] = useState(false);
   const router = useRouter();
 
@@ -44,25 +43,25 @@ export default function Login() {
     progress: undefined,
   });
   async function login() {
-    const token = localStorage.getItem("token");
-    const credentials = { username:username, password:password,token:Decryptor(token || "") };
+    const credentials = { username:username, password:password };
     try {
       
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/intranet/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
         },
         body: JSON.stringify(credentials),
       });
       if (response.status === 200) {
         const res = await response.json();
+        localStorage.setItem("token",Encryptor(res.token));
         localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
         localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
         localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
         localStorage.setItem("name",res.name);
         localStorage.setItem("position",res.position);
+        localStorage.setItem("status","login")
         successToast("Login Successful");
         setLog(true);
       }else if(response.status === 403){
@@ -83,34 +82,9 @@ export default function Login() {
       setError("Invalid Credentials");
     }
   }
-
-  async function getToken() {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/api/token/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ un: username, password:password }),
-      });
-
-      if (response.ok) {
-        const token = await response.json();
-        localStorage.setItem("token", Encryptor(token.access));
-        localStorage.setItem("refresh_token", Encryptor(token.access));
-        localStorage.setItem("status", "login");
-        login();
-      } else {
-        const message = await response.json();
-        setError(message.warning);
-      }
-    } catch (error) {
-      setError("Something went wrong while connecting to server!");
-    }
-  }
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    getToken();
+  login();
   };
 
   return (

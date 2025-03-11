@@ -103,6 +103,9 @@ function BreakDataTable() {
           }
         }
       udpateTimeStamp();
+      setTimeout(()=>{
+        udpateTimeStamp();
+      },2000)
       }
     };
   

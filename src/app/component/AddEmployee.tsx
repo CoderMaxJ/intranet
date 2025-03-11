@@ -59,6 +59,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
 
   useEffect(() => {
+    const unique_token = localStorage.getItem("token");
+console.log(unique_token)
     if (empData) {
       setFormData({
         empno: empData.empno || "",
@@ -218,7 +220,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           "Content-Type": "application/json",
           Authorization: `Bearer ${Decryptor(token || "")}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formDataWithToken),
       });
 
       if (response.status === 201) {
@@ -244,7 +246,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           "Content-Type": "application/json",
           Authorization: `Bearer ${Decryptor(token || "")}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formDataWithToken),
       });
 
       if (response.status === 200) {
@@ -257,10 +259,17 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       console.error(e);
     }
   }
-
+  const formDataWithToken = {
+    ...formData,
+    token:Decryptor(localStorage.getItem("token") || ""),
+    user_priviledge: Decryptor(localStorage.getItem("user_privilege") || ""),
+    user_id:Decryptor(localStorage.getItem("user_id") || "")
+    
+  }
   const handleSubmitForm = async (e: React.FormEvent) => {
 
     e.preventDefault();
+   
     onButtonClick("clicked");
     if (mode === 'edit') {
       await Update();
