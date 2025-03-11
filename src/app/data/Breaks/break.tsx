@@ -25,7 +25,7 @@ function BreakDataTable() {
   };
 
   const fetchBreakData = async () => {
-    console.log("fetching");
+ 
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
@@ -59,23 +59,14 @@ function BreakDataTable() {
       }
 
       const data = await response.json();
-
+ 
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
       const storedBreaks = storedData ? JSON.parse(storedData) : [];
-      const updatedBreaks = data.data.map((newBreak: BreakData) => {
-        const existingBreak = storedBreaks.find((b: BreakData) => b.name === newBreak.name);
-
-        // If the user is overbreak, use the overbreak duration from the backend
-        if (newBreak.duration <= 0) {
-          return {
-            ...newBreak,
-            duration: -newBreak.overbreak, // Set duration to negative overbreak
-          };
-        }
-
-        return existingBreak ? { ...newBreak, duration: existingBreak.duration } : newBreak;
-      });
+      const updatedBreaks = data.data.map((newBreak: BreakData) => ({
+        ...newBreak,
+        duration: newBreak.duration > 0 ? newBreak.duration : -newBreak.overbreak, // Always use fresh duration
+      }));
 
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
@@ -87,6 +78,40 @@ function BreakDataTable() {
       console.error("Failed to fetch break data:", error);
     }
   };
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        const udpateTimeStamp = async ()=>{
+          try{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/updatetimestamp/`,{
+              method:"POST",
+              headers:{
+                "Content-type":"application/json",
+                Authorization:`Bearer ${Decryptor(token || "")}`
+              }
+            })
+            if(response.status === 200){
+            
+            }else{
+              console.log("error");
+            }
+          }catch(e){
+            alert("error");
+          }
+        }
+      udpateTimeStamp();
+      }
+    };
+  
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+  
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   useEffect(() => {
     const countdownIntervalId = setInterval(() => {

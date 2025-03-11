@@ -24,6 +24,7 @@ export default function Login() {
   }, []);
 
   useEffect(() => {
+    
     if (isLogged) {
       setTimeout(() => {
         router.push("/WorkforceMonitoring");
@@ -43,10 +44,10 @@ export default function Login() {
     progress: undefined,
   });
   async function login() {
-
-    const credentials = { username, password };
+    const token = localStorage.getItem("token");
+    const credentials = { username:username, password:password,token:Decryptor(token || "") };
     try {
-      const token = localStorage.getItem("token");
+      
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/intranet/`, {
         method: "POST",
         headers: {
@@ -90,7 +91,7 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ un: username, password }),
+        body: JSON.stringify({ un: username, password:password }),
       });
 
       if (response.ok) {
