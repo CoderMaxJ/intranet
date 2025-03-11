@@ -73,7 +73,6 @@ function LogsDataTable() {
         throw new Error("Network response was not ok");
       }
       const fetchedData = await response.json();
-
       setLatestUpdate(fetchedData.latest_update);
 
       // Merge fetched data with the current state
