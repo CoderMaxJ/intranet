@@ -107,11 +107,10 @@ export default function CreateUD() {
         successToast("Deleted successfully.");
         GetEmployee(currentPage);
       } else {
-        alert("Failed to delete employee.");
+        console.error("error while deleting!")
       }
     } catch (e) {
       console.error(e);
-      alert("An error occurred while deleting the employee.");
     }
   };
 
@@ -139,7 +138,7 @@ export default function CreateUD() {
         const data = await response.json();
         setEmployees(data.data);
       } else {
-        console.log("error ");
+        console.error("error ");
       }
     }
     if (searchTerm !== "") {
@@ -205,7 +204,7 @@ export default function CreateUD() {
     } else {
       const warning = await response.json();
       errorToast(warning.warning);
-      console.log("error");
+      console.error("error");
     }
   };
 

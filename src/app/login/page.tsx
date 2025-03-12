@@ -66,7 +66,6 @@ export default function Login() {
         setLog(true);
       }else if(response.status === 403){
         const message = await response.json();
-        console.log(message)
         setError(message.warning);
         localStorage.clear();
       }else if(response.status === 401){

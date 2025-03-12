@@ -59,8 +59,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
 
   useEffect(() => {
-    const unique_token = localStorage.getItem("token");
-console.log(unique_token)
     if (empData) {
       setFormData({
         empno: empData.empno || "",
@@ -128,7 +126,7 @@ console.log(unique_token)
         setPrivileges(data.data);
 
       } else {
-        console.log("Error while fetching privileges");
+        console.error("Error while fetching privileges");
       }
     }
     catch (e) {
@@ -233,7 +231,6 @@ console.log(unique_token)
       }
     } catch (e) {
       console.error(e);
-      alert(e);
     }
   }
 

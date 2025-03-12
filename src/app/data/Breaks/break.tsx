@@ -2,7 +2,7 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState, useEffect, useRef, use } from "react";
 import "../../style/breaks.css";
-import { Decryptor } from "@/security";
+import { Decryptor, Encryptor } from "@/security";
 import {useRouter} from "next/navigation"
 
 interface BreakData {
@@ -55,11 +55,26 @@ function BreakDataTable() {
         return;
       }
 
-      if (!response.ok || response.status === 404) {
-        localStorage.clear();
-        router.push("/login")
+      if (!response.ok || response.status === 404 || response.status === 401 || response.status === 403) {
+        const getToken = async ()=>{
+          const user_id = localStorage.getItem("user_id");
+          const id = {user_id:Decryptor(user_id || "")}
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/token/`,{
+            method:"POST",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${Decryptor(token || "")}`,
+            },
+            body:JSON.stringify(id)
+          })
+          if(response.status === 200){
+            const data = await response.json();
+            localStorage.setItem("token",Encryptor(data.token));
+            
+          }
+        }
+        getToken();
         return;
-        throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
@@ -100,10 +115,11 @@ function BreakDataTable() {
             if(response.status === 200){
             
             }else{
-              console.log("error");
+              console.error("error");
             }
           }catch(e){
-            alert("error");
+            
+            console.error(e);
           }
         }
       udpateTimeStamp();
