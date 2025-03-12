@@ -3,6 +3,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState, useEffect, useRef, use } from "react";
 import "../../style/breaks.css";
 import { Decryptor } from "@/security";
+import {useRouter} from "next/navigation"
 
 interface BreakData {
   name: string;
@@ -20,6 +21,7 @@ function BreakDataTable() {
   const [latestUpdate, setLatestUpdate] = useState<string | null>(null);
   const breaksRef = useRef<BreakData[]>([]);
 
+  const router = useRouter();
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
@@ -43,7 +45,6 @@ function BreakDataTable() {
 
       if (response.status === 204) {
         const message = await response.text();
-
         // No new data, use data from local storage
         const storedData = localStorage.getItem("breakData");
         if (storedData) {
@@ -54,7 +55,10 @@ function BreakDataTable() {
         return;
       }
 
-      if (!response.ok) {
+      if (!response.ok || response.status === 404) {
+        localStorage.clear();
+        router.push("/login")
+        return;
         throw new Error("Network response was not ok");
       }
 
@@ -103,6 +107,9 @@ function BreakDataTable() {
           }
         }
       udpateTimeStamp();
+      setTimeout(()=>{
+        udpateTimeStamp();
+      },2000)
       }
     };
   

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { Decryptor } from "@/security";
+import { useRouter } from "next/navigation";
 
 interface Logs {
   name: string;
@@ -27,6 +28,7 @@ function LogsDataTable() {
   const [latestUpdate, setLatestUpdate] = useState("");
   const logData = useRef<Logs[]>([]); // Ref to store logs data
 
+  const router = useRouter();
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value.toUpperCase());
     setFilter(e.target.value.toLowerCase());
@@ -69,8 +71,12 @@ function LogsDataTable() {
         return;
       }
 
-      if (!response.ok) {
+      if (!response.ok || response.status === 404) {
+        localStorage.clear();
+        router.push("/login");
+        return;
         throw new Error("Network response was not ok");
+
       }
       const fetchedData = await response.json();
       setLatestUpdate(fetchedData.latest_update);

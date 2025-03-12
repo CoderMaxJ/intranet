@@ -6,8 +6,8 @@ import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { truncateSync } from "node:fs";
-import { profile } from "node:console";
+import { Decryptor } from "@/security";
+
 
 export default function Dashboard() {
   const [user_privilege, setUserPrivilege] = useState([""]);
@@ -43,8 +43,8 @@ export default function Dashboard() {
   }
  const profileImg = localStorage.getItem("profileImage") 
   const handleLogout = () => {
-    
-    localStorage.clear();
+  localStorage.clear();
+   
   if(profileImg){
     localStorage.setItem("profileImage",profileImg)
   }
