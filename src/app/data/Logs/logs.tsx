@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
+import { Encryptor } from "@/security";
 
 interface Logs {
   name: string;
@@ -43,6 +44,7 @@ function LogsDataTable() {
   );
 
   const fetchLogs = async () => {
+    
     try {
       const account_id = await localStorage.getItem("user_id");
       const response = await fetch(
@@ -70,14 +72,10 @@ function LogsDataTable() {
 
         return;
       }
-
-      if (!response.ok || response.status === 404) {
-        localStorage.clear();
-        router.push("/login");
-        return;
-        throw new Error("Network response was not ok");
-
+      if(!response.ok || response.status === 404 || response.status === 401 || response.status === 403 ){
+       return;
       }
+          
       const fetchedData = await response.json();
       setLatestUpdate(fetchedData.latest_update);
 

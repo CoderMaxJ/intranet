@@ -83,7 +83,7 @@ export default function ManageDepartment() {
                 setDepartment(data.data);
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     };
 
@@ -101,7 +101,7 @@ export default function ManageDepartment() {
                 setManager(data.data);
             }
         } catch (e) {
-            console.log(e);
+        console.error(e);
         }
     };
 
@@ -131,7 +131,7 @@ export default function ManageDepartment() {
                 fetchAccountList();
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     };
     const handleCreateManager = (acctid: number) => {
@@ -162,7 +162,7 @@ export default function ManageDepartment() {
                 errorToast(error.warning);
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     };
     const deleteAccount = async (empno: number) => {
@@ -179,7 +179,7 @@ export default function ManageDepartment() {
                 fetchAccountList();
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     };
     const removeManager = async (empno: number, acctid: number) => {
