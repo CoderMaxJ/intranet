@@ -108,6 +108,7 @@ export default function ManageDepartment() {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         createAccount();
+        setAccountName("");
     };
 
     const createAccount = async () => {
@@ -269,7 +270,7 @@ export default function ManageDepartment() {
                                         />
                                     </div>
                                     <div className="buttons1">
-                                        <a className="closebutton" data-bs-dismiss="modal">Close</a>
+                                        <button className="closebutton" data-bs-dismiss="modal" type="button">Close</button>
                                         <button className="btn btn-success btn-sm" type="submit">
                                             Create
                                         </button>

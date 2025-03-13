@@ -1,5 +1,4 @@
 "use client";
-import { Encryptor, Decryptor } from "@/security";
 import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmployee";
 import { useEffect, useState } from "react";
@@ -7,6 +6,7 @@ import Header from "../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
 import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { Decryptor } from "@/security";
 
 interface Information {
   empno: number;
@@ -21,15 +21,15 @@ interface Information {
   position: string;
   acctid: number;
   un: string;
+  role_id:number;
+  isdayshift:number
 }
 ////
 export default function CreateUD() {
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
   const [employees, setEmployees] = useState<Information[]>([]);
-  const [hide, hidden] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [departmentSearchTerm, setDepartmentSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [targetID, setTargetID] = useState<number | null>(null);
@@ -39,7 +39,6 @@ export default function CreateUD() {
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
-  const [targetReset, setTargetReset] = useState(Number);
 
   const token = localStorage.getItem("token");
 
@@ -107,10 +106,11 @@ export default function CreateUD() {
         successToast("Deleted successfully.");
         GetEmployee(currentPage);
       } else {
-        console.error("error while deleting!")
+        alert("Failed to delete employee.");
       }
     } catch (e) {
       console.error(e);
+      alert("An error occurred while deleting the employee.");
     }
   };
 
@@ -138,7 +138,7 @@ export default function CreateUD() {
         const data = await response.json();
         setEmployees(data.data);
       } else {
-        console.error("error ");
+        console.log("error ");
       }
     }
     if (searchTerm !== "") {
@@ -149,8 +149,9 @@ export default function CreateUD() {
   };
 
   const handleData = (data: any) => {
+
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid } = data;
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid,role_id,isdayshift } = data;
     let currentData = {
       empno,
       fname,
@@ -162,15 +163,12 @@ export default function CreateUD() {
       position,
       gender,
       maritalstatus,
-      acctid
+      acctid,
+      role_id,
+      isdayshift,
     };
     setEmpData(currentData);
   };
-
-  const closeModal = () => {
-    hidden(true);
-  };
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page); // Update the current page
     GetEmployee(page); // Fetch data for the new page
@@ -204,7 +202,7 @@ export default function CreateUD() {
     } else {
       const warning = await response.json();
       errorToast(warning.warning);
-      console.error("error");
+      console.log("error");
     }
   };
 
