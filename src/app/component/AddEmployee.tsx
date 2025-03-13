@@ -18,7 +18,7 @@ interface AddEmployeeData {
   address: string;
   acctid: number;
   role_id: number;
-  is_dayshift: number
+  isdayshift: number
 }
 
 interface AddEmpProps {
@@ -47,7 +47,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     address: empData.address || "",
     acctid: empData.acctid || 0,
     role_id: empData.role_id || 0,
-    is_dayshift: empData.is_dayshift || 0,
+    isdayshift: empData.isdayshift || 0,
   });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
@@ -55,8 +55,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
  
-
-
 
   useEffect(() => {
     if (empData) {
@@ -73,7 +71,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         address: empData.address || "",
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
-        is_dayshift: empData.is_dayshift || 0,
+        isdayshift: empData.isdayshift || 0,
       });
     }
   }, [empData]);
@@ -111,7 +109,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   
   }
 
-
   const fetchPrivileges = async () => {
     try {
       const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/role/list/`, {
@@ -126,7 +123,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         setPrivileges(data.data);
 
       } else {
-        console.error("Error while fetching privileges");
+        console.log("Error while fetching privileges");
       }
     }
     catch (e) {
@@ -231,6 +228,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       }
     } catch (e) {
       console.error(e);
+      alert(e);
     }
   }
 
@@ -289,7 +287,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       address: "",
       acctid: 0,
       role_id: 0,
-      is_dayshift: 0
+      isdayshift: 0
     });
     isClose();
 
@@ -486,24 +484,24 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         <div className="col-md-2 mt-3  d-flex justify-content-center align-items-center">
           <label htmlFor="is_dayshift" className="form-label">
             Day Shift
-            <span className="ms-2">
-              <input
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: "4px",
-                  border: "1px solid #ccc",
-                  cursor: "pointer",
-                  marginLeft: "10px",
-                }}
-                type="checkbox"
-                name="is_dayshift"
-                className="form-check-input "
-                id="is_dayshift"
-                value={formData.is_dayshift}
-                checked={formData.is_dayshift === 1}
-                onChange={handleInputChange}
-              /></span>
+                <span className="ms-2">
+                    <input
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      borderRadius: "4px",
+                      border: "1px solid #ccc",
+                      cursor: "pointer",
+                      marginLeft: "10px",
+                    }}
+                    type="checkbox"
+                    name="isdayshift"
+                    className="form-check-input "
+                    id="is_dayshift"
+                    value={formData.isdayshift}
+                    checked={formData.isdayshift === 1}
+                    onChange={handleInputChange}
+                  /></span>
           </label>
         </div>
           {mode === 'edit' && (
