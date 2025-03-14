@@ -26,6 +26,25 @@ function BreakDataTable() {
     setFullscreen((prev) => !prev);
   };
 
+  const getToken = async ()=>{
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    const id = {user_id:Decryptor(user_id || "")}
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/token/`,{
+      method:"POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${Decryptor(token || "")}`,
+      },
+      body:JSON.stringify(id)
+    })
+    if(response.status === 200){
+      const data = await response.json();
+      localStorage.setItem("token",Encryptor(data.token));
+      
+    }
+  }
+  
   const fetchBreakData = async () => {
  
     try {
@@ -56,23 +75,6 @@ function BreakDataTable() {
       }
 
       if (!response.ok || response.status === 404 || response.status === 401 || response.status === 403) {
-        const getToken = async ()=>{
-          const user_id = localStorage.getItem("user_id");
-          const id = {user_id:Decryptor(user_id || "")}
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/token/`,{
-            method:"POST",
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${Decryptor(token || "")}`,
-            },
-            body:JSON.stringify(id)
-          })
-          if(response.status === 200){
-            const data = await response.json();
-            localStorage.setItem("token",Encryptor(data.token));
-            
-          }
-        }
         getToken();
         return;
       }
@@ -122,6 +124,7 @@ function BreakDataTable() {
             console.error(e);
           }
         }
+      getToken();
       udpateTimeStamp();
       setTimeout(()=>{
         udpateTimeStamp();
