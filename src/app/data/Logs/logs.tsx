@@ -191,7 +191,7 @@ function LogsDataTable() {
             </div>
           </div>
         </div>
-        <div className="logs-tablee">
+        <div className="logs-tablee table-responsive">
           <table className="table table-bordered table-striped">
             <thead style={{ position: "sticky", top: 0 }}>
               <tr>

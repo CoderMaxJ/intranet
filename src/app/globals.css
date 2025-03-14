@@ -337,13 +337,14 @@ input:focus {
   height: auto;
   margin-right: 20px;
 }
-
+.main-page {
+  background-color: #e7e7e7;
+}
 .searchbar-wrapper {
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
 }
 
 .searchbar-container {
@@ -506,13 +507,13 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding-top: 20px;
+  /* padding-top: 20px;
   margin-left: 245px;
-  width: 85.7vw;
-  margin-top: 20px !important;
+  width: 85.7vw; */
+  /* margin-top: 20px !important;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 5px !important;
+  padding-bottom: 5px !important; */
 }
 
 .breaks-div.fullscreen {
@@ -547,14 +548,14 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 85.7vw;
-  margin: 32px auto;
+  /* width: 85.7vw;
+  margin: 32px auto; */
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 5px;
   padding-top: 18px;
-  margin-left: 245px;
-  position: relative;
+  /* margin-left: 245px;
+  position: relative; */
 }
 
 .logs-table {
@@ -612,10 +613,7 @@ input:focus {
 
 .background-report {
   border-radius: 4px;
-  margin: 0 auto 0 240px;
-  margin-top: 20px !important;
-  height: 84.5vh;
-  width: 86vw;
+  width: 100% !important;
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
 }
@@ -1397,11 +1395,11 @@ table {
 
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
-  width: 215px;
+  /* width: 215px; */
   background-color: #007ea7;
   height: 100% !important;
   padding: 10px;
-  position: fixed;
+  /* position: fixed; */
 }
 
 
@@ -1787,10 +1785,10 @@ table {
 }
 
 .header-text-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  background-image: url("/img/Breaktool.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;  
 }
 
 .reportheader {

@@ -193,8 +193,8 @@ function BreakDataTable() {
 
   return (
     <div className="workforce">
-      <div className={fullscreen ? "breaks-div fullscreen" : "breaks-div"}>
-        <div>
+      <div className={fullscreen ? "breaks-div fullscreen" : "breaks-div p-3"}>
+        <div className="d-flex flex-column gap-3">
           <div className="searchbar-wrapper">
             <div className="d-flex align-items-center">
               <h4
@@ -300,7 +300,7 @@ function BreakDataTable() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="table-responsive">
             <table className="table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
                 <tr>

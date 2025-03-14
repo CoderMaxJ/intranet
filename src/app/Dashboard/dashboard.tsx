@@ -16,6 +16,7 @@ export default function Dashboard() {
   const [upload,setUpload]=useState(false);
   const [profile,setProfile]=useState(null)
   const [open,setOpen]=useState(false);
+  const [navWidth,setNavWidth]=useState("217px");
   
 
   useEffect(() => {
@@ -78,6 +79,15 @@ const openClose =()=>{
   }
 }
 
+const toggleMinimizeMaximize = ()=>{
+  if(navWidth === "217px"){
+    setNavWidth("60px")
+  }else{
+    setNavWidth("217px")
+  }
+  
+}
+
   return (
     <>
       <Updatepassword />
@@ -122,23 +132,24 @@ const openClose =()=>{
       <div
         className="db "
         style={{
-          width: "217px",
+          width:navWidth,
         }}
       >
         <div style={{ marginBottom: "30px", marginLeft: '40px', transform: 'translateY(-10px)' }}>
           <img src="/img/sos1.png" height={100} />
         </div>
         <div className="accordion"  >
+
           <div style={{ marginBottom: '-10px', paddingLeft: '5px' }} className="generate">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{ marginRight: "21px", marginLeft: "5px", marginBottom: '5px' }}>
               <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
             </svg>
-            <button className="nav-font" onClick={() => router.push("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
+            <button className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => router.push("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
               Dashboard
             </button>
           </div>
           <div className="generate text-dark">
-            <a className="nav-font" onClick={() => router.push("/Reports")} style={{ color: '#ffffff' }}>
+            <a className="nav-font " onClick={() => router.push("/Reports")} style={{ color: '#ffffff' }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -270,6 +281,8 @@ const openClose =()=>{
           <Logout />
           
         </div>
+        <hr className="border-white border-2 "/>
+        <button className="btn btn-primary rounded-circle m-auto d-block" onClick={toggleMinimizeMaximize}><i className="bi bi-chevron-right"></i></button>
         {open && (
                <img
                onClick={()=>setOpen(false)}
@@ -312,8 +325,9 @@ const openClose =()=>{
 
         )}
         </center>  
-      
+        
       </div>
+      
     </>
   );
 }
