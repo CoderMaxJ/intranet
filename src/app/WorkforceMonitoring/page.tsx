@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function MainDashboard() {
   return (
-    <div className="d-flex main-page ">
+    <div className="d-flex main-page">
       <div>
         <Dashboard />
       </div>

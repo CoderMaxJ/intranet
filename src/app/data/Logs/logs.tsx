@@ -135,7 +135,7 @@ function LogsDataTable() {
   return (
     <div className="logs-wrapper" style={{ backgroundColor: "#e7e7e7" }}>
       <div className="logs-maindiv">
-        <div className="logs-table" style={{ display: "flex", position: "relative" }}>
+        <div className="logs-table" style={{ display: "flex"}}>
           <h3
             className="logs-headername"
             style={{

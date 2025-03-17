@@ -247,10 +247,9 @@ function BreakDataTable() {
             <div
               style={{
                 fontWeight: "bold",
-                width: "460px",
               }}
             >
-              <div style={{transform:'translateX(90px)'}}>
+              <div>
               <span
                 style={{
                   padding: "10px",

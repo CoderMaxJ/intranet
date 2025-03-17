@@ -199,21 +199,19 @@ export default function Daterange() {
                 <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
-                    <div className="main-divv">
-                        <div className="reportheader px-4"><Header title="DAILY REPORTS" /></div>
+                    <div className="main-divv px-4">
+                        <div className="reportheader"><Header title="DAILY REPORTS" /></div>
                         <div className="background-report">
-                            <div style={{ display: 'flex' }}>
+                            <div className="px-4 pt-4" style={{ display: 'flex' }}>
                                 <header style={{
                                     backgroundImage: "url('/img/Breaktool.png')",
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
-                                    transform: 'translateX(100px)',
                                     position: 'sticky',
+                                    paddingTop:'10px',
                                     padding: '15px',
-                                    marginTop: '20px',
                                     color: 'white',
-                                    marginLeft: '-80px',
                                     width: '100%'
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
@@ -301,22 +299,22 @@ export default function Daterange() {
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '690px', backgroundColor: '#ffffff' }}>
-                                <table className="table table-striped" style={{ position: 'sticky', top: 0 }}>
+                            <div style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
+                                <table className="table table-striped mx-4" style={{ position: 'sticky', top: 0, width:'97.4%' }}>
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Shift Date</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout1</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob1</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Break in 1</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Break out 1</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Over Break 1</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchin</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchout</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob3</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin2</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout2</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob2</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Over Break 3</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Break in 2</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Break out 2</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Over Break 2</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
                                         </tr>
                                     </thead>

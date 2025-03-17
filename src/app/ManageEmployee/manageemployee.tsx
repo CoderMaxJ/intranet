@@ -235,7 +235,7 @@ export default function CreateUD() {
       <div className="db-employee">
         <Dashboard />
       </div>
-      <div className="main-divv">
+      <div className="main-divv px-4">
         <Header title="MANAGE EMPLOYEE" />
         <div className="manageemployee-division">
           <div>

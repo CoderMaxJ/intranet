@@ -303,8 +303,8 @@ export default function ManageDepartment() {
                 </div>
             )}
             <div className="manage-department">
-                <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" /></div>
-                <div>
+                <div className="manageaccounts-header px-4"><Header title="MANAGE ACCOUNTS" /></div>
+                <div className="px-4">
                     <div className="manageaccounts-bg">
                         <div className="employee-header">
                             <button
