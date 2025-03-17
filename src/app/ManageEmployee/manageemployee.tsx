@@ -89,13 +89,12 @@ const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
       console.log("error")
     }
     const data = await response.json();
-    console.log(data.data);
     setAccount(data.data)
   }
 
 useEffect(()=>{
   getAccout();
-})
+},[])
 
 const getAccountName = (acctid: number): string => {
   if(acctid == undefined || acctid == null){
