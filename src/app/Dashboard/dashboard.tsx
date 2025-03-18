@@ -28,6 +28,7 @@ export default function Dashboard() {
   const [showProfile, setShowProfile] =useState(true);
   const [showAccounts, setShowAccounts] = useState(true);
   const [showEmployee, setShowEmployee] = useState(true);
+  const [showProfileLabel, setShowProfileLabel] = useState(true);
 
 
   useEffect(() => {
@@ -102,9 +103,9 @@ export default function Dashboard() {
       setShowIcon(false);
       setArrowIcon(false);
       setShowProfile(false);
-      setShowProfile(false);
       setShowAccounts(false);
       setShowEmployee(false);
+      setShowProfileLabel(false);
     } else {
       setNavWidth("217px")
       setShowDashboard(true);
@@ -118,8 +119,8 @@ export default function Dashboard() {
       setShowProfile(true);
       setShowAccounts(true);
       setShowEmployee(true);
+      setShowProfileLabel(true);
     }
-
   }
 
   return (
@@ -177,12 +178,10 @@ export default function Dashboard() {
         <div className="accordion"  >
 
           <div style={{ marginBottom: '-10px', paddingLeft: '5px' }} className="generate">
-            <div className="gen-svg"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{position:'sticky'}}>
-              <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
-            </svg></div>
+            <div className="gen-svg"></div>
             {showDashboard === true && (
               <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => router.push("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
-                Dashboard
+              <i className="bi bi-grid" style={{marginLeft:'5px', marginRight:'23px'}}></i>Dashboard
               </button>
             )}
           </div>
@@ -227,7 +226,7 @@ export default function Dashboard() {
                 </svg>
                 <div>
                   {showManage === true && (
-                    <span className="nav-font" style={{}}>Manage</span>
+                    <span className="nav-font" style={{marginLeft:'-40px'}}>Manage</span>
                   )}
                 </div>
                 <div>
@@ -298,12 +297,12 @@ export default function Dashboard() {
                         cursor: 'pointer',
                       }}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="white" className="bi bi-person-circle" viewBox="0 0 16 16" style={{ marginRight: '19px' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="white" className="bi bi-person-circle" viewBox="0 0 16 16" style={{ marginRight: '22px' }}>
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                         <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                       </svg>
                       {showUpdatepassword === true && (
-                        <label className="nav-font" htmlFor="" >Update password</label>
+                        <label className="nav-font" htmlFor="updatepassword" >Update password</label>
                       )}
                     </div>
                   </div>
@@ -314,7 +313,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div onClick={() => setLogout(true)} className="generate" style={{ marginTop: '-11px', width: '10.3vw' }}>
+        <div onClick={() => setLogout(true)} className="generate" style={{ marginTop: '-11px', width: showLogout === false ? "100px" :'10.3vw' }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -338,6 +337,7 @@ export default function Dashboard() {
           )}
         </div>
         <hr className="border-white border-2 " />
+        <div className="upload-prof">
         <button className="btn btn-light rounded-circle m-auto d-block" onClick={toggleMinimizeMaximize}>
           {arrowIcon ? (
             <i className="bi bi-chevron-right rotate-right"></i>) : (
@@ -376,7 +376,7 @@ export default function Dashboard() {
             </div>
 
           )}
-          {profile != null && (
+          {profile != null && showProfileLabel === true && (
             <div>
               <p className="name">{localStorage.getItem("name")}</p>
               <p className="name">{localStorage.getItem("position")}</p>
@@ -385,7 +385,7 @@ export default function Dashboard() {
 
           )}
         </center>
-
+        </div>
       </div>
 
     </>

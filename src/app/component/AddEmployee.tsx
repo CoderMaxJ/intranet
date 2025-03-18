@@ -298,7 +298,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
 
   return (
-    <div>
+    <div className="addemployee-form">
       <form className="row" onSubmit={handleSubmitForm} >
         <div className="col-md-4 mb-3">
           <button
@@ -412,7 +412,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <option value="Female">Female</option>
           </select>
         </div>
-        <div className="col-md-5 mb-3">
+        <div className="col-md-3 mb-3">
           <label htmlFor="contactno" className="form-label">
             Contact No
           </label>
@@ -426,6 +426,26 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="+63 02 6645 9723"
           />
         </div>
+
+        <div className="col-md-2 mb-3">
+          <label htmlFor="position" className="form-label">
+            Status
+          </label>
+          <select
+            required
+            name="acctid"
+            value={formData.acctid}
+            id="acctid"
+            className="form-select"
+            onChange={handleInputChange}
+          >
+            <option value="">Select Status</option>
+            {accounts.map((account, index) => (
+              <option key={index} value={account.acctid}> {account.acctname} </option>
+            ))}
+          </select>
+        </div>
+
         <div className="col-md-4 mb-3">
           <label htmlFor="address" className="form-label">
             Address

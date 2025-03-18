@@ -22,11 +22,11 @@
 }
 
 
-.nav-font{
-  font-family:"roboto";
-  font-weight:400;
-  color:#fbfff1;
-  letter-spacing: 0.50px;  
+.nav-font {
+  font-family: "roboto";
+  font-weight: 400;
+  color: #fbfff1;
+  letter-spacing: 0.50px;
 }
 
 .nav-font:hover {
@@ -336,9 +336,11 @@ input:focus {
   height: auto;
   margin-right: 20px;
 }
+
 .main-page {
   background-color: #e7e7e7;
 }
+
 .searchbar-wrapper {
 
   display: flex;
@@ -356,13 +358,32 @@ input:focus {
   .searchbar-wrapper {
     display: flex;
     flex-direction: column;
-    align-items:start;
+    align-items: start;
     gap: 1rem;
   }
   .searchbar-container1 {
- justify-content: space-between;
+    justify-content: space-between;
   }
-  
+
+  .logs-table {
+    /* justify-content: space-between; */
+  }
+  .modal-content {
+    width: 150% !important;
+  }
+  .updatepassword-input {
+    width: 90% !important;
+  }
+  .updatepassword-input1 {
+    width: 90% !important;
+  }
+  .actions {
+    display: flex;
+  }
+  .row{
+    width: 60% !important;
+   
+  }
 }
 
 .searchbar {
@@ -374,6 +395,17 @@ input:focus {
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: white;
+}
+
+.searchbarr {
+  margin-top: 1px;
+  width: 330px;
+  padding: 5px 5px 10px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: white;
+  transform: translateX(-70px);
 }
 
 .searchbar:focus {
@@ -565,14 +597,24 @@ input:focus {
   padding-right: 20px;
   padding-bottom: 5px;
   padding-top: 18px;
+  /* transform: translateY(10px); */
   /* margin-left: 245px;
   position: relative; */
 }
 
 .logs-table {
   margin-bottom: 10px;
+  justify-content: space-between;
 }
 
+.logs-total span {
+  background-color: #2ee4c5;
+  padding: 5px;
+  width: 95px;
+  justify-content: center;
+  height: 37px;
+  text-align: center;
+}
 
 .logs-headername {
   font-size: 1.5rem;
@@ -956,15 +998,15 @@ table {
   border: none;
   border-radius: 4px;
   white-space: nowrap;
-  font-weight: bold; 
-  font-size: small; 
+  font-weight: bold;
+  font-size: small;
   width: 130px;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 
 .addhover:hover {
-  background-color:#22af10 !important;
+  background-color: #22af10 !important;
   transform: scale(0.9);
 }
 
@@ -1040,26 +1082,29 @@ table {
   font-weight: bolder;
 }
 
-.profile-div{
-  border:0.60px solid white;
+.profile-div {
+  border: 0.60px solid white;
   border-radius: 4px;
   height: 120px;
   width: 70%;
 
 }
-.profile-picture{
+
+.profile-picture {
   border-radius: 50%;
 }
-.username-label-profile{
-  color:white;
+
+.username-label-profile {
+  color: white;
   font-family: 'roboto';
   font-size: 40px;
-  letter-spacing:1px;
-  font-weight:bold;
+  letter-spacing: 1px;
+  font-weight: bold;
   margin-top: 15px;
 
 }
-.input-image{
+
+.input-image {
   height: 20px;
   width: 100px;
   font-size: 10px;
@@ -1068,7 +1113,7 @@ table {
 
 }
 
-.dot-div{
+.dot-div {
   width: 90%;
 
   display: flex;
@@ -1076,7 +1121,7 @@ table {
   justify-content: flex-end;
 }
 
-.profile-circle{
+.profile-circle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1087,6 +1132,7 @@ table {
   background-color: #05668d;
 
 }
+
 .employee-heade {
   position: sticky;
   top: 0;
@@ -1353,7 +1399,8 @@ table {
   border: none;
   color: rgb(14, 206, 100);
 }
-.online{
+
+.online {
   height: 15px;
   width: 15px;
   margin-left: 70px;
@@ -1361,13 +1408,15 @@ table {
   background-color: #00FF40;
 
 }
-.name{
+
+.name {
   padding-top: 5px;
   letter-spacing: 1px;
   font-weight: bold;
   color: white;
   font-family: "roboto";
 }
+
 .delete {
   outline: none;
   background-color: none;
@@ -1458,6 +1507,11 @@ table {
 
 }
 
+.upload-prof {
+  display: grid;
+  gap: 190px;
+}
+
 .dashboard:active {
   background-color: #ffffff;
   color: white !important;
@@ -1470,9 +1524,7 @@ table {
 }
 
 /* dashboard view report  */
-.gen-svg {
-  position: sticky;
-}
+
 
 .generate svg {
   align-items: center;
@@ -1803,7 +1855,7 @@ table {
   background-image: url("/img/Breaktool.png");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;  
+  background-position: center;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
 }
@@ -1817,6 +1869,7 @@ table {
   min-height: 100vh;
   height: 100%;
 }
+
 .viewdashboard {
   position: fixed;
   left: 0;

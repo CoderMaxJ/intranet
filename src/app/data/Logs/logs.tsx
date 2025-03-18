@@ -156,21 +156,24 @@ function LogsDataTable() {
             }}
           >
             <input
-              className="searchbar"
+              className="searchbarr"
               style={{
+                justifyContent:'space-between',
                 backgroundColor: "#f0f0f0",
                 fontFamily: "'Raleway', sans-serif",
                 marginBottom: "3px",
-                paddingRight: "30px",
-                position: "absolute",
-                left: "425px",
+                // paddingRight: "30px",
+                // position: "absolute",
+             
               }}
               type="text"
               placeholder="Search..."
               value={filter}
               onChange={handleSearchChange}
             />
+           
             <div
+            className="adjust-icon"
               style={{
                 position: "absolute",
                 right: "10px",
@@ -184,11 +187,25 @@ function LogsDataTable() {
                 fill="currentColor"
                 className="bi-search"
                 viewBox="-7 0 30 16"
-                style={{ cursor: "pointer", position: "absolute", transform: "translateY(-24px)", margin: "0 auto", marginLeft: "435px" }}
+                style={{ cursor: "pointer", position: "absolute", transform: "translateY(-24px) translateX(-390px)", margin: "0 auto" }}
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>
             </div>
+          </div>
+          <div className="logs-total d-flex">
+          <span
+                style={{
+                  padding: "3px",
+                  fontFamily: "'Raleway', sans-serif",
+                  backgroundColor: "#b3efb2",
+                  textAlign: "center", 
+                  fontWeight: "bold",    
+                  paddingTop:'7px',        
+                }}
+              >
+                Total: 100
+              </span>
           </div>
         </div>
         <div className="logs-tablee table-responsive">

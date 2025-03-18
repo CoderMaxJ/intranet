@@ -296,6 +296,19 @@ function BreakDataTable() {
               >
                 Over Break
               </span>
+              
+              <span
+                style={{
+                  padding: "10px",
+                  marginLeft:'10px',
+                  fontFamily: "'Raleway', sans-serif",
+                  backgroundColor: "#b3efb2",
+                  textAlign: "center",             
+                }}
+              >
+                Total: 100
+              </span>
+        
               </div>
             </div>
           </div>
