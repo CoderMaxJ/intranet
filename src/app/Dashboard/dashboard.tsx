@@ -176,17 +176,13 @@ export default function Dashboard() {
           )}
         </div>
         <div className="accordion"  >
-
           <div style={{ marginBottom: '-10px', paddingLeft: '5px' }} className="generate">
-            <div className="gen-svg"></div>
-            {showDashboard === true && (
               <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => router.push("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
-              <i className="bi bi-grid" style={{marginLeft:'5px', marginRight:'23px'}}></i>Dashboard
+              <i className="bi bi-grid" style={{marginLeft:'5px', marginRight:'23px'}}></i>
+              {showDashboard === true && (<label htmlFor="dashboardd">Dashboard</label>  )}
               </button>
-            )}
           </div>
           <div className="generate text-dark">
-
             <a className="nav-font " onClick={() => router.push("/Reports")} style={{ color: '#ffffff' }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -206,7 +202,6 @@ export default function Dashboard() {
                 <label htmlFor="label">Reports</label>
               )}
             </a>
-
           </div>
           <div className="accordion-item">
             <div style={{ marginTop: '5px' }}>

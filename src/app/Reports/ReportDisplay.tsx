@@ -195,7 +195,7 @@ export default function Daterange() {
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
-            <div className="d-flex" style={{ height: "100%", position: "absolute", width: '100%' }} >
+            <div className="d-flex db-reports1" style={{ height: "100%", position: "absolute", width: '100%' }} >
                 <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
@@ -299,7 +299,7 @@ export default function Daterange() {
                                     </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
+                            <div className="reportss" style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
                                 <table className="table table-striped mx-4" style={{ position: 'sticky', top: 0, width:'97.4%' }}>
                                     <thead>
                                         <tr className="report-header">

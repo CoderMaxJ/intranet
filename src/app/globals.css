@@ -384,6 +384,13 @@ input:focus {
     width: 60% !important;
    
   }
+  .reportss {
+    height: 620px !important;
+    overflow-y: auto !important;
+  }
+  .db-reports1 {
+    min-height: 120vh !important;
+  }
 }
 
 .searchbar {
@@ -1161,8 +1168,8 @@ table {
 
 .db-employee {
   margin-left: 0;
+  min-height: 100vh !important;
 }
-
 .search-employee {
   position: absolute;
 }
