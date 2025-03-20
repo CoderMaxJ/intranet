@@ -254,23 +254,8 @@ export default function Daterange() {
                                                     View
                                                 </button>
                                             </div>
-                                        </div>
-                                        <div className="download-reports">
-                                            <button
-                                                type="button"
-                                                className="download"
-                                                onClick={handleGenerateAndDownloadCSV}
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16" style={{ marginTop: '5px', marginRight: '5px' }}>
-                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
-                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
-                                                </svg>
-                                                Download
-                                            </button>
-                                        </div>
-                                    </form>
-                                    <div className="search-div" style={{ transform: "translateY(-40px)", position: 'fixed', marginLeft: '700px' }}>
-                                        <input
+                                            <div className="search-div">
+                                            <input
                                             className="search-input1"
                                             id="search-employee"
                                             type="text"
@@ -296,11 +281,26 @@ export default function Daterange() {
                                         >
                                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                         </svg>
-                                    </div>
+                                        </div>
+                                        </div>
+                                        <div className="download-reports">
+                                            <button
+                                                type="button"
+                                                className="download"
+                                                onClick={handleGenerateAndDownloadCSV}
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16" style={{ marginTop: '5px', marginRight: '5px' }}>
+                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                                </svg>
+                                                Download
+                                            </button>
+                                        </div>
+                                    </form>
                                 </header>
                             </div>
                             <div className="reportss" style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
-                                <table className="table table-striped mx-4" style={{ position: 'sticky', top: 0, width:'97.4%' }}>
+                                <table className="table table-striped mx-4" style={{ position: 'sticky', width:'97.1%' }}>
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>

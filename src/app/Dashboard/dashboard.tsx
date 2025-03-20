@@ -91,8 +91,29 @@ export default function Dashboard() {
     }
   }
 
+  const routerPush = (path: string) => {
+    router.push(path);
+  }
+
   const toggleMinimizeMaximize = () => {
-    if (navWidth === "217px") {
+    const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
+  
+    if (isMinimized) {
+      setNavWidth("217px");
+      setShowDashboard(true);
+      setShowUpdatepassword(true);
+      setShowImage(true);
+      setShowReports(true);
+      setShowManage(true);
+      setShowLogout(true);
+      setShowIcon(true);
+      setArrowIcon(true);
+      setShowProfile(true);
+      setShowAccounts(true);
+      setShowEmployee(true);
+      setShowProfileLabel(true);
+      localStorage.setItem("sidebarMinimized", "false");
+    } else {
       setNavWidth("60px");
       setShowDashboard(false);
       setShowUpdatepassword(false);
@@ -106,22 +127,29 @@ export default function Dashboard() {
       setShowAccounts(false);
       setShowEmployee(false);
       setShowProfileLabel(false);
-    } else {
-      setNavWidth("217px")
-      setShowDashboard(true);
-      setShowUpdatepassword(true);
-      setShowImage(true);
-      setShowReports(true);
-      setShowManage(true);
-      setShowLogout(true);
-      setShowIcon(true);
-      setArrowIcon(true);
-      setShowProfile(true);
-      setShowAccounts(true);
-      setShowEmployee(true);
-      setShowProfileLabel(true);
+      localStorage.setItem("sidebarMinimized", "true");
     }
-  }
+  };
+  
+  // Apply the stored state when the component loads
+  useEffect(() => {
+    const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
+    if (isMinimized) {
+      setNavWidth("60px");
+      setShowDashboard(false);
+      setShowUpdatepassword(false);
+      setShowImage(false);
+      setShowReports(false);
+      setShowManage(false);
+      setShowLogout(false);
+      setShowIcon(false);
+      setArrowIcon(false);
+      setShowProfile(false);
+      setShowAccounts(false);
+      setShowEmployee(false);
+      setShowProfileLabel(false);
+    }
+  }, []);
 
   return (
     <>
@@ -177,13 +205,13 @@ export default function Dashboard() {
         </div>
         <div className="accordion"  >
           <div style={{ marginBottom: '-10px', paddingLeft: '5px' }} className="generate">
-              <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => router.push("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
+              <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => routerPush("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
               <i className="bi bi-grid" style={{marginLeft:'5px', marginRight:'23px'}}></i>
               {showDashboard === true && (<label htmlFor="dashboardd">Dashboard</label>  )}
               </button>
           </div>
           <div className="generate text-dark">
-            <a className="nav-font " onClick={() => router.push("/Reports")} style={{ color: '#ffffff' }}>
+            <a className="nav-font " onClick={() => routerPush("/Reports")} style={{ color: '#ffffff' }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -234,7 +262,7 @@ export default function Dashboard() {
                 <div className="undermanage-hover accordion-body">
                   {user_privilege.includes("manage_users") && (
 
-                    <a className="nav-font" onClick={() => router.push("/ManageAccount")} style={{ marginLeft: "15px", color: '#ffffff', textDecoration: 'none', display: 'block', marginTop: '12px', padding: '10px' }}>
+                    <a className="nav-font" onClick={() => routerPush("/ManageAccount")} style={{ marginLeft: "15px", color: '#ffffff', textDecoration: 'none', display: 'block', marginTop: '12px', padding: '10px' }}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                       </svg>
@@ -243,7 +271,7 @@ export default function Dashboard() {
                     )}
                     </a>
                   )}
-                  <a className="nav-font" onClick={() => router.push("/ManageEmployee")} style={{ marginLeft: "15px", color: '#ffffff', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop: '5px' }}>
+                  <a className="nav-font" onClick={() => routerPush("/ManageEmployee")} style={{ marginLeft: "15px", color: '#ffffff', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop: '5px' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                     </svg> 

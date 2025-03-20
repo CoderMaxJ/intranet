@@ -391,6 +391,12 @@ input:focus {
   .db-reports1 {
     min-height: 120vh !important;
   }
+  .main-divv {
+    width:82% !important;
+  }
+  .search-div {
+    transform: translateX(490px) !important;
+  }
 }
 
 .searchbar {
@@ -1214,7 +1220,7 @@ table {
 
 .search-div {
   position: absolute;
-  margin-left: 600px;
+  transform: translateX(700px);
 }
 
 .search-div svg {
