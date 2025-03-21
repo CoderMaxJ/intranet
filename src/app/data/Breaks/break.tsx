@@ -25,12 +25,13 @@ function BreakDataTable() {
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
-
+  
   const fetchBreakData = async () => {
  
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
+     
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/?last_update=${latestUpdate || ""}`,

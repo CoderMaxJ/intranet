@@ -23,7 +23,8 @@ interface Information {
   acctid: number;
   un: string;
   role_id:number;
-  isdayshift:number
+  isdayshift:number;
+  status:number;
 }
 
 interface Account {
@@ -55,6 +56,7 @@ export default function CreateUD() {
       setListener(false);
     }, 2000);
   }, [listener]);
+ 
 
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
@@ -183,7 +185,7 @@ const getAccountName = (acctid: number): string => {
   const handleData = (data: any) => {
 
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid,role_id,isdayshift } = data;
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid,role_id,isdayshift,status } = data;
     let currentData = {
       empno,
       fname,
@@ -198,6 +200,7 @@ const getAccountName = (acctid: number): string => {
       acctid,
       role_id,
       isdayshift,
+      status,
     };
     setEmpData(currentData);
   };
@@ -414,7 +417,7 @@ const getAccountName = (acctid: number): string => {
                               </svg>
                             </button>
                           )}
-                          {/* {user_privilege.includes("manage_users") && (
+                          {user_privilege.includes("manage_users") && (
                             <button
                               data-bs-toggle="modal"
                               data-bs-target="#deleteModal"
@@ -425,7 +428,7 @@ const getAccountName = (acctid: number): string => {
                             >
                               <i className="bi bi-trash3"></i>
                             </button>
-                          )} */}
+                          )}
                         </div>
                       </td>
                     </tr>
