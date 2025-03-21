@@ -380,18 +380,6 @@ export default function CreateUD() {
                               </svg>
                             </button>
                           )}
-                          {/* {user_privilege.includes("manage_users") && (
-                            <button
-                              data-bs-toggle="modal"
-                              data-bs-target="#deleteModal"
-                              type="button"
-                              className="delete-button"
-                              onClick={() => setTargetID(info.empno)}
-                              style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
-                            >
-                              <i className="bi bi-trash3"></i>
-                            </button>
-                          )} */}
                         </div>
                       </td>
                     </tr>

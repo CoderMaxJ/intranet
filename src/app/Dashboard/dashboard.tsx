@@ -25,7 +25,7 @@ export default function Dashboard() {
   const [showImage, setShowImage] = useState(true);
   const [showIcon, setShowIcon] = useState(true);
   const [arrowIcon, setArrowIcon] = useState(true);
-  const [showProfile, setShowProfile] =useState(true);
+  const [showProfile, setShowProfile] = useState(true);
   const [showAccounts, setShowAccounts] = useState(true);
   const [showEmployee, setShowEmployee] = useState(true);
   const [showProfileLabel, setShowProfileLabel] = useState(true);
@@ -97,7 +97,7 @@ export default function Dashboard() {
 
   const toggleMinimizeMaximize = () => {
     const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
-  
+
     if (isMinimized) {
       setNavWidth("217px");
       setShowDashboard(true);
@@ -130,7 +130,7 @@ export default function Dashboard() {
       localStorage.setItem("sidebarMinimized", "true");
     }
   };
-  
+
   // Apply the stored state when the component loads
   useEffect(() => {
     const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
@@ -205,10 +205,10 @@ export default function Dashboard() {
         </div>
         <div className="accordion"  >
           <div style={{ marginBottom: '-10px', paddingLeft: '5px' }} className="generate">
-              <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => routerPush("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
-              <i className="bi bi-grid" style={{marginLeft:'5px', marginRight:'23px'}}></i>
-              {showDashboard === true && (<label htmlFor="dashboardd">Dashboard</label>  )}
-              </button>
+            <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => routerPush("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
+              <i className="bi bi-grid" style={{ marginLeft: '5px', marginRight: '23px' }}></i>
+              {showDashboard === true && (<label htmlFor="dashboardd">Dashboard</label>)}
+            </button>
           </div>
           <div className="generate text-dark">
             <a className="nav-font " onClick={() => routerPush("/Reports")} style={{ color: '#ffffff' }}>
@@ -249,7 +249,7 @@ export default function Dashboard() {
                 </svg>
                 <div>
                   {showManage === true && (
-                    <span className="nav-font" style={{marginLeft:'-40px'}}>Manage</span>
+                    <span className="nav-font" style={{ marginLeft: '-40px' }}>Manage</span>
                   )}
                 </div>
                 <div>
@@ -263,20 +263,21 @@ export default function Dashboard() {
                   {user_privilege.includes("manage_users") && (
 
                     <a className="nav-font" onClick={() => routerPush("/ManageAccount")} style={{ marginLeft: "15px", color: '#ffffff', textDecoration: 'none', display: 'block', marginTop: '12px', padding: '10px' }}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="white" className="bi bi-person-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                       </svg>
                       {showAccounts === true && (
-                     <label htmlFor="label">Accounts</label> 
-                    )}
+                        <label htmlFor="label">Accounts</label>
+                      )}
                     </a>
                   )}
                   <a className="nav-font" onClick={() => routerPush("/ManageEmployee")} style={{ marginLeft: "15px", color: '#ffffff', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop: '5px' }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
-                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    </svg> 
-                       {showEmployee === true && (
-                     <label htmlFor="employee">Employee</label> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-people" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
+                      <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
+                    </svg>
+                    {showEmployee === true && (
+                      <label htmlFor="employee">Employee</label>
                     )}
                   </a>
                 </div>
@@ -320,12 +321,9 @@ export default function Dashboard() {
                         cursor: 'pointer',
                       }}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="white" className="bi bi-person-circle" viewBox="0 0 16 16" style={{ marginRight: '22px' }}>
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                        <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                      </svg>
+                      <i className="shield-icon bi bi-shield-lock text-light"></i>
                       {showUpdatepassword === true && (
-                        <label className="nav-font" htmlFor="updatepassword" >Update password</label>
+                        <label className="nav-font" htmlFor="updatepassword">Update password</label>
                       )}
                     </div>
                   </div>
@@ -336,7 +334,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div onClick={() => setLogout(true)} className="generate" style={{ marginTop: '-11px', width: showLogout === false ? "100px" :'10.3vw' }}>
+        <div onClick={() => setLogout(true)} className="generate" style={{ marginTop: '-11px', width: showLogout === false ? "100px" : '10.3vw' }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -361,53 +359,53 @@ export default function Dashboard() {
         </div>
         <hr className="border-white border-2 " />
         <div className="upload-prof">
-        <button className="btn btn-light rounded-circle m-auto d-block" onClick={toggleMinimizeMaximize}>
-          {arrowIcon ? (
-            <i className="bi bi-chevron-right rotate-right"></i>) : (
-            <i className="bi bi-chevron-left rotate-left"></i>
+          <button className="btn btn-light rounded-circle m-auto d-block" onClick={toggleMinimizeMaximize}>
+            {arrowIcon ? (
+              <i className="bi bi-chevron-right rotate-right"></i>) : (
+              <i className="bi bi-chevron-left rotate-left"></i>
+            )}
+          </button>
+          {open && (
+            <img
+              onClick={() => setOpen(false)}
+              src={profile}
+              alt="Enlarged Profile"
+              className=""
+              height={200}
+              width={200}
+              style={{ borderRadius: "50%", marginTop: "150px" }}
+            />
           )}
-        </button>
-        {open && (
-          <img
-            onClick={() => setOpen(false)}
-            src={profile}
-            alt="Enlarged Profile"
-            className=""
-            height={200}
-            width={200}
-            style={{ borderRadius: "50%", marginTop: "150px" }}
-          />
-        )}
-        <center>
-          {open === false && showProfile === true && (
-            <div className="profile-div">
-              <div className="dot-div">
-                <i onClick={toggleinput} className="dots bi bi-camera fs-5 text-light"></i>
-              </div>
-              {upload === true && (
-                <div>
-                  <input className="input-image" type="file" accept="image/*" onChange={handleImageUpload} />
+          <center>
+            {open === false && showProfile === true && (
+              <div className="profile-div">
+                <div className="dot-div">
+                  <i onClick={toggleinput} className="dots bi bi-camera fs-5 text-light"></i>
                 </div>
-              )}
-              <div className="profile-circle">
-                {profile ? (
-                  <img onClick={openClose} className="profile-picture" src={profile} alt="" height={70} width={70} />
-                ) : (<p className="username-label-profile">{localStorage.getItem("name")?.charAt(0)}</p>)}
+                {upload === true && (
+                  <div>
+                    <input className="input-image" type="file" accept="image/*" onChange={handleImageUpload} />
+                  </div>
+                )}
+                <div className="profile-circle">
+                  {profile ? (
+                    <img onClick={openClose} className="profile-picture" src={profile} alt="" height={70} width={70} />
+                  ) : (<p className="username-label-profile">{localStorage.getItem("name")?.charAt(0)}</p>)}
+                </div>
+                <div className="online"></div>
+
               </div>
-              <div className="online"></div>
-          
-            </div>
 
-          )}
-          {profile != null && showProfileLabel === true && (
-            <div>
-              <p className="name">{localStorage.getItem("name")}</p>
-              <p className="name">{localStorage.getItem("position")}</p>
-            </div>
+            )}
+            {profile != null && showProfileLabel === true && (
+              <div>
+                <p className="name">{localStorage.getItem("name")}</p>
+                <p className="name">{localStorage.getItem("position")}</p>
+              </div>
 
 
-          )}
-        </center>
+            )}
+          </center>
         </div>
       </div>
 

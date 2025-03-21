@@ -193,7 +193,7 @@ function BreakDataTable() {
 
   return (
     <div className="workforce">
-      <div className={fullscreen ? "breaks-div fullscreen" : "breaks-div p-3"}>
+      <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div p-3"}>
         <div className="d-flex flex-column gap-3">
           <div className="searchbar-wrapper">
             <div className="d-flex align-items-center">
@@ -306,6 +306,7 @@ function BreakDataTable() {
                   textAlign: "center",             
                 }}
               >
+               <i className="bi bi-alarm" style={{padding:'4px'}}></i>
                 Total: 100
               </span>
         

@@ -399,11 +399,22 @@ input:focus {
   }
 }
 
+.searchbar3 {
+  max-width: 330px;
+  margin-top: 1px;
+  width: 25rem;
+  padding: 7px 5px 7px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: rgb(240, 240, 240);
+}
+
 .searchbar {
   max-width: 330px;
   margin-top: 1px;
   width: 25rem;
-  padding: 5px 5px 10px 65px !important;
+  padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
@@ -413,7 +424,7 @@ input:focus {
 .searchbarr {
   margin-top: 1px;
   width: 330px;
-  padding: 5px 5px 10px 65px !important;
+  padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
@@ -451,6 +462,11 @@ input:focus {
   text-align: left !important;
   width: 400px;
   margin: 0;
+}
+
+.shield-icon {
+  margin-right: 24px;
+  font-size: 18px;
 }
 
 /* header-icons */
@@ -545,7 +561,6 @@ input:focus {
   z-index: 1;
   border-radius: 4px;
   right: 0;
-  /* Align dropdown content to the right */
 }
 
 .dropdown-content a {
@@ -553,7 +568,6 @@ input:focus {
   padding: 12px 16px;
   text-decoration: none;
   text-align: left;
-  /* Text aligned to the left inside the dropdown */
   display: block;
 }
 
@@ -563,20 +577,13 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* padding-top: 20px;
-  margin-left: 245px;
-  width: 85.7vw; */
-  /* margin-top: 20px !important;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 5px !important; */
 }
 
 .breaks-div.fullscreen {
   margin: 0;
   position: fixed;
   padding-top: 80px;
-  top: -80px;
+  top: -60px;
   left: 0;
   width: 100%;
   z-index: 999;
@@ -604,15 +611,10 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* width: 85.7vw;
-  margin: 32px auto; */
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 5px;
   padding-top: 18px;
-  /* transform: translateY(10px); */
-  /* margin-left: 245px;
-  position: relative; */
 }
 
 .logs-table {
@@ -622,8 +624,8 @@ input:focus {
 
 .logs-total span {
   background-color: #2ee4c5;
-  padding: 5px;
-  width: 95px;
+  padding: 7px;
+  width: 115px;
   justify-content: center;
   height: 37px;
   text-align: center;

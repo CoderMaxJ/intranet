@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
-import { Encryptor } from "@/security";
 
 interface Logs {
   name: string;
@@ -60,8 +59,6 @@ function LogsDataTable() {
 
       if (response.status === 204) {
         const message = await response.text();
-     
-
         // No new data, use data from local storage
         const storedData = localStorage.getItem("logsData");
         if (storedData) {
@@ -74,11 +71,9 @@ function LogsDataTable() {
       }
       if(!response.ok || response.status === 404 || response.status === 401 || response.status === 403 ){
        return;
-      }
-          
+      }      
       const fetchedData = await response.json();
       setLatestUpdate(fetchedData.latest_update);
-
       // Merge fetched data with the current state
       const storedData = localStorage.getItem("logsData");
       const storedLogs = storedData ? JSON.parse(storedData) : [];
@@ -89,7 +84,6 @@ function LogsDataTable() {
 
       setData(updatedLogs);
       logData.current = updatedLogs;
-
       // Store the new data in local storage
       localStorage.setItem("logsData", JSON.stringify(updatedLogs));
     } catch (err: any) {
@@ -100,11 +94,8 @@ function LogsDataTable() {
   };
 
   useEffect(() => {
-    
     fetchLogs();
-
     const intervalId = setInterval(fetchLogs, 1000);
-
     return () => clearInterval(intervalId); // Cleanup interval
   }, [latestUpdate]); 
 
@@ -129,9 +120,8 @@ function LogsDataTable() {
         </div>
       </div>
     );
-
   if (error) return <div>Error: {error}</div>;
-
+  
   return (
     <div className="logs-wrapper" style={{ backgroundColor: "#e7e7e7" }}>
       <div className="logs-maindiv">
@@ -164,7 +154,6 @@ function LogsDataTable() {
                 marginBottom: "3px",
                 // paddingRight: "30px",
                 // position: "absolute",
-             
               }}
               type="text"
               placeholder="Search..."
@@ -187,7 +176,7 @@ function LogsDataTable() {
                 fill="currentColor"
                 className="bi-search"
                 viewBox="-7 0 30 16"
-                style={{ cursor: "pointer", position: "absolute", transform: "translateY(-24px) translateX(-390px)", margin: "0 auto" }}
+                style={{ cursor: "pointer", position: "absolute", transform: "translateY(-23px) translateX(-390px)", margin: "0 auto" }}
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>
@@ -204,6 +193,7 @@ function LogsDataTable() {
                   paddingTop:'7px',        
                 }}
               >
+                <i className="bi bi-people-fill" style={{padding:'4px'}}></i>
                 Total: 100
               </span>
           </div>
