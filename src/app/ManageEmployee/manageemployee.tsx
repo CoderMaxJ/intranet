@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
+import { th } from "date-fns/locale";
 
 interface Information {
   empno: number;
@@ -22,7 +23,13 @@ interface Information {
   acctid: number;
   un: string;
   role_id:number;
-  isdayshift:number
+  isdayshift:number;
+  status:number;
+}
+
+interface Account {
+  acctname:string
+  acctid:number
 }
 ////
 export default function CreateUD() {
@@ -39,6 +46,7 @@ export default function CreateUD() {
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [account,setAccount]=useState<Account[]>([]);
 
   const token = localStorage.getItem("token");
 
@@ -48,6 +56,7 @@ export default function CreateUD() {
       setListener(false);
     }, 2000);
   }, [listener]);
+ 
 
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
@@ -69,7 +78,33 @@ export default function CreateUD() {
       setTotal(data.total);
     }
   }
+const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
+  async function getAccout(){
+    const response = await fetch(url,{
+      method:"GET",
+      headers:{
+        "Content-type":"application/json",
+        Authorization:`Bearer ${Decryptor(token || "")}`
+      }
+    })
+    if(!response.ok){
+      console.log("error")
+    }
+    const data = await response.json();
+    setAccount(data.data)
+  }
 
+useEffect(()=>{
+  getAccout();
+},[])
+
+const getAccountName = (acctid: number): string => {
+  if(acctid == undefined || acctid == null){
+    return '';
+  }
+  const accountInfo = account.find(acc => acc.acctid === acctid);
+  return accountInfo ? accountInfo.acctname : "Unassigned"; // Return "N/A" if no account is found
+};
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -110,7 +145,6 @@ export default function CreateUD() {
       }
     } catch (e) {
       console.error(e);
-      alert("An error occurred while deleting the employee.");
     }
   };
 
@@ -151,7 +185,7 @@ export default function CreateUD() {
   const handleData = (data: any) => {
 
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid,role_id,isdayshift } = data;
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid,role_id,isdayshift,status } = data;
     let currentData = {
       empno,
       fname,
@@ -166,6 +200,7 @@ export default function CreateUD() {
       acctid,
       role_id,
       isdayshift,
+      status,
     };
     setEmpData(currentData);
   };
@@ -328,8 +363,9 @@ export default function CreateUD() {
                   {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Marital Status</th>)}
                   {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Date of Birth</th>)}
                   {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Gender</th>)}
-                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Position</th>
                   {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Account</th>)}
+                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Position</th>
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Username</th>
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
                 </tr>
@@ -346,8 +382,9 @@ export default function CreateUD() {
                       {user_privilege.includes("manage_users") && (<td>{info.maritalstatus}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
-                      <td>{info.position}</td>
                       {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
+                      {user_privilege.includes("manage_users") && ( <td>{getAccountName(info.acctid)}</td> )}
+                      <td>{info.position}</td>
                       <td>{info.un}</td>
                       <td>
                         <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>

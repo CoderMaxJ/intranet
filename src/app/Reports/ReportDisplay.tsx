@@ -19,6 +19,7 @@ interface BreaksReport {
     brkin2: string;
     brkout2: string;
     ob2: string;
+    personalbreak:string;
     logoff: string;
 }
 
@@ -92,6 +93,7 @@ export default function Daterange() {
                     "Second Break",
                     "Breakout",
                     "Over Break",
+                    "Personal Break",
                     "Log Out",
                 ],
                 ...filteredData.map((row: BreaksReport) =>
@@ -108,6 +110,7 @@ export default function Daterange() {
                         row.brkin2 || "",
                         row.brkout2 || "",
                         row.ob2 || "",
+                        row.personalbreak,
                         row.logoff || "",
                     ]
                         .map((value) => `${value}`)
@@ -314,7 +317,8 @@ export default function Daterange() {
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Obrk3</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin2</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout2</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Obrk2</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob2</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Personal Break</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
                                         </tr>
                                     </thead>
@@ -339,6 +343,7 @@ export default function Daterange() {
                                                     <td>{report.brkin2}</td>
                                                     <td>{report.brkout2}</td>
                                                     <td className={report.ob2 ? "overbreak-red" : ""}>{report.ob2}</td>
+                                                    <td>{report.personalbreak}</td>
                                                     <td>{report.logoff}</td>
                                                 </tr>
                                             ))}

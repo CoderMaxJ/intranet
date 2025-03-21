@@ -18,7 +18,8 @@ interface AddEmployeeData {
   address: string;
   acctid: number;
   role_id: number;
-  isdayshift: number
+  isdayshift: number,
+  status:number
 }
 
 interface AddEmpProps {
@@ -48,6 +49,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     acctid: empData.acctid || 0,
     role_id: empData.role_id || 0,
     isdayshift: empData.isdayshift || 0,
+    status : empData.status 
   });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
@@ -72,6 +74,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
         isdayshift: empData.isdayshift || 0,
+        status : empData.status 
       });
     }
   }, [empData]);
@@ -104,11 +107,17 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       }));
     }
 
+    if(name === "status"){
+      setFormData((prev)=>(
+        {
+          ...prev,
+          status:Number(value)
+        }
+      ))
+    }
 
- 
-  
   }
-
+ 
   const fetchPrivileges = async () => {
     try {
       const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/role/list/`, {
@@ -287,7 +296,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       address: "",
       acctid: 0,
       role_id: 0,
-      isdayshift: 0
+      isdayshift: 0,
+      status:1,
     });
     isClose();
 
@@ -360,7 +370,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="Dela Cruz"
           />
         </div>
-        <div className="col-md-3 mb-3">
+        <div className="col-md-2 mb-3">
           <label htmlFor="dateofbirth" className="form-label">
             Date of Birth
           </label>
@@ -395,7 +405,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <option value="Other">Other</option>
           </select>
         </div>
-        <div className="col-md-2 mb-3">
+        <div className="col-md-3 mb-3">
           <label htmlFor="gender" className="form-label">
             Gender
           </label>
@@ -404,7 +414,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             name="gender"
             value={formData.gender}
             id="gender"
-            className="form-select"
+            className="form-select w-5"
             onChange={handleInputChange}
           > 
             <option value="">-- SELECT --</option>
@@ -412,40 +422,31 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <option value="Female">Female</option>
           </select>
         </div>
-        <div className="col-md-3 mb-3">
+        <div className="col-md-3 mb-2">
           <label htmlFor="contactno" className="form-label">
             Contact No
           </label>
           <input
             type="number"
             name="contactno"
-            className="form-control"
+            className="form-control  w-100"
             id="contactno"
             value={formData.contactno}
             onChange={handleInputChange}
-            placeholder="+63 02 6645 9723"
+            placeholder="+63 92 6645 9723"
           />
         </div>
-
-        <div className="col-md-2 mb-3">
-          <label htmlFor="position" className="form-label">
-            Status
-          </label>
-          <select
-            required
-            name="acctid"
-            value={formData.acctid}
-            id="acctid"
-            className="form-select"
+        {mode === "edit" && (
+            <div className="col-md-2">
+            <label htmlFor="" className="form-label">Status</label>
+            <select className="form-select w-75 " name="status" value ={formData.status === 1 ? 1:0}
             onChange={handleInputChange}
-          >
-            <option value="">Select Status</option>
-            {accounts.map((account, index) => (
-              <option key={index} value={account.acctid}> {account.acctname} </option>
-            ))}
-          </select>
-        </div>
-
+            >
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </select>
+          </div>
+        )}
         <div className="col-md-4 mb-3">
           <label htmlFor="address" className="form-label">
             Address
@@ -501,10 +502,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </select>
         </div>
 
-        <div className="col-md-2 mt-3  d-flex justify-content-center align-items-center">
+        <div className="col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
           <label htmlFor="is_dayshift" className="form-label">
             Day Shift
-                <span className="ms-2">
+                <span className="">
                     <input
                     style={{
                       width: "20px",
