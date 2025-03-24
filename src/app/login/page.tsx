@@ -108,6 +108,7 @@ export default function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              style={{color:'#000000'}}
             />
           </div>
           <div>
@@ -119,6 +120,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                style={{backgroundColor:"#ffffff", color:"#000000"}}
               />
             </div>
           </div>

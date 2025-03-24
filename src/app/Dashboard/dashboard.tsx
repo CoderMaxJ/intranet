@@ -361,8 +361,8 @@ export default function Dashboard() {
         <div className="upload-prof">
           <button className="btn btn-light rounded-circle m-auto d-block" onClick={toggleMinimizeMaximize}>
             {arrowIcon ? (
-              <i className="bi bi-chevron-right rotate-right"></i>) : (
-              <i className="bi bi-chevron-left rotate-left"></i>
+              <i className="bi bi-chevron-left rotate-left"></i>) : (
+              <i className="bi bi-chevron-right rotate-right"></i>
             )}
           </button>
           {open && (

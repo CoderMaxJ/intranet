@@ -397,6 +397,42 @@ input:focus {
   .search-div {
     transform: translateX(490px) !important;
   }
+  .table-data {
+    font-size: smaller !important;
+  }
+  .tabemp {
+    font-size: smaller;
+  }
+  .tabreport{
+    width: 94.8% !important;
+    font-size: x-small !important;
+  }
+  .download-reports button  {
+    width: 7% !important;
+  }
+  .tablogs {
+    font-size: x-small !important;
+    white-space: nowrap;
+  }
+  .tabbreaks {
+    font-size: x-small !important;
+  }
+  .legends {
+    font-size: x-small !important;
+  }
+  .agent-header{
+    font-size: 20px !important;
+  }
+  .logs-headername {
+    font-size: 20px !important;
+  }
+ .logs-total {
+  font-size: small !important;
+  width: 100px !important;
+ }
+ .agent-header {
+  width: 350px !important;
+ }
 }
 
 .searchbar3 {

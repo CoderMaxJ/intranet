@@ -303,7 +303,7 @@ export default function Daterange() {
                                 </header>
                             </div>
                             <div className="reportss" style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
-                                <table className="table table-striped mx-4" style={{ position: 'sticky', width:'97.1%' }}>
+                                <table className="tabreport table table-striped mx-4" style={{ position: 'sticky', width:'97.1%' }}>
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>

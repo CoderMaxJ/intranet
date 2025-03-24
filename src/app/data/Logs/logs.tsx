@@ -193,13 +193,13 @@ function LogsDataTable() {
                   paddingTop:'7px',        
                 }}
               >
-                <i className="bi bi-people-fill" style={{padding:'4px'}}></i>
+                <i className=" bi bi-people-fill" style={{padding:'4px'}}></i>
                 Total: 100
               </span>
           </div>
         </div>
         <div className="logs-tablee table-responsive">
-          <table className="table table-bordered table-striped">
+          <table className="tablogs table table-bordered table-striped">
             <thead style={{ position: "sticky", top: 0 }}>
               <tr>
                 <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>

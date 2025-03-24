@@ -349,7 +349,7 @@ const getAccountName = (acctid: number): string => {
           </div>
           <div className="emp-table" style={{ position: 'relative', height: 'auto'}}>
             <table
-              className="table table-striped table-hover table-bordered"
+              className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
               style={{ width: '97.7%', margin: 'auto' }}
             >

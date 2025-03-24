@@ -247,7 +247,7 @@ function BreakDataTable() {
                 fontWeight: "bold",
               }}
             >
-              <div>
+              <div className="legends">
               <span
                 style={{
                   padding: "10px",
@@ -312,7 +312,7 @@ function BreakDataTable() {
             </div>
           </div>
           <div className="table-responsive">
-            <table className="table table-bordered" style={{ borderCollapse: "collapse" }}>
+            <table className="tabbreaks table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
                 <tr>
                   <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
