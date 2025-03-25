@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
-import { Encryptor } from "@/security";
 
 interface Logs {
   name: string;
@@ -60,8 +59,6 @@ function LogsDataTable() {
 
       if (response.status === 204) {
         const message = await response.text();
-     
-
         // No new data, use data from local storage
         const storedData = localStorage.getItem("logsData");
         if (storedData) {
@@ -74,11 +71,10 @@ function LogsDataTable() {
       }
       if(!response.ok || response.status === 404 || response.status === 401 || response.status === 403 ){
        return;
-      }
-          
+      }      
       const fetchedData = await response.json();
+      localStorage.setItem("total-logs",fetchedData.total);
       setLatestUpdate(fetchedData.latest_update);
-
       // Merge fetched data with the current state
       const storedData = localStorage.getItem("logsData");
       const storedLogs = storedData ? JSON.parse(storedData) : [];
@@ -89,7 +85,6 @@ function LogsDataTable() {
 
       setData(updatedLogs);
       logData.current = updatedLogs;
-
       // Store the new data in local storage
       localStorage.setItem("logsData", JSON.stringify(updatedLogs));
     } catch (err: any) {
@@ -100,11 +95,8 @@ function LogsDataTable() {
   };
 
   useEffect(() => {
-    
     fetchLogs();
-
-    const intervalId = setInterval(fetchLogs, 5000);
-
+    const intervalId = setInterval(fetchLogs, 1000);
     return () => clearInterval(intervalId); // Cleanup interval
   }, [latestUpdate]); 
 
@@ -129,13 +121,12 @@ function LogsDataTable() {
         </div>
       </div>
     );
-
   if (error) return <div>Error: {error}</div>;
-
+  
   return (
     <div className="logs-wrapper" style={{ backgroundColor: "#e7e7e7" }}>
       <div className="logs-maindiv">
-        <div className="logs-table" style={{ display: "flex", position: "relative" }}>
+        <div className="logs-table" style={{ display: "flex"}}>
           <h3
             className="logs-headername"
             style={{
@@ -156,21 +147,23 @@ function LogsDataTable() {
             }}
           >
             <input
-              className="searchbar"
+              className="searchbarr"
               style={{
+                justifyContent:'space-between',
                 backgroundColor: "#f0f0f0",
                 fontFamily: "'Raleway', sans-serif",
                 marginBottom: "3px",
-                paddingRight: "30px",
-                position: "absolute",
-                left: "425px",
+                // paddingRight: "30px",
+                // position: "absolute",
               }}
               type="text"
               placeholder="Search..."
               value={filter}
               onChange={handleSearchChange}
             />
+           
             <div
+            className="adjust-icon"
               style={{
                 position: "absolute",
                 right: "10px",
@@ -182,17 +175,32 @@ function LogsDataTable() {
                 width="14"
                 height="14"
                 fill="currentColor"
-                className="bi-search"
+                className="logs-icon bi-search"
                 viewBox="-7 0 30 16"
-                style={{ cursor: "pointer", position: "absolute", transform: "translateY(-24px)", margin: "0 auto", marginLeft: "435px" }}
+                style={{ cursor: "pointer", position: "absolute", transform: "translateY(-23px) translateX(-390px)", margin: "0 auto" }}
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
               </svg>
             </div>
           </div>
+          <div className="logs-total d-flex">
+          <span
+                style={{
+                  padding: "3px",
+                  fontFamily: "'Raleway', sans-serif",
+                  backgroundColor: "#b3efb2",
+                  textAlign: "center", 
+                  fontWeight: "bold",    
+                  paddingTop:'7px',        
+                }}
+              >
+                <i className=" bi bi-people-fill" style={{padding:'px'}}></i>
+                Total: {localStorage.getItem("total-logs") || 0}
+              </span>
+          </div>
         </div>
-        <div className="logs-tablee">
-          <table className="table table-bordered table-striped">
+        <div className="logs-tablee table-responsive">
+          <table className="tablogs table table-bordered table-striped">
             <thead style={{ position: "sticky", top: 0 }}>
               <tr>
                 <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>

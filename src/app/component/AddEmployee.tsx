@@ -308,7 +308,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
 
   return (
-    <div>
+    <div className="addemployee-form">
       <form className="row" onSubmit={handleSubmitForm} >
         <div className="col-md-4 mb-3">
           <button

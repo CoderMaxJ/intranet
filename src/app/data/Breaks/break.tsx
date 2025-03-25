@@ -45,6 +45,7 @@ function BreakDataTable() {
       );
 
       if (response.status === 204) {
+        
         const message = await response.text();
         // No new data, use data from local storage
         const storedData = localStorage.getItem("breakData");
@@ -79,6 +80,7 @@ function BreakDataTable() {
       }
 
       const data = await response.json();
+      localStorage.setItem("total-on-breaks",data.total);
  
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
@@ -191,8 +193,8 @@ function BreakDataTable() {
 
   return (
     <div className="workforce">
-      <div className={fullscreen ? "breaks-div fullscreen" : "breaks-div"}>
-        <div>
+      <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div p-3"}>
+        <div className="d-flex flex-column gap-3">
           <div className="searchbar-wrapper">
             <div className="d-flex align-items-center">
               <h4
@@ -236,7 +238,7 @@ function BreakDataTable() {
                 width="14"
                 height="14"
                 fill="currentColor"
-                className="bi-search"
+                className="breaks-icon bi-search"
                 viewBox="-7 0 30 16"
               >
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -245,10 +247,9 @@ function BreakDataTable() {
             <div
               style={{
                 fontWeight: "bold",
-                width: "460px",
               }}
             >
-              <div style={{transform:'translateX(90px)'}}>
+              <div className="legends">
               <span
                 style={{
                   padding: "10px",
@@ -295,11 +296,25 @@ function BreakDataTable() {
               >
                 Over Break
               </span>
+              
+              <span
+                style={{
+                  padding: "10px",
+                  marginLeft:'10px',
+                  fontFamily: "'Raleway', sans-serif",
+                  backgroundColor: "#b3efb2",
+                  textAlign: "center",             
+                }}
+              >
+               <i className="bi bi-alarm" style={{padding:'4px'}}></i>
+                Total: <span>{localStorage.getItem("total-on-breaks") || 0}</span>
+              </span>
+        
               </div>
             </div>
           </div>
-          <div>
-            <table className="table table-bordered" style={{ borderCollapse: "collapse" }}>
+          <div className="table-responsive">
+            <table className="tabbreaks table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
                 <tr>
                   <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>

@@ -33,6 +33,20 @@ export default function ManageDepartment() {
     const [showDropDown, setShowDropdown] = useState(false);
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [add, setAdd] = useState(false);
+    const [filter, setFilter] = useState('');
+
+    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilter(event.target.value);
+    };
+
+    const filteredRows = department.filter((dept) => {
+        const managerNames = Array.isArray(dept.manager)
+            ? dept.manager.map((m: any) => `${m.fname} ${m.lname}`).join(" ")
+            : dept.manager;
+
+        const searchString = `${dept.acctid} ${dept.acctname} ${dept.status === 1 ? "Active" : "Not Active"} ${managerNames}`.toLowerCase();
+        return searchString.includes(filter.toLowerCase());
+    });
 
     const router = useRouter();
     useEffect(() => {
@@ -101,7 +115,7 @@ export default function ManageDepartment() {
                 setManager(data.data);
             }
         } catch (e) {
-        console.error(e);
+            console.error(e);
         }
     };
 
@@ -303,26 +317,52 @@ export default function ManageDepartment() {
                 </div>
             )}
             <div className="manage-department">
-                <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" /></div>
-                <div>
+                <div className="manageaccounts-header px-4"><Header title="MANAGE ACCOUNTS" /></div>
+                <div className="px-4">
                     <div className="manageaccounts-bg">
-                        <div className="employee-header">
-                            <button
-                                className="addhover"
-                                data-bs-toggle="modal"
-                                data-bs-target="#addAccountModal"
+                        <div className="employee-header flex-grow-1 d-flex justify-content-center ">  
+                          <div style={{position:'relative'}}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="14"
+                                height="14"
+                                fill="currentColor"
+                                className="accounts-icon bi-search"
+                                viewBox="-7 0 30 16"
+                                style={{zIndex:1, transform:'translateX(-90px)'}}
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="#ffffff"
-                                    className="bi bi-plus-circle-fill me-2"
-                                    viewBox="0 0 16 16"
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg>
+                            <input
+                                className="searchbar3 d-flex"
+                                type="text"
+                                id="myInput"
+                                placeholder="Search..."
+                                value={filter}
+                                onChange={handleFilterChange}
+                                style={{ transform: 'translateX(-90px)', position:'absolute' }}
+                            />
+                            </div>  
+                            <div style={{transform:"translateX(735px)"}}>
+                                <button
+                                    className="addhover"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addAccountModal"
+                                    style={{ justifyContent: 'flex-end' }}
                                 >
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                </svg> Add Account
-                            </button>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="#ffffff"
+                                        className="bi bi-plus-circle-fill me-2 "
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                                    </svg> 
+                                    <label htmlFor="">Add Account</label>
+                                </button>
+                            </div>
                         </div>
                         {showform && (
                             <>
@@ -354,7 +394,7 @@ export default function ManageDepartment() {
                                     </tr>
                                 </thead>
                                 <tbody style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-                                    {department.map((instance) => (
+                                    {filteredRows.map((instance) => (
                                         <tr key={instance.acctid}>
                                             <td >{instance.acctid}</td>
                                             <td >{instance.acctname}</td>

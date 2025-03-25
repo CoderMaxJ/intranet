@@ -270,7 +270,7 @@ const getAccountName = (acctid: number): string => {
       <div className="db-employee">
         <Dashboard />
       </div>
-      <div className="main-divv">
+      <div className="main-divv px-4">
         <Header title="MANAGE EMPLOYEE" />
         <div className="manageemployee-division">
           <div>
@@ -279,7 +279,7 @@ const getAccountName = (acctid: number): string => {
                 <div className="w-100 d-flex justify-content-center py-2 px-2" style={{ width: '86vw', margin: 'auto', position: 'relative' }}>
                   <div className="searchbar-containerr">
                     <input
-                      className="searchbar"
+                      className="searchbar12"
                       id="search-employee"
                       style={{ backgroundColor: "#f0f0f0" }}
                       type="text"
@@ -293,7 +293,7 @@ const getAccountName = (acctid: number): string => {
                       width="14"
                       height="14"
                       fill="currentColor"
-                      className="bi-search"
+                      className="employee-icon bi-search"
                       viewBox="-7 0 30 16"
                     >
                       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -349,7 +349,7 @@ const getAccountName = (acctid: number): string => {
           </div>
           <div className="emp-table" style={{ position: 'relative', height: 'auto'}}>
             <table
-              className="table table-striped table-hover table-bordered"
+              className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
               style={{ width: '97.7%', margin: 'auto' }}
             >
@@ -417,7 +417,7 @@ const getAccountName = (acctid: number): string => {
                               </svg>
                             </button>
                           )}
-                          {user_privilege.includes("manage_users") && (
+                         {/* {user_privilege.includes("manage_users") && (
                             <button
                               data-bs-toggle="modal"
                               data-bs-target="#deleteModal"
@@ -428,7 +428,7 @@ const getAccountName = (acctid: number): string => {
                             >
                               <i className="bi bi-trash3"></i>
                             </button>
-                          )}
+                         )} */}
                         </div>
                       </td>
                     </tr>

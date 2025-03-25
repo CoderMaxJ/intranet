@@ -22,12 +22,11 @@
 }
 
 
-.nav-font{
-  font-family:"roboto";
-  font-weight:400;
-  color:#fbfff1;
+.nav-font {
+  font-family: "roboto";
+  font-weight: 400;
+  color: #fbfff1;
   letter-spacing: 0.50px;
-  
 }
 
 .nav-font:hover {
@@ -338,12 +337,15 @@ input:focus {
   margin-right: 20px;
 }
 
+.main-page {
+  background-color: #e7e7e7;
+}
+
 .searchbar-wrapper {
-  flex-grow: 1;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
 }
 
 .searchbar-container {
@@ -352,16 +354,236 @@ input:focus {
   align-items: center;
 }
 
+@media only screen and (max-width: 1200px) {
+  .searchbar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+  }
+
+  .searchbar-container1 {
+    justify-content: space-between;
+  }
+
+  .logs-table {
+    /* justify-content: space-between; */
+  }
+
+  .modal-content {
+    width: 150% !important;
+  }
+
+  .updatepassword-input {
+    width: 90% !important;
+  }
+
+  .updatepassword-input1 {
+    width: 90% !important;
+  }
+
+  .actions {
+    display: flex;
+  }
+
+  .row {
+    width: 60% !important;
+
+  }
+
+  .reportss {
+    height: 620px !important;
+    overflow-y: auto !important;
+  }
+
+  .db-reports1 {
+    min-height: 120vh !important;
+  }
+
+  .main-divv {
+    width: 82% !important;
+  }
+
+  .search-div {
+    transform: translateX(490px) !important;
+  }
+
+  .table-data {
+    font-size: smaller !important;
+  }
+
+  .tabemp {
+    font-size: smaller !important;
+  }
+
+  .tabreport {
+    width: 94.8% !important;
+    font-size: x-small !important;
+  }
+
+  .download-reports button {
+    width: 7% !important;
+  }
+
+  .tablogs {
+    font-size: x-small !important;
+    white-space: nowrap;
+  }
+
+  .tabbreaks {
+    font-size: x-small !important;
+  }
+
+  .legends {
+    font-size: x-small !important;
+  }
+
+  .agent-header {
+    font-size: 20px !important;
+  }
+
+  .logs-headername {
+    font-size: 20px !important;
+  }
+
+  .logs-total {
+    font-size: small !important;
+    width: 100px !important;
+  }
+
+  .agent-header {
+    width: 350px !important;
+  }
+
+  .download-reports button {
+    font-size: small;
+    margin-top: -37px !important;
+    padding: 8px;
+  }
+
+  .daterange-button {
+    font-size: small;
+  }
+
+  .form-control {
+    font-size: small !important;
+  }
+
+  .form-label {
+    margin-bottom: .5rem;
+    font-size: small;
+  }
+
+  .search-div {
+    transform: translateX(490px) translateY(-5PX) !important;
+  }
+
+  .button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-size: small !important;
+  }
+
+  .bi-search {
+    transform: translateY(-2px);
+  }
+
+  /* .table>thead {
+    vertical-align: bottom;
+    font-size: x-small;
+    white-space: nowrap;
+  } */
+
+  .search-input1 {
+    width: 270px !important;
+    transform: translateX(-20px) translateY(4px);
+  }
+
+  .report-icon {
+    transform: translateX(-20px) translateY(2px);
+  }
+
+  .reportss {
+    width: 100.1% !important;
+  }
+
+  .searchbar-wrapper {
+    flex-direction: row;
+
+  }
+
+  .searchbar-container {
+    width: 30px !important;
+  }
+  .searchbar {
+    transform:translateY(30px) translateX(-140px);
+  }
+  .tabbreaks {
+    margin-top: 20px !important;
+  }
+
+  .breaks-icon {
+    transform: translateY(27px) translateX(-135px);
+  }
+
+  .searchbarr {
+    transform: translateX(-20px) !important;
+  }
+
+  .logs-icon {
+    transform: translateY(-23px) translateX(-335px) !important;
+  }
+  .employee-icon {
+    transform: translateY(-1px) !important;
+  }
+  .accounts-icon {
+    transform: translateX(-90px) translateY(-2px) !important;
+  }
+}
+
+.searchbar3 {
+  max-width: 330px;
+  margin-top: 1px;
+  width: 25rem;
+  padding: 7px 5px 7px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: rgb(240, 240, 240);
+}
 
 .searchbar {
   max-width: 330px;
   margin-top: 1px;
   width: 25rem;
-  padding: 5px 5px 10px 65px !important;
+  padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: white;
+}
+.searchbar12 {
+  max-width: 330px;
+  margin-top: 1px;
+  width: 25rem;
+  padding: 7px 5px 7px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: white;
+}
+
+.searchbarr {
+  margin-top: 1px;
+  width: 330px;
+  padding: 7px 5px 7px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: white;
+  transform: translateX(-70px);
 }
 
 .searchbar:focus {
@@ -394,6 +616,11 @@ input:focus {
   text-align: left !important;
   width: 400px;
   margin: 0;
+}
+
+.shield-icon {
+  margin-right: 24px;
+  font-size: 18px;
 }
 
 /* header-icons */
@@ -488,7 +715,6 @@ input:focus {
   z-index: 1;
   border-radius: 4px;
   right: 0;
-  /* Align dropdown content to the right */
 }
 
 .dropdown-content a {
@@ -496,7 +722,6 @@ input:focus {
   padding: 12px 16px;
   text-decoration: none;
   text-align: left;
-  /* Text aligned to the left inside the dropdown */
   display: block;
 }
 
@@ -506,20 +731,13 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding-top: 20px;
-  margin-left: 245px;
-  width: 85.7vw;
-  margin-top: 20px !important;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 5px !important;
 }
 
 .breaks-div.fullscreen {
   margin: 0;
   position: fixed;
   padding-top: 80px;
-  top: -80px;
+  top: -60px;
   left: 0;
   width: 100%;
   z-index: 999;
@@ -547,18 +765,24 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 85.7vw;
-  margin: 32px auto;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 5px;
   padding-top: 18px;
-  margin-left: 245px;
-  position: relative;
 }
 
 .logs-table {
   margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.logs-total span {
+  background-color: #2ee4c5;
+  padding: 7px;
+  width: 115px;
+  justify-content: center;
+  height: 37px;
+  text-align: center;
 }
 
 .logs-headername {
@@ -612,10 +836,9 @@ input:focus {
 
 .background-report {
   border-radius: 4px;
-  margin: 0 auto 0 240px;
-  margin-top: 20px !important;
-  height: 84.5vh;
-  width: 86vw;
+  margin: 22px auto;
+  height: 87%;
+  width: 100% !important;
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
 }
@@ -875,6 +1098,7 @@ tbody td {
 
 }
 
+
 .actions {
   margin-left: 35px;
 }
@@ -943,15 +1167,15 @@ table {
   border: none;
   border-radius: 4px;
   white-space: nowrap;
-  font-weight: bold; 
-  font-size: small; 
+  font-weight: bold;
+  font-size: small;
   width: 130px;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 
 .addhover:hover {
-  background-color:#22af10 !important;
+  background-color: #22af10 !important;
   transform: scale(0.9);
 }
 
@@ -1003,12 +1227,12 @@ table {
 .manageaccounts-bg {
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
-  margin: 20px auto 0 246px;
+  margin: 20px auto;
   padding-bottom: 10px !important;
   padding-top: 15px !important;
   border-radius: 4px;
-  width: 94.4%;
-  height: 84.8vh;
+  width: 100% !important;
+  height: 840px;
 }
 
 
@@ -1027,27 +1251,29 @@ table {
   font-weight: bolder;
 }
 
-.profile-div{
-  margin-top:340px;
-  border:0.60px solid white;
+.profile-div {
+  border: 0.60px solid white;
   border-radius: 4px;
   height: 120px;
   width: 70%;
 
 }
-.profile-picture{
+
+.profile-picture {
   border-radius: 50%;
 }
-.username-label-profile{
-  color:white;
+
+.username-label-profile {
+  color: white;
   font-family: 'roboto';
   font-size: 40px;
-  letter-spacing:1px;
-  font-weight:bold;
+  letter-spacing: 1px;
+  font-weight: bold;
   margin-top: 15px;
 
 }
-.input-image{
+
+.input-image {
   height: 20px;
   width: 100px;
   font-size: 10px;
@@ -1056,7 +1282,7 @@ table {
 
 }
 
-.dot-div{
+.dot-div {
   width: 90%;
 
   display: flex;
@@ -1064,7 +1290,7 @@ table {
   justify-content: flex-end;
 }
 
-.profile-circle{
+.profile-circle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1075,6 +1301,7 @@ table {
   background-color: #05668d;
 
 }
+
 .employee-heade {
   position: sticky;
   top: 0;
@@ -1103,6 +1330,7 @@ table {
 
 .db-employee {
   margin-left: 0;
+  min-height: 100vh !important;
 }
 
 .search-employee {
@@ -1149,7 +1377,7 @@ table {
 
 .search-div {
   position: absolute;
-  margin-left: 600px;
+  transform: translateX(700px);
 }
 
 .search-div svg {
@@ -1212,9 +1440,9 @@ table {
 
 .manageemployee-division {
   background-color: white;
-  margin: 20px auto 0 245px;
+  margin: 20px auto;
   height: auto;
-  width: 85.8%;
+  width: 100%;
   padding-bottom: 10px;
   border-radius: 4px;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
@@ -1242,9 +1470,8 @@ table {
 
 .crud-maindiv {
   background-color: #266bc5;
-  width: 100vw;
+  width: 100%;
   height: 100%;
-  position: absolute;
 }
 
 .crud-header {
@@ -1342,7 +1569,8 @@ table {
   border: none;
   color: rgb(14, 206, 100);
 }
-.online{
+
+.online {
   height: 15px;
   width: 15px;
   margin-left: 70px;
@@ -1350,13 +1578,15 @@ table {
   background-color: #00FF40;
 
 }
-.name{
+
+.name {
   padding-top: 5px;
   letter-spacing: 1px;
   font-weight: bold;
   color: white;
   font-family: "roboto";
 }
+
 .delete {
   outline: none;
   background-color: none;
@@ -1397,11 +1627,10 @@ table {
 
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
-  width: 215px;
   background-color: #007ea7;
   height: 100% !important;
   padding: 10px;
-  position: fixed;
+
 }
 
 
@@ -1448,6 +1677,11 @@ table {
 
 }
 
+.upload-prof {
+  display: grid;
+  gap: 190px;
+}
+
 .dashboard:active {
   background-color: #ffffff;
   color: white !important;
@@ -1460,6 +1694,7 @@ table {
 }
 
 /* dashboard view report  */
+
 
 .generate svg {
   align-items: center;
@@ -1489,11 +1724,48 @@ table {
   background-color: #53a2be;
 }
 
-
 .generate svg {
   margin-right: 20px;
   fill: rgb(255, 255, 255);
 }
+
+.logout-hover {
+  display: flex !important;
+  align-items: center;
+  padding: 10px;
+  margin-top: 15px;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
+}
+
+.logout-hover:hover {
+  background-color: #53a2be;
+}
+
+.logout-hover svg {
+  margin-right: 20px;
+  fill: rgb(255, 255, 255);
+}
+
+.updatepassword-hover {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-top: 5px;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  height: 45px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.updatepassword-hover:hover {
+  background-color: #53a2be;
+}
+
 
 /* Existing styles */
 .admin {
@@ -1547,12 +1819,22 @@ table {
   fill: white;
 }
 
+.undermanage-hover a.default-width {
+  width: 9vw !important;
+}
+
+.undermanage-hover a.condensed-width {
+  width: 2vw !important;
+}
+
+
+/* 
 .undermanage-hover a {
   border-radius: 2px !important;
   cursor: pointer !important;
   width: 9vw !important;
   transform: translateX(-20px);
-}
+} */
 
 .undermanage-hover a:hover {
   background-color: #53a2be;
@@ -1612,7 +1894,6 @@ table {
 
 .prof-hover:hover {
   border-radius: 2px;
-  padding-top: 7px;
   color: white !important;
   background-color: white !important;
 }
@@ -1787,15 +2068,22 @@ table {
 }
 
 .header-text-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  background-image: url("/img/Breaktool.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .reportheader {
   position: relative;
   width: 100%;
+}
+
+.main-page {
+  min-height: 100vh;
+  height: 100%;
 }
 
 .viewdashboard {
@@ -1804,13 +2092,13 @@ table {
 }
 
 .manageaccounts-header {
-  width: 110.1%;
+  width: 100%;
 }
 
 
 /* manage department */
 .manage-department {
-  width: calc(100% - 177px);
+  width: 100% !important;
 }
 
 
@@ -1820,6 +2108,7 @@ table {
 
 .manageaccounts-div {
   background-color: #e7e7e7;
+
 }
 
 .dash {

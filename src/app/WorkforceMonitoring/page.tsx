@@ -14,11 +14,11 @@ export const metadata: Metadata = {
 
 export default function MainDashboard() {
   return (
-    <div style={{ display: "flex", width: '100vw', backgroundColor: "#e7e7e7" }}>
+    <div className="d-flex main-page">
       <div>
         <Dashboard />
       </div>
-      <div style={{ flex: 1, backgroundColor: "#e7e7e7", width: '50vw' }}>
+      <div className="w-100 d-flex flex-column gap-4 px-4">
         <Header title="WORKFORCE MONITORING" text="Connecting Teams, Empowering Innovation" />
         <div>
           <BreakDataTable />

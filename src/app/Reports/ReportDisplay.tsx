@@ -198,26 +198,24 @@ export default function Daterange() {
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
-            <div className="d-flex" style={{ height: "100%", position: "absolute", width: '100%' }} >
+            <div className="d-flex db-reports1" style={{ height: "100%", position: "absolute", width: '100%' }} >
                 <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
-                    <div className="main-divv">
+                    <div className="main-divv px-4">
                         <div className="reportheader"><Header title="DAILY REPORTS" /></div>
                         <div className="background-report">
-                            <div style={{ display: 'flex' }}>
+                            <div className="px-4 pt-4" style={{ display: 'flex' }}>
                                 <header style={{
                                     backgroundImage: "url('/img/Breaktool.png')",
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
-                                    transform: 'translateX(100px)',
                                     position: 'sticky',
+                                    paddingTop:'10px',
                                     padding: '15px',
-                                    marginTop: '20px',
                                     color: 'white',
-                                    marginLeft: '-80px',
-                                    width: '84vw'
+                                    width: '100%'
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
                                     <form>
@@ -259,6 +257,35 @@ export default function Daterange() {
                                                     View
                                                 </button>
                                             </div>
+                                            <div className="search-div">
+                                            <input
+                                            className="search-input1"
+                                            id="search-employee"
+                                            type="text"
+                                            placeholder="Search..."
+                                            value={searchTerm}
+                                            onChange={handleSearch}
+                                            style={{
+                                                padding: '7px 60px',
+                                                borderRadius: '5px',
+                                                border: '1px solid #ccc',
+                                                width: '360px',
+                                                position: 'relative',
+                                                backgroundColor:'#f0f0f0'
+                                            }}
+                                        />
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="14"
+                                            height="14"
+                                            fill="currentColor"
+                                            className="report-icon bi-search"
+                                            viewBox="-7 0 30 16"
+                                            style={{ color: '#595b5c' }}
+                                        >
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                        </svg>
+                                        </div>
                                         </div>
                                         <div className="download-reports">
                                             <button
@@ -274,38 +301,10 @@ export default function Daterange() {
                                             </button>
                                         </div>
                                     </form>
-                                    <div className="search-div" style={{ transform: "translateY(-40px)", position: 'fixed', marginLeft: '700px' }}>
-                                        <input
-                                            className="search-input1"
-                                            id="search-employee"
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchTerm}
-                                            onChange={handleSearch}
-                                            style={{
-                                                padding: '7px 60px',
-                                                borderRadius: '5px',
-                                                border: '1px solid #ccc',
-                                                width: '22vw',
-                                                position: 'relative',
-                                            }}
-                                        />
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="14"
-                                            height="14"
-                                            fill="currentColor"
-                                            className="bi-search"
-                                            viewBox="-7 0 30 16"
-                                            style={{ color: '#595b5c' }}
-                                        >
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                        </svg>
-                                    </div>
                                 </header>
                             </div>
-                            <div style={{ overflowY: 'auto', height: '690px', position: 'fixed', width: '84vw', backgroundColor: '#ffffff', marginLeft: '20px' }}>
-                                <table className="table table-striped" style={{ position: 'sticky', top: 0, width: '84vw' }}>
+                            <div className="reportss" style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
+                                <table className="tabreport table table-striped mx-4" style={{ position: 'sticky', width:'97.1%' }}>
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
@@ -313,10 +312,10 @@ export default function Daterange() {
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout1</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob1</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Obrk1</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchin</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchout</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob3</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Obrk3</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin2</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout2</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob2</th>
