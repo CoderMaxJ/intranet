@@ -77,6 +77,7 @@ function LogsDataTable() {
       }
           
       const fetchedData = await response.json();
+      localStorage.setItem("total-logs",fetchedData.total);
       setLatestUpdate(fetchedData.latest_update);
 
       // Merge fetched data with the current state

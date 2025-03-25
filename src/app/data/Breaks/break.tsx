@@ -45,6 +45,7 @@ function BreakDataTable() {
       );
 
       if (response.status === 204) {
+        
         const message = await response.text();
         // No new data, use data from local storage
         const storedData = localStorage.getItem("breakData");
@@ -79,6 +80,7 @@ function BreakDataTable() {
       }
 
       const data = await response.json();
+      localStorage.setItem("total-on-breaks",data.total);
  
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");

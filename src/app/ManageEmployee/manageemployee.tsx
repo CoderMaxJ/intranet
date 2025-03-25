@@ -417,7 +417,7 @@ const getAccountName = (acctid: number): string => {
                               </svg>
                             </button>
                           )}
-                          {user_privilege.includes("manage_users") && (
+                         {/* {user_privilege.includes("manage_users") && (
                             <button
                               data-bs-toggle="modal"
                               data-bs-target="#deleteModal"
@@ -428,7 +428,7 @@ const getAccountName = (acctid: number): string => {
                             >
                               <i className="bi bi-trash3"></i>
                             </button>
-                          )}
+                         )} */}
                         </div>
                       </td>
                     </tr>
