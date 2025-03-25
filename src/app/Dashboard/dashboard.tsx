@@ -393,7 +393,7 @@ export default function Dashboard() {
 
         <hr className="border-white border-2 " />
         <div className="upload-prof">
-          <button className="btn btn-light rounded-circle m-auto d-block" onClick={toggleMinimizeMaximize}>
+          <button style={{borderRadius:"50%",height:"100%",width:"auto"}} className="btn btn-light rounded-circle m-auto d-block" onClick={toggleMinimizeMaximize}>
             {arrowIcon ? (
               <i className="bi bi-chevron-left rotate-left"></i>) : (
               <i className="bi bi-chevron-right rotate-right"></i>

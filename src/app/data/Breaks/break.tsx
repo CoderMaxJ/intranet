@@ -307,7 +307,7 @@ function BreakDataTable() {
                 }}
               >
                <i className="bi bi-alarm" style={{padding:'4px'}}></i>
-                Total: 100
+                Total: <span>{localStorage.getItem("total-on-breaks") || 0}</span>
               </span>
         
               </div>

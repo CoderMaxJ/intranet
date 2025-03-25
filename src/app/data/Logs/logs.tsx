@@ -194,8 +194,8 @@ function LogsDataTable() {
                   paddingTop:'7px',        
                 }}
               >
-                <i className=" bi bi-people-fill" style={{padding:'4px'}}></i>
-                Total: 100
+                <i className=" bi bi-people-fill" style={{padding:'px'}}></i>
+                Total: {localStorage.getItem("total-logs") || 0}
               </span>
           </div>
         </div>
