@@ -413,7 +413,7 @@ input:focus {
   }
 
   .tabemp {
-    font-size: smaller;
+    font-size: smaller !important;
   }
 
   .tabreport {
@@ -490,14 +490,56 @@ input:focus {
     transform: translateY(-2px);
   }
 
-  .table>thead {
+  /* .table>thead {
     vertical-align: bottom;
     font-size: x-small;
     white-space: nowrap;
+  } */
+
+  .search-input1 {
+    width: 270px !important;
+    transform: translateX(-20px) translateY(4px);
   }
 
-  .table>tbody {
-    font-size: x-small !important;
+  .report-icon {
+    transform: translateX(-20px) translateY(2px);
+  }
+
+  .reportss {
+    width: 100.1% !important;
+  }
+
+  .searchbar-wrapper {
+    flex-direction: row;
+
+  }
+
+  .searchbar-container {
+    width: 30px !important;
+  }
+  .searchbar {
+    transform:translateY(30px) translateX(-140px);
+  }
+  .tabbreaks {
+    margin-top: 20px !important;
+  }
+
+  .breaks-icon {
+    transform: translateY(27px) translateX(-135px);
+  }
+
+  .searchbarr {
+    transform: translateX(-20px) !important;
+  }
+
+  .logs-icon {
+    transform: translateY(-23px) translateX(-335px) !important;
+  }
+  .employee-icon {
+    transform: translateY(-1px) !important;
+  }
+  .accounts-icon {
+    transform: translateX(-90px) translateY(-2px) !important;
   }
 }
 
@@ -513,6 +555,16 @@ input:focus {
 }
 
 .searchbar {
+  max-width: 330px;
+  margin-top: 1px;
+  width: 25rem;
+  padding: 7px 5px 7px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: white;
+}
+.searchbar12 {
   max-width: 330px;
   margin-top: 1px;
   width: 25rem;

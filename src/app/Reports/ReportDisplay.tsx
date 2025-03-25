@@ -279,7 +279,7 @@ export default function Daterange() {
                                             width="14"
                                             height="14"
                                             fill="currentColor"
-                                            className="bi-search"
+                                            className="report-icon bi-search"
                                             viewBox="-7 0 30 16"
                                             style={{ color: '#595b5c' }}
                                         >

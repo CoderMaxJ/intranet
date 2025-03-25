@@ -174,7 +174,7 @@ function LogsDataTable() {
                 width="14"
                 height="14"
                 fill="currentColor"
-                className="bi-search"
+                className="logs-icon bi-search"
                 viewBox="-7 0 30 16"
                 style={{ cursor: "pointer", position: "absolute", transform: "translateY(-23px) translateX(-390px)", margin: "0 auto" }}
               >

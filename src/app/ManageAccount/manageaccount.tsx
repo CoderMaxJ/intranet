@@ -321,12 +321,13 @@ export default function ManageDepartment() {
                 <div className="px-4">
                     <div className="manageaccounts-bg">
                         <div className="employee-header flex-grow-1 d-flex justify-content-center ">  
-                          <div style={{position:'relative'}}><svg
+                          <div style={{position:'relative'}}>
+                            <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="14"
                                 height="14"
                                 fill="currentColor"
-                                className="bi-search"
+                                className="accounts-icon bi-search"
                                 viewBox="-7 0 30 16"
                                 style={{zIndex:1, transform:'translateX(-90px)'}}
                             >
@@ -354,11 +355,12 @@ export default function ManageDepartment() {
                                         width="16"
                                         height="16"
                                         fill="#ffffff"
-                                        className="bi bi-plus-circle-fill me-2"
+                                        className="bi bi-plus-circle-fill me-2 "
                                         viewBox="0 0 16 16"
                                     >
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                    </svg> Add Account
+                                    </svg> 
+                                    <label htmlFor="">Add Account</label>
                                 </button>
                             </div>
                         </div>
