@@ -361,6 +361,7 @@ input:focus {
     align-items: start;
     gap: 1rem;
   }
+
   .searchbar-container1 {
     justify-content: space-between;
   }
@@ -368,71 +369,136 @@ input:focus {
   .logs-table {
     /* justify-content: space-between; */
   }
+
   .modal-content {
     width: 150% !important;
   }
+
   .updatepassword-input {
     width: 90% !important;
   }
+
   .updatepassword-input1 {
     width: 90% !important;
   }
+
   .actions {
     display: flex;
   }
-  .row{
+
+  .row {
     width: 60% !important;
-   
+
   }
+
   .reportss {
     height: 620px !important;
     overflow-y: auto !important;
   }
+
   .db-reports1 {
     min-height: 120vh !important;
   }
+
   .main-divv {
-    width:82% !important;
+    width: 82% !important;
   }
+
   .search-div {
     transform: translateX(490px) !important;
   }
+
   .table-data {
     font-size: smaller !important;
   }
+
   .tabemp {
     font-size: smaller;
   }
-  .tabreport{
+
+  .tabreport {
     width: 94.8% !important;
     font-size: x-small !important;
   }
-  .download-reports button  {
+
+  .download-reports button {
     width: 7% !important;
   }
+
   .tablogs {
     font-size: x-small !important;
     white-space: nowrap;
   }
+
   .tabbreaks {
     font-size: x-small !important;
   }
+
   .legends {
     font-size: x-small !important;
   }
-  .agent-header{
+
+  .agent-header {
     font-size: 20px !important;
   }
+
   .logs-headername {
     font-size: 20px !important;
   }
- .logs-total {
-  font-size: small !important;
-  width: 100px !important;
- }
- .agent-header {
-  width: 350px !important;
- }
+
+  .logs-total {
+    font-size: small !important;
+    width: 100px !important;
+  }
+
+  .agent-header {
+    width: 350px !important;
+  }
+
+  .download-reports button {
+    font-size: small;
+    margin-top: -37px !important;
+    padding: 8px;
+  }
+
+  .daterange-button {
+    font-size: small;
+  }
+
+  .form-control {
+    font-size: small !important;
+  }
+
+  .form-label {
+    margin-bottom: .5rem;
+    font-size: small;
+  }
+
+  .search-div {
+    transform: translateX(490px) translateY(-5PX) !important;
+  }
+
+  .button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-size: small !important;
+  }
+
+  .bi-search {
+    transform: translateY(-2px);
+  }
+
+  .table>thead {
+    vertical-align: bottom;
+    font-size: x-small;
+    white-space: nowrap;
+  }
+
+  .table>tbody {
+    font-size: x-small !important;
+  }
 }
 
 .searchbar3 {
@@ -1214,6 +1280,7 @@ table {
   margin-left: 0;
   min-height: 100vh !important;
 }
+
 .search-employee {
   position: absolute;
 }
@@ -1605,11 +1672,48 @@ table {
   background-color: #53a2be;
 }
 
-
 .generate svg {
   margin-right: 20px;
   fill: rgb(255, 255, 255);
 }
+
+.logout-hover {
+  display: flex !important;
+  align-items: center;
+  padding: 10px;
+  margin-top: 15px;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
+}
+
+.logout-hover:hover {
+  background-color: #53a2be;
+}
+
+.logout-hover svg {
+  margin-right: 20px;
+  fill: rgb(255, 255, 255);
+}
+
+.updatepassword-hover {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-top: 5px;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  height: 45px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.updatepassword-hover:hover {
+  background-color: #53a2be;
+}
+
 
 /* Existing styles */
 .admin {
@@ -1663,12 +1767,22 @@ table {
   fill: white;
 }
 
+.undermanage-hover a.default-width {
+  width: 9vw !important;
+}
+
+.undermanage-hover a.condensed-width {
+  width: 2vw !important;
+}
+
+
+/* 
 .undermanage-hover a {
   border-radius: 2px !important;
   cursor: pointer !important;
   width: 9vw !important;
   transform: translateX(-20px);
-}
+} */
 
 .undermanage-hover a:hover {
   background-color: #53a2be;
@@ -1728,7 +1842,6 @@ table {
 
 .prof-hover:hover {
   border-radius: 2px;
-  padding-top: 7px;
   color: white !important;
   background-color: white !important;
 }

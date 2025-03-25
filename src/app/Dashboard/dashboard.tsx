@@ -29,6 +29,9 @@ export default function Dashboard() {
   const [showAccounts, setShowAccounts] = useState(true);
   const [showEmployee, setShowEmployee] = useState(true);
   const [showProfileLabel, setShowProfileLabel] = useState(true);
+  const [accountsMenu, setAccountsMenu] = useState(true);
+  const [manageMenu, setManageMenu] = useState(true);
+
 
 
   useEffect(() => {
@@ -130,7 +133,6 @@ export default function Dashboard() {
       localStorage.setItem("sidebarMinimized", "true");
     }
   };
-
   // Apply the stored state when the component loads
   useEffect(() => {
     const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
@@ -258,11 +260,27 @@ export default function Dashboard() {
                   </svg>)}
                 </div>
               </div>
+
+
               <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne" style={{ marginTop: "-20px" }}>
                 <div className="undermanage-hover accordion-body">
+                  <div>
                   {user_privilege.includes("manage_users") && (
-
-                    <a className="nav-font" onClick={() => routerPush("/ManageAccount")} style={{ marginLeft: "15px", color: '#ffffff', textDecoration: 'none', display: 'block', marginTop: '12px', padding: '10px' }}>
+                    <a className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`}
+                      onClick={() => routerPush("/ManageAccount")}
+                      style={{
+                        width: navWidth === '217px' ? '9.5vw' : '2vw',
+                        marginLeft: '6px',
+                        color: '#ffffff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        marginTop: '12px',
+                        padding: '10px',
+                        borderRadius: '2px',
+                        cursor: 'pointer',
+                        transform: 'translateX(-20px)'
+                      }}
+                      >
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="white" className="bi bi-person-circle" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                         <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
@@ -272,7 +290,11 @@ export default function Dashboard() {
                       )}
                     </a>
                   )}
-                  <a className="nav-font" onClick={() => routerPush("/ManageEmployee")} style={{ marginLeft: "15px", color: '#ffffff', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop: '5px' }}>
+                  </div>
+                    <div className="undermanage-hover">
+                  <a className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`}  
+                  onClick={() => routerPush("/ManageEmployee")} 
+                  style={{ borderRadius:"2px", width: navWidth === '217px' ? '9.5vw' : '2vw', marginLeft: "-15px", color: '#ffffff', textDecoration: 'none', display: 'block', padding: '10px', marginBottom: '-13px', marginTop: '5px' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-people" viewBox="0 0 16 16" style={{ marginRight: '21px' }}>
                       <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
                     </svg>
@@ -280,6 +302,7 @@ export default function Dashboard() {
                       <label htmlFor="employee">Employee</label>
                     )}
                   </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -289,9 +312,7 @@ export default function Dashboard() {
               <div
                 style={{
                   borderRadius: '2px',
-                  marginTop: '10px',
                 }}
-                className="menu-item"
               >
                 <div
                   className="prof-hover d-flex justify-content-between"
@@ -305,19 +326,17 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div
-                  style={{ marginTop: "-7px" }}
                 >
+                </div>
+                <div className="updatepassword-hover">
                   <div className="accordion-body user-updatepassword-button"
                   >
-                    <div className="manage-menu" data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
+                    <div id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
                       style={{
                         textDecoration: 'none',
-                        padding: '10px',
                         whiteSpace: 'nowrap',
-                        borderRadius: '2px',
                         width: '126%',
-                        marginTop: '-14px',
-                        transform: 'translateX(-20px)',
+                        transform: 'translateX(-22px)',
                         cursor: 'pointer',
                       }}
                     >
@@ -334,8 +353,11 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div onClick={() => setLogout(true)} className="generate" style={{ marginTop: '-11px', width: showLogout === false ? "100px" : '10.3vw' }}>
-          <svg
+        <div >
+        </div>
+        <div  className="logout-hover" onClick={() => setLogout(true)} style={{ marginTop: '5px'}}>
+            <div id="dashboard" className={`nav-font d-flex ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => routerPush("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
+            <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
@@ -356,7 +378,19 @@ export default function Dashboard() {
           {showLogout === true && (
             <Logout />
           )}
-        </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
         <hr className="border-white border-2 " />
         <div className="upload-prof">
           <button className="btn btn-light rounded-circle m-auto d-block" onClick={toggleMinimizeMaximize}>
@@ -393,22 +427,17 @@ export default function Dashboard() {
                   ) : (<p className="username-label-profile">{localStorage.getItem("name")?.charAt(0)}</p>)}
                 </div>
                 <div className="online"></div>
-
               </div>
-
             )}
             {profile != null && showProfileLabel === true && (
               <div>
                 <p className="name">{localStorage.getItem("name")}</p>
                 <p className="name">{localStorage.getItem("position")}</p>
               </div>
-
-
             )}
           </center>
         </div>
       </div>
-
     </>
   );
 }

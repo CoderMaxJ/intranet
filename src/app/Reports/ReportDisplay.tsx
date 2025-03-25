@@ -269,8 +269,9 @@ export default function Daterange() {
                                                 padding: '7px 60px',
                                                 borderRadius: '5px',
                                                 border: '1px solid #ccc',
-                                                width: '22vw',
+                                                width: '360px',
                                                 position: 'relative',
+                                                backgroundColor:'#f0f0f0'
                                             }}
                                         />
                                         <svg
