@@ -337,6 +337,14 @@ input:focus {
   margin-right: 20px;
 }
 
+.updatepassword-input {
+  color: black;
+  background-color: white;
+}
+.updatepassword-input1 {
+  color: black;
+  background-color: white;
+}
 .main-page {
   background-color: #e7e7e7;
 }
