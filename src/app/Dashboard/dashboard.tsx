@@ -34,6 +34,7 @@ export default function Dashboard() {
 
 
 
+  
   useEffect(() => {
     const savedImage = localStorage.getItem("profileImage");
     if (savedImage) {
@@ -73,7 +74,7 @@ export default function Dashboard() {
       setUpload(false);
     }
   }
-  const handleImageUpload = (event) => {
+  const handleImageUpload = (event: any) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -81,6 +82,7 @@ export default function Dashboard() {
         const base64String = reader.result;
         localStorage.setItem("profileImage", base64String);
         setProfile(base64String);
+        setUpload(false);
       };
       reader.readAsDataURL(file);
     }
@@ -152,6 +154,7 @@ export default function Dashboard() {
       setShowProfileLabel(false);
     }
   }, []);
+  
 
   return (
     <>

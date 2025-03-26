@@ -234,7 +234,7 @@ export default function Daterange() {
                                                     className="form-control"
                                                     onChange={(e) => setStart(e.target.value)}
                                                     value={start}
-                                                    style={{ marginLeft: "10px", width: "10vw" }}
+                                                    style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
                                                 />
                                             </div>
                                             <div style={{ display: 'flex' }}>
@@ -251,7 +251,7 @@ export default function Daterange() {
                                                     className="form-control"
                                                     onChange={(e) => setEnd(e.target.value)}
                                                     value={end}
-                                                    style={{ marginLeft: "10px", width: "10vw" }}
+                                                    style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
                                                 />
                                                 <button type="button" className="daterange-button" onClick={handleView}>
                                                     View
@@ -272,7 +272,7 @@ export default function Daterange() {
                                                 width: '360px',
                                                 position: 'relative',
                                                 backgroundColor:'#f0f0f0',
-                                             
+                                                color:'#000000'
                                             }}
                                         />
                                         <svg
