@@ -337,6 +337,14 @@ input:focus {
   margin-right: 20px;
 }
 
+.updatepassword-input {
+  color: black;
+  background-color: white;
+}
+.updatepassword-input1 {
+  color: black;
+  background-color: white;
+}
 .main-page {
   background-color: #e7e7e7;
 }
@@ -355,6 +363,10 @@ input:focus {
 }
 
 @media only screen and (max-width: 1200px) {
+  .addbutton12 {
+    transform:translateX(390px) !important;
+  }
+
   .searchbar-wrapper {
     display: flex;
     flex-direction: column;
@@ -779,7 +791,7 @@ input:focus {
 .logs-total span {
   background-color: #2ee4c5;
   padding: 7px;
-  width: 115px;
+  width: 105px;
   justify-content: center;
   height: 37px;
   text-align: center;
