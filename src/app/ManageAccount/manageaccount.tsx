@@ -343,7 +343,7 @@ export default function ManageDepartment() {
                                 style={{ transform: 'translateX(-90px)', position:'absolute' }}
                             />
                             </div>  
-                            <div style={{transform:"translateX(735px)"}}>
+                            <div className="addbutton12" style={{transform:"translateX(735px)"}}>
                                 <button
                                     className="addhover"
                                     data-bs-toggle="modal"
