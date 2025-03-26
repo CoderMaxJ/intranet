@@ -483,6 +483,7 @@ input:focus {
 
   .form-control {
     font-size: small !important;
+    color: black;
   }
 
   .form-label {
