@@ -271,7 +271,8 @@ export default function Daterange() {
                                                 border: '1px solid #ccc',
                                                 width: '360px',
                                                 position: 'relative',
-                                                backgroundColor:'#f0f0f0'
+                                                backgroundColor:'#f0f0f0',
+                                             
                                             }}
                                         />
                                         <svg
