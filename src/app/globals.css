@@ -388,6 +388,11 @@ input:focus {
 
 
 @media only screen and (max-width: 1200px) {
+
+  .manage-table {
+    font-size: small !important;
+  }
+
   .addbutton12 {
     transform:translateX(390px) !important;
   }
@@ -1676,6 +1681,9 @@ table {
 }
 
 
+.dashboardd {
+
+}
 
 .dashboard svg {
   margin-left: -3px;
