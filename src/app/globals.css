@@ -365,6 +365,7 @@ input:focus {
 .search-input1 {
   color: black !important;
 }
+
 .form-control {
   position: relative;
   width: 100%;
@@ -385,18 +386,6 @@ input:focus {
   pointer-events: none;
 }
 
-
-/* @media (prefers-color-scheme: dark) {
-  .form-control  { color: black !important;
-  background-color: white !important;
-  border-color: #ccc !important;
-}
-
- 
-}
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0);
-  color: blue !important; /* Makes calendar icon dark */
 
 @media only screen and (max-width: 1200px) {
   .addbutton12 {
@@ -555,7 +544,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   .reportss {
-    width: 100.1% !important;
+    width: 105.2% !important;
   }
 
   .searchbar-wrapper {
