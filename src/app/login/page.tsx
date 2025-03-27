@@ -103,7 +103,7 @@ export default function Login() {
         <img
           src="/img/blackecomia.png"
           alt="Staff Outsourcing Logo"
-          style={{ width: "130px", height: "100%" }}
+          style={{ width: "100px", height: "50%" }}
         />
         </div>
         <form className="username" onSubmit={handleSubmit}>

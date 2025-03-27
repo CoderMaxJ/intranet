@@ -207,7 +207,7 @@ export default function Dashboard() {
           {showImage === true && (
             <>
               <img src="/img/whitesos.png" height={100} />
-              <img src="/img/whiteecomia123.png" height={35} style={{justifyContent:'center', marginTop:'-23px'}}  />
+              <img src="/img/whiteecomia123.png" height={30} style={{justifyContent:'center', marginTop:'-30px', marginLeft:'5px'}}  />
             </>
           )}
         </div>
