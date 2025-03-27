@@ -153,7 +153,7 @@ a {
   border-radius: 8px;
   padding: 20px 20px 85px 20px;
   width: 20vw !important;
-  height: 45vh !important;
+  height: 48% !important;
   justify-content: center;
   align-items: center;
   border: none !important;
@@ -167,8 +167,8 @@ a {
 
 .login-div img {
   width: 85%;
-  margin-top: 1px;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
+
 }
 
 .login-div input {

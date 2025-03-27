@@ -205,7 +205,10 @@ export default function Dashboard() {
         {/*  */}
         <div style={{ marginBottom: "30px", marginLeft: '40px', transform: 'translateY(-10px)' }}>
           {showImage === true && (
-            <img src="/img/sos1.png" height={100} />
+            <>
+              <img src="/img/whitesos.png" height={100} />
+              <img src="/img/whiteecomia123.png" height={35} style={{justifyContent:'center', marginTop:'-23px'}}  />
+            </>
           )}
         </div>
         <div className="accordion"  >
