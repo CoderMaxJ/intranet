@@ -366,6 +366,27 @@ input:focus {
   color: black !important;
 }
 
+.form-control {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  padding-right: 40px; /* space for the icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-control::after {
+  content: "\1F4C5"; /* 📅 calendar icon */
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 31px); /* or right: 10px */
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black !important;
+  pointer-events: none;
+}
+
+
 @media only screen and (max-width: 1200px) {
   .addbutton12 {
     transform:translateX(390px) !important;
@@ -523,7 +544,7 @@ input:focus {
   }
 
   .reportss {
-    width: 100.1% !important;
+    width: 105.2% !important;
   }
 
   .searchbar-wrapper {
@@ -2165,4 +2186,24 @@ table {
   html {
     color-scheme: dark;
   }
+}
+
+.form-control {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  padding-right: 40px; /* space for the icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-control::after {
+  content: "\1F4C5"; /* 📅 calendar icon */
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 31px); /* or right: 10px */
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black !important;
+  pointer-events: none;
 }
