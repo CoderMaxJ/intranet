@@ -337,6 +337,14 @@ input:focus {
   margin-right: 20px;
 }
 
+.updatepassword-input {
+  color: black;
+  background-color: white;
+}
+.updatepassword-input1 {
+  color: black;
+  background-color: white;
+}
 .main-page {
   background-color: #e7e7e7;
 }
@@ -354,7 +362,36 @@ input:focus {
   align-items: center;
 }
 
+.search-input1 {
+  color: black !important;
+}
+
+.form-control {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  padding-right: 40px; /* space for the icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-control::after {
+  content: "\1F4C5"; /* 📅 calendar icon */
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 31px); /* or right: 10px */
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black !important;
+  pointer-events: none;
+}
+
+
 @media only screen and (max-width: 1200px) {
+  .addbutton12 {
+    transform:translateX(390px) !important;
+  }
+
   .searchbar-wrapper {
     display: flex;
     flex-direction: column;
@@ -467,6 +504,7 @@ input:focus {
 
   .form-control {
     font-size: small !important;
+    color: black;
   }
 
   .form-label {
@@ -506,7 +544,7 @@ input:focus {
   }
 
   .reportss {
-    width: 100.1% !important;
+    width: 105.2% !important;
   }
 
   .searchbar-wrapper {
@@ -552,6 +590,7 @@ input:focus {
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: rgb(240, 240, 240);
+  color: #000000 !important;
 }
 
 .searchbar {
@@ -563,6 +602,7 @@ input:focus {
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: white;
+  color: #000000;
 }
 .searchbar12 {
   max-width: 330px;
@@ -573,6 +613,7 @@ input:focus {
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: white;
+  color: #000000;
 }
 
 .searchbarr {
@@ -584,6 +625,7 @@ input:focus {
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: white;
   transform: translateX(-70px);
+  color: #000000;
 }
 
 .searchbar:focus {
@@ -779,7 +821,7 @@ input:focus {
 .logs-total span {
   background-color: #2ee4c5;
   padding: 7px;
-  width: 115px;
+  width: 105px;
   justify-content: center;
   height: 37px;
   text-align: center;

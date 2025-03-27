@@ -234,7 +234,7 @@ export default function Daterange() {
                                                     className="form-control"
                                                     onChange={(e) => setStart(e.target.value)}
                                                     value={start}
-                                                    style={{ marginLeft: "10px", width: "10vw" }}
+                                                    style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
                                                 />
                                             </div>
                                             <div style={{ display: 'flex' }}>
@@ -251,7 +251,7 @@ export default function Daterange() {
                                                     className="form-control"
                                                     onChange={(e) => setEnd(e.target.value)}
                                                     value={end}
-                                                    style={{ marginLeft: "10px", width: "10vw" }}
+                                                    style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
                                                 />
                                                 <button type="button" className="daterange-button" onClick={handleView}>
                                                     View
@@ -271,7 +271,8 @@ export default function Daterange() {
                                                 border: '1px solid #ccc',
                                                 width: '360px',
                                                 position: 'relative',
-                                                backgroundColor:'#f0f0f0'
+                                                backgroundColor:'#f0f0f0',
+                                                color:'#000000'
                                             }}
                                         />
                                         <svg
@@ -303,8 +304,8 @@ export default function Daterange() {
                                     </form>
                                 </header>
                             </div>
-                            <div className="reportss" style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
-                                <table className="tabreport table table-striped mx-4" style={{ position: 'sticky', width:'97.1%' }}>
+                            <div className="reportss px-4" style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
+                                <table className="tabreport table table-striped" style={{ position: 'sticky', width:'100%' }}>
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
