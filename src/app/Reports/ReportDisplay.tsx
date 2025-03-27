@@ -313,13 +313,13 @@ export default function Daterange() {
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout1</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Obrk1</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchin</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchout</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Obrk3</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin2</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout2</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Ob2</th>
+                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Personal Break</th>
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
                                         </tr>
