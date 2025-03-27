@@ -202,6 +202,7 @@ export default function Dashboard() {
           width: navWidth,
         }}
       >
+        {/*  */}
         <div style={{ marginBottom: "30px", marginLeft: '40px', transform: 'translateY(-10px)' }}>
           {showImage === true && (
             <img src="/img/sos1.png" height={100} />
