@@ -106,7 +106,7 @@ export default function Login() {
           className="ecomialogo"
           src="/img/eComialogo.png"
           alt="Staff Outsourcing Logo"
-          style={{ width: "88px", height: "50%" }}
+          style={{ width: "75px", height: "50%" }}
         />
         </div>
         <form className="username" onSubmit={handleSubmit}>
