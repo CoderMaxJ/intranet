@@ -132,7 +132,7 @@ export default function Dashboard() {
       setShowEmployee(false);
       setShowProfileLabel(false);
       localStorage.setItem("sidebarMinimized", "true");
-    }
+    } 
   };
   // Apply the stored state when the component loads
   useEffect(() => {
@@ -396,12 +396,7 @@ export default function Dashboard() {
         <div className="upload-prof">
           <button
             onClick={toggleMinimizeMaximize}
-            className="btn btn-light rounded-circle m-auto d-flex align-items-center justify-content-center"
-            style={{
-              height: "40px",
-              width: "40px",
-              padding: 0
-            }}
+            className="arrow-btn btn btn-light rounded-circle m-auto d-flex align-items-center justify-content-center"  
           >
             {arrowIcon ? (
               <svg

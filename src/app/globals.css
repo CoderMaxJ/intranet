@@ -372,6 +372,9 @@ input:focus {
   color: black !important;
 }
 
+.acc-head input {
+  justify-content: center;
+}
 .form-control {
   position: relative;
   width: 100%;
@@ -401,10 +404,6 @@ input:focus {
   }
   .manage-table {
     font-size: small !important;
-  }
-
-  .addbutton12 {
-    transform:translateX(390px) !important;
   }
 
   .searchbar-wrapper {
@@ -453,12 +452,12 @@ input:focus {
   }
 
   .main-divv {
-    width: 82% !important;
+    width: 100% !important;
   }
 
-  .search-div {
+  /* .search-div {
     transform: translateX(490px) !important;
-  }
+  } */
 
   .table-data {
     font-size: smaller !important;
@@ -469,7 +468,7 @@ input:focus {
   }
 
   .tabreport {
-    width: 94.8% !important;
+    width: 100% !important;
     font-size: x-small !important;
   }
 
@@ -527,9 +526,9 @@ input:focus {
     font-size: small;
   }
 
-  .search-div {
+  /* .search-div {
     transform: translateX(490px) translateY(-5PX) !important;
-  }
+  } */
 
   .button,
   input,
@@ -549,30 +548,30 @@ input:focus {
     white-space: nowrap;
   } */
 
-  .search-input1 {
+  /* .search-input1 {
     width: 270px !important;
     transform: translateX(-20px) translateY(4px);
-  }
+  } */
 
   .report-icon {
     transform: translateX(-20px) translateY(2px);
   }
 
   .reportss {
-    width: 105.2% !important;
+    width: 100% !important;
   }
-
+/* 
   .searchbar-wrapper {
     flex-direction: row;
 
-  }
+  } */
 
-  .searchbar-container {
+  /* .searchbar-container {
     width: 30px !important;
-  }
-  .searchbar {
+  } */
+  /* .searchbar {
     transform:translateY(30px) translateX(-140px);
-  }
+  } */
   .tabbreaks {
     margin-top: 20px !important;
   }
@@ -581,9 +580,9 @@ input:focus {
     transform: translateY(27px) translateX(-135px);
   }
 
-  .searchbarr {
+  /* .searchbarr {
     transform: translateX(-20px) !important;
-  }
+  } */
 
   .logs-icon {
     transform: translateY(-23px) translateX(-335px) !important;
@@ -609,9 +608,9 @@ input:focus {
 }
 
 .searchbar {
-  max-width: 330px;
+  /* max-width: 330px;
   margin-top: 1px;
-  width: 25rem;
+  width: 25rem; */
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
@@ -632,14 +631,14 @@ input:focus {
 }
 
 .searchbarr {
-  margin-top: 1px;
-  width: 330px;
+  /* margin-top: 1px;
+  width: 330px; */
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: white;
-  transform: translateX(-70px);
+  /* transform: translateX(-70px); */
   color: #000000;
 }
 
@@ -844,8 +843,6 @@ input:focus {
 
 .logs-headername {
   font-size: 1.5rem;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .searchbarlogs {
@@ -901,8 +898,8 @@ input:focus {
 }
 
 .daterange-button {
-  margin-left: 10px;
   width: 70px;
+  padding:7px;
   border: none;
   border-radius: 4px;
   color: white;
@@ -1263,11 +1260,12 @@ table {
   background-color: #807e7e;
 }
 
-.employee-header {
+.employee-header > div{
   display: flex !important;
-  justify-content: flex-end !important;
+  flex-wrap: wrap ;
+  justify-self: center;
   padding: 2px 20px 15px;
-
+  width: 100%;
 }
 
 .managereport {
@@ -1431,10 +1429,6 @@ table {
   position: fixed;
 }
 
-.search-div {
-  position: absolute;
-  transform: translateX(700px);
-}
 
 .search-div svg {
   top: 6px;
@@ -2062,10 +2056,6 @@ table {
 }
 
 /* viewreports */
-.download-reports {
-  display: flex;
-  justify-content: flex-end;
-}
 
 .download-reports button {
   width: 6vw !important;
@@ -2220,4 +2210,14 @@ table {
   font-size: 18px;
   color: black !important;
   pointer-events: none;
+}
+
+.arrow-btn {
+  transform: translateX(105px);
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  border-color: #000000 !important;
+  border-style: solid !important;
+  border-width: 2px !important;
 }

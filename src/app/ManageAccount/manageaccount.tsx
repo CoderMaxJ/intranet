@@ -318,10 +318,11 @@ export default function ManageDepartment() {
             )}
             <div className="manage-department">
                 <div className="manageaccounts-header px-4"><Header title="MANAGE ACCOUNTS" /></div>
-                <div className="px-4">
+                <div className="px-4"> 
                     <div className="manageaccounts-bg">
-                        <div className="employee-header flex-grow-1 d-flex justify-content-center ">  
-                          <div style={{position:'relative'}}>
+
+                        <div className="employee-header">  
+                          <div className="acc-head gap-3 justify-content-center justify-content-md-between">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="14"
@@ -329,21 +330,19 @@ export default function ManageDepartment() {
                                 fill="currentColor"
                                 className="accounts-icon bi-search"
                                 viewBox="-7 0 30 16"
-                                style={{zIndex:1, transform:'translateX(-90px)'}}
+                              
                             >
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                             </svg>
                             <input
-                                className="searchbar3 d-flex"
+                                className="searchbar3 "
                                 type="text"
                                 id="myInput"
                                 placeholder="Search..."
                                 value={filter}
                                 onChange={handleFilterChange}
-                                style={{ transform: 'translateX(-90px)', position:'absolute' }}
+                              
                             />
-                            </div>  
-                            <div className="addbutton12" style={{transform:"translateX(735px)"}}>
                                 <button
                                     className="addhover"
                                     data-bs-toggle="modal"
@@ -365,6 +364,8 @@ export default function ManageDepartment() {
                                 </button>
                             </div>
                         </div>
+
+
                         {showform && (
                             <>
                                 <div

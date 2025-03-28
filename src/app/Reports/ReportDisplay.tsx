@@ -219,11 +219,12 @@ export default function Daterange() {
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
                                     <form>
-                                        <div style={{ display: 'flex', marginTop: '5px' }}>
-                                            <div style={{ display: 'flex' }}>
+                                        <div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3">
+                                            <div className="row d-flex flex-wrap align-items-center">
+                                            <div className="col-auto row">
                                                 <label
                                                     htmlFor="id-start"
-                                                    className="form-label"
+                                                    className="form-label col-auto"
                                                     style={{ marginLeft: "5px" }}
                                                 >
                                                     From:
@@ -236,11 +237,11 @@ export default function Daterange() {
                                                     value={start}
                                                     style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
                                                 />
-                                            </div>
-                                            <div style={{ display: 'flex' }}>
+                                                </div>
+                                                <div className="col-auto row">
                                                 <label
                                                     htmlFor="id-end"
-                                                    className="form-label"
+                                                    className="form-label col-auto"
                                                     style={{ marginLeft: "30px" }}
                                                 >
                                                     To:
@@ -253,42 +254,42 @@ export default function Daterange() {
                                                     value={end}
                                                     style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
                                                 />
+                                                </div>
+                                              <div>
                                                 <button type="button" className="daterange-button" onClick={handleView}>
                                                     View
-                                                </button>
-                                            </div>
-                                            <div className="search-div">
-                                            <input
-                                            className="search-input1"
-                                            id="search-employee"
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchTerm}
-                                            onChange={handleSearch}
-                                            style={{
-                                                padding: '7px 60px',
-                                                borderRadius: '5px',
-                                                border: '1px solid #ccc',
-                                                width: '360px',
-                                                position: 'relative',
-                                                backgroundColor:'#f0f0f0',
-                                                color:'#000000'
-                                            }}
-                                        />
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="14"
-                                            height="14"
-                                            fill="currentColor"
-                                            className="report-icon bi-search"
-                                            viewBox="-7 0 30 16"
-                                            style={{ color: '#595b5c' }}
-                                        >
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                        </svg>
+                                                </button> 
+                                                </div>
+                                                </div>
+                                                <div style={{position:'relative'}}>
+                                                <input
+                                                    className="search-div"
+                                                    id="search-employee"
+                                                    type="text"
+                                                    placeholder="Search..."
+                                                    value={searchTerm}
+                                                    onChange={handleSearch}
+                                                    style={{
+                                                        padding: '7px 60px',
+                                                        borderRadius: '5px',
+                                                        border: '1px solid #ccc',
+                                                        position: 'relative',
+                                                        backgroundColor:'#f0f0f0',
+                                                        color:'#000000'
+                                                    }}
+                                                />
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="14"
+                                                    height="14"
+                                                    fill="currentColor"
+                                                    className="report-icon bi-search"
+                                                    viewBox="-7 0 30 16"
+                                                    style={{ color: '#595b5c', position:'absolute' }}
+                                                >
+                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
                                         </div>
-                                        </div>
-                                        <div className="download-reports">
                                             <button
                                                 type="button"
                                                 className="download"
@@ -304,8 +305,8 @@ export default function Daterange() {
                                     </form>
                                 </header>
                             </div>
-                            <div className="reportss px-4" style={{ overflowY: 'auto', height: '710px' }}>
-                                <table className="tabreport table table-striped" style={{ position: 'sticky', width:'100%' }}>
+                            <div className="mx-4" style={{ overflowY: 'auto', height: '790px' }}>
+                                <table className="tabreport table table-striped" style={{ width:'100%' }}>
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
