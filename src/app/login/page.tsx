@@ -92,12 +92,23 @@ export default function Login() {
     <div className="main-div">
       <ToastContainer />
       <div className="login-div">
-        <img
-          src="/img/Sos.png"
+        <div style={{marginTop:'-20px'}}>
+        <img 
+          className="login-logo"
+          src="/img/Bluesos.png"
           alt="Staff Outsourcing Logo"
-          height={60}
-          width={100}
+          style={{ width: "105px", height: "80%" }}
         />
+        </div>
+        <label htmlFor="poweredby" style={{transform:'translateY(-21px) translateX(10px)', fontSize:'10px', fontWeight:"bold"}}>powered by</label>
+        <div>
+        <img 
+          className="ecomialogo"
+          src="/img/eComialogo.png"
+          alt="Staff Outsourcing Logo"
+          style={{ width: "75px", height: "50%" }}
+        />
+        </div>
         <form className="username" onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           <div className="inp-lab">

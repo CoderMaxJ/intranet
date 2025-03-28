@@ -350,6 +350,7 @@ export default function ManageDepartment() {
                                     data-bs-target="#addAccountModal"
                                     style={{ justifyContent: 'flex-end' }}
                                 >
+                                    {/*  */}
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="16"
