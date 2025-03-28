@@ -304,7 +304,7 @@ export default function Daterange() {
                                     </form>
                                 </header>
                             </div>
-                            <div className="reportss px-4" style={{ overflowY: 'auto', height: '710px', backgroundColor: '#ffffff' }}>
+                            <div className="reportss px-4" style={{ overflowY: 'auto', height: '710px' }}>
                                 <table className="tabreport table table-striped" style={{ position: 'sticky', width:'100%' }}>
                                     <thead>
                                         <tr className="report-header">
