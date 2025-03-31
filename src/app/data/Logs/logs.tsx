@@ -43,7 +43,7 @@ function LogsDataTable() {
   );
 
   const fetchLogs = async () => {
-    
+
     try {
       const account_id = await localStorage.getItem("user_id");
       const response = await fetch(
@@ -69,11 +69,11 @@ function LogsDataTable() {
 
         return;
       }
-      if(!response.ok || response.status === 404 || response.status === 401 || response.status === 403 ){
-       return;
-      }      
+      if (!response.ok || response.status === 404 || response.status === 401 || response.status === 403) {
+        return;
+      }
       const fetchedData = await response.json();
-      localStorage.setItem("total-logs",fetchedData.total);
+      localStorage.setItem("total-logs", fetchedData.total);
       setLatestUpdate(fetchedData.latest_update);
       // Merge fetched data with the current state
       const storedData = localStorage.getItem("logsData");
@@ -98,7 +98,7 @@ function LogsDataTable() {
     fetchLogs();
     const intervalId = setInterval(fetchLogs, 1000);
     return () => clearInterval(intervalId); // Cleanup interval
-  }, [latestUpdate]); 
+  }, [latestUpdate]);
 
   if (loading)
     return (
@@ -122,11 +122,11 @@ function LogsDataTable() {
       </div>
     );
   if (error) return <div>Error: {error}</div>;
-  
+
   return (
     <div className="logs-wrapper" style={{ backgroundColor: "#e7e7e7" }}>
-      <div className="logs-maindiv">
-        <div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3">
+      <div className="logs-maindiv p-3">
+        <div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3 p-2">
           <h3
             className="logs-headername"
             style={{
@@ -140,63 +140,64 @@ function LogsDataTable() {
           <div
             className="searchbar-container1"
             style={{
-              display: "flex",
-              alignItems: "center",
               position: "relative",
-              alignContent: "center",
+              width: "100%",
+              maxWidth: "400px",
             }}
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              style={{
+                position: "absolute",
+                left: "20px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                pointerEvents: "none",
+                color: "#888",
+              }}
+            >
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+
             <input
               className="searchbarr"
-              style={{
-                justifyContent:'space-between',
-                backgroundColor: "#f0f0f0",
-                fontFamily: "'Raleway', sans-serif",
-                marginBottom: "3px",
-                // paddingRight: "30px",
-                // position: "absolute",
-              }}
               type="text"
               placeholder="Search..."
               value={filter}
               onChange={handleSearchChange}
-            />
-           
-            <div
-            className="adjust-icon"
               style={{
-                position: "absolute",
-                right: "10px",
-                pointerEvents: "none",
+                width: "100%",
+                paddingLeft: "40px", 
+                paddingRight: "16px",
+                paddingTop: "10px",
+                paddingBottom: "10px",
+                backgroundColor: "#f0f0f0",
+                fontFamily: "'Raleway', sans-serif",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                fontSize: "14px",
+                boxSizing: "border-box",
               }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                fill="currentColor"
-                className="logs-icon bi-search"
-                viewBox="-7 0 30 16"
-                style={{ cursor: "pointer", position: "absolute", transform: "translateY(-23px) translateX(-390px)", margin: "0 auto" }}
-              >
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-              </svg>
-            </div>
+            />
           </div>
           <div className="logs-total d-flex">
-          <span
-                style={{
-                  padding: "3px",
-                  fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#b3efb2",
-                  textAlign: "center", 
-                  fontWeight: "bold",    
-                  paddingTop:'7px',        
-                }}
-              >
-                <i className=" bi bi-people-fill" style={{padding:'5px'}}></i>
-                Total: {localStorage.getItem("total-logs") || 0}
-              </span>
+            <span
+              style={{
+                padding: "3px",
+                fontFamily: "'Raleway', sans-serif",
+                backgroundColor: "#b3efb2",
+                textAlign: "center",
+                fontWeight: "bold",
+                paddingTop: '7px',
+              }}
+            >
+              <i className=" bi bi-people-fill" style={{ padding: '5px' }}></i>
+              Total: {localStorage.getItem("total-logs") || 0}
+            </span>
           </div>
         </div>
         <div className="logs-tablee table-responsive">

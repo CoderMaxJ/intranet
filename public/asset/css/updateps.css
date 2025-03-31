@@ -19,38 +19,18 @@
   margin-top: 1px;
 }
 
-.updatepass-label label {
+.updatepass-label {
   color: #4e4f50;
-  margin-right: 190px;
   white-space: nowrap;
 }
 
-.updatepass-label1 label {
-  color: #4e4f50;
-}
 
 .updatepassword-input {
   font-size: 14px;
   padding: 8px !important;
   border: 1px solid #cccccc;
   border-radius: 4px;
-  margin-bottom: 10px !important;
-  margin-right: 30px;
   outline: none;
-  width: 15vw;
-  transition: border-color 0.3s ease;
-}
-
-
-.updatepassword-input1 {
-  font-size: 14px;
-  padding: 8px !important;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
- margin-bottom: 10px;
-  margin-right: 30px;
-  outline: none;
-  width: 15vw;
   transition: border-color 0.3s ease;
 }
 
@@ -64,40 +44,7 @@
   font-weight: 600;
   padding-top: 5px;
   font-size: 14px;
-  width: 91%;
-  margin-left: 15px !important;
   box-sizing: border-box;
   transition: background-color 0.3s ease, transform 0.2s ease;
-}
+} 
 
-.button-div button:hover {
-  background-color: #2d60cf;
-}
-
-.button-div button:active {
-  background-color: #059205;
-  transform: scale(0.95);
-}
-
-/* .forgot-password-link:hover {
-  text-decoration: underline;
-} */
-
-.success-message {
-  color: rgb(13, 185, 13);
-}
-
-.cp-button {
-  border: none;
-  background-color: white;
-}
-
-.ps-button {
-  border: none;
-  background-color: white;
-}
-
-.cnfrm-button{
-  border: none;
-  background-color: white;
-}

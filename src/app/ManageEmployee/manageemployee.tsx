@@ -22,14 +22,14 @@ interface Information {
   position: string;
   acctid: number;
   un: string;
-  role_id:number;
-  isdayshift:number;
-  status:number;
+  role_id: number;
+  isdayshift: number;
+  status: number;
 }
 
 interface Account {
-  acctname:string
-  acctid:number
+  acctname: string
+  acctid: number
 }
 ////
 export default function CreateUD() {
@@ -46,7 +46,7 @@ export default function CreateUD() {
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
-  const [account,setAccount]=useState<Account[]>([]);
+  const [account, setAccount] = useState<Account[]>([]);
 
   const token = localStorage.getItem("token");
 
@@ -56,7 +56,7 @@ export default function CreateUD() {
       setListener(false);
     }, 2000);
   }, [listener]);
- 
+
 
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
@@ -78,33 +78,33 @@ export default function CreateUD() {
       setTotal(data.total);
     }
   }
-const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
-  async function getAccout(){
-    const response = await fetch(url,{
-      method:"GET",
-      headers:{
-        "Content-type":"application/json",
-        Authorization:`Bearer ${Decryptor(token || "")}`
+  const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
+  async function getAccout() {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${Decryptor(token || "")}`
       }
     })
-    if(!response.ok){
+    if (!response.ok) {
       console.log("error")
     }
     const data = await response.json();
     setAccount(data.data)
   }
 
-useEffect(()=>{
-  getAccout();
-},[])
+  useEffect(() => {
+    getAccout();
+  }, [])
 
-const getAccountName = (acctid: number): string => {
-  if(acctid == undefined || acctid == null){
-    return '';
-  }
-  const accountInfo = account.find(acc => acc.acctid === acctid);
-  return accountInfo ? accountInfo.acctname : "Unassigned"; // Return "N/A" if no account is found
-};
+  const getAccountName = (acctid: number): string => {
+    if (acctid == undefined || acctid == null) {
+      return '';
+    }
+    const accountInfo = account.find(acc => acc.acctid === acctid);
+    return accountInfo ? accountInfo.acctname : "Unassigned"; // Return "N/A" if no account is found
+  };
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -185,7 +185,7 @@ const getAccountName = (acctid: number): string => {
   const handleData = (data: any) => {
 
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid,role_id,isdayshift,status } = data;
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status } = data;
     let currentData = {
       empno,
       fname,
@@ -218,10 +218,10 @@ const getAccountName = (acctid: number): string => {
     setResetPasswordTargetID(empno);
   };
 
-  const TriggerReset = ()=>{
+  const TriggerReset = () => {
     resetPassword(Number(resetPasswordTargetID));
   }
-  
+
   const resetPassword = async (empno: number) => {
     const data = { empno: empno };
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reset/password/`, {
@@ -243,7 +243,7 @@ const getAccountName = (acctid: number): string => {
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
-       <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+      <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -276,25 +276,42 @@ const getAccountName = (acctid: number): string => {
           <div>
             <div>
               <header className="">
-                <div className="w-100 d-flex justify-content-center py-2 px-2" style={{ width: '86vw', margin: 'auto', position: 'relative' }}>
+                <div className="w-100 d-flex justify-content-center flex-wrap gap-3 py-2 px-2" style={{ width: '86vw', margin: 'auto', position: 'relative' }}>
                   <div className="searchbar-containerr">
                     <input
                       className="searchbar12"
                       id="search-employee"
-                      style={{ backgroundColor: "#f0f0f0" }}
                       type="text"
                       placeholder="Search..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       onKeyUp={searchKeyword}
+                      style={{
+                        padding: "8px 12px 8px 36px",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        backgroundColor: "#f0f0f0",
+                        fontFamily: "'Raleway', sans-serif",
+                        fontSize: "14px",
+                        color: "#000",
+                        width: "100%",
+                        boxSizing: "border-box",
+                    }}
                     />
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
+                      width="20"
+                      height="20"
                       fill="currentColor"
-                      className="employee-icon bi-search"
-                      viewBox="-7 0 30 16"
+                      viewBox="0 0 16 16"
+                      style={{
+                        position: "absolute",
+                        left: "12px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        pointerEvents: "none",
+                        color: "#888",
+                      }}
                     >
                       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                     </svg>
@@ -347,13 +364,13 @@ const getAccountName = (acctid: number): string => {
               </div>
             </div>
           </div>
-          <div className="emp-table" style={{ position: 'relative', height: 'auto'}}>
+          <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
             <table
               className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
               style={{ width: '97.7%', margin: 'auto' }}
             >
-              <thead style={{ position: 'sticky', padding: '15px', zIndex: 10, transform:"translateY(-1px)" }}>
+              <thead style={{ position: 'sticky', padding: '15px', zIndex: 10, transform: "translateY(-1px)" }}>
                 <tr>
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
                   <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
@@ -383,7 +400,7 @@ const getAccountName = (acctid: number): string => {
                       {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
-                      {user_privilege.includes("manage_users") && ( <td>{getAccountName(info.acctid)}</td> )}
+                      {user_privilege.includes("manage_users") && (<td>{getAccountName(info.acctid)}</td>)}
                       <td>{info.position}</td>
                       <td>{info.un}</td>
                       <td>
@@ -391,7 +408,7 @@ const getAccountName = (acctid: number): string => {
                           {user_privilege.includes("update_breaktool_account") && (
                             <button
                               type="button"
-                        
+
                               data-bs-toggle="modal"
                               data-bs-target="#resetPasswordModal"
                               style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
@@ -417,7 +434,7 @@ const getAccountName = (acctid: number): string => {
                               </svg>
                             </button>
                           )}
-                         {/* {user_privilege.includes("manage_users") && (
+                          {/* {user_privilege.includes("manage_users") && (
                             <button
                               data-bs-toggle="modal"
                               data-bs-target="#deleteModal"
@@ -443,34 +460,34 @@ const getAccountName = (acctid: number): string => {
               </tbody>
             </table>
           </div>
-            {searchTerm =="" && (
-                   <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end" }}>
-                   <div className="employee-total">
-                     <p><i className="bi bi-people-fill"></i><span> Total: {total}</span></p>
-                   </div>
-                  <div className="employee-pagination">
-                  <nav aria-label="Page navigation">
-                    <ul className="pagination">
-                      <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                        <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
-                          <i className="bi bi-caret-left"></i>
-                        </button>
-                      </li>
-                      <li className="page-item">
-                        <span className="page-link" style={{ whiteSpace: 'nowrap' }}>
-                          {currentPage} of {totalPages}
-                        </span>
-                      </li>
-                      <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                        <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
-                          <i className="bi bi-caret-right"></i>
-                        </button>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-                </div>
-            )}
+          {searchTerm == "" && (
+            <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end" }}>
+              <div className="employee-total">
+                <p><i className="bi bi-people-fill"></i><span> Total: {total}</span></p>
+              </div>
+              <div className="employee-pagination">
+                <nav aria-label="Page navigation">
+                  <ul className="pagination">
+                    <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                      <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
+                        <i className="bi bi-caret-left"></i>
+                      </button>
+                    </li>
+                    <li className="page-item">
+                      <span className="page-link" style={{ whiteSpace: 'nowrap' }}>
+                        {currentPage} of {totalPages}
+                      </span>
+                    </li>
+                    <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                      <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
+                        <i className="bi bi-caret-right"></i>
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <ToastContainer />

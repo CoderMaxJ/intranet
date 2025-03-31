@@ -19,7 +19,7 @@ interface BreaksReport {
     brkin2: string;
     brkout2: string;
     ob2: string;
-    personalbreak:string;
+    personalbreak: string;
     logoff: string;
 }
 
@@ -46,7 +46,7 @@ export default function Daterange() {
             fetchData();
         }
     }, [data])
-// 
+    // 
     const handleGenerateAndDownloadCSV = async () => {
         try {
             setError("");
@@ -212,101 +212,107 @@ export default function Daterange() {
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
                                     position: 'sticky',
-                                    paddingTop:'10px',
+                                    paddingTop: '10px',
                                     padding: '15px',
                                     color: 'white',
                                     width: '100%'
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
                                     <form>
-                                        <div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3">
-                                            <div className="row d-flex flex-wrap align-items-center">
-                                            <div className="col-auto row">
-                                                <label
-                                                    htmlFor="id-start"
-                                                    className="form-label col-auto"
-                                                    style={{ marginLeft: "5px" }}
-                                                >
-                                                    From:
-                                                </label>
+                                        <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
+                                            {/* Date Range Section */}
+                                            <div className="d-flex flex-wrap align-items-center justify-content-center gap-3">
+                                                <div className="d-flex align-items-center">
+                                                    <label htmlFor="id-start" className="form-label mb-0 me-2">From:</label>
+                                                    <input
+                                                        required
+                                                        type="date"
+                                                        className="form-control"
+                                                        onChange={(e) => setStart(e.target.value)}
+                                                        value={start}
+                                                        style={{ color: '#000000' }}
+                                                    />
+                                                </div>
+
+                                                <div className="d-flex align-items-center">
+                                                    <label htmlFor="id-end" className="form-label mb-0 me-2">To:</label>
+                                                    <input
+                                                        required
+                                                        type="date"
+                                                        className="form-control"
+                                                        onChange={(e) => setEnd(e.target.value)}
+                                                        value={end}
+                                                        style={{ color: '#000000' }}
+                                                    />
+                                                </div>
+
+                                                <div className="d-flex align-items-center">
+                                                    <button
+                                                        type="button"
+                                                        className="daterange-button"
+                                                        onClick={handleView}
+                                                    >
+                                                        View
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {/* Search Input */}
+                                            <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
                                                 <input
-                                                    required
-                                                    type="date"
                                                     className="form-control"
-                                                    onChange={(e) => setStart(e.target.value)}
-                                                    value={start}
-                                                    style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
-                                                />
-                                                </div>
-                                                <div className="col-auto row">
-                                                <label
-                                                    htmlFor="id-end"
-                                                    className="form-label col-auto"
-                                                    style={{ marginLeft: "30px" }}
-                                                >
-                                                    To:
-                                                </label>
-                                                <input
-                                                    required
-                                                    type="date"
-                                                    className="form-control"
-                                                    onChange={(e) => setEnd(e.target.value)}
-                                                    value={end}
-                                                    style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
-                                                />
-                                                </div>
-                                              <div>
-                                                <button type="button" className="daterange-button" onClick={handleView}>
-                                                    View
-                                                </button> 
-                                                </div>
-                                                </div>
-                                                <div style={{position:'relative'}}>
-                                                <input
-                                                    className="search-div"
                                                     id="search-employee"
                                                     type="text"
                                                     placeholder="Search..."
                                                     value={searchTerm}
                                                     onChange={handleSearch}
                                                     style={{
-                                                        padding: '7px 60px',
+                                                        padding: '8px 12px 8px 50px', // adjusted vertical padding
                                                         borderRadius: '5px',
                                                         border: '1px solid #ccc',
-                                                        position: 'relative',
-                                                        backgroundColor:'#f0f0f0',
-                                                        color:'#000000'
+                                                        backgroundColor: '#f0f0f0',
+                                                        color: '#000',
+                                                        width: '100%',
+                                                        fontSize: '14px',
+                                                        boxSizing: 'border-box',
                                                     }}
                                                 />
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    width="14"
-                                                    height="14"
+                                                    width="20"
+                                                    height="20"
                                                     fill="currentColor"
-                                                    className="report-icon bi-search"
-                                                    viewBox="-7 0 30 16"
-                                                    style={{ color: '#595b5c', position:'absolute' }}
+                                                    viewBox="0 0 16 16"
+                                                    style={{
+                                                        position: "absolute",
+                                                        left: "12px",
+                                                        top: "50%",
+                                                        transform: "translateY(-50%)",
+                                                        pointerEvents: "none",
+                                                        color: "#888",
+                                                    }}
                                                 >
-                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                 </svg>
-                                        </div>
+                                            </div>
+
                                             <button
                                                 type="button"
                                                 className="download"
                                                 onClick={handleGenerateAndDownloadCSV}
                                             >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16" style={{ marginTop: '5px', marginRight: '5px' }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
                                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
                                                     <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
                                                 </svg>
-                                                Download
+                                                <label htmlFor="downloaf" className="align-items-center">Download</label>
                                             </button>
                                         </div>
                                     </form>
                                 </header>
                             </div>
-                            <div className="mx-4" style={{ overflowY: 'auto', height: '790px' }}>
-                                <table className="tabreport table table-striped" style={{ width:'100%' }}>
+                            <div className="mx-4" style={{ overflowY: 'auto', height: '700px' }}>
+                                <table className="tabreport table table-striped" style={{ width: '100%' }}>
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>

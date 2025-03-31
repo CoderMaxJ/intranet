@@ -132,7 +132,7 @@ export default function Dashboard() {
       setShowEmployee(false);
       setShowProfileLabel(false);
       localStorage.setItem("sidebarMinimized", "true");
-    } 
+    }
   };
   // Apply the stored state when the component loads
   useEffect(() => {
@@ -204,10 +204,10 @@ export default function Dashboard() {
         {/*  */}
         <div style={{ marginBottom: "30px", marginLeft: '40px', transform: 'translateY(-10px)' }}>
           {showImage === true && (
-            <div style={{display:'grid', alignItems:'center'}}>
+            <div style={{ display: 'grid', alignItems: 'center' }}>
               <img src="/img/whitesos.png" height={100} />
               <label htmlFor="poweredby" className="db-poweredby">powered by</label>
-              <img src="/img/eComiaWhiteLogo.png" height={27} style={{justifyContent:'center', transform:'translateY(-26px) translateX(5px)'}}  />
+              <img src="/img/eComiaWhiteLogo.png" height={27} style={{ justifyContent: 'center', transform: 'translateY(-26px) translateX(5px)' }} />
             </div>
           )}
         </div>
@@ -254,7 +254,7 @@ export default function Dashboard() {
                   borderRadius: '2px',
                   color: '#000000',
                 }}
-              >  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="21" fill="currentColor" className="bi bi-person-gear" viewBox="0 0 16 16" style={{ color: '#ffffff', marginLeft: '-5px', position: 'sticky' }}>
+              >  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="21" fill="currentColor" className="bi bi-person-gear" viewBox="0 0 16 16" style={{ color: '#ffffff', marginLeft: '-5px' }}>
                   <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
                 </svg>
                 <div>
@@ -396,9 +396,11 @@ export default function Dashboard() {
         <div className="upload-prof">
           <button
             onClick={toggleMinimizeMaximize}
-            className="arrow-btn btn btn-light rounded-circle m-auto d-flex align-items-center justify-content-center"  
+            className="arrow-btn btn btn-light rounded-circle m-auto d-flex align-items-center justify-content-center"
           >
-            {arrowIcon ? (
+            <span
+              className={`transition-icon ${arrowIcon ? 'rotate-left' : 'rotate-right'}`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -412,21 +414,7 @@ export default function Dashboard() {
                   d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
                 />
               </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                fill="currentColor"
-                className="bi bi-chevron-right"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
-                />
-              </svg>
-            )}
+            </span>
           </button>
           {open && (
             <img

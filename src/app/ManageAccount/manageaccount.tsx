@@ -318,31 +318,59 @@ export default function ManageDepartment() {
             )}
             <div className="manage-department">
                 <div className="manageaccounts-header px-4"><Header title="MANAGE ACCOUNTS" /></div>
-                <div className="px-4"> 
+                <div className="px-4">
                     <div className="manageaccounts-bg">
 
-                        <div className="employee-header">  
-                          <div className="acc-head gap-3 justify-content-center justify-content-md-between">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="14"
-                                height="14"
-                                fill="currentColor"
-                                className="accounts-icon bi-search"
-                                viewBox="-7 0 30 16"
-                              
+                        <div className="employee-header">
+                            <div
+                                className="acc-head gap-3 d-flex justify-content-center"
+                                style={{ width: "100%" }}
                             >
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                            </svg>
-                            <input
-                                className="searchbar3 "
-                                type="text"
-                                id="myInput"
-                                placeholder="Search..."
-                                value={filter}
-                                onChange={handleFilterChange}
-                              
-                            />
+                                <div
+                                    style={{
+                                        position: "relative",
+                                        width: "100%",
+                                        maxWidth: "400px",
+                                    }}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="currentColor"
+                                        viewBox="0 0 16 16"
+                                        style={{
+                                            position: "absolute",
+                                            left: "12px",
+                                            top: "50%",
+                                            transform: "translateY(-50%)",
+                                            pointerEvents: "none",
+                                            color: "#888",
+                                        }}
+                                    >
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+
+                                    <input
+                                        type="text"
+                                        id="myInput"
+                                        className="searchbar3"
+                                        placeholder="Search..."
+                                        value={filter}
+                                        onChange={handleFilterChange}
+                                        style={{
+                                            padding: "8px 12px 8px 36px",
+                                            borderRadius: "5px",
+                                            border: "1px solid #ccc",
+                                            backgroundColor: "#f0f0f0",
+                                            fontFamily: "'Raleway', sans-serif",
+                                            fontSize: "14px",
+                                            color: "#000",
+                                            width: "100%",
+                                            boxSizing: "border-box",
+                                        }}
+                                    />
+                                </div>
                                 <button
                                     className="addhover"
                                     data-bs-toggle="modal"
@@ -359,7 +387,7 @@ export default function ManageDepartment() {
                                         viewBox="0 0 16 16"
                                     >
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                    </svg> 
+                                    </svg>
                                     <label htmlFor="">Add Account</label>
                                 </button>
                             </div>

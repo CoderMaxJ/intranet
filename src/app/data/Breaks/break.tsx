@@ -3,7 +3,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState, useEffect, useRef, use } from "react";
 import "../../style/breaks.css";
 import { Decryptor, Encryptor } from "@/security";
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation"
 
 interface BreakData {
   name: string;
@@ -25,13 +25,13 @@ function BreakDataTable() {
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
-  
+
   const fetchBreakData = async () => {
- 
+
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
-     
+
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/?last_update=${latestUpdate || ""}`,
@@ -45,7 +45,7 @@ function BreakDataTable() {
       );
 
       if (response.status === 204) {
-        
+
         const message = await response.text();
         // No new data, use data from local storage
         const storedData = localStorage.getItem("breakData");
@@ -58,21 +58,21 @@ function BreakDataTable() {
       }
 
       if (!response.ok || response.status === 404 || response.status === 401 || response.status === 403) {
-        const getToken = async ()=>{
+        const getToken = async () => {
           const user_id = localStorage.getItem("user_id");
-          const id = {user_id:Decryptor(user_id || "")}
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/token/`,{
-            method:"POST",
+          const id = { user_id: Decryptor(user_id || "") }
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/token/`, {
+            method: "POST",
             headers: {
               "Content-type": "application/json",
               Authorization: `Bearer ${Decryptor(token || "")}`,
             },
-            body:JSON.stringify(id)
+            body: JSON.stringify(id)
           })
-          if(response.status === 200){
+          if (response.status === 200) {
             const data = await response.json();
-            localStorage.setItem("token",Encryptor(data.token));
-            
+            localStorage.setItem("token", Encryptor(data.token));
+
           }
         }
         getToken();
@@ -80,8 +80,8 @@ function BreakDataTable() {
       }
 
       const data = await response.json();
-      localStorage.setItem("total-on-breaks",data.total);
- 
+      localStorage.setItem("total-on-breaks", data.total);
+
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
       const storedBreaks = storedData ? JSON.parse(storedData) : [];
@@ -92,7 +92,7 @@ function BreakDataTable() {
 
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
-      setLatestUpdate(data.latest_update); 
+      setLatestUpdate(data.latest_update);
 
       // Store the new data in local storage
       localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
@@ -106,34 +106,34 @@ function BreakDataTable() {
     const token = localStorage.getItem("token");
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        const udpateTimeStamp = async ()=>{
-          try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/updatetimestamp/`,{
-              method:"POST",
-              headers:{
-                "Content-type":"application/json",
-                Authorization:`Bearer ${Decryptor(token || "")}`
+        const udpateTimeStamp = async () => {
+          try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/updatetimestamp/`, {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${Decryptor(token || "")}`
               }
             })
-            if(response.status === 200){
-            
-            }else{
+            if (response.status === 200) {
+
+            } else {
               console.error("error");
             }
-          }catch(e){
-            
+          } catch (e) {
+
             console.error(e);
           }
         }
-      udpateTimeStamp();
-      setTimeout(()=>{
         udpateTimeStamp();
-      },2000)
+        setTimeout(() => {
+          udpateTimeStamp();
+        }, 2000)
       }
     };
-  
+
     document.addEventListener("visibilitychange", handleVisibilityChange);
-  
+
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
@@ -144,7 +144,7 @@ function BreakDataTable() {
       setBreaks((prevBreaks) => {
         const updatedBreaks = prevBreaks.map((breakItem) => ({
           ...breakItem,
-          duration: breakItem.duration - 1, 
+          duration: breakItem.duration - 1,
         }));
         breaksRef.current = updatedBreaks; // Update the ref
         localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
@@ -152,7 +152,7 @@ function BreakDataTable() {
       });
     }, 1000);
 
-    return () => clearInterval(countdownIntervalId); 
+    return () => clearInterval(countdownIntervalId);
   }, []);
 
   const status = localStorage.getItem("status");
@@ -160,14 +160,14 @@ function BreakDataTable() {
   useEffect(() => {
     if (status !== "login") return;
 
-  
+
     fetchBreakData();
 
 
     const fetchIntervalId = setInterval(fetchBreakData, 1000);
 
-    return () => clearInterval(fetchIntervalId); 
-  }, [latestUpdate]); 
+    return () => clearInterval(fetchIntervalId);
+  }, [latestUpdate]);
 
   const formatTime = (time: number) => {
     const isNegative = time < 0;
@@ -220,96 +220,121 @@ function BreakDataTable() {
                 )}
               </button>
             </div>
-            <div className="searchbar-container">
+            <div
+              className="searchbar-container"
+              style={{
+                position: "relative",
+                width: "100%",
+                maxWidth: "400px",
+              }}
+            >
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              style={{
+                position: "absolute",
+                left: "20px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                pointerEvents: "none",
+                color: "#888",
+              }}
+            >
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+
               <input
                 className="searchbar"
                 style={{
                   backgroundColor: "#f0f0f0",
                   fontFamily: "'Raleway', sans-serif",
                   marginBottom: "3px",
+                  paddingLeft: "34px",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                  width: "100%",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  fontSize: "14px",
+                  boxSizing: "border-box",
                 }}
                 type="text"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={handleSearchChange}
               />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                fill="currentColor"
-                className="breaks-icon bi-search"
-                viewBox="-7 0 30 16"
-              >
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-              </svg>
             </div>
+
+
             <div
               style={{
                 fontWeight: "bold",
               }}
             >
               <div className="legends">
-              <span
-                style={{
-                  padding: "10px",
-                  fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#ffffb7",
-                  textAlign: "center",
-                  marginRight:'-90px'
-                }}
-              >
-                1st Break
-              </span>
-              <span
-                style={{
-                  padding: "10px",
-                  fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#FFEDA6",
-                  textAlign: "center",
-                  marginLeft: "92px",
-                  marginRight:'2px'
-                }}
-              >
-                2nd Break
-              </span>
-              <span
-                className="legends"
-                style={{
-                  padding: "10px",
-                  fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#A9E4FF",
-                  marginRight:'2px' 
-                }}
-              >
-                Lunch
-              </span>
-              <span
-                style={{
-                  padding: "10px",
-                  color: "red",
-                  fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#ffdccc",
-                  textAlign: "center", 
-                               
-                }}
-              >
-                Over Break
-              </span>
-              
-              <span
-                style={{
-                  padding: "10px",
-                  marginLeft:'10px',
-                  fontFamily: "'Raleway', sans-serif",
-                  backgroundColor: "#b3efb2",
-                  textAlign: "center",             
-                }}
-              >
-               <i className="bi bi-alarm" style={{padding:'4px'}}></i>
-                Total: <span>{localStorage.getItem("total-on-breaks") || 0}</span>
-              </span>
-        
+                <span
+                  style={{
+                    padding: "10px",
+                    fontFamily: "'Raleway', sans-serif",
+                    backgroundColor: "#ffffb7",
+                    textAlign: "center",
+                    marginRight: '-90px'
+                  }}
+                >
+                  1st Break
+                </span>
+                <span
+                  style={{
+                    padding: "10px",
+                    fontFamily: "'Raleway', sans-serif",
+                    backgroundColor: "#FFEDA6",
+                    textAlign: "center",
+                    marginLeft: "92px",
+                    marginRight: '2px'
+                  }}
+                >
+                  2nd Break
+                </span>
+                <span
+                  className="legends"
+                  style={{
+                    padding: "10px",
+                    fontFamily: "'Raleway', sans-serif",
+                    backgroundColor: "#A9E4FF",
+                    marginRight: '2px'
+                  }}
+                >
+                  Lunch
+                </span>
+                <span
+                  style={{
+                    padding: "10px",
+                    color: "red",
+                    fontFamily: "'Raleway', sans-serif",
+                    backgroundColor: "#ffdccc",
+                    textAlign: "center",
+
+                  }}
+                >
+                  Over Break
+                </span>
+
+                <span
+                  style={{
+                    padding: "10px",
+                    marginLeft: '10px',
+                    fontFamily: "'Raleway', sans-serif",
+                    backgroundColor: "#b3efb2",
+                    textAlign: "center",
+                  }}
+                >
+                  <i className="bi bi-alarm" style={{ padding: '4px' }}></i>
+                  Total: <span>{localStorage.getItem("total-on-breaks") || 0}</span>
+                </span>
+
               </div>
             </div>
           </div>
@@ -325,22 +350,22 @@ function BreakDataTable() {
                 </tr>
               </thead>
               <tbody>
-              {filteredBreaks
-  .sort((a, b) => {
-    // First, sort by duration (less than 300 first)
-    if (a.duration < 300 && b.duration >= 300) return -1;
-    if (a.duration >= 300 && b.duration < 300) return 1;
+                {filteredBreaks
+                  .sort((a, b) => {
+                    // First, sort by duration (less than 300 first)
+                    if (a.duration < 300 && b.duration >= 300) return -1;
+                    if (a.duration >= 300 && b.duration < 300) return 1;
 
-    // Then, sort by break type (First Break, Second Break, Lunch)
-    const breakOrder = {
-      "First Break": 1,
-      "Second Break": 2,
-      "Lunch": 3
-    };
+                    // Then, sort by break type (First Break, Second Break, Lunch)
+                    const breakOrder = {
+                      "First Break": 1,
+                      "Second Break": 2,
+                      "Lunch": 3
+                    };
 
-    return breakOrder[a.breaktype as keyof typeof breakOrder] - breakOrder[b.breaktype as keyof typeof breakOrder];
-  })
-                 
+                    return breakOrder[a.breaktype as keyof typeof breakOrder] - breakOrder[b.breaktype as keyof typeof breakOrder];
+                  })
+
                   .map((instance) => (
                     <tr
                       style={{
@@ -349,10 +374,10 @@ function BreakDataTable() {
                             ? instance.breaktype === "First Break"
                               ? "#ffffb7"
                               : instance.breaktype === "Second Break"
-                              ? "#FFEDA6"
-                              : instance.breaktype === "Lunch"
-                              ? "#A9E4FF"
-                              : ""
+                                ? "#FFEDA6"
+                                : instance.breaktype === "Lunch"
+                                  ? "#A9E4FF"
+                                  : ""
                             : "",
                       }}
                       key={instance.name}
