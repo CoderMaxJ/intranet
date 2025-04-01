@@ -98,7 +98,7 @@ export default function Login() {
           style={{ width: "105px", height: "80%" }}
         />
         </div>
-        <label htmlFor="poweredby" style={{transform:'translateY(-21px) translateX(10px)', fontSize:'10px', fontWeight:"bold"}}>powered by</label>
+        <label htmlFor="poweredby" style={{transform:'translateY(-23px)', fontSize:'10px', fontWeight:"bold"}}>powered by</label>
         <div>
         <img 
           className="ecomialogo"

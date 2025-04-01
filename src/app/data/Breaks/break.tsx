@@ -238,7 +238,7 @@ function BreakDataTable() {
                 position: "absolute",
                 left: "20px",
                 top: "50%",
-                transform: "translateY(-50%)",
+                transform: "translateY(-60%)",
                 pointerEvents: "none",
                 color: "#888",
               }}

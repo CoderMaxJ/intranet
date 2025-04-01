@@ -23,7 +23,7 @@ export default function MainDashboard() {
         <div>
           <BreakDataTable />
         </div>
-        <div style={{ marginTop: "-10px" }}>
+        <div>
           <LogsDataTable />
         </div>
       </div>

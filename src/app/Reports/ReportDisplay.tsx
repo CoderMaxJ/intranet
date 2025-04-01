@@ -267,7 +267,7 @@ export default function Daterange() {
                                                     value={searchTerm}
                                                     onChange={handleSearch}
                                                     style={{
-                                                        padding: '8px 12px 8px 50px', // adjusted vertical padding
+                                                        padding: '8px 12px 8px 60px', 
                                                         borderRadius: '5px',
                                                         border: '1px solid #ccc',
                                                         backgroundColor: '#f0f0f0',
@@ -300,6 +300,11 @@ export default function Daterange() {
                                                 type="button"
                                                 className="download"
                                                 onClick={handleGenerateAndDownloadCSV}
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '8px', // space between icon and label
+                                                  }}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
                                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />

@@ -272,11 +272,11 @@ export default function CreateUD() {
       </div>
       <div className="main-divv px-4">
         <Header title="MANAGE EMPLOYEE" />
-        <div className="manageemployee-division">
+        <div className="manageemployee-division px-4">
           <div>
             <div>
               <header className="">
-                <div className="w-100 d-flex justify-content-center flex-wrap gap-3 py-2 px-2" style={{ width: '86vw', margin: 'auto', position: 'relative' }}>
+                <div className="w-100 d-flex justify-content-center flex-wrap py-2 gap-3" style={{ width: '100%', margin: 'auto', position: 'relative' }}>
                   <div className="searchbar-containerr">
                     <input
                       className="searchbar12"
@@ -294,7 +294,7 @@ export default function CreateUD() {
                         fontFamily: "'Raleway', sans-serif",
                         fontSize: "14px",
                         color: "#000",
-                        width: "100%",
+                        width: "300px",
                         boxSizing: "border-box",
                     }}
                     />
@@ -326,11 +326,12 @@ export default function CreateUD() {
                         style={{
                           borderRadius: "4px",
                           fontWeight: "500",
-                          padding: '10px',
+                          padding: '8px',
                           whiteSpace: 'nowrap',
                           backgroundColor: '#0ebb39',
                           border: 'none',
                           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                          transform:'translateX(-20px)'
                         }}
                       >
                         <svg
@@ -358,7 +359,7 @@ export default function CreateUD() {
               aria-hidden="true"
             >
               <div className="modal-dialog modal-xl" role="document">
-                <div className="modal-content px-4">
+                <div className="modal-content px-4 flex-wrap">
                   <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
                 </div>
               </div>
@@ -368,7 +369,7 @@ export default function CreateUD() {
             <table
               className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
-              style={{ width: '97.7%', margin: 'auto' }}
+              style={{ width: '100%', margin: 'auto' }}
             >
               <thead style={{ position: 'sticky', padding: '15px', zIndex: 10, transform: "translateY(-1px)" }}>
                 <tr>
@@ -434,18 +435,6 @@ export default function CreateUD() {
                               </svg>
                             </button>
                           )}
-                          {/* {user_privilege.includes("manage_users") && (
-                            <button
-                              data-bs-toggle="modal"
-                              data-bs-target="#deleteModal"
-                              type="button"
-                              className="delete-button"
-                              onClick={() => setTargetID(info.empno)}
-                              style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
-                            >
-                              <i className="bi bi-trash3"></i>
-                            </button>
-                         )} */}
                         </div>
                       </td>
                     </tr>

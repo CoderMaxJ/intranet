@@ -125,8 +125,8 @@ function LogsDataTable() {
 
   return (
     <div className="logs-wrapper" style={{ backgroundColor: "#e7e7e7" }}>
-      <div className="logs-maindiv p-3">
-        <div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3 p-2">
+      <div className="logs-maindiv px-3">
+        <div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3 py-3">
           <h3
             className="logs-headername"
             style={{

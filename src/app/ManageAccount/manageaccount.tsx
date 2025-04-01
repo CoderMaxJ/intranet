@@ -262,15 +262,10 @@ export default function ManageDepartment() {
                         <div className="modal-header">
                             <h1 className="modal-title fs-5">Create Account</h1>
                         </div>
-                        <div className="modal-body" style={{ display: "flex", justifyContent: 'center' }}>
-                            <form onSubmit={handleSubmit}>
-                                <div
-                                    className=""
-                                    style={{
-                                        backgroundColor: '#ffffff',
-                                    }}
-                                >
-                                    <div className="d-flex align-items-center gap-3 mt-5">
+                        <div className="modal-body" style={{ display: "flex", flexDirection: "column" }}>
+                            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+                                <div style={{ backgroundColor: "#ffffff", width: "100%" }}>
+                                    <div className="d-flex align-items-center" style={{ width: "100%" }}>
                                         <input
                                             value={accountName}
                                             onChange={(e) => setAccountName(e.target.value)}
@@ -278,17 +273,19 @@ export default function ManageDepartment() {
                                             className="form-control p-2 px-3 ml-3"
                                             placeholder="Account Name"
                                             style={{
-                                                width: '300px',
-                                                fontSize: '16px',
+                                                width: "100%",
+                                                fontSize: "16px",
                                             }}
                                         />
                                     </div>
-                                    <div className="buttons1">
-                                        <button className="closebutton" data-bs-dismiss="modal" type="button">Close</button>
-                                        <button className="btn btn-success btn-sm" type="submit">
-                                            Create
-                                        </button>
-                                    </div>
+                                </div>
+                                <div className="d-flex justify-content-end gap-2 mt-3">
+                                    <button className="closebutton btn btn-secondary btn-sm" data-bs-dismiss="modal" type="button">
+                                        Close
+                                    </button>
+                                    <button className="btn btn-success btn-sm" type="submit">
+                                        Create
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -323,13 +320,12 @@ export default function ManageDepartment() {
 
                         <div className="employee-header">
                             <div
-                                className="acc-head gap-3 d-flex justify-content-center"
+                                className="acc-head gap-3 d-flex justify-content-center py-2"
                                 style={{ width: "100%" }}
                             >
                                 <div
                                     style={{
                                         position: "relative",
-                                        width: "100%",
                                         maxWidth: "400px",
                                     }}
                                 >
@@ -366,7 +362,7 @@ export default function ManageDepartment() {
                                             fontFamily: "'Raleway', sans-serif",
                                             fontSize: "14px",
                                             color: "#000",
-                                            width: "100%",
+                                            width: "300px",
                                             boxSizing: "border-box",
                                         }}
                                     />
@@ -412,7 +408,7 @@ export default function ManageDepartment() {
                                 ></div>
                             </>
                         )}
-                        <div className="accounts-table" style={{ position: 'relative' }}>
+                        <div className="accounts-table px-4" style={{ position: 'relative' }}>
                             <table className="manage-table table table-light table-hover table-striped border">
                                 <thead style={{ position: 'sticky', transform: 'translatey(-12px)', zIndex: 10 }}>
                                     <tr>
