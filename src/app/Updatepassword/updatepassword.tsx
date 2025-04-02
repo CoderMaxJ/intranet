@@ -109,7 +109,7 @@ export default function Updatepassword() {
                 alt="Staff Outsourcing Logo"
                 className="modal-title"
                 id="updatePasswordModalLabel"
-                style={{ height: "50px"}}
+                style={{ height: "50px" }}
               />
               <button
                 type="button"
@@ -134,112 +134,109 @@ export default function Updatepassword() {
                 </center>
               </div>
             )}
-         <div className="modal-body p-4" style={{ display: 'block' }}>
-  <form onSubmit={handleSubmit}>
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center', // 💡 This centers all child items horizontally
-        gap: '20px',
-      }}
-    >
-      {/* Current Password */}
-      <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
-        <label htmlFor="currentpassword" className="updatepass-label" style={{ display: 'block'}}>
-          Current Password
-        </label>
-        <input
-          className="updatepassword-input"
-          type={showPassword ? 'text' : 'password'}
-          value={currentpassword}
-          onChange={(e) => setCurrentPassword(e.target.value)}
-          required
-          style={{ width: '100%' }}
-        />
-      </div>
+            <div className="modal-body p-4" style={{ display: 'block' }}>
+              <form onSubmit={handleSubmit}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center', // 💡 This centers all child items horizontally
+                    gap: '20px',
+                    transform:'translateX(15px)'
+                  }}
+                >
+                  {/* Current Password */}
+                  <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
+                    <label htmlFor="currentpassword" className="updatepass-label" style={{ display: 'block' }}>
+                      Current Password
+                    </label>
+                    <input
+                      className="updatepassword-input"
+                      type={showPassword ? 'text' : 'password'}
+                      value={currentpassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      required
+                      style={{ width: '100%' }}
+                    />
+                  </div>
 
-      {/* New Password */}
-      <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
-        <label htmlFor="password" className="updatepass-label" style={{ display: 'block'}}>
-          New Password{' '}
-          {password !== '' && (
-            <span
-              style={{
-                color: passwordStrength ? 'green' : 'red',
-                fontSize: '13px',
-                marginLeft: '10px',
-              }}
-            >
-              {passwordStrength ? 'Strong password' : 'Weak password'}
-            </span>
-          )}
-        </label>
-        <input
-          onFocus={() => setFocus(true)}
-          onKeyUp={validate}
-          className="updatepassword-input"
-          type={showPassword1 ? 'text' : 'password'}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            width: '100%',
-            border: passwordsMatch ? '1px solid green' : '1px solid #ccc',
-          }}
-        />
-        {focus && (
-          <div style={{ textAlign: 'left', fontSize: '13px' }}>
-            <label
-              style={{
-                display: 'block',
-                color: password.length >= 8 ? 'green' : 'grey',
-              }}
-            >
-              ✔ 8 to 20 characters
-            </label>
-            <label
-              style={{
-                display: 'block',
-                color: passwordStrength ? 'green' : 'grey',
-              }}
-            >
-              Letters, numbers, and special characters
-            </label>
-          </div>
-        )}
-      </div>
-
-      {/* Confirm Password */}
-      <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
-        <label htmlFor="confirmpassword" className="updatepass-label" style={{ display: 'block'}}>
-          Confirm Password
-        </label>
-        <input
-          className="updatepassword-input"
-          onFocus={() => setFocus(false)}
-          type={showPassword2 ? 'text' : 'password'}
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-          style={{
-            width: '100%',
-            border: passwordsMatch ? '1px solid green' : '1px solid #ccc',
-          }}
-        />
-      </div>
-
-      {/* Submit Button */}
-      <div>
-        <button type="submit" className="btn btn-success">
-          Update Password
-        </button>
-      </div>
-    </div>
-  </form>
-</div>
-
-
+                  {/* New Password */}
+                  <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
+                    <label htmlFor="password" className="updatepass-label" style={{ display: 'block' }}>
+                      New Password{' '}
+                      {password !== '' && (
+                        <span
+                          style={{
+                            color: passwordStrength ? 'green' : 'red',
+                            fontSize: '13px',
+                            marginLeft: '10px',
+                          }}
+                        >
+                          {passwordStrength ? 'Strong password' : 'Weak password'}
+                        </span>
+                      )}
+                    </label>
+                    <input
+                      onFocus={() => setFocus(true)}
+                      onKeyUp={validate}
+                      className="updatepassword-input"
+                      type={showPassword1 ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      style={{
+                        width: '100%',
+                        border: passwordsMatch ? '1px solid green' : '1px solid #ccc',
+                      }}
+                    />
+                    {focus && (
+                      <div style={{ textAlign: 'left', fontSize: '13px' }}>
+                        <label
+                          style={{
+                            display: 'block',
+                            color: password.length >= 8 ? 'green' : 'grey',
+                          }}
+                        >
+                          ✔ 8 to 20 characters
+                        </label>
+                        <label
+                          style={{
+                            display: 'block',
+                            color: passwordStrength ? 'green' : 'grey',
+                          }}
+                        >
+                          Letters, numbers, and special characters
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                  {/* Confirm Password */}
+                  <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
+                    <label htmlFor="confirmpassword" className="updatepass-label" style={{ display: 'block' }}>
+                      Confirm Password
+                    </label>
+                    <input
+                      className="updatepassword-input"
+                      onFocus={() => setFocus(false)}
+                      type={showPassword2 ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      style={{
+                        width: '100%',
+                        border: passwordsMatch ? '1px solid green' : '1px solid #ccc',
+                      }}
+                    />
+                  </div>
+                  {/* Submit Button */}
+                  <div>
+                    <button type="submit" className="btn btn-success">
+                      Update Password
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
             <div className="modal-footer"></div>
           </div>
         </div>

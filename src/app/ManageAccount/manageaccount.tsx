@@ -314,8 +314,8 @@ export default function ManageDepartment() {
                 </div>
             )}
             <div className="manage-department">
-                <div className="manageaccounts-header px-4"><Header title="MANAGE ACCOUNTS" /></div>
-                <div className="px-4">
+                <div className="manageaccounts-header"  style={{paddingLeft:'1rem', paddingRight:'1rem'}}><Header title="MANAGE ACCOUNTS" /></div>
+                <div className=""  style={{paddingLeft:'1rem', paddingRight:'1rem'}}>
                     <div className="manageaccounts-bg">
 
                         <div className="employee-header">

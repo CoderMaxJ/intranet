@@ -243,6 +243,9 @@ export default function CreateUD() {
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
+      <div className="db-employee">
+        <Dashboard />
+      </div>
       <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -267,10 +270,8 @@ export default function CreateUD() {
           </div>
         </div>
       </div>
-      <div className="db-employee">
-        <Dashboard />
-      </div>
-      <div className="main-divv px-4">
+      
+      <div className="main-divv"  style={{paddingLeft:'1rem', paddingRight:'1rem'}}>
         <Header title="MANAGE EMPLOYEE" />
         <div className="manageemployee-division px-4">
           <div>

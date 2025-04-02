@@ -117,6 +117,7 @@ export default function Dashboard() {
       setShowEmployee(true);
       setShowProfileLabel(true);
       localStorage.setItem("sidebarMinimized", "false");
+      document.getElementById("dashboard-menu")?.classList.add("is-minimize");
     } else {
       setNavWidth("60px");
       setShowDashboard(false);
@@ -132,6 +133,7 @@ export default function Dashboard() {
       setShowEmployee(false);
       setShowProfileLabel(false);
       localStorage.setItem("sidebarMinimized", "true");
+      document.getElementById("dashboard-menu")?.classList.remove("is-minimize");
     }
   };
   // Apply the stored state when the component loads

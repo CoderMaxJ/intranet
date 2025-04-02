@@ -194,7 +194,7 @@ function BreakDataTable() {
   return (
     <div className="workforce">
       <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div p-3"}>
-        <div className="d-flex flex-column gap-3">
+        <div className="d-flex flex-column">
           <div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3">
             <div className="d-flex align-items-center">
               <h4

@@ -308,9 +308,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
 
   return (
-    <div className="addemployee-form">
-      <form className="row" onSubmit={handleSubmitForm} >
-        <div className="col-md-4 mb-3">
+    <div className="addemployee-form" >
+      <form className="row d-flex flex-wrap" onSubmit={handleSubmitForm} >
+        <div className="fixed-field col-md-3">
           <button
             id="buttonclose"
             type="button"
@@ -341,7 +341,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="Juan"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="fixed-field col-md-4 mb-3">
           <label htmlFor="mname" className="form-label">
             Middle Name
           </label>
@@ -355,7 +355,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="Montenegro"
           />
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="fixed-field col-md-4 mb-3">
           <label htmlFor="lname" className="form-label">
             Last Name
           </label>
@@ -370,7 +370,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="Dela Cruz"
           />
         </div>
-        <div className="col-md-2 mb-3">
+        <div className="fixed-field col-md-1 mb-3">
           <label htmlFor="dateofbirth" className="form-label">
             Date of Birth
           </label>
@@ -385,7 +385,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             max="2015-12-31"
           />
         </div>
-        <div className="col-md-2 mb-3">
+        <div className="fixed-field col-md-2 mb-3">
           <label htmlFor="maritalstatus" className="form-label">
             Marital Status
           </label>
@@ -405,7 +405,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <option value="Other">Other</option>
           </select>
         </div>
-        <div className="col-md-3 mb-3">
+        <div className="fixed-field col-md-3 mb-3">
           <label htmlFor="gender" className="form-label">
             Gender
           </label>
@@ -422,7 +422,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <option value="Female">Female</option>
           </select>
         </div>
-        <div className="col-md-3 mb-2">
+        <div className="fixed-field col-md-3 mb-2">
           <label htmlFor="contactno" className="form-label">
             Contact No
           </label>
@@ -437,7 +437,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           />
         </div>
         {mode === "edit" && (
-            <div className="col-md-2">
+            <div className="fixed-field col-md-2">
             <label htmlFor="" className="form-label">Status</label>
             <select className="form-select w-75 " name="status" value ={formData.status === 1 ? 1:0}
             onChange={handleInputChange}
@@ -447,7 +447,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             </select>
           </div>
         )}
-        <div className="col-md-4 mb-3">
+        <div className="fixed-field col-md-4 mb-3">
           <label htmlFor="address" className="form-label">
             Address
           </label>
@@ -462,7 +462,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="Zapatera, Cebu City"
           />
         </div>
-        <div className="col-md-3 mb-3">
+        <div className="fixed-field col-md-3 mb-3">
           <label htmlFor="position" className="form-label">
             Position
           </label>
@@ -483,7 +483,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </select>
         </div>
 
-        <div className="col-md-3 mb-3">
+        <div className="fixed-field col-md-3 mb-3">
           <label htmlFor="position" className="form-label">
             Account
           </label>
@@ -502,7 +502,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </select>
         </div>
 
-        <div className="col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
+        <div className="fixed-field col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
           <label htmlFor="is_dayshift" className="form-label">
             Day Shift
                 <span className="">
@@ -526,7 +526,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </label>
         </div>
           {mode === 'edit' && (
-          <div className="col-md-4 mb-1">
+          <div className="fixed-field col-md-4 mb-1">
             <div className="mb-3">
               <label htmlFor="">Assign Privileges</label>
             </div>
@@ -544,7 +544,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </div>
          )}
         <div
-          className="col-md-12"
+          className="fixed-field col-md-12"
           style={{
             marginBottom: "30px",
             marginTop: "30px",

@@ -14,11 +14,11 @@ export const metadata: Metadata = {
 
 export default function MainDashboard() {
   return (
-    <div className="d-flex main-page">
-      <div>
+    <div className="d-flex main-page" style={{position:'relative'}}>
+      <div id="dashboard-menu" className="d-flex ">
         <Dashboard />
       </div>
-      <div className="w-100 d-flex flex-column gap-4 px-4">
+      <div className="flex-fill flex-grow d-flex flex-column gap-4 " style={{paddingLeft:'1rem', paddingRight:'1rem'}}>
         <Header title="WORKFORCE MONITORING" text="Connecting Teams, Empowering Innovation" />
         <div>
           <BreakDataTable />
