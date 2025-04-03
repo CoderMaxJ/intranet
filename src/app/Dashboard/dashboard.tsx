@@ -204,7 +204,7 @@ export default function Dashboard() {
         }}
       >
         {/*  */}
-        <div style={{ marginBottom: "30px", marginLeft: '40px', transform: 'translateY(-10px)' }}>
+        <div style={{ marginBottom: "30px", marginLeft: '40px', transform: 'translateY(-10px)', overflow:'hidden' }}>
           {showImage === true && (
             <div style={{ display: 'grid', alignItems: 'center' }}>
               <img src="/img/whitesos.png" height={100} />

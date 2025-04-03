@@ -200,7 +200,7 @@ function LogsDataTable() {
             </span>
           </div>
         </div>
-        <div className="logs-tablee table-responsive">
+        <div className="table-responsive" style={{width: "calc(100vw - (60px + 4.5rem))"}}>
           <table className="tablogs table table-bordered table-striped">
             <thead style={{ position: "sticky", top: 0 }}>
               <tr>

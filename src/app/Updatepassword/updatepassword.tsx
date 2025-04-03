@@ -230,7 +230,7 @@ export default function Updatepassword() {
                   </div>
                   {/* Submit Button */}
                   <div>
-                    <button type="submit" className="btn btn-success">
+                    <button type="submit" className="update-pass btn btn-success">
                       Update Password
                     </button>
                   </div>

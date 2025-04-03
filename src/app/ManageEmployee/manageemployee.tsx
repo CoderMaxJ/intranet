@@ -366,9 +366,9 @@ export default function CreateUD() {
               </div>
             </div>
           </div>
-          <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
+          <div className="emp-table" style={{ position: 'relative', height: 'auto', overflow:'auto', width:"calc(100vw - (60px + 5rem))" }}>
             <table
-              className="tabemp table table-striped table-hover table-bordered"
+              className="tabemp table table-striped table-hover table-bordered table-responsive"
               id="table-employee"
               style={{ width: '100%', margin: 'auto' }}
             >

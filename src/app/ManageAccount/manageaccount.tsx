@@ -409,7 +409,7 @@ export default function ManageDepartment() {
                             </>
                         )}
                         <div className="accounts-table px-4" style={{ position: 'relative' }}>
-                            <table className="manage-table table table-light table-hover table-striped border">
+                            <table className="manage-table table table-light table-hover table-striped border table-responsive">
                                 <thead style={{ position: 'sticky', transform: 'translatey(-12px)', zIndex: 10 }}>
                                     <tr>
                                         <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account ID</th>
