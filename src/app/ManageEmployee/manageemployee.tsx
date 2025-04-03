@@ -271,7 +271,7 @@ export default function CreateUD() {
         </div>
       </div>
       
-      <div className="main-divv"  style={{paddingLeft:'1rem', paddingRight:'1rem'}}>
+      <div className="main-divv"  style={{paddingLeft:'1rem', paddingRight:'1rem', flex:'1 1 100%', width:'0 !important'}}>
         <Header title="MANAGE EMPLOYEE" />
         <div className="manageemployee-division px-4">
           <div>
@@ -359,16 +359,16 @@ export default function CreateUD() {
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
-              <div className="modal-dialog modal-xl" role="document">
+              <div className="modal-dialog modal-sl" role="document">
                 <div className="modal-content px-4 flex-wrap">
                   <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
                 </div>
               </div>
             </div>
           </div>
-          <div className="emp-table" style={{ position: 'relative', height: 'auto', overflow:'auto', width:"calc(100vw - (60px + 5rem))" }}>
+          <div className="table-responsive emp-table" style={{ position: 'relative', height: 'auto', overflow:'auto'}}>
             <table
-              className="tabemp table table-striped table-hover table-bordered table-responsive"
+              className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
               style={{ width: '100%', margin: 'auto' }}
             >

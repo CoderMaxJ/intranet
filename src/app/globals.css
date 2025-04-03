@@ -14,7 +14,9 @@
 .addemployee-form {
   width: 100%;
 }
-
+.manage-label {
+  color: white !important;
+}
 .form-row {
   display: flex;
   flex-wrap: wrap;
@@ -1430,8 +1432,12 @@ table {
 }
 
 .main-divv {
-  width: calc(100% - 5px);
+  /* width: calc(100% - 5px); */
   background-color: #e7e7e7;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  flex: 1 1 100%;
+  width: 0px !important;
 }
 
 .accounts-button {
@@ -1747,9 +1753,7 @@ display: flex;
   flex-direction: column;
   z-index: 20;
   min-height: 100vh;
-  transition: width 0.3s ease-in-out;
  
-  
 }
 
 .dashboard svg {
@@ -2219,7 +2223,9 @@ display: flex;
 
 /* manage department */
 .manage-department {
-  width: 100% !important;
+  /* width: 100% !important; */
+  width: 0px !important;
+  flex: 1 1 100%;
 }
 
 

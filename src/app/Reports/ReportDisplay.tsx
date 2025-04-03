@@ -202,7 +202,7 @@ export default function Daterange() {
                 <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
-                    <div className="main-divv"  style={{paddingLeft:'1rem', paddingRight:'1rem'}}>
+                    <div className="flex-fill"  style={{paddingLeft:'1rem', paddingRight:'1rem', width:0, }}>
                         <div className="reportheader"><Header title="DAILY REPORTS" /></div>
                         <div className="background-report">
                             <div className="px-4 pt-4" style={{ display: 'flex' }}>
@@ -316,8 +316,8 @@ export default function Daterange() {
                                     </form>
                                 </header>
                             </div>
-                            <div className="mx-4" style={{ overflowY: 'auto', height: '87%', width:'calc(100vw - (60px + 5rem))' }}>
-                                <table className="tabreport table table-striped table-bordered table-responsive">
+                            <div className="mx-4 table-responsive">
+                                <table className="tabreport table table-striped table-bordered">
                                     <thead>
                                         <tr className="report-header">
                                             <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>

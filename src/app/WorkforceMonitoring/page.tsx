@@ -18,7 +18,7 @@ export default function MainDashboard() {
       <div id="dashboard-menu" className="d-flex ">
         <Dashboard />
       </div>
-      <div className="flex-fill flex-grow d-flex flex-column gap-4 " style={{paddingLeft:'1rem', paddingRight:'1rem'}}>
+      <div className="flex-grow d-flex flex-column gap-4 " style={{paddingLeft:'1rem', paddingRight:'1rem', width:'0px', flex:"1 1 100%"}}>
         <Header title="WORKFORCE MONITORING" text="Connecting Teams, Empowering Innovation" />
         <div>
           <BreakDataTable />

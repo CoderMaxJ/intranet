@@ -341,7 +341,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="Juan"
           />
         </div>
-        <div className="fixed-field col-md-4 mb-3">
+        <div className="fixed-field col-md-4 mb-3 py-2">
           <label htmlFor="mname" className="form-label">
             Middle Name
           </label>
@@ -503,7 +503,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         </div>
 
         <div className="fixed-field col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
-          <label htmlFor="is_dayshift" className="form-label">
+          <label htmlFor="is_dayshift" className="form-label" style={{marginTop:'-15px'}}>
             Day Shift
                 <span className="">
                     <input
@@ -550,7 +550,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             marginTop: "30px",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "15px" }}>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: "15px"}}>
             <button
               type="button"
               data-bs-dismiss="modal"
@@ -561,7 +561,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             </button>
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-primary py-1"
             >
               {mode === "edit" ? "Update" : "Create"}
             </button>

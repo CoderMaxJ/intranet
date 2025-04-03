@@ -213,7 +213,7 @@ export default function Dashboard() {
             </div>
           )}
         </div>
-        <div className="accordion"  >
+        <div  style={{overflow:'hidden'}}>
           <div style={{ marginBottom: '-10px', paddingLeft: '10px' }} className="generate">
             <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`} onClick={() => routerPush("/WorkforceMonitoring")} style={{ border: "none", background: "transparent", color: '#ffffff' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 16 16" style={{ marginRight: '24px' }}>
@@ -243,9 +243,9 @@ export default function Dashboard() {
               )}
             </a>
           </div>
-          <div className="accordion-item">
+          <div className="accordion-item accordion" style={{ overflow: 'hidden' }}>
             <div style={{ marginTop: '5px' }}>
-              <div className="manage-menu d-flex justify-content-between"
+              <div className="manage-menu d-flex justify-content-between align-items-center"
                 data-bs-toggle="collapse"
                 data-bs-target="#panelsStayOpen-collapseOne"
                 aria-expanded="true"
@@ -255,15 +255,18 @@ export default function Dashboard() {
                   padding: '10px',
                   borderRadius: '2px',
                   color: '#000000',
+                  cursor:'pointer'
                 }}
-              >  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="21" fill="currentColor" className="bi bi-person-gear" viewBox="0 0 16 16" style={{ color: '#ffffff', marginLeft: '-5px' }}>
+              >  
+              <div style={{ display: 'flex', alignItems: 'center', gap: '19px' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" fill="currentColor" className="bi bi-person-gear text-light" viewBox="0 0 16 16" style={{marginLeft:'-2px'}}>
                   <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
                 </svg>
-                <div>
-                  {showManage === true && (
-                    <span className="nav-font" style={{ marginLeft: '-40px' }}>Manage</span>
-                  )}
+                <span className="manage-label" style={{ opacity: navWidth === '217px' ? 1 : 0, width: navWidth === '217px' ? 'auto' : 0, overflow: 'hidden', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease, width 0.2s ease', fontFamily:'roboto' }}>
+                  Manage
+                </span>
                 </div>
+
                 <div>
                   {showIcon === true && (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className={`bi bi-chevron-up ${accordionIconn ? "rotate-acc-icon" : ""}`} viewBox="0 0 16 16" style={{ color: '#ffffff' }}>
                     <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
@@ -285,7 +288,7 @@ export default function Dashboard() {
                           textDecoration: 'none',
                           display: 'flex',
                           alignItems:'center',
-                          gap:'12px',
+                          gap:'5px',
                           marginTop: '12px',
                           padding: '10px',
                           borderRadius: '2px',
@@ -293,7 +296,7 @@ export default function Dashboard() {
                           transform: 'translateX(-20px)'
                         }}
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="white" className="accountss-icon bi bi-person-circle" viewBox="0 0 16 16" style={{ marginRight: '21px', minWidth:'20px',minHeight:'20px', maxWidth:'20px', maxHeight:'20px' }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" fill="white" className="accountss-icon bi bi-person-circle" viewBox="0 0 16 16" style={{ marginRight: '21px', minWidth:'20px',minHeight:'20px', maxWidth:'20px', maxHeight:'20px' }}>
                           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                           <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                         </svg>
@@ -308,7 +311,7 @@ export default function Dashboard() {
                       onClick={() => routerPush("/ManageEmployee")}
                       style={{ borderRadius: "2px", width: navWidth === '217px' ? '100%' : '2vw', marginLeft: "-15px", color: '#ffffff', textDecoration: 'none', padding: '10px', marginBottom: '-13px', marginTop: '5px',display: 'flex',
                         alignItems:'center',
-                        gap:'12px', }}>
+                        gap:'5px', }}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="employee-icon bi bi-people" viewBox="0 0 16 16" style={{ marginRight: '21px', minWidth:'20px', minHeight:'20px', maxHeight:'20px', maxWidth:'20px' }}>
                         <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
                       </svg>
@@ -350,7 +353,7 @@ export default function Dashboard() {
                         textDecoration: 'none',
                         whiteSpace: 'nowrap',
                         width: '126%',
-                        transform: 'translateX(-22px)',
+                        
                         cursor: 'pointer',
 
                       }}
