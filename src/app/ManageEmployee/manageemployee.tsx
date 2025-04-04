@@ -312,7 +312,7 @@ export default function CreateUD() {
                         type="button"
                         className="btn btn-success btn-sm d-flex align-items-center ms-4"
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
+                        data-bs-target="#employeeModal"
                         style={{
                           borderRadius: "4px",
                           fontWeight: "500",
@@ -343,7 +343,7 @@ export default function CreateUD() {
             </div>
             <div
               className="modal fade"
-              id="exampleModal"
+              id="employeeModal"
               role="dialog"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
