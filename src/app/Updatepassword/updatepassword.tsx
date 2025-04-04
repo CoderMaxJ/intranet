@@ -146,7 +146,7 @@ export default function Updatepassword() {
                   }}
                 >
                   {/* Current Password */}
-                  <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
+                  <div className="currentpass">
                     <label htmlFor="currentpassword" className="updatepass-label" style={{ display: 'block' }}>
                       Current Password
                     </label>
@@ -161,7 +161,7 @@ export default function Updatepassword() {
                   </div>
 
                   {/* New Password */}
-                  <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
+                  <div className="newpass">
                     <label htmlFor="password" className="updatepass-label" style={{ display: 'block' }}>
                       New Password{' '}
                       {password !== '' && (
@@ -211,7 +211,7 @@ export default function Updatepassword() {
                     )}
                   </div>
                   {/* Confirm Password */}
-                  <div style={{ width: '100%', maxWidth: '400px', textAlign: 'start' }}>
+                  <div className="confirmpass">
                     <label htmlFor="confirmpassword" className="updatepass-label" style={{ display: 'block' }}>
                       Confirm Password
                     </label>

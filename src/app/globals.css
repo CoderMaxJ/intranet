@@ -339,6 +339,19 @@ input:focus {
   margin-bottom: 15px;
 }
 
+.search12 {
+    max-width: 330px;
+    margin-top: 1px;
+    width: 25rem;
+    padding: 7px 5px 7px 65px !important;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+    background-color: rgb(240, 240, 240);
+    color: #000000 !important;
+
+}
+
 /* SEARCH BAR */
 
 
@@ -666,7 +679,7 @@ input:focus {
 }
 
 .searchbar3 {
-  max-width: 330px;
+  min-width: 330px;
   margin-top: 1px;
   width: 25rem;
   padding: 7px 5px 7px 65px !important;
@@ -689,15 +702,45 @@ input:focus {
   color: #000000;
 }
 .searchbar12 {
-  max-width: 400px;
+  min-width: 330px;
+  width: 100%;
+  max-width: 300px !important;
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
-  background-color: white;
+  background-color: #e7e7e7;
   color: #000000;
 }
+.newpass {
+  width: 100%;
+  max-width: 400px;
+  text-align: start;
+}
+.newpass input {
+  color: black;
+  background-color: white;
+}
+.currentpass {
+  width: 100% !important;
+  max-width: 400px;
+  text-align: start;
+}
+.currentpass input {
+  color: black;
+  background-color: white;
+}
 
+.confirmpass {
+  width: 100%;
+  max-width: 400px;
+  text-align: start;
+}
+
+.confirmpass input {
+  color: black;
+  background-color: white;
+}
 .searchbarr {
   /* margin-top: 1px;
   width: 330px; */
