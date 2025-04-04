@@ -76,7 +76,11 @@
   font-style: normal;
 }
 
-
+.logoutbutton {
+  color: white;
+  background: none;
+  border: none;
+}
 .nav-font {
   font-family: "roboto";
   font-weight: 400;
@@ -631,7 +635,7 @@ input:focus {
   }
 
   .agent-header {
-    width: 350px !important;
+    width: 100% !important;
   }
 
   .download-reports button {
