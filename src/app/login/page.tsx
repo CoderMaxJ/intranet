@@ -90,22 +90,21 @@ export default function Login() {
     <div className="main-div">
       <ToastContainer />
       <div className="login-div">
-        <div className="logo">
+        <div style={{marginTop:'-20px'}}>
         <img 
           className="login-logo"
           src="/img/Bluesos.png"
           alt="Staff Outsourcing Logo"
+          style={{ width: "105px", height: "80%" }}
         />
-        <label className="poweredby-label"
-          htmlFor="poweredby" 
-          style={{ marginTop: "-10px", fontSize: "10px", fontWeight: "bold", display: "block", textAlign: "center" }}
-        >
-          powered by
-        </label>
+        </div>
+        <label htmlFor="poweredby" style={{transform:'translateY(-23px)', fontSize:'10px', fontWeight:"bold"}}>powered by</label>
+        <div>
         <img 
           className="ecomialogo"
           src="/img/eComialogo.png"
-          alt="eComia Logo"
+          alt="Staff Outsourcing Logo"
+          style={{ width: "75px", height: "50%" }}
         />
         </div>
         <form className="username" onSubmit={handleSubmit}>
@@ -120,19 +119,27 @@ export default function Login() {
               required
             />
           </div>
-          <div className="inp-lab">
+          <div className="inputpassword">
             <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div style={{ position: "relative", display: "flex" }}>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={{backgroundColor:"#ffffff"}}
+              />
+            </div>
           </div>
-          <button type="submit" className="button-login">Login</button>
+          <div>
+            <button type="submit" className="button-login">
+              Login
+            </button>
+          </div>
         </form>
       </div>
     </div>
   );
-}  
+
+}

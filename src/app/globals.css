@@ -40,13 +40,18 @@
   width: 100%;
 }
 
+.fixed-field {
+  width: 300px;
+  min-width: 300px;
+  margin-right: 20px;
+}
 @media (max-height: 866px) {
   .b-repodrts1 {
     height: 100% !important;
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
   .addemployee-form {
     overflow-x: auto;
   }
@@ -76,11 +81,7 @@
   font-style: normal;
 }
 
-.logoutbutton {
-  color: white;
-  background: none;
-  border: none;
-}
+
 .nav-font {
   font-family: "roboto";
   font-weight: 400;
@@ -191,29 +192,13 @@ a {
   background-color: #fff;
 }
 
-@media (max-width: 480px) {
-  .login-div {
-    padding: 1.5rem;
-  }
-
-  input,
-  .button-login {
-    font-size: 0.95rem;
-  }
-
-  .powered-label {
-    font-size: 9px;
-  }
-}
 .main-div {
   background-color: white;
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
-  display: flex;
-  padding: 2vh 1rem;
-  box-sizing: border-box;
+  height: 100%;
+  /* background-image: url("/img/sooos.png"); */
   background-size: cover;
   background-image: url("/img/Group5.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
@@ -227,60 +212,22 @@ a {
   backdrop-filter: blur(-50px);
   border-radius: 8px;
   padding: 20px 20px 85px 20px;
-  width: 100% !important;
-  max-width:400px;
+  width: 20% !important;
+  height: 48% !important;
   justify-content: center;
   align-items: center;
   border: none !important;
   outline: none !important;
   place-items: center;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  height: 55vh;
 }
 
 .login-div label {
   color: rgb(58, 58, 58);
-  display: flex;
-  transform: translateY(-10px);
-}
-.poweredby-label {
-  flex-direction: column;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  object-fit: contain;
-  display: flex;
-  transform: translateY(-20px);
-}
-
-.logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  overflow: hidden;
-  margin-bottom: 25px;
-}
-
-.logo label{
-  transform: translateY(-23px);
+  display: block;
 }
 
 .login-div img {
-  flex-direction: column;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
-    width: 70px;
-    object-fit: contain;
-    display: flex;
-    transform: translateY(-10px);
-}
-.ecomialogo {
-  margin-top: -15px;
+  width: 85%;
 }
 
 .login-div input {
@@ -290,6 +237,7 @@ a {
   border-radius: 4px;
   margin-bottom: 20px;
   outline: none;
+  width: 17vw;
 }
 
 .main-div {
@@ -300,6 +248,8 @@ a {
   justify-content: center;
 
 }
+
+
 
 .login-div input {
   padding: 5px;
@@ -456,7 +406,9 @@ input:focus {
   color: white;
   transform: translateX(30px) translateY(-21px);
 }
-
+.ecomialogo {
+  transform: translateY(-26px);
+}
 .searchbar-wrapper {
 
   display: flex;
@@ -497,20 +449,6 @@ input:focus {
   pointer-events: none;
 }
 
-.legends {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1px;
-  align-items: center;
-}
-
-.legends {
-  padding: 10px;
-  font-family: 'Raleway', sans-serif;
-  text-align: center;
-}
-
-
 
 @media only screen and (max-width: 1020px) {
   .emp-table {
@@ -534,9 +472,9 @@ input:focus {
   .login-logo {
     width: 100px !important;
   }
-  /* .login-div {
+  .login-div {
     width: 20% !important;
-  } */
+  }
   .manage-table {
     font-size: small !important;
   }
@@ -635,7 +573,7 @@ input:focus {
   }
 
   .agent-header {
-    width: 100% !important;
+    width: 350px !important;
   }
 
   .download-reports button {
@@ -730,23 +668,19 @@ input:focus {
 .searchbar3 {
   max-width: 330px;
   margin-top: 1px;
-  width: 100%;
+  width: 25rem;
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: rgb(240, 240, 240);
   color: #000000 !important;
-  font-family: sans-serif;
-  font-size: 14px;
-  box-sizing: border-box;
-}
-
-.addemployee-modal {
-  width: 400px !important;
 }
 
 .searchbar {
+  /* max-width: 330px;
+  margin-top: 1px;
+  width: 25rem; */
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
@@ -758,22 +692,21 @@ input:focus {
   max-width: 400px;
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
-  background-color: #f0f0f0;
+  background-color: white;
   color: #000000;
-  box-sizing: border-box;
-  width: 100%;
-  font-size: 14px;
-  font-family: sans-serif;
 }
 
 .searchbarr {
+  /* margin-top: 1px;
+  width: 330px; */
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: white;
+  /* transform: translateX(-70px); */
   color: #000000;
 }
 
@@ -804,7 +737,7 @@ input:focus {
 
 .agent-header {
   text-align: left !important;
-  width: 100%;
+  width: 400px;
   margin: 0;
 }
 
@@ -852,6 +785,7 @@ input:focus {
   background-color: rgb(0, 0, 0);
   font-size: 16px;
 }
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -863,14 +797,6 @@ input:focus {
   right: 0;
   /* Align dropdown content to the right */
 }
-
-@media (max-width: 480px) {
-  .img-wrapper {
-    max-height: 40px;
-  }
-
-  }
-
 
 .dropdown-content a {
   color: black;
@@ -1027,17 +953,7 @@ input:focus {
 .report-data td {
   white-space: nowrap;
 }
-.username {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
 
-.inp-lab {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
 
 .background-report {
   border-radius: 4px;
@@ -1475,7 +1391,13 @@ table {
   margin-top: 15px;
 }
 
+.username input {
+  color: black !important;
+}
 
+.inputpassword input {
+  color: black !important;
+}
 .input-image {
   height: 20px;
   width: 100px;
