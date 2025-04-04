@@ -4,7 +4,9 @@ export default function Logout() {
     <div>
       <button
         className="nav-font"
-        data-bs-target="modal"
+        data-toggle="modal"
+        data-target="#logoutModal"
+      
         style={{ boxShadow: 'none', outline: 'none', background: 'none', border: 'none', color: '#ffffff' }}
       >
         Log Out

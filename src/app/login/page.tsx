@@ -90,6 +90,7 @@ export default function Login() {
     <div className="main-div">
       <ToastContainer />
       <div className="login-div">
+        <div className="logo">
         <img 
           className="login-logo"
           src="/img/Bluesos.png"
@@ -106,6 +107,7 @@ export default function Login() {
           src="/img/eComialogo.png"
           alt="eComia Logo"
         />
+        </div>
         <form className="username" onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           <div className="inp-lab">

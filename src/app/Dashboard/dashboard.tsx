@@ -161,15 +161,16 @@ export default function Dashboard() {
       <Updatepassword />
       {logout && (
         <div
-          className="modal fade show"
+          className="modal fade show" id="logoutModal"
           style={{ display: "block", background: "rgba(0,0,0,0.5)" }}
         >
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Confirm Logout</h5>
+                <h5 className="modal-title">Confirm Log Out</h5>
                 <button
                   type="button"
+                  id="modallogout"
                   className="btn-close"
                   onClick={() => setLogout(false)}
                 ></button>
@@ -190,7 +191,7 @@ export default function Dashboard() {
                   className="btn btn-danger"
                   onClick={handleLogout}
                 >
-                  Logout
+                  Log Out
                 </button>
               </div>
             </div>

@@ -233,7 +233,7 @@ a {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  height: 60vh;
+  height: 55vh;
 }
 
 .login-div label {
@@ -241,7 +241,29 @@ a {
   display: flex;
   transform: translateY(-10px);
 }
+.poweredby-label {
+  flex-direction: column;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  object-fit: contain;
+  display: flex;
+  transform: translateY(-20px);
+}
 
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.logo label{
+  transform: translateY(-23px);
+}
 
 .login-div img {
   flex-direction: column;
@@ -251,6 +273,10 @@ a {
     width: 70px;
     object-fit: contain;
     display: flex;
+    transform: translateY(-10px);
+}
+.ecomialogo {
+  margin-top: -15px;
 }
 
 .login-div input {
@@ -466,6 +492,20 @@ input:focus {
   color: black !important;
   pointer-events: none;
 }
+
+.legends {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  align-items: center;
+}
+
+.legends {
+  padding: 10px;
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+}
+
 
 
 @media only screen and (max-width: 1020px) {
@@ -760,7 +800,7 @@ input:focus {
 
 .agent-header {
   text-align: left !important;
-  width: 400px;
+  width: 100%;
   margin: 0;
 }
 
@@ -825,10 +865,8 @@ input:focus {
     max-height: 40px;
   }
 
-  .ecomialogo {
-    max-width: 80%;
   }
-}
+
 
 .dropdown-content a {
   color: black;
