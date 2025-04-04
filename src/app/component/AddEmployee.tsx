@@ -310,7 +310,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   return (
     <div className="addemployee-form" >
       <form className="row d-flex flex-wrap" onSubmit={handleSubmitForm} >
-        <div className="fixed-field col-md-3">
+        <div className="fixed-field col-md-4">
           <button
             id="buttonclose"
             type="button"
@@ -341,7 +341,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="Juan"
           />
         </div>
-        <div className="fixed-field col-md-4 mb-3 py-2">
+        <div className="fixed-field col-md-4 mb-3">
           <label htmlFor="mname" className="form-label">
             Middle Name
           </label>
@@ -370,7 +370,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             placeholder="Dela Cruz"
           />
         </div>
-        <div className="fixed-field col-md-1 mb-3">
+        <div className="fixed-field col-md-3 mb-3">
           <label htmlFor="dateofbirth" className="form-label">
             Date of Birth
           </label>
@@ -385,7 +385,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             max="2015-12-31"
           />
         </div>
-        <div className="fixed-field col-md-2 mb-3">
+        <div className="fixed-field col-md-3 mb-3">
           <label htmlFor="maritalstatus" className="form-label">
             Marital Status
           </label>
@@ -503,7 +503,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         </div>
 
         <div className="fixed-field col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
-          <label htmlFor="is_dayshift" className="form-label" style={{marginTop:'-15px'}}>
+          <label htmlFor="is_dayshift" className="form-label">
             Day Shift
                 <span className="">
                     <input

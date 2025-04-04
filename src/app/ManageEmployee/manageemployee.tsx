@@ -287,17 +287,6 @@ export default function CreateUD() {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       onKeyUp={searchKeyword}
-                      style={{
-                        padding: "8px 12px 8px 36px",
-                        borderRadius: "5px",
-                        border: "1px solid #ccc",
-                        backgroundColor: "#f0f0f0",
-                        fontFamily: "'Raleway', sans-serif",
-                        fontSize: "14px",
-                        color: "#000",
-                        width: "300px",
-                        boxSizing: "border-box",
-                    }}
                     />
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -359,7 +348,7 @@ export default function CreateUD() {
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
-              <div className="modal-dialog modal-sl" role="document">
+              <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content px-4 flex-wrap">
                   <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
                 </div>

@@ -354,17 +354,6 @@ export default function ManageDepartment() {
                                         placeholder="Search..."
                                         value={filter}
                                         onChange={handleFilterChange}
-                                        style={{
-                                            padding: "8px 12px 8px 36px",
-                                            borderRadius: "5px",
-                                            border: "1px solid #ccc",
-                                            backgroundColor: "#f0f0f0",
-                                            fontFamily: "'Raleway', sans-serif",
-                                            fontSize: "14px",
-                                            color: "#000",
-                                            width: "300px",
-                                            boxSizing: "border-box",
-                                        }}
                                     />
                                 </div>
                                 <button

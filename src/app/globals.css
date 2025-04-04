@@ -40,18 +40,13 @@
   width: 100%;
 }
 
-.fixed-field {
-  width: 300px;
-  min-width: 300px;
-  margin-right: 20px;
-}
 @media (max-height: 866px) {
   .b-repodrts1 {
     height: 100% !important;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .addemployee-form {
     overflow-x: auto;
   }
@@ -192,13 +187,29 @@ a {
   background-color: #fff;
 }
 
+@media (max-width: 480px) {
+  .login-div {
+    padding: 1.5rem;
+  }
+
+  input,
+  .button-login {
+    font-size: 0.95rem;
+  }
+
+  .powered-label {
+    font-size: 9px;
+  }
+}
 .main-div {
   background-color: white;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
-  /* background-image: url("/img/sooos.png"); */
+  min-height: 100vh;
+  display: flex;
+  padding: 2vh 1rem;
+  box-sizing: border-box;
   background-size: cover;
   background-image: url("/img/Group5.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
@@ -212,22 +223,34 @@ a {
   backdrop-filter: blur(-50px);
   border-radius: 8px;
   padding: 20px 20px 85px 20px;
-  width: 20% !important;
-  height: 48% !important;
+  width: 100% !important;
+  max-width:400px;
   justify-content: center;
   align-items: center;
   border: none !important;
   outline: none !important;
   place-items: center;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 60vh;
 }
 
 .login-div label {
   color: rgb(58, 58, 58);
-  display: block;
+  display: flex;
+  transform: translateY(-10px);
 }
 
+
 .login-div img {
-  width: 85%;
+  flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    object-fit: contain;
+    display: flex;
 }
 
 .login-div input {
@@ -237,7 +260,6 @@ a {
   border-radius: 4px;
   margin-bottom: 20px;
   outline: none;
-  width: 17vw;
 }
 
 .main-div {
@@ -248,8 +270,6 @@ a {
   justify-content: center;
 
 }
-
-
 
 .login-div input {
   padding: 5px;
@@ -406,9 +426,7 @@ input:focus {
   color: white;
   transform: translateX(30px) translateY(-21px);
 }
-.ecomialogo {
-  transform: translateY(-26px);
-}
+
 .searchbar-wrapper {
 
   display: flex;
@@ -472,9 +490,9 @@ input:focus {
   .login-logo {
     width: 100px !important;
   }
-  .login-div {
+  /* .login-div {
     width: 20% !important;
-  }
+  } */
   .manage-table {
     font-size: small !important;
   }
@@ -668,19 +686,23 @@ input:focus {
 .searchbar3 {
   max-width: 330px;
   margin-top: 1px;
-  width: 25rem;
+  width: 100%;
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: rgb(240, 240, 240);
   color: #000000 !important;
+  font-family: sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.addemployee-modal {
+  width: 400px !important;
 }
 
 .searchbar {
-  /* max-width: 330px;
-  margin-top: 1px;
-  width: 25rem; */
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
@@ -692,21 +714,22 @@ input:focus {
   max-width: 400px;
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
-  background-color: white;
+  background-color: #f0f0f0;
   color: #000000;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 14px;
+  font-family: sans-serif;
 }
 
 .searchbarr {
-  /* margin-top: 1px;
-  width: 330px; */
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: white;
-  /* transform: translateX(-70px); */
   color: #000000;
 }
 
@@ -785,7 +808,6 @@ input:focus {
   background-color: rgb(0, 0, 0);
   font-size: 16px;
 }
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -796,6 +818,16 @@ input:focus {
   border-radius: 4px;
   right: 0;
   /* Align dropdown content to the right */
+}
+
+@media (max-width: 480px) {
+  .img-wrapper {
+    max-height: 40px;
+  }
+
+  .ecomialogo {
+    max-width: 80%;
+  }
 }
 
 .dropdown-content a {
@@ -953,7 +985,17 @@ input:focus {
 .report-data td {
   white-space: nowrap;
 }
+.username {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
+.inp-lab {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
 .background-report {
   border-radius: 4px;

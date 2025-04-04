@@ -90,23 +90,22 @@ export default function Login() {
     <div className="main-div">
       <ToastContainer />
       <div className="login-div">
-        <div style={{marginTop:'-20px'}}>
         <img 
           className="login-logo"
           src="/img/Bluesos.png"
           alt="Staff Outsourcing Logo"
-          style={{ width: "105px", height: "80%" }}
         />
-        </div>
-        <label htmlFor="poweredby" style={{transform:'translateY(-23px)', fontSize:'10px', fontWeight:"bold"}}>powered by</label>
-        <div>
+        <label className="poweredby-label"
+          htmlFor="poweredby" 
+          style={{ marginTop: "-10px", fontSize: "10px", fontWeight: "bold", display: "block", textAlign: "center" }}
+        >
+          powered by
+        </label>
         <img 
           className="ecomialogo"
           src="/img/eComialogo.png"
-          alt="Staff Outsourcing Logo"
-          style={{ width: "75px", height: "50%" }}
+          alt="eComia Logo"
         />
-        </div>
         <form className="username" onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           <div className="inp-lab">
@@ -117,30 +116,21 @@ export default function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              style={{color:'#000000'}}
             />
           </div>
-          <div>
+          <div className="inp-lab">
             <label htmlFor="password">Password</label>
-            <div style={{ position: "relative", display: "flex" }}>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                style={{backgroundColor:"#ffffff", color:"#000000"}}
-              />
-            </div>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
-          <div>
-            <button type="submit" className="button-login">
-              Login
-            </button>
-          </div>
+          <button type="submit" className="button-login">Login</button>
         </form>
       </div>
     </div>
   );
-
-}
+}  
