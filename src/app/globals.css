@@ -1435,7 +1435,7 @@ table {
   height: 20px;
   width: 100px;
   font-size: 10px;
-
+  transform: translateY(-29px) translateX(-40px);
   position: absolute;
 
 }
