@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function MainDashboard() {
   return (
-    <div className="d-flex main-page" style={{position:'relative'}}>
+    <div className="d-flex main-page">
       <div id="dashboard-menu" className="d-flex ">
         <Dashboard />
       </div>

@@ -91,21 +91,11 @@ export default function Login() {
     <div className="main-div">
       <ToastContainer />
       <div className="login-div">
-        <div style={{ marginTop: '-20px' }}>
+        <div>
           <img
             className="login-logo"
             src="/img/Bluesos.png"
             alt="Staff Outsourcing Logo"
-            style={{ width: "105px", height: "80%" }}
-          />
-        </div>
-        <label htmlFor="poweredby" style={{ transform: 'translateY(-23px)', fontSize: '10px', fontWeight: "bold" }}>powered by</label>
-        <div>
-          <img
-            className="ecomialogo"
-            src="/img/eComialogo.png"
-            alt="Staff Outsourcing Logo"
-            style={{ width: "75px", height: "50%" }}
           />
         </div>
         <form className="username" onSubmit={handleSubmit}>
@@ -122,15 +112,13 @@ export default function Login() {
           </div>
           <div className="inputpassword">
             <label htmlFor="password">Password</label>
-            <div style={{ position: "relative", display: "flex" }}>
+            <div className="inputfields">
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
-                style={{ backgroundColor: "#ffffff" }}
-                
+                required   
               />
               <span onClick={() => setShowPassword(!showPassword)} className="eyetoggle">
               {showPassword ? (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
@@ -148,6 +136,18 @@ export default function Login() {
             <button type="submit" className="button-login">
               Login
             </button>
+            <div className="ecomialogo-footer">
+              <div>
+            <label  className="poweredby-label" htmlFor="poweredby">powered by</label>
+            </div>
+            <div>
+          <img
+            className="ecomialogo"
+            src="/img/eComialogo.png"
+            alt="Staff Outsourcing Logo"
+          />
+          </div>
+        </div>
           </div>
         </form>
       </div>

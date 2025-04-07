@@ -260,6 +260,39 @@ input:focus {
   border-color: #0a63d8;
 }
 
+.ecomialogo-footer > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ecomialogo-footer img {
+  width: 80px;
+  height: 30px;
+  transform: translateY(30px);
+}
+
+.login-logo {
+ width: 105px;
+ height: 80%;
+}
+.poweredby-label {
+  font-size: 10px;
+  font-weight: bold;
+  transform: translateY(30px);
+}
+
+.inputfields {
+  position: relative;
+  display: flex;
+}
+
+.inputfields input {
+  background-color: white;
+}
+
+
 .eye {
   position: absolute;
   border: none;
@@ -307,7 +340,6 @@ input:focus {
 .newpass-eyetoggle svg {
   transform: translateX(-25px);
 }
-
 
 .button-login {
   background-color: #008dcc;
@@ -415,16 +447,9 @@ input:focus {
   margin-right: 20px;
 }
 
-/* .updatepassword-input {
-  color: black;
-  background-color: white;
-}
-.updatepassword-input1 {
-  color: black;
-  background-color: white;
-} */
 .main-page {
   background-color: #e7e7e7;
+  position: relative;
 }
 
 .db-poweredby {
@@ -432,10 +457,6 @@ input:focus {
   font-weight: bold;
   color: white;
   transform: translateX(30px) translateY(-21px);
-}
-
-.ecomialogo {
-  transform: translateY(-26px);
 }
 
 .searchbar-wrapper {
@@ -457,12 +478,14 @@ input:focus {
 
 .acc-head input {
   justify-content: center;
+  width: 100%;
 }
 
 .form-control {
   position: relative;
   width: 100%;
   padding: 10px;
+
   padding-right: 40px;
   /* space for the icon */
   border: 1px solid #ccc;
@@ -607,7 +630,7 @@ input:focus {
   }
 
   .tabbreaks {
-    margin-top: 20px !important;
+    margin-top: 13px !important;
   }
 
   .breaks-icon {
@@ -868,7 +891,7 @@ input:focus {
   left: 0;
   width: 100%;
   z-index: 999;
-  height: 100%;
+  height: 101%;
   min-height: 100vh;
 }
 
@@ -1192,9 +1215,9 @@ tbody td {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9998;
   opacity: 0;
-  /* Initially hidden */
-  transition: opacity 0.3s ease;
-  /* Smooth fade-in/fade-out effect */
+
+  transition: opacity 4.3s ease;
+
 }
 
 .add-icon {
@@ -1779,6 +1802,13 @@ table {
   min-height: 100vh;
 }
 
+.navigation-division {
+  margin-bottom: 30px;
+  margin-left: 40px;
+  transform: translateY(-10px);
+  overflow: hidden;
+}
+
 .dashboard svg {
   margin-left: -3px;
   align-items: center;
@@ -1844,6 +1874,7 @@ table {
 
 
 .generate svg {
+  margin-right: 24px;
   align-items: center;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
   /* Updated transition */
@@ -1853,14 +1884,16 @@ table {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: inherit;
+  color: white;
 }
 
 .generate {
+  margin-bottom: 5px;
+  padding-left: 10px;
   display: flex;
   align-items: center;
   padding: 10px;
-  margin-top: 15px;
+  margin-top: 5px;
   color: white;
   cursor: pointer;
   border-radius: 2px;
@@ -1874,6 +1907,21 @@ table {
 .generate svg {
   margin-right: 20px;
   fill: rgb(255, 255, 255);
+}
+
+.generate button {
+  border: none;
+  background: transparent;
+  color: white;
+}
+
+.manage-div {
+  margin-top: 5px;
+}
+.manage-nav {
+  display: flex;
+  align-items: center;
+  gap: 19px;
 }
 
 .logout-hover {
@@ -2039,6 +2087,24 @@ table {
   border-radius: 2px;
 }
 
+.manage-menus {
+  padding: 10px;
+  border-radius: 2px;
+  color: #000000;
+  cursor: pointer;
+}
+.manage-menus:hover {
+  background-color: #53a2be;
+  cursor: pointer;
+}
+
+.manage-menus a {
+  border-radius: 2px;
+}
+
+.manage-menu {
+  overflow: hidden;
+}
 .prof-hover:hover {
   border-radius: 2px;
   color: white !important;
@@ -2312,7 +2378,7 @@ table {
   width: 100%;
   padding: 10px;
   padding-right: 40px;
-  /* space for the icon */
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -2362,4 +2428,65 @@ table {
 
 .rotate-right {
   transform: rotate(180deg);
+}
+
+.add-account-form {
+  width: 100%;
+}
+.account-div {
+  background-color: white;
+  width: 100%;
+}
+.create-div {
+  width: 100%;
+}
+
+.search-division {
+  position: relative;
+  max-width: 400px;
+}
+.search-division svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #888;
+}
+.accounta-table-div{
+  position: relative;
+}
+
+.accounta-table-div thead {
+  position: sticky;
+  transform: translateY(-12px);
+  z-index: 10;
+}
+
+.emp-plus {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #FAA0A0;
+  color: red;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manage-account-form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 0px;
+  padding: 0px;
+  height: 40px;
 }

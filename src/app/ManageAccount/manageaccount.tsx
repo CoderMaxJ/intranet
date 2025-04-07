@@ -121,6 +121,10 @@ export default function ManageDepartment() {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
+        if (!accountName.trim()) {
+            errorToast("Account name is required.");
+            return;
+        }
         createAccount();
         setAccountName("");
     };
@@ -263,19 +267,15 @@ export default function ManageDepartment() {
                             <h1 className="modal-title fs-5">Create Account</h1>
                         </div>
                         <div className="modal-body" style={{ display: "flex", flexDirection: "column" }}>
-                            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-                                <div style={{ backgroundColor: "#ffffff", width: "100%" }}>
-                                    <div className="d-flex align-items-center" style={{ width: "100%" }}>
+                            <form onSubmit={handleSubmit} className="add-account-form">
+                                <div className="account-div">
+                                    <div className="create-div d-flex align-items-center">
                                         <input
                                             value={accountName}
                                             onChange={(e) => setAccountName(e.target.value)}
                                             type="text"
                                             className="form-control p-2 px-3 ml-3"
                                             placeholder="Account Name"
-                                            style={{
-                                                width: "100%",
-                                                fontSize: "16px",
-                                            }}
                                         />
                                     </div>
                                 </div>
@@ -321,13 +321,8 @@ export default function ManageDepartment() {
                         <div className="employee-header">
                             <div
                                 className="acc-head gap-3 d-flex justify-content-center py-2"
-                                style={{ width: "100%" }}
                             >
-                                <div
-                                    style={{
-                                        position: "relative",
-                                        maxWidth: "400px",
-                                    }}
+                                <div className="search-division"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -335,18 +330,9 @@ export default function ManageDepartment() {
                                         height="20"
                                         fill="currentColor"
                                         viewBox="0 0 16 16"
-                                        style={{
-                                            position: "absolute",
-                                            left: "12px",
-                                            top: "50%",
-                                            transform: "translateY(-50%)",
-                                            pointerEvents: "none",
-                                            color: "#888",
-                                        }}
                                     >
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                     </svg>
-
                                     <input
                                         type="text"
                                         id="myInput"
@@ -377,29 +363,20 @@ export default function ManageDepartment() {
                                 </button>
                             </div>
                         </div>
-
-
                         {showform && (
                             <>
                                 <div
                                     className="background-overlay"
                                     style={{
-                                        position: 'fixed',
-                                        top: 0,
-                                        left: 0,
-                                        width: '100%',
-                                        height: '100%',
-                                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
                                         opacity: showform ? 1 : 0,
-                                        transition: 'opacity 4.3s ease',
                                     }}
                                     onClick={formClose}
                                 ></div>
                             </>
                         )}
-                        <div className="table-responsive accounts-table px-4" style={{ position: 'relative' }}>
+                        <div className="accounta-table-div table-responsive accounts-table px-4" style={{ position: 'relative' }}>
                             <table className="manage-table table table-light table-hover table-striped border ">
-                                <thead style={{ position: 'sticky', transform: 'translatey(-12px)', zIndex: 10 }}>
+                                <thead>
                                     <tr>
                                         <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account ID</th>
                                         <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account Name</th>
@@ -416,31 +393,16 @@ export default function ManageDepartment() {
                                             <td >{instance.status === 1 ? "Active" : "Not Active"}</td>
                                             <td>
                                                 {instance.manager && instance.manager.length > 0 ? (
-                                                    <div style={{ display: 'flex', justifyContent: "flex-start", alignItems: "center", gap: '15px', flexWrap: 'wrap', margin: "0px", padding: "0px", height: "40px" }} >
+                                                    <div className="manage-account-form" >
                                                         <form>
                                                             {instance.manager.map((manager: any, index: any) => (
                                                                 <div
                                                                     key={index}
                                                                     style={{ position: "relative", display: "inline-block", margin: "8px" }}
                                                                 >
-                                                                    <button
+                                                                    <button className="emp-plus"
                                                                         type="button"
-                                                                        style={{
-                                                                            position: "absolute",
-                                                                            top: "-8px",
-                                                                            right: "-8px",
-                                                                            backgroundColor: "#FAA0A0",
-                                                                            color: "red",
-                                                                            border: "none",
-                                                                            borderRadius: "50%",
-                                                                            width: "20px",
-                                                                            height: "20px",
-                                                                            fontSize: "14px",
-                                                                            cursor: "pointer",
-                                                                            display: "flex",
-                                                                            justifyContent: "center",
-                                                                            alignItems: "center",
-                                                                        }}
+                                                                        
                                                                         onClick={() => removeManager(manager.empno, instance.acctid)}
                                                                     >
                                                                         ×
