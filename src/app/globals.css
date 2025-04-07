@@ -218,7 +218,7 @@ a {
   backdrop-filter: blur(-50px);
   border-radius: 8px;
   padding: 20px 20px 85px 20px;
-  width: 20% !important;
+  width: 20vw !important;
   height: 48% !important;
   justify-content: center;
   align-items: center;
@@ -283,8 +283,29 @@ input:focus {
   padding: 15px;
 }
 
-.newpassword-eyetoggle {
-  transform: translateX(-10px);
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.updatepassword-input {
+  padding-right: 40px; /* space for icon */
+  box-sizing: border-box;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+.newpass-eyetoggle svg {
+  transform: translateX(-25px);
 }
 
 
@@ -487,10 +508,6 @@ input:focus {
     width: 100px !important;
   }
 
-  .login-div {
-    width: 20% !important;
-  }
-
   .searchbar-wrapper {
     display: flex;
     flex-direction: column;
@@ -557,10 +574,6 @@ input:focus {
 
   .logs-headername {
     font-size: 20px !important;
-  }
-
-  .logs-total {
-    width: 100px !important;
   }
 
   .agent-header {
@@ -838,7 +851,9 @@ input:focus {
 }
 
 /* breaks div */
-
+.breaks-table {
+  height: auto;
+}
 .breaks-div {
   background-color: #ffffff;
   border-radius: 4px;
@@ -847,13 +862,14 @@ input:focus {
 
 .breaks-div.fullscreen {
   margin: 0;
-  position: fixed;
+  position: absolute;
   padding-top: 80px;
   top: -60px;
   left: 0;
   width: 100%;
   z-index: 999;
-  height: 120vh;
+  height: 100%;
+  min-height: 100vh;
 }
 
 /* logs main div */
@@ -886,12 +902,14 @@ input:focus {
 }
 
 .logs-total span {
-  background-color: #2ee4c5;
+  background-color: #b3efb2;
   padding: 7px;
-  width: 105px;
+  width: 120px;
   justify-content: center;
   height: 37px;
   text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .logs-headername {
@@ -1428,11 +1446,10 @@ table {
 }
 
 .main-divv {
-  /* width: calc(100% - 5px); */
   background-color: #e7e7e7;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  flex: 1 1 100%;
+  padding-right: 1rem !important;
+  padding-left: 1.3rem !important;
+  flex: 1 1 100% !important;
   width: 0px !important;
 }
 
@@ -1457,6 +1474,10 @@ table {
 
 .search-employee input {
   margin-top: -4px;
+}
+.manageemployee-button button {
+  padding-left: 1.3rem;
+  padding-right: 1rem;
 }
 
 .manageemployee-button {
@@ -2132,7 +2153,11 @@ table {
 }
 
 /* viewreports */
-
+.reports-division {
+  padding-left: 1.3rem;
+  padding-right: 1rem;
+  width: 0;
+}
 .download-reports button {
   width: 6vw !important;
   display: flex;
@@ -2222,6 +2247,8 @@ table {
 
 .manageaccounts-header {
   width: 100%;
+  padding-left: 1.3rem;
+  padding-right: 1rem;
 }
 
 
@@ -2232,7 +2259,10 @@ table {
   flex: 1 1 100%;
 }
 
-
+.accounts-margin {
+  padding-left: 1.3rem;
+  padding-right: 1rem;
+}
 .manage-header {
   margin-left: 750px;
 }

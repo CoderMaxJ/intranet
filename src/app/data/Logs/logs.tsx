@@ -188,17 +188,8 @@ return (
 		/>
 		</div>
 		<div className="logs-total d-flex">
-		<span
-			style={{
-			padding: "3px",
-			fontFamily: "'Raleway', sans-serif",
-			backgroundColor: "#b3efb2",
-			textAlign: "center",
-			fontWeight: "bold",
-			paddingTop: '7px',
-			}}
-		>
-			<i className=" bi bi-people-fill" style={{ padding: '5px' }}></i>
+		<span>
+			<i className=" bi bi-people-fill px-1"></i>
 			Total: {localStorage.getItem("total-logs") || 0}
 		</span>
 		</div>

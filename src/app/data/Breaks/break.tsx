@@ -341,7 +341,7 @@ function BreakDataTable() {
               </div>
             </div>
           </div>
-          <div className="table-responsive">
+          <div className="table-responsive breaks-table">
             <table className="tabbreaks table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
                 <tr>

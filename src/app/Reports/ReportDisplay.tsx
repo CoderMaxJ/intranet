@@ -202,7 +202,7 @@ export default function Daterange() {
                 <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
-                    <div className="flex-fill"  style={{paddingLeft:'1rem', paddingRight:'1rem', width:0, }}>
+                    <div className="flex-fill reports-division">
                         <div className="reportheader"><Header title="DAILY REPORTS" /></div>
                         <div className="background-report">
                             <div className="px-4 pt-4" style={{ display: 'flex' }}>

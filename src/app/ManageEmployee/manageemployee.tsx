@@ -271,7 +271,7 @@ export default function CreateUD() {
         </div>
       </div>
       
-      <div className="main-divv"  style={{paddingLeft:'1rem', paddingRight:'1rem', flex:'1 1 100%', width:'0 !important'}}>
+      <div className="main-divv">
         <Header title="MANAGE EMPLOYEE" />
         <div className="manageemployee-division px-4">
           <div>
