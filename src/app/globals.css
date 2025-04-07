@@ -11,12 +11,15 @@
     --foreground: #ededed;
   }
 }
+
 .addemployee-form {
   width: 100%;
 }
+
 .manage-label {
   color: white !important;
 }
+
 .form-row {
   display: flex;
   flex-wrap: wrap;
@@ -25,8 +28,10 @@
 }
 
 .form-field {
-  flex: 1 1 300px; /* base width 300px, but can shrink if needed */
-  max-width: 100%;  /* don't go beyond container */
+  flex: 1 1 300px;
+  /* base width 300px, but can shrink if needed */
+  max-width: 100%;
+  /* don't go beyond container */
   min-width: 200px;
 }
 
@@ -50,6 +55,7 @@
   .addemployee-form {
     overflow-x: auto;
   }
+
   .fixed-field {
     flex: 1 1 100%;
     min-width: 100%;
@@ -57,18 +63,22 @@
 }
 
 @media (min-width: 992px) {
-  .modal-lg, .modal-xl {
-      --bs-modal-width: 1px;
+
+  .modal-lg,
+  .modal-xl {
+    --bs-modal-width: 1px;
   }
 }
 
 @media (min-width: 996px) {
-  .modal-lg, .modal-xl {
-      --bs-modal-width: 320px;
+
+  .modal-lg,
+  .modal-xl {
+    --bs-modal-width: 320px;
   }
 }
 
- 
+
 @font-face {
   font-family: 'roboto';
   src: url('././fonts/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
@@ -188,12 +198,13 @@ a {
 }
 
 .main-div {
-  background-color: white;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  min-height: 100vh;
   height: 100%;
-  /* background-image: url("/img/sooos.png"); */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
   background-size: cover;
   background-image: url("/img/Group5.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
@@ -235,31 +246,10 @@ a {
   width: 17vw;
 }
 
-.main-div {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-}
-
-
-
 .login-div input {
   padding: 5px;
   margin-top: 5px;
 }
-
-/* .login-div .button-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 20%;
-  margin-top: 5px;
-
-} */
 
 .login-div button {
   padding: 3px;
@@ -284,12 +274,19 @@ input:focus {
   background-color: white !important;
 }
 
-/* .button-div {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-left: -14px;
-} */
+.eyetoggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-70%);
+  cursor: pointer;
+  padding: 15px;
+}
+
+.newpassword-eyetoggle {
+  transform: translateX(-10px);
+}
+
 
 .button-login {
   background-color: #008dcc;
@@ -335,15 +332,15 @@ input:focus {
 }
 
 .search12 {
-    max-width: 330px;
-    margin-top: 1px;
-    width: 25rem;
-    padding: 7px 5px 7px 65px !important;
-    border-radius: 5px;
-    border: 2px solid #ccc;
-    box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
-    background-color: rgb(240, 240, 240);
-    color: #000000 !important;
+  max-width: 330px;
+  margin-top: 1px;
+  width: 25rem;
+  padding: 7px 5px 7px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: rgb(240, 240, 240);
+  color: #000000 !important;
 
 }
 
@@ -408,15 +405,18 @@ input:focus {
 .main-page {
   background-color: #e7e7e7;
 }
+
 .db-poweredby {
   font-size: 10px;
   font-weight: bold;
   color: white;
   transform: translateX(30px) translateY(-21px);
 }
+
 .ecomialogo {
   transform: translateY(-26px);
 }
+
 .searchbar-wrapper {
 
   display: flex;
@@ -437,20 +437,24 @@ input:focus {
 .acc-head input {
   justify-content: center;
 }
+
 .form-control {
   position: relative;
   width: 100%;
   padding: 10px;
-  padding-right: 40px; /* space for the icon */
+  padding-right: 40px;
+  /* space for the icon */
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 .form-control::after {
-  content: "\1F4C5"; /* 📅 calendar icon */
+  content: "\1F4C5";
+  /* 📅 calendar icon */
   position: absolute;
   top: 50%;
-  left: calc(100% - 31px); /* or right: 10px */
+  left: calc(100% - 31px);
+  /* or right: 10px */
   transform: translateY(-50%);
   font-size: 18px;
   color: black !important;
@@ -468,9 +472,11 @@ input:focus {
   .tablogs {
     width: calc(100% + 1000px) !important;
   }
+
   .manage-table {
     width: calc(100% + 1000px) !important;
   }
+
   .tabbreaks {
     width: calc(100% + 100px) !important;
   }
@@ -480,13 +486,10 @@ input:focus {
   .login-logo {
     width: 100px !important;
   }
+
   .login-div {
     width: 20% !important;
   }
-  .manage-table {
-    font-size: small !important;
-  }
- 
 
   .searchbar-wrapper {
     display: flex;
@@ -536,13 +539,8 @@ input:focus {
     font-size: smaller !important;
   }
 
-  .tabemp {
-    font-size: smaller !important;
-  }
-
   .tabreport {
     width: 100% !important;
-    font-size: small !important;
   }
 
   .download-reports button {
@@ -550,16 +548,7 @@ input:focus {
   }
 
   .tablogs {
-    font-size: small !important;
     white-space: nowrap;
-  }
-
-  .tabbreaks {
-    font-size: small !important;
-  }
-
-  .legends {
-    font-size: small !important;
   }
 
   .agent-header {
@@ -571,7 +560,6 @@ input:focus {
   }
 
   .logs-total {
-    font-size: small !important;
     width: 100px !important;
   }
 
@@ -585,46 +573,17 @@ input:focus {
     padding: 8px;
   }
 
-  .daterange-button {
-    font-size: small;
-  }
-
   .form-control {
-    font-size: small !important;
     color: black;
   }
 
   .form-label {
     margin-bottom: .5rem;
-    font-size: small;
-  }
-
-  /* .search-div {
-    transform: translateX(490px) translateY(-5PX) !important;
-  } */
-
-  .button,
-  input,
-  optgroup,
-  select,
-  textarea {
-    font-size: small !important;
   }
 
   .bi-search {
     transform: translateY(-2px);
   }
-
-  /* .table>thead {
-    vertical-align: bottom;
-    font-size: x-small;
-    white-space: nowrap;
-  } */
-
-  /* .search-input1 {
-    width: 270px !important;
-    transform: translateX(-20px) translateY(4px);
-  } */
 
   .report-icon {
     transform: translateX(-20px) translateY(2px);
@@ -633,18 +592,7 @@ input:focus {
   .reportss {
     width: 100% !important;
   }
-/* 
-  .searchbar-wrapper {
-    flex-direction: row;
 
-  } */
-
-  /* .searchbar-container {
-    width: 30px !important;
-  } */
-  /* .searchbar {
-    transform:translateY(30px) translateX(-140px);
-  } */
   .tabbreaks {
     margin-top: 20px !important;
   }
@@ -653,16 +601,14 @@ input:focus {
     transform: translateY(27px) translateX(-135px);
   }
 
-  /* .searchbarr {
-    transform: translateX(-20px) !important;
-  } */
-
   .logs-icon {
     transform: translateY(-23px) translateX(-335px) !important;
   }
+
   .employee-icon {
     transform: translateY(-1px) !important;
   }
+
   .accounts-icon {
     transform: translateX(-90px) translateY(-2px) !important;
   }
@@ -691,6 +637,7 @@ input:focus {
   background-color: white;
   color: #000000;
 }
+
 .searchbar12 {
   min-width: 330px;
   width: 100%;
@@ -702,20 +649,24 @@ input:focus {
   background-color: #e7e7e7;
   color: #000000;
 }
+
 .newpass {
   width: 100%;
   max-width: 400px;
   text-align: start;
 }
+
 .newpass input {
   color: black;
   background-color: white;
 }
+
 .currentpass {
   width: 100% !important;
   max-width: 400px;
   text-align: start;
 }
+
 .currentpass input {
   color: black;
   background-color: white;
@@ -731,6 +682,7 @@ input:focus {
   color: black;
   background-color: white;
 }
+
 .searchbarr {
   /* margin-top: 1px;
   width: 330px; */
@@ -782,6 +734,7 @@ input:focus {
 .update-pass {
   transform: translateX(-5px);
 }
+
 /* header-icons */
 .create-update-delete {
   justify-content: flex-start;
@@ -998,7 +951,7 @@ input:focus {
 
 .daterange-button {
   width: 70px;
-  padding:7px;
+  padding: 6px;
   border: none;
   border-radius: 4px;
   color: white;
@@ -1047,6 +1000,7 @@ input:focus {
   --bs-modal-width: 340px;
   max-width: var(--bs-modal-width);
 }
+
 .modal-dialog-centered {
   display: flex;
   align-items: center;
@@ -1359,9 +1313,9 @@ table {
   background-color: #807e7e;
 }
 
-.employee-header > div{
+.employee-header>div {
   display: flex !important;
-  flex-wrap: wrap ;
+  flex-wrap: wrap;
   justify-self: center;
   width: 100%;
 }
@@ -1431,6 +1385,7 @@ table {
 .inputpassword input {
   color: black !important;
 }
+
 .input-image {
   height: 20px;
   width: 100px;
@@ -1493,7 +1448,7 @@ table {
 }
 
 .db-employee {
-display: flex;
+  display: flex;
 }
 
 .search-employee {
@@ -1786,6 +1741,13 @@ display: flex;
   background: #ffeeab;
 }
 
+.workforce-div {
+  padding-left: 1.3rem !important;
+  padding-right: 1rem;
+  width: 0px;
+  flex: 1 1 100%;
+}
+
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
   background-color: #007ea7;
@@ -1794,7 +1756,6 @@ display: flex;
   flex-direction: column;
   z-index: 20;
   min-height: 100vh;
- 
 }
 
 .dashboard svg {
@@ -1803,9 +1764,11 @@ display: flex;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
   /* Updated transition */
 }
+
 .dash {
   transform: translateY(3px) translateX(10px);
 }
+
 .dashboard a {
   display: flex;
   align-items: center;
@@ -2184,7 +2147,7 @@ display: flex;
   border: none;
   background-color: #0ebb39;
   color: white;
-  padding: 7px;
+  padding: 6px;
   border-radius: 4px;
   justify-content: center;
   margin-right: 10px !important;
@@ -2241,12 +2204,12 @@ display: flex;
 }
 
 .main-page {
- position: relative;
- min-height: 100vh;
- height: 100%;
+  position: relative;
+  min-height: 100vh;
+  height: 100%;
 }
 
-.dashboard-menu{
+.dashboard-menu {
   position: absolute;
   z-index: 10;
   overflow: scroll;
@@ -2318,16 +2281,19 @@ display: flex;
   position: relative;
   width: 100%;
   padding: 10px;
-  padding-right: 40px; /* space for the icon */
+  padding-right: 40px;
+  /* space for the icon */
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 .form-control::after {
-  content: "\1F4C5"; /* 📅 calendar icon */
+  content: "\1F4C5";
+  /* 📅 calendar icon */
   position: absolute;
   top: 50%;
-  left: calc(100% - 31px); /* or right: 10px */
+  left: calc(100% - 31px);
+  /* or right: 10px */
   transform: translateY(-50%);
   font-size: 18px;
   color: black !important;
@@ -2335,13 +2301,24 @@ display: flex;
 }
 
 .arrow-btn {
-  height: 40px;
-  width: 40px;
-  padding: 0;
-  border-color: #8b8c89 !important;
-  border-style:  1px !important;
-  border-width: 1px !important;
+  display: flex !important;
+  align-items: center !important;
   justify-content: center !important;
+  height: 35px;
+  width: 35px;
+  padding: 0;
+  margin: auto;
+  margin-right: -26px;
+  border-radius: 50% !important;
+  background-color: whitesmoke !important;
+  border: 2px solid rgb(197, 190, 190) !important;
+
+}
+
+.arrow-img {
+  color: #6c757d;
+  margin-top: -5px;
+  margin-left: -3px;
 }
 
 .transition-icon {
@@ -2356,4 +2333,3 @@ display: flex;
 .rotate-right {
   transform: rotate(180deg);
 }
-

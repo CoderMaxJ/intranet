@@ -386,7 +386,7 @@ export default function Dashboard() {
                 <div className="upload-prof">
                     <button
                         onClick={toggleMinimizeMaximize}
-                        className="arrow-btn btn btn-light rounded-circle m-auto d-flex align-items-center justify-content-center text-secondary"
+                        className="arrow-btn btn"
                     >
                         <span
                             className={`transition-icon ${arrowIcon ? 'rotate-left' : 'rotate-right'}`}
@@ -396,7 +396,7 @@ export default function Dashboard() {
                                 width="18"
                                 height="18"
                                 fill="currentColor"
-                                className="bi bi-chevron-left"
+                                className="arrow-img bi bi-chevron-left"
                                 viewBox="0 0 16 16"
                             >
                                 <path
