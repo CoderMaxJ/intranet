@@ -19,14 +19,13 @@ logoff: string;
 }
 
 function LogsDataTable() {
-const [data, setData] = useState<Logs[]>([]);
-const [loading, setLoading] = useState<boolean>(true);
-const [error, setError] = useState<string | null>(null);
-const [searchQuery, setSearchQuery] = useState("");
-const [filter, setFilter] = useState("");
-const token = localStorage.getItem("token");
-const [latestUpdate, setLatestUpdate] = useState("");
-const logData = useRef<Logs[]>([]); // Ref to store logs data
+  const [data, setData] = useState<Logs[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [filter, setFilter] = useState("");
+  const token = localStorage.getItem("token");
+  const [latestUpdate, setLatestUpdate] = useState("");
+  const logData = useRef<Logs[]>([]); // Ref to store logs data
 
 const router = useRouter();
 const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,21 +66,25 @@ try {
 		logData.current = parsedData;
 	}
 
-	return;
-	}
-	if (!response.ok || response.status === 404 || response.status === 401 || response.status === 403) {
-	return;
-	}
-	const fetchedData = await response.json();
-	localStorage.setItem("total-logs", fetchedData.total);
-	setLatestUpdate(fetchedData.latest_update);
-	// Merge fetched data with the current state
-	const storedData = localStorage.getItem("logsData");
-	const storedLogs = storedData ? JSON.parse(storedData) : [];
-	const updatedLogs = fetchedData.data.map((newLog: Logs) => {
-	const existingLog = storedLogs.find((log: Logs) => log.name === newLog.name);
-	return existingLog ? { ...newLog } : newLog;
-	});
+        return;
+      }
+  
+      if(!response.ok || response.status === 404 || response.status === 401 || response.status === 403 ){
+        
+        localStorage.clear();
+        router.push("/");
+       return;
+      }      
+      const fetchedData = await response.json();
+      localStorage.setItem("total-logs",fetchedData.total);
+      setLatestUpdate(fetchedData.latest_update);
+      // Merge fetched data with the current state
+      const storedData = localStorage.getItem("logsData");
+      const storedLogs = storedData ? JSON.parse(storedData) : [];
+      const updatedLogs = fetchedData.data.map((newLog: Logs) => {
+        const existingLog = storedLogs.find((log: Logs) => log.name === newLog.name);
+        return existingLog ? { ...newLog } : newLog;
+      });
 
 	setData(updatedLogs);
 	logData.current = updatedLogs;

@@ -49,43 +49,60 @@ export default function Dashboard() {
         }
     })
 
-    const router = useRouter();
-    const user_hash_privilege = localStorage.getItem("user_privilege");
-    if (user_hash_privilege) {
-        const array_privilege = IdentifyUser(user_hash_privilege);
-        array_privilege.forEach((data) => {
-            user_privilege.push(data);
-        })
-    }
-    const profileImg = localStorage.getItem("profileImage")
-    const handleLogout = () => {
+  const router = useRouter();
+  const user_hash_privilege = localStorage.getItem("user_privilege");
+  if (user_hash_privilege) {
+    const array_privilege = IdentifyUser(user_hash_privilege);
+    array_privilege.forEach((data) => {
+      user_privilege.push(data);
+    })
+  }
+  const profileImg = localStorage.getItem("profileImage")
+  const user_id = localStorage.getItem("user_id");
+  const handleLogout = () => {
+    const deleteToken = async ()=>{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token || "")}`,
+        },
+        body: JSON.stringify({ user_id: Decryptor(user_id || "") }),
+        });
+      if (response.status === 200) {
         localStorage.clear();
-
-        if (profileImg) {
-            localStorage.setItem("profileImage", profileImg)
-        }
         router.push("/")
+      } else {
+        console.error("Logout failed");
+      }
     }
-    const toggleinput = () => {
-        if (upload == false) {
-            setUpload(true)
-        } else {
-            setUpload(false);
-        }
+    deleteToken();
+    
+    if (profileImg) {
+      localStorage.setItem("profileImage", profileImg)
     }
-    const handleImageUpload = (event: any) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64String = reader.result;
-                localStorage.setItem("profileImage", base64String);
-                setProfile(base64String);
-                setUpload(false);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+    
+  }
+  const toggleinput = () => {
+    if (upload == false) {
+      setUpload(true)
+    } else {
+      setUpload(false);
+    }
+  }
+  const handleImageUpload = (event: any) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        localStorage.setItem("profileImage", base64String);
+        setProfile(base64String);
+        setUpload(false);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
     const openClose = () => {
         if (open == false) {
