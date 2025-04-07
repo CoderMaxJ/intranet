@@ -22,7 +22,6 @@ function LogsDataTable() {
   const [data, setData] = useState<Logs[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
   const token = localStorage.getItem("token");
   const [latestUpdate, setLatestUpdate] = useState("");
@@ -69,7 +68,11 @@ function LogsDataTable() {
 
         return;
       }
+  
       if(!response.ok || response.status === 404 || response.status === 401 || response.status === 403 ){
+        
+        localStorage.clear();
+        router.push("/");
        return;
       }      
       const fetchedData = await response.json();

@@ -25,7 +25,26 @@ function BreakDataTable() {
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
   };
-  
+
+  const user_id = localStorage.getItem("user_id");
+  const deleteToken = async ()=>{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user_id: Decryptor(user_id || "") }),
+      });
+    if (response.status === 200) {
+      localStorage.clear();
+      router.push("/")
+      return;
+    } else {
+      console.error("Logout failed");
+      return;
+    }
+  }
+ 
   const fetchBreakData = async () => {
  
     try {
@@ -58,24 +77,9 @@ function BreakDataTable() {
       }
 
       if (!response.ok || response.status === 404 || response.status === 401 || response.status === 403) {
-        const getToken = async ()=>{
-          const user_id = localStorage.getItem("user_id");
-          const id = {user_id:Decryptor(user_id || "")}
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/token/`,{
-            method:"POST",
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${Decryptor(token || "")}`,
-            },
-            body:JSON.stringify(id)
-          })
-          if(response.status === 200){
-            const data = await response.json();
-            localStorage.setItem("token",Encryptor(data.token));
-            
-          }
-        }
-        getToken();
+        deleteToken();
+        localStorage.clear();
+        router.push("/");
         return;
       }
 

@@ -57,13 +57,30 @@ export default function Dashboard() {
     })
   }
   const profileImg = localStorage.getItem("profileImage")
+  const user_id = localStorage.getItem("user_id");
   const handleLogout = () => {
-    localStorage.clear();
-
+    const deleteToken = async ()=>{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Decryptor(token || "")}`,
+        },
+        body: JSON.stringify({ user_id: Decryptor(user_id || "") }),
+        });
+      if (response.status === 200) {
+        localStorage.clear();
+        router.push("/")
+      } else {
+        console.error("Logout failed");
+      }
+    }
+    deleteToken();
+    
     if (profileImg) {
       localStorage.setItem("profileImage", profileImg)
     }
-    router.push("/")
+    
   }
   const toggleinput = () => {
     if (upload == false) {
