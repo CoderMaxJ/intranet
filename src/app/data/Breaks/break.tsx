@@ -40,8 +40,7 @@ function BreakDataTable() {
       router.push("/")
       return;
     } else {
-      console.error("Logout failed");
-      return;
+      return null;
     }
   }
  
