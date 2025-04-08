@@ -502,7 +502,25 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </select>
         </div>
 
-        <div className="fixed-field col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
+          {mode === 'edit' && (
+          <div className="fixed-field col-md-4 mb-1">
+            <div className="mb-3">
+              <label htmlFor="">Assign Privileges</label>
+            </div>
+            <select name="role_id"
+              value={formData.role_id}
+              onChange={handleInputChange}
+              id=""
+              className="form-select"
+            >
+              <option value="">Select privilege</option>
+              {privileges.map((role, index) => (
+                <option key={index} value={role.id}>{role.name}</option>
+              ))}
+            </select>
+          </div>
+         )}
+         <div className="fixed-field col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
           <label htmlFor="is_dayshift" className="form-label">
             Day Shift
                 <span className="">
@@ -525,24 +543,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   /></span>
           </label>
         </div>
-          {mode === 'edit' && (
-          <div className="fixed-field col-md-4 mb-1">
-            <div className="mb-3">
-              <label htmlFor="">Assign Privileges</label>
-            </div>
-            <select name="role_id"
-              value={formData.role_id}
-              onChange={handleInputChange}
-              id=""
-              className="form-select"
-            >
-              <option value="">Select privilege</option>
-              {privileges.map((role, index) => (
-                <option key={index} value={role.id}>{role.name}</option>
-              ))}
-            </select>
-          </div>
-         )}
         <div
           className="fixed-field col-md-12"
           style={{

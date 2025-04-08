@@ -243,9 +243,6 @@ export default function CreateUD() {
 
   return (
     <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
-      <div className="db-employee">
-        <Dashboard />
-      </div>
       <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -270,14 +267,16 @@ export default function CreateUD() {
           </div>
         </div>
       </div>
-      
-      <div className="main-divv">
+      <div className="db-employee">
+        <Dashboard />
+      </div>
+      <div className="main-divv px-4">
         <Header title="MANAGE EMPLOYEE" />
-        <div className="manageemployee-division px-4">
+        <div className="manageemployee-division">
           <div>
             <div>
-              <header className="">
-                <div className="w-100 d-flex justify-content-center flex-wrap py-2" style={{ width: '100%', margin: 'auto', position: 'relative' }}>
+              <header>
+                <div className="w-100 d-flex justify-content-center flex-wrap py-2 px-2 gap-3">
                   <div className="searchbar-containerr">
                     <input
                       className="searchbar12"
@@ -312,7 +311,16 @@ export default function CreateUD() {
                         type="button"
                         className="btn btn-success btn-sm d-flex align-items-center ms-4"
                         data-bs-toggle="modal"
-                        data-bs-target="#employeeModal"
+                        data-bs-target="#exampleModal"
+                        style={{
+                          borderRadius: "4px",
+                          fontWeight: "500",
+                          padding: '10px',
+                          whiteSpace: 'nowrap',
+                          backgroundColor: '#0ebb39',
+                          border: 'none',
+                          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                        }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -333,38 +341,39 @@ export default function CreateUD() {
             </div>
             <div
               className="modal fade"
-              id="employeeModal"
+              id="exampleModal"
               role="dialog"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
-              <div className="modal-dialog modal-lg" role="document">
-                <div className="modal-content px-4 flex-wrap">
+              <div className="modal-dialog modal-xl" role="document">
+                <div className="modal-content px-4">
                   <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
                 </div>
               </div>
             </div>
           </div>
-          <div className="table-responsive emp-table">
+          <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
             <table
               className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
+              style={{ width: '97.7%', margin: 'auto' }}
             >
               <thead>
                 <tr>
-                  <th scope="col">Employee No.</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Middle Name</th>
-                  <th scope="col">Last Name</th>
-                  {user_privilege.includes("manage_users") && (<th scope="col">Address</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col">Marital Status</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col">Date of Birth</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col">Gender</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col">Contact No.</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col">Account</th>)}
-                  <th scope="col">Position</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col" >Employee No.</th>
+                  <th scope="col" >First Name</th>
+                  <th scope="col" >Middle Name</th>
+                  <th scope="col" >Last Name</th>
+                  {user_privilege.includes("manage_users") && (<th scope="col" >Address</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col" >Marital Status</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col" >Date of Birth</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col" >Gender</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col" >Contact No.</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col" >Account</th>)}
+                  <th scope="col" >Position</th>
+                  <th scope="col" >Username</th>
+                  <th scope="col" >Actions</th>
                 </tr>
               </thead>
               <tbody className="manage-tbody table-data">
@@ -414,6 +423,18 @@ export default function CreateUD() {
                               </svg>
                             </button>
                           )}
+                          {/* {user_privilege.includes("manage_users") && (
+                            <button
+                              data-bs-toggle="modal"
+                              data-bs-target="#deleteModal"
+                              type="button"
+                              className="delete-button"
+                              onClick={() => setTargetID(info.empno)}
+                              style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
+                            >
+                              <i className="bi bi-trash3"></i>
+                            </button>
+                         )} */}
                         </div>
                       </td>
                     </tr>

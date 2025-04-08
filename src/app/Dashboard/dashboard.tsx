@@ -353,9 +353,9 @@ export default function Dashboard() {
                 </div>
                 <div
                     className="logout-hover"
-                    onClick={() => setLogout(true)}
+                    // onClick={() => setLogout(true)}
                     data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
+                    data-bs-target="#logoutModal"
                     style={{ marginTop: '5px', cursor: 'pointer' }}
                 >
                     <div
