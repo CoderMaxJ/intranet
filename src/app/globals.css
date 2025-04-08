@@ -43,13 +43,17 @@
   width: 100%;
 }
 
-@media (max-height: 782px) {
+@media (min-height: 782px) {
   .legends {
-    font-size: smaller;
+    font-size: small !important;
+  }
+
+  .logs-total {
+    font-size: small !important;
   }
 }
 
-@media (max-height: 866px) {
+@media (max-height: 400px) {
   .b-repodrts1 {
     height: 100% !important;
   }
@@ -1466,7 +1470,7 @@ table {
 }
 
 .manageemployee-button {
-  /* transform: translateX(-20px); */
+  transform: translateX(-20px);
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -2446,4 +2450,9 @@ table {
   margin: 0px;
   padding: 0px;
   height: 40px;
+}
+
+.updatelogo {
+  margin-left: 35px;
+  height: 50px;
 }

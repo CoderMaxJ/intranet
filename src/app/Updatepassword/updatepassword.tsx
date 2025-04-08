@@ -108,9 +108,8 @@ export default function Updatepassword() {
               <img
                 src="/img/Sos.png"
                 alt="Staff Outsourcing Logo"
-                className="modal-title"
+                className="modal-title updatelogo"
                 id="updatePasswordModalLabel"
-                style={{ height: "50px" }}
               />
               <button
                 type="button"
