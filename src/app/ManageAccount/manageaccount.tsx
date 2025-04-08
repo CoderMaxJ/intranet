@@ -378,11 +378,11 @@ export default function ManageDepartment() {
                             <table className="manage-table table table-light table-hover table-striped border ">
                                 <thead>
                                     <tr>
-                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account ID</th>
-                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account Name</th>
-                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Status</th>
-                                        <th style={{ color: '#ffffff', padding: '15px', width: '50%' }} className="px-1">Manager/Supervisor</th>
-                                        <th className="border border" style={{ color: '#ffffff', width: '100px' }} >Action</th>
+                                        <th className="px-1">Account ID</th>
+                                        <th className="px-1">Account Name</th>
+                                        <th className="px-1">Status</th>
+                                        <th className="th-manager px-1">Manager/Supervisor</th>
+                                        <th className="th-action border border">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody style={{ maxHeight: '70vh', overflowY: 'auto' }}>

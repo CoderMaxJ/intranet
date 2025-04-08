@@ -277,7 +277,7 @@ export default function CreateUD() {
           <div>
             <div>
               <header className="">
-                <div className="w-100 d-flex justify-content-center flex-wrap py-2 gap-3" style={{ width: '100%', margin: 'auto', position: 'relative' }}>
+                <div className="w-100 d-flex justify-content-center flex-wrap py-2" style={{ width: '100%', margin: 'auto', position: 'relative' }}>
                   <div className="searchbar-containerr">
                     <input
                       className="searchbar12"
@@ -313,16 +313,6 @@ export default function CreateUD() {
                         className="btn btn-success btn-sm d-flex align-items-center ms-4"
                         data-bs-toggle="modal"
                         data-bs-target="#employeeModal"
-                        style={{
-                          borderRadius: "4px",
-                          fontWeight: "500",
-                          padding: '8px',
-                          whiteSpace: 'nowrap',
-                          backgroundColor: '#0ebb39',
-                          border: 'none',
-                          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                          transform:'translateX(-20px)'
-                        }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -355,27 +345,26 @@ export default function CreateUD() {
               </div>
             </div>
           </div>
-          <div className="table-responsive emp-table" style={{ position: 'relative', height: 'auto', overflow:'auto'}}>
+          <div className="table-responsive emp-table">
             <table
               className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
-              style={{ width: '100%', margin: 'auto' }}
             >
-              <thead style={{ position: 'sticky', padding: '15px', zIndex: 10, transform: "translateY(-1px)" }}>
+              <thead>
                 <tr>
-                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Employee No.</th>
-                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>First Name</th>
-                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Middle Name</th>
-                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Last Name</th>
-                  {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Address</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Marital Status</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Date of Birth</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Gender</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Contact No.</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Account</th>)}
-                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Position</th>
-                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Username</th>
-                  <th scope="col" style={{ backgroundColor: "#4391f7", color: "#ffffff" }}>Actions</th>
+                  <th scope="col">Employee No.</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Middle Name</th>
+                  <th scope="col">Last Name</th>
+                  {user_privilege.includes("manage_users") && (<th scope="col">Address</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col">Marital Status</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col">Date of Birth</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col">Gender</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col">Contact No.</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col">Account</th>)}
+                  <th scope="col">Position</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody className="manage-tbody table-data">
