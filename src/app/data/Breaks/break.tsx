@@ -217,9 +217,9 @@ function BreakDataTable() {
                 title={fullscreen ? "Compress" : "Fullscreen"}
               >
                 {fullscreen ? (
-                  <i className="bi bi-fullscreen-exit fw-bold"></i>
+                  <i className="bi bi-fullscreen-exit fw-bold text-dark"></i>
                 ) : (
-                  <i className="bi bi-fullscreen fw-bold"></i>
+                  <i className="bi bi-fullscreen fw-bold text-dark"></i>
                 )}
               </button>
             </div>
