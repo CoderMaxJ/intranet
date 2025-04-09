@@ -131,7 +131,10 @@ export default function Daterange() {
             setError("An error occurred while fetching data.");
         }
     };
-    const handleView = async () => {
+    const handleView = async (e: any) => {
+        e.preventDefault();
+        console.log("start",start,"end",end);
+
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
@@ -218,16 +221,17 @@ export default function Daterange() {
                                     width: '100%'
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
-                                    <form>
+                                    <form onSubmit={handleView}>
                                         <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
                                             {/* Date Range Section */}
                                             <div className="d-flex flex-wrap align-items-center justify-content-center gap-3">
                                                 <div className="d-flex align-items-center">
                                                     <label htmlFor="id-start" className="form-label mb-0 me-2">From:</label>
                                                     <input
-                                                        required
+                                                        id="id-start"
                                                         type="date"
                                                         className="form-control"
+                                                        required
                                                         onChange={(e) => setStart(e.target.value)}
                                                         value={start}
                                                         style={{ color: '#000000' }}
@@ -237,20 +241,19 @@ export default function Daterange() {
                                                 <div className="d-flex align-items-center">
                                                     <label htmlFor="id-end" className="form-label mb-0 me-2">To:</label>
                                                     <input
-                                                        required
+                                                        id="id-end"
                                                         type="date"
                                                         className="form-control"
+                                                        required
                                                         onChange={(e) => setEnd(e.target.value)}
                                                         value={end}
                                                         style={{ color: '#000000' }}
                                                     />
                                                 </div>
-
                                                 <div className="d-flex align-items-center">
                                                     <button
-                                                        type="button"
+                                                        type="submit"
                                                         className="daterange-button"
-                                                        onClick={handleView}
                                                     >
                                                         View
                                                     </button>
@@ -267,7 +270,7 @@ export default function Daterange() {
                                                     value={searchTerm}
                                                     onChange={handleSearch}
                                                     style={{
-                                                        padding: '8px 12px 8px 60px', 
+                                                        padding: '8px 12px 8px 60px',
                                                         borderRadius: '5px',
                                                         border: '1px solid #ccc',
                                                         backgroundColor: '#f0f0f0',
@@ -295,7 +298,6 @@ export default function Daterange() {
                                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                 </svg>
                                             </div>
-
                                             <button
                                                 type="button"
                                                 className="download"
@@ -303,8 +305,8 @@ export default function Daterange() {
                                                 style={{
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    gap: '8px', // space between icon and label
-                                                  }}
+                                                    gap: '8px',
+                                                }}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
                                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
