@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 export default function Logout() {
 const router = useRouter();
 const handleLogout = () => {
+    const savedProfileImage = localStorage.getItem("profileImage");
     localStorage.clear();
+    if (savedProfileImage) {
+        localStorage.setItem("profileImage", savedProfileImage);
+    }
     router.push("/")
 }
 return (

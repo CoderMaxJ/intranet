@@ -29,7 +29,7 @@ export default function Dashboard() {
     const [showAccounts, setShowAccounts] = useState(true);
     const [showEmployee, setShowEmployee] = useState(true);
     const [showProfileLabel, setShowProfileLabel] = useState(true);
-    const [cameraHover, setCameraHover] = useState (true);
+    const [cameraHover, setCameraHover] = useState(true);
     const [accountsMenu, setAccountsMenu] = useState(true);
     const [manageMenu, setManageMenu] = useState(true);
 
@@ -49,60 +49,61 @@ export default function Dashboard() {
         }
     })
 
-  const router = useRouter();
-  const user_hash_privilege = localStorage.getItem("user_privilege");
-  if (user_hash_privilege) {
-    const array_privilege = IdentifyUser(user_hash_privilege);
-    array_privilege.forEach((data) => {
-      user_privilege.push(data);
-    })
-  }
-  const profileImg = localStorage.getItem("profileImage")
-  const user_id = localStorage.getItem("user_id");
-  const handleLogout = () => {
-    const deleteToken = async ()=>{
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
-        },
-        body: JSON.stringify({ user_id: Decryptor(user_id || "") }),
-        });
-      if (response.status === 200) {
-        localStorage.clear();
-        router.push("/")
-      } else {
-        console.error("Logout failed");
-      }
+    const router = useRouter();
+    const user_hash_privilege = localStorage.getItem("user_privilege");
+    if (user_hash_privilege) {
+        const array_privilege = IdentifyUser(user_hash_privilege);
+        array_privilege.forEach((data) => {
+            user_privilege.push(data);
+        })
     }
-    deleteToken();
-    
-    if (profileImg) {
-      localStorage.setItem("profileImage", profileImg)
+    const profileImg = localStorage.getItem("profileImage")
+    const user_id = localStorage.getItem("user_id");
+    const handleLogout = () => {
+        const deleteToken = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${Decryptor(token || "")}`,
+                },
+                body: JSON.stringify({ user_id: Decryptor(user_id || "") }),
+            });
+            if (response.status === 200) {
+                localStorage.clear();
+               
+                router.push("/")
+            } else {
+                console.error("Logout failed");
+            }
+        }
+        deleteToken();
+
+        if (profileImg) {
+            localStorage.setItem("profileImage", profileImg)
+        }
+
     }
-    
-  }
-  const toggleinput = () => {
-    if (upload == false) {
-      setUpload(true)
-    } else {
-      setUpload(false);
+    const toggleinput = () => {
+        if (upload == false) {
+            setUpload(true)
+        } else {
+            setUpload(false);
+        }
     }
-  }
-  const handleImageUpload = (event: any) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        localStorage.setItem("profileImage", base64String);
-        setProfile(base64String);
-        setUpload(false);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+    const handleImageUpload = (event: any) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result;
+                localStorage.setItem("profileImage", base64String);
+                setProfile(base64String);
+                setUpload(false);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const openClose = () => {
         if (open == false) {
@@ -431,7 +432,7 @@ export default function Dashboard() {
                         {open === false && showProfile === true && (
                             <div className="profile-div">
                                 <div className="dot-div">
-                                    <svg onClick={toggleinput}  xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" className="bi bi-camera-fill text-light" viewBox="0 0 16 16">
+                                    <svg onClick={toggleinput} xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" className="bi bi-camera-fill text-light" viewBox="0 0 16 16">
                                         <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                                         <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0" />
                                     </svg>
@@ -441,6 +442,8 @@ export default function Dashboard() {
                                         <input className="input-image" type="file" accept="image/*" onChange={handleImageUpload} />
                                     </div>
                                 )}
+                                
+
                                 <div className="profile-circle">
                                     {profile ? (
                                         <img onClick={openClose} className="profile-picture" src={profile} alt="" height={70} width={70} />

@@ -188,10 +188,8 @@ return (
 		/>
 		</div>
 		<div className="logs-total d-flex">
-		<span>
-			<i className=" bi bi-people-fill px-1"></i>
-			Total: {localStorage.getItem("total-logs") || 0}
-		</span>
+			<div><i className=" bi bi-people-fill px-1"></i></div>
+			<div><label>Total: {localStorage.getItem("total-logs") || 0}</label></div>
 		</div>
 	</div>
 	<div className="table-responsive" >
