@@ -263,7 +263,7 @@ export default function Updatepassword() {
                     </div>
                   </div>
                   {/* Submit Button */}
-                  <div>
+                  <div className="upd">
                     <button type="submit" className="update-pass btn btn-success">
                       Update Password
                     </button>

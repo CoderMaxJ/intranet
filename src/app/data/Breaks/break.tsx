@@ -104,7 +104,6 @@ function BreakDataTable() {
     }
   };
 
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     const handleVisibilityChange = () => {
@@ -162,11 +161,7 @@ function BreakDataTable() {
 
   useEffect(() => {
     if (status !== "login") return;
-
-
     fetchBreakData();
-
-
     const fetchIntervalId = setInterval(fetchBreakData, 1000);
 
     return () => clearInterval(fetchIntervalId);
@@ -202,12 +197,6 @@ function BreakDataTable() {
             <div className="d-flex align-items-center">
               <h4
                 className="agent-header"
-                style={{
-                  marginRight: "10px",
-                  fontFamily: "'Raleway', sans-serif",
-                  fontWeight: "bold",
-                  fontSize: "23px",
-                }}
               >
                 Agent Breaks Monitoring Dashboard
               </h4>
@@ -225,11 +214,6 @@ function BreakDataTable() {
             </div>
             <div
               className="searchbar-container"
-              style={{
-                position: "relative",
-                width: "100%",
-                maxWidth: "400px",
-              }}
             >
               <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -237,107 +221,36 @@ function BreakDataTable() {
               height="20"
               fill="currentColor"
               viewBox="0 0 16 16"
-              style={{
-                position: "absolute",
-                left: "20px",
-                top: "50%",
-                transform: "translateY(-60%)",
-                pointerEvents: "none",
-                color: "#888",
-              }}
             >
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
             </svg>
-
               <input
                 className="searchbar"
-                style={{
-                  backgroundColor: "#f0f0f0",
-                  fontFamily: "'Raleway', sans-serif",
-                  marginBottom: "3px",
-                  paddingLeft: "34px",
-                  paddingTop: "10px",
-                  paddingBottom: "10px",
-                  width: "100%",
-                  border: "1px solid #ccc",
-                  borderRadius: "4px",
-                  fontSize: "14px",
-                  boxSizing: "border-box",
-                }}
                 type="text"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={handleSearchChange}
               />
             </div>
-
-
             <div
-              style={{
-                fontWeight: "bold",
-              }}
             >
               <div className="legends">
-                <span
-                  style={{
-                    padding: "10px",
-                    fontFamily: "'Raleway', sans-serif",
-                    backgroundColor: "#ffffb7",
-                    textAlign: "center",
-                    marginRight: '-90px'
-                  }}
-                >
+                <span className="firstbreak">
                   1st Break
                 </span>
-                <span
-                  style={{
-                    padding: "10px",
-                    fontFamily: "'Raleway', sans-serif",
-                    backgroundColor: "#FFEDA6",
-                    textAlign: "center",
-                    marginLeft: "92px",
-                    marginRight: '2px'
-                  }}
-                >
+                <span className="secondbreak">
                   2nd Break
                 </span>
-                <span
-                  className="legends"
-                  style={{
-                    padding: "10px",
-                    fontFamily: "'Raleway', sans-serif",
-                    backgroundColor: "#A9E4FF",
-                    marginRight: '2px'
-                  }}
-                >
+                <span className="lunchbreak">
                   Lunch
                 </span>
-                <span
-                  style={{
-                    padding: "10px",
-                    color: "red",
-                    fontFamily: "'Raleway', sans-serif",
-                    backgroundColor: "#ffdccc",
-                    textAlign: "center",
-
-                  }}
-                >
+                <span className="overbreak">
                   Over Break
                 </span>
-
-                <span
-                  style={{
-                    padding: "10px",
-                    marginLeft: '10px',
-                    fontFamily: "'Raleway', sans-serif",
-                    backgroundColor: "#b3efb2",
-                    textAlign: "center",
-                  }}
-                >
-                  <i className="bi bi-alarm" style={{ padding: '4px' }}></i>
+                <span className="totalbreak">
+                  <i className="alarm bi bi-alarm"></i>
                   Total: <span>{localStorage.getItem("total-on-breaks") || 0}</span>
                 </span>
-
               </div>
             </div>
           </div>
@@ -345,11 +258,11 @@ function BreakDataTable() {
             <table className="tabbreaks table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
                 <tr>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Name</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Start</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>End</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Duration</th>
-                  <th style={{ backgroundColor: "#4CBDFF", fontFamily: "'Raleway', sans-serif" }}>Type</th>
+                  <th>Name</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>Duration</th>
+                  <th>Type</th>
                 </tr>
               </thead>
               <tbody>
@@ -368,7 +281,6 @@ function BreakDataTable() {
 
                     return breakOrder[a.breaktype as keyof typeof breakOrder] - breakOrder[b.breaktype as keyof typeof breakOrder];
                   })
-
                   .map((instance) => (
                     <tr
                       style={{

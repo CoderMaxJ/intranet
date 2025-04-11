@@ -261,7 +261,7 @@ export default function Daterange() {
                                             </div>
 
                                             {/* Search Input */}
-                                            <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
+                                            <div className="report-input">
                                                 <input
                                                     className="form-control"
                                                     id="search-employee"
@@ -269,16 +269,6 @@ export default function Daterange() {
                                                     placeholder="Search..."
                                                     value={searchTerm}
                                                     onChange={handleSearch}
-                                                    style={{
-                                                        padding: '8px 12px 8px 60px',
-                                                        borderRadius: '5px',
-                                                        border: '1px solid #ccc',
-                                                        backgroundColor: '#f0f0f0',
-                                                        color: '#000',
-                                                        width: '100%',
-                                                        fontSize: '14px',
-                                                        boxSizing: 'border-box',
-                                                    }}
                                                 />
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -286,14 +276,6 @@ export default function Daterange() {
                                                     height="20"
                                                     fill="currentColor"
                                                     viewBox="0 0 16 16"
-                                                    style={{
-                                                        position: "absolute",
-                                                        left: "12px",
-                                                        top: "50%",
-                                                        transform: "translateY(-50%)",
-                                                        pointerEvents: "none",
-                                                        color: "#888",
-                                                    }}
                                                 >
                                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                 </svg>
@@ -302,11 +284,6 @@ export default function Daterange() {
                                                 type="button"
                                                 className="download"
                                                 onClick={handleGenerateAndDownloadCSV}
-                                                style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: '8px',
-                                                }}
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
                                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
@@ -318,24 +295,24 @@ export default function Daterange() {
                                     </form>
                                 </header>
                             </div>
-                            <div className="mx-4 table-responsive">
+                            <div className="mx-4 table-responsive reports-container">
                                 <table className="tabreport table table-striped table-bordered">
                                     <thead>
                                         <tr className="report-header">
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Shift Date</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout1</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchin</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchout</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin2</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout2</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Personal Break</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
+                                            <th>Name</th>
+                                            <th>Shift Date</th>
+                                            <th>Login</th>
+                                            <th>Brkin1</th>
+                                            <th>Brkout1</th>
+                                            <th>OB</th>
+                                            <th>Lunchin</th>
+                                            <th>Lunchout</th>
+                                            <th>OB</th>
+                                            <th>Brkin2</th>
+                                            <th>Brkout2</th>
+                                            <th>OB</th>
+                                            <th>Personal Break</th>
+                                            <th>Logout</th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-data">

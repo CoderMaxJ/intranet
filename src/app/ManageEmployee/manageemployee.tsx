@@ -242,7 +242,7 @@ export default function CreateUD() {
   };
 
   return (
-    <div className="crud-maindiv" style={{ backgroundColor: "#e7e7e7", display: "flex" }}>
+    <div className="crud-maindiv">
       <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -293,14 +293,6 @@ export default function CreateUD() {
                       height="20"
                       fill="currentColor"
                       viewBox="0 0 16 16"
-                      style={{
-                        position: "absolute",
-                        left: "12px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        pointerEvents: "none",
-                        color: "#888",
-                      }}
                     >
                       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                     </svg>
@@ -312,15 +304,6 @@ export default function CreateUD() {
                         className="btn btn-success btn-sm d-flex align-items-center ms-4"
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
-                        style={{
-                          borderRadius: "4px",
-                          fontWeight: "500",
-                          padding: '10px',
-                          whiteSpace: 'nowrap',
-                          backgroundColor: '#0ebb39',
-                          border: 'none',
-                          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                        }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -423,18 +406,6 @@ export default function CreateUD() {
                               </svg>
                             </button>
                           )}
-                          {/* {user_privilege.includes("manage_users") && (
-                            <button
-                              data-bs-toggle="modal"
-                              data-bs-target="#deleteModal"
-                              type="button"
-                              className="delete-button"
-                              onClick={() => setTargetID(info.empno)}
-                              style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
-                            >
-                              <i className="bi bi-trash3"></i>
-                            </button>
-                         )} */}
                         </div>
                       </td>
                     </tr>
@@ -450,7 +421,7 @@ export default function CreateUD() {
             </table>
           </div>
           {searchTerm == "" && (
-            <div className="manageemployee-div" style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div className="manageemployee-div">
               <div className="employee-total">
                 <p><i className="bi bi-people-fill"></i><span> Total: {total}</span></p>
               </div>
