@@ -382,7 +382,7 @@ export default function ManageDepartment() {
                                         <th className="px-1">Account Name</th>
                                         <th className="px-1">Status</th>
                                         <th className="th-manager px-1">Manager/Supervisor</th>
-                                        <th className="th-action border border">Action</th>
+                                        <th className="th-action border border">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody style={{ maxHeight: '70vh', overflowY: 'auto' }}>
