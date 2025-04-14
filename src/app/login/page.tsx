@@ -3,7 +3,6 @@ import { Encryptor, Decryptor } from "@/security";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "/public/asset/css/login.css";
 import { ToastContainer, toast } from 'react-toastify';
 
 export default function Login() {
