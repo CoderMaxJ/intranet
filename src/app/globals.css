@@ -42,12 +42,14 @@
 .form-field select {
   width: 100%;
 }
+
 .legends {
   display: flex;
   flex-wrap: wrap;
   gap: 1px;
   font-weight: bolder;
 }
+
 .firstbreak {
   padding: 10px;
   font-family: sans-serif;
@@ -55,6 +57,7 @@
   text-align: center;
   margin-right: -90px;
 }
+
 .secondbreak {
   padding: 10px;
   font-family: sans-serif;
@@ -63,12 +66,14 @@
   margin-left: 92px;
   margin-right: 2px;
 }
+
 .lunchbreak {
   padding: 10px;
   font-family: sans-serif;
   background-color: #a9e4ff;
   margin-right: 2px;
 }
+
 .overbreak {
   padding: 10px;
   color: red;
@@ -76,6 +81,7 @@
   background-color: #ffdccc;
   text-align: center;
 }
+
 .totalbreak {
   padding: 10px;
   margin-left: 10px;
@@ -83,6 +89,7 @@
   background-color: #b3efb2;
   text-align: center;
 }
+
 .alarm {
   padding: 4px;
 }
@@ -153,19 +160,6 @@
   color: #f8f9fb;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 * {
   box-sizing: border-box;
@@ -188,26 +182,23 @@ html,
 body {
   max-width: 100vw;
   background-color: #e7e7e7;
+  overflow-x: hidden;
 }
+
 
 body {
   color: var(--foreground);
-
+  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
+
 }
 
 .workforce {
   height: 100%;
   width: 100%;
   z-index: 1;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
 
 /* LOG IN FORM */
@@ -267,12 +258,12 @@ a {
 .login-div {
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0px 0px 5px rgb(87, 86, 86);
-  backdrop-filter: blur(0); 
+  backdrop-filter: blur(0);
   border-radius: 6px;
   padding: 20px 20px 85px 20px;
-  width: 390px;  
-  height: 470px; 
-  display: block; 
+  width: 390px;
+  height: 470px;
+  display: block;
   justify-content: center;
   align-items: center;
   border: none !important;
@@ -293,10 +284,6 @@ a {
   margin-bottom: 20px;
   outline: none;
   width: 300px;
-}
-
-.login-div input {
-  padding: 5px;
   margin-top: 5px;
 }
 
@@ -309,7 +296,7 @@ input:focus {
   border-color: #0a63d8;
 }
 
-.ecomialogo-footer > div {
+.ecomialogo-footer>div {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -323,9 +310,10 @@ input:focus {
 }
 
 .login-logo {
- width: 105px;
- height: 80%;
+  width: 105px;
+  height: 80%;
 }
+
 .poweredby-label {
   font-size: 10px;
   font-weight: bold;
@@ -370,7 +358,7 @@ input:focus {
 }
 
 .updatepassword-input {
-  padding-right: 40px; 
+  padding-right: 40px;
   box-sizing: border-box;
 }
 
@@ -492,11 +480,6 @@ input:focus {
   margin-right: 20px;
 }
 
-.main-page {
-  background-color: #e7e7e7;
-  position: relative;
-}
-
 .db-poweredby {
   font-size: 10px;
   font-weight: bold;
@@ -540,7 +523,7 @@ input:focus {
   transform: translateY(-42px) !important;
   pointer-events: none;
   color: #888;
- 
+
 }
 
 .search-input1 {
@@ -550,27 +533,6 @@ input:focus {
 .acc-head input {
   justify-content: center;
   width: 100%;
-}
-
-.form-control {
-  position: relative;
-  width: 100%;
-  padding: 10px;
-  padding-right: 40px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-control::after {
-  content: "\1F4C5";
-  /* 📅 calendar icon */
-  position: absolute;
-  top: 50%;
-  left: calc(100% - 31px);
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: black !important;
-  pointer-events: none;
 }
 
 @media only screen and (max-width: 1020px) {
@@ -625,11 +587,6 @@ input:focus {
     display: flex;
   }
 
-  .reportss {
-    height: 620px !important;
-    overflow-y: auto !important;
-  }
-
   .db-reports1 {
     min-height: 120vh !important;
   }
@@ -646,30 +603,25 @@ input:focus {
     width: 100% !important;
   }
 
-  .download-reports button {
-    width: 7% !important;
-  }
-
   .tablogs {
     white-space: nowrap;
   }
 
   .agent-header {
     font-size: 20px !important;
+    width: 100% !important;
   }
 
   .logs-headername {
     font-size: 20px !important;
   }
 
-  .agent-header {
-    width: 100% !important;
-  }
-
   .download-reports button {
     font-size: small;
     margin-top: -37px !important;
     padding: 8px;
+    width: 7% !important;
+
   }
 
   .form-control {
@@ -689,6 +641,8 @@ input:focus {
   }
 
   .reportss {
+    height: 620px !important;
+    overflow-y: auto !important;
     width: 100% !important;
   }
 
@@ -739,7 +693,7 @@ input:focus {
   width: 100%;
   font-size: 14px;
   box-sizing: border-box;
-  
+
 }
 
 .searchbar12 {
@@ -787,6 +741,7 @@ input:focus {
   color: black;
   background-color: white;
 }
+
 .loading {
   position: fixed;
   top: 0;
@@ -798,6 +753,7 @@ input:focus {
   opacity: 1;
   z-index: 9999;
 }
+
 .searchbarr {
   padding: 7px 5px 7px 65px !important;
   border-radius: 4px;
@@ -889,16 +845,6 @@ input:focus {
   position: relative;
   display: flex;
 }
-
-.dropbtn {
-  background-color: transparent;
-  border: none;
-  margin-right: 20px;
-  margin-top: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -930,45 +876,16 @@ input:focus {
   background-color: #d8d7d7c9;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropbtn {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 4px;
-  right: 0;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  text-align: left;
-  display: block;
-}
-
 /* breaks div */
 .breaks-table {
   height: auto;
 }
+
 .breaks-table th {
   background-color: #4cbdff !important;
   font-family: sans-serif;
 }
+
 .breaks-div {
   background-color: #ffffff;
   border-radius: 4px;
@@ -983,7 +900,7 @@ input:focus {
   left: 0;
   width: 100%;
   z-index: 999;
-  height: 101%;
+  height: 107%;
   min-height: 100vh;
 }
 
@@ -991,6 +908,7 @@ input:focus {
 .logs-wrapper {
   background-color: #e7e7e7;
 }
+
 .logs-wrapper .table-striped>tbody>tr:nth-of-type(odd)>* {
   background-color: #ffffff;
   --bs-table-color-type: #ffffff;
@@ -1012,10 +930,12 @@ input:focus {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
 }
+
 .logs-container th {
   background-color: #4cbdff !important;
   font-family: sans-serif;
 }
+
 .logs-container thead {
   position: sticky;
   top: 0;
@@ -1059,13 +979,16 @@ input:focus {
 
 /* Dropdown Button */
 .dropbtn {
-  background-color: rgb(255, 255, 255);
+  background-color: transparent;
   color: rgb(0, 0, 0);
-  padding: 16px;
-  font-size: 16px;
-  border-radius: 30px;
   border: none;
+  margin-right: 20px;
+  margin-top: 5px;
+  cursor: pointer;
+  font-size: 16px;
   position: relative;
+  border-radius: 30px;
+  padding: 16px;
 }
 
 /* account  */
@@ -1165,11 +1088,6 @@ input:focus {
   max-height: 400px;
   overflow-y: auto;
   border: 1px solid #ddd;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
 }
 
 thead th {
@@ -1295,10 +1213,6 @@ tbody td {
   background-color: #e2f0f7;
 }
 
-.table-striped th {
-  background-color: #4cbdff;
-}
-
 .background-overlay {
   position: fixed;
   top: 0;
@@ -1387,10 +1301,6 @@ table {
   background-color: #e2f0f7;
 }
 
-.table-striped th {
-  background-color: #4cbdff;
-}
-
 .table.table-striped.table-hover.table-bordered td,
 .table.table-striped.table-hover.table-bordered th {
   padding: 4px;
@@ -1461,7 +1371,7 @@ table {
 }
 
 .manage-anchor svg {
-  min-width:20px;
+  min-width: 20px;
   margin-right: 21px;
   min-height: 20px;
   max-width: 20px;
@@ -1602,6 +1512,7 @@ table {
 .search-employee input {
   margin-top: -4px;
 }
+
 .manageemployee-button button {
   border-radius: 4px;
   font-weight: 500;
@@ -1694,6 +1605,7 @@ table {
   width: 100%;
   margin: auto;
 }
+
 .emp-table th {
   background-color: #4391f7 !important;
   color: #ffffff !important;
@@ -1710,13 +1622,7 @@ table {
   position: sticky;
   padding: 15px;
   z-index: 10;
-  transform: translateY(-1px) ;
-}
-
-.manageemployee-title h1 {
-  font-weight: bolder;
-  justify-content: center;
-  display: flex;
+  transform: translateY(-1px);
 }
 
 .manage-tbody td {
@@ -1776,9 +1682,11 @@ table {
 }
 
 .manageemployee-title h1 {
+  display: flex;
   margin-left: 20px;
   font-weight: bolder;
   white-space: nowrap;
+  justify-content: center;
 }
 
 .manage-input input {
@@ -1802,15 +1710,6 @@ table {
 .gobackbutton:active {
   transform: scale(0.95);
   background-color: #0077b3;
-}
-
-.edit-button {
-  background: none;
-  color: #45dd66;
-}
-
-.delete-button {
-  background: none;
 }
 
 .add {
@@ -1882,7 +1781,8 @@ table {
   border: none;
   box-shadow: none;
   outline: none;
-  color: rgb(15, 150, 76);
+  background: none;
+  color: #45dd66;
 }
 
 .delete-button {
@@ -1891,6 +1791,7 @@ table {
   outline: none;
   color: red;
   margin-left: 30px !important;
+  background: none;
 }
 
 .blink {
@@ -1940,6 +1841,7 @@ table {
 
 .dash {
   transform: translateY(3px) translateX(10px);
+  margin-left: -12px;
 }
 
 .dashboard a {
@@ -1992,6 +1894,7 @@ table {
 .generate svg {
   margin-right: 24px;
   align-items: center;
+  fill: rgb(255, 255, 255);
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
@@ -2018,11 +1921,6 @@ table {
   background-color: #53a2be;
 }
 
-.generate svg {
-  margin-right: 20px;
-  fill: rgb(255, 255, 255);
-}
-
 .generate button {
   border: none;
   background: transparent;
@@ -2032,6 +1930,7 @@ table {
 .manage-div {
   margin-top: 5px;
 }
+
 .manage-nav {
   display: flex;
   align-items: center;
@@ -2161,11 +2060,6 @@ table {
   color: white;
 }
 
-.manage-hover:hover {
-  background-color: lightgray;
-  cursor: pointer;
-}
-
 .admin .accordion-button:hover {
   background-color: #2193df;
   color: white;
@@ -2217,6 +2111,7 @@ table {
   color: #000000;
   cursor: pointer;
 }
+
 .manage-menus:hover {
   background-color: #53a2be;
   cursor: pointer;
@@ -2229,6 +2124,7 @@ table {
 .manage-menu {
   overflow: hidden;
 }
+
 .prof-hover:hover {
   border-radius: 2px;
   color: white !important;
@@ -2280,10 +2176,6 @@ table {
   color: #ffffff !important;
   border-radius: 5px;
   padding-left: 10px;
-}
-
-.accordion-button:hover {
-  background-color: #32b8f7;
 }
 
 .forminput input {
@@ -2340,6 +2232,7 @@ table {
   width: 100%;
   max-width: 400px;
 }
+
 .report-input input {
   padding: 8px 12px 8px 60px;
   border-radius: 5px;
@@ -2350,6 +2243,7 @@ table {
   font-size: 14px;
   box-sizing: border-box;
 }
+
 .report-input svg {
   position: absolute;
   left: 12px;
@@ -2359,15 +2253,17 @@ table {
   color: #888;
 }
 
-.reports-container th{
+.reports-container th {
   background-color: #4391f7 !important;
   color: white !important;
 }
+
 .reports-division {
   padding-left: 1.3rem;
   padding-right: 1rem;
   width: 0;
 }
+
 .download-reports button {
   width: 6vw !important;
   display: flex;
@@ -2444,6 +2340,7 @@ table {
   position: relative;
   min-height: 100vh;
   height: 100%;
+  background-color: #e7e7e7;
 }
 
 .dashboard-menu {
@@ -2473,16 +2370,13 @@ table {
   padding-left: 1.3rem;
   padding-right: 1rem;
 }
+
 .manage-header {
   margin-left: 750px;
 }
 
 .manageaccounts-div {
   background-color: #e7e7e7;
-}
-
-.dash {
-  margin-left: -12px;
 }
 
 @keyframes blinkAnimation {
@@ -2574,10 +2468,12 @@ table {
 .add-account-form {
   width: 100%;
 }
+
 .account-div {
   background-color: white;
   width: 100%;
 }
+
 .create-div {
   width: 100%;
 }
@@ -2586,6 +2482,7 @@ table {
   position: relative;
   max-width: 400px;
 }
+
 .search-division svg {
   position: absolute;
   left: 12px;
@@ -2594,7 +2491,8 @@ table {
   pointer-events: none;
   color: #888;
 }
-.accounta-table-div{
+
+.accounta-table-div {
   position: relative;
 }
 
@@ -2603,11 +2501,13 @@ table {
   padding: 15px !important;
   width: 200px;
 }
+
 .accounta-table-div thead {
   position: sticky;
   transform: translateY(-12px);
   z-index: 10;
 }
+
 .th-manager {
   color: white;
   padding: 15px;
