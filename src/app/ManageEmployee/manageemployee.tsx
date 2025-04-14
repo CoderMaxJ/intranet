@@ -7,7 +7,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
-import { th } from "date-fns/locale";
 
 interface Information {
   empno: number;
@@ -31,7 +30,7 @@ interface Account {
   acctname: string
   acctid: number
 }
-////
+
 export default function CreateUD() {
   const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
@@ -47,7 +46,6 @@ export default function CreateUD() {
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
   const [account, setAccount] = useState<Account[]>([]);
-
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -56,7 +54,6 @@ export default function CreateUD() {
       setListener(false);
     }, 2000);
   }, [listener]);
-
 
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");

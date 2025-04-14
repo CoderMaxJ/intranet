@@ -65,10 +65,8 @@ function LogsDataTable() {
 					setData(parsedData);
 					logData.current = parsedData;
 				}
-
 				return;
 			}
-
 			if (!response.ok || response.status === 404 || response.status === 401 || response.status === 403) {
 
 				localStorage.clear();

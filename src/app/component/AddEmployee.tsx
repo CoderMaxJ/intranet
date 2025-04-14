@@ -81,13 +81,11 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-
     const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value === "" && name === "dateofbirth" ? null : value,
     }));
-
     if (type === "checkbox") {
       const isChecked = (e.target as HTMLInputElement).checked;
       setFormData((prev) => ({
@@ -106,7 +104,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         role_id: Number(value),
       }));
     }
-
     if(name === "status"){
       setFormData((prev)=>(
         {
@@ -115,7 +112,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         }
       ))
     }
-
   }
  
   const fetchPrivileges = async () => {

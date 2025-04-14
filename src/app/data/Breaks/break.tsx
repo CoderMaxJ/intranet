@@ -45,12 +45,9 @@ function BreakDataTable() {
   }
  
   const fetchBreakData = async () => {
-
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
-
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/?last_update=${latestUpdate || ""}`,
         {
@@ -63,7 +60,6 @@ function BreakDataTable() {
       );
 
       if (response.status === 204) {
-
         const message = await response.text();
         // No new data, use data from local storage
         const storedData = localStorage.getItem("breakData");
@@ -84,7 +80,6 @@ function BreakDataTable() {
 
       const data = await response.json();
       localStorage.setItem("total-on-breaks", data.total);
-
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
       const storedBreaks = storedData ? JSON.parse(storedData) : [];
@@ -92,11 +87,9 @@ function BreakDataTable() {
         ...newBreak,
         duration: newBreak.duration > 0 ? newBreak.duration : -newBreak.overbreak, // Always use fresh duration
       }));
-
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
       setLatestUpdate(data.latest_update);
-
       // Store the new data in local storage
       localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
     } catch (error) {
@@ -271,14 +264,12 @@ function BreakDataTable() {
                     // First, sort by duration (less than 300 first)
                     if (a.duration < 300 && b.duration >= 300) return -1;
                     if (a.duration >= 300 && b.duration < 300) return 1;
-
                     // Then, sort by break type (First Break, Second Break, Lunch)
                     const breakOrder = {
                       "First Break": 1,
                       "Second Break": 2,
                       "Lunch": 3
                     };
-
                     return breakOrder[a.breaktype as keyof typeof breakOrder] - breakOrder[b.breaktype as keyof typeof breakOrder];
                   })
                   .map((instance) => (
