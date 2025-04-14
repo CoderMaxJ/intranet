@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Head from "next/head";
+// import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -41,9 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-       <Head>
+       {/* <Head>
         <link rel="icon" href="%PUBLIC_URL%/IMG/favicon.ico" />
-      </Head>
+      </Head> */}
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
       
