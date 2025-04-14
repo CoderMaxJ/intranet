@@ -19,7 +19,7 @@ interface BreaksReport {
     brkin2: string;
     brkout2: string;
     ob2: string;
-    personalbreak:string;
+    personalbreak: string;
     logoff: string;
 }
 
@@ -46,7 +46,7 @@ export default function Daterange() {
             fetchData();
         }
     }, [data])
-// 
+    // 
     const handleGenerateAndDownloadCSV = async () => {
         try {
             setError("");
@@ -131,7 +131,10 @@ export default function Daterange() {
             setError("An error occurred while fetching data.");
         }
     };
-    const handleView = async () => {
+    const handleView = async (e: any) => {
+        e.preventDefault();
+        console.log("start",start,"end",end);
+
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
@@ -198,11 +201,11 @@ export default function Daterange() {
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
-            <div className="d-flex db-reports1" style={{ height: "100%", position: "absolute", width: '100%' }} >
+            <div className="d-flex" >
                 <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
-                    <div className="main-divv px-4">
+                    <div className="flex-fill reports-division">
                         <div className="reportheader"><Header title="DAILY REPORTS" /></div>
                         <div className="background-report">
                             <div className="px-4 pt-4" style={{ display: 'flex' }}>
@@ -212,116 +215,104 @@ export default function Daterange() {
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
                                     position: 'sticky',
-                                    paddingTop:'10px',
+                                    paddingTop: '10px',
                                     padding: '15px',
                                     color: 'white',
                                     width: '100%'
                                 }}>
                                     {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
-                                    <form>
-                                        <div style={{ display: 'flex', marginTop: '5px' }}>
-                                            <div style={{ display: 'flex' }}>
-                                                <label
-                                                    htmlFor="id-start"
-                                                    className="form-label"
-                                                    style={{ marginLeft: "5px" }}
-                                                >
-                                                    From:
-                                                </label>
-                                                <input
-                                                    required
-                                                    type="date"
-                                                    className="form-control"
-                                                    onChange={(e) => setStart(e.target.value)}
-                                                    value={start}
-                                                    style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
-                                                />
+                                    <form onSubmit={handleView}>
+                                        <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
+                                            {/* Date Range Section */}
+                                            <div className="d-flex flex-wrap align-items-center justify-content-center gap-3">
+                                                <div className="d-flex align-items-center">
+                                                    <label htmlFor="id-start" className="form-label mb-0 me-2">From:</label>
+                                                    <input
+                                                        id="id-start"
+                                                        type="date"
+                                                        className="form-control"
+                                                        required
+                                                        onChange={(e) => setStart(e.target.value)}
+                                                        value={start}
+                                                        style={{ color: '#000000' }}
+                                                    />
+                                                </div>
+
+                                                <div className="d-flex align-items-center">
+                                                    <label htmlFor="id-end" className="form-label mb-0 me-2">To:</label>
+                                                    <input
+                                                        id="id-end"
+                                                        type="date"
+                                                        className="form-control"
+                                                        required
+                                                        onChange={(e) => setEnd(e.target.value)}
+                                                        value={end}
+                                                        style={{ color: '#000000' }}
+                                                    />
+                                                </div>
+                                                <div className="d-flex align-items-center">
+                                                    <button
+                                                        type="submit"
+                                                        className="daterange-button"
+                                                    >
+                                                        View
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div style={{ display: 'flex' }}>
-                                                <label
-                                                    htmlFor="id-end"
-                                                    className="form-label"
-                                                    style={{ marginLeft: "30px" }}
-                                                >
-                                                    To:
-                                                </label>
+
+                                            {/* Search Input */}
+                                            <div className="report-input">
                                                 <input
-                                                    required
-                                                    type="date"
                                                     className="form-control"
-                                                    onChange={(e) => setEnd(e.target.value)}
-                                                    value={end}
-                                                    style={{ marginLeft: "10px", width: "10vw", color:'#000000' }}
+                                                    id="search-employee"
+                                                    type="text"
+                                                    placeholder="Search..."
+                                                    value={searchTerm}
+                                                    onChange={handleSearch}
                                                 />
-                                                <button type="button" className="daterange-button" onClick={handleView}>
-                                                    View
-                                                </button>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="20"
+                                                    height="20"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
                                             </div>
-                                            <div className="search-div">
-                                            <input
-                                            className="search-input1"
-                                            id="search-employee"
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchTerm}
-                                            onChange={handleSearch}
-                                            style={{
-                                                padding: '7px 60px',
-                                                borderRadius: '5px',
-                                                border: '1px solid #ccc',
-                                                width: '360px',
-                                                position: 'relative',
-                                                backgroundColor:'#f0f0f0',
-                                                color:'#000000'
-                                            }}
-                                        />
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="14"
-                                            height="14"
-                                            fill="currentColor"
-                                            className="report-icon bi-search"
-                                            viewBox="-7 0 30 16"
-                                            style={{ color: '#595b5c' }}
-                                        >
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                        </svg>
-                                        </div>
-                                        </div>
-                                        <div className="download-reports">
                                             <button
                                                 type="button"
                                                 className="download"
                                                 onClick={handleGenerateAndDownloadCSV}
                                             >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16" style={{ marginTop: '5px', marginRight: '5px' }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
                                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
                                                     <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
                                                 </svg>
-                                                Download
+                                                <label htmlFor="downloaf" className="align-items-center">Download</label>
                                             </button>
                                         </div>
                                     </form>
                                 </header>
                             </div>
-                            <div className="reportss px-4" style={{ overflowY: 'auto', height: '710px' }}>
-                                <table className="tabreport table table-striped" style={{ position: 'sticky', width:'100%' }}>
+                            <div className="mx-4 table-responsive reports-container">
+                                <table className="tabreport table table-striped table-bordered">
                                     <thead>
                                         <tr className="report-header">
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Name</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Shift Date</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Login</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin1</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout1</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchin</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Lunchout</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkin2</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Brkout2</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>OB</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Personal Break</th>
-                                            <th style={{ backgroundColor: '#4391f7', color: '#ffffff' }}>Logout</th>
+                                            <th>Name</th>
+                                            <th>Shift Date</th>
+                                            <th>Login</th>
+                                            <th>Brkin1</th>
+                                            <th>Brkout1</th>
+                                            <th>OB</th>
+                                            <th>Lunchin</th>
+                                            <th>Lunchout</th>
+                                            <th>OB</th>
+                                            <th>Brkin2</th>
+                                            <th>Brkout2</th>
+                                            <th>OB</th>
+                                            <th>Personal Break</th>
+                                            <th>Logout</th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-data">

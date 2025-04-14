@@ -121,6 +121,10 @@ export default function ManageDepartment() {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
+        if (!accountName.trim()) {
+            errorToast("Account name is required.");
+            return;
+        }
         createAccount();
         setAccountName("");
     };
@@ -262,33 +266,26 @@ export default function ManageDepartment() {
                         <div className="modal-header">
                             <h1 className="modal-title fs-5">Create Account</h1>
                         </div>
-                        <div className="modal-body" style={{ display: "flex", justifyContent: 'center' }}>
-                            <form onSubmit={handleSubmit}>
-                                <div
-                                    className=""
-                                    style={{
-                                        backgroundColor: '#ffffff',
-                                    }}
-                                >
-                                    <div className="d-flex align-items-center gap-3 mt-5">
+                        <div className="modal-body" style={{ display: "flex", flexDirection: "column" }}>
+                            <form onSubmit={handleSubmit} className="add-account-form">
+                                <div className="account-div">
+                                    <div className="create-div d-flex align-items-center">
                                         <input
                                             value={accountName}
                                             onChange={(e) => setAccountName(e.target.value)}
                                             type="text"
                                             className="form-control p-2 px-3 ml-3"
                                             placeholder="Account Name"
-                                            style={{
-                                                width: '300px',
-                                                fontSize: '16px',
-                                            }}
                                         />
                                     </div>
-                                    <div className="buttons1">
-                                        <button className="closebutton" data-bs-dismiss="modal" type="button">Close</button>
-                                        <button className="btn btn-success btn-sm" type="submit">
-                                            Create
-                                        </button>
-                                    </div>
+                                </div>
+                                <div className="d-flex justify-content-end gap-2 mt-3">
+                                    <button className="closebutton btn btn-secondary btn-sm" data-bs-dismiss="modal" type="button">
+                                        Close
+                                    </button>
+                                    <button className="btn btn-success btn-sm" type="submit">
+                                        Create
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -317,33 +314,34 @@ export default function ManageDepartment() {
                 </div>
             )}
             <div className="manage-department">
-                <div className="manageaccounts-header px-4"><Header title="MANAGE ACCOUNTS" /></div>
-                <div className="px-4">
+                <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" /></div>
+                <div className="accounts-margin">
                     <div className="manageaccounts-bg">
-                        <div className="employee-header flex-grow-1 d-flex justify-content-center ">  
-                          <div style={{position:'relative'}}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="14"
-                                height="14"
-                                fill="currentColor"
-                                className="accounts-icon bi-search"
-                                viewBox="-7 0 30 16"
-                                style={{zIndex:1, transform:'translateX(-90px)'}}
+
+                        <div className="employee-header">
+                            <div
+                                className="acc-head gap-3 d-flex justify-content-center py-2"
                             >
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                            </svg>
-                            <input
-                                className="searchbar3 d-flex"
-                                type="text"
-                                id="myInput"
-                                placeholder="Search..."
-                                value={filter}
-                                onChange={handleFilterChange}
-                                style={{ transform: 'translateX(-90px)', position:'absolute' }}
-                            />
-                            </div>  
-                            <div className="addbutton12" style={{transform:"translateX(735px)"}}>
+                                <div className="search-division"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="currentColor"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+                                    <input
+                                        type="text"
+                                        id="myInput"
+                                        className="searchbar3"
+                                        placeholder="Search..."
+                                        value={filter}
+                                        onChange={handleFilterChange}
+                                    />
+                                </div>
                                 <button
                                     className="addhover"
                                     data-bs-toggle="modal"
@@ -360,7 +358,7 @@ export default function ManageDepartment() {
                                         viewBox="0 0 16 16"
                                     >
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                    </svg> 
+                                    </svg>
                                     <label htmlFor="">Add Account</label>
                                 </button>
                             </div>
@@ -370,28 +368,21 @@ export default function ManageDepartment() {
                                 <div
                                     className="background-overlay"
                                     style={{
-                                        position: 'fixed',
-                                        top: 0,
-                                        left: 0,
-                                        width: '100%',
-                                        height: '100%',
-                                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
                                         opacity: showform ? 1 : 0,
-                                        transition: 'opacity 4.3s ease',
                                     }}
                                     onClick={formClose}
                                 ></div>
                             </>
                         )}
-                        <div className="accounts-table" style={{ position: 'relative' }}>
-                            <table className="manage-table table table-light table-hover table-striped border">
-                                <thead style={{ position: 'sticky', transform: 'translatey(-12px)', zIndex: 10 }}>
+                        <div className="accounta-table-div table-responsive accounts-table px-4" style={{ position: 'relative' }}>
+                            <table className="manage-table table table-light table-hover table-striped border ">
+                                <thead>
                                     <tr>
-                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account ID</th>
-                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Account Name</th>
-                                        <th style={{ color: '#ffffff', padding: '15px', width: '200px' }} className="px-1">Status</th>
-                                        <th style={{ color: '#ffffff', padding: '15px', width: '50%' }} className="px-1">Manager/Supervisor</th>
-                                        <th className="border border" style={{ color: '#ffffff', width: '100px' }} >Action</th>
+                                        <th className="px-1">Account ID</th>
+                                        <th className="px-1">Account Name</th>
+                                        <th className="px-1">Status</th>
+                                        <th className="th-manager px-1">Manager/Supervisor</th>
+                                        <th className="th-action border border">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody style={{ maxHeight: '70vh', overflowY: 'auto' }}>
@@ -402,31 +393,16 @@ export default function ManageDepartment() {
                                             <td >{instance.status === 1 ? "Active" : "Not Active"}</td>
                                             <td>
                                                 {instance.manager && instance.manager.length > 0 ? (
-                                                    <div style={{ display: 'flex', justifyContent: "flex-start", alignItems: "center", gap: '15px', flexWrap: 'wrap', margin: "0px", padding: "0px", height: "40px" }} >
+                                                    <div className="manage-account-form" >
                                                         <form>
                                                             {instance.manager.map((manager: any, index: any) => (
                                                                 <div
                                                                     key={index}
                                                                     style={{ position: "relative", display: "inline-block", margin: "8px" }}
                                                                 >
-                                                                    <button
+                                                                    <button className="emp-plus"
                                                                         type="button"
-                                                                        style={{
-                                                                            position: "absolute",
-                                                                            top: "-8px",
-                                                                            right: "-8px",
-                                                                            backgroundColor: "#FAA0A0",
-                                                                            color: "red",
-                                                                            border: "none",
-                                                                            borderRadius: "50%",
-                                                                            width: "20px",
-                                                                            height: "20px",
-                                                                            fontSize: "14px",
-                                                                            cursor: "pointer",
-                                                                            display: "flex",
-                                                                            justifyContent: "center",
-                                                                            alignItems: "center",
-                                                                        }}
+                                                                        
                                                                         onClick={() => removeManager(manager.empno, instance.acctid)}
                                                                     >
                                                                         ×
