@@ -563,7 +563,7 @@ input:focus {
   .searchbar-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     gap: 1rem;
   }
 
