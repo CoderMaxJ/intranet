@@ -1794,6 +1794,14 @@ table {
   background: none;
 }
 
+.schedule-button {
+  border-radius: 4px;
+  background-color: #008dcc;
+  color: #ffffff;
+  border: none;
+  padding: 8px;
+}
+
 .blink {
   animation: blinkAnimation 1s steps(1, end) infinite,
     blink-animation 1s steps(5, start) infinite;

@@ -46,7 +46,26 @@ export default function CreateUD() {
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
   const [account, setAccount] = useState<Account[]>([]);
+  const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
+  const [allSelected, setAllSelected] = useState(false);
+
   const token = localStorage.getItem("token");
+
+  const toggleSelect = (empno: number) => {
+    setSelectedEmployees(prev =>
+      prev.includes(empno) ? prev.filter(id => id !== empno) : [...prev, empno]
+    );
+  };
+
+  const handleSelectAll = (checked: boolean) => {
+    setAllSelected(checked);
+    if (checked) {
+      const allEmpnos = employees.map(emp => emp.empno);
+      setSelectedEmployees(allEmpnos);
+    } else {
+      setSelectedEmployees([]);
+    }
+  };
 
   useEffect(() => {
     GetEmployee(currentPage);
@@ -316,6 +335,12 @@ export default function CreateUD() {
                       </button>
                     </div>
                   )}
+                  <div>
+                    <button
+                      type="button"
+                      className="schedule-button"
+                    >Add Schedule</button>
+                  </div>
                 </div>
               </header>
             </div>
@@ -334,6 +359,7 @@ export default function CreateUD() {
             </div>
           </div>
           <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
+
             <table
               className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
@@ -341,6 +367,13 @@ export default function CreateUD() {
             >
               <thead>
                 <tr>
+                  <th>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => handleSelectAll(e.target.checked)}
+                      checked={allSelected}
+                    />
+                  </th>
                   <th scope="col" >Employee No.</th>
                   <th scope="col" >First Name</th>
                   <th scope="col" >Middle Name</th>
@@ -360,6 +393,13 @@ export default function CreateUD() {
                 {employees?.length ? (
                   employees.map((info, index) => (
                     <tr key={info.empno}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={selectedEmployees.includes(info.empno)}
+                          onChange={() => toggleSelect(info.empno)}
+                        />
+                      </td>
                       <td className="p">{info.empno}</td>
                       <td>{info.fname}</td>
                       <td>{info.mname}</td>
@@ -377,7 +417,6 @@ export default function CreateUD() {
                           {user_privilege.includes("update_breaktool_account") && (
                             <button
                               type="button"
-
                               data-bs-toggle="modal"
                               data-bs-target="#resetPasswordModal"
                               style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
