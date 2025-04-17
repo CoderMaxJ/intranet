@@ -2045,6 +2045,15 @@ table {
   margin-top: 5px !important;
   display: flex;
 }
+.time {
+  padding: 5px;
+}
+.timein {
+  padding: 2px;
+}
+.timeout {
+  padding: 2px;
+}
 
 .employee-anchor svg {
   min-width: 20px;
@@ -2052,6 +2061,18 @@ table {
   margin-right: 21px;
   max-width: 20px;
   max-height: 20px;
+}
+.undermanage-hover a.default-width {
+  width: 9vw !important;
+}
+
+.undermanage-hover a.condensed-width {
+  width: 2vw !important;
+}
+
+.undermanage-hover a:hover {
+  background-color: #53a2be;
+  color: white;
 }
 
 .undermanage-hover a.default-width {
@@ -2064,7 +2085,6 @@ table {
 
 .undermanage-hover a:hover {
   background-color: #53a2be;
-
   color: white;
 }
 

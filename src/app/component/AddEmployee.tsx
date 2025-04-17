@@ -547,7 +547,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               /></span>
           </label>
         </div>
-        {mode === 'edit' && (
           <div className="fixed-field col-md-2 mt-2 position-relative">
             <label htmlFor="timeIn" className="form-label">Time In</label>
             <input
@@ -560,8 +559,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               value={formData.timeIn}
               onChange={handleInputChange}
             />
-          </div>)}
-        {mode === 'edit' && (
+          </div>
           <div className="fixed-field col-md-2 mt-2 position-relative">
             <label htmlFor="timeOut" className="form-label">Time Out</label>
             <input
@@ -574,10 +572,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               value={formData.timeOut}
               onChange={handleInputChange}
             />
-          </div>)}
-
-
-
+          </div>
         <div
           className="fixed-field col-md-12"
           style={{
