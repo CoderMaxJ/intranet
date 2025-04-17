@@ -60,6 +60,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [selectedAccount, SetSelectedAccount] = useState("");
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
+  const [timeIn,setTimeIn] = useState("");
+  const [timeOut,setTimeOut] = useState("");
 
 
   useEffect(() => {
@@ -79,8 +81,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         role_id: empData.role_id || 0,
         isdayshift: empData.isdayshift || 0,
         status: empData.status,
-        timeIn: empData.timeIn || "",
-        timeOut: empData.timeOut || "",
+        timeIn: timeIn,
+        timeOut: timeOut
       });
     }
   }, [empData]);
@@ -550,6 +552,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           <div className="fixed-field col-md-2 mt-2 position-relative">
             <label htmlFor="timeIn" className="form-label">Time In</label>
             <input
+              required
               type="time"
               name="timeIn"
               className="form-control ps-4 w-100"
@@ -563,6 +566,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           <div className="fixed-field col-md-2 mt-2 position-relative">
             <label htmlFor="timeOut" className="form-label">Time Out</label>
             <input
+              required
               type="time"
               name="timeOut"
               className="form-control ps-4 w-100"
