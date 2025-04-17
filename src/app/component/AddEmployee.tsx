@@ -555,7 +555,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               required
               type="time"
               name="timeIn"
-              className="form-control ps-4 w-100"
+              className="time-input"
               id="timeIn"
               autoComplete="off"
               inputMode="numeric"
@@ -569,7 +569,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               required
               type="time"
               name="timeOut"
-              className="form-control ps-4 w-100"
+              className="time-input"
               id="timeOut"
               autoComplete="off"
               inputMode="numeric"

@@ -226,7 +226,7 @@ export default function Daterange() {
                                             {/* Date Range Section */}
                                             <div className="d-flex flex-wrap align-items-center justify-content-center gap-3">
                                                 <div className="d-flex align-items-center">
-                                                    <label htmlFor="id-start" className="form-label mb-0 me-2">From:</label>
+                                                    <label htmlFor="id-start" className="rep-label mb-0 me-2">From:</label>
                                                     <input
                                                         id="id-start"
                                                         type="date"
@@ -239,7 +239,7 @@ export default function Daterange() {
                                                 </div>
 
                                                 <div className="d-flex align-items-center">
-                                                    <label htmlFor="id-end" className="form-label mb-0 me-2">To:</label>
+                                                    <label htmlFor="id-end" className="rep-label mb-0 me-2">To:</label>
                                                     <input
                                                         id="id-end"
                                                         type="date"

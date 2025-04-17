@@ -706,6 +706,20 @@ input:focus {
   color: #000000;
   margin-top: 3px;
 }
+.searchbar0 {
+  width: 100%;
+  min-width: 350px !important;
+  padding: 7px 5px 7px 65px !important;
+  border-radius: 5px;
+  border: 2px solid #ccc !important;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  background-color: #f0f0f0;
+  color: #000000;
+  margin-top: 3px;
+  margin-left:40px;
+}
+
+
 
 .newpass {
   width: 100%;
@@ -784,6 +798,18 @@ input:focus {
   pointer-events: none;
   color: #888;
   transform: translateY(-50%);
+}
+.searchbar-containerrr {
+  position: relative;
+}
+
+.searchbar-containerrr svg {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  pointer-events: none;
+  color: #888;
+  transform: translateY(-50%) translateX(40px);
 }
 
 .bi-search {
@@ -2048,15 +2074,17 @@ table {
   gap: 65px;
   padding: 20px 20px 1px 20px;
 }
-.sched-button {
+.sched-button  button{
   border-radius: 4px;
   font-weight: 500;
-  padding: 10px;
+  padding: 7px;
   white-space: nowrap;
   background-color: #0ebb39;
   border: none;
   color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 40px;
+  margin-top: 3px;
 }
 
 .time {
@@ -2068,14 +2096,14 @@ table {
   background-position: center center;
   background-repeat: no-repeat;
   position: sticky;
-  padding: 15px;
+  padding: 10px;
   color: white;
   width: 100%;
 }
 
 .time div {
   display: flex;
-  gap: 7px;
+  gap: 3px;
 }
 
 .time input[type="time"] {
@@ -2121,10 +2149,14 @@ table {
 
 .form-label {
   font-weight: 600;
+  color: #313131;
+  margin-bottom: 4px;
+}
+.rep-label {
+  font-weight: 600;
   color: #ffffff;
   margin-bottom: 4px;
 }
-
 
 
 .employee-anchor svg {
