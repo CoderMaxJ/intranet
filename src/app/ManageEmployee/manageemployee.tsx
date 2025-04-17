@@ -46,7 +46,16 @@ export default function CreateUD() {
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
   const [account, setAccount] = useState<Account[]>([]);
+  const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
+  const [allSelected, setAllSelected] = useState(false);
+
   const token = localStorage.getItem("token");
+
+  const toggleSelect = (empno: number) => {
+    setSelectedEmployees(prev =>
+      prev.includes(empno) ? prev.filter(id => id !== empno) : [...prev, empno]
+    );
+  };
 
   useEffect(() => {
     GetEmployee(currentPage);
@@ -295,7 +304,7 @@ export default function CreateUD() {
                     </svg>
                   </div>
                   {user_privilege.includes("manage_users") && (
-                    <div className="manageemployee-button">
+                    <div className="manageemployee-button py-1">
                       <button
                         type="button"
                         className="btn btn-success btn-sm d-flex align-items-center ms-4"
@@ -377,7 +386,6 @@ export default function CreateUD() {
                           {user_privilege.includes("update_breaktool_account") && (
                             <button
                               type="button"
-
                               data-bs-toggle="modal"
                               data-bs-target="#resetPasswordModal"
                               style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}

@@ -19,7 +19,9 @@ interface AddEmployeeData {
   acctid: number;
   role_id: number;
   isdayshift: number,
-  status:number
+  status: number
+  timeIn: string;
+  timeOut: string;
 }
 
 interface AddEmpProps {
@@ -49,14 +51,18 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     acctid: empData.acctid || 0,
     role_id: empData.role_id || 0,
     isdayshift: empData.isdayshift || 0,
-    status : empData.status 
+    status: empData.status,
+    timeIn: empData.timeIn || "",
+    timeOut: empData.timeOut || "",
   });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
- 
+  const [timeIn,setTimeIn] = useState("");
+  const [timeOut,setTimeOut] = useState("");
+
 
   useEffect(() => {
     if (empData) {
@@ -74,7 +80,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
         isdayshift: empData.isdayshift || 0,
-        status : empData.status 
+        status: empData.status,
+        timeIn: timeIn,
+        timeOut: timeOut
       });
     }
   }, [empData]);
@@ -104,16 +112,16 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         role_id: Number(value),
       }));
     }
-    if(name === "status"){
-      setFormData((prev)=>(
+    if (name === "status") {
+      setFormData((prev) => (
         {
           ...prev,
-          status:Number(value)
+          status: Number(value)
         }
       ))
     }
   }
- 
+
   const fetchPrivileges = async () => {
     try {
       const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/role/list/`, {
@@ -261,15 +269,15 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   const formDataWithToken = {
     ...formData,
-    token:Decryptor(localStorage.getItem("token") || ""),
+    token: Decryptor(localStorage.getItem("token") || ""),
     user_priviledge: Decryptor(localStorage.getItem("user_privilege") || ""),
-    user_id:Decryptor(localStorage.getItem("user_id") || "")
-    
+    user_id: Decryptor(localStorage.getItem("user_id") || "")
+
   }
   const handleSubmitForm = async (e: React.FormEvent) => {
 
     e.preventDefault();
-   
+
     onButtonClick("clicked");
     if (mode === 'edit') {
       await Update();
@@ -293,7 +301,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       acctid: 0,
       role_id: 0,
       isdayshift: 0,
-      status:1,
+      status: 1,
+      timeIn: "",
+      timeOut: "",
     });
     isClose();
 
@@ -412,7 +422,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             id="gender"
             className="form-select w-5"
             onChange={handleInputChange}
-          > 
+          >
             <option value="">-- SELECT --</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -433,10 +443,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           />
         </div>
         {mode === "edit" && (
-            <div className="fixed-field col-md-2">
+          <div className="fixed-field col-md-2">
             <label htmlFor="" className="form-label">Status</label>
-            <select className="form-select w-75 " name="status" value ={formData.status === 1 ? 1:0}
-            onChange={handleInputChange}
+            <select className="form-select w-75 " name="status" value={formData.status === 1 ? 1 : 0}
+              onChange={handleInputChange}
             >
               <option value="1">Active</option>
               <option value="0">Inactive</option>
@@ -498,7 +508,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </select>
         </div>
 
-          {mode === 'edit' && (
+        {mode === 'edit' && (
           <div className="fixed-field col-md-4 mb-1">
             <div className="mb-3">
               <label htmlFor="">Assign Privileges</label>
@@ -515,30 +525,58 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               ))}
             </select>
           </div>
-         )}
-         <div className="fixed-field col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
+        )}
+        <div className="fixed-field col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
           <label htmlFor="is_dayshift" className="form-label">
             Day Shift
-                <span className="">
-                    <input
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      borderRadius: "4px",
-                      border: "1px solid #ccc",
-                      cursor: "pointer",
-                      marginLeft: "10px",
-                    }}
-                    type="checkbox"
-                    name="isdayshift"
-                    className="form-check-input "
-                    id="is_dayshift"
-                    value={formData.isdayshift}
-                    checked={formData.isdayshift === 1}
-                    onChange={handleInputChange}
-                  /></span>
+            <span className="">
+              <input
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                  cursor: "pointer",
+                  marginLeft: "10px",
+                }}
+                type="checkbox"
+                name="isdayshift"
+                className="form-check-input "
+                id="is_dayshift"
+                value={formData.isdayshift}
+                checked={formData.isdayshift === 1}
+                onChange={handleInputChange}
+              /></span>
           </label>
         </div>
+          <div className="fixed-field col-md-2 mt-2 position-relative">
+            <label htmlFor="timeIn" className="form-label">Time In</label>
+            <input
+              required
+              type="time"
+              name="timeIn"
+              className="form-control ps-4 w-100"
+              id="timeIn"
+              autoComplete="off"
+              inputMode="numeric"
+              value={formData.timeIn}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="fixed-field col-md-2 mt-2 position-relative">
+            <label htmlFor="timeOut" className="form-label">Time Out</label>
+            <input
+              required
+              type="time"
+              name="timeOut"
+              className="form-control ps-4 w-100"
+              id="timeOut"
+              autoComplete="off"
+              inputMode="numeric"
+              value={formData.timeOut}
+              onChange={handleInputChange}
+            />
+          </div>
         <div
           className="fixed-field col-md-12"
           style={{
@@ -546,7 +584,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             marginTop: "30px",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "15px"}}>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: "15px" }}>
             <button
               type="button"
               data-bs-dismiss="modal"

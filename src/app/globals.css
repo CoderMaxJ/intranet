@@ -693,20 +693,18 @@ input:focus {
   width: 100%;
   font-size: 14px;
   box-sizing: border-box;
-
 }
 
 .searchbar12 {
   width: 100%;
-  max-width: 300px !important;
+  min-width: 350px !important;
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc !important;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: #f0f0f0;
   color: #000000;
-
-
+  margin-top: 3px;
 }
 
 .newpass {
@@ -1794,6 +1792,14 @@ table {
   background: none;
 }
 
+.schedule-button {
+  border-radius: 4px;
+  background-color: #008dcc;
+  color: #ffffff;
+  border: none;
+  padding: 8px;
+}
+
 .blink {
   animation: blinkAnimation 1s steps(1, end) infinite,
     blink-animation 1s steps(5, start) infinite;
@@ -2038,12 +2044,107 @@ table {
   display: flex;
 }
 
+.schedule-employee {
+  gap: 65px;
+  padding: 20px 20px 1px 20px;
+}
+.sched-button {
+  border-radius: 4px;
+  font-weight: 500;
+  padding: 10px;
+  white-space: nowrap;
+  background-color: #0ebb39;
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.time {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background-image: url(/img/Breaktool.png);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: sticky;
+  padding: 15px;
+  color: white;
+  width: 100%;
+}
+
+.time div {
+  display: flex;
+  gap: 7px;
+}
+
+.time input[type="time"] {
+  padding: 6px 10px;
+  border: 2px solid #cccccc;
+  border-radius: 6px;
+  font-size: 14px;
+  height: 38px;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s;
+  background-color: #ffffff; /* soft neutral background */
+}
+
+.time input[type="time"]:focus {
+  outline: none;
+  border-color: #0d6efd;
+  
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+  background-color: #ffffff; /* subtle change on focus */
+}
+.time label {
+  font-weight: 500;
+  color: #ffffff;
+}
+
+
+.time-input {
+  padding: 6px 12px;
+  font-size: 14px;
+  height: 38px;
+  width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s;
+  color: #333;
+}
+
+.time-input:focus {
+  border-color: #74a3e9;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+}
+
+.form-label {
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+
+
 .employee-anchor svg {
   min-width: 20px;
   min-height: 20px;
   margin-right: 21px;
   max-width: 20px;
   max-height: 20px;
+}
+.undermanage-hover a.default-width {
+  width: 9vw !important;
+}
+
+.undermanage-hover a.condensed-width {
+  width: 2vw !important;
+}
+
+.undermanage-hover a:hover {
+  background-color: #53a2be;
+  color: white;
 }
 
 .undermanage-hover a.default-width {
@@ -2056,7 +2157,6 @@ table {
 
 .undermanage-hover a:hover {
   background-color: #53a2be;
-
   color: white;
 }
 
