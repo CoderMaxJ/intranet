@@ -264,7 +264,7 @@ export default function CreateUD() {
                     <div>
                         <div>
                             <header>
-                                <div className="schedule-employee w-100 d-flex  flex-wrap py-2 px-2">
+                                <div className="schedule-employee w-100 d-flex  flex-wrap">
                                     <div className="time d-flex gap-4">
                                         <div>
                                             <label htmlFor="timein">Time In:</label>
@@ -342,7 +342,7 @@ export default function CreateUD() {
                             <thead>
                                 <tr>
                                     <th>
-                                   
+
                                         <input
                                             type="checkbox"
                                             onChange={(e) => handleSelectAll(e.target.checked)}
