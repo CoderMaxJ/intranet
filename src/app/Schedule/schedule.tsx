@@ -48,6 +48,9 @@ export default function CreateUD() {
     const [account, setAccount] = useState<Account[]>([]);
     const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
     const [allSelected, setAllSelected] = useState(false);
+    const [timeIn, setTimeIn] = useState("");
+    const [timeOut, setTimeOut] = useState("");
+    const EmpNoList:any = [];
 
     const token = localStorage.getItem("token");
 
@@ -62,10 +65,14 @@ export default function CreateUD() {
         if (checked) {
             const allEmpnos = employees.map(emp => emp.empno);
             setSelectedEmployees(allEmpnos);
+          
         } else {
             setSelectedEmployees([]);
         }
     };
+    useEffect(()=>{
+        EmpNoList.push(...selectedEmployees);
+    },[EmpNoList])
 
     useEffect(() => {
         GetEmployee(currentPage);
@@ -198,28 +205,6 @@ export default function CreateUD() {
         }
     };
 
-    const handleData = (data: any) => {
-
-        setCurrentMode("edit");
-        let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status } = data;
-        let currentData = {
-            empno,
-            fname,
-            mname,
-            lname,
-            dateofbirth,
-            contactno,
-            address,
-            position,
-            gender,
-            maritalstatus,
-            acctid,
-            role_id,
-            isdayshift,
-            status,
-        };
-        setEmpData(currentData);
-    };
     const handlePageChange = (page: number) => {
         setCurrentPage(page); // Update the current page
         GetEmployee(page); // Fetch data for the new page
@@ -230,59 +215,46 @@ export default function CreateUD() {
         search(e);
     };
 
-    const handleResetPassword = (empno: number) => {
-        setResetPasswordTargetID(empno);
-    };
-
-    const TriggerReset = () => {
-        resetPassword(Number(resetPasswordTargetID));
-    }
-
-    const resetPassword = async (empno: number) => {
-        const data = { empno: empno };
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reset/password/`, {
-            method: "PATCH",
+    
+    const create = async () => {
+        const data = {
+            empno: EmpNoList,
+            timein: timeIn,
+            timeout: timeOut
+        }
+      
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${Decryptor(token || "")}`
+                Authorization: `Bearer ${Decryptor(token || "")}`,
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         });
-        if (response.status === 204) {
-            successToast("Password has been reset");
+
+        if (response.status === 201) {
+            const data = await response.json();
+           
+                successToast(data.message);
+                GetEmployee(currentPage);
+                setSelectedEmployees([]);
+                setAllSelected(false);
         } else {
-            const warning = await response.json();
-            errorToast(warning.warning);
-            console.log("error");
+            const error = await response.json(); 
+            errorToast(error.message);
         }
-    };
+    }
+    const CreateSchedule = () =>{
+        if(timeIn === "" || timeOut === "" || EmpNoList == 0){
+            return null ;
+        }else{
+            create();
+        }
+        
+    }
 
     return (
         <div className="crud-maindiv">
-            <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="resetPasswordModalLabel">Confirmation</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Are you sure you want to reset the password?</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button
-                                type="button"
-                                className="btn btn-danger"
-                                data-bs-dismiss="modal"
-                                onClick={TriggerReset}
-                            >
-                                Reset Password
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div className="db-employee">
                 <Dashboard />
             </div>
@@ -296,16 +268,16 @@ export default function CreateUD() {
                                     <div className="time d-flex gap-4">
                                         <div>
                                             <label htmlFor="timein">Time In:</label>
-                                            <input type="time" name="timeIn" className="timein" />
+                                            <input type="time" value={timeIn} className="timein" onChange={(e)=>setTimeIn(e.target.value)} />
                                         </div>
                                         <div>
                                             <label htmlFor="timeout">Time Out:</label>
-                                            <input type="time" name="timeOut" className="timeout" />
+                                            <input type="time" value={timeOut} className="timeout" onChange={(e)=>setTimeOut(e.target.value)} />
                                         </div>
                                         <div>
                                         <div className="manageemployee-button">
                       <button
-                        type="submit"
+                        onClick={CreateSchedule}
                         className="btn btn-success btn-sm d-flex align-items-center ms-4"
                       >
                         <svg
@@ -379,17 +351,9 @@ export default function CreateUD() {
                                     </th>
                                     <th scope="col" >Employee No.</th>
                                     <th scope="col" >First Name</th>
-                                    <th scope="col" >Middle Name</th>
                                     <th scope="col" >Last Name</th>
-                                    {user_privilege.includes("manage_users") && (<th scope="col" >Address</th>)}
-                                    {user_privilege.includes("manage_users") && (<th scope="col" >Marital Status</th>)}
-                                    {user_privilege.includes("manage_users") && (<th scope="col" >Date of Birth</th>)}
-                                    {user_privilege.includes("manage_users") && (<th scope="col" >Gender</th>)}
-                                    {user_privilege.includes("manage_users") && (<th scope="col" >Contact No.</th>)}
-                                    {user_privilege.includes("manage_users") && (<th scope="col" >Account</th>)}
+                                    <th scope="col" >Account</th>
                                     <th scope="col" >Position</th>
-                                    <th scope="col" >Username</th>
-                                    <th scope="col" >Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="manage-tbody table-data">
@@ -405,48 +369,9 @@ export default function CreateUD() {
                                             </td>
                                             <td className="p">{info.empno}</td>
                                             <td>{info.fname}</td>
-                                            <td>{info.mname}</td>
                                             <td>{info.lname}</td>
-                                            {user_privilege.includes("manage_users") && (<td>{info.address}</td>)}
-                                            {user_privilege.includes("manage_users") && (<td>{info.maritalstatus}</td>)}
-                                            {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
-                                            {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
-                                            {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
-                                            {user_privilege.includes("manage_users") && (<td>{getAccountName(info.acctid)}</td>)}
+                                            <td>{getAccountName(info.acctid)}</td>
                                             <td>{info.position}</td>
-                                            <td>{info.un}</td>
-                                            <td>
-                                                <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
-                                                    {user_privilege.includes("update_breaktool_account") && (
-                                                        <button
-                                                            type="button"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#resetPasswordModal"
-                                                            style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
-                                                            title={isresetPassword ? "" : "Reset Password"}
-                                                            onClick={() => handleResetPassword(info.empno)}
-                                                        >
-                                                            <img src="/img/resetpassword.png" height={22} width={22} />
-                                                        </button>
-                                                    )}
-                                                    {user_privilege.includes("manage_users") && (
-                                                        <button
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal"
-                                                            type="button"
-                                                            className="edit-button ms-3"
-                                                            onClick={() => handleData(info)}
-                                                            style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
-                                                            title={update ? "" : "Update"}
-                                                        >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                                <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                                            </svg>
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </td>
                                         </tr>
                                     ))
                                 ) : (
