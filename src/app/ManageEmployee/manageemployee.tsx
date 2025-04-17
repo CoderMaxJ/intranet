@@ -8,6 +8,10 @@ import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 
+interface Schedule {
+  shiftstart: string;
+  shiftend: string;
+}
 interface Information {
   empno: number;
   gender: string;
@@ -24,6 +28,7 @@ interface Information {
   role_id: number;
   isdayshift: number;
   status: number;
+  schedule: Schedule
 }
 
 interface Account {
@@ -80,6 +85,7 @@ export default function CreateUD() {
     if (response.ok) {
       const data = await response.json();
       setEmployees(data.data);
+      console.log("================",data.data);
       setTotalPages(data.num_pages);
       setTotal(data.total);
     }
@@ -191,7 +197,7 @@ export default function CreateUD() {
   const handleData = (data: any) => {
 
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status } = data;
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status,schedule } = data;
     let currentData = {
       empno,
       fname,
@@ -207,6 +213,7 @@ export default function CreateUD() {
       role_id,
       isdayshift,
       status,
+      schedule,
     };
     setEmpData(currentData);
   };
@@ -304,7 +311,7 @@ export default function CreateUD() {
                     </svg>
                   </div>
                   {user_privilege.includes("manage_users") && (
-                    <div className="manageemployee-button">
+                    <div className="manageemployee-button py-1">
                       <button
                         type="button"
                         className="btn btn-success btn-sm d-flex align-items-center ms-4"

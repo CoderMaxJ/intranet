@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
 const token = localStorage.getItem("token");
-
+interface Schedule {
+  shiftstart: string;
+  shiftend: string;
+}
 interface AddEmployeeData {
   empno: string;
   fname: string;
@@ -22,6 +25,7 @@ interface AddEmployeeData {
   status: number
   timeIn: string;
   timeOut: string;
+  schedule: Schedule;
 }
 
 interface AddEmpProps {
@@ -54,6 +58,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     status: empData.status,
     timeIn: empData.timeIn || "",
     timeOut: empData.timeOut || "",
+    schedule: empData.schedule || {}
   });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
@@ -82,12 +87,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         isdayshift: empData.isdayshift || 0,
         status: empData.status,
         timeIn: timeIn,
-        timeOut: timeOut
+        timeOut: timeOut,
+        schedule: empData.schedule || {}
       });
     }
   }, [empData]);
-
-
+console.log(formData.schedule)
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     setFormData((prev) => ({
@@ -119,6 +124,20 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           status: Number(value)
         }
       ))
+    }
+    if (name === "shiftstart") {
+      setFormData(prev => ({
+        ...prev,
+        shiftstart: value,
+      }));
+    
+    }
+    if (name === "shiftend") {
+      setFormData(prev => ({
+        ...prev,
+        shiftend: value,
+      }));
+    
     }
   }
 
@@ -304,6 +323,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       status: 1,
       timeIn: "",
       timeOut: "",
+      schedule: {shiftend: "", shiftstart: ""}
     });
     isClose();
 
@@ -556,10 +576,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               type="time"
               name="timeIn"
               className="form-control ps-4 w-100"
-              id="timeIn"
+              id="shiftstart"
               autoComplete="off"
               inputMode="numeric"
-              value={formData.timeIn}
+              value={formData.schedule.shiftstart}
               onChange={handleInputChange}
             />
           </div>
@@ -568,12 +588,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <input
               required
               type="time"
-              name="timeOut"
+              name="shiftend"
               className="form-control ps-4 w-100"
               id="timeOut"
               autoComplete="off"
               inputMode="numeric"
-              value={formData.timeOut}
+              value={formData.schedule.shiftend}
               onChange={handleInputChange}
             />
           </div>
