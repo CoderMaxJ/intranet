@@ -693,20 +693,18 @@ input:focus {
   width: 100%;
   font-size: 14px;
   box-sizing: border-box;
-
 }
 
 .searchbar12 {
   width: 100%;
-  max-width: 300px !important;
+  min-width: 350px !important;
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
   border: 2px solid #ccc !important;
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: #f0f0f0;
   color: #000000;
-
-
+  margin-top: 3px;
 }
 
 .newpass {
@@ -2045,15 +2043,54 @@ table {
   margin-top: 5px !important;
   display: flex;
 }
+
+.schedule-employee {
+  gap: 15px;
+}
+.manageemployee-button button {
+  border-radius: 4px;
+  font-weight: 500;
+  padding: 8.5px;
+  white-space: nowrap;
+  background-color: #0ebb39;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 .time {
-  padding: 5px;
+  display: flex;
+  gap: 1rem;
+  padding: 5px 0;
+  align-items: center;
+  margin-left: 13px;
 }
-.timein {
-  padding: 2px;
+
+.time div {
+  display: flex;
+  gap: 7px;
 }
-.timeout {
-  padding: 2px;
+
+.time input[type="time"] {
+  padding: 6px 10px;
+  border: 2px solid #cccccc;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 140px;
+  height: 38px;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s;
+  background-color: #ffffff; /* soft neutral background */
 }
+
+.time input[type="time"]:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+  background-color: #ffffff; /* subtle change on focus */
+}
+.time label {
+  font-weight: 500;
+  color: #444444;
+}
+
 
 .employee-anchor svg {
   min-width: 20px;
