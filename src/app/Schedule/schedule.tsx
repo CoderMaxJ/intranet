@@ -287,7 +287,7 @@ export default function CreateUD() {
                 <Dashboard />
             </div>
             <div className="main-divv px-4">
-                <Header title="MANAGE EMPLOYEE" />
+                <Header title="MANAGE SCHEDULE" />
                 <div className="manageemployee-division">
                     <div>
                         <div>
@@ -370,6 +370,7 @@ export default function CreateUD() {
                             <thead>
                                 <tr>
                                     <th>
+                                   
                                         <input
                                             type="checkbox"
                                             onChange={(e) => handleSelectAll(e.target.checked)}
