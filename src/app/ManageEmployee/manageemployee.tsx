@@ -304,7 +304,7 @@ export default function CreateUD() {
                     </svg>
                   </div>
                   {user_privilege.includes("manage_users") && (
-                    <div className="manageemployee-button">
+                    <div className="manageemployee-button py-1">
                       <button
                         type="button"
                         className="btn btn-success btn-sm d-flex align-items-center ms-4"

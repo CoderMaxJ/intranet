@@ -292,7 +292,7 @@ export default function CreateUD() {
                     <div>
                         <div>
                             <header>
-                                <div className="schedule-employee w-100 d-flex  flex-wrap py-2 px-2">
+                                <div className="schedule-employee w-100 d-flex  flex-wrap">
                                     <div className="time d-flex gap-4">
                                         <div>
                                             <label htmlFor="timein">Time In:</label>
@@ -303,45 +303,47 @@ export default function CreateUD() {
                                             <input type="time" name="timeOut" className="timeout" />
                                         </div>
                                         <div>
-                                        <div className="manageemployee-button">
-                      <button
-                        type="submit"
-                        className="btn btn-success btn-sm d-flex align-items-center ms-4"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="#ffffff"
-                          className="bi bi-plus-circle-fill me-2"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                        </svg>
-                        Add Schedule
-                      </button>
-                    </div>
+                                            <div className="">
+                                                <div>
+                                                <button
+                                                    type="submit"
+                                                    className="sched-button d-flex align-items-center "
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="16"
+                                                        height="16"
+                                                        fill="#ffffff"
+                                                        className="bi bi-plus-circle-fill me-2"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                                                    </svg>
+                                                    Add Schedule
+                                                </button>
+                                                </div>
+                                                <div className="searchbar-containerr">
+                                                    <input
+                                                        className="searchbar12"
+                                                        id="search-employee"
+                                                        type="text"
+                                                        placeholder="Search..."
+                                                        value={searchTerm}
+                                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                                        onKeyUp={searchKeyword}
+                                                    />
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="20"
+                                                        height="20"
+                                                        fill="currentColor"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="searchbar-containerr">
-                                        <input
-                                            className="searchbar12"
-                                            id="search-employee"
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            onKeyUp={searchKeyword}
-                                        />
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            fill="currentColor"
-                                            viewBox="0 0 16 16"
-                                        >
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                        </svg>
                                     </div>
                                 </div>
                             </header>
@@ -370,7 +372,7 @@ export default function CreateUD() {
                             <thead>
                                 <tr>
                                     <th>
-                                   
+
                                         <input
                                             type="checkbox"
                                             onChange={(e) => handleSelectAll(e.target.checked)}

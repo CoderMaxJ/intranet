@@ -547,32 +547,34 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               /></span>
           </label>
         </div>
-          <div className="fixed-field col-md-2 mt-2 position-relative">
-            <label htmlFor="timeIn" className="form-label">Time In</label>
-            <input
-              type="time"
-              name="timeIn"
-              className="form-control ps-4 w-100"
-              id="timeIn"
-              autoComplete="off"
-              inputMode="numeric"
-              value={formData.timeIn}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="fixed-field col-md-2 mt-2 position-relative">
-            <label htmlFor="timeOut" className="form-label">Time Out</label>
-            <input
-              type="time"
-              name="timeOut"
-              className="form-control ps-4 w-100"
-              id="timeOut"
-              autoComplete="off"
-              inputMode="numeric"
-              value={formData.timeOut}
-              onChange={handleInputChange}
-            />
-          </div>
+        <div className="fixed-field col-md-2 mt-2 position-relative">
+          <label htmlFor="timeIn" className="form-label">Time In</label>
+          <input
+            type="time"
+            name="timeIn"
+            id="timeIn"
+            className="time-input"
+            autoComplete="off"
+            inputMode="numeric"
+            value={formData.timeIn}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="fixed-field col-md-2 mt-2 position-relative">
+          <label htmlFor="timeOut" className="form-label">Time Out</label>
+          <input
+            type="time"
+            name="timeOut"
+            id="timeOut"
+            className="time-input"
+            autoComplete="off"
+            inputMode="numeric"
+            value={formData.timeOut}
+            onChange={handleInputChange}
+          />
+        </div>
+
         <div
           className="fixed-field col-md-12"
           style={{
