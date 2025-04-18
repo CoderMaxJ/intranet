@@ -135,17 +135,11 @@ export default function Updatepassword() {
               </div>
             )}
             <div className="modal-body p-4" style={{ display: 'block' }}>
-              <form onSubmit={handleSubmit}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center', // 💡 This centers all child items horizontally
-                    gap: '20px',
-                    transform: 'translateX(15px)'
-                  }}
+              <form onSubmit={handleSubmit} className="gap">
+                <div className="passwords-inputs"
                 >
                   {/* Current Password */}
+                  <div className="gap-3">
                   <div className="currentpass">
                     <label htmlFor="currentpassword" className="updatepass-label" style={{ display: 'block' }}>
                       Current Password
@@ -171,7 +165,7 @@ export default function Updatepassword() {
                   </div>
 
                   {/* New Password */}
-                  <div className="newpass">
+                  <div className="newpass  mt-3">
                     <div className="newpassword-eyetoggle">
                       <label htmlFor="password" className="updatepass-label" style={{ display: 'block' }}>
                         New Password{' '}
@@ -233,7 +227,7 @@ export default function Updatepassword() {
                     )}
                   </div>
                   {/* Confirm Password */}
-                  <div className="confirmpass">
+                  <div className="confirmpass mt-3">
                     <label htmlFor="confirmpassword" className="updatepass-label" style={{ display: 'block' }}>
                       Confirm Password
                     </label>
@@ -264,9 +258,10 @@ export default function Updatepassword() {
                   </div>
                   {/* Submit Button */}
                   <div className="upd">
-                    <button type="submit" className="update-pass btn btn-success">
+                    <button type="submit" className="update-pass mt-3">
                       Update Password
                     </button>
+                  </div>
                   </div>
                 </div>
               </form>

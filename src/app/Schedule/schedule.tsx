@@ -264,39 +264,10 @@ export default function CreateUD() {
                     <div>
                         <div>
                             <header>
-                                <div className="schedule-employee w-100 d-flex  flex-wrap">
-                                    <div className="time d-flex gap-4">
-                                        <div>
-                                            <label htmlFor="timein">Time In:</label>
-                                            <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="timeout">Time Out:</label>
-                                            <input type="time" value={timeOut} className="timeout" onChange={(e) => setTimeOut(e.target.value)} />
-                                        </div>
-                                        <div>
-
-                                            <div className="sched-button">
-
-                                                <button
-                                                    onClick={CreateSchedule}
-                                                    className="d-flex align-items-center "
-                                                >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="16"
-                                                        height="16"
-                                                        fill="#ffffff"
-                                                        className="bi bi-plus-circle-fill me-2"
-                                                        viewBox="0 0 16 16"
-                                                    >
-                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                                    </svg>
-                                                    Add Schedule
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="searchbar-containerrr">
+                                <div className="schedule-employee w-100 d-flex  flex-wrap px-4">
+                                    
+                                    <div className="time d-flex gap-4 flex-wrap">
+                                    <div className="searchbar-containerrr">
                                             <input
                                                 className="searchbar0"
                                                 id="search-employee"
@@ -317,6 +288,30 @@ export default function CreateUD() {
                                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                             </svg>
                                         </div>
+                                        <div className="sched-button gap-3 flex-wrap">
+                                            <label htmlFor="timein">Time In:</label>
+                                            <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
+                                            <label htmlFor="timeout">Time Out:</label>
+                                            <input type="time" value={timeOut} className="timeout" onChange={(e) => setTimeOut(e.target.value)} />
+                                        
+                                                <button
+                                                    onClick={CreateSchedule}
+                                                    className="d-flex align-items-center "
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="16"
+                                                        height="16"
+                                                        fill="#ffffff"
+                                                        className="bi bi-plus-circle-fill me-2"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                                                    </svg>
+                                                    Add Schedule
+                                                </button>
+                                            </div>
+                                       
                                     </div>
                                 </div>
                             </header>
@@ -335,12 +330,12 @@ export default function CreateUD() {
                             </div>
                         </div>
                     </div>
-                    <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
+                    <div className="emp-table px-4" style={{ position: 'relative', height: 'auto' }}>
 
                         <table
                             className="tabemp table table-striped table-hover table-bordered"
                             id="table-employee"
-                            style={{ width: '97.7%', margin: 'auto' }}
+                            style={{ margin: 'auto' }}
                         >
                             <thead>
                                 <tr>

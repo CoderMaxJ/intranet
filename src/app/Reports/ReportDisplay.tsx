@@ -224,7 +224,28 @@ export default function Daterange() {
                                     <form onSubmit={handleView}>
                                         <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
                                             {/* Date Range Section */}
+                                             {/* Search Input */}
+                                             <div className="report-input">
+                                                <input
+                                                    className="form-control"
+                                                    id="search-employee"
+                                                    type="text"
+                                                    placeholder="Search..."
+                                                    value={searchTerm}
+                                                    onChange={handleSearch}
+                                                />
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="20"
+                                                    height="20"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
+                                            </div>
                                             <div className="d-flex flex-wrap align-items-center justify-content-center gap-3">
+                                                
                                                 <div className="d-flex align-items-center">
                                                     <label htmlFor="id-start" className="rep-label mb-0 me-2">From:</label>
                                                     <input
@@ -258,29 +279,7 @@ export default function Daterange() {
                                                         View
                                                     </button>
                                                 </div>
-                                            </div>
-
-                                            {/* Search Input */}
-                                            <div className="report-input">
-                                                <input
-                                                    className="form-control"
-                                                    id="search-employee"
-                                                    type="text"
-                                                    placeholder="Search..."
-                                                    value={searchTerm}
-                                                    onChange={handleSearch}
-                                                />
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="20"
-                                                    height="20"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 16 16"
-                                                >
-                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                                </svg>
-                                            </div>
-                                            <button
+                                                <button
                                                 type="button"
                                                 className="download"
                                                 onClick={handleGenerateAndDownloadCSV}
@@ -291,6 +290,10 @@ export default function Daterange() {
                                                 </svg>
                                                 <label htmlFor="downloaf" className="align-items-center">Download</label>
                                             </button>
+                                            </div>
+
+                                           
+                                           
                                         </div>
                                     </form>
                                 </header>
