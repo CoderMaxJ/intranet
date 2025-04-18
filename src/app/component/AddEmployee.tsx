@@ -1,5 +1,4 @@
 import { Decryptor } from "@/security";
-import { da, ms } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -23,8 +22,6 @@ interface AddEmployeeData {
   role_id: number;
   isdayshift: number,
   status: number
-  timeIn: string;
-  timeOut: string;
   schedule: Schedule;
 }
 
@@ -56,17 +53,14 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     role_id: empData.role_id || 0,
     isdayshift: empData.isdayshift || 0,
     status: empData.status,
-    timeIn: empData.timeIn || "",
-    timeOut: empData.timeOut || "",
-    schedule: empData.schedule || {}
+    schedule: empData.schedule || { shiftstart: "", shiftend: "" }
   });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
-  const [timeIn,setTimeIn] = useState("");
-  const [timeOut,setTimeOut] = useState("");
+  const [isEditSchedule, setIsEditSchedule] = useState(false);
 
 
   useEffect(() => {
@@ -86,15 +80,24 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         role_id: empData.role_id || 0,
         isdayshift: empData.isdayshift || 0,
         status: empData.status,
-        timeIn: timeIn,
-        timeOut: timeOut,
-        schedule: empData.schedule || {}
+        schedule: empData.schedule || { shiftstart: "", shiftend: "" }
+        
       });
     }
   }, [empData]);
-console.log(formData.schedule)
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
+    if (name === "shiftstart" || name === "shiftend") {
+      setFormData(prev => ({
+        ...prev,
+        schedule: {
+          ...prev.schedule,
+          [name]: value
+        }
+      }));
+      return;
+    }
     setFormData((prev) => ({
       ...prev,
       [name]: value === "" && name === "dateofbirth" ? null : value,
@@ -106,7 +109,9 @@ console.log(formData.schedule)
         [name]: isChecked ? 1 : 0,
       }));
       return;
+
     }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (name === "acctid") {
       SetSelectedAccount(value)
@@ -125,20 +130,7 @@ console.log(formData.schedule)
         }
       ))
     }
-    if (name === "shiftstart") {
-      setFormData(prev => ({
-        ...prev,
-        shiftstart: value,
-      }));
-    
-    }
-    if (name === "shiftend") {
-      setFormData(prev => ({
-        ...prev,
-        shiftend: value,
-      }));
-    
-    }
+
   }
 
   const fetchPrivileges = async () => {
@@ -277,6 +269,7 @@ console.log(formData.schedule)
       });
 
       if (response.status === 200) {
+        setIsEditSchedule(false);
         successToast("Updated successfully!");
         btnClose?.click();
       } else {
@@ -321,8 +314,6 @@ console.log(formData.schedule)
       role_id: 0,
       isdayshift: 0,
       status: 1,
-      timeIn: "",
-      timeOut: "",
       schedule: {shiftend: "", shiftstart: ""}
     });
     isClose();
@@ -333,11 +324,17 @@ console.log(formData.schedule)
     mode = "create"
   }
 
+const toggleChangeSchedule = () => {
+  if(isEditSchedule){
+    setIsEditSchedule(false);
+  }else{
+    setIsEditSchedule(true);
+  }
+}
   return (
     <div className="addemployee-form" >
       <form className="row d-flex flex-wrap" onSubmit={handleSubmitForm} >
-        <div className="fixed-field col-md-4">
-          <button
+      <button
             id="buttonclose"
             type="button"
             className="btn-close"
@@ -353,6 +350,8 @@ console.log(formData.schedule)
             onClick={clearInputs}
           >
           </button>
+      <div className="col-md-4 mt-1 w-100 d-flex justify-content-around align-items-start border border-1 p-1 rounded  ">
+        <div className="fixed-field col-md-5">
           <label htmlFor="fname" className="form-label">
             First Name
           </label>
@@ -360,7 +359,7 @@ console.log(formData.schedule)
             required
             type="text"
             name="fname"
-            className="form-control"
+            className="form-control w-75"
             id="fname"
             value={formData.fname}
             onChange={handleInputChange}
@@ -374,7 +373,7 @@ console.log(formData.schedule)
           <input
             type="text"
             name="mname"
-            className="form-control"
+            className="form-control w-75"
             id="mname"
             value={formData.mname}
             onChange={handleInputChange}
@@ -389,65 +388,69 @@ console.log(formData.schedule)
             required
             type="text"
             name="lname"
-            className="form-control"
+            className="form-control w-75"
             id="lname"
             value={formData.lname}
             onChange={handleInputChange}
             placeholder="Dela Cruz"
           />
         </div>
-        <div className="fixed-field col-md-3 mb-3">
-          <label htmlFor="dateofbirth" className="form-label">
-            Date of Birth
-          </label>
-          <input
-            required
-            type="date"
-            name="dateofbirth"
-            className="form-control"
-            id="dateofbirth"
-            value={formData.dateofbirth}
-            onChange={handleInputChange}
-            max="2015-12-31"
-          />
         </div>
-        <div className="fixed-field col-md-3 mb-3">
-          <label htmlFor="maritalstatus" className="form-label">
-            Marital Status
-          </label>
-          <select
-            required
-            name="maritalstatus"
-            value={formData.maritalstatus}
-            id="maritalstatus"
-            className="form-select"
-            onChange={handleInputChange}
-          > <option value="">-- SELECT --</option>
-            <option value="Single">Single</option>
-            <option value="Married">Married</option>
-            <option value="Separated">Separated</option>
-            <option value="Widowed">Widowed</option>
-            <option value="Divorced">Divorced</option>
-            <option value="Other">Other</option>
-          </select>
+        <div className="col-md-5 mt-3 w-100 d-flex justify-content-around align-items-start border border-1 p-1 rounded position-relative ">
+              <div className="fixed-field col-md-3 mb-3">
+                <label htmlFor="dateofbirth" className="form-label">
+                  Date of Birth
+                </label>
+                <input
+                  required
+                  type="date"
+                  name="dateofbirth"
+                  className="form-control"
+                  id="dateofbirth"
+                  value={formData.dateofbirth}
+                  onChange={handleInputChange}
+                  max="2015-12-31"
+                />
+              </div>
+            <div className="fixed-field col-md-3 mb-3">
+              <label htmlFor="maritalstatus" className="form-label">
+                Marital Status
+              </label>
+              <select
+                required
+                name="maritalstatus"
+                value={formData.maritalstatus}
+                id="maritalstatus"
+                className="form-select"
+                onChange={handleInputChange}
+              > <option value="">-- SELECT --</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Separated">Separated</option>
+                <option value="Widowed">Widowed</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div className="fixed-field col-md-3 mb-3">
+              <label htmlFor="gender" className="form-label">
+                Gender
+              </label>
+              <select
+                required
+                name="gender"
+                value={formData.gender}
+                id="gender"
+                className="form-select w-5"
+                onChange={handleInputChange}
+              >
+                <option value="">-- SELECT --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
         </div>
-        <div className="fixed-field col-md-3 mb-3">
-          <label htmlFor="gender" className="form-label">
-            Gender
-          </label>
-          <select
-            required
-            name="gender"
-            value={formData.gender}
-            id="gender"
-            className="form-select w-5"
-            onChange={handleInputChange}
-          >
-            <option value="">-- SELECT --</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
+        <div className="col-md-5 mt-3 w-100 d-flex justify-content-around align-items-start border border-1 p-1 rounded position-relative ">
         <div className="fixed-field col-md-3 mb-2">
           <label htmlFor="contactno" className="form-label">
             Contact No
@@ -488,6 +491,8 @@ console.log(formData.schedule)
             placeholder="Zapatera, Cebu City"
           />
         </div>
+        </div>
+        <div className="col-md-5 mt-3 w-100 d-flex justify-content-around align-items-center border border-1 p-1 rounded position-relative ">
         <div className="fixed-field col-md-3 mb-3">
           <label htmlFor="position" className="form-label">
             Position
@@ -508,7 +513,6 @@ console.log(formData.schedule)
             ))}
           </select>
         </div>
-
         <div className="fixed-field col-md-3 mb-3">
           <label htmlFor="position" className="form-label">
             Account
@@ -529,9 +533,10 @@ console.log(formData.schedule)
         </div>
 
         {mode === 'edit' && (
-          <div className="fixed-field col-md-4 mb-1">
-            <div className="mb-3">
-              <label htmlFor="">Assign Privileges</label>
+          
+          <div className="fixed-field col-md-3 mb-3">
+            <div className="mb-1">
+              <label className="form-label" htmlFor="">Assign Privileges</label>
             </div>
             <select name="role_id"
               value={formData.role_id}
@@ -546,7 +551,9 @@ console.log(formData.schedule)
             </select>
           </div>
         )}
-        <div className="fixed-field col-md-2 mt-3  d-flex justify-content-flex-start align-items-center">
+        </div>
+        <div className="mt-3 w-100 d-flex justify-content-around align-items-center border border-1 p-3 rounded position-relative ">
+        <div className="fixed-field col-md-2 mt-4  d-flex justify-content-around align-items-center ">
           <label htmlFor="is_dayshift" className="form-label">
             Day Shift
             <span className="">
@@ -569,34 +576,75 @@ console.log(formData.schedule)
               /></span>
           </label>
         </div>
-          <div className="fixed-field col-md-2 mt-2 position-relative">
-            <label htmlFor="timeIn" className="form-label">Time In</label>
-            <input
-              required
-              type="time"
-              name="timeIn"
-              className="form-control ps-4 w-100"
-              id="shiftstart"
-              autoComplete="off"
-              inputMode="numeric"
-              value={formData.schedule.shiftstart}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="fixed-field col-md-2 mt-2 position-relative">
-            <label htmlFor="timeOut" className="form-label">Time Out</label>
-            <input
-              required
-              type="time"
-              name="shiftend"
-              className="form-control ps-4 w-100"
-              id="timeOut"
-              autoComplete="off"
-              inputMode="numeric"
-              value={formData.schedule.shiftend}
-              onChange={handleInputChange}
-            />
-          </div>
+                  {formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
+                    <div className=" col-md-2">
+                      <label className="form-label" htmlFor="timeIn">Time In</label>
+                      <input
+                      
+                        type="time"
+                        className="form-control ps-1 mt-1"
+                        id="timeIn"
+                        value={formData.schedule.shiftstart.slice(0, 5)}
+                        disabled
+                        // readOnly
+                      />
+                    </div>
+                  ) : (
+                    <div className="col-md-3">
+                      <label htmlFor="shiftstart" className="form-label">Time In</label>
+                      <input
+                        required
+                        value={formData.schedule.shiftstart}
+                        type="time"
+                        name="shiftstart"
+                        className="form-control"
+                        id="shiftstart"
+                        autoComplete="off"
+                        inputMode="numeric"
+                        onChange={handleInputChange}
+                        
+                      />
+                    </div>
+                  )}
+
+                  {/* Time Out */}
+                  {formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
+                    <div className=" col-md-2">
+                      <label className="form-label" htmlFor="timeOut">Time Out</label>
+                      <input
+                        type="time"
+                        className="form-control mt-1 "
+                        id="timeOut"
+                        value={formData.schedule.shiftend.slice(0, 5)}
+                        disabled
+                        // readOnly
+                      />
+                    </div>
+                  ) : (
+                    <div className=" col-md-2">
+                      <label htmlFor="shiftend" className="form-label">Time Out</label>
+                      <input
+                        required
+                        value={formData.schedule.shiftend}
+                        type="time"
+                        name="shiftend"
+                        className="form-control ps-4 w"
+                        id="shiftend"
+                        autoComplete="off"
+                        inputMode="numeric"
+                        onChange={handleInputChange}
+                        
+                      />
+                    </div>
+                  )}
+                    <div className="w-20 col-md-1">
+                    {formData.schedule.shiftend != "" && formData.schedule.shiftstart != "" && (
+                        <button className="edit-schedule-btn btn btn-secondary btn-sm mt-4" type="button" onClick={toggleChangeSchedule}>
+                        <i className="bi bi-pen sm"></i>
+                        </button>
+                    )}
+                    </div>
+            </div>
         <div
           className="fixed-field col-md-12"
           style={{
