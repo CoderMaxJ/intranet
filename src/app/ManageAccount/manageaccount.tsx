@@ -62,7 +62,7 @@ export default function ManageDepartment() {
             fetchManagerList();
         }
     }, [token]);
-
+//
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",
         autoClose: 2000,
