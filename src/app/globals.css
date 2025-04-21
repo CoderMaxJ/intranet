@@ -374,7 +374,8 @@ input:focus {
 }
 
 .newpass-eyetoggle svg {
-  transform: translateX(-25px);
+ position: absolute;
+ transform: translateY(10px) translateX(-25px);
 }
 
 .button-login {
@@ -532,7 +533,6 @@ input:focus {
 
 .acc-head input {
   justify-content: center;
-  width: 100%;
 }
 
 @media only screen and (max-width: 1020px) {
@@ -573,10 +573,6 @@ input:focus {
 
   .modal-content {
     width: 100% !important;
-  }
-
-  .updatepassword-input {
-    width: 90% !important;
   }
 
   .updatepassword-input1 {
@@ -668,15 +664,29 @@ input:focus {
 }
 
 .searchbar3 {
-  margin-top: 1px;
-  width: 100% !important;
-  padding: 7px 5px 7px 65px !important;
+  padding: 8px 12px 8px 60px;
   border-radius: 5px;
-  border: 2px solid #ccc;
-  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
-  background-color: rgb(240, 240, 240);
-  color: #000000 !important;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  color: #000000;
+  width: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  max-width: 400px;
+  min-width: 0;
 }
+
+
+/* This triggers when screen width is 688px or less */
+/* @media screen and (max-width: 688px) {
+  .searchbar3 {
+    width: auto;
+    padding-left: 40px;
+    font-size: 13px;
+  }
+} */
+
 
 .searchbar {
   padding: 7px 5px 7px 65px !important;
@@ -696,15 +706,44 @@ input:focus {
 }
 
 .searchbar12 {
-  width: 100%;
-  min-width: 350px !important;
-  padding: 7px 5px 7px 65px !important;
+  padding: 8px 12px 8px 60px;
   border-radius: 5px;
-  border: 2px solid #ccc !important;
-  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
+  border: 1px solid #ccc;
   background-color: #f0f0f0;
   color: #000000;
-  margin-top: 3px;
+  width: 100%;
+  max-width: 400px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  min-width: 0; /* allow shrinking beyond intrinsic size */
+}
+.searchbar-containerr {
+  flex: 1;
+  min-width: 0; /* crucial for allowing shrinking */
+  position: relative;
+}
+
+.search12:focus {
+  background-color: #008dcc !important;
+}
+
+.searchbar0 {
+  padding: 8px 12px 8px 60px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  color: #000000;
+  width: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  min-width: 400px;
+}
+@media only screen and (max-width: 731px) {
+  .searchbar0 {
+    min-width: 250px; 
+  }
 }
 
 .newpass {
@@ -773,10 +812,6 @@ input:focus {
   color: #000000;
 }
 
-.searchbar-containerr {
-  position: relative;
-}
-
 .searchbar-containerr svg {
   position: absolute;
   left: 17px;
@@ -784,6 +819,18 @@ input:focus {
   pointer-events: none;
   color: #888;
   transform: translateY(-50%);
+}
+.searchbar-containerrr {
+  position: relative;
+}
+
+.searchbar-containerrr svg {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  pointer-events: none;
+  color: #888;
+  transform: translateY(-9px) ;
 }
 
 .bi-search {
@@ -813,10 +860,6 @@ input:focus {
   font-size: 18px;
 }
 
-.update-pass {
-  transform: translateX(-5px);
-}
-
 /* header-icons */
 .create-update-delete {
   justify-content: flex-start;
@@ -828,6 +871,19 @@ input:focus {
   margin-top: 10px;
 }
 
+.update-pass {
+  min-width: 290px;
+  width: 100% !important;
+  padding: 7px;
+  border: none;
+  color: #ffffff;
+  background-color: #045fc7;
+  border-radius: 4px;
+}
+
+.update-pass:hover {
+  background-color: #0d65c9;
+}
 .right-section {
   display: flex;
 
@@ -1352,6 +1408,8 @@ table {
   flex-wrap: wrap;
   justify-self: center;
   width: 100%;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .manage-anchor a {
@@ -1522,7 +1580,6 @@ table {
 }
 
 .manageemployee-button {
-  transform: translateX(-20px);
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -2048,15 +2105,17 @@ table {
   gap: 65px;
   padding: 20px 20px 1px 20px;
 }
-.sched-button {
+.sched-button  button{
   border-radius: 4px;
   font-weight: 500;
-  padding: 10px;
+  padding: 7px;
   white-space: nowrap;
   background-color: #0ebb39;
   border: none;
   color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 40px;
+  margin-top: 3px;
 }
 
 .time {
@@ -2068,14 +2127,16 @@ table {
   background-position: center center;
   background-repeat: no-repeat;
   position: sticky;
-  padding: 15px;
+  padding: 10px;
   color: white;
   width: 100%;
+  justify-content: space-between;
 }
 
 .time div {
   display: flex;
-  gap: 7px;
+  gap: 3px;
+  align-items: center;
 }
 
 .time input[type="time"] {
@@ -2122,6 +2183,11 @@ table {
 .form-label {
   font-weight: 600;
   color: #615959;
+  margin-bottom: 4px;
+}
+.rep-label {
+  font-weight: 600;
+  color: #ffffff;
   margin-bottom: 4px;
 }
 
@@ -2580,14 +2646,15 @@ table {
 
 .search-division {
   position: relative;
-  max-width: 400px;
+  min-width: 0;
+  flex: 1;
 }
 
 .search-division svg {
   position: absolute;
   left: 12px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-40%);
   pointer-events: none;
   color: #888;
 }

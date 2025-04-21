@@ -289,7 +289,7 @@ export default function CreateUD() {
           <div>
             <div>
               <header>
-                <div className="w-100 d-flex justify-content-center flex-wrap py-2 px-2 gap-3">
+                <div className="w-100 d-flex justify-content-between flex-wrap py-2 px-4 gap-3">
                   <div className="searchbar-containerr">
                     <input
                       className="searchbar12"
@@ -314,7 +314,7 @@ export default function CreateUD() {
                     <div className="manageemployee-button py-1">
                       <button
                         type="button"
-                        className="btn btn-success btn-sm d-flex align-items-center ms-4"
+                        className="btn btn-success btn-sm d-flex align-items-center"
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
                       >
@@ -349,11 +349,11 @@ export default function CreateUD() {
               </div>
             </div>
           </div>
-          <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
+          <div className="emp-table px-4" style={{ position: 'relative', height: 'auto' }}>
             <table
               className="tabemp table table-striped table-hover table-bordered"
               id="table-employee"
-              style={{ width: '97.7%', margin: 'auto' }}
+              style={{ margin: 'auto' }}
             >
               <thead>
                 <tr>

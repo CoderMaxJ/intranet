@@ -320,7 +320,7 @@ export default function ManageDepartment() {
 
                         <div className="employee-header">
                             <div
-                                className="acc-head gap-3 d-flex justify-content-center py-2"
+                                className="acc-head d-flex justify-content-between px-4 gap-3"
                             >
                                 <div className="search-division"
                                 >

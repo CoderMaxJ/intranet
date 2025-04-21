@@ -50,7 +50,7 @@ export default function CreateUD() {
     const [allSelected, setAllSelected] = useState(false);
     const [timeIn, setTimeIn] = useState("");
     const [timeOut, setTimeOut] = useState("");
-    const EmpNoList:any = [];
+    const EmpNoList: any = [];
 
     const token = localStorage.getItem("token");
 
@@ -65,14 +65,14 @@ export default function CreateUD() {
         if (checked) {
             const allEmpnos = employees.map(emp => emp.empno);
             setSelectedEmployees(allEmpnos);
-          
+
         } else {
             setSelectedEmployees([]);
         }
     };
-    useEffect(()=>{
+    useEffect(() => {
         EmpNoList.push(...selectedEmployees);
-    },[EmpNoList])
+    }, [EmpNoList])
 
     useEffect(() => {
         GetEmployee(currentPage);
@@ -215,14 +215,14 @@ export default function CreateUD() {
         search(e);
     };
 
-    
+
     const create = async () => {
         const data = {
             empno: EmpNoList,
             timein: timeIn,
             timeout: timeOut
         }
-      
+
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
             method: "POST",
             headers: {
@@ -234,23 +234,23 @@ export default function CreateUD() {
 
         if (response.status === 201) {
             const data = await response.json();
-           
-                successToast(data.message);
-                GetEmployee(currentPage);
-                setSelectedEmployees([]);
-                setAllSelected(false);
+
+            successToast(data.message);
+            GetEmployee(currentPage);
+            setSelectedEmployees([]);
+            setAllSelected(false);
         } else {
-            const error = await response.json(); 
+            const error = await response.json();
             errorToast(error.message);
         }
     }
-    const CreateSchedule = () =>{
-        if(timeIn === "" || timeOut === "" || EmpNoList == 0){
-            return null ;
-        }else{
+    const CreateSchedule = () => {
+        if (timeIn === "" || timeOut === "" || EmpNoList == 0) {
+            return null;
+        } else {
             create();
         }
-        
+
     }
 
     return (
@@ -268,52 +268,28 @@ export default function CreateUD() {
                                     <div className="time d-flex gap-4">
                                         <div>
                                             <label htmlFor="timein">Time In:</label>
-                                            <input type="time" value={timeIn} className="timein" onChange={(e)=>setTimeIn(e.target.value)} />
-                                        </div>
-                                        <div>
+                                            <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
                                             <label htmlFor="timeout">Time Out:</label>
-                                            <input type="time" value={timeOut} className="timeout" onChange={(e)=>setTimeOut(e.target.value)} />
-                                        </div>
-                                        <div>
-                                        <div className="manageemployee-button">
-                      <button
-                        onClick={CreateSchedule}
-                        className="btn btn-success btn-sm d-flex align-items-center ms-4"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="#ffffff"
-                          className="bi bi-plus-circle-fill me-2"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                        </svg>
-                        Add Schedule
-                      </button>
-                    </div>
-                                        </div>
-                                    </div>
-                                    <div className="searchbar-containerr">
-                                        <input
-                                            className="searchbar12"
-                                            id="search-employee"
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            onKeyUp={searchKeyword}
-                                        />
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            fill="currentColor"
-                                            viewBox="0 0 16 16"
-                                        >
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                        </svg>
+                                            <input type="time" value={timeOut} className="timeout" onChange={(e) => setTimeOut(e.target.value)} />
+                                        
+                                                <button
+                                                    onClick={CreateSchedule}
+                                                    className="d-flex align-items-center "
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="16"
+                                                        height="16"
+                                                        fill="#ffffff"
+                                                        className="bi bi-plus-circle-fill me-2"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                                                    </svg>
+                                                    Add Schedule
+                                                </button>
+                                            </div>
+                                       
                                     </div>
                                 </div>
                             </header>
@@ -332,16 +308,17 @@ export default function CreateUD() {
                             </div>
                         </div>
                     </div>
-                    <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
+                    <div className="emp-table px-4" style={{ position: 'relative', height: 'auto' }}>
 
                         <table
                             className="tabemp table table-striped table-hover table-bordered"
                             id="table-employee"
-                            style={{ width: '97.7%', margin: 'auto' }}
+                            style={{ margin: 'auto' }}
                         >
                             <thead>
                                 <tr>
                                     <th>
+
 
                                         <input
                                             type="checkbox"
