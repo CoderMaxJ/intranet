@@ -264,9 +264,31 @@ export default function CreateUD() {
                     <div>
                         <div>
                             <header>
-                                <div className="schedule-employee w-100 d-flex  flex-wrap">
-                                    <div className="time d-flex gap-4">
-                                        <div>
+                                <div className="schedule-employee w-100 d-flex  flex-wrap px-4">
+                                    
+                                    <div className="time d-flex gap-4 flex-wrap">
+                                    <div className="searchbar-containerrr">
+                                            <input
+                                                className="searchbar0"
+                                                id="search-employee"
+                                                type="text"
+                                                placeholder="Search..."
+                                                value={searchTerm}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                                onKeyUp={searchKeyword}
+                                            />
+                                            <svg
+                                            className="schedule-svg"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="20"
+                                                height="20"
+                                                fill="currentColor"
+                                                viewBox="0 0 16 16"
+                                            >
+                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                            </svg>
+                                        </div>
+                                        <div className="sched-button gap-3 flex-wrap">
                                             <label htmlFor="timein">Time In:</label>
                                             <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
                                             <label htmlFor="timeout">Time Out:</label>
@@ -318,7 +340,6 @@ export default function CreateUD() {
                             <thead>
                                 <tr>
                                     <th>
-
 
                                         <input
                                             type="checkbox"

@@ -584,7 +584,7 @@ const toggleChangeSchedule = () => {
                         type="time"
                         className="form-control ps-1 mt-1"
                         id="timeIn"
-                        value={formData.schedule.shiftstart.slice(0, 5)}
+                        value={formData.schedule.shiftstart}
                         disabled
                         // readOnly
                       />
@@ -615,7 +615,7 @@ const toggleChangeSchedule = () => {
                         type="time"
                         className="form-control mt-1 "
                         id="timeOut"
-                        value={formData.schedule.shiftend.slice(0, 5)}
+                        value={formData.schedule.shiftend}
                         disabled
                         // readOnly
                       />
