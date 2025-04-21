@@ -1,12 +1,13 @@
 "use client";
 import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmployee";
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useMemo} from "react";
 import Header from "../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
 import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
+import debounce from 'lodash.debounce';
 
 interface Information {
     empno: number;
@@ -181,40 +182,45 @@ export default function CreateUD() {
     }
 
     const id = localStorage.getItem("user_id");
-    const search = (e: any) => {
-        e.preventDefault();
-        async function SearchData(name: string) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${name}/`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${Decryptor(token || '')}`
-                }
-            });
-            if (response.status == 200) {
-                const data = await response.json();
-                setEmployees(data.data);
-            } else {
-                console.log("error ");
-            }
-        }
-        if (searchTerm !== "") {
-            SearchData(searchTerm);
-        } else {
-            GetEmployee(currentPage);
-        }
-    };
-
+     const debouncedSearch = useMemo(() => {
+       return debounce(async (value: string) => {
+         if (value.trim() === "") {
+           GetEmployee(currentPage);
+         } else {
+           const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${value}/`, {
+             method: "GET",
+             headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${Decryptor(token || '')}`
+             }
+           });
+     
+           if (response.ok) {
+             const data = await response.json();
+             setEmployees(data.data);
+           } else {
+             console.error("Error fetching search results");
+           }
+         }
+       }, 300); // 300ms debounce
+     }, [currentPage, id, token]);
+     
+     // Optional cleanup to prevent memory leaks
+     useEffect(() => {
+       return () => {
+         debouncedSearch.cancel();
+       };
+     }, [debouncedSearch]);
+   
+     useEffect(()=>{
+       return () => {
+         debouncedSearch.cancel();
+       };
+     },[debouncedSearch])
     const handlePageChange = (page: number) => {
         setCurrentPage(page); // Update the current page
         GetEmployee(page); // Fetch data for the new page
     };
-
-    const searchKeyword = async (e: any) => {
-        e.preventDefault();
-        search(e);
-    };
-
 
     const create = async () => {
         const data = {
@@ -274,8 +280,8 @@ export default function CreateUD() {
                                                 type="text"
                                                 placeholder="Search..."
                                                 value={searchTerm}
-                                                onChange={(e) => setSearchTerm(e.target.value)}
-                                                onKeyUp={searchKeyword}
+                                               onChange={(e)=>{ setSearchTerm(e.target.value);
+                                                debouncedSearch(e.target.value);}}
                                             />
                                             <svg
                                             className="schedule-svg"
