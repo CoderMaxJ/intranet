@@ -1339,6 +1339,10 @@ tbody td {
   z-index: 1;
 }
 
+.emp-table thead{ 
+  white-space: nowrap;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
