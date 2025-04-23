@@ -2602,6 +2602,46 @@ table {
   pointer-events: none;
 }
 
+.form-controll {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 5px;
+  padding-right: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-controll input {
+  width: 100%;
+  padding: 7px 40px 7px 10px; /* Leave space for icon */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-controll::after {
+  content: "\1F552";
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Position icon from right edge */
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black;
+  pointer-events: none;
+}
+
+.timein-create {
+  min-width: 250px;
+  width: 100%;
+}
+
+.timeout-create {
+  min-width: 250px;
+  width: 100%;
+}
 .arrow-btn {
   display: flex !important;
   align-items: center !important;
@@ -2615,7 +2655,6 @@ table {
   background-color: whitesmoke !important;
   border: 2px solid rgb(197, 190, 190) !important;
 }
-
 .arrow-img {
   color: #6c757d;
   margin-top: -5px;
