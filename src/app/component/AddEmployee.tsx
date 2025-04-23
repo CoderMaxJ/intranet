@@ -593,7 +593,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           )}
         </div>
         <div className="mt-3 flex-wrap d-flex justify-content-between align-items-center">
-          <div className="fixed-field col-md-2 mt-4  d-flex justify-content-around align-items-center ">
+          {/* <div className="fixed-field col-md-2 mt-4  d-flex justify-content-around align-items-center ">
             <label htmlFor="is_dayshift" className="form-label">
               Day Shift
               <span className="">
@@ -615,7 +615,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   onChange={handleInputChange}
                 /></span>
             </label>
-          </div>
+          </div> */}
           {formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
             <div className="timein col-md-2">
               <label className="form-label" htmlFor="timeIn">Time In</label>
