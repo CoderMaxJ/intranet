@@ -20,7 +20,6 @@ interface AddEmployeeData {
   address: string;
   acctid: number;
   role_id: number;
-  isdayshift: number,
   status: number
   schedule: Schedule;
 }
@@ -51,7 +50,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     address: empData.address || "",
     acctid: empData.acctid || 0,
     role_id: empData.role_id || 0,
-    isdayshift: empData.isdayshift || 0,
     status: empData.status,
     schedule: empData.schedule || { shiftstart: "", shiftend: "" }
   });
@@ -78,7 +76,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         address: empData.address || "",
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
-        isdayshift: empData.isdayshift || 0,
         status: empData.status,
         schedule: empData.schedule || { shiftstart: "", shiftend: "" }
 
@@ -312,7 +309,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       address: "",
       acctid: 0,
       role_id: 0,
-      isdayshift: 0,
       status: 1,
       schedule: { shiftend: "", shiftstart: "" }
     });
@@ -593,29 +589,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           )}
         </div>
         <div className="mt-3 flex-wrap d-flex justify-content-between align-items-center">
-          {/* <div className="fixed-field col-md-2 mt-4  d-flex justify-content-around align-items-center ">
-            <label htmlFor="is_dayshift" className="form-label">
-              Day Shift
-              <span className="">
-                <input
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    borderRadius: "4px",
-                    border: "1px solid #ccc",
-                    cursor: "pointer",
-                    marginLeft: "10px",
-                  }}
-                  type="checkbox"
-                  name="isdayshift"
-                  className="form-check-input "
-                  id="is_dayshift"
-                  value={formData.isdayshift}
-                  checked={formData.isdayshift === 1}
-                  onChange={handleInputChange}
-                /></span>
-            </label>
-          </div> */}
           {formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
             <div className="timein col-md-2">
               <label className="form-label" htmlFor="timeIn">Time In</label>
