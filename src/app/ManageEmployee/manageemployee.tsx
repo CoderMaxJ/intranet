@@ -367,6 +367,7 @@ export default function CreateUD() {
               <thead>
                 <tr>
                   <th scope="col" >Employee No.</th>
+                  <th scope="col" >Username</th>
                   <th scope="col" >First Name</th>
                   <th scope="col" >Middle Name</th>
                   <th scope="col" >Last Name</th>
@@ -377,7 +378,6 @@ export default function CreateUD() {
                   {user_privilege.includes("manage_users") && (<th scope="col" >Contact No.</th>)}
                   {user_privilege.includes("manage_users") && (<th scope="col" >Account</th>)}
                   <th scope="col" >Position</th>
-                  <th scope="col" >Username</th>
                   <th scope="col" >Actions</th>
                 </tr>
               </thead>
@@ -386,6 +386,7 @@ export default function CreateUD() {
                   employees.map((info, index) => (
                     <tr key={info.empno}>
                       <td className="p">{info.empno}</td>
+                      <td>{info.un}</td>
                       <td>{info.fname}</td>
                       <td>{info.mname}</td>
                       <td>{info.lname}</td>
@@ -396,7 +397,6 @@ export default function CreateUD() {
                       {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{getAccountName(info.acctid)}</td>)}
                       <td>{info.position}</td>
-                      <td>{info.un}</td>
                       <td>
                         <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
                           {user_privilege.includes("update_breaktool_account") && (

@@ -61,16 +61,16 @@ export default function CreateUD() {
         );
     };
 
-    const handleSelectAll = (checked: boolean) => {
-        setAllSelected(checked);
-        if (checked) {
-            const allEmpnos = employees.map(emp => emp.empno);
-            setSelectedEmployees(allEmpnos);
+    // const handleSelectAll = (checked: boolean) => {
+    //     setAllSelected(checked);
+    //     if (checked) {
+    //         const allEmpnos = employees.map(emp => emp.empno);
+    //         setSelectedEmployees(allEmpnos);
 
-        } else {
-            setSelectedEmployees([]);
-        }
-    };
+    //     } else {
+    //         setSelectedEmployees([]);
+    //     }
+    // };
     useEffect(() => {
         EmpNoList.push(...selectedEmployees);
     }, [EmpNoList])
@@ -345,14 +345,6 @@ export default function CreateUD() {
                         >
                             <thead>
                                 <tr>
-                                    <th>
-
-                                        <input
-                                            type="checkbox"
-                                            onChange={(e) => handleSelectAll(e.target.checked)}
-                                            checked={allSelected}
-                                        />
-                                    </th>
                                     <th scope="col" >Employee No.</th>
                                     <th scope="col" >First Name</th>
                                     <th scope="col" >Last Name</th>
@@ -364,13 +356,6 @@ export default function CreateUD() {
                                 {employees?.length ? (
                                     employees.map((info, index) => (
                                         <tr key={info.empno}>
-                                            <td>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedEmployees.includes(info.empno)}
-                                                    onChange={() => toggleSelect(info.empno)}
-                                                />
-                                            </td>
                                             <td className="p">{info.empno}</td>
                                             <td>{info.fname}</td>
                                             <td>{info.lname}</td>

@@ -221,7 +221,7 @@ export default function Dashboard() {
                         </a>
                     </div>
                     <div className="undermanage-hover">
-                                        <div className="employee-anchor mb-3">
+                                        <div className="employee-anchorr mb-3">
                                             <a className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`}
                                                 onClick={() => routerPush("/Schedule")}
                                                 style={{
