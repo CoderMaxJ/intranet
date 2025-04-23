@@ -71,7 +71,7 @@ function BreakDataTable() {
         return;
       }
 
-      if (!response.ok || response.status === 404 || response.status === 401 || response.status === 403) {
+      if ( response.status === 404 || response.status === 403) {
         deleteToken();
         localStorage.clear();
         router.push("/");
