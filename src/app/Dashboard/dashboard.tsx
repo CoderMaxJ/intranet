@@ -220,6 +220,24 @@ export default function Dashboard() {
                             )}
                         </a>
                     </div>
+                    <div className="undermanage-hover">
+                                        <div className="employee-anchor mb-3">
+                                            <a className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`}
+                                                onClick={() => routerPush("/Schedule")}
+                                                style={{
+                                                    borderRadius: "2px", width: navWidth === '217px' ? '100%' : '2vw'
+                                                }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-calendar2-check" viewBox="0 0 16 16">
+                                                    <path d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0" />
+                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
+                                                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z" />
+                                                </svg>
+                                                {showEmployee === true && (
+                                                    <label className="emp-label" htmlFor="employee">Schedule</label>
+                                                )}
+                                            </a>
+                                        </div>
+                                    </div>
                     <div className="accordion-item accordion" >
                         <div className="manage-div">
                             <div className="manage-menus d-flex justify-content-between align-items-center"
@@ -279,24 +297,7 @@ export default function Dashboard() {
                                             </a>
                                         </div>
                                     </div>
-                                    <div className="undermanage-hover">
-                                        <div className="employee-anchor mt-3">
-                                            <a className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`}
-                                                onClick={() => routerPush("/Schedule")}
-                                                style={{
-                                                    borderRadius: "2px", width: navWidth === '217px' ? '100%' : '2vw'
-                                                }}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-calendar2-check" viewBox="0 0 16 16">
-                                                    <path d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0" />
-                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
-                                                    <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z" />
-                                                </svg>
-                                                {showEmployee === true && (
-                                                    <label className="emp-label" htmlFor="employee">Schedule</label>
-                                                )}
-                                            </a>
-                                        </div>
-                                    </div>
+                                  
                                 </div>
                             </div>
                         </div>

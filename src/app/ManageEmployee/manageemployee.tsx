@@ -370,8 +370,8 @@ export default function CreateUD() {
                   <th scope="col" >First Name</th>
                   <th scope="col" >Middle Name</th>
                   <th scope="col" >Last Name</th>
-                  {user_privilege.includes("manage_users") && (<th scope="col" >Address</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col" >Marital Status</th>)}
+                  {/* {user_privilege.includes("manage_users") && (<th scope="col" >Address</th>)}
+                  {user_privilege.includes("manage_users") && (<th scope="col" >Marital Status</th>)} */}
                   {user_privilege.includes("manage_users") && (<th scope="col" >Date of Birth</th>)}
                   {user_privilege.includes("manage_users") && (<th scope="col" >Gender</th>)}
                   {user_privilege.includes("manage_users") && (<th scope="col" >Contact No.</th>)}
@@ -389,8 +389,8 @@ export default function CreateUD() {
                       <td>{info.fname}</td>
                       <td>{info.mname}</td>
                       <td>{info.lname}</td>
-                      {user_privilege.includes("manage_users") && (<td>{info.address}</td>)}
-                      {user_privilege.includes("manage_users") && (<td>{info.maritalstatus}</td>)}
+                      {/* {user_privilege.includes("manage_users") && (<td>{info.address}</td>)}
+                      {user_privilege.includes("manage_users") && (<td>{info.maritalstatus}</td>)} */}
                       {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
