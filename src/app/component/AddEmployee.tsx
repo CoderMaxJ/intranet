@@ -347,7 +347,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         >
         </button>
         <div className="d-flex flex-wrap justify-content-between align-items-start">
-          <div className="fixed-field col-md-4">
+          <div className="fixed-field col-md-4 mt-3">
             <label htmlFor="fname" className="form-label">
               First Name
             </label>
@@ -362,7 +362,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               placeholder="Juan"
             />
           </div>
-          <div className="fixed-field col-md-3 mb-3">
+          <div className="fixed-field col-md-3 mt-3">
             <label htmlFor="mname" className="form-label">
               Middle Name
             </label>
@@ -376,7 +376,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               placeholder="Montenegro"
             />
           </div>
-          <div className="fixed-field col-md-4 mb-3">
+          <div className="fixed-field col-md-4 mt-3">
             <label htmlFor="lname" className="form-label">
               Last Name
             </label>
@@ -428,7 +428,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               <option value="Other">Other</option>
             </select>
           </div>
-          <div className="fixed-field col-md-4 mb-3">
+          <div className="fixed-field col-md-4">
             <label htmlFor="gender" className="form-label">
               Gender
             </label>
@@ -477,7 +477,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               placeholder="Zapatera, Cebu City"
             />
           </div>
-          <div className="fixed-field col-md-4 mb-3">
+          <div className="fixed-field col-md-4">
             <label htmlFor="position" className="form-label">
               Account
             </label>
@@ -577,7 +577,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               value={formData.schedule.shiftend}
               type="time"
               name="shiftend"
-              className="form-controll"
+              className="form-controll-timeout"
               id="shiftend"
               autoComplete="off"
               inputMode="numeric"
@@ -588,14 +588,14 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </div>
           )}
         </div>
-        <div className="mt-3 flex-wrap d-flex justify-content-between align-items-center">
-          {formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
+        <div className="mt-3 flex-wrap d-flex gap-5 align-items-center justify-content-center">
+          {mode === "edit" && formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
             <div className="timein col-md-2">
-              <label className="form-label" htmlFor="timeIn">Time In</label>
+              <label className="form-label-timein" htmlFor="timeIn">Time In</label>
               <input
 
                 type="time"
-                className="form-controll"
+                className="form-controll-timein"
                 id="timeIn"
                 value={formData.schedule.shiftstart}
                 disabled
@@ -606,13 +606,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div>
               {mode === "edit" && (
             <div className="w-100 col-md-2">
-              <label htmlFor="shiftstart" className="form-label">Time In</label>
+              <label htmlFor="shiftstart" className="form-label-ti">Time In</label>
               <input
                 required
                 value={formData.schedule.shiftstart}
                 type="time"
                 name="shiftstart"
-                className="form-controll"
+                className="form-control-ti"
                 id="shiftstart"
                 autoComplete="off"
                 inputMode="numeric"
@@ -624,12 +624,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           )}
 
           {/* Time Out */}
-          {formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
+          {mode === "edit" && formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
             <div className="timeout col-md-2">
-              <label className="form-label" htmlFor="timeOut">Time Out</label>
+              <label className="form-label-timeout" htmlFor="timeOut">Time Out</label>
               <input
                 type="time"
-                className="form-controll"
+                className="form-controll-toupdate"
                 id="timeOut"
                 value={formData.schedule.shiftend}
                 disabled
@@ -640,13 +640,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div>
               {mode === "edit" && (
             <div className="timeout w-100 col-md-2">
-              <label htmlFor="shiftend" className="form-label">Time Out</label>
+              <label htmlFor="shiftend" className="form-label-timeout1">Time Out</label>
               <input
                 required
                 value={formData.schedule.shiftend}
                 type="time"
                 name="shiftend"
-                className="form-controll"
+                className="form-controll-timeout1"
                 id="shiftend"
                 autoComplete="off"
                 inputMode="numeric"
@@ -657,7 +657,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             </div>
           )}
           <div className="w-20 col-md-1">
-            {formData.schedule.shiftend != "" && formData.schedule.shiftstart != "" && (
+            {mode === "edit" && formData.schedule.shiftend != "" && formData.schedule.shiftstart != "" && (
               <button className="edit-schedule-btn btn btn-secondary btn-sm mt-4" type="button" onClick={toggleChangeSchedule}>
                 <i className="bi bi-pen sm"></i>
               </button>
