@@ -22,9 +22,76 @@
   width: 100%;
 }
 
-.manage-label {
-  color:gray;
+.manage-nav {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  width: 100%;
 }
+
+
+.manage-label {
+  color: rgb(0, 0, 0);
+}
+
+.manage-menus {
+  padding: 10px 15px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.manage-label {
+  color: rgb(0, 0, 0);
+}
+
+.manage-menus:hover {
+  background-color: #0F62EE;
+}
+
+.manage-menus:hover .manage-img {
+  filter: invert(1) brightness(2);
+}
+
+.manage-menus:hover .manage-label {
+  color: #ffffff;
+}
+
+.manage-menus:hover .arrow-accordion {
+  filter: invert(1) brightness(2);
+}
+
+
+.manage-nav:hover .manage-img {
+  filter: invert(1) brightness(2);
+}
+
+.manage-nav:hover .manage-label {
+  color: #ffffff;
+}
+
+.acc-label,
+.emp-label {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.accounts-svg,
+.bi-circle {
+  transition: filter 0.3s ease;
+}
+
+.nav-font:hover .accounts-svg,
+.nav-font:hover .bi-circle {
+  filter: invert(1) brightness(2);
+}
+
+.nav-font:hover .acc-label,
+.nav-font:hover .emp-label {
+  color: #ffffff;
+}
+
 
 .active-menu {
   background-color: #343a40;
@@ -34,11 +101,13 @@
 }
 
 .acc-label {
-  color: gray;
+  color: rgb(0, 0, 0);
+  margin-left: -15px;
 }
 
 .emp-label {
-  color: gray;
+  color: rgb(0, 0, 0);
+  margin-left: -15px;
 }
 
 .form-row {
@@ -170,7 +239,7 @@
 .nav-font {
   font-weight: 700;
   font-weight: 400;
-  color: gray;
+  color: rgb(0, 0, 0);
   letter-spacing: 0.50px;
   text-decoration: none;
   white-space: nowrap;
@@ -180,10 +249,69 @@
 .nav-font:hover {
   color: #f8f9fb;
 }
+.nav-fontt {
+  font-weight: 700;
+  font-weight: 400;
+  color: rgb(0, 0, 0);
+  letter-spacing: 0.50px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-fontt:hover {
+  color: #f8f9fb;
+}
+
+.updatepassword-hover {
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Default styles */
+.updatepassword-img {
+  transition: filter 0.3s ease;
+}
+
+.updatep {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+/* Flexible layout inside nav-fontt */
+.nav-fontt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  margin-left: -10px;
+}
+.nav-fonttt{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+}
+
+/* Hover behavior */
+
+.nav-fontt:hover .updatepassword-img,
+.nav-fonttt:hover .logout-img {
+  filter: invert(1) brightness(2);
+}
+
+.nav-fontt:hover .updatep {
+  color: #ffffff;
+}
 
 .generate.active,
 .generate.active .nav-font {
-  background-color: #1c1f2a; /* or any theme color */
+  background-color: #1c1f2a;
+  /* or any theme color */
   border-left: 4px solid #00bcd4;
   color: #fff !important;
 }
@@ -191,8 +319,6 @@
 .generate.active svg {
   fill: #00bcd4;
 }
-
-
 
 a {
   color: inherit;
@@ -219,7 +345,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Geist';
-
 }
 
 .workforce {
@@ -268,6 +393,7 @@ body {
   background-color: #fff;
 }
 
+
 .main-div {
   min-height: 100vh;
   height: 100%;
@@ -276,10 +402,10 @@ body {
   align-items: center;
   justify-content: center;
   background-color: white;
-  background-image: url("/img/Group5.png"), url("/img/Group4.png");
+  background-image: url("/img/Group4.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
-  background-size: 23% auto, 25% auto;
-  background-position: 37% 25%, 58% 75%
+  background-size: 27% auto, 27% auto;
+  background-position: 40% 20%, 58% 80%
 }
 
 .login-div {
@@ -382,11 +508,15 @@ input:focus {
   position: relative;
   width: 100%;
 }
+.updatepassword {
+  margin-left: 10px;
+}
 
 .updatepassword-input {
   padding-right: 40px;
   box-sizing: border-box;
 }
+
 
 .eye-icon {
   position: absolute;
@@ -510,8 +640,7 @@ input:focus {
 .db-poweredby {
   font-size: 10px;
   font-weight: bold;
-  color: white;
-  transform: translateX(30px) translateY(-21px);
+  color: rgb(59, 59, 59);
 }
 
 .searchbar-wrapper {
@@ -1449,10 +1578,13 @@ table {
   padding-bottom: 12px;
 }
 
+
+
 .manage-anchor a {
   color: white;
   text-decoration: none;
-  margin-left: 6px;
+  width: 100%;
+  min-width: 20vw;  
   display: flex;
   align-items: center;
   gap: 5px !important;
@@ -1471,6 +1603,9 @@ table {
   max-height: 20px;
 }
 
+.manage-anchor:hover svg {
+  color: #ffffff;
+}
 .managereport {
   overflow-y: scroll;
   height: calc(83.5vh - 144px);
@@ -1541,14 +1676,14 @@ table {
   height: 20px;
   width: 100px;
   font-size: 10px;
-  transform: translateY(-29px) translateX(-40px);
+  transform: translateY(82px) translateX(-15px);
   position: absolute;
 }
 
 .dot-div {
 
   top: 70%;
-  right:0%;
+  right: 0%;
 }
 
 
@@ -1575,8 +1710,6 @@ table {
 
 .main-divv {
   background-color: #e7e7e7;
-  padding-right: 1rem !important;
-  padding-left: 1.3rem !important;
   flex: 1 1 100% !important;
   width: 0px !important;
 }
@@ -1908,8 +2041,6 @@ table {
 }
 
 .workforce-div {
-  padding-left: 1.3rem !important;
-  padding-right: 1rem;
   width: 0px;
   flex: 1 1 100%;
 }
@@ -1922,13 +2053,20 @@ table {
   flex-direction: column;
   z-index: 20;
   min-height: 100vh;
+  gap: 58px;
+  transition: width 0.3s ease-in-out;
 }
 
 .navigation-division {
-  margin-bottom: 30px;
-  margin-left: 40px;
-  transform: translateY(-10px);
   overflow: hidden;
+}
+
+.ecomia-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .dashboard svg {
@@ -1936,10 +2074,8 @@ table {
   align-items: center;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
-
 .dash {
-  transform: translateY(3px) translateX(10px);
-  margin-left: -12px;
+  margin-left: 10px;
   color: gray;
 }
 
@@ -2016,17 +2152,40 @@ table {
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
-.generate:hover {
-  background-color: #53a2be;
+.manage-anchor:hover .accounts-svg {
+  filter: invert(1) brightness(2);
 }
+
+.generate:hover {
+  background-color: #0F62EE !important;
+}
+
+.generate:hover .dashboard-img,
+.generate:hover .reports-img,
+.generate:hover .schedule-img {
+  filter: invert(1) brightness(2);
+}
+
+.generate:hover .dash,
+.generate:hover .reps,
+.generate:hover .sched {
+  color: #ffffff;
+}
+
+.generate:hover .nav-font {
+  color: #ffffff;
+}
+
 
 .generate button {
   border: none;
   background: transparent;
   color: white;
 }
+
 .generate label {
-  color: gray;
+  color: rgb(0, 0, 0);
+  margin-left: 10px;
 }
 
 .manage-div {
@@ -2036,29 +2195,43 @@ table {
 .manage-nav {
   display: flex;
   align-items: center;
-  gap: 19px;
+  gap: 10px;
+}
+
+.logoutbutton {
+  margin-left: 10px;
+}
+.logout-hover:hover {
+  background-color: #0F62EE;
 }
 
 .logout-hover {
+  width: 100%;
   display: flex !important;
   align-items: center;
-  padding: 10px;
   margin-top: 5px;
-  color: white;
+  color: rgb(0, 0, 0);
   cursor: pointer;
   border-radius: 2px;
-  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
 .logout-hover:hover {
-  background-color: #53a2be;
+  color: #ffffff;
 }
 
+.logout-hover:hover .logout-img {
+  filter: invert(1) brightness(2);
+}
 .logout-hover svg {
   margin-right: 20px;
   fill: rgb(255, 255, 255);
 }
-
+.updatepassword-hover:hover {
+  background-color: #0F62EE;
+}
+.updatepassword-hover:hover .updatepassword-img {
+  filter: invert(1) brightness(2);
+}
 .updatepassword-hover {
   display: flex;
   align-items: center;
@@ -2069,11 +2242,27 @@ table {
   border-radius: 2px;
   height: 45px;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
 }
 
-.updatepassword-hover:hover {
-  background-color: #53a2be;
+
+.dot-div {
+  width: 35px; /* Adjust size as you want */
+  height: 35px;
+  background-color: #0F62EE; /* Example: blue background */
+  border: 3px solid #ffffff; /* Thick white border */
+  border-radius: 50%; /* Make it a perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Optional: make it pop a little on hover */
+.dot-div:hover {
+  background-color: #0846b5; /* Darker blue when hovering */
+  transform: scale(1.05);
 }
 
 /* Existing styles */
@@ -2138,6 +2327,8 @@ table {
   margin-bottom: -13px;
   margin-top: 5px !important;
   display: flex;
+  min-width: 20vw;
+  width: 100%;
 }
 
 .employee-anchorr a {
@@ -2294,11 +2485,6 @@ table {
   width: 2vw !important;
 }
 
-.undermanage-hover a:hover {
-  background-color: #53a2be;
-  color: white;
-}
-
 .undermanage-hover a.default-width {
   width: 9vw !important;
 }
@@ -2308,17 +2494,17 @@ table {
 }
 
 .undermanage-hover a:hover {
-  background-color: #53a2be;
+  background-color: #0F62EE;
   color: white;
 }
 
 .admin .accordion-button:hover {
-  background-color: #2193df;
+  background-color: #0F62EE;
   color: white;
 }
 
 .admin .accordion-button:active {
-  background-color: #2193df;
+  background-color: #0F62EE;
   color: white;
 }
 
@@ -2361,11 +2547,6 @@ table {
   padding: 10px;
   border-radius: 2px;
   color: #000000;
-  cursor: pointer;
-}
-
-.manage-menus:hover {
-  background-color: #53a2be;
   cursor: pointer;
 }
 
@@ -2511,8 +2692,6 @@ table {
 }
 
 .reports-division {
-  padding-left: 1.3rem;
-  padding-right: 1rem;
   width: 0;
 }
 
@@ -2579,8 +2758,6 @@ table {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
 }
 
 .reportheader {
@@ -2608,8 +2785,6 @@ table {
 
 .manageaccounts-header {
   width: 100%;
-  padding-left: 1.3rem;
-  padding-right: 1rem;
 }
 
 /* manage department */

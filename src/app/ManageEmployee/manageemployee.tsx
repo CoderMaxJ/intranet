@@ -290,8 +290,9 @@ export default function CreateUD() {
       <div className="db-employee">
         <Dashboard />
       </div>
-      <div className="main-divv px-4">
+      <div className="main-divv">
         <Header title="MANAGE EMPLOYEE" />
+        <div className="px-4">
         <div className="manageemployee-division">
           <div>
             <div>
@@ -441,6 +442,7 @@ export default function CreateUD() {
               </tbody>
             </table>
           </div>
+          
           {searchTerm == "" && (
             <div className="manageemployee-div">
               <div className="employee-total">
@@ -501,5 +503,7 @@ export default function CreateUD() {
         </div>
       </div>
     </div>
+    </div>
+    
   );
 }

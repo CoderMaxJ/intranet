@@ -264,8 +264,9 @@ export default function CreateUD() {
             <div className="db-employee">
                 <Dashboard />
             </div>
-            <div className="main-divv px-4">
+            <div className="main-divv">
                 <Header title="MANAGE SCHEDULE" />
+                <div className="px-4">
                 <div className="manageemployee-division">
                     <div>
                         <div>
@@ -432,6 +433,7 @@ export default function CreateUD() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 }
