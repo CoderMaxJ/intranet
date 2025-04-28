@@ -1,21 +1,15 @@
 "use client";
 import Dashboard from "../Dashboard/dashboard";
 import AddEmp from "../component/AddEmployee";
-import { useEffect, useState ,useMemo} from "react";
+import Reassignment from "../Reassignment/reassignment";
+import { useEffect, useState, useMemo } from "react";
 import Header from "../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
 import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
-import MultiSelect from "../component/CheduleForm";
 
-
-interface Schedule {
-    shiftstart: string;
-    shiftend: string;
-    created_at: string;
-  }
 interface Information {
     empno: number;
     gender: string;
@@ -32,7 +26,6 @@ interface Information {
     role_id: number;
     isdayshift: number;
     status: number;
-    schedule:Schedule
 }
 
 interface Account {
@@ -69,16 +62,16 @@ export default function CreateUD() {
         );
     };
 
-    const handleSelectAll = (checked: boolean) => {
-        setAllSelected(checked);
-        if (checked) {
-            const allEmpnos = employees.map(emp => emp.empno);
-            setSelectedEmployees(allEmpnos);
+    // const handleSelectAll = (checked: boolean) => {
+    //     setAllSelected(checked);
+    //     if (checked) {
+    //         const allEmpnos = employees.map(emp => emp.empno);
+    //         setSelectedEmployees(allEmpnos);
 
-        } else {
-            setSelectedEmployees([]);
-        }
-    };
+    //     } else {
+    //         setSelectedEmployees([]);
+    //     }
+    // };
     useEffect(() => {
         EmpNoList.push(...selectedEmployees);
     }, [EmpNoList])
@@ -94,7 +87,7 @@ export default function CreateUD() {
         const token = localStorage.getItem("token");
         const user_id = localStorage.getItem("user_id");
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/schedule/${Decryptor(user_id || "")}/?page=${page}`,
+            `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/${Decryptor(user_id || "")}/?page=${page}`,
             {
                 method: "GET",
                 headers: {
@@ -105,7 +98,6 @@ export default function CreateUD() {
         );
         if (response.ok) {
             const data = await response.json();
-            console.log(data.data);
             setEmployees(data.data);
             setTotalPages(data.num_pages);
             setTotal(data.total);
@@ -191,42 +183,41 @@ export default function CreateUD() {
     }
 
     const id = localStorage.getItem("user_id");
-     const debouncedSearch = useMemo(() => {
-       return debounce(async (value: string) => {
-         if (value.trim() === "") {
-           GetEmployee(currentPage);
-         } else {
-           const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/schedule/${Decryptor(id || "")}/${value}/`, {
-             method: "GET",
-             headers: {
-               "Content-Type": "application/json",
-               Authorization: `Bearer ${Decryptor(token || '')}`
-             }
-           });
-     
-           if (response.ok) {
-             const data = await response.json();
-             console.log(data.data);
-             setEmployees(data.data);
-           } else {
-             console.error("Error fetching search results");
-           }
-         }
-       }, 300); // 300ms debounce
-     }, [currentPage, id, token]);
-     
-     // Optional cleanup to prevent memory leaks
-     useEffect(() => {
-       return () => {
-         debouncedSearch.cancel();
-       };
-     }, [debouncedSearch]);
-   
-     useEffect(()=>{
-       return () => {
-         debouncedSearch.cancel();
-       };
-     },[debouncedSearch])
+    const debouncedSearch = useMemo(() => {
+        return debounce(async (value: string) => {
+            if (value.trim() === "") {
+                GetEmployee(currentPage);
+            } else {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${value}/`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${Decryptor(token || '')}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setEmployees(data.data);
+                } else {
+                    console.error("Error fetching search results");
+                }
+            }
+        }, 300); // 300ms debounce
+    }, [currentPage, id, token]);
+
+    // Optional cleanup to prevent memory leaks
+    useEffect(() => {
+        return () => {
+            debouncedSearch.cancel();
+        };
+    }, [debouncedSearch]);
+
+    useEffect(() => {
+        return () => {
+            debouncedSearch.cancel();
+        };
+    }, [debouncedSearch])
     const handlePageChange = (page: number) => {
         setCurrentPage(page); // Update the current page
         GetEmployee(page); // Fetch data for the new page
@@ -268,181 +259,165 @@ export default function CreateUD() {
         }
 
     }
+
     return (
+
         <div className="crud-maindiv">
+            <div>
+                <Reassignment />
+            </div>
             <div className="db-employee">
                 <Dashboard />
             </div>
-            <div className="main-divv px-4">
+            <div className="main-divv">
                 <Header title="MANAGE SCHEDULE" />
-                <div className="manageemployee-division">
-                    <MultiSelect/>
-                    <div>
+                <div className="px-4">
+                    <div className="manageemployee-division">
                         <div>
-                            <header>
-                                <div className="schedule-employee w-100 d-flex  flex-wrap px-4">
-                                    
-                                    <div className="time d-flex gap-4 flex-wrap">
-                                    <div className="searchbar-containerrr">
-                                            <input
-                                                className="searchbar0"
-                                                id="search-employee"
-                                                type="text"
-                                                placeholder="Search..."
-                                                value={searchTerm}
-                                               onChange={(e)=>{ setSearchTerm(e.target.value);
-                                                debouncedSearch(e.target.value);}}
-                                            />
-                                            <svg
-                                            className="schedule-svg"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="20"
-                                                height="20"
-                                                fill="currentColor"
-                                                viewBox="0 0 16 16"
-                                            >
-                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                            </svg>
-                                        </div>
-                                        <div className="sched-button gap-3 flex-wrap">
-                                            <label htmlFor="timein">Time In:</label>
-                                            <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
-                                            <label htmlFor="timeout">Time Out:</label>
-                                            <input type="time" value={timeOut} className="timeout" onChange={(e) => setTimeOut(e.target.value)} />
-            
-                                            <button type="button" className="" data-bs-toggle="modal" data-bs-target="#open-modal-schedule" data-bs-whatever="@mdo">
-                                                Add Schedule
-                                            <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="16"
-                                                        height="16"
-                                                        fill="#ffffff"
-                                                        className="bi bi-plus-circle-fill me-2"
-                                                        viewBox="0 0 16 16"
-                                                    >
-                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                                    </svg>
-                                            </button>
-                                              
+                            <div>
+                                <header>
+                                    <div className="schedule-employee w-100 d-flex  flex-wrap px-4">
+
+                                        <div className="time d-flex gap-4 flex-wrap">
+                                            <div className="searchbar-containerrr">
+                                                <input
+                                                    className="searchbar0"
+                                                    id="search-employee"
+                                                    type="text"
+                                                    placeholder="Search..."
+                                                    value={searchTerm}
+                                                    onChange={(e) => {
+                                                        setSearchTerm(e.target.value);
+                                                        debouncedSearch(e.target.value);
+                                                    }}
+                                                />
+                                                <svg
+                                                    className="schedule-svg"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="20"
+                                                    height="20"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
                                             </div>
-                                       
+                                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reassignment">
+                                                {/* <img src="/svg/update.svg" alt="update" className=""/> */}
+                                                Update Schedule
+                                            </button>
+                                           
+                                        </div>
+                                    </div>
+                                </header>
+                            </div>
+                            <div
+                                className="modal fade"
+                                id="exampleModal"
+                                role="dialog"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div className="modal-dialog modal-xl" role="document">
+                                    <div className="modal-content px-4">
+                                        <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
                                     </div>
                                 </div>
-                            </header>
+                            </div>
                         </div>
-                        <div
-                            className="modal fade"
-                            id="exampleModal"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                        >
-                            <div className="modal-dialog modal-xl" role="document">
-                                <div className="modal-content px-4">
-                                    <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
+                        <div className="emp-table px-4" style={{ position: 'relative', height: 'auto' }}>
+
+                            <table
+                                className="tabemp table table-striped table-hover table-bordered"
+                                id="table-employee"
+                                style={{ margin: 'auto' }}
+                            >
+                                <thead>
+                                    <tr>
+                                        <th scope="col" >Employee No.</th>
+                                        <th scope="col" >First Name</th>
+                                        <th scope="col" >Last Name</th>
+                                        <th scope="col" >Account</th>
+                                        <th scope="col" >Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="manage-tbody table-data">
+                                    {employees?.length ? (
+                                        employees.map((info, index) => (
+                                            <tr key={info.empno}>
+                                                <td className="p">{info.empno}</td>
+                                                <td>{info.fname}</td>
+                                                <td>{info.lname}</td>
+                                                <td>{getAccountName(info.acctid)}</td>
+                                                <td>{info.position}</td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={11} className="text-center">
+                                                No employees found.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                        {searchTerm == "" && (
+                            <div className="manageemployee-div">
+                                <div className="employee-total">
+                                    <p><i className="bi bi-people-fill"></i><span> Total: {total}</span></p>
+                                </div>
+                                <div className="employee-pagination">
+                                    <nav aria-label="Page navigation">
+                                        <ul className="pagination">
+                                            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                                                <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
+                                                    <i className="bi bi-caret-left"></i>
+                                                </button>
+                                            </li>
+                                            <li className="page-item">
+                                                <span className="page-link" style={{ whiteSpace: 'nowrap' }}>
+                                                    {currentPage} of {totalPages}
+                                                </span>
+                                            </li>
+                                            <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                                                <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
+                                                    <i className="bi bi-caret-right"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
-                    <div className="emp-table px-4" style={{ position: 'relative', height: 'auto' }}>
-
-                        <table
-                            className="tabemp table table-striped table-hover table-bordered"
-                            id="table-employee"
-                            style={{ margin: 'auto' }}
-                        >
-                            <thead>
-                                <tr> 
-                                    <th scope="col" >Employee No.</th>
-                                    <th scope="col" >Name</th>
-                                    <th scope="col" >Account</th>
-                                    <th scope="col" >Position</th>
-                                    <th scope="col" >Shift Start</th>
-                                    <th scope="col" >Shift End</th>
-                                    <th scope="col">Shift Type</th>
-                                    <th scope="col">Last Updated</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody className="manage-tbody table-data">
-                                {employees?.length ? (
-                                    employees.map((info, index) => (
-                                        <tr key={info.empno}>
-                                            <td className="empno-data-column">{info.empno}</td>
-                                            <td>{info.fname } {info.lname}</td>
-                                            <td>{getAccountName(info.acctid)}</td>
-                                            <td>{info.position}</td>
-                                            <td>{info.schedule?.shiftstart || '- -'}</td>
-                                            <td>{info.schedule?.shiftend || '- -'}</td>
-                                            <td>{info.isdayshift == 0 ? "Night Shift":"Morning Shift"}</td>
-                                            <td>{info.schedule?.created_at}</td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan={11} className="text-center">
-                                            No employees found.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-                    {searchTerm == "" && (
-                        <div className="manageemployee-div">
-                            <div className="employee-total">
-                                <p><i className="bi bi-people-fill"></i><span> Total: {total}</span></p>
-                            </div>
-                            <div className="employee-pagination">
-                                <nav aria-label="Page navigation">
-                                    <ul className="pagination">
-                                        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                                            <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
-                                                <i className="bi bi-caret-left"></i>
-                                            </button>
-                                        </li>
-                                        <li className="page-item">
-                                            <span className="page-link" style={{ whiteSpace: 'nowrap' }}>
-                                                {currentPage} of {totalPages}
-                                            </span>
-                                        </li>
-                                        <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                                            <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
-                                                <i className="bi bi-caret-right"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    )}
                 </div>
-            </div>
-            <ToastContainer />
-            <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Are you sure you want to delete this employee?</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button
-                                type="button"
-                                className="btn btn-danger"
-                                data-bs-dismiss="modal"
-                                onClick={() => {
-                                    if (targetID !== null) {
-                                        handleDelete(targetID);
-                                    }
-                                }}
-                            >
-                                Delete
-                            </button>
+                <ToastContainer />
+                <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Are you sure you want to delete this employee?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    data-bs-dismiss="modal"
+                                    onClick={() => {
+                                        if (targetID !== null) {
+                                            handleDelete(targetID);
+                                        }
+                                    }}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

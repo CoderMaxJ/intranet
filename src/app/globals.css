@@ -5,6 +5,12 @@
   --foreground: #171717;
 }
 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -16,8 +22,92 @@
   width: 100%;
 }
 
+.manage-nav {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  width: 100%;
+}
+
+
 .manage-label {
+  color: rgb(0, 0, 0);
+}
+
+.manage-menus {
+  padding: 10px 15px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.manage-label {
+  color: rgb(0, 0, 0);
+}
+
+.manage-menus:hover {
+  background-color: #0F62EE;
+}
+
+.manage-menus:hover .manage-img {
+  filter: invert(1) brightness(2);
+}
+
+.manage-menus:hover .manage-label {
+  color: #ffffff;
+}
+
+.manage-menus:hover .arrow-accordion {
+  filter: invert(1) brightness(2);
+}
+
+
+.manage-nav:hover .manage-img {
+  filter: invert(1) brightness(2);
+}
+
+.manage-nav:hover .manage-label {
+  color: #ffffff;
+}
+
+.acc-label,
+.emp-label {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.accounts-svg,
+.bi-circle {
+  transition: filter 0.3s ease;
+}
+
+.nav-font:hover .accounts-svg,
+.nav-font:hover .bi-circle {
+  filter: invert(1) brightness(2);
+}
+
+.nav-font:hover .acc-label,
+.nav-font:hover .emp-label {
+  color: #ffffff;
+}
+
+
+.active-menu {
+  background-color: #343a40;
+  /* Or your preferred highlight */
+  border-left: 4px solid #0d6efd;
   color: white !important;
+}
+
+.acc-label {
+  color: rgb(0, 0, 0);
+  margin-left: -15px;
+}
+
+.emp-label {
+  color: rgb(0, 0, 0);
+  margin-left: -15px;
 }
 
 .form-row {
@@ -147,9 +237,9 @@
 }
 
 .nav-font {
-  font-family: "Roboto", sans-serif;
+  font-weight: 700;
   font-weight: 400;
-  color: #fbfff1;
+  color: rgb(0, 0, 0);
   letter-spacing: 0.50px;
   text-decoration: none;
   white-space: nowrap;
@@ -159,12 +249,76 @@
 .nav-font:hover {
   color: #f8f9fb;
 }
+.nav-fontt {
+  font-weight: 700;
+  font-weight: 400;
+  color: rgb(0, 0, 0);
+  letter-spacing: 0.50px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
 
+.nav-fontt:hover {
+  color: #f8f9fb;
+}
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.updatepassword-hover {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 6px !important;
+}
+
+/* Default styles */
+.updatepassword-img {
+  transition: filter 0.3s ease;
+}
+
+.updatep {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+/* Flexible layout inside nav-fontt */
+.nav-fontt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  margin-left: -10px;
+}
+.nav-fonttt{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+}
+
+/* Hover behavior */
+
+.nav-fontt:hover .updatepassword-img,
+.nav-fonttt:hover .logout-img {
+  filter: invert(1) brightness(2);
+}
+
+.nav-fontt:hover .updatep {
+  color: #ffffff;
+}
+
+.generate.active,
+.generate.active .nav-font {
+  background-color: #1c1f2a;
+  /* or any theme color */
+  border-left: 4px solid #00bcd4;
+  color: #fff !important;
+}
+
+.generate.active svg {
+  fill: #00bcd4;
 }
 
 a {
@@ -189,10 +343,9 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  font-family: 'Geist';
 }
 
 .workforce {
@@ -241,6 +394,7 @@ body {
   background-color: #fff;
 }
 
+
 .main-div {
   min-height: 100vh;
   height: 100%;
@@ -249,15 +403,15 @@ body {
   align-items: center;
   justify-content: center;
   background-color: white;
-  background-image: url("/img/Group5.png"), url("/img/Group4.png");
+  background-image: url("/img/Group4.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
-  background-size: 23% auto, 25% auto;
-  background-position: 37% 25%, 58% 75%
+  background-size: 27% auto, 27% auto;
+  background-position: 40% 20%, 58% 80%
 }
 
 .login-div {
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0px 0px 5px rgb(87, 86, 86);
+  background: rgb(251 251 251);
+  box-shadow: 6px 19px 28px rgb(167 178 198);
   backdrop-filter: blur(0);
   border-radius: 6px;
   padding: 20px 20px 85px 20px;
@@ -305,8 +459,7 @@ input:focus {
 
 .ecomialogo-footer img {
   width: 80px;
-  height: 30px;
-  transform: translateY(30px);
+
 }
 
 .login-logo {
@@ -317,7 +470,7 @@ input:focus {
 .poweredby-label {
   font-size: 10px;
   font-weight: bold;
-  transform: translateY(30px);
+
 }
 
 .inputfields {
@@ -356,11 +509,15 @@ input:focus {
   position: relative;
   width: 100%;
 }
+.updatepassword {
+  margin-left: 10px;
+}
 
 .updatepassword-input {
   padding-right: 40px;
   box-sizing: border-box;
 }
+
 
 .eye-icon {
   position: absolute;
@@ -374,8 +531,8 @@ input:focus {
 }
 
 .newpass-eyetoggle svg {
- position: absolute;
- transform: translateY(10px) translateX(-25px);
+  position: absolute;
+  transform: translateY(10px) translateX(-25px);
 }
 
 .button-login {
@@ -484,8 +641,7 @@ input:focus {
 .db-poweredby {
   font-size: 10px;
   font-weight: bold;
-  color: white;
-  transform: translateX(30px) translateY(-21px);
+  color: rgb(59, 59, 59);
 }
 
 .searchbar-wrapper {
@@ -716,11 +872,14 @@ input:focus {
   font-size: 14px;
   box-sizing: border-box;
   margin-top: 5px;
-  min-width: 0; /* allow shrinking beyond intrinsic size */
+  min-width: 0;
+  /* allow shrinking beyond intrinsic size */
 }
+
 .searchbar-containerr {
   flex: 1;
-  min-width: 0; /* crucial for allowing shrinking */
+  min-width: 0;
+  /* crucial for allowing shrinking */
   position: relative;
 }
 
@@ -740,9 +899,10 @@ input:focus {
   margin-top: 5px;
   min-width: 400px;
 }
+
 @media only screen and (max-width: 731px) {
   .searchbar0 {
-    min-width: 250px; 
+    min-width: 250px;
   }
 }
 
@@ -820,6 +980,7 @@ input:focus {
   color: #888;
   transform: translateY(-50%);
 }
+
 .searchbar-containerrr {
   position: relative;
 }
@@ -830,7 +991,7 @@ input:focus {
   top: 50%;
   pointer-events: none;
   color: #888;
-  transform: translateY(-9px) ;
+  transform: translateY(-9px);
 }
 
 .bi-search {
@@ -884,6 +1045,7 @@ input:focus {
 .update-pass:hover {
   background-color: #0d65c9;
 }
+
 .right-section {
   display: flex;
 
@@ -899,6 +1061,7 @@ input:focus {
   position: relative;
   display: flex;
 }
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -1339,7 +1502,7 @@ tbody td {
   z-index: 1;
 }
 
-.emp-table thead{ 
+.emp-table thead {
   white-space: nowrap;
 }
 
@@ -1419,15 +1582,14 @@ table {
 .manage-anchor a {
   color: white;
   text-decoration: none;
-  margin-left: 6px;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 5px !important;
-  margin-top: 12px;
+  margin-top: 30px;
   padding: 10px !important;
-  border-radius: 2px;
+  border-radius: 6px;
   cursor: pointer;
-  transform: translateX(-20px);
 }
 
 .manage-anchor svg {
@@ -1438,6 +1600,9 @@ table {
   max-height: 20px;
 }
 
+.manage-anchor:hover svg {
+  color: #ffffff;
+}
 .managereport {
   overflow-y: scroll;
   height: calc(83.5vh - 144px);
@@ -1476,10 +1641,10 @@ table {
 }
 
 .profile-div {
-  border: 0.60px solid white;
+  border: 3px solid white;
   border-radius: 50%;
-  height: 120px !important;
-  width: 120px !important;
+  height: fit-content;
+  width: fit-content;
   margin-top: 100px;
 }
 
@@ -1508,19 +1673,17 @@ table {
   height: 20px;
   width: 100px;
   font-size: 10px;
-  transform: translateY(-29px) translateX(-40px);
+  transform: translateY(82px) translateX(-15px);
   position: absolute;
 }
 
 .dot-div {
-  width: 90%;
-  align-items: center;
-  justify-content: flex-end;
+
+  top: 70%;
+  right: 0%;
 }
 
-.dot-div svg {
-  margin-top: -60px;
-}
+
 
 .profile-circle {
   display: flex;
@@ -1544,8 +1707,6 @@ table {
 
 .main-divv {
   background-color: #e7e7e7;
-  padding-right: 1rem !important;
-  padding-left: 1.3rem !important;
   flex: 1 1 100% !important;
   width: 0px !important;
 }
@@ -1877,27 +2038,32 @@ table {
 }
 
 .workforce-div {
-  padding-left: 1.3rem !important;
-  padding-right: 1rem;
   width: 0px;
   flex: 1 1 100%;
 }
 
 .db {
   box-shadow: 0px 0px 1px rgb(87, 86, 86);
-  background-color: #007ea7;
+  background-color: #ffffff;
   padding: 10px;
   display: flex;
   flex-direction: column;
   z-index: 20;
   min-height: 100vh;
+  gap: 58px;
+  transition: width 0.3s ease-in-out;
 }
 
 .navigation-division {
-  margin-bottom: 30px;
-  margin-left: 40px;
-  transform: translateY(-10px);
   overflow: hidden;
+}
+
+.ecomia-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .dashboard svg {
@@ -1905,10 +2071,9 @@ table {
   align-items: center;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
-
 .dash {
-  transform: translateY(3px) translateX(10px);
-  margin-left: -12px;
+  margin-left: 10px;
+  color: gray;
 }
 
 .dashboard a {
@@ -1961,7 +2126,7 @@ table {
 .generate svg {
   margin-right: 24px;
   align-items: center;
-  fill: rgb(255, 255, 255);
+  fill: rgb(114, 112, 112);
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
@@ -1980,18 +2145,45 @@ table {
   margin-top: 5px;
   color: white;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 6px;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
-.generate:hover {
-  background-color: #53a2be;
+.manage-anchor:hover .accounts-svg {
+  filter: invert(1) brightness(2);
 }
+
+.generate:hover {
+  background-color: #0F62EE !important;
+  
+}
+
+.generate:hover .dashboard-img,
+.generate:hover .reports-img,
+.generate:hover .schedule-img {
+  filter: invert(1) brightness(2);
+}
+
+.generate:hover .dash,
+.generate:hover .reps,
+.generate:hover .sched {
+  color: #ffffff;
+}
+
+.generate:hover .nav-font {
+  color: #ffffff;
+}
+
 
 .generate button {
   border: none;
   background: transparent;
   color: white;
+}
+
+.generate label {
+  color: rgb(0, 0, 0);
+  margin-left: 10px;
 }
 
 .manage-div {
@@ -2001,29 +2193,40 @@ table {
 .manage-nav {
   display: flex;
   align-items: center;
-  gap: 19px;
-}
-
-.logout-hover {
-  display: flex !important;
-  align-items: center;
-  padding: 10px;
-  margin-top: 5px;
-  color: white;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
+  gap: 10px;
 }
 
 .logout-hover:hover {
-  background-color: #53a2be;
+  background-color: #0F62EE;
 }
 
+.logout-hover {
+  width: 100%;
+  display: flex !important;
+  align-items: center;
+  margin-top: 5px;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.logout-hover:hover {
+  color: #ffffff;
+}
+
+.logout-hover:hover .logout-img {
+  filter: invert(1) brightness(2);
+}
 .logout-hover svg {
   margin-right: 20px;
   fill: rgb(255, 255, 255);
 }
-
+.updatepassword-hover:hover {
+  background-color: #0F62EE;
+}
+.updatepassword-hover:hover .updatepassword-img {
+  filter: invert(1) brightness(2);
+}
 .updatepassword-hover {
   display: flex;
   align-items: center;
@@ -2034,11 +2237,29 @@ table {
   border-radius: 2px;
   height: 45px;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+}
+.updatepassword-hover:hover .updatep {
+  color: white;
 }
 
-.updatepassword-hover:hover {
-  background-color: #53a2be;
+
+.dot-div {
+  width: 35px; /* Adjust size as you want */
+  height: 35px;
+  background-color: #0F62EE; /* Example: blue background */
+  border: 3px solid #ffffff; /* Thick white border */
+  border-radius: 50%; /* Make it a perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Optional: make it pop a little on hover */
+.dot-div:hover {
+  background-color: #0846b5; /* Darker blue when hovering */
+  transform: scale(1.05);
 }
 
 /* Existing styles */
@@ -2099,6 +2320,18 @@ table {
   padding: 10px;
   align-items: center;
   gap: 5px;
+  margin-top: 5px !important;
+  display: flex;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.employee-anchorr a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  align-items: center;
+  gap: 23px;
   margin-bottom: -13px;
   margin-top: 5px !important;
   display: flex;
@@ -2106,9 +2339,9 @@ table {
 
 .schedule-employee {
   gap: 65px;
-  padding: 20px 20px 1px 20px;
 }
-.sched-button  button{
+
+.sched-button button {
   border-radius: 4px;
   font-weight: 500;
   padding: 7px;
@@ -2125,7 +2358,6 @@ table {
   display: flex;
   gap: 1rem;
   align-items: center;
-  background-image: url(/img/Breaktool.png);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -2149,16 +2381,19 @@ table {
   font-size: 14px;
   height: 38px;
   transition: border 0.2s ease-in-out, box-shadow 0.2s;
-  background-color: #ffffff; /* soft neutral background */
+  background-color: #ffffff;
+  /* soft neutral background */
 }
 
 .time input[type="time"]:focus {
   outline: none;
   border-color: #0d6efd;
-  
+
   box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
-  background-color: #ffffff; /* subtle change on focus */
+  background-color: #ffffff;
+  /* subtle change on focus */
 }
+
 .time label {
   font-weight: 500;
   color: #ffffff;
@@ -2183,11 +2418,42 @@ table {
   box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
 }
 
+/* .edit-schedule-btn {
+  margin-left: -120px;
+} */
+
 .form-label {
   font-weight: 600;
   color: #615959;
   margin-bottom: 4px;
 }
+
+/* .form-label-timein {
+  font-weight: 600;
+  color: #615959;
+  margin-bottom: 4px;
+  margin-left: -16.8rem;
+}
+.form-label-timeout {
+  font-weight: 600;
+  color: #615959;
+  margin-bottom: 4px;
+  margin-left: -11.8rem;
+}
+
+.form-label-timeout1 {
+  font-weight: 600;
+  color: #615959;
+  margin-bottom: 4px;
+  margin-left: -11.8rem;
+}
+
+.form-label-ti {
+  font-weight: 600;
+  color: #615959;
+  margin-bottom: 4px;
+  margin-left: -11.1rem;
+} */
 .rep-label {
   font-weight: 600;
   color: #ffffff;
@@ -2203,18 +2469,6 @@ table {
   max-width: 20px;
   max-height: 20px;
 }
-.undermanage-hover a.default-width {
-  width: 9vw !important;
-}
-
-.undermanage-hover a.condensed-width {
-  width: 2vw !important;
-}
-
-.undermanage-hover a:hover {
-  background-color: #53a2be;
-  color: white;
-}
 
 .undermanage-hover a.default-width {
   width: 9vw !important;
@@ -2224,18 +2478,26 @@ table {
   width: 2vw !important;
 }
 
+.undermanage-hover a.default-width {
+  width: 9vw !important;
+}
+
+.undermanage-hover a.condensed-width {
+  width: 2vw !important;
+}
+
 .undermanage-hover a:hover {
-  background-color: #53a2be;
+  background-color: #0F62EE;
   color: white;
 }
 
 .admin .accordion-button:hover {
-  background-color: #2193df;
+  background-color: #0F62EE;
   color: white;
 }
 
 .admin .accordion-button:active {
-  background-color: #2193df;
+  background-color: #0F62EE;
   color: white;
 }
 
@@ -2277,12 +2539,8 @@ table {
 .manage-menus {
   padding: 10px;
   border-radius: 2px;
+  border-radius: 6px;
   color: #000000;
-  cursor: pointer;
-}
-
-.manage-menus:hover {
-  background-color: #53a2be;
   cursor: pointer;
 }
 
@@ -2428,8 +2686,6 @@ table {
 }
 
 .reports-division {
-  padding-left: 1.3rem;
-  padding-right: 1rem;
   width: 0;
 }
 
@@ -2496,8 +2752,6 @@ table {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
 }
 
 .reportheader {
@@ -2525,8 +2779,6 @@ table {
 
 .manageaccounts-header {
   width: 100%;
-  padding-left: 1.3rem;
-  padding-right: 1rem;
 }
 
 /* manage department */
@@ -2605,16 +2857,19 @@ table {
   position: relative;
   display: block;
   width: 100%;
+  /* min-width: 14.2vw; */
   padding: 5px;
   padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  /* transform: translateX(-45px); */
 }
 
 .form-controll input {
   width: 100%;
-  padding: 7px 40px 7px 10px; /* Leave space for icon */
+  padding: 7px 40px 7px 10px;
+  /* Leave space for icon */
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -2625,7 +2880,171 @@ table {
   content: "\1F552";
   position: absolute;
   top: 50%;
-  right: 10px; /* Position icon from right edge */
+  right: 10px;
+  /* Position icon from right edge */
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black;
+  pointer-events: none;
+}
+
+.form-controll-toupdate {
+  position: relative;
+  display: block;
+  width: 100%;
+  /* min-width: 14.2vw; */
+  padding: 5px;
+  padding-right: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* transform: translateX(-190px); */
+}
+
+.form-controll-toupdate::after {
+  content: "\1F552";
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 31px);
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black !important;
+  pointer-events: none;
+}
+
+.form-controll-timeout {
+  position: relative;
+  display: block;
+  width: 100%;
+  /* min-width: 14.2vw; */
+  padding: 5px;
+  padding-right: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* transform: translateX(-90px); */
+}
+
+.form-controll-timeout1 {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 9.7vw;
+  padding: 5px;
+  padding-right: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* transform: translateX(-190px); */
+}
+
+.form-controll-timeout1::after {
+  content: "\1F552";
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 31px);
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black !important;
+  pointer-events: none;
+}
+
+.form-controll-timeout input {
+  width: 100%;
+  padding: 7px 40px 7px 10px;
+  /* Leave space for icon */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-controll-timeout::after {
+  content: "\1F552";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  /* Position icon from right edge */
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black;
+  pointer-events: none;
+}
+
+.form-controll-timein {
+  position: relative;
+  display: block;
+  width: 100%;
+  /* min-width: 14.2vw; */
+  padding: 5px;
+  padding-right: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* transform: translateX(-270px); */
+}
+
+.form-controll-timein input {
+  width: 100%;
+  padding: 7px 40px 7px 10px;
+  /* Leave space for icon */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-controll-timein::after {
+  content: "\1F552";
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 31px);
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black !important;
+  pointer-events: none;
+}
+
+.form-control-ti {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 9.7vw;
+  padding: 5px;
+  padding-right: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* transform: translateX(-179px); */
+}
+
+.form-control-ti::after {
+  content: "\1F552";
+  position: absolute;
+  top: 50%;
+  left: calc(100% - 31px);
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: black !important;
+  pointer-events: none;
+}
+
+.form-control-ti input {
+  width: 100%;
+  padding: 7px 40px 7px 10px;
+  /* Leave space for icon */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-controll-ti::after {
+  content: "\1F552";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  /* Position icon from right edge */
   transform: translateY(-50%);
   font-size: 18px;
   color: black;
@@ -2641,6 +3060,7 @@ table {
   min-width: 250px;
   width: 100%;
 }
+
 .arrow-btn {
   display: flex !important;
   align-items: center !important;
@@ -2654,6 +3074,7 @@ table {
   background-color: whitesmoke !important;
   border: 2px solid rgb(197, 190, 190) !important;
 }
+
 .arrow-img {
   color: #6c757d;
   margin-top: -5px;
@@ -2761,7 +3182,7 @@ table {
   height: 50px;
 }
 
-.icon-sm-class{
+.icon-sm-class {
   font-size: 0.50rem;
 }
 .empno-data-column{

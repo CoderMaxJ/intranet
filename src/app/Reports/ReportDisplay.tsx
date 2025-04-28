@@ -207,6 +207,7 @@ export default function Daterange() {
                 {data.length > 0 ? (
                     <div className="flex-fill reports-division">
                         <div className="reportheader"><Header title="DAILY REPORTS" /></div>
+                        <div className="px-4">
                         <div className="background-report">
                             <div className="px-4 pt-4" style={{ display: 'flex' }}>
                                 <header style={{
@@ -297,6 +298,7 @@ export default function Daterange() {
                                         </div>
                                     </form>
                                 </header>
+                       
                             </div>
                             <div className="mx-4 table-responsive reports-container">
                                 <table className="tabreport table table-striped table-bordered">
@@ -348,10 +350,11 @@ export default function Daterange() {
                             </div>
                         </div>
                     </div>
+                    </div>
                 ) : (
                     <p>No data to display</p>
                 )}
             </div>
-        </div>
+        </div> 
     );
 }

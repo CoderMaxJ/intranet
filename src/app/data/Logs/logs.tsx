@@ -114,7 +114,7 @@ function LogsDataTable() {
 	if (error) return <div>Error: {error}</div>;
 
 	return (
-		<div className="logs-wrapper">
+		<div className="logs-wrapper px-4">
 			<div className="logs-maindiv px-3">
 				<div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3 py-3">
 					<h3
