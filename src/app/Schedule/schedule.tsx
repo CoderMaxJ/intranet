@@ -10,6 +10,11 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 
+interface Schedule{
+    shiftstart:string;
+    shiftend:string;
+    created_at:string;
+}
 interface Information {
     empno: number;
     gender: string;
@@ -26,6 +31,7 @@ interface Information {
     role_id: number;
     isdayshift: number;
     status: number;
+    schedule:Schedule;
 }
 
 interface Account {
@@ -98,6 +104,7 @@ export default function CreateUD() {
         );
         if (response.ok) {
             const data = await response.json();
+            console.log(data.data);
             setEmployees(data.data);
             setTotalPages(data.num_pages);
             setTotal(data.total);
@@ -339,6 +346,10 @@ export default function CreateUD() {
                                         <th scope="col" >Last Name</th>
                                         <th scope="col" >Account</th>
                                         <th scope="col" >Position</th>
+                                        <th scope="col" >Time In</th>
+                                        <th scope="col" >Time Out</th>
+                                        <th scope="col">Schedule Type</th>
+                                        <th>Last Modified</th>
                                     </tr>
                                 </thead>
                                 <tbody className="manage-tbody table-data">
@@ -350,6 +361,10 @@ export default function CreateUD() {
                                                 <td>{info.lname}</td>
                                                 <td>{getAccountName(info.acctid)}</td>
                                                 <td>{info.position}</td>
+                                                <td>{info.schedule?.shiftstart || "--"}</td>
+                                                <td>{info.schedule?.shiftend || "--"}</td>
+                                                <td>{info.isdayshift === 0 ? "Night Shift":"Morning Shift"}</td>
+                                                <td>{info.schedule?.created_at}</td>
                                             </tr>
                                         ))
                                     ) : (
