@@ -266,6 +266,7 @@
 .updatepassword-hover {
   width: 100%;
   cursor: pointer;
+  border-radius: 6px !important;
 }
 
 /* Default styles */
@@ -1578,21 +1579,17 @@ table {
   padding-bottom: 12px;
 }
 
-
-
 .manage-anchor a {
   color: white;
   text-decoration: none;
   width: 100%;
-  min-width: 20vw;  
   display: flex;
   align-items: center;
   gap: 5px !important;
-  margin-top: 12px;
+  margin-top: 30px;
   padding: 10px !important;
-  border-radius: 2px;
+  border-radius: 6px;
   cursor: pointer;
-  transform: translateX(-20px);
 }
 
 .manage-anchor svg {
@@ -2148,7 +2145,7 @@ table {
   margin-top: 5px;
   color: white;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 6px;
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
@@ -2158,6 +2155,7 @@ table {
 
 .generate:hover {
   background-color: #0F62EE !important;
+  
 }
 
 .generate:hover .dashboard-img,
@@ -2198,9 +2196,6 @@ table {
   gap: 10px;
 }
 
-.logoutbutton {
-  margin-left: 10px;
-}
 .logout-hover:hover {
   background-color: #0F62EE;
 }
@@ -2212,7 +2207,7 @@ table {
   margin-top: 5px;
   color: rgb(0, 0, 0);
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
 .logout-hover:hover {
@@ -2244,6 +2239,9 @@ table {
   box-sizing: border-box;
   width: 100%;
 }
+.updatepassword-hover:hover .updatep {
+  color: white;
+}
 
 
 .dot-div {
@@ -2256,7 +2254,6 @@ table {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* Optional: make it pop a little on hover */
@@ -2323,12 +2320,10 @@ table {
   padding: 10px;
   align-items: center;
   gap: 5px;
-  margin-left: -14px !important;
-  margin-bottom: -13px;
   margin-top: 5px !important;
   display: flex;
-  min-width: 20vw;
   width: 100%;
+  border-radius: 6px;
 }
 
 .employee-anchorr a {
@@ -2344,7 +2339,6 @@ table {
 
 .schedule-employee {
   gap: 65px;
-  padding: 20px 20px 1px 20px;
 }
 
 .sched-button button {
@@ -2364,7 +2358,6 @@ table {
   display: flex;
   gap: 1rem;
   align-items: center;
-  background-image: url(/img/Breaktool.png);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -2546,6 +2539,7 @@ table {
 .manage-menus {
   padding: 10px;
   border-radius: 2px;
+  border-radius: 6px;
   color: #000000;
   cursor: pointer;
 }

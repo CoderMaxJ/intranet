@@ -310,7 +310,7 @@ export default function Dashboard() {
                                 aria-labelledby="panelsStayOpen-headingOne"
                                 style={{ marginTop: "-25px" }}
                             >
-                                <div className="undermanage-hover accordion-body">
+                                <div className="undermanage-hover">
                                     <div className="manage-anchor">
                                         {user_privilege.includes("manage_users") && (
                                             <a
@@ -326,7 +326,7 @@ export default function Dashboard() {
                                                     width="16"
                                                     height="16"
                                                     fill={localStorage.getItem("active_tab") === "4" ? "white" : "currentColor"}
-                                                    className="accounts-svg bi bi-circle"
+                                                    className="accounts-svg bi bi-circle text-dark"
                                                     viewBox="0 0 16 16"
                                                 >
                                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
@@ -359,7 +359,7 @@ export default function Dashboard() {
                                                     width="16"
                                                     height="16"
                                                     fill={localStorage.getItem("active_tab") === "5" ? "white" : "currentColor"}
-                                                    className="bi bi-circle"
+                                                    className="bi bi-circle text-dark"
                                                     viewBox="0 0 16 16"
                                                 >
                                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
@@ -374,7 +374,6 @@ export default function Dashboard() {
                                                     </label>
                                                 )}
                                             </a>
-
                                         </div>
                                     </div>
                                 </div>
