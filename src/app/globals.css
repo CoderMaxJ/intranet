@@ -2764,3 +2764,6 @@ table {
 .icon-sm-class{
   font-size: 0.50rem;
 }
+.empno-data-column{
+  width: 10px !important;
+}

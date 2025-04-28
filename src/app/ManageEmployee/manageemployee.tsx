@@ -8,6 +8,7 @@ import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
+import MultiSelect from "../component/CheduleForm";
 
 interface Schedule {
   shiftstart: string;
@@ -367,8 +368,9 @@ export default function CreateUD() {
               <thead>
                 <tr>
                   <th scope="col" >Employee No.</th>
+                  <th scope="col" >Username</th>
                   <th scope="col" >First Name</th>
-                  <th scope="col" >Middle Name</th>
+                  {/* <th scope="col" >Middle Name</th> */}
                   <th scope="col" >Last Name</th>
                   {/* {user_privilege.includes("manage_users") && (<th scope="col" >Address</th>)}
                   {user_privilege.includes("manage_users") && (<th scope="col" >Marital Status</th>)} */}
@@ -377,7 +379,6 @@ export default function CreateUD() {
                   {user_privilege.includes("manage_users") && (<th scope="col" >Contact No.</th>)}
                   {user_privilege.includes("manage_users") && (<th scope="col" >Account</th>)}
                   <th scope="col" >Position</th>
-                  <th scope="col" >Username</th>
                   <th scope="col" >Actions</th>
                 </tr>
               </thead>
@@ -385,9 +386,10 @@ export default function CreateUD() {
                 {employees?.length ? (
                   employees.map((info, index) => (
                     <tr key={info.empno}>
-                      <td className="p">{info.empno}</td>
+                      <td className="empno-data-column">{info.empno}</td>
+                      <td>{info.un}</td>
                       <td>{info.fname}</td>
-                      <td>{info.mname}</td>
+                      {/* <td>{info.mname}</td> */}
                       <td>{info.lname}</td>
                       {/* {user_privilege.includes("manage_users") && (<td>{info.address}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{info.maritalstatus}</td>)} */}
@@ -396,7 +398,6 @@ export default function CreateUD() {
                       {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
                       {user_privilege.includes("manage_users") && (<td>{getAccountName(info.acctid)}</td>)}
                       <td>{info.position}</td>
-                      <td>{info.un}</td>
                       <td>
                         <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
                           {user_privilege.includes("update_breaktool_account") && (

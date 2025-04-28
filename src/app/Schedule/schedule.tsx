@@ -8,7 +8,14 @@ import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
+import MultiSelect from "../component/CheduleForm";
 
+
+interface Schedule {
+    shiftstart: string;
+    shiftend: string;
+    created_at: string;
+  }
 interface Information {
     empno: number;
     gender: string;
@@ -25,6 +32,7 @@ interface Information {
     role_id: number;
     isdayshift: number;
     status: number;
+    schedule:Schedule
 }
 
 interface Account {
@@ -86,7 +94,7 @@ export default function CreateUD() {
         const token = localStorage.getItem("token");
         const user_id = localStorage.getItem("user_id");
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/${Decryptor(user_id || "")}/?page=${page}`,
+            `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/schedule/${Decryptor(user_id || "")}/?page=${page}`,
             {
                 method: "GET",
                 headers: {
@@ -97,6 +105,7 @@ export default function CreateUD() {
         );
         if (response.ok) {
             const data = await response.json();
+            console.log(data.data);
             setEmployees(data.data);
             setTotalPages(data.num_pages);
             setTotal(data.total);
@@ -187,7 +196,7 @@ export default function CreateUD() {
          if (value.trim() === "") {
            GetEmployee(currentPage);
          } else {
-           const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${value}/`, {
+           const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/schedule/${Decryptor(id || "")}/${value}/`, {
              method: "GET",
              headers: {
                "Content-Type": "application/json",
@@ -197,6 +206,7 @@ export default function CreateUD() {
      
            if (response.ok) {
              const data = await response.json();
+             console.log(data.data);
              setEmployees(data.data);
            } else {
              console.error("Error fetching search results");
@@ -258,7 +268,6 @@ export default function CreateUD() {
         }
 
     }
-
     return (
         <div className="crud-maindiv">
             <div className="db-employee">
@@ -267,6 +276,7 @@ export default function CreateUD() {
             <div className="main-divv px-4">
                 <Header title="MANAGE SCHEDULE" />
                 <div className="manageemployee-division">
+                    <MultiSelect/>
                     <div>
                         <div>
                             <header>
@@ -299,12 +309,10 @@ export default function CreateUD() {
                                             <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
                                             <label htmlFor="timeout">Time Out:</label>
                                             <input type="time" value={timeOut} className="timeout" onChange={(e) => setTimeOut(e.target.value)} />
-                                        
-                                                <button
-                                                    onClick={CreateSchedule}
-                                                    className="d-flex align-items-center "
-                                                >
-                                                    <svg
+            
+                                            <button type="button" className="" data-bs-toggle="modal" data-bs-target="#open-modal-schedule" data-bs-whatever="@mdo">
+                                                Add Schedule
+                                            <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         width="16"
                                                         height="16"
@@ -314,8 +322,8 @@ export default function CreateUD() {
                                                     >
                                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                                                     </svg>
-                                                    Add Schedule
-                                                </button>
+                                            </button>
+                                              
                                             </div>
                                        
                                     </div>
@@ -344,38 +352,30 @@ export default function CreateUD() {
                             style={{ margin: 'auto' }}
                         >
                             <thead>
-                                <tr>
-                                    <th>
-
-                                        <input
-                                            type="checkbox"
-                                            onChange={(e) => handleSelectAll(e.target.checked)}
-                                            checked={allSelected}
-                                        />
-                                    </th>
+                                <tr> 
                                     <th scope="col" >Employee No.</th>
-                                    <th scope="col" >First Name</th>
-                                    <th scope="col" >Last Name</th>
+                                    <th scope="col" >Name</th>
                                     <th scope="col" >Account</th>
                                     <th scope="col" >Position</th>
+                                    <th scope="col" >Shift Start</th>
+                                    <th scope="col" >Shift End</th>
+                                    <th scope="col">Shift Type</th>
+                                    <th scope="col">Last Updated</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody className="manage-tbody table-data">
                                 {employees?.length ? (
                                     employees.map((info, index) => (
                                         <tr key={info.empno}>
-                                            <td>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedEmployees.includes(info.empno)}
-                                                    onChange={() => toggleSelect(info.empno)}
-                                                />
-                                            </td>
-                                            <td className="p">{info.empno}</td>
-                                            <td>{info.fname}</td>
-                                            <td>{info.lname}</td>
+                                            <td className="empno-data-column">{info.empno}</td>
+                                            <td>{info.fname } {info.lname}</td>
                                             <td>{getAccountName(info.acctid)}</td>
                                             <td>{info.position}</td>
+                                            <td>{info.schedule?.shiftstart || '- -'}</td>
+                                            <td>{info.schedule?.shiftend || '- -'}</td>
+                                            <td>{info.isdayshift == 0 ? "Night Shift":"Morning Shift"}</td>
+                                            <td>{info.schedule?.created_at}</td>
                                         </tr>
                                     ))
                                 ) : (
