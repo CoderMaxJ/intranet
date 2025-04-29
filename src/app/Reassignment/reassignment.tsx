@@ -45,7 +45,8 @@ export default function () {
      const [account, setAccount] = useState<Account[]>([]);
      const [allEmployees, setAllEmployees] = useState<Information[]>([]);
      const [filteredEmployees, setFilteredEmployees] = useState<Information[]>([]);
-     const [selectedEmployees, setSelectedEmployees] = useState([]);
+     const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
+
      const [localEmployees, setLocalEmployees] = useState([]);
      const [searchQueryLeft, setSearchQueryLeft] = useState("");
      const [filterText, setFilterText] = useState(""); // <-- ADD THIS
@@ -61,21 +62,28 @@ export default function () {
           setSearchQueryLeft(value);
      };
 
-     const handleCheckboxChange = (empno) => {
-          setSelectedEmployees((prevSelected) =>
-               prevSelected.includes(empno)
-                    ? prevSelected.filter(id => id !== empno) // Uncheck
-                    : [...prevSelected, empno] // Check
-          );
-     };
+     // const handleCheckboxChange = (empno) => {
+     //      setSelectedEmployees((prevSelected) =>
+     //           prevSelected.includes(empno)
+     //                ? prevSelected.filter(id => id !== empno) // Uncheck
+     //                : [...prevSelected, empno] // Check
+     //      );
+     // };
 
-     function debounce(func, delay) {
-          let timeout;
-          return (...args) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func(...args), delay);
+     function customDebounce<T extends (...args: any[]) => void>(func: T, delay: number): (...args: Parameters<T>) => void {
+          let timeout: ReturnType<typeof setTimeout>;
+
+          return (...args: Parameters<T>) => {
+               clearTimeout(timeout);
+               timeout = setTimeout(() => func(...args), delay);
           };
-        }
+     }
+     
+     const handleEmployeeClick = (empno: number) => {
+          setSelectedEmployees((prevSelected) =>
+            prevSelected.includes(empno) ? prevSelected.filter(id => id !== empno) : [...prevSelected, empno]   
+          );
+        };
         
      useEffect(() => {
           if (!timeIn || !timeOut) return;
@@ -276,7 +284,7 @@ export default function () {
 
      const id = localStorage.getItem("user_id");
      const debouncedSearch = useMemo(() => {
-          const token = localStorage.getItem("token"); 
+          const token = localStorage.getItem("token");
           const decryptedToken = Decryptor(token || '');
           return debounce(async (value: string) => {
                if (value.trim() === "") {
@@ -387,46 +395,45 @@ export default function () {
                                              />
 
                                              <div className="list-group w-100">
-                                                  {filteredEmployees
-                                                       .filter(emp =>
-                                                            !selectedEmployees.includes(emp.empno) &&
-                                                            (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQueryLeft.toLowerCase()) ||
-                                                                 getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
-                                                       )
-                                                       .filter(emp =>
-                                                            getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase()) // <-- account filtering added here
-                                                       )
-                                                       .map(emp => (
-                                                            <div
-                                                                 key={emp.empno}
-                                                                 className="list-group-item d-flex justify-content-between align-items-center"
-                                                                 style={{
-                                                                      border: "1px solid #f0f0f0",
-                                                                      borderRadius: "8px",
-                                                                      marginBottom: "8px",
-                                                                      padding: "12px 16px",
-                                                                      backgroundColor: "#fafafa",
-                                                                 }}
-                                                            >
-                                                                 <div className="d-flex align-items-center">
-                                                                      <input
-                                                                           type="checkbox"
-                                                                           checked={false}
-                                                                           onChange={() => handleCheckboxChange(emp.empno)}
-                                                                           style={{ marginRight: "10px" }}
-                                                                      />
-                                                                      <span>{emp.fname} {emp.lname}</span>
+                                                  <div>
+                                                       {filteredEmployees
+                                                            .filter(emp =>
+                                                                 !selectedEmployees.includes(emp.empno) &&
+                                                                 (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQueryLeft.toLowerCase()) ||
+                                                                      getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
+                                                            )
+                                                            .filter(emp =>
+                                                                 getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
+                                                            )
+                                                            .map(emp => (
+                                                                 <div
+                                                                      key={emp.empno}
+                                                                      className="list-group-item d-flex justify-content-between align-items-center"
+                                                                      style={{
+                                                                           border: "1px solid #f0f0f0",
+                                                                           borderRadius: "8px",
+                                                                           marginBottom: "8px",
+                                                                           padding: "12px 16px",
+                                                                           backgroundColor: "#fafafa",
+                                                                           cursor: "pointer",
+                                                                      }}
+                                                                      onClick={() => handleEmployeeClick(emp.empno)}
+                                                                 >
+                                                                      <div className="d-flex flex-column">
+                                                                           <span>{emp.fname} {emp.lname}</span>
+                                                                           <small className="text-muted">{getAccountName(emp.acctid)}</small>
+                                                                      </div>
                                                                  </div>
-                                                                 <span className="text-muted">{getAccountName(emp.acctid)}</span>
-                                                            </div>
-                                                       ))}
+                                                            ))}
+                                                  </div>
+
                                              </div>
 
                                         </div>
 
                                         {/* Arrow */}
                                         <div className="d-flex justify-content-center align-items-start" style={{ marginTop: "30px", fontSize: "24px" }}>
-                                        <img src="/svg/lr-arrow.svg" alt="arrow" />
+                                             <img src="/svg/lr-arrow.svg" alt="arrow" />
 
                                         </div>
 
@@ -443,50 +450,38 @@ export default function () {
                                                   onChange={handleSearchEmployee}
                                              />
 
-                                             <div className="list-group w-100">
-                                                  {filteredEmployees
-                                                       .filter(emp =>
-                                                            selectedEmployees.includes(emp.empno) &&
-                                                            (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                                                 getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
-                                                       ).length > 0 ? (
-                                                       filteredEmployees
-                                                            .filter(emp =>
-                                                                 selectedEmployees.includes(emp.empno) &&
-                                                                 (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                                                      getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
-                                                            )
-                                                            .filter(emp =>
-                                                                 getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase()) // <-- account filtering added here
-                                                            )
-                                                            .map(emp => (
-                                                                 <div
-                                                                      key={emp.empno}
-                                                                      className="list-group-item d-flex justify-content-between align-items-center"
-                                                                      style={{
-                                                                           border: "1px solid #f0f0f0",
-                                                                           borderRadius: "8px",
-                                                                           marginBottom: "8px",
-                                                                           padding: "12px 16px",
-                                                                           backgroundColor: "#e6f7ff",
-                                                                      }}
-                                                                 >
-                                                                      <div className="d-flex align-items-center">
-                                                                           <input
-                                                                                type="checkbox"
-                                                                                checked={true}
-                                                                                onChange={() => handleCheckboxChange(emp.empno)}
-                                                                                style={{ marginRight: "10px" }}
-                                                                           />
-                                                                           <span>{emp.fname} {emp.lname}</span>
-                                                                      </div>
-                                                                      <span className="text-muted">{getAccountName(emp.acctid)}</span>
-                                                                 </div>
-                                                            ))
-                                                  ) : (
-                                                       <p>No employees selected.</p>
-                                                  )}
-                                             </div>
+<div className="list-group w-100">
+  {filteredEmployees
+    .filter(emp =>
+      selectedEmployees.includes(emp.empno) &&
+      (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
+    )
+    .filter(emp =>
+      getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
+    )
+    .map(emp => (
+      <div
+        key={emp.empno}
+        className="list-group-item d-flex justify-content-between align-items-center"
+        style={{
+          border: "1px solid #f0f0f0",
+          borderRadius: "8px",
+          marginBottom: "8px",
+          padding: "12px 16px",
+          backgroundColor: "#e6f7ff",
+          cursor: "pointer",
+        }}
+        onClick={() => handleEmployeeClick(emp.empno)}
+      >
+        <div className="d-flex flex-column">
+          <span>{emp.fname} {emp.lname}</span>
+          <small className="text-muted">{getAccountName(emp.acctid)}</small>
+        </div>
+      </div>
+    ))}
+</div>
+
                                         </div>
                                    </div>
 

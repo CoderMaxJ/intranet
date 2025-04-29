@@ -4,6 +4,10 @@ export default function ShiftAdjustment() {
   return (
     <><div className="d-flex">
       <div><Dashboard/></div>
+      <div className="shiftadjustment-container">
+        <div className="shiftadjustment-table">
+          <input type="search" className="form-control"/>
+        </div>
       <div className="shiftadjustment-table">
         <table className="table">
           <thead>
@@ -29,6 +33,7 @@ export default function ShiftAdjustment() {
             </tr>
           </tbody>
         </table>
+      </div>
       </div>
     </div>
     </>
