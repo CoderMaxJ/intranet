@@ -3065,18 +3065,22 @@ table {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
   padding: 0;
   margin: auto;
   margin-right: -26px;
   border-radius: 50% !important;
   background-color: whitesmoke !important;
-  border: 2px solid rgb(197, 190, 190) !important;
+  border: 3px solid rgb(255, 255, 255) !important;
+}
+
+.modal-header {
+background-color: #0F62EE ;
 }
 
 .arrow-img {
-  color: #6c757d;
+  color: #3271a8;
   margin-top: -5px;
   margin-left: -3px;
 }

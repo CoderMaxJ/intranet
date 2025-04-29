@@ -3,6 +3,9 @@ import { Decryptor, Encryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // <-- ADD this
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface Schedule {
     shiftstart: string;
@@ -42,6 +45,135 @@ export default function () {
     const [account, setAccount] = useState<Account[]>([]);
     const [allEmployees, setAllEmployees] = useState<Information[]>([]);
     const [filteredEmployees, setFilteredEmployees] = useState<Information[]>([]);
+    const [selectedEmployees, setSelectedEmployees] = useState([]);
+    const [localEmployees, setLocalEmployees] = useState([]);
+    const [searchQueryLeft, setSearchQueryLeft] = useState("");
+    const [filterText, setFilterText] = useState(""); // <-- ADD THIS
+
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterText(e.target.value);
+    };
+
+    const handleSearchAvailableEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSearchQueryLeft(value);
+    };
+
+    const handleCheckboxChange = (empno) => {
+        setSelectedEmployees((prevSelected) =>
+            prevSelected.includes(empno)
+                ? prevSelected.filter(id => id !== empno) // Uncheck
+                : [...prevSelected, empno] // Check
+        );
+    };
+    useEffect(() => {
+        if (!timeIn || !timeOut) return;
+        if (selectedEmployees.length === 0) return;
+
+        // Update local employees immediately when timeIn/timeOut changes
+        setAllEmployees(prev =>
+            prev.map(emp =>
+                selectedEmployees.includes(emp.empno)
+                    ? { ...emp, schedule: { shiftstart: timeIn, shiftend: timeOut } }
+                    : emp
+            )
+        );
+
+        setFilteredEmployees(prev =>
+            prev.map(emp =>
+                selectedEmployees.includes(emp.empno)
+                    ? { ...emp, schedule: { shiftstart: timeIn, shiftend: timeOut } }
+                    : emp
+            )
+        );
+    }, [timeIn, timeOut, selectedEmployees]);
+    const create = async () => {
+        const data = {
+            empno: EmpNoList,
+            timein: timeIn,
+            timeout: timeOut
+        }
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Decryptor(token || "")}`,
+            },
+            body: JSON.stringify(data),
+        });
+    }
+
+    const handleSetSchedule = async () => {
+        if (!timeIn || !timeOut) {
+            toast.error("Please set both Time In and Time Out before assigning schedule.");
+            return;
+        }
+        if (selectedEmployees.length === 0) {
+            toast.error("Please select at least one employee.");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+        const decryptedToken = Decryptor(token || "");
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedToken}`
+                },
+                body: JSON.stringify({
+                    empno: selectedEmployees,   // <-- must be empno not employees
+                    timein: timeIn,              // <-- must be timein not shiftstart
+                    timeout: timeOut             // <-- must be timeout not shiftend
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                toast.success(data.message || "Schedule successfully set for selected employees!");
+
+                // Update local state immediately
+                setAllEmployees(prev =>
+                    prev.map(emp =>
+                        selectedEmployees.includes(emp.empno)
+                            ? { ...emp, schedule: { shiftstart: timeIn, shiftend: timeOut } }
+                            : emp
+                    )
+                );
+
+                setFilteredEmployees(prev =>
+                    prev.map(emp =>
+                        selectedEmployees.includes(emp.empno)
+                            ? { ...emp, schedule: { shiftstart: timeIn, shiftend: timeOut } }
+                            : emp
+                    )
+                );
+
+                setSelectedEmployees([]);
+                setTimeIn("");
+                setTimeOut("");
+            } else {
+                const text = await response.text();
+                try {
+                    const errorData = JSON.parse(text);
+                    toast.error(`Failed to set schedule: ${errorData.message || "Unknown error"}`);
+                } catch {
+                    console.error("Server response is not JSON:", text);
+                    toast.error("Failed to set schedule: Server error or wrong endpoint.");
+                }
+            }
+        } catch (error) {
+            console.error("Error setting schedule", error);
+            toast.error("An error occurred while setting schedule.");
+        }
+    };
+
+
+
 
     const handleSearchEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -166,104 +298,199 @@ export default function () {
 
     return (
         <div>
-            <div className="modal fade" id="reassignment" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div
+                className="modal fade"
+                id="reassignment"
+                tabIndex={-1}
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
-                        <div className="modal-header">
+                        <div className="modal-header text-light">
                             <h1 className="modal-title fs-5">Update Employee Schedule Assignment</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+
                         <div className="modal-body">
-                            <div><label htmlFor="effectivitydate" className="fw-bold">Effectivity Date</label></div>
                             <div>
-                                <label htmlFor="timein">From:</label>
-                                <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
-                                <label htmlFor="timeout">To:</label>
-                                <input type="time" value={timeOut} className="timeout" onChange={(e) => setTimeOut(e.target.value)} />
+                                <label htmlFor="effectivitydate" className="fw-bold">Effectivity Date</label>
                             </div>
 
-                            <div><label htmlFor="assignemployees" className="fw-bold">Assign Employees</label></div>
-                            <div className="container text-center">
-                            <div className="flex-wrap justify-content-between row align-items-start">
-                                <div className="col d-flex justify-content-center align-items-center">
+                            <div className="d-flex gap-2 mb-4">
+                                <div className="d-flex flex-column">
+                                    <label htmlFor="timein">From:</label>
                                     <input
-                                        className="searchbar"
+                                        type="time"
+                                        value={timeIn}
+                                        className="timein"
+                                        onChange={(e) => setTimeIn(e.target.value)}
+                                    />
+                                </div>
+                                <div className="d-flex flex-column">
+                                    <label htmlFor="timeout">To:</label>
+                                    <input
+                                        type="time"
+                                        value={timeOut}
+                                        className="timeout"
+                                        onChange={(e) => setTimeOut(e.target.value)}
+                                    />
+                                </div>
+
+                                <div>
+                                    <input
+                                        id="myInput"
                                         type="text"
-                                        placeholder="Search..."
+                                        placeholder="Search.."
+                                        value={filterText}
+                                        onChange={handleInputChange}
+                                    />
+                                    <label htmlFor="accounts" className="fw-bold">Accounts</label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label htmlFor="assignemployees" className="fw-bold">Assign Employees</label>
+                            </div>
+
+                            <div className="d-flex flex-wrap justify-content-between align-items-start gap-5">
+
+                                {/* Left Side: Unselected Employees */}
+                                <div className="d-flex flex-column align-items-center" style={{ flex: 1 }}>
+                                    <h6>Available Employees</h6>
+
+                                    {/* LEFT SIDE SEARCH */}
+                                    <input
+                                        className="searchbar mb-2"
+                                        type="text"
+                                        placeholder="Search available..."
+                                        value={searchQueryLeft}
+                                        onChange={handleSearchAvailableEmployee}
+                                    />
+
+                                    <div className="list-group w-100">
+                                        {filteredEmployees
+                                            .filter(emp =>
+                                                !selectedEmployees.includes(emp.empno) &&
+                                                (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQueryLeft.toLowerCase()) ||
+                                                    getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
+                                            )
+                                            .filter(emp =>
+                                                getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase()) // <-- account filtering added here
+                                            )
+                                            .map(emp => (
+                                                <div
+                                                    key={emp.empno}
+                                                    className="list-group-item d-flex justify-content-between align-items-center"
+                                                    style={{
+                                                        border: "1px solid #f0f0f0",
+                                                        borderRadius: "8px",
+                                                        marginBottom: "8px",
+                                                        padding: "12px 16px",
+                                                        backgroundColor: "#fafafa",
+                                                    }}
+                                                >
+                                                    <div className="d-flex align-items-center">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={false}
+                                                            onChange={() => handleCheckboxChange(emp.empno)}
+                                                            style={{ marginRight: "10px" }}
+                                                        />
+                                                        <span>{emp.fname} {emp.lname}</span>
+                                                    </div>
+                                                    <span className="text-muted">{getAccountName(emp.acctid)}</span>
+                                                </div>
+                                            ))}
+                                    </div>
+
+                                </div>
+
+                                {/* Arrow */}
+                                <div className="d-flex justify-content-center align-items-start" style={{ marginTop: "30px", fontSize: "24px" }}>
+                                    ➡️
+                                </div>
+
+                                {/* Right Side: Selected Employees */}
+                                <div className="d-flex flex-column align-items-center" style={{ flex: 1 }}>
+                                    <h6>Selected Employees</h6>
+
+                                    {/* RIGHT SIDE SEARCH */}
+                                    <input
+                                        className="searchbar mb-2"
+                                        type="text"
+                                        placeholder="Search selected..."
                                         value={searchQuery}
                                         onChange={handleSearchEmployee}
                                     />
-                                </div>
-                                <div className="col d-flex justify-content-center align-items-center">
-                                    Arrow
-                                </div>
-                                <div className="col d-flex justify-content-center align-items-center">
-                                    <input
-                                        className="searchbar"
-                                        type="text"
-                                        placeholder="Search employees (API)..."
-                                        value={searchQueryAPI}
-                                        onChange={handleSearchAPI}
-                                    />
-                                </div>
+
+                                    <div className="list-group w-100">
+                                        {filteredEmployees
+                                            .filter(emp =>
+                                                selectedEmployees.includes(emp.empno) &&
+                                                (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                                    getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
+                                            ).length > 0 ? (
+                                            filteredEmployees
+                                                .filter(emp =>
+                                                    selectedEmployees.includes(emp.empno) &&
+                                                    (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                                        getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
+                                                )
+                                                .filter(emp =>
+                                                    getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase()) // <-- account filtering added here
+                                                )
+                                                .map(emp => (
+                                                    <div
+                                                        key={emp.empno}
+                                                        className="list-group-item d-flex justify-content-between align-items-center"
+                                                        style={{
+                                                            border: "1px solid #f0f0f0",
+                                                            borderRadius: "8px",
+                                                            marginBottom: "8px",
+                                                            padding: "12px 16px",
+                                                            backgroundColor: "#e6f7ff",
+                                                        }}
+                                                    >
+                                                        <div className="d-flex align-items-center">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={true}
+                                                                onChange={() => handleCheckboxChange(emp.empno)}
+                                                                style={{ marginRight: "10px" }}
+                                                            />
+                                                            <span>{emp.fname} {emp.lname}</span>
+                                                        </div>
+                                                        <span className="text-muted">{getAccountName(emp.acctid)}</span>
+                                                    </div>
+                                                ))
+                                        ) : (
+                                            <p>No employees selected.</p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="list-group mt-3 w-100">
-                                {searchQueryAPI.trim() !== "" ? (
-                                    employee.length > 0 ? (
-                                        employee.map((emp) => (
-                                            <div
-                                                key={emp.empno}
-                                                className="list-group-item d-flex justify-content-between align-items-center"
-                                                style={{ border: "1px solid #f0f0f0", borderRadius: "8px", marginBottom: "8px", padding: "12px 16px", backgroundColor: "#fafafa" }}
-                                            >
-                                                <span>{emp.fname} {emp.lname}</span>
-                                                <span className="text-muted">{getAccountName(emp.acctid)}</span>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>No employees found in API search.</p>
-                                    )
-                                ) : (
-                                    filteredEmployees.length > 0 ? (
-                                        filteredEmployees.map((emp) => (
-                                            <div
-                                                key={emp.empno}
-                                                className="list-group-item d-flex justify-content-between align-items-center"
-                                                style={{ border: "1px solid #f0f0f0", borderRadius: "8px", marginBottom: "8px", padding: "12px 16px", backgroundColor: "#fafafa" }}
-                                            >
-                                                <span>{emp.fname} {emp.lname}</span>
-                                                <span className="text-muted">{getAccountName(emp.acctid)}</span>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>No employees found.</p>
-                                    )
-                                )}
-                            </div>
-                      
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-primary d-flex align-items-center"
-                                data-bs-toggle="modal"
-                                data-bs-target="#reassignment"
-                                onClick={resetEmployeeList} // <<< ADD THIS
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="#ffffff"
-                                    className="bi bi-plus-circle-fill me-2"
-                                    viewBox="0 0 16 16"
+                            {/* Add Schedule Button */}
+                            <div className="d-flex justify-content-end mt-4">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary d-flex align-items-center"
+                                    onClick={handleSetSchedule}
                                 >
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                </svg>
-                                Add Schedule
-                            </button>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="#ffffff"
+                                        className="bi bi-plus-circle-fill me-2"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                                    </svg>
+                                    Reschedule Employees
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
