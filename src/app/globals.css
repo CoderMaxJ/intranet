@@ -3061,6 +3061,11 @@ table {
   width: 100%;
 }
 
+.list-group {
+  height: 55vh;
+  overflow-y: scroll;
+}
+
 .arrow-btn {
   display: flex !important;
   align-items: center !important;
@@ -3191,4 +3196,13 @@ background-color: #0F62EE ;
 }
 .empno-data-column{
   width: 10px !important;
+}
+
+.shiftadjustment-table th {
+  color: #ffffff;
+  background-color: #0F62EE !important;
+}
+
+.shiftadjustment-table {
+  width: 100%;
 }

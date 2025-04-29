@@ -36,10 +36,12 @@ export default function Dashboard() {
     const [manageMenu, setManageMenu] = useState(true);
     const [activeMenu, setActiveMenu] = useState("manage");
     const [activeNav, setActiveNav] = useState("1");
+    const [shiftAdjustment, setShiftAdjustment] = useState(true);
 
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
         setActiveNav(storedTab);
+        setShowEmployee(true);
     }, []);
 
     const navigateTo = (path: string, tabId: string) => {
@@ -375,6 +377,37 @@ export default function Dashboard() {
                                                 )}
                                             </a>
                                         </div>
+
+                                        <div className="employee-anchor">
+                                        <a
+                                                className="nav-font"
+                                                onClick={() => navigateTo("/ShiftAdjustment", "5")}
+                                                style={{
+                                                    backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0F62EE" : "",
+                                                    color: localStorage.getItem("active_tab") === "5" ? "white" : "",
+                                                }}
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="16"
+                                                    height="16"
+                                                    fill={localStorage.getItem("active_tab") === "5" ? "white" : "currentColor"}
+                                                    className="bi bi-circle text-dark"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                </svg>
+                                                {shiftAdjustment && (
+                                                    <label
+                                                        className="emp-label"
+                                                        htmlFor="employee"
+                                                        style={{ color: localStorage.getItem("active_tab") === "5" ? "white" : "" }}
+                                                    >
+                                                        Shift Adjusment
+                                                    </label>
+                                                )}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -437,28 +470,28 @@ export default function Dashboard() {
                 <div >
                     <hr className="border-dark border-2 " />
                     <div className="upload-prof">
-                    <button
-  onClick={toggleMinimizeMaximize}
-  className="arrow-btn btn bg-primary" 
->
-  <span
-    className={`transition-icon ${arrowIcon ? 'rotate-left' : 'rotate-right'}`}
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="25"
-      height="25"
-      fill="white"
-      className="arrow-img bi bi-chevron-left"
-      viewBox="0 0 16 16"
-    >
-      <path
-        fillRule="evenodd"
-        d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
-      />
-    </svg>
-  </span>
-</button>
+                        <button
+                            onClick={toggleMinimizeMaximize}
+                            className="arrow-btn btn bg-primary"
+                        >
+                            <span
+                                className={`transition-icon ${arrowIcon ? 'rotate-left' : 'rotate-right'}`}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="25"
+                                    height="25"
+                                    fill="white"
+                                    className="arrow-img bi bi-chevron-left"
+                                    viewBox="0 0 16 16"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+                                    />
+                                </svg>
+                            </span>
+                        </button>
 
                         {open && (
                             <img
