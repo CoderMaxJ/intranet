@@ -3199,7 +3199,7 @@ background-color: #0F62EE ;
 }
 
 .shiftadjustment-table th {
-  color: #ffffff;
+  color: #ffffff !important;
   background-color: #0F62EE !important;
 }
 
@@ -3209,4 +3209,37 @@ background-color: #0F62EE ;
 
 .shiftadjustment-container {
   width: 100%;
+  background-color:#e7e7e7;
+}
+
+#reassignment .list-group-item {
+  padding: 0px;
+} 
+
+.displayed-data span {
+  font-size: smaller;
+}
+
+.displayed-dataa small {
+  font-size: smaller;
+}
+.shiftadjusment-table {
+  background-color: #ffffff;
+  margin: 20px;
+  border-radius: 4px;
+  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
+}
+.breaks {
+  padding: 10px;
+  color: red;
+  font-weight: bold;
+  border-radius: 4px;
+  background-color: #FEE4E3;
+}
+
+.in-out {
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #ffffff;
 }

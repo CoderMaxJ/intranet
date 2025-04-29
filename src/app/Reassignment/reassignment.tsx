@@ -53,6 +53,9 @@ export default function () {
      const debouncedSetFilterText = useMemo(() => debounce(setFilterText, 300), [setFilterText]);
 
 
+     const handleRemoveEmployee = (empno: any) => {
+          setSelectedEmployees(prev => prev.filter(id => id !== empno));
+     }
      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           setFilterText(e.target.value);
      };
@@ -62,14 +65,6 @@ export default function () {
           setSearchQueryLeft(value);
      };
 
-     // const handleCheckboxChange = (empno) => {
-     //      setSelectedEmployees((prevSelected) =>
-     //           prevSelected.includes(empno)
-     //                ? prevSelected.filter(id => id !== empno) // Uncheck
-     //                : [...prevSelected, empno] // Check
-     //      );
-     // };
-
      function customDebounce<T extends (...args: any[]) => void>(func: T, delay: number): (...args: Parameters<T>) => void {
           let timeout: ReturnType<typeof setTimeout>;
 
@@ -78,13 +73,13 @@ export default function () {
                timeout = setTimeout(() => func(...args), delay);
           };
      }
-     
+
      const handleEmployeeClick = (empno: number) => {
           setSelectedEmployees((prevSelected) =>
-            prevSelected.includes(empno) ? prevSelected.filter(id => id !== empno) : [...prevSelected, empno]   
+               prevSelected.includes(empno) ? prevSelected.filter(id => id !== empno) : [...prevSelected, empno]
           );
-        };
-        
+     };
+
      useEffect(() => {
           if (!timeIn || !timeOut) return;
           if (selectedEmployees.length === 0) return;
@@ -189,9 +184,6 @@ export default function () {
                toast.error("An error occurred while setting schedule.");
           }
      };
-
-
-
 
      const handleSearchEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
           const value = e.target.value;
@@ -419,9 +411,9 @@ export default function () {
                                                                       }}
                                                                       onClick={() => handleEmployeeClick(emp.empno)}
                                                                  >
-                                                                      <div className="d-flex flex-column">
-                                                                           <span>{emp.fname} {emp.lname}</span>
-                                                                           <small className="text-muted">{getAccountName(emp.acctid)}</small>
+                                                                      
+                                                                           <div  className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
+                                                                           <div  className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
                                                                       </div>
                                                                  </div>
                                                             ))}
@@ -450,37 +442,45 @@ export default function () {
                                                   onChange={handleSearchEmployee}
                                              />
 
-<div className="list-group w-100">
-  {filteredEmployees
-    .filter(emp =>
-      selectedEmployees.includes(emp.empno) &&
-      (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
-    )
-    .filter(emp =>
-      getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
-    )
-    .map(emp => (
-      <div
-        key={emp.empno}
-        className="list-group-item d-flex justify-content-between align-items-center"
-        style={{
-          border: "1px solid #f0f0f0",
-          borderRadius: "8px",
-          marginBottom: "8px",
-          padding: "12px 16px",
-          backgroundColor: "#e6f7ff",
-          cursor: "pointer",
-        }}
-        onClick={() => handleEmployeeClick(emp.empno)}
-      >
-        <div className="d-flex flex-column">
-          <span>{emp.fname} {emp.lname}</span>
-          <small className="text-muted">{getAccountName(emp.acctid)}</small>
-        </div>
-      </div>
-    ))}
-</div>
+                                             <div className="list-group w-100">
+                                                  {filteredEmployees
+                                                       .filter(emp =>
+                                                            selectedEmployees.includes(emp.empno) &&
+                                                            (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                                                 getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
+                                                       )
+                                                       .filter(emp =>
+                                                            getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
+                                                       )
+                                                       .map(emp => (
+                                                            <div
+                                                                 key={emp.empno}
+                                                                 className="list-group-item d-flex justify-content-between align-items-center"
+                                                                 style={{
+                                                                      border: "1px solid #f0f0f0",
+                                                                      borderRadius: "8px",
+                                                                      marginBottom: "8px",
+                                                                      padding: "12px 16px",
+                                                                      backgroundColor: "#e6f7ff",
+                                                                      cursor: "pointer",
+                                                                 }}
+
+                                                            >
+                                                                <div  className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
+                                                                           <div  className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
+                                                                      </div>
+                                                                 <button
+                                                                      className="btn btn-sm btn-danger"
+                                                                      onClick={(e) => {
+                                                                           e.stopPropagation();
+                                                                           handleRemoveEmployee(emp.empno);
+                                                                      }}
+                                                                 >
+                                                                      ×
+                                                                 </button>
+                                                            </div>
+                                                       ))}
+                                             </div>
 
                                         </div>
                                    </div>
@@ -509,6 +509,6 @@ export default function () {
                          </div>
                     </div>
                </div>
-          </div>
+          </div >
      );
 }
