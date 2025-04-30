@@ -45,38 +45,42 @@ export default function () {
      const [account, setAccount] = useState<Account[]>([]);
      const [allEmployees, setAllEmployees] = useState<Information[]>([]);
      const [filteredEmployees, setFilteredEmployees] = useState<Information[]>([]);
-     const [selectedEmployees, setSelectedEmployees] = useState([]);
+     const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
+
      const [localEmployees, setLocalEmployees] = useState([]);
      const [searchQueryLeft, setSearchQueryLeft] = useState("");
      const [filterText, setFilterText] = useState(""); // <-- ADD THIS
      const debouncedSetFilterText = useMemo(() => debounce(setFilterText, 300), [setFilterText]);
 
 
+     const handleRemoveEmployee = (empno: any) => {
+          setSelectedEmployees(prev => prev.filter(id => id !== empno));
+     }
      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           setFilterText(e.target.value);
      };
+     
 
      const handleSearchAvailableEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
           const value = e.target.value;
           setSearchQueryLeft(value);
      };
 
-     const handleCheckboxChange = (empno) => {
+     function customDebounce<T extends (...args: any[]) => void>(func: T, delay: number): (...args: Parameters<T>) => void {
+          let timeout: ReturnType<typeof setTimeout>;
+
+          return (...args: Parameters<T>) => {
+               clearTimeout(timeout);
+               timeout = setTimeout(() => func(...args), delay);
+          };
+     }
+
+     const handleEmployeeClick = (empno: number) => {
           setSelectedEmployees((prevSelected) =>
-               prevSelected.includes(empno)
-                    ? prevSelected.filter(id => id !== empno) // Uncheck
-                    : [...prevSelected, empno] // Check
+               prevSelected.includes(empno) ? prevSelected.filter(id => id !== empno) : [...prevSelected, empno]
           );
      };
 
-     function debounce(func, delay) {
-          let timeout;
-          return (...args) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func(...args), delay);
-          };
-        }
-        
      useEffect(() => {
           if (!timeIn || !timeOut) return;
           if (selectedEmployees.length === 0) return;
@@ -182,9 +186,6 @@ export default function () {
           }
      };
 
-
-
-
      const handleSearchEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
           const value = e.target.value;
           setSearchQuery(value);
@@ -276,7 +277,7 @@ export default function () {
 
      const id = localStorage.getItem("user_id");
      const debouncedSearch = useMemo(() => {
-          const token = localStorage.getItem("token"); 
+          const token = localStorage.getItem("token");
           const decryptedToken = Decryptor(token || '');
           return debounce(async (value: string) => {
                if (value.trim() === "") {
@@ -315,24 +316,22 @@ export default function () {
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                >
-                    <div className="modal-dialog modal-lg">
+                    <div className="modal-dialog modal-xl">
                          <div className="modal-content">
                               <div className="modal-header text-light">
                                    <h1 className="modal-title fs-5">Update Employee Schedule Assignment</h1>
                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-
                               <div className="modal-body">
                                    <div>
                                         <div>
-                                             <label htmlFor="effectivitydate" className="fw-bold">Effectivity Date</label>
+                                             <label htmlFor="effectivitydate" className="fw-bold mb-3">Effectivity Date</label>
                                         </div>
 
-                                        <div className="d-flex gap-5 mb-4 align-items-end">
+                                        <div className="effectivity-date d-flex mb-1 align-items-end">
                                              <div className="d-flex gap-4">
-
-                                                  <div className="d-flex flex-column">
-                                                       <label htmlFor="timein">From</label>
+                                                  <div className="input-group mb-3" style={{ minWidth: "200px" }}>
+                                                  <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
                                                             type="time"
                                                             value={timeIn}
@@ -340,8 +339,8 @@ export default function () {
                                                             onChange={(e) => setTimeIn(e.target.value)}
                                                        />
                                                   </div>
-                                                  <div className="d-flex flex-column">
-                                                       <label htmlFor="timeout">To</label>
+                                                  <div className="input-group mb-3" style={{ minWidth: "180px" }}>
+                                                  <span className="input-group-text" id="basic-addon1">To</span>
                                                        <input
                                                             type="time"
                                                             value={timeOut}
@@ -350,10 +349,8 @@ export default function () {
                                                        />
                                                   </div>
                                              </div>
-
-
-                                             <div className="flex-column d-flex">
-                                                  <label htmlFor="suggestedAccounts">Account</label>
+                                             <div className="input-group mb-3"  style={{ minWidth: "400px" }}>
+                                             <span className="input-group-text" id="basic-addon1">Account</span>
                                                   <select
                                                        id="suggestedAccounts"
                                                        className="form-select"
@@ -370,8 +367,7 @@ export default function () {
                                              </div>
                                         </div>
                                    </div>
-
-                                   <div className="d-flex flex-wrap justify-content-between align-items-start gap-5">
+                                   <div className="d-flex flex-wrap justify-content-between align-items-start gap-2">
 
                                         {/* Left Side: Unselected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
@@ -385,79 +381,16 @@ export default function () {
                                                   value={searchQueryLeft}
                                                   onChange={handleSearchAvailableEmployee}
                                              />
-
                                              <div className="list-group w-100">
-                                                  {filteredEmployees
-                                                       .filter(emp =>
-                                                            !selectedEmployees.includes(emp.empno) &&
-                                                            (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQueryLeft.toLowerCase()) ||
-                                                                 getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
-                                                       )
-                                                       .filter(emp =>
-                                                            getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase()) // <-- account filtering added here
-                                                       )
-                                                       .map(emp => (
-                                                            <div
-                                                                 key={emp.empno}
-                                                                 className="list-group-item d-flex justify-content-between align-items-center"
-                                                                 style={{
-                                                                      border: "1px solid #f0f0f0",
-                                                                      borderRadius: "8px",
-                                                                      marginBottom: "8px",
-                                                                      padding: "12px 16px",
-                                                                      backgroundColor: "#fafafa",
-                                                                 }}
-                                                            >
-                                                                 <div className="d-flex align-items-center">
-                                                                      <input
-                                                                           type="checkbox"
-                                                                           checked={false}
-                                                                           onChange={() => handleCheckboxChange(emp.empno)}
-                                                                           style={{ marginRight: "10px" }}
-                                                                      />
-                                                                      <span>{emp.fname} {emp.lname}</span>
-                                                                 </div>
-                                                                 <span className="text-muted">{getAccountName(emp.acctid)}</span>
-                                                            </div>
-                                                       ))}
-                                             </div>
-
-                                        </div>
-
-                                        {/* Arrow */}
-                                        <div className="d-flex justify-content-center align-items-start" style={{ marginTop: "30px", fontSize: "24px" }}>
-                                        <img src="/svg/lr-arrow.svg" alt="arrow" />
-
-                                        </div>
-
-                                        {/* Right Side: Selected Employees */}
-                                        <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                             <h6>Selected Employees</h6>
-
-                                             {/* RIGHT SIDE SEARCH */}
-                                             <input
-                                                  className="form-control mb-2"
-                                                  type="text"
-                                                  placeholder="Search selected..."
-                                                  value={searchQuery}
-                                                  onChange={handleSearchEmployee}
-                                             />
-
-                                             <div className="list-group w-100">
-                                                  {filteredEmployees
-                                                       .filter(emp =>
-                                                            selectedEmployees.includes(emp.empno) &&
-                                                            (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                                                 getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
-                                                       ).length > 0 ? (
-                                                       filteredEmployees
+                                                  <div>
+                                                       {filteredEmployees
                                                             .filter(emp =>
-                                                                 selectedEmployees.includes(emp.empno) &&
-                                                                 (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                                                      getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
+                                                                 !selectedEmployees.includes(emp.empno) &&
+                                                                 (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQueryLeft.toLowerCase()) ||
+                                                                      getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
                                                             )
                                                             .filter(emp =>
-                                                                 getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase()) // <-- account filtering added here
+                                                                 getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
                                                             )
                                                             .map(emp => (
                                                                  <div
@@ -468,28 +401,79 @@ export default function () {
                                                                            borderRadius: "8px",
                                                                            marginBottom: "8px",
                                                                            padding: "12px 16px",
-                                                                           backgroundColor: "#e6f7ff",
+                                                                           backgroundColor: "#fafafa",
+                                                                           cursor: "pointer",
                                                                       }}
+                                                                      onClick={() => handleEmployeeClick(emp.empno)}
                                                                  >
-                                                                      <div className="d-flex align-items-center">
-                                                                           <input
-                                                                                type="checkbox"
-                                                                                checked={true}
-                                                                                onChange={() => handleCheckboxChange(emp.empno)}
-                                                                                style={{ marginRight: "10px" }}
-                                                                           />
-                                                                           <span>{emp.fname} {emp.lname}</span>
+                                                                      
+                                                                           <div  className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
+                                                                           <div  className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
                                                                       </div>
-                                                                      <span className="text-muted">{getAccountName(emp.acctid)}</span>
                                                                  </div>
-                                                            ))
-                                                  ) : (
-                                                       <p>No employees selected.</p>
-                                                  )}
+                                                            ))}
+                                                  </div>
+                                             </div>
+                                        </div>
+
+                                        {/* Arrow */}
+                                        <div className="d-flex justify-content-center align-items-start flex-column line" style={{ marginTop: "30px", fontSize: "24px" }}>
+                                             <img src="/svg/lr-arrow.svg" alt="arrow" />
+                                             <div className="vertical-line"></div>
+                                        </div>
+                                     
+                                        {/* Right Side: Selected Employees */}
+                                        <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
+                                             <h6>Selected Employees</h6>
+                                             {/* RIGHT SIDE SEARCH */}
+                                             <input
+                                                  className="form-control mb-2"
+                                                  type="text"
+                                                  placeholder="Search selected..."
+                                                  value={searchQuery}
+                                                  onChange={handleSearchEmployee}
+                                             />
+                                             <div className="list-group w-100">
+                                                  {filteredEmployees
+                                                       .filter(emp =>
+                                                            selectedEmployees.includes(emp.empno) &&
+                                                            (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                                                 getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
+                                                       )
+                                                       .filter(emp =>
+                                                            getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
+                                                       )
+                                                       .map(emp => (
+                                                            <div
+                                                                 key={emp.empno}
+                                                                 className="list-group-item d-flex justify-content-between align-items-center"
+                                                                 style={{
+                                                                      border: "1px solid #f0f0f0",
+                                                                      borderRadius: "8px",
+                                                                      marginBottom: "8px",
+                                                                      padding: "12px 16px",
+                                                                      backgroundColor: "#e6f7ff",
+                                                                      cursor: "pointer",
+                                                                 }}
+                                                            >
+                                                                <div  className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
+                                                                           <div  className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
+                                                                      </div>
+                                                                 <button
+                                                                      className="x-button btn btn-sm btn-danger"  
+                                                                      onClick={(e) => {
+                                                                           e.stopPropagation();
+                                                                           handleRemoveEmployee(emp.empno);
+                                                                      }}
+                                                                      style={{padding:'2px 6px', fontSize:'10px', lineHeight:1 }}
+                                                                 >
+                                                                     <label htmlFor="" className="x">X</label> 
+                                                                 </button>
+                                                            </div>
+                                                       ))}
                                              </div>
                                         </div>
                                    </div>
-
                                    {/* Add Schedule Button */}
                                    <div className="d-flex justify-content-end mt-4 modal-footer">
                                         <button
@@ -514,6 +498,6 @@ export default function () {
                          </div>
                     </div>
                </div>
-          </div>
+          </div >
      );
 }

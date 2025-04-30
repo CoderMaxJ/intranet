@@ -221,7 +221,7 @@ export default function Dashboard() {
                 </div>
                 <div style={{ overflow: 'hidden' }}>
                     <div className="generate" onClick={() => navigateTo("/WorkforceMonitoring", "1")}
-                        style={{ backgroundColor: localStorage.getItem("active_tab") === "1" ? "#0F62EE" : "" }}>
+                        style={{ backgroundColor: localStorage.getItem("active_tab") === "1" ? "#0a85ed" : "" }}>
                         <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`}>
                             <img
                                 src="/svg/dashboard.svg"
@@ -247,7 +247,7 @@ export default function Dashboard() {
                     </div>
 
                     <div className="generate" onClick={() => navigateTo("/Reports", "2")}
-                        style={{ backgroundColor: localStorage.getItem("active_tab") === "2" ? "#0F62EE" : "" }}>
+                        style={{ backgroundColor: localStorage.getItem("active_tab") === "2" ? "#0a85ed" : "" }}>
 
                         <a className="nav-font" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
                             <img
@@ -269,7 +269,7 @@ export default function Dashboard() {
                     </div>
                     <div>
                         <div className="generate" onClick={() => navigateTo("/Schedule", "3")}
-                            style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0F62EE" : "" }}>
+                            style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0a85ed" : "" }}>
                             <a className="nav-font " style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
                                 <img src="/svg/schedule.svg" alt="schedule" className="schedule-img" height={20} style={{
                                     filter: localStorage.getItem("active_tab") === "3" ? "brightness(0) invert(1)" : "",
@@ -319,7 +319,7 @@ export default function Dashboard() {
                                                 className="nav-font"
                                                 onClick={() => navigateTo("/ManageAccount", "4")}
                                                 style={{
-                                                    backgroundColor: localStorage.getItem("active_tab") === "4" ? "#0F62EE" : "",
+                                                    backgroundColor: localStorage.getItem("active_tab") === "4" ? "#0a85ed" : "",
                                                     color: localStorage.getItem("active_tab") === "4" ? "white" : "",
                                                 }}
                                             >
@@ -352,7 +352,7 @@ export default function Dashboard() {
                                                 className="nav-font"
                                                 onClick={() => navigateTo("/ManageEmployee", "5")}
                                                 style={{
-                                                    backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0F62EE" : "",
+                                                    backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
                                                     color: localStorage.getItem("active_tab") === "5" ? "white" : "",
                                                 }}
                                             >
@@ -381,17 +381,17 @@ export default function Dashboard() {
                                         <div className="employee-anchor">
                                         <a
                                                 className="nav-font"
-                                                onClick={() => navigateTo("/ShiftAdjustment", "5")}
+                                                onClick={() => navigateTo("/ShiftAdjustment", "6")}
                                                 style={{
-                                                    backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0F62EE" : "",
-                                                    color: localStorage.getItem("active_tab") === "5" ? "white" : "",
+                                                    backgroundColor: localStorage.getItem("active_tab") === "6" ? "#0a85ed" : "",
+                                                    color: localStorage.getItem("active_tab") === "6" ? "white" : "",
                                                 }}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="16"
                                                     height="16"
-                                                    fill={localStorage.getItem("active_tab") === "5" ? "white" : "currentColor"}
+                                                    fill={localStorage.getItem("active_tab") === "6" ? "white" : "currentColor"}
                                                     className="bi bi-circle text-dark"
                                                     viewBox="0 0 16 16"
                                                 >
@@ -401,7 +401,7 @@ export default function Dashboard() {
                                                     <label
                                                         className="emp-label"
                                                         htmlFor="employee"
-                                                        style={{ color: localStorage.getItem("active_tab") === "5" ? "white" : "" }}
+                                                        style={{ color: localStorage.getItem("active_tab") === "6" ? "white" : "" }}
                                                     >
                                                         Shift Adjusment
                                                     </label>
