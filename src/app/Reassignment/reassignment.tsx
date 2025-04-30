@@ -59,6 +59,7 @@ export default function () {
      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           setFilterText(e.target.value);
      };
+     
 
      const handleSearchAvailableEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
           const value = e.target.value;
@@ -315,24 +316,22 @@ export default function () {
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                >
-                    <div className="modal-dialog modal-lg">
+                    <div className="modal-dialog modal-xl">
                          <div className="modal-content">
                               <div className="modal-header text-light">
                                    <h1 className="modal-title fs-5">Update Employee Schedule Assignment</h1>
                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-
                               <div className="modal-body">
                                    <div>
                                         <div>
-                                             <label htmlFor="effectivitydate" className="fw-bold">Effectivity Date</label>
+                                             <label htmlFor="effectivitydate" className="fw-bold mb-3">Effectivity Date</label>
                                         </div>
 
-                                        <div className="d-flex gap-5 mb-4 align-items-end">
+                                        <div className="effectivity-date d-flex mb-1 align-items-end">
                                              <div className="d-flex gap-4">
-
-                                                  <div className="d-flex flex-column">
-                                                       <label htmlFor="timein">From</label>
+                                                  <div className="input-group mb-3" style={{ minWidth: "200px" }}>
+                                                  <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
                                                             type="time"
                                                             value={timeIn}
@@ -340,8 +339,8 @@ export default function () {
                                                             onChange={(e) => setTimeIn(e.target.value)}
                                                        />
                                                   </div>
-                                                  <div className="d-flex flex-column">
-                                                       <label htmlFor="timeout">To</label>
+                                                  <div className="input-group mb-3" style={{ minWidth: "180px" }}>
+                                                  <span className="input-group-text" id="basic-addon1">To</span>
                                                        <input
                                                             type="time"
                                                             value={timeOut}
@@ -350,10 +349,8 @@ export default function () {
                                                        />
                                                   </div>
                                              </div>
-
-
-                                             <div className="flex-column d-flex">
-                                                  <label htmlFor="suggestedAccounts">Account</label>
+                                             <div className="input-group mb-3"  style={{ minWidth: "400px" }}>
+                                             <span className="input-group-text" id="basic-addon1">Account</span>
                                                   <select
                                                        id="suggestedAccounts"
                                                        className="form-select"
@@ -370,8 +367,7 @@ export default function () {
                                              </div>
                                         </div>
                                    </div>
-
-                                   <div className="d-flex flex-wrap justify-content-between align-items-start gap-5">
+                                   <div className="d-flex flex-wrap justify-content-between align-items-start gap-2">
 
                                         {/* Left Side: Unselected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
@@ -385,7 +381,6 @@ export default function () {
                                                   value={searchQueryLeft}
                                                   onChange={handleSearchAvailableEmployee}
                                              />
-
                                              <div className="list-group w-100">
                                                   <div>
                                                        {filteredEmployees
@@ -418,21 +413,18 @@ export default function () {
                                                                  </div>
                                                             ))}
                                                   </div>
-
                                              </div>
-
                                         </div>
 
                                         {/* Arrow */}
-                                        <div className="d-flex justify-content-center align-items-start" style={{ marginTop: "30px", fontSize: "24px" }}>
+                                        <div className="d-flex justify-content-center align-items-start flex-column line" style={{ marginTop: "30px", fontSize: "24px" }}>
                                              <img src="/svg/lr-arrow.svg" alt="arrow" />
-
+                                             <div className="vertical-line"></div>
                                         </div>
-
+                                     
                                         {/* Right Side: Selected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
                                              <h6>Selected Employees</h6>
-
                                              {/* RIGHT SIDE SEARCH */}
                                              <input
                                                   className="form-control mb-2"
@@ -441,7 +433,6 @@ export default function () {
                                                   value={searchQuery}
                                                   onChange={handleSearchEmployee}
                                              />
-
                                              <div className="list-group w-100">
                                                   {filteredEmployees
                                                        .filter(emp =>
@@ -464,27 +455,25 @@ export default function () {
                                                                       backgroundColor: "#e6f7ff",
                                                                       cursor: "pointer",
                                                                  }}
-
                                                             >
                                                                 <div  className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
                                                                            <div  className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
                                                                       </div>
                                                                  <button
-                                                                      className="btn btn-sm btn-danger"
+                                                                      className="x-button btn btn-sm btn-danger"  
                                                                       onClick={(e) => {
                                                                            e.stopPropagation();
                                                                            handleRemoveEmployee(emp.empno);
                                                                       }}
+                                                                      style={{padding:'2px 6px', fontSize:'10px', lineHeight:1 }}
                                                                  >
-                                                                      ×
+                                                                     <label htmlFor="" className="x">X</label> 
                                                                  </button>
                                                             </div>
                                                        ))}
                                              </div>
-
                                         </div>
                                    </div>
-
                                    {/* Add Schedule Button */}
                                    <div className="d-flex justify-content-end mt-4 modal-footer">
                                         <button
