@@ -18,14 +18,14 @@ return (
         className="modal fade"
        id="logoutModal"  aria-labelledby="exampleModalLabel" aria-hidden="true"
         >
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                 <div className="modal-header">
-                    <h5 className="modal-title">Confirm Logout</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 className="modal-title text-light">Confirm Logout</h5>
+                    <button type="button" className="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
-                    <p>Are you sure you want to log out?</p>
+                    <p className="logout-confirmation">Are you sure you want to log out?</p>
                 </div>
                 <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
