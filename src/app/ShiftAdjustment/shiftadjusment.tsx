@@ -149,7 +149,7 @@ const handleViewClick = (item: RequestDetails) => {
                         return (
                           <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
                             <td>{item.name || "-"}</td>
-                            <td>{item.logs.login.reason?.slice(0, 10) + "..." || "-"}</td>
+                            <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
                             <td>{item.acctid || "-"}</td>
                             {/* <td>{emptyStatusCount}</td> */}
                             <td>{item.created_at || "-"}</td>
