@@ -1628,7 +1628,7 @@ table {
   padding-bottom: 10px !important;
   border-radius: 4px;
   width: 100% !important;
-  height: 830px;
+  height: 930px;
 }
 
 
@@ -2440,9 +2440,10 @@ table {
   box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
 }
 
-/* .edit-schedule-btn {
-  margin-left: -120px;
-} */
+.edit-schedule-btn {
+  margin-left: -460px;
+  transform: translateY(-3px);
+}
 
 .form-label {
   font-weight: 600;
@@ -2476,10 +2477,17 @@ table {
   margin-bottom: 4px;
   margin-left: -11.1rem;
 } */
+
+.form-label-ti {
+  margin-left: 20px;
+} 
 .rep-label {
   font-weight: 600;
   color: #ffffff;
   margin-bottom: 4px;
+}
+.form-label-timeout1 {
+  margin-left: -220px;
 }
 
 
@@ -2950,14 +2958,12 @@ table {
 .form-controll-timeout1 {
   position: relative;
   display: block;
-  width: 100%;
-  min-width: 9.7vw;
+  margin-left: -220px;
   padding: 5px;
   padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* transform: translateX(-190px); */
 }
 
 .form-controll-timeout1::after {
@@ -3030,14 +3036,13 @@ table {
 .form-control-ti {
   position: relative;
   display: block;
-  width: 100%;
-  min-width: 9.7vw;
   padding: 5px;
   padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* transform: translateX(-179px); */
+  margin-left: 20px;
+ 
 }
 
 .form-control-ti::after {
@@ -3336,7 +3341,6 @@ table {
 }
 
 .form-select {
-  max-width: 30vh;
   width: 100%;
 }
 

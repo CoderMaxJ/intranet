@@ -247,7 +247,7 @@ export default function ManageDepartment() {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
+                            <h1 className="modal-title fs-5 text-light" id="deleteModalLabel" style={{minWidth:'500px'}}>Confirmation</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close text-light"></button>
                         </div>
                         <div className="modal-body">
@@ -261,10 +261,11 @@ export default function ManageDepartment() {
                 </div>
             </div>
             <div className="modal fade" id="addAccountModal" aria-labelledby="addAccountModal">
-                <div className="modal-dialog modal-lg">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5 text-light">Create Account</h1>
+                <div className="modal-dialog">
+                    <div className="modal-content" style={{minWidth:'500px'}}>
+                        <div className="modal-header" >
+                            <h1 className="modal-title fs-5 text-light" >Create Account</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body" style={{ display: "flex", flexDirection: "column" }}>
                             <form onSubmit={handleSubmit} className="add-account-form">
@@ -299,17 +300,17 @@ export default function ManageDepartment() {
             </div>
             {showModal && (
                 <div className="modal show d-block" id="saveModal" aria-labelledby="saveModalLabel">
-                    <div className="modal-dialog modal-lg">
-                        <div className="modal-content">
+                    <div className="modal-dialog">
+                        <div className="modal-content"  style={{minWidth:'500px'}}>
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="saveModalLabel">Confirmation</h1>
+                                <h1 className="modal-title fs-5 text-light" id="saveModalLabel">Confirmation</h1>
                                 <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
                                 <p>Are you sure you want to save changes?</p>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" onClick={() => setShowModal(false)} className="btn btn-secondary">Close</button>
+                                <button type="button" onClick={() => setShowModal(false)} className="btn btn-secondary">Cancel</button>
                                 <button onClick={() => handleCreateManager(targetID)} type="button" className="btn btn-success">
                                     Save changes
                                 </button>
@@ -320,7 +321,7 @@ export default function ManageDepartment() {
             )}
             <div className="manage-department">
                 <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" /></div>
-                <div className="accounts-margin">
+                <div className="accounts-margin px-4">
                     <div className="manageaccounts-bg">
 
                         <div className="employee-header">

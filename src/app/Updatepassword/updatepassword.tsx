@@ -102,15 +102,10 @@ export default function Updatepassword() {
         aria-hidden="true"
         style={{ zIndex: 10000 }}
       >
-        <div className="modal-dialog ">
+        <div className="modal-dialog" style={{minWidth:'450px'}}>
           <div className="modal-content" style={{ marginTop: "250px" }}>
-            <div className="modal-header">
-              <img
-                src="/img/Sos.png"
-                alt="Staff Outsourcing Logo"
-                className="modal-title updatelogo"
-                id="updatePasswordModalLabel"
-              />
+            <div className="modal-header mb-3">
+            <h1 className="modal-title fs-5 text-light" id="exampleModalToggleLabel">Reset Password</h1>
               <button
                 type="button"
                 id="btn-close"
@@ -118,7 +113,6 @@ export default function Updatepassword() {
                 data-bs-dismiss="modal"
                 onClick={clearInputs}
                 aria-label="Close"
-                style={{ marginTop: "-45px" }}
               />
             </div>
             {success ? (
