@@ -1551,8 +1551,8 @@ table {
 
 .closebutton {
   text-decoration: none;
-  color: rgb(255, 255, 255);
-  background-color: #757575;
+  color: rgb(255, 255, 255) !important;
+  background-color: #757575 !important;
   border: none;
   border-radius: 4px;
   padding: 5px;
@@ -1574,6 +1574,7 @@ table {
 .closebutton:hover {
   background-color: #807e7e;
 }
+
 
 .employee-header>div {
   display: flex !important;
@@ -2863,7 +2864,7 @@ table {
 }
 
 .form-control::after {
-  content: "\1F4C5";
+  /* content: "\1F4C5"; */
   /* 📅 calendar icon */
   position: absolute;
   top: 50%;
@@ -3328,4 +3329,28 @@ table {
 .closebtn {
   background-color: none;
   border: none;
+}
+
+.logout-confirmation {
+  font-size: larger;
+}
+
+.form-select {
+  max-width: 30vh;
+  width: 100%;
+}
+
+.selectall,
+.clearall {
+  border: none;
+  color: white;
+  background: gray;
+  height: 38px;
+  padding: 5px 15px;
+  border-radius: 4px;
+}
+
+.btn-close {
+  filter: invert(1) brightness(300%) contrast(150%);
+  opacity: 1;
 }

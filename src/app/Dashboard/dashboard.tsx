@@ -34,32 +34,52 @@ export default function Dashboard() {
     const [cameraHover, setCameraHover] = useState(true);
     const [accountsMenu, setAccountsMenu] = useState(true);
     const [manageMenu, setManageMenu] = useState(true);
-    const [activeMenu, setActiveMenu] = useState("manage");
-    const [activeNav, setActiveNav] = useState("1");
+    const [activeMenu, setActiveMenu] = useState("");
+    const [activeNav, setActiveNav] = useState("");
     const [shiftAdjustment, setShiftAdjustment] = useState(true);
+    const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
         setActiveNav(storedTab);
         setShowEmployee(true);
     }, []);
+    
+    useEffect(() => {
+        if (["4", "5", "6"].includes(activeNav)) {
+            setActiveMenu("manage");
+            setAccordionIconn(true);
+        } else if (activeMenu === "manage") {
+            setActiveMenu("");
+            setAccordionIconn(false);
+        }
+    }, [activeNav]);
+    
 
     const navigateTo = (path: string, tabId: string) => {
         setActiveNav(tabId);
         localStorage.setItem("active_tab", tabId);
         router.push(path);
+
+        if (["4", "5", "6"].includes(tabId)) {
+            setActiveMenu("manage");
+            setAccordionIconn(true);
+        } else {
+            setActiveMenu("");
+            setAccordionIconn(false);
+        }
     };
 
     const handleSetActiveMenu = (menuName: string) => {
         setActiveMenu(menuName);
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (!token) {
-            router.push("/");
-        }
-    }, [router]);
+    //     if (!token) {
+    //         router.push("/");
+    //     }
+    // }, [router]);
 
     useEffect(() => {
         const savedImage = localStorage.getItem("profileImage");
@@ -68,13 +88,14 @@ export default function Dashboard() {
         }
     }, []);
 
-    const token = localStorage.getItem("token");
     useEffect(() => {
-
-        if (!token) {
-            router.push("/")
+        const storedToken = localStorage.getItem("token");
+        if (!storedToken) {
+            router.push("/");
+        } else {
+            setToken(storedToken);
         }
-    })
+    }, []);
 
     const user_hash_privilege = localStorage.getItem("user_privilege");
     if (user_hash_privilege) {
@@ -265,7 +286,6 @@ export default function Dashboard() {
                                 </label>
                             )}
                         </a>
-
                     </div>
                     <div>
                         <div className="generate" onClick={() => navigateTo("/Schedule", "3")}
@@ -283,27 +303,49 @@ export default function Dashboard() {
                     <div className="accordion-item accordion" >
                         <div className="manage-div">
                             <div className="manage-menus d-flex justify-content-between align-items-center"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseOne"
-                                aria-expanded="true"
-                                aria-controls="panelsStayOpen-collapseOne"
-                                onClick={(e) => {
-                                    if (activeMenu !== "manage") {
-                                        setActiveMenu("manage");
+                               
+                                onClick={() => {
+                                    const isManageTab = ["4", "5", "6"].includes(activeNav);
+                                
+                                    if (activeMenu === "manage" && isManageTab) {
+                                       
+                                        setActiveMenu("");
+                                        setAccordionIconn(false);
+                                    } else {
+                                      
+                                        const newState = activeMenu === "manage" ? "" : "manage";
+                                        setActiveMenu(newState);
+                                        setAccordionIconn(newState === "manage");
                                     }
-                                    setAccordionIconn(!accordionIconn);
                                 }}
-                            >
+                                style={{ cursor: "pointer" }}>
                                 <div className="manage-nav">
                                     <img src="/svg/manage.svg" alt="manage" className="manage-img" height={20} />
-                                    <span className="manage-label" style={{ opacity: navWidth === '217px' ? 1 : 0, width: navWidth === '217px' ? 'auto' : 0, overflow: 'hidden', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease, width 0.2s ease' }}>
+                                    <span className="manage-label" style={{
+                                        opacity: navWidth === '217px' ? 1 : 0,
+                                        width: navWidth === '217px' ? 'auto' : 0,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        transition: 'opacity 0.2s ease, width 0.2s ease'
+                                    }}>
                                         Manage
                                     </span>
                                 </div>
-                                <div>
-                                    {showIcon === true && (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "rotate-acc-icon" : ""}`} viewBox="0 0 16 16" style={{ color: '#ffffff' }}>
-                                        <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
-                                    </svg>)}
+                                <div
+                                >
+                                    {showIcon && (
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="20"
+                                            height="20"
+                                            fill="currentColor"
+                                            className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "rotate-acc-icon" : ""}`}
+                                            viewBox="0 0 16 16"
+                                            style={{ color: '#ffffff' }}
+                                        >
+                                            <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
+                                        </svg>
+                                    )}
                                 </div>
                             </div>
                             <div
@@ -379,7 +421,7 @@ export default function Dashboard() {
                                         </div>
 
                                         <div className="employee-anchor">
-                                        <a
+                                            <a
                                                 className="nav-font"
                                                 onClick={() => navigateTo("/ShiftAdjustment", "6")}
                                                 style={{

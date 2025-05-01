@@ -355,7 +355,7 @@ export default function CreateUD() {
               aria-hidden="true"
             >
               <div className="modal-dialog modal-xl" role="document">
-                <div className="modal-content px-4">
+                <div className="modal-content">
                   <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
                 </div>
               </div>

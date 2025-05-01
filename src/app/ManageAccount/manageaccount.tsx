@@ -62,7 +62,7 @@ export default function ManageDepartment() {
             fetchManagerList();
         }
     }, [token]);
-//
+    //
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",
         autoClose: 2000,
@@ -248,7 +248,7 @@ export default function ManageDepartment() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close text-light"></button>
                         </div>
                         <div className="modal-body">
                             <p>Are you sure you want to delete?</p>
@@ -261,10 +261,10 @@ export default function ManageDepartment() {
                 </div>
             </div>
             <div className="modal fade" id="addAccountModal" aria-labelledby="addAccountModal">
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5">Create Account</h1>
+                            <h1 className="modal-title fs-5 text-light">Create Account</h1>
                         </div>
                         <div className="modal-body" style={{ display: "flex", flexDirection: "column" }}>
                             <form onSubmit={handleSubmit} className="add-account-form">
@@ -280,9 +280,14 @@ export default function ManageDepartment() {
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-end gap-2 mt-3">
-                                    <button className="closebutton btn btn-secondary btn-sm" data-bs-dismiss="modal" type="button">
+                                    <button
+                                        className="closebutton btn btn-white btn-sm"
+                                        data-bs-dismiss="modal"
+                                        type="button"
+                                    >
                                         Close
                                     </button>
+
                                     <button className="btn btn-success btn-sm" type="submit">
                                         Create
                                     </button>
@@ -294,7 +299,7 @@ export default function ManageDepartment() {
             </div>
             {showModal && (
                 <div className="modal show d-block" id="saveModal" aria-labelledby="saveModalLabel">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-lg">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5" id="saveModalLabel">Confirmation</h1>
@@ -374,7 +379,7 @@ export default function ManageDepartment() {
                                 ></div>
                             </>
                         )}
-                        
+
                         <div className="accounta-table-div table-responsive accounts-table px-4" style={{ position: 'relative' }}>
                             <table className="manage-table table table-light table-hover table-striped border ">
                                 <thead>
@@ -403,7 +408,7 @@ export default function ManageDepartment() {
                                                                 >
                                                                     <button className="emp-plus"
                                                                         type="button"
-                                                                        
+
                                                                         onClick={() => removeManager(manager.empno, instance.acctid)}
                                                                     >
                                                                         ×
