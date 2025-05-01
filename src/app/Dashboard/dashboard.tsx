@@ -34,30 +34,52 @@ export default function Dashboard() {
     const [cameraHover, setCameraHover] = useState(true);
     const [accountsMenu, setAccountsMenu] = useState(true);
     const [manageMenu, setManageMenu] = useState(true);
-    const [activeMenu, setActiveMenu] = useState("manage");
-    const [activeNav, setActiveNav] = useState("1");
+    const [activeMenu, setActiveMenu] = useState("");
+    const [activeNav, setActiveNav] = useState("");
+    const [shiftAdjustment, setShiftAdjustment] = useState(true);
+    const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
         setActiveNav(storedTab);
+        setShowEmployee(true);
     }, []);
+    
+    useEffect(() => {
+        if (["4", "5", "6"].includes(activeNav)) {
+            setActiveMenu("manage");
+            setAccordionIconn(true);
+        } else if (activeMenu === "manage") {
+            setActiveMenu("");
+            setAccordionIconn(false);
+        }
+    }, [activeNav]);
+    
 
     const navigateTo = (path: string, tabId: string) => {
         setActiveNav(tabId);
         localStorage.setItem("active_tab", tabId);
         router.push(path);
+
+        if (["4", "5", "6"].includes(tabId)) {
+            setActiveMenu("manage");
+            setAccordionIconn(true);
+        } else {
+            setActiveMenu("");
+            setAccordionIconn(false);
+        }
     };
 
     const handleSetActiveMenu = (menuName: string) => {
         setActiveMenu(menuName);
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (!token) {
-            router.push("/");
-        }
-    }, [router]);
+    //     if (!token) {
+    //         router.push("/");
+    //     }
+    // }, [router]);
 
     useEffect(() => {
         const savedImage = localStorage.getItem("profileImage");
@@ -66,13 +88,14 @@ export default function Dashboard() {
         }
     }, []);
 
-    const token = localStorage.getItem("token");
     useEffect(() => {
-
-        if (!token) {
-            router.push("/")
+        const storedToken = localStorage.getItem("token");
+        if (!storedToken) {
+            router.push("/");
+        } else {
+            setToken(storedToken);
         }
-    })
+    }, []);
 
     const user_hash_privilege = localStorage.getItem("user_privilege");
     if (user_hash_privilege) {
@@ -219,7 +242,7 @@ export default function Dashboard() {
                 </div>
                 <div style={{ overflow: 'hidden' }}>
                     <div className="generate" onClick={() => navigateTo("/WorkforceMonitoring", "1")}
-                        style={{ backgroundColor: localStorage.getItem("active_tab") === "1" ? "#0F62EE" : "" }}>
+                        style={{ backgroundColor: localStorage.getItem("active_tab") === "1" ? "#0a85ed" : "" }}>
                         <button id="dashboard" className={`nav-font ${navWidth === '217px' ? 'hide-icon-name' : 'show-icon-name'}`}>
                             <img
                                 src="/svg/dashboard.svg"
@@ -245,7 +268,7 @@ export default function Dashboard() {
                     </div>
 
                     <div className="generate" onClick={() => navigateTo("/Reports", "2")}
-                        style={{ backgroundColor: localStorage.getItem("active_tab") === "2" ? "#0F62EE" : "" }}>
+                        style={{ backgroundColor: localStorage.getItem("active_tab") === "2" ? "#0a85ed" : "" }}>
 
                         <a className="nav-font" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
                             <img
@@ -263,11 +286,10 @@ export default function Dashboard() {
                                 </label>
                             )}
                         </a>
-
                     </div>
                     <div>
                         <div className="generate" onClick={() => navigateTo("/Schedule", "3")}
-                            style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0F62EE" : "" }}>
+                            style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0a85ed" : "" }}>
                             <a className="nav-font " style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
                                 <img src="/svg/schedule.svg" alt="schedule" className="schedule-img" height={20} style={{
                                     filter: localStorage.getItem("active_tab") === "3" ? "brightness(0) invert(1)" : "",
@@ -281,27 +303,49 @@ export default function Dashboard() {
                     <div className="accordion-item accordion" >
                         <div className="manage-div">
                             <div className="manage-menus d-flex justify-content-between align-items-center"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseOne"
-                                aria-expanded="true"
-                                aria-controls="panelsStayOpen-collapseOne"
-                                onClick={(e) => {
-                                    if (activeMenu !== "manage") {
-                                        setActiveMenu("manage");
+                               
+                                onClick={() => {
+                                    const isManageTab = ["4", "5", "6"].includes(activeNav);
+                                
+                                    if (activeMenu === "manage" && isManageTab) {
+                                       
+                                        setActiveMenu("");
+                                        setAccordionIconn(false);
+                                    } else {
+                                      
+                                        const newState = activeMenu === "manage" ? "" : "manage";
+                                        setActiveMenu(newState);
+                                        setAccordionIconn(newState === "manage");
                                     }
-                                    setAccordionIconn(!accordionIconn);
                                 }}
-                            >
+                                style={{ cursor: "pointer" }}>
                                 <div className="manage-nav">
                                     <img src="/svg/manage.svg" alt="manage" className="manage-img" height={20} />
-                                    <span className="manage-label" style={{ opacity: navWidth === '217px' ? 1 : 0, width: navWidth === '217px' ? 'auto' : 0, overflow: 'hidden', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease, width 0.2s ease' }}>
+                                    <span className="manage-label" style={{
+                                        opacity: navWidth === '217px' ? 1 : 0,
+                                        width: navWidth === '217px' ? 'auto' : 0,
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                        transition: 'opacity 0.2s ease, width 0.2s ease'
+                                    }}>
                                         Manage
                                     </span>
                                 </div>
-                                <div>
-                                    {showIcon === true && (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "rotate-acc-icon" : ""}`} viewBox="0 0 16 16" style={{ color: '#ffffff' }}>
-                                        <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
-                                    </svg>)}
+                                <div
+                                >
+                                    {showIcon && (
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="20"
+                                            height="20"
+                                            fill="currentColor"
+                                            className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "rotate-acc-icon" : ""}`}
+                                            viewBox="0 0 16 16"
+                                            style={{ color: '#ffffff' }}
+                                        >
+                                            <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
+                                        </svg>
+                                    )}
                                 </div>
                             </div>
                             <div
@@ -317,7 +361,7 @@ export default function Dashboard() {
                                                 className="nav-font"
                                                 onClick={() => navigateTo("/ManageAccount", "4")}
                                                 style={{
-                                                    backgroundColor: localStorage.getItem("active_tab") === "4" ? "#0F62EE" : "",
+                                                    backgroundColor: localStorage.getItem("active_tab") === "4" ? "#0a85ed" : "",
                                                     color: localStorage.getItem("active_tab") === "4" ? "white" : "",
                                                 }}
                                             >
@@ -350,7 +394,7 @@ export default function Dashboard() {
                                                 className="nav-font"
                                                 onClick={() => navigateTo("/ManageEmployee", "5")}
                                                 style={{
-                                                    backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0F62EE" : "",
+                                                    backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
                                                     color: localStorage.getItem("active_tab") === "5" ? "white" : "",
                                                 }}
                                             >
@@ -371,6 +415,37 @@ export default function Dashboard() {
                                                         style={{ color: localStorage.getItem("active_tab") === "5" ? "white" : "" }}
                                                     >
                                                         Employee
+                                                    </label>
+                                                )}
+                                            </a>
+                                        </div>
+
+                                        <div className="employee-anchor">
+                                            <a
+                                                className="nav-font"
+                                                onClick={() => navigateTo("/ShiftAdjustment", "6")}
+                                                style={{
+                                                    backgroundColor: localStorage.getItem("active_tab") === "6" ? "#0a85ed" : "",
+                                                    color: localStorage.getItem("active_tab") === "6" ? "white" : "",
+                                                }}
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="16"
+                                                    height="16"
+                                                    fill={localStorage.getItem("active_tab") === "6" ? "white" : "currentColor"}
+                                                    className="bi bi-circle text-dark"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                </svg>
+                                                {shiftAdjustment && (
+                                                    <label
+                                                        className="emp-label"
+                                                        htmlFor="employee"
+                                                        style={{ color: localStorage.getItem("active_tab") === "6" ? "white" : "" }}
+                                                    >
+                                                        Shift Adjusment
                                                     </label>
                                                 )}
                                             </a>
@@ -439,16 +514,16 @@ export default function Dashboard() {
                     <div className="upload-prof">
                         <button
                             onClick={toggleMinimizeMaximize}
-                            className="arrow-btn btn"
+                            className="arrow-btn btn bg-primary"
                         >
                             <span
                                 className={`transition-icon ${arrowIcon ? 'rotate-left' : 'rotate-right'}`}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="18"
-                                    height="18"
-                                    fill="currentColor text-secondary"
+                                    width="25"
+                                    height="25"
+                                    fill="white"
                                     className="arrow-img bi bi-chevron-left"
                                     viewBox="0 0 16 16"
                                 >
@@ -459,6 +534,7 @@ export default function Dashboard() {
                                 </svg>
                             </span>
                         </button>
+
                         {open && (
                             <img
                                 onClick={() => setOpen(false)}

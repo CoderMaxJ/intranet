@@ -9,6 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import MultiSelect from "../component/CheduleForm";
+import ShiftAdjustment from "../ShiftAdjustment/shiftadjusment";
 
 interface Schedule {
   shiftstart: string;
@@ -354,7 +355,7 @@ export default function CreateUD() {
               aria-hidden="true"
             >
               <div className="modal-dialog modal-xl" role="document">
-                <div className="modal-content px-4">
+                <div className="modal-content">
                   <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
                 </div>
               </div>

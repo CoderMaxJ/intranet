@@ -102,7 +102,7 @@ export default function Updatepassword() {
         aria-hidden="true"
         style={{ zIndex: 10000 }}
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog ">
           <div className="modal-content" style={{ marginTop: "250px" }}>
             <div className="modal-header">
               <img

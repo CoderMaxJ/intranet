@@ -328,367 +328,235 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
   return (
-    <div className="addemployee-form" >
-      <form className="row d-flex flex-wrap" onSubmit={handleSubmitForm} >
-        <button
-          id="buttonclose"
-          type="button"
-          className="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            marginTop: '-1px'
-          }
-          }
-          onClick={clearInputs}
-        >
-        </button>
-        <div className="d-flex flex-wrap justify-content-between align-items-start">
-          <div className="fixed-field col-md-4 mt-3">
-            <label htmlFor="fname" className="form-label">
-              First Name
-            </label>
-            <input
-              required
-              type="text"
-              name="fname"
-              className="form-control"
-              id="fname"
-              value={formData.fname}
-              onChange={handleInputChange}
-              placeholder="Juan"
-            />
-          </div>
-          <div className="fixed-field col-md-3 mt-3">
-            <label htmlFor="mname" className="form-label">
-              Middle Name
-            </label>
-            <input
-              type="text"
-              name="mname"
-              className="form-control"
-              id="mname"
-              value={formData.mname}
-              onChange={handleInputChange}
-              placeholder="Montenegro"
-            />
-          </div>
-          <div className="fixed-field col-md-4 mt-3">
-            <label htmlFor="lname" className="form-label">
-              Last Name
-            </label>
-            <input
-              required
-              type="text"
-              name="lname"
-              className="form-control"
-              id="lname"
-              value={formData.lname}
-              onChange={handleInputChange}
-              placeholder="Dela Cruz"
-            />
-          </div>
-        </div>
-        <div className="mt-3 d-flex flex-wrap justify-content-between align-items-start">
-          <div className="fixed-field col-md-4 mb-3">
-            <label htmlFor="dateofbirth" className="form-label">
-              Date of Birth
-            </label>
-            <input
-              required
-              type="date"
-              name="dateofbirth"
-              className="form-control"
-              id="dateofbirth"
-              value={formData.dateofbirth}
-              onChange={handleInputChange}
-              max="2015-12-31"
-            />
-          </div>
-          <div className="fixed-field col-md-3 mb-3">
-            <label htmlFor="maritalstatus" className="form-label">
-              Marital Status
-            </label>
-            <select
-              required
-              name="maritalstatus"
-              value={formData.maritalstatus}
-              id="maritalstatus"
-              className="form-select"
-              onChange={handleInputChange}
-            > <option value="">-- SELECT --</option>
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-              <option value="Separated">Separated</option>
-              <option value="Widowed">Widowed</option>
-              <option value="Divorced">Divorced</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div className="fixed-field col-md-4">
-            <label htmlFor="gender" className="form-label">
-              Gender
-            </label>
-            <select
-              required
-              name="gender"
-              value={formData.gender}
-              id="gender"
-              className="form-select w-5"
-              onChange={handleInputChange}
+    <div>
+      <div className="addemployee-form">
+        <form onSubmit={handleSubmitForm}>
+
+          {/* Close Button */}
+          <div className="modal-header">
+            <h5 className="modal-title">Modal title</h5>
+            <button
+              id="buttonclose"
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+             
+              onClick={clearInputs}
             >
-              <option value="">-- SELECT --</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-        </div>
-        <div className="mt-3 d-flex  flex-wrap justify-content-between align-items-start">
-          <div className="fixed-field col-md-4 mb-2">
-            <label htmlFor="contactno" className="form-label">
-              Contact No
-            </label>
-            <input
-              type="number"
-              name="contactno"
-              className="form-control"
-              id="contactno"
-              value={formData.contactno}
-              onChange={handleInputChange}
-              placeholder="+63 92 6645 9723"
-            />
+            </button>
           </div>
 
-          <div className="fixed-field col-md-3 mb-3">
-            <label htmlFor="address" className="form-label">
-              Address
-            </label>
-            <input
-              required
-              type="text"
-              name="address"
-              className="form-control"
-              id="address"
-              value={formData.address}
-              onChange={handleInputChange}
-              placeholder="Zapatera, Cebu City"
-            />
+          {/* Row 1 */}
+          <div className="row w-100 px-4">
+            <div className="col-md-4">
+              <label htmlFor="fname" className="form-label">First Name</label>
+              <input
+                required type="text" name="fname" className="form-control" id="fname"
+                value={formData.fname} onChange={handleInputChange} placeholder="Juan"
+              />
+            </div>
+            <div className="col-md-4">
+              <label htmlFor="mname" className="form-label">Middle Name</label>
+              <input
+                type="text" name="mname" className="form-control" id="mname"
+                value={formData.mname} onChange={handleInputChange} placeholder="Montenegro"
+              />
+            </div>
+            <div className="col-md-4">
+              <label htmlFor="lname" className="form-label">Last Name</label>
+              <input
+                required type="text" name="lname" className="form-control" id="lname"
+                value={formData.lname} onChange={handleInputChange} placeholder="Dela Cruz"
+              />
+            </div>
           </div>
-          <div className="fixed-field col-md-4">
-            <label htmlFor="position" className="form-label">
-              Account
-            </label>
-            <select
-              required
-              name="acctid"
-              value={formData.acctid}
-              id="acctid"
-              className="form-select"
-              onChange={handleInputChange}
-            >
-              <option value="">Select Account</option>
-              {accounts.map((account, index) => (
-                <option key={index} value={account.acctid}> {account.acctname} </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="mt-3 d-flex flex-wrap justify-content-between align-items-center">
-          <div className="fixed-field col-md-4 mb-3">
-            <label htmlFor="position" className="form-label">
-              Position
-            </label>
-            <select
-              required
-              name="position"
-              value={formData.position}
-              id="position"
-              className="form-select"
-              onChange={handleInputChange}
-            >
-              <option value="">Select a position</option>
-              {roles.map((role, index) => (
-                <option key={index} value={role}>
-                  {role}
-                </option>
-              ))}
-            </select>
-          </div>
-          {mode === "edit" ? (
-            <div className="fixed-field col-md-3 mb-3">
-              <label htmlFor="" className="form-label">Status</label>
-              <select className="form-select" name="status" value={formData.status === 1 ? 1 : 0}
-                onChange={handleInputChange}
+
+          {/* Row 2 */}
+          <div className="row w-100 px-4">
+            <div className="col-md-4">
+              <label htmlFor="dateofbirth" className="form-label">Date of Birth</label>
+              <input
+                required type="date" name="dateofbirth" className="form-control" id="dateofbirth"
+                value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
+              />
+            </div>
+            <div className="col-md-4">
+              <label htmlFor="maritalstatus" className="form-label">Marital Status</label>
+              <select
+                required name="maritalstatus" className="form-select" id="maritalstatus"
+                value={formData.maritalstatus} onChange={handleInputChange}
               >
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
+                <option value="">-- SELECT --</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Separated">Separated</option>
+                <option value="Widowed">Widowed</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Other">Other</option>
               </select>
             </div>
-          ) : (
-            <div>
-              {mode !== "edit" && (
-              <div className="timein-create mb-3">
-                <label htmlFor="shiftstart" className="form-label">Time In</label>
-                <input
-                  required
-                  value={formData.schedule.shiftstart}
-                  type="time"
-                  name="shiftstart"
-                  className="form-controll"
-                  id="shiftstart"
-                  autoComplete="off"
-                  inputMode="numeric"
-                  onChange={handleInputChange}
-
-                />
-              </div>
-              )}
-            </div>)}
-
-
-          {mode === 'edit' ? (
-
-            <div className="fixed-field col-md-4 mb-3">
-              <div className="mb-1">
-                <label className="form-label" htmlFor="">Assign Privileges</label>
-              </div>
-              <select name="role_id"
-                value={formData.role_id}
-                onChange={handleInputChange}
-                id=""
-                className="form-select"
+            <div className="col-md-4">
+              <label htmlFor="gender" className="form-label">Gender</label>
+              <select
+                required name="gender" className="form-select" id="gender"
+                value={formData.gender} onChange={handleInputChange}
               >
-                <option value="">Select privilege</option>
-                {privileges.map((role, index) => (
-                  <option key={index} value={role.id}>{role.name}</option>
+                <option value="">-- SELECT --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Row 3 */}
+          <div className="row w-100 px-4">
+            <div className="col-md-4">
+              <label htmlFor="contactno" className="form-label">Contact No</label>
+              <input
+                type="number" name="contactno" className="form-control" id="contactno"
+                value={formData.contactno} onChange={handleInputChange} placeholder="+63 92 6645 9723"
+              />
+            </div>
+            <div className="col-md-4">
+              <label htmlFor="address" className="form-label">Address</label>
+              <input
+                required type="text" name="address" className="form-control" id="address"
+                value={formData.address} onChange={handleInputChange} placeholder="Zapatera, Cebu City"
+              />
+            </div>
+            <div className="col-md-4">
+              <label htmlFor="acctid" className="form-label">Account</label>
+              <select
+                required name="acctid" className="form-select" id="acctid"
+                value={formData.acctid} onChange={handleInputChange}
+              >
+                <option value="">Select Account</option>
+                {accounts.map((account, index) => (
+                  <option key={index} value={account.acctid}>{account.acctname}</option>
                 ))}
               </select>
             </div>
-          ):(
-            <div>
-              {mode !== "edit" && (
-            <div className="timeout-create mb-3">
-            <label htmlFor="shiftend" className="form-label">Time Out</label>
-            <input
-              required
-              value={formData.schedule.shiftend}
-              type="time"
-              name="shiftend"
-              className="form-controll-timeout"
-              id="shiftend"
-              autoComplete="off"
-              inputMode="numeric"
-              onChange={handleInputChange}
-            />
           </div>
-          )}
-          </div>
-          )}
-        </div>
-        <div className="mt-3 flex-wrap d-flex gap-5 align-items-center justify-content-center">
-          {mode === "edit" && formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
-            <div className="timein col-md-2">
-              <label className="form-label-timein" htmlFor="timeIn">Time In</label>
-              <input
 
-                type="time"
-                className="form-controll-timein"
-                id="timeIn"
-                value={formData.schedule.shiftstart}
-                disabled
-              // readOnly
-              />
+          {/* Row 4 */}
+          <div className="row w-100 px-4">
+            <div className="col-md-4">
+              <label htmlFor="position" className="form-label">Position</label>
+              <select
+                required name="position" className="form-select" id="position"
+                value={formData.position} onChange={handleInputChange}
+              >
+                <option value="">Select a position</option>
+                {roles.map((role, index) => (
+                  <option key={index} value={role}>{role}</option>
+                ))}
+              </select>
             </div>
-          ) : (
-            <div>
-              {mode === "edit" && (
-            <div className="w-100 col-md-2">
-              <label htmlFor="shiftstart" className="form-label-ti">Time In</label>
-              <input
-                required
-                value={formData.schedule.shiftstart}
-                type="time"
-                name="shiftstart"
-                className="form-control-ti"
-                id="shiftstart"
-                autoComplete="off"
-                inputMode="numeric"
-                onChange={handleInputChange}
-              />
-            </div>
-            )}
-            </div>
-          )}
 
-          {/* Time Out */}
-          {mode === "edit" && formData.schedule.shiftstart !== "" && formData.schedule.shiftend !== "" && !isEditSchedule ? (
-            <div className="timeout col-md-2">
-              <label className="form-label-timeout" htmlFor="timeOut">Time Out</label>
-              <input
-                type="time"
-                className="form-controll-toupdate"
-                id="timeOut"
-                value={formData.schedule.shiftend}
-                disabled
-              // readOnly
-              />
+            <div className="col-md-4">
+              {mode === "edit" ? (
+                <>
+                  <label className="form-label">Status</label>
+                  <select
+                    className="form-select" name="status"
+                    value={formData.status === 1 ? 1 : 0}
+                    onChange={handleInputChange}
+                  >
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                </>
+              ) : (
+                <>
+                  <label htmlFor="shiftstart" className="form-label">Time In</label>
+                  <input
+                    required type="time" name="shiftstart" className="form-controll" id="shiftstart"
+                    autoComplete="off" inputMode="numeric"
+                    value={formData.schedule.shiftstart} onChange={handleInputChange}
+                  />
+                </>
+              )}
             </div>
-          ) : (
-            <div>
-              {mode === "edit" && (
-            <div className="timeout w-100 col-md-2">
-              <label htmlFor="shiftend" className="form-label-timeout1">Time Out</label>
-              <input
-                required
-                value={formData.schedule.shiftend}
-                type="time"
-                name="shiftend"
-                className="form-controll-timeout1"
-                id="shiftend"
-                autoComplete="off"
-                inputMode="numeric"
-                onChange={handleInputChange}
-              />
+
+            <div className="col-md-4">
+              {mode === "edit" ? (
+                <>
+                  <label className="form-label">Assign Privileges</label>
+                  <select
+                    name="role_id" className="form-select"
+                    value={formData.role_id} onChange={handleInputChange}
+                  >
+                    <option value="">Select privilege</option>
+                    {privileges.map((role, index) => (
+                      <option key={index} value={role.id}>{role.name}</option>
+                    ))}
+                  </select>
+                </>
+              ) : (
+                <>
+                  <label htmlFor="shiftend" className="form-label">Time Out</label>
+                  <input
+                    required type="time" name="shiftend" className="form-controll-timeout" id="shiftend"
+                    autoComplete="off" inputMode="numeric"
+                    value={formData.schedule.shiftend} onChange={handleInputChange}
+                  />
+                </>
+              )}
             </div>
-            )}
+          </div>
+
+          {/* Row 5: Editable Time Controls */}
+          {mode === "edit" && (
+            <div className="row w-100 align-items-end">
+              <div className="col-md-4">
+                <label htmlFor="shiftstart" className="form-label-ti">Time In</label>
+                <input
+                  required type="time" name="shiftstart" className="form-control-ti" id="shiftstart"
+                  autoComplete="off" inputMode="numeric"
+                  value={formData.schedule.shiftstart} onChange={handleInputChange}
+                  disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                />
+              </div>
+              <div className="col-md-4">
+                <label htmlFor="shiftend" className="form-label-timeout1">Time Out</label>
+                <input
+                  required type="time" name="shiftend" className="form-controll-timeout1" id="shiftend"
+                  autoComplete="off" inputMode="numeric"
+                  value={formData.schedule.shiftend} onChange={handleInputChange}
+                  disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                />
+              </div>
+              <div className="col-md-4 d-flex align-items-center">
+                {formData.schedule.shiftstart && formData.schedule.shiftend && (
+                  <button
+                    className="edit-schedule-btn btn btn-secondary btn-sm mt-3"
+                    type="button"
+                    onClick={toggleChangeSchedule}
+                  >
+                    <i className="bi bi-pen sm"></i>
+                  </button>
+                )}
+              </div>
             </div>
           )}
-          <div className="w-20 col-md-1">
-            {mode === "edit" && formData.schedule.shiftend != "" && formData.schedule.shiftstart != "" && (
-              <button className="edit-schedule-btn btn btn-secondary btn-sm mt-4" type="button" onClick={toggleChangeSchedule}>
-                <i className="bi bi-pen sm"></i>
-              </button>
-            )}
-          </div>
+        </form >
+        <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
+          <button
+            type="button"
+            data-bs-dismiss="modal"
+            className="btn btn-danger"
+            onClick={clearInputs}
+          >
+            Cancel
+          </button>
+          <button type="submit" className="btn btn-primary">
+            {mode === "edit" ? "Update" : "Create"}
+          </button>
         </div>
-        <div
-          className="fixed-field col-md-12"
-          style={{
-            marginBottom: "30px",
-            marginTop: "30px",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "15px" }}>
-            <button
-              type="button"
-              data-bs-dismiss="modal"
-              className="btn btn-danger"
-              onClick={clearInputs}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="btn btn-primary py-1"
-            >
-              {mode === "edit" ? "Update" : "Create"}
-            </button>
-          </div>
-        </div>
-      </form>
+      </div >
     </div>
   );
-}
+
+
+}  
