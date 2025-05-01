@@ -2864,7 +2864,7 @@ table {
 }
 
 .form-control::after {
-  content: "\1F4C5";
+  /* content: "\1F4C5"; */
   /* 📅 calendar icon */
   position: absolute;
   top: 50%;
@@ -3348,4 +3348,9 @@ table {
   height: 38px;
   padding: 5px 15px;
   border-radius: 4px;
+}
+
+.btn-close {
+  filter: invert(1) brightness(300%) contrast(150%);
+  opacity: 1;
 }

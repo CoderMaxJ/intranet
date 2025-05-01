@@ -60,6 +60,14 @@ export default function Dashboard() {
         setActiveNav(tabId);
         localStorage.setItem("active_tab", tabId);
         router.push(path);
+
+        if (["4", "5", "6"].includes(tabId)) {
+            setActiveMenu("manage");
+            setAccordionIconn(true);
+        } else {
+            setActiveMenu("");
+            setAccordionIconn(false);
+        }
     };
 
     const handleSetActiveMenu = (menuName: string) => {
@@ -278,7 +286,6 @@ export default function Dashboard() {
                                 </label>
                             )}
                         </a>
-
                     </div>
                     <div>
                         <div className="generate" onClick={() => navigateTo("/Schedule", "3")}
@@ -296,14 +303,19 @@ export default function Dashboard() {
                     <div className="accordion-item accordion" >
                         <div className="manage-div">
                             <div className="manage-menus d-flex justify-content-between align-items-center"
+                               
                                 onClick={() => {
                                     const isManageTab = ["4", "5", "6"].includes(activeNav);
-                                    if (activeMenu === "manage" && !isManageTab) {
+                                
+                                    if (activeMenu === "manage" && isManageTab) {
+                                       
                                         setActiveMenu("");
                                         setAccordionIconn(false);
                                     } else {
-                                        setActiveMenu("manage");
-                                        setAccordionIconn(true);
+                                      
+                                        const newState = activeMenu === "manage" ? "" : "manage";
+                                        setActiveMenu(newState);
+                                        setAccordionIconn(newState === "manage");
                                     }
                                 }}
                                 style={{ cursor: "pointer" }}>
@@ -320,7 +332,6 @@ export default function Dashboard() {
                                     </span>
                                 </div>
                                 <div
-
                                 >
                                     {showIcon && (
                                         <svg
