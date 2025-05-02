@@ -81,8 +81,13 @@ const handleViewClick = (item: RequestDetails) => {
         <Header title="MANAGE SHIFT ADJUSTMENT" />
 
         <div className="shift-background p-4 px-4">
+          <div className="d-flex gap-5 ">
+            <div><button type="button" className="form-label form-label--shiftadjustment-header">Pending</button></div>
+            <div><button type="button" className="form-label form-label--shiftadjustment-header">Approved</button></div>
+            <div><button type="button" className="form-label form-label--shiftadjustment-header">Rejected/Cancelled</button></div>
+          </div>
       
-          <div className="row g-3 align-items-center mb-4">
+          
             {/* <div className="col-md-3">
               <input
                 className="form-control"
@@ -123,7 +128,6 @@ const handleViewClick = (item: RequestDetails) => {
             <div className="col-md-2">
               <button className="btn btn-warning w-100">Apply</button>
             </div> */}
-          </div>
 
           {/* Data Table */}
           <div className="shiftadjustment-table">
@@ -151,6 +155,7 @@ const handleViewClick = (item: RequestDetails) => {
                             <td>{item.name || "-"}</td>
                             <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
                             <td>{item.acctid || "-"}</td>
+                            
                             {/* <td>{emptyStatusCount}</td> */}
                             <td>{item.created_at || "-"}</td>
                             <td>

@@ -52,7 +52,28 @@ export default function () {
      const [filterText, setFilterText] = useState(""); // <-- ADD THIS
      const debouncedSetFilterText = useMemo(() => debounce(setFilterText, 300), [setFilterText]);
 
-
+     useEffect(() => {
+          const modal = document.getElementById('reassignment');
+        
+          if (!modal) return;
+        
+          const handleModalHidden = () => {
+            setFilterText("");
+            setSearchQuery("");
+            setSearchQueryLeft("");
+            setSelectedEmployees([]);
+            setTimeIn("");
+            setTimeOut("");
+            setFilteredEmployees(allEmployees); // Reset employee list
+          };
+        
+          modal.addEventListener('hidden.bs.modal', handleModalHidden);
+        
+          return () => {
+            modal.removeEventListener('hidden.bs.modal', handleModalHidden);
+          };
+        }, [allEmployees]);
+        
      const handleRemoveEmployee = (empno: any) => {
           setSelectedEmployees(prev => prev.filter(id => id !== empno));
      }

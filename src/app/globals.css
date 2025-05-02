@@ -3241,6 +3241,10 @@ table {
   background-color: #e7e7e7;
 }
 
+.form-label--shiftadjustment-header {
+  border: none;
+  background: none;
+}
 #reassignment .list-group-item {
   padding: 0px;
 }
