@@ -214,35 +214,37 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         </div>
 
                         {/* Login */}
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-in">Login</span>
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={true}
-                                    readOnly
-                                    value={data?.logs?.login?.in || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    onChange={(e) => handleChange("login", "", e.target.value)}
-                                    value={buildData?.login?.record || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <button type="button" className="closebtn">
-                                    <img src="/svg/wrong-danger.svg" alt="close" />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Break 1 - In */}
+                        {data?.logs?.login?.in && (
+                              <div className="d-flex justify-content-between align-items-center mb-2">
+                              <div>
+                                  <span className="break-label break-in">Login</span>
+                              </div>
+                              <div>
+                                  <input
+                                      type="time"
+                                      disabled={true}
+                                      readOnly
+                                      value={data?.logs?.login?.in || ""}
+                                      className="form-control"
+                                  />
+                              </div>
+                              <div>
+                                  <input
+                                      type="time"
+                                      onChange={(e) => handleChange("login", "", e.target.value)}
+                                      value={buildData?.login?.record || ""}
+                                      className="form-control"
+                                  />
+                              </div>
+                              <div>
+                                  <button type="button" className="closebtn">
+                                      <img src="/svg/wrong-danger.svg" alt="close" />
+                                  </button>
+                              </div>
+                          </div>
+                        )}
+                      
+                        {data?.logs?.break1?.in && (
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label break-in">1st Break - In</span>
@@ -270,39 +272,44 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     <img src="/svg/wrong-danger.svg" alt="close" />
                                 </button>
                             </div>
+                            
                         </div>
-
+                    )}
                         {/* Break 1 - Out */}
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-out">1st Break - Out</span>
+                        {data?.logs?.break1?.out && (
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span className="break-label break-out">1st Break - Out</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.break1?.out || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={!data?.logs?.break1?.out}
+                                        onChange={(e) => handleChange("break1", "out", e.target.value)}
+                                        value={buildData?.break1?.record?.out || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="button" className="closebtn">
+                                        <img src="/svg/wrong-danger.svg" alt="close" />
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={true}
-                                    readOnly
-                                    value={data?.logs?.break1?.out || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={!data?.logs?.break1?.out}
-                                    onChange={(e) => handleChange("break1", "out", e.target.value)}
-                                    value={buildData?.break1?.record?.out || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <button type="button" className="closebtn">
-                                    <img src="/svg/wrong-danger.svg" alt="close" />
-                                </button>
-                            </div>
-                        </div>
-
+                        )}
                         {/* Lunch - In */}
+                        {data?.logs?.lunch?.in && (
+
+                      
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label lunch-in">Lunch - In</span>
@@ -331,8 +338,12 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 </button>
                             </div>
                         </div>
-
+                    )}
                         {/* Lunch - Out */}
+
+                    {data?.logs?.lunch?.out && (
+
+                   
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label lunch-in">Lunch - Out</span>
@@ -361,8 +372,11 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 </button>
                             </div>
                         </div>
-
+                    )}
                         {/* Break 2 - In */}
+                    {data?.logs?.break2?.in && (
+
+                    
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label break-in">2nd Break - In</span>
@@ -391,8 +405,11 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 </button>
                             </div>
                         </div>
-
+                    )}
                         {/* Break 2 - Out */}
+                    {data?.logs?.break2?.out && (
+
+                
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label break-out">2nd Break - Out</span>
@@ -421,8 +438,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 </button>
                             </div>
                         </div>
+                        )}
 
-                        {/* Logout */}
+                        {data?.logs?.logout?.out && (
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label logout">Logout</span>
@@ -451,8 +469,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 </button>
                             </div>
                         </div>
+                    )}
                     </div>
-
+                
                     <div className="mb-3">
                         <label className="form-label fw-bold fs-4 text-dark">Reason</label>
                         <p className="form-text fs-5">{data?.reason}</p>
