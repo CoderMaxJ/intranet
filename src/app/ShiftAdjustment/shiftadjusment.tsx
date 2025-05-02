@@ -81,9 +81,14 @@ const handleViewClick = (item: RequestDetails) => {
         <Header title="MANAGE SHIFT ADJUSTMENT" />
 
         <div className="shift-background p-4 px-4">
-          {/* Filter Bar */}
-          <div className="row g-3 align-items-center mb-4">
-            <div className="col-md-3">
+          <div className="d-flex gap-5 ">
+            <div><button type="button" className="form-label form-label--shiftadjustment-header">Pending</button></div>
+            <div><button type="button" className="form-label form-label--shiftadjustment-header">Approved</button></div>
+            <div><button type="button" className="form-label form-label--shiftadjustment-header">Rejected/Cancelled</button></div>
+          </div>
+      
+          
+            {/* <div className="col-md-3">
               <input
                 className="form-control"
                 type="text"
@@ -98,7 +103,7 @@ const handleViewClick = (item: RequestDetails) => {
                 <option value="" disabled hidden>
                   Account
                 </option>
-                {/* Add options dynamically here */}
+           
               </select>
             </div>
 
@@ -107,7 +112,7 @@ const handleViewClick = (item: RequestDetails) => {
                 <option value="" disabled hidden>
                   Break
                 </option>
-                {/* Add options dynamically here */}
+               
               </select>
             </div>
 
@@ -116,19 +121,18 @@ const handleViewClick = (item: RequestDetails) => {
                 <option value="" disabled hidden>
                   Work hours
                 </option>
-                {/* Add options dynamically here */}
+        
               </select>
             </div>
 
             <div className="col-md-2">
               <button className="btn btn-warning w-100">Apply</button>
-            </div>
-          </div>
+            </div> */}
 
           {/* Data Table */}
           <div className="shiftadjustment-table">
 
-            <table className="table table-striped">
+            <table className="table table-striped table-hover table-bordered">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -151,6 +155,7 @@ const handleViewClick = (item: RequestDetails) => {
                             <td>{item.name || "-"}</td>
                             <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
                             <td>{item.acctid || "-"}</td>
+                            
                             {/* <td>{emptyStatusCount}</td> */}
                             <td>{item.created_at || "-"}</td>
                             <td>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 interface RequestDetails {
     requestid: number;
     empno: number;
@@ -88,15 +88,15 @@ export default function Drawer({ data, onSave }: DrawerProps) {
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
             if (!prev) return prev;
-            
+
             const updated = { ...prev };
-            
+
             if (section === "login" || section === "logout") {
                 updated[section] = {
                     ...updated[section],
                     record: value
                 };
-            } 
+            }
             // Handle other sections with record objects
             else if (section === "break1" || section === "break2" || section === "lunch") {
                 updated[section] = {
@@ -107,7 +107,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     }
                 };
             }
-            
+
             return updated;
         });
     };
@@ -122,9 +122,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
             },
             body:JSON.stringify(payload),
         })
-        if (response.status === 200){
+        if (response.status === 200) {
             successToast("Changes have been applied")
-        }else{
+        } else {
             errorToast("")
         }
     }
@@ -156,9 +156,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      });
-    
-      const errorToast = (msg: string) => toast.error(msg, {
+    });
+
+    const errorToast = (msg: string) => toast.error(msg, {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: true,
@@ -166,17 +166,17 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      });
-    
+    });
+
     return (
         <div>
-            <ToastContainer/>
+            <ToastContainer />
             <div
                 className="offcanvas offcanvas-end"
                 tabIndex={-1}
                 id="shiftdrawer"
                 aria-labelledby="ShiftRightLabel"
-                style={{ width: "700px" }}
+                style={{ width: "500px" }}
             >
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">
@@ -193,31 +193,35 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 <div className="offcanvas-body">
                     <div className="mb-5 d-flex flex-column gap-2">
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 fw-semibold fs-5">Name</p>
-                            <p className="mb-0 fw-semibold fs-5">{data?.name}</p>
+                            <p className="mb-0 shiftadjustment-info-label">Name</p>
+                            <p className="mb-0 shiftadjustment-info-label">{data?.name}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 fw-semibold fs-5">Department</p>
-                            <p className="mb-0 fw-semibold fs-5">{data?.acctid}</p>
+                            <p className="mb-0 shiftadjustment-info-label">Date Filed</p>
+                            <p className="mb-0 shiftadjustment-info-label">{data?.created_at}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 fw-semibold fs-5">Date Filed</p>
-                            <p className="mb-0 fw-semibold fs-5">{data?.created_at}</p>
+                            <p className="mb-0 shiftadjustment-info-label">Department</p>
+                            <p className="mb-0 shiftadjustment-info-label">{data?.acctid}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 fw-semibold fs-5">Request ID</p>
-                            <p className="mb-0 fw-semibold fs-5">{data?.requestid}</p>
+                            <p className="mb-0 shiftadjustment-info-label">Request ID</p>
+                            <p className="mb-0 shiftadjustment-info-label">{data?.requestid}</p>
                         </div>
                     </div>
 
                     <hr />
                     <div></div>
-                    <div className="d-flex justify-content-between mb-3">
-                        <h5 className="form-label fw-bold fs-4 text-dark">Summary</h5>
+                    <div className="d-flex justify-content-between mb-1">
+                        <h5 className="form-label fs-5 text-dark">Summary</h5>
+                    </div>
+                    <div>
+                        <div><label htmlFor="requesteddate" className="form-label">Requested Date</label></div>
+                        <div><input type="date" className="form-control form-control--narrow mb-3"/></div>
                     </div>
 
                     <div className="justify-content-between">
-                        <div className="d-flex form-label justify-content-evenly mb-3">
+                        <div className="d-flex form-label mb-2 schedule-summary-label">
                             <div>
                                 <label htmlFor="attendance">Attendance</label>
                             </div>
@@ -253,9 +257,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                   />
                               </div>
                               <div>
-                                  <button type="button" className="closebtn">
-                                      <img src="/svg/wrong-danger.svg" alt="close" />
-                                  </button>
+                              <button type="button" className="close-btn">
+                                    ×
+                                </button>
                               </div>
                           </div>
                         )}
@@ -284,44 +288,45 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 />
                             </div>
                             <div>
-                                <button type="button" className="closebtn">
-                                    <img src="/svg/wrong-danger.svg" alt="close" />
+                                <button type="button" className="close-btn">
+                                    ×
                                 </button>
+
                             </div>
                             
                         </div>
                     )}
                         {/* Break 1 - Out */}
-                        {data?.logs?.break1?.out && (
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span className="break-label break-out">1st Break - Out</span>
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.break1?.out || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={!data?.logs?.break1?.out}
-                                        onChange={(e) => handleChange("break1", "out", e.target.value)}
-                                        value={buildData?.break1?.record?.out || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <button type="button" className="closebtn">
-                                        <img src="/svg/wrong-danger.svg" alt="close" />
-                                    </button>
-                                </div>
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <span className="break-label break-out">1st Break - Out</span>
                             </div>
-                        )}
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true}
+                                    readOnly
+                                    value={data?.logs?.break1?.out || ""}
+                                    className="form-control"
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={!data?.logs?.break1?.out}
+                                    onChange={(e) => handleChange("break1", "out", e.target.value)}
+                                    value={buildData?.break1?.record?.out || ""}
+                                    className="form-control"
+                                />
+                            </div>
+                            <div>
+                                <button type="button" className="close-btn">
+                                    ×
+                                </button>
+
+                            </div>
+                        </div>
+
                         {/* Lunch - In */}
                         {data?.logs?.lunch?.in && (
 
@@ -349,9 +354,10 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 />
                             </div>
                             <div>
-                                <button type="button" className="closebtn">
-                                    <img src="/svg/wrong-danger.svg" alt="close" />
+                                <button type="button" className="close-btn">
+                                    ×
                                 </button>
+
                             </div>
                         </div>
                     )}
@@ -383,9 +389,10 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 />
                             </div>
                             <div>
-                                <button type="button" className="closebtn">
-                                    <img src="/svg/wrong-danger.svg" alt="close" />
+                                <button type="button" className="close-btn">
+                                    ×
                                 </button>
+
                             </div>
                         </div>
                     )}
@@ -416,9 +423,10 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 />
                             </div>
                             <div>
-                                <button type="button" className="closebtn">
-                                    <img src="/svg/wrong-danger.svg" alt="close" />
+                                <button type="button" className="close-btn">
+                                    ×
                                 </button>
+
                             </div>
                         </div>
                     )}
@@ -447,9 +455,10 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 />
                             </div>
                             <div>
-                                <button type="button" className="closebtn">
-                                    <img src="/svg/wrong-danger.svg" alt="close" />
+                                <button type="button" className="close-btn">
+                                    ×
                                 </button>
+
                             </div>
                         </div>
                         )}
@@ -478,29 +487,30 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 />
                             </div>
                             <div>
-                                <button type="button" className="closebtn">
-                                    <img src="/svg/wrong-danger.svg" alt="close" />
+                                <button type="button" className="close-btn">
+                                    ×
                                 </button>
+
                             </div>
                         </div>
                     )}
                     </div>
                 
                     <div className="mb-3">
-                        <label className="form-label fw-bold fs-4 text-dark">Reason</label>
+                        <label className="form-label fs-5 text-dark mt-3">Reason</label>
                         <p className="form-text fs-5">{data?.reason}</p>
                     </div>
                 </div>
 
                 <hr />
-                <div className="modal-footer gap-4 mb-3">
+                <div className="modal-footer gap-4 " style={{padding:'20px'}}>
                     <div>
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             onClick={handleApply}
                             className="btn btn-primary"
                         >
-                            Apply
+                            Approved
                         </button>
                     </div>
                     <div>

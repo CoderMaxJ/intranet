@@ -352,7 +352,7 @@ export default function Daterange() {
                     </div>
                     </div>
                 ) : (
-                    <p>No data to display</p>
+                    <p></p>
                 )}
             </div>
         </div> 

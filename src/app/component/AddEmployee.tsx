@@ -334,7 +334,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Close Button */}
           <div className="modal-header">
-            <h5 className="modal-title">Modal title</h5>
+            <h5 className="modal-title text-light">Add Employee</h5>
             <button
               id="buttonclose"
               type="button"
@@ -348,7 +348,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </div>
 
           {/* Row 1 */}
-          <div className="row w-100 px-4">
+          <div className="row px-4">
             <div className="col-md-4">
               <label htmlFor="fname" className="form-label">First Name</label>
               <input
@@ -373,7 +373,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </div>
 
           {/* Row 2 */}
-          <div className="row w-100 px-4">
+          <div className="row px-4">
             <div className="col-md-4">
               <label htmlFor="dateofbirth" className="form-label">Date of Birth</label>
               <input
@@ -410,7 +410,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </div>
 
           {/* Row 3 */}
-          <div className="row w-100 px-4">
+          <div className="row px-4">
             <div className="col-md-4">
               <label htmlFor="contactno" className="form-label">Contact No</label>
               <input
@@ -440,7 +440,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </div>
 
           {/* Row 4 */}
-          <div className="row w-100 px-4">
+          <div className="row px-4">
             <div className="col-md-4">
               <label htmlFor="position" className="form-label">Position</label>
               <select
@@ -508,18 +508,19 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 5: Editable Time Controls */}
           {mode === "edit" && (
-            <div className="row w-100 align-items-end">
+            <div className="row align-items-end">
               <div className="col-md-4">
-                <label htmlFor="shiftstart" className="form-label-ti">Time In</label>
+                <label htmlFor="shiftstart" className="form-label-ti mb-1">Time In</label>
                 <input
                   required type="time" name="shiftstart" className="form-control-ti" id="shiftstart"
                   autoComplete="off" inputMode="numeric"
                   value={formData.schedule.shiftstart} onChange={handleInputChange}
                   disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+               
                 />
               </div>
               <div className="col-md-4">
-                <label htmlFor="shiftend" className="form-label-timeout1">Time Out</label>
+                <label htmlFor="shiftend" className="form-label-timeout1 mb-1">Time Out</label>
                 <input
                   required type="time" name="shiftend" className="form-controll-timeout1" id="shiftend"
                   autoComplete="off" inputMode="numeric"
