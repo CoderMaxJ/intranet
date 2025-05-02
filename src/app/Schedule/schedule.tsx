@@ -10,10 +10,10 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 
-interface Schedule{
-    shiftstart:string;
-    shiftend:string;
-    created_at:string;
+interface Schedule {
+    shiftstart: string;
+    shiftend: string;
+    created_at: string;
 }
 interface Information {
     empno: number;
@@ -31,7 +31,7 @@ interface Information {
     role_id: number;
     isdayshift: number;
     status: number;
-    schedule:Schedule;
+    schedule: Schedule;
 }
 
 interface Account {
@@ -283,7 +283,7 @@ export default function CreateUD() {
                         <div>
                             <div>
                                 <header>
-                                    <div className="schedule-employee w-100 d-flex  flex-wrap px-3">
+                                    <div className="manageemployee-button w-100 d-flex  flex-wrap px-3">
 
                                         <div className="time d-flex gap-4 flex-wrap">
                                             <div className="searchbar-containerrr">
@@ -309,10 +309,26 @@ export default function CreateUD() {
                                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                 </svg>
                                             </div>
-                                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reassignment">
-                                                {/* <img src="/svg/update.svg" alt="update" className=""/> */}
-                                                Update Schedule
+                                            <button
+                                                type="button"
+                                                className="d-flex align-items-center"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#reassignment"
+                                            >
+                                                <img
+                                                    src="/svg/update.svg"
+                                                    alt="update"
+                                                    style={{
+                                                        width: '20px',
+                                                        height: '18px',
+                                                        filter: 'brightness(100) contrast(2.5)',
+                                                        marginRight: '2px',
+                                                        display: 'inline-block',
+                                                    }}
+                                                />
+                                                <span className="fs-6 text-light">Update Schedule</span>
                                             </button>
+
                                             {/* <div className="sched-button gap-3 flex-wrap">
                                             <label htmlFor="timein">Time In:</label>
                                             <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
@@ -385,7 +401,7 @@ export default function CreateUD() {
                                                 <td>{info.position}</td>
                                                 <td>{info.schedule?.shiftstart || "--"}</td>
                                                 <td>{info.schedule?.shiftend || "--"}</td>
-                                                <td>{info.isdayshift === 0 ? "Night Shift":"Morning Shift"}</td>
+                                                <td>{info.isdayshift === 0 ? "Night Shift" : "Morning Shift"}</td>
                                                 <td>{info.schedule?.created_at}</td>
                                             </tr>
                                         ))

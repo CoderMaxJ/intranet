@@ -182,6 +182,7 @@ export default function Dashboard() {
             setShowProfileLabel(true);
             setShowEcomia(true);
             setShowPoweredby(true);
+            setShiftAdjustment(true);
             localStorage.setItem("sidebarMinimized", "false");
             document.getElementById("dashboard-menu")?.classList.add("is-minimize");
         } else {
@@ -200,6 +201,7 @@ export default function Dashboard() {
             setShowProfileLabel(false);
             setShowEcomia(false);
             setShowPoweredby(false);
+            setShiftAdjustment(false);
             localStorage.setItem("sidebarMinimized", "true");
             document.getElementById("dashboard-menu")?.classList.remove("is-minimize");
         }
@@ -221,6 +223,9 @@ export default function Dashboard() {
             setShowAccounts(false);
             setShowEmployee(false);
             setShowProfileLabel(false);
+            setShiftAdjustment(false);
+            setShowEcomia(false);
+            setShowPoweredby(false);
         }
     }, []);
 
@@ -339,7 +344,7 @@ export default function Dashboard() {
                                             width="20"
                                             height="20"
                                             fill="currentColor"
-                                            className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "rotate-acc-icon" : ""}`}
+                                            className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "" : "rotate-acc-icon"}`}
                                             viewBox="0 0 16 16"
                                             style={{ color: '#ffffff' }}
                                         >
