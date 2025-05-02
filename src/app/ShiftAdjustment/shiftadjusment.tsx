@@ -177,7 +177,7 @@ const handleViewClick = (item: RequestDetails) => {
                     ) : (
                       <tr>
                         <td colSpan={6} className="text-center">
-                          No shift data found.
+                          No Request as of now
                         </td>
                       </tr>
                     )}

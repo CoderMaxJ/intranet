@@ -217,7 +217,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     </div>
                     <div>
                         <div><label htmlFor="requesteddate" className="form-label">Requested Date</label></div>
-                        <div><input type="date" className="form-control form-control--narrow mb-3"/></div>
+                        <div><input type="date" readOnly value={data?.shiftdate || ""} disabled={true} className="form-control form-control--narrow mb-3"/></div>
                     </div>
 
                     <div className="justify-content-between">
@@ -296,7 +296,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             
                         </div>
                     )}
-                        {/* Break 1 - Out */}
+                      {data?.logs?.break1?.out && (
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label break-out">1st Break - Out</span>
@@ -326,11 +326,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
 
                             </div>
                         </div>
-
+                    )}
                         {/* Lunch - In */}
                         {data?.logs?.lunch?.in && (
-
-                      
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label lunch-in">Lunch - In</span>

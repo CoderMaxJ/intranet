@@ -413,7 +413,7 @@ export default function () {
                                              <span className="input-group-text" id="basic-addon1">Account</span>
                                              <select
                                                   id="suggestedAccounts"
-                                                  className="form-select"
+                                                  className="form-select form-select--filter" 
                                                   onChange={(e) => setFilterText(e.target.value)}
                                                   value={filterText}
                                              >
