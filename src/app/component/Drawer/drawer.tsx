@@ -59,7 +59,8 @@ interface DrawerProps {
 export default function Drawer({ data, onSave }: DrawerProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData,setCombinedData]=useState({})
-    const [status,setStatus]=useState(1);
+    const [status,setStatus]=useState(0);
+    console.log(data);
     useEffect(() => {
         if (buildData) {
             setCombinedData({
@@ -68,7 +69,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 name: data?.name,
                 shiftdate: data?.shiftdate,
                 reason: data?.reason,
-                status:1,
+                status:data?.status,
                 logs: buildData,
                 acctid: data?.acctid,
                 created_at: data?.created_at,
@@ -76,7 +77,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 declined_at: data?.declined_at
             });
         }
-    }, [buildData]);
+    }, [buildData,status]);
     
     useEffect(() => {
         if (data?.logs) {
@@ -111,7 +112,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         });
     };
     const token = localStorage.getItem("token");
-    const approvedRequest = async ()=>{
+    const approvedRequest = async (payload:any)=>{
         
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`,{
             method:"PATCH",
@@ -119,7 +120,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 "Content-Type":"application/json",
                 "Authorization": `Bearer ${Decryptor(token || "")}`
             },
-            body:JSON.stringify(combinedData),
+            body:JSON.stringify(payload),
         })
         if (response.status === 200){
             successToast("Changes have been applied")
@@ -128,8 +129,23 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         }
     }
     const handleApply = () => {
-        approvedRequest();
-      console.log(combinedData)
+        const updatedStatus = 1;
+        setStatus(updatedStatus);
+    
+        const payload = {
+            requestid: data?.requestid,
+            empno: data?.empno,
+            name: data?.name,
+            shiftdate: data?.shiftdate,
+            reason: data?.reason,
+            status: updatedStatus, 
+            logs: buildData,
+            acctid: data?.acctid,
+            created_at: data?.created_at,
+            aprroved_at: new Date().toISOString(),
+            declined_at: null
+        };
+        approvedRequest(payload);
     };
 
     const successToast = (msg: string) => toast.success(msg, {
@@ -408,8 +424,6 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     )}
                         {/* Break 2 - Out */}
                     {data?.logs?.break2?.out && (
-
-                
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
                                 <span className="break-label break-out">2nd Break - Out</span>
