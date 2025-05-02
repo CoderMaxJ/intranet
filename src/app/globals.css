@@ -3268,6 +3268,35 @@ table {
   background-color: #FEE4E3;
 }
 
+.close-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 23px;
+  height: 23px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: rgb(199, 44, 44);
+}
+
+.shiftadjustment-info-label {
+  font-size: large;
+  font-weight: 600;
+}
+.form-control--narrow {
+  max-width: 200px; 
+  background-color: #E9ECEF !important;  
+}
+
 .in-out {
   padding: 10px;
   border-radius: 4px;
@@ -3278,9 +3307,14 @@ table {
 .offcanvas-header {
   background: #0a85ed;
 }
-
+.schedule-summary-label {
+  gap: 70px;
+}
 .shift-background {
-  background-color: #8fbce0;
+  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  margin: 25px;
+  border-radius: 4px;
 }
 
 .vertical-line {
