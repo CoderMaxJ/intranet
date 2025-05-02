@@ -54,26 +54,26 @@ export default function () {
 
      useEffect(() => {
           const modal = document.getElementById('reassignment');
-        
+
           if (!modal) return;
-        
+
           const handleModalHidden = () => {
-            setFilterText("");
-            setSearchQuery("");
-            setSearchQueryLeft("");
-            setSelectedEmployees([]);
-            setTimeIn("");
-            setTimeOut("");
-            setFilteredEmployees(allEmployees); // Reset employee list
+               setFilterText("");
+               setSearchQuery("");
+               setSearchQueryLeft("");
+               setSelectedEmployees([]);
+               setTimeIn("");
+               setTimeOut("");
+               setFilteredEmployees(allEmployees); // Reset employee list
           };
-        
+
           modal.addEventListener('hidden.bs.modal', handleModalHidden);
-        
+
           return () => {
-            modal.removeEventListener('hidden.bs.modal', handleModalHidden);
+               modal.removeEventListener('hidden.bs.modal', handleModalHidden);
           };
-        }, [allEmployees]);
-        
+     }, [allEmployees]);
+
      const handleRemoveEmployee = (empno: any) => {
           setSelectedEmployees(prev => prev.filter(id => id !== empno));
      }
@@ -84,23 +84,23 @@ export default function () {
           const accountInfo = account.find(acc => acc.acctid === acctid);
           return accountInfo ? accountInfo.acctname : "Unassigned";
      };
-     
+
      const totalAvailable = filteredEmployees.filter(emp =>
           !selectedEmployees.includes(emp.empno) &&
           (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQueryLeft.toLowerCase()) ||
-           getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
+               getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
      ).filter(emp =>
           getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
      ).length;
-     
+
      const totalSelected = filteredEmployees.filter(emp =>
           selectedEmployees.includes(emp.empno) &&
           (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-           getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
+               getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
      ).filter(emp =>
           getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
      ).length;
-     
+
      const handleClearAll = () => {
           setSelectedEmployees([]); // Deselect all employees
      };
@@ -274,7 +274,7 @@ export default function () {
           getAccount();
      }, []);
 
-     
+
 
      const token = localStorage.getItem("token");
      const getAccount = async () => {
@@ -413,7 +413,7 @@ export default function () {
                                              <span className="input-group-text" id="basic-addon1">Account</span>
                                              <select
                                                   id="suggestedAccounts"
-                                                  className="form-select"
+                                                  className="form-select form-select--adjustwidth"
                                                   onChange={(e) => setFilterText(e.target.value)}
                                                   value={filterText}
                                              >
@@ -430,7 +430,7 @@ export default function () {
 
                                         {/* Left Side: Unselected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                        <h6>Assign Employees <span className="text-muted">({totalAvailable})</span></h6>
+                                             <h6>Assign Employees <span className="text-muted">({totalAvailable})</span></h6>
                                              {/* LEFT SIDE SEARCH */}
                                              <div className="d-flex justity-content-center flex-wrap gap-2 w-100">
                                                   <div className="flex-grow-1"><input
@@ -487,7 +487,7 @@ export default function () {
 
                                         {/* Right Side: Selected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                        <h6>Selected Employees <span className="text-muted">({totalSelected})</span></h6>
+                                             <h6>Selected Employees <span className="text-muted">({totalSelected})</span></h6>
 
                                              {/* RIGHT SIDE SEARCH */}
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">

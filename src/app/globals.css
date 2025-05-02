@@ -3382,6 +3382,10 @@ table {
   width: 100%;
 }
 
+.form-select--adjustwidth {
+  width: 200px;
+}
+
 .selectall,
 .clearall {
   border: none;
