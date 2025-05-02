@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'roboto';
+    src: url('/src/app/fonts/roboto.ttf') format('truetype');
+    font-weight: 500;
+    font-style: medium;
+    font-size: 17px;
+}
+
+@font-face {
+    font-family: 'roboto2';
+    src: url('/src/app/fonts/roboto.ttf') format('truetype');
+    font-weight: 500;
+    font-style: medium;
+    font-size: 15px;
+}
+
+.drawer-label{
+font-family: 'roboto';
+}
+
+
+.reason{
+    font-family: 'roboto2';
+
+}
+
+.input-time-field {
+    font-family: 'roboto2';
+    padding: 6px;
+    border-radius: 4px;
+    border: none;
+    
+}

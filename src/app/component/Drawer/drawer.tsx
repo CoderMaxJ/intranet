@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
+import "../../../../public/asset/css/drawer.css"
+
 interface RequestDetails {
     requestid: number;
     empno: number;
@@ -193,20 +195,20 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 <div className="offcanvas-body">
                     <div className="mb-5 d-flex flex-column gap-2">
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 shiftadjustment-info-label">Name</p>
-                            <p className="mb-0 shiftadjustment-info-label">{data?.name}</p>
+                            <p className="drawer-label">Name</p>
+                            <p className="drawer-label">{data?.name}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 shiftadjustment-info-label">Date Filed</p>
-                            <p className="mb-0 shiftadjustment-info-label">{data?.created_at}</p>
+                            <p className="drawer-label">Date Filed</p>
+                            <p className="drawer-label">{data?.created_at}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 shiftadjustment-info-label">Department</p>
-                            <p className="mb-0 shiftadjustment-info-label">{data?.acctid}</p>
+                            <p className="drawer-label">Department</p>
+                            <p className="drawer-label">{data?.acctid}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 shiftadjustment-info-label">Request ID</p>
-                            <p className="mb-0 shiftadjustment-info-label">{data?.requestid}</p>
+                            <p className="drawer-label">Request ID</p>
+                            <p className="drawer-label">{data?.requestid}</p>
                         </div>
                     </div>
 
@@ -216,20 +218,20 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         <h5 className="form-label fs-5 text-dark">Summary</h5>
                     </div>
                     <div>
-                        <div><label htmlFor="requesteddate" className="form-label">Requested Date</label></div>
+                        <div><label htmlFor="requesteddate" className="drawer-label">Requested Date</label></div>
                         <div><input type="date" readOnly value={data?.shiftdate || ""} disabled={true} className="form-control form-control--narrow mb-3"/></div>
                     </div>
 
                     <div className="justify-content-between">
                         <div className="d-flex form-label mb-2 schedule-summary-label">
                             <div>
-                                <label htmlFor="attendance">Attendance</label>
+                                <label className="drawer-label" >Attendance</label>
                             </div>
                             <div>
-                                <label htmlFor="attendance">Initial Time</label>
+                                <label className="drawer-label">Requested Time</label>
                             </div>
                             <div>
-                                <label htmlFor="attendance">Assigned Time</label>
+                                <label className="drawer-label">Recorded Time</label>
                             </div>
                         </div>
 
@@ -237,7 +239,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         {data?.logs?.login?.in && (
                               <div className="d-flex justify-content-between align-items-center mb-2">
                               <div>
-                                  <span className="break-label break-in">Login</span>
+                                  <span className="input-time-field">Login</span>
                               </div>
                               <div>
                                   <input
@@ -245,7 +247,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                       disabled={true}
                                       readOnly
                                       value={data?.logs?.login?.in || ""}
-                                      className="form-control"
+                                      className="input-time-field"
                                   />
                               </div>
                               <div>
@@ -253,7 +255,8 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                       type="time"
                                       onChange={(e) => handleChange("login", "", e.target.value)}
                                       value={buildData?.login?.record || ""}
-                                      className="form-control"
+                                      disabled={true} readOnly
+                                      className="input-time-field"
                                   />
                               </div>
                               <div>
@@ -281,9 +284,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <div>
                                 <input
                                     type="time"
-                                    disabled={!data?.logs?.break1?.in}
                                     onChange={(e) => handleChange("break1", "in", e.target.value)}
                                     value={buildData?.break1?.record?.in || ""}
+                                    disabled={true} readOnly
                                     className="form-control"
                                 />
                             </div>
@@ -313,7 +316,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <div>
                                 <input
                                     type="time"
-                                    disabled={!data?.logs?.break1?.out}
+                                    disabled={true} readOnly
                                     onChange={(e) => handleChange("break1", "out", e.target.value)}
                                     value={buildData?.break1?.record?.out || ""}
                                     className="form-control"
@@ -345,7 +348,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <div>
                                 <input
                                     type="time"
-                                    disabled={!data?.logs?.lunch?.in}
+                                    disabled={true} readOnly
                                     onChange={(e) => handleChange("lunch", "in", e.target.value)}
                                     value={buildData?.lunch?.record?.in || ""}
                                     className="form-control"
@@ -380,7 +383,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <div>
                                 <input
                                     type="time"
-                                    disabled={!data?.logs?.lunch?.out}
+                                    disabled={true} readOnly
                                     onChange={(e) => handleChange("lunch", "out", e.target.value)}
                                     value={buildData?.lunch?.record?.out || ""}
                                     className="form-control"
@@ -414,7 +417,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <div>
                                 <input
                                     type="time"
-                                    disabled={!data?.logs?.break2?.in}
+                                    disabled={true} readOnly
                                     onChange={(e) => handleChange("break2", "in", e.target.value)}
                                     value={buildData?.break2?.record?.in || ""}
                                     className="form-control"
@@ -446,7 +449,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <div>
                                 <input
                                     type="time"
-                                    disabled={!data?.logs?.break2?.out}
+                                    disabled={true} readOnly
                                     onChange={(e) => handleChange("break2", "out", e.target.value)}
                                     value={buildData?.break2?.record?.out || ""}
                                     className="form-control"
@@ -495,8 +498,8 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     </div>
                 
                     <div className="mb-3">
-                        <label className="form-label fs-5 text-dark mt-3">Reason</label>
-                        <p className="form-text fs-5">{data?.reason}</p>
+                        <label className="drawer-label">Reason</label>
+                        <p className="reason">{data?.reason}</p>
                     </div>
                 </div>
 
