@@ -6,19 +6,23 @@ import Header from "../component/Header";
 import Drawer from "../component/Drawer/drawer";
 import { Decryptor } from "@/security";
 
-interface ShiftItem {
-  id?: string;
-  name?: string;
-  department?: string;
-  break?: string;
-  work_hours?: string;
-  time?: string;
-  date_filed?: string;
-}
+interface RequestDetails {
+  requestid:number;
+  empno:number;
+  name:string;
+  shiftdate:string;
+  reason:string;
+  status:number;
+  logs:Object;
+  acctid:number;
+  created_at:string;
+  aprroved_at:string;
+  declined_at:string;
+  }
 
 export default function ShiftAdjustment() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [shiftData, setShiftData] = useState<ShiftItem[]>([]);
+  const [details, setShiftData] = useState<RequestDetails | null>(null);
   const [data,setData]=useState<any[]>([]);
 
 
@@ -64,6 +68,9 @@ export default function ShiftAdjustment() {
 //     item.name?.toLowerCase().includes(searchTerm.toLowerCase())
 //   );
 
+const handleViewClick = (item: RequestDetails) => {
+  setShiftData(item); 
+};
   return (
     <div className="d-flex">
       <div>
@@ -127,44 +134,54 @@ export default function ShiftAdjustment() {
                   <th>Name</th>
                   <th>Reason</th>
                   <th>Department</th>
-                  <th>Pending Request</th>
+                  {/* <th>Pending Request</th> */}
                   <th>Date Filed</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {data.length > 0 ? (
-                  data.map((item) => (
-                    <tr key={item.requestid || `${item.name}-${item.date_filed}`}>
-                      <td>{item.name || "-"}</td>
-                      <td>{item.reason || "-"}</td>
-                      <td>{item.shiftdate || "-"}</td>
-                      <td>{item.acctid|| "-"}</td>
-                      <td>{item.created_at|| "-"}</td>
-                      <td>
-                        <button className="btn btn-sm btn-outline-primary" type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#shiftdrawer"
-              aria-controls="shiftdrawer">
-                          View
-                        </button>
-                    
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={7} className="text-center">
-                      No shift data found.
-                    </td>
-                  </tr>
-                )}
+                      data.map((item) => {
+                        const emptyStatusCount = Object.values(item.logs).filter(
+                          (log) => log?.status === "" || log?.status === 0
+                        ).length;
+
+                        return (
+                          <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
+                            <td>{item.name || "-"}</td>
+                            <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
+                            <td>{item.acctid || "-"}</td>
+                            {/* <td>{emptyStatusCount}</td> */}
+                            <td>{item.created_at || "-"}</td>
+                            <td>
+                              <button
+                               
+                                className="btn btn-sm btn-outline-primary"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#shiftdrawer"
+                                aria-controls="shiftdrawer"
+                                onClick={()=>handleViewClick(item)}
+                              >
+                                View
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <tr>
+                        <td colSpan={6} className="text-center">
+                          No shift data found.
+                        </td>
+                      </tr>
+                    )}
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <Drawer />
+      <Drawer data={details} />
     </div>
   );
 }

@@ -220,11 +220,11 @@ export default function CreateUD() {
         };
     }, [debouncedSearch]);
 
-    useEffect(() => {
-        return () => {
-            debouncedSearch.cancel();
-        };
-    }, [debouncedSearch])
+    // useEffect(() => {
+    //     return () => {
+    //         debouncedSearch.cancel();
+    //     };
+    // }, [debouncedSearch])
     const handlePageChange = (page: number) => {
         setCurrentPage(page); // Update the current page
         GetEmployee(page); // Fetch data for the new page
