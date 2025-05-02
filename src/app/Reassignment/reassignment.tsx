@@ -74,6 +74,25 @@ export default function () {
           };
         }, [allEmployees]);
         
+        const successToast = (msg: string) => toast.success(msg, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      
+        const errorToast = (msg: string) => toast.error(msg, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
      const handleRemoveEmployee = (empno: any) => {
           setSelectedEmployees(prev => prev.filter(id => id !== empno));
      }
@@ -166,30 +185,14 @@ export default function () {
                )
           );
      }, [timeIn, timeOut, selectedEmployees]);
-     const create = async () => {
-          const data = {
-               empno: EmpNoList,
-               timein: timeIn,
-               timeout: timeOut
-          }
-
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
-               method: "POST",
-               headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${Decryptor(token || "")}`,
-               },
-               body: JSON.stringify(data),
-          });
-     }
 
      const handleSetSchedule = async () => {
           if (!timeIn || !timeOut) {
-               toast.error("Please set both Time In and Time Out before assigning schedule.");
+               errorToast("Please set both Time In and Time Out before assigning schedule.");
                return;
           }
           if (selectedEmployees.length === 0) {
-               toast.error("Please select at least one employee.");
+               errorToast("Please select at least one employee.");
                return;
           }
 
@@ -212,7 +215,7 @@ export default function () {
 
                if (response.ok) {
                     const data = await response.json();
-                    toast.success(data.message || "Schedule successfully set for selected employees!");
+                    successToast(data.message || "Schedule successfully set for selected employees!");
 
                     // Update local state immediately
                     setAllEmployees(prev =>
@@ -238,15 +241,15 @@ export default function () {
                     const text = await response.text();
                     try {
                          const errorData = JSON.parse(text);
-                         toast.error(`Failed to set schedule: ${errorData.message || "Unknown error"}`);
+                         errorToast(`Failed to set schedule: ${errorData.message || "Unknown error"}`);
                     } catch {
                          console.error("Server response is not JSON:", text);
-                         toast.error("Failed to set schedule: Server error or wrong endpoint.");
+                         errorToast("Failed to set schedule: Server error or wrong endpoint.");
                     }
                }
           } catch (error) {
                console.error("Error setting schedule", error);
-               toast.error("An error occurred while setting schedule.");
+               errorToast("An error occurred while setting schedule.");
           }
      };
 
