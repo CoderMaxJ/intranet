@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import Drawer from "../component/Drawer/drawer";
-import Approve from "../component/Approve/approve";
+import RejectedTable from "../component/Rejected/RejectedTable";
+import ApprovedTable from "../component/Approve/ApproveTable";
 import { Decryptor } from "@/security";
 
 interface RequestDetails {
@@ -28,26 +29,60 @@ export default function ShiftAdjustment() {
   const [approve, setApprove] = useState("");
   const [filter, setFilter] = useState<"pending" | "approved" | "rejected">("pending");
 
-const handleTabChange = (value: "pending" | "approved" | "rejected") => {
-  setFilter(value);
-};
+  const handleTabChange = (value: "pending" | "approved" | "rejected") => {
+    setFilter(value);
+  };
 
-const filteredData = data.filter((item) => {
+  const filteredData = data.filter((item) => {
     if (filter === "pending") return item.status === 0;
     if (filter === "approved") return item.status === 1;
     if (filter === "rejected") return item.status === 2;
     return true;
   });
-  
-
 
   useEffect(() => {
     fetchShiftAdjustmentData();
   }, []);
 
-  const handleApproved = (e:any) => {
+  const handleApproved = (e: any) => {
     setApprove(e.target.value);
   };
+  const handleApproveRequest = async (decryptedId: string) => {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/requests/${decryptedId}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Decryptor(token || "")}`,
+      }
+    });
+
+    if (response.ok) {
+      fetchShiftAdjustmentData(); // refresh data
+    } else {
+      console.error("Approval failed");
+    }
+  };
+
+  const handleRejectRequest = async (empno: number, acctid: number) => {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/${user_id}/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Decryptor(token || "")}`,
+      }
+    });
+
+    if (response.ok) {
+      fetchShiftAdjustmentData(); // refresh data
+    } else {
+      console.error("Rejection failed");
+    }
+  };
+
 
   const fetchShiftAdjustmentData = async () => {
     const user_id = localStorage.getItem("user_id");
@@ -83,80 +118,96 @@ const filteredData = data.filter((item) => {
     }
   };
 
-  //   const filteredData = shiftData.filter((item) =>
-  //     item.name?.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-
   const handleViewClick = (item: RequestDetails) => {
     setShiftData(item);
   };
+
   return (
     <div className="d-flex">
       <div>
         <Dashboard />
       </div>
-
       <div className="shiftadjustment-container flex-grow-1">
         <Header title="MANAGE SHIFT ADJUSTMENT" />
 
         <div className="shift-background p-4 px-4">
-          <div className="d-flex gap-5 ">
-            <div><button type="button" className="form-label form-label--shiftadjustment-header">Pending</button></div>
-            <div><button type="button" className="form-label form-label--shiftadjustment-header" onClick={handleApproved} value={approve}>Approved</button></div>
-            <div><button type="button" className="form-label form-label--shiftadjustment-header">Rejected/Cancelled</button></div>
+          <div className="d-flex gap-5">
+            <button
+              type="button"
+              className={`form-label form-label--shiftadjustment-header ${filter === "pending" ? "active" : ""}`}
+              onClick={() => handleTabChange("pending")}
+            >
+              Pending
+            </button>
+            <button
+              type="button"
+              className={`form-label form-label--shiftadjustment-header ${filter === "approved" ? "active" : ""}`}
+              onClick={() => handleTabChange("approved")}
+            >
+              Approved
+            </button>
+            <button
+              type="button"
+              className={`form-label form-label--shiftadjustment-header ${filter === "rejected" ? "active" : ""}`}
+              onClick={() => handleTabChange("rejected")}
+            >
+              Rejected/Cancelled
+            </button>
           </div>
 
           <div className="shiftadjustment-table">
-            <table className="table table-striped table-hover table-bordered">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Reason</th>
-                  <th>Department</th>
-                  <th>Date Filed</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.length > 0 ? (
-                  data.map((item) => {
-                    const emptyStatusCount = Object.values(item.logs).filter(
-                      (log) => log?.status === "" || log?.status === 0
-                    ).length;
+  {filter === "pending" && (
+    <table className="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Reason</th>
+          <th>Department</th>
+          <th>Date Filed</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredData.length > 0 ? (
+          filteredData.map((item) => (
+            <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
+              <td>{item.name || "-"}</td>
+              <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
+              <td>{item.acctid || "-"}</td>
+              <td>{item.created_at || "-"}</td>
+              <td>
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#shiftdrawer"
+                  aria-controls="shiftdrawer"
+                  onClick={() => handleViewClick(item)}
+                >
+                  View
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={5} className="text-center">
+              No shift data found.
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  )}
 
-                    return (
-                      <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
-                        <td>{item.name || "-"}</td>
-                        <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
-                        <td>{item.acctid || "-"}</td>
+  {filter === "approved" && (
+    <ApprovedTable data={filteredData} onView={handleViewClick} />
+  )}
 
-                        {/* <td>{emptyStatusCount}</td> */}
-                        <td>{item.created_at || "-"}</td>
-                        <td>
-                          <button
+  {filter === "rejected" && (
+    <RejectedTable data={filteredData} onView={handleViewClick} />
+  )}
 
-                            className="btn btn-sm btn-outline-primary"
-                            type="button"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#shiftdrawer"
-                            aria-controls="shiftdrawer"
-                            onClick={() => handleViewClick(item)}
-                          >
-                            View
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <tr>
-                    <td colSpan={6} className="text-center">
-                      No shift data found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
           </div>
         </div>
       </div>

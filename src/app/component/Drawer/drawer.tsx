@@ -59,6 +59,7 @@ interface DrawerProps {
 export default function Drawer({ data, onSave }: DrawerProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData, setCombinedData] = useState({})
+    const [declineReason, setDeclineReason] = useState("");
     const [status, setStatus] = useState(1);
     useEffect(() => {
         if (buildData) {
@@ -83,6 +84,29 @@ export default function Drawer({ data, onSave }: DrawerProps) {
             setBuildData(JSON.parse(JSON.stringify(data.logs)));
         }
     }, [data]);
+
+    const handleDecline = async () => {
+        const declinePayload = {
+            requestid: data?.requestid,
+            status: 0,
+            declined_at: new Date().toISOString(),
+        };
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/decline/request/`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Decryptor(token || "")}`
+            },
+            body: JSON.stringify(declinePayload)
+        });
+
+        if (response.ok) {
+            successToast("Request declined.");
+        } else {
+            errorToast("Failed to decline request.");
+        }
+    };
 
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
@@ -201,7 +225,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     </div>
                     <div>
                         <div><label htmlFor="requesteddate" className="form-label">Requested Date</label></div>
-                        <div><input type="date" className="form-control form-control--narrow mb-3"/></div>
+                        <div><input type="date" className="form-control form-control--narrow mb-3" /></div>
                     </div>
 
                     <div className="justify-content-between">
@@ -212,74 +236,71 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <div>
                                 <label htmlFor="attendance">Initial Time</label>
                             </div>
-                            <div>
-                                <label htmlFor="attendance">Assigned Time</label>
-                            </div>
                         </div>
 
                         {/* Login */}
                         {data?.logs?.login?.in && (
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                              <div>
-                                  <span className="break-label break-in">Login</span>
-                              </div>
-                              <div>
-                                  <input
-                                      type="time"
-                                      disabled={true}
-                                      readOnly
-                                      value={data?.logs?.login?.in || ""}
-                                      className="form-control"
-                                  />
-                              </div>
-                              <div>
-                                  <input
-                                      type="time"
-                                      onChange={(e) => handleChange("login", "", e.target.value)}
-                                      value={buildData?.login?.record || ""}
-                                      className="form-control"
-                                  />
-                              </div>
-                              <div>
-                              <button type="button" className="close-btn">
-                                    ×
-                                </button>
-                              </div>
-                          </div>
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span className="break-label break-in">Login</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.login?.in || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        onChange={(e) => handleChange("login", "", e.target.value)}
+                                        value={buildData?.login?.record || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="button" className="close-btn">
+                                        ×
+                                    </button>
+                                </div>
+                            </div>
                         )}
-                      
+
                         {data?.logs?.break1?.in && (
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-in">1st Break - In</span>
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={true}
-                                    readOnly
-                                    value={data?.logs?.break1?.in || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={!data?.logs?.break1?.in}
-                                    onChange={(e) => handleChange("break1", "in", e.target.value)}
-                                    value={buildData?.break1?.record?.in || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <button type="button" className="close-btn">
-                                    ×
-                                </button>
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span className="break-label break-in">1st Break - In</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.break1?.in || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={!data?.logs?.break1?.in}
+                                        onChange={(e) => handleChange("break1", "in", e.target.value)}
+                                        value={buildData?.break1?.record?.in || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="button" className="close-btn">
+                                        ×
+                                    </button>
+
+                                </div>
 
                             </div>
-                            
-                        </div>
-                    )}
+                        )}
                         {/* Break 1 - Out */}
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <div>
@@ -314,174 +335,174 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         {/* Lunch - In */}
                         {data?.logs?.lunch?.in && (
 
-                      
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label lunch-in">Lunch - In</span>
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={true}
-                                    readOnly
-                                    value={data?.logs?.lunch?.in || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={!data?.logs?.lunch?.in}
-                                    onChange={(e) => handleChange("lunch", "in", e.target.value)}
-                                    value={buildData?.lunch?.record?.in || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <button type="button" className="close-btn">
-                                    ×
-                                </button>
 
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span className="break-label lunch-in">Lunch - In</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.lunch?.in || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={!data?.logs?.lunch?.in}
+                                        onChange={(e) => handleChange("lunch", "in", e.target.value)}
+                                        value={buildData?.lunch?.record?.in || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="button" className="close-btn">
+                                        ×
+                                    </button>
+
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                         {/* Lunch - Out */}
 
-                    {data?.logs?.lunch?.out && (
+                        {data?.logs?.lunch?.out && (
 
-                   
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label lunch-in">Lunch - Out</span>
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={true}
-                                    readOnly
-                                    value={data?.logs?.lunch?.out || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={!data?.logs?.lunch?.out}
-                                    onChange={(e) => handleChange("lunch", "out", e.target.value)}
-                                    value={buildData?.lunch?.record?.out || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <button type="button" className="close-btn">
-                                    ×
-                                </button>
 
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span className="break-label lunch-in">Lunch - Out</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.lunch?.out || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={!data?.logs?.lunch?.out}
+                                        onChange={(e) => handleChange("lunch", "out", e.target.value)}
+                                        value={buildData?.lunch?.record?.out || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="button" className="close-btn">
+                                        ×
+                                    </button>
+
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                         {/* Break 2 - In */}
-                    {data?.logs?.break2?.in && (
+                        {data?.logs?.break2?.in && (
 
-                    
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-in">2nd Break - In</span>
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={true}
-                                    readOnly
-                                    value={data?.logs?.break2?.in || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={!data?.logs?.break2?.in}
-                                    onChange={(e) => handleChange("break2", "in", e.target.value)}
-                                    value={buildData?.break2?.record?.in || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <button type="button" className="close-btn">
-                                    ×
-                                </button>
 
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span className="break-label break-in">2nd Break - In</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.break2?.in || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={!data?.logs?.break2?.in}
+                                        onChange={(e) => handleChange("break2", "in", e.target.value)}
+                                        value={buildData?.break2?.record?.in || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="button" className="close-btn">
+                                        ×
+                                    </button>
+
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                         {/* Break 2 - Out */}
-                    {data?.logs?.break2?.out && (
+                        {data?.logs?.break2?.out && (
 
-                
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-out">2nd Break - Out</span>
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={true}
-                                    readOnly
-                                    value={data?.logs?.break2?.out || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={!data?.logs?.break2?.out}
-                                    onChange={(e) => handleChange("break2", "out", e.target.value)}
-                                    value={buildData?.break2?.record?.out || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <button type="button" className="close-btn">
-                                    ×
-                                </button>
 
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span className="break-label break-out">2nd Break - Out</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.break2?.out || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={!data?.logs?.break2?.out}
+                                        onChange={(e) => handleChange("break2", "out", e.target.value)}
+                                        value={buildData?.break2?.record?.out || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="button" className="close-btn">
+                                        ×
+                                    </button>
+
+                                </div>
                             </div>
-                        </div>
                         )}
 
                         {data?.logs?.logout?.out && (
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label logout">Logout</span>
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={true}
-                                    readOnly
-                                    value={data?.logs?.logout?.out || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="time"
-                                    disabled={!data?.logs?.logout?.out}
-                                    onChange={(e) => handleChange("logout", "", e.target.value)}
-                                    value={buildData?.logout?.record || ""}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <button type="button" className="close-btn">
-                                    ×
-                                </button>
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span className="break-label logout">Logout</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.logout?.out || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={!data?.logs?.logout?.out}
+                                        onChange={(e) => handleChange("logout", "", e.target.value)}
+                                        value={buildData?.logout?.record || ""}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button type="button" className="close-btn">
+                                        ×
+                                    </button>
 
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                     </div>
-                
+
                     <div className="mb-3">
                         <label className="form-label fs-5 text-dark mt-3">Reason</label>
                         <p className="form-text fs-5">{data?.reason}</p>
@@ -489,7 +510,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 </div>
 
                 <hr />
-                <div className="modal-footer gap-4 " style={{padding:'20px'}}>
+                <div className="modal-footer gap-4 " style={{ padding: '20px' }}>
                     <div>
                         <button
                             type="button"
@@ -500,12 +521,71 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         </button>
                     </div>
                     <div>
-                        <button type="button" className="btn text-danger fw-bold">
+                        <button
+                            type="button"
+                            className="btn text-danger fw-bold"
+                            data-bs-toggle="modal"
+                            data-bs-target="#declineModal"
+                        >
                             Decline
                         </button>
+
                     </div>
                 </div>
             </div>
+            <div
+                className="modal fade"
+                id="declineModal"
+                tabIndex={-1}
+                aria-labelledby="declineModalLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-light" id="declineModalLabel">Decline Shift Adjustment</h5>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+
+                        <div className="modal-body">
+                            <div className="mb-3">
+                                <label htmlFor="decline-reason" className="form-label">Reason for Decline</label>
+                                <textarea
+                                    id="decline-reason"
+                                    className="form-control"
+                                    rows={5}
+                                    value={declineReason}
+                                    onChange={(e) => setDeclineReason(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                data-bs-dismiss="modal"
+                                onClick={handleDecline}
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 }

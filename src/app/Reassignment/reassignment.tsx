@@ -386,7 +386,7 @@ export default function () {
                                              <label htmlFor="effectivitydate" className="fw-bold mb-3 fs-6">Schedule</label>
                                         </div>
 
-                                        <div className="effectivity-date d-flex mb-1 align-items-end">
+                                        <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
                                              <div className="d-flex gap-4">
                                                   <div className="input-group mb-3" style={{ minWidth: "200px" }}>
                                                        <span className="input-group-text" id="basic-addon1">From</span>
