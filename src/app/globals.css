@@ -33,6 +33,7 @@
 
 .manage-label {
   color: rgb(0, 0, 0);
+  font-family: 'Geist';
 }
 
 .manage-menus {
@@ -40,10 +41,6 @@
   width: 100%;
   cursor: pointer;
   border-radius: 4px;
-}
-
-.manage-label {
-  color: rgb(0, 0, 0);
 }
 
 .manage-menus:hover {
@@ -73,6 +70,7 @@
 
 .acc-label,
 .emp-label {
+  font-family: 'Geist';
   color: black;
   transition: color 0.3s ease;
 }
@@ -138,6 +136,10 @@
   flex-wrap: wrap;
   gap: 1px;
   font-weight: bolder;
+}
+
+.legends span {
+  font-family: 'Geist';
 }
 
 .firstbreak {
@@ -284,8 +286,13 @@
 }
 
 .updatep {
+  font-family: 'Geist';
   color: black;
   transition: color 0.3s ease;
+}
+
+.logoutbutton {
+  font-family: 'Geist';
 }
 
 /* Flexible layout inside nav-fontt */
@@ -669,13 +676,22 @@ input:focus {
   max-width: 400px;
 }
 
+.searchbar-containerr {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
 .searchbar-container svg {
   position: absolute;
-  left: 20px;
+  right: 20px;
   top: 50%;
-  transform: translateY(-60%);
+  transform: translateY(-50%);
   pointer-events: none;
   color: #888;
+  z-index: 10;
 }
 
 .searchbar-container1 {
@@ -835,20 +851,6 @@ input:focus {
   }
 }
 
-.searchbar3 {
-  padding: 8px 12px 8px 60px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  color: #000000;
-  width: 100%;
-  font-size: 14px;
-  box-sizing: border-box;
-  margin-top: 5px;
-  max-width: 400px;
-  min-width: 0;
-}
-
 
 /* This triggers when screen width is 688px or less */
 /* @media screen and (max-width: 688px) {
@@ -867,7 +869,7 @@ input:focus {
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: #f0f0f0;
   color: #000000;
-  font-family: sans-serif;
+  font-family: 'Geist';
   margin-bottom: 3px;
   padding-left: 34px;
   padding-top: 10px;
@@ -875,9 +877,10 @@ input:focus {
   width: 100%;
   font-size: 14px;
   box-sizing: border-box;
+
 }
 
-.searchbar12 {
+/* .searchbar12 {
   padding: 8px 12px 8px 60px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -889,32 +892,16 @@ input:focus {
   box-sizing: border-box;
   margin-top: 5px;
   min-width: 0;
+  font-family: 'Geist';
   /* allow shrinking beyond intrinsic size */
-}
 
-.searchbar-containerr {
-  flex: 1;
-  min-width: 0;
-  /* crucial for allowing shrinking */
-  position: relative;
-}
+
+
 
 .search12:focus {
   background-color: #008dcc !important;
 }
 
-.searchbar0 {
-  padding: 8px 12px 8px 60px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  color: #000000;
-  width: 100%;
-  font-size: 14px;
-  box-sizing: border-box;
-  margin-top: 5px;
-  min-width: 400px;
-}
 
 @media only screen and (max-width: 731px) {
   .searchbar0 {
@@ -979,7 +966,7 @@ input:focus {
   padding-right: 16px;
   padding-top: 10px;
   padding-bottom: 10px;
-  font-family: sans-serif;
+  font-family: 'Geist';
   font-size: 14px;
   box-sizing: border-box;
 }
@@ -1028,7 +1015,7 @@ input:focus {
   margin: 0;
   font-weight: bold;
   font-size: 23px;
-  font-family: sans-serif;
+  font-family: 'Geist';
   margin-right: 10px;
 }
 
@@ -1114,9 +1101,13 @@ input:focus {
   height: auto;
 }
 
+.breaks-table td {
+  font-size: 14px;
+}
+
 .breaks-table th {
   background-color: #0a85ed !important;
-  font-family: sans-serif;
+  font-family: 'Geist';
   color: #ffffff !important;
 }
 
@@ -1167,13 +1158,17 @@ input:focus {
 
 .logs-container th {
   background-color: #0a85ed !important;
-  font-family: sans-serif;
+  font-family: 'Geist';
   color: #ffffff !important;
 }
 
 .logs-container thead {
   position: sticky;
   top: 0;
+}
+
+.logs-container td {
+  font-size: 14px;
 }
 
 .logs-table {
@@ -1192,8 +1187,12 @@ input:focus {
   white-space: nowrap;
 }
 
+.logs-total label {
+  font-family: 'Geist';
+}
+
 .logs-headername {
-  font-family: sans-serif;
+  font-family: 'Geist';
   font-weight: bold;
   font-size: 1.5rem;
 }
@@ -1238,6 +1237,7 @@ input:focus {
 
 .report-data td {
   white-space: nowrap;
+  font-family: 'Geist';
 }
 
 .background-report {
@@ -1255,7 +1255,8 @@ input:focus {
   border-radius: 4px;
   color: white;
   background-color: #0ebb39;
-  transition: background-color 0.3s ease
+  transition: background-color 0.3s ease;
+  font-family: 'Geist';
 }
 
 .daterange-button:hover {
@@ -1495,6 +1496,19 @@ tbody td {
   color: #0da52e;
 }
 
+.add-manager,
+.delete-manager {
+  font-size: 20px;
+}
+
+/* .form-control.form-control--search {
+  border: 3px solid #dbdbdb; 
+  padding: 8px 30px 8px 60px;
+  background-color: #ffffff;
+  font-family: 'Geist';
+} */
+
+
 .rotate-acc-icon {
   rotate: 180deg;
   transition: 0.3s all ease-in-out;
@@ -1518,10 +1532,12 @@ tbody td {
   position: sticky;
   top: 0;
   z-index: 1;
+  font-family: 'Geist';
 }
 
 .emp-table thead {
   white-space: nowrap;
+  font-family: 'Geist';
 }
 
 table {
@@ -1627,11 +1643,6 @@ table {
   overflow-y: scroll;
   height: calc(83.5vh - 144px);
   margin: 10px auto;
-}
-
-.employee-header svg {
-  transform: translatey(-1px);
-  margin-left: 3px;
 }
 
 .manageaccounts-bg {
@@ -1772,6 +1783,10 @@ table {
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
+.manageemployee-button span {
+  font-family: 'Geist';
+}
+
 .manageaccount-dashboard {
   display: flex;
 }
@@ -1820,8 +1835,20 @@ table {
   width: 100%;
 }
 
+.effectivitydate {
+  font-family: 'Geist';
+}
+
 .employee-information {
   margin-left: 300px;
+}
+
+.modal-title {
+  font-family: 'Geist';
+}
+
+.input-group-text {
+  font-family: 'Geist';
 }
 
 .employee-total p {
@@ -1831,6 +1858,10 @@ table {
   right: 190px !important;
   position: relative;
   top: 13px;
+}
+
+.employee-total span {
+  font-family: 'Geist';
 }
 
 .employee-pagination {
@@ -1848,6 +1879,10 @@ table {
 .tabemp {
   width: 100%;
   margin: auto;
+}
+
+.tabemp th {
+  font-family: 'Geist';
 }
 
 .emp-table th {
@@ -1871,6 +1906,7 @@ table {
 
 .manage-tbody td {
   font-size: 500;
+  font-family: 'Geist';
 }
 
 .manageemployee-division {
@@ -2099,6 +2135,7 @@ table {
 .dash {
   margin-left: 10px;
   color: gray;
+  font-family: 'Geist';
 }
 
 .dashboard a {
@@ -2209,6 +2246,7 @@ table {
 .generate label {
   color: rgb(0, 0, 0);
   margin-left: 10px;
+  font-family: 'Geist';
 }
 
 .manage-div {
@@ -2493,12 +2531,15 @@ table {
 
 .form-label-ti {
   margin-left: 20px;
-} 
+}
+
 .rep-label {
   font-weight: 600;
   color: #ffffff;
   margin-bottom: 4px;
+  font-family: 'Geist';
 }
+
 .form-label-timeout1 {
   margin-left: -220px;
 }
@@ -2726,6 +2767,11 @@ table {
 .reports-container th {
   background-color: #0a85ed !important;
   color: white !important;
+  font-family: 'Geist';
+}
+
+.reports-container td {
+  font-size: 14px;
 }
 
 .reports-division {
@@ -2754,6 +2800,10 @@ table {
   justify-content: center;
   margin-right: 10px !important;
   transition: background-color 0.3s ease
+}
+
+.download label {
+  font-family: 'Geist';
 }
 
 .download:hover {
@@ -2795,6 +2845,7 @@ table {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  font-family: 'Geist';
 }
 
 .reportheader {
@@ -2874,7 +2925,7 @@ table {
   }
 }
 
-.form-control {
+/* .form-control {
   position: relative;
   width: 100%;
   padding: 10px;
@@ -2882,11 +2933,10 @@ table {
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-family: 'Geist';
 }
 
 .form-control::after {
-  /* content: "\1F4C5"; */
-  /* 📅 calendar icon */
   position: absolute;
   top: 50%;
   left: calc(100% - 31px);
@@ -2894,7 +2944,7 @@ table {
   font-size: 18px;
   color: black !important;
   pointer-events: none;
-}
+} */
 
 .form-controll {
   position: relative;
@@ -3055,7 +3105,7 @@ table {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-left: 20px;
- 
+
 }
 
 .form-control-ti::after {
@@ -3245,10 +3295,15 @@ table {
 .shiftadjustment-table th {
   color: #ffffff !important;
   background-color: #0a85ed !important;
+  font-family: 'Geist';
 }
 
 .shiftadjustment-table {
   width: 100%;
+}
+
+.tbody-data {
+  font-family: 'Geist';
 }
 
 .shiftadjustment-container {
@@ -3259,7 +3314,9 @@ table {
 .form-label--shiftadjustment-header {
   border: none;
   background: none;
+  font-family: 'Geist';
 }
+
 #reassignment .list-group-item {
   padding: 0px;
 }
@@ -3311,9 +3368,10 @@ table {
   font-size: large;
   font-weight: 600;
 }
+
 .form-control--narrow {
-  max-width: 200px; 
-  background-color: #E9ECEF !important;  
+  max-width: 200px;
+  background-color: #E9ECEF !important;
 }
 
 .in-out {
@@ -3326,9 +3384,11 @@ table {
 .offcanvas-header {
   background: #0a85ed;
 }
+
 .schedule-summary-label {
   gap: 70px;
 }
+
 .shift-background {
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
   background-color: #ffffff;
@@ -3347,7 +3407,7 @@ table {
 }
 
 .effectivity-date {
-  gap:190px
+  gap: 190px
 }
 
 .break-label {
@@ -3395,14 +3455,48 @@ table {
 
 .form-select {
   width: 100%;
+  font-family: 'Geist';
 }
+
 .form-select--filter {
   max-width: 320px;
+}
+
+.assign-employees,
+.clearall,
+.selectall,
+.login-label,
+.selected-emp,
+.update-employee-data,
+.reschedule,
+.cancel,
+.addaccount,
+.accounts-td,
+.form-select,
+.unassigned,
+.addemployee-btn,
+.view,
+.updatepass-label,
+.update-pass,
+.logout-confirmation,
+.form-label,
+.form-label-ti,
+.form-label-timeout1,
+.drawer-label,
+.offcanvas-header,
+.tablogs {
+  font-family: 'Geist' !important;
 }
 
 .form-select--adjustwidth {
   width: 100%;
   max-width: 320px;
+}
+
+.manage-table td {
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 14px;
 }
 
 .selectall,
@@ -3435,4 +3529,3 @@ table {
   margin-right: 30px;
   position: fixed;
 } */
-

@@ -68,7 +68,7 @@ export default function ShiftAdjustment() {
   const handleRejectRequest = async (empno: number, acctid: number) => {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/${user_id}/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -167,7 +167,7 @@ export default function ShiftAdjustment() {
           <th>Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className="tbody-data">
         {filteredData.length > 0 ? (
           filteredData.map((item) => (
             <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
@@ -184,7 +184,7 @@ export default function ShiftAdjustment() {
                   aria-controls="shiftdrawer"
                   onClick={() => handleViewClick(item)}
                 >
-                  View
+                  <span className="view">View</span>
                 </button>
               </td>
             </tr>

@@ -101,7 +101,7 @@
         <form className="username" onSubmit={handleSubmit}>
             {error && <div className="error-message">{error}</div>}
             <div className="inp-lab">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username"><span className="view">Username</span></label>
             <input
                 id="username"
                 type="text"
@@ -111,7 +111,7 @@
             />
             </div>
             <div className="inputpassword">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password"><span className="view">Password</span></label>
             <div className="inputfields">
                 <input
                 id="password"
@@ -136,14 +136,14 @@
             <div>
             <button type="submit" className="button-login mb-4
             ">
-                Login
+               <span className="view">Login</span> 
             </button>
            
             </div>
         </form>
         <div className="ecomialogo-footer d-flex flex-column align-items-center">
             
-            <label  className="poweredby-label" htmlFor="poweredby">powered by</label>
+            <label  className="poweredby-label" htmlFor="poweredby"><span className="view">powered by</span></label>
             <img
             className="ecomialogo"
             src="/img/eComialogo.png"
