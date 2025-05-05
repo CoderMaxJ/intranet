@@ -156,52 +156,52 @@ export default function ShiftAdjustment() {
           </div>
 
           <div className="shiftadjustment-table">
-  {filter === "pending" && (
-    <table className="table table-striped table-hover table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Reason</th>
-          <th>Department</th>
-          <th>Date Filed</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody className="tbody-data">
-        {filteredData.length > 0 ? (
-          filteredData.map((item) => (
-            <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
-              <td>{item.name || "-"}</td>
-              <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
-              <td>{item.acctid || "-"}</td>
-              <td>{item.created_at || "-"}</td>
-              <td>
-                <button
-                  className="btn btn-sm btn-outline-primary"
-                  type="button"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#shiftdrawer"
-                  aria-controls="shiftdrawer"
-                  onClick={() => handleViewClick(item)}
-                >
-                  <span className="view">View</span>
-                </button>
-              </td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={5} className="text-center">
-              No shift data found.
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </table>
-  )}
+          {filter === "pending" && (
+            <table className="table table-striped table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Reason</th>
+                  <th>Department</th>
+                  <th>Date Filed</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.length > 0 ? (
+                  filteredData.map((item) => (
+                    <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
+                      <td>{item.name || "-"}</td>
+                      <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
+                      <td>{item.acctid || "-"}</td>
+                      <td>{item.created_at || "-"}</td>
+                      <td>
+                        <button
+                          className="btn btn-sm btn-outline-primary"
+                          type="button"
+                          data-bs-toggle="offcanvas"
+                          data-bs-target="#shiftdrawer"
+                          aria-controls="shiftdrawer"
+                          onClick={() => handleViewClick(item)}
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={5} className="text-center">
+                      No shift data found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          )}
 
   {filter === "approved" && (
-    <ApprovedTable data={filteredData} onView={handleViewClick} />
+    <ApprovedTable />
   )}
 
   {filter === "rejected" && (
