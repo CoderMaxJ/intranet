@@ -28,14 +28,14 @@ return (
                     <p className="logout-confirmation">Are you sure you want to log out?</p>
                 </div>
                 <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" className=" btn btn-secondary" data-bs-dismiss="modal"><span className="view">Cancel</span></button>
                     <button
                     type="button"
                     className="btn btn-danger"
                     data-bs-dismiss="modal"
                     onClick={handleLogout}
                     >
-                    Logout
+                    <span className="view">Logout</span>
                     </button>
                 </div>
                 </div>

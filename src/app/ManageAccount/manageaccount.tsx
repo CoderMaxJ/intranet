@@ -251,11 +251,11 @@ export default function ManageDepartment() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close text-light"></button>
                         </div>
                         <div className="modal-body">
-                            <p>Are you sure you want to delete?</p>
+                            <p className="view">Are you sure you want to delete?</p>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onClick={() => deleteAccount(targetID)} type="button" className="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><span className="view">Close</span></button>
+                            <button onClick={() => deleteAccount(targetID)} type="button" className="btn btn-danger" data-bs-dismiss="modal"><span className="view">Delete</span></button>
                         </div>
                     </div>
                 </div>
@@ -286,11 +286,11 @@ export default function ManageDepartment() {
                                         data-bs-dismiss="modal"
                                         type="button"
                                     >
-                                        Close
+                                       <span className="view">Close</span> 
                                     </button>
 
                                     <button className="btn btn-success btn-sm" type="submit">
-                                        Create
+                                      <span className="view">Create</span>  
                                     </button>
                                 </div>
                             </form>
@@ -307,12 +307,12 @@ export default function ManageDepartment() {
                                 <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <p>Are you sure you want to save changes?</p>
+                                <p className="view">Are you sure you want to save changes?</p>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" onClick={() => setShowModal(false)} className="btn btn-secondary">Cancel</button>
+                                <button type="button" onClick={() => setShowModal(false)} className="btn btn-secondary"><span className="view">Cancel</span> </button>
                                 <button onClick={() => handleCreateManager(targetID)} type="button" className="btn btn-success">
-                                    Save changes
+                                    <span className="view">Save changes</span>
                                 </button>
                             </div>
                         </div>
@@ -328,7 +328,7 @@ export default function ManageDepartment() {
                             <div
                                 className="acc-head d-flex justify-content-between"
                             >
-                                <div className="search-division"
+                                <div className="searchbar-container"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -342,7 +342,7 @@ export default function ManageDepartment() {
                                     <input
                                         type="text"
                                         id="myInput"
-                                        className="searchbar3"
+                                        className="form-control"
                                         placeholder="Search..."
                                         value={filter}
                                         onChange={handleFilterChange}
@@ -365,7 +365,7 @@ export default function ManageDepartment() {
                                     >
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                                     </svg>
-                                    <label htmlFor="">Add Account</label>
+                                 <span className="view">Add Account</span>
                                 </button>
                             </div>
                         </div>
@@ -392,7 +392,7 @@ export default function ManageDepartment() {
                                         <th className="th-action border border">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+                                <tbody className="accounts-td" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
                                     {filteredRows.map((instance) => (
                                         <tr key={instance.acctid}>
                                             <td >{instance.acctid}</td>
@@ -438,7 +438,7 @@ export default function ManageDepartment() {
                                                                         value={selectedManagerIDs[instance.acctid] || ""}
                                                                         onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
                                                                     >
-                                                                        <option value="">Unassigned</option>
+                                                                        <option value="" className="unassigned">Unassigned</option>
                                                                         {manager.map((manager) => (
                                                                             <option key={manager.empno} value={manager.empno}>
                                                                                 {manager.fname} {manager.lname}
@@ -451,7 +451,7 @@ export default function ManageDepartment() {
                                                     </div>
                                                 ) : (
                                                     <select
-                                                        className="form-select w-20 p-1"
+                                                        className="form-select w-20 p-1 unassigned"
                                                         style={{ width: "130px" }}
                                                         value={selectedManagerIDs[instance.acctid] || ""}
                                                         onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
@@ -474,13 +474,13 @@ export default function ManageDepartment() {
                                                         style={{ cursor: "pointer" }}
                                                         title={add ? "" : "Add"}
                                                     >
-                                                        <i className="bi bi-plus-square"></i>
+                                                        <i className="bi bi-plus-square add-manager"></i>
                                                     </button>
                                                     <button
                                                         onClick={() => { setTargetID(instance.acctid); }}
                                                         type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     >
-                                                        <i className="bi bi-trash3"></i>
+                                                        <i className="bi bi-trash3 delete-manager"></i>
                                                     </button>
                                                 </div>
                                             </td>

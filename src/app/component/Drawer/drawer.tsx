@@ -546,7 +546,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             onClick={handleApply}
                             className="btn btn-primary"
                         >
-                            Approved
+                            <span className="view">Approved</span>
                         </button>
                     </div>
                     <div>
@@ -556,7 +556,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             data-bs-toggle="modal"
                             data-bs-target="#declineModal"
                         >
-                            Decline
+                           <span className="view">Decline</span>
                         </button>
 
                     </div>
@@ -600,7 +600,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 className="btn btn-secondary"
                                 data-bs-dismiss="modal"
                             >
-                                Cancel
+                                <span className="view">Cancel</span>
                             </button>
                             <button
                                 type="button"
@@ -608,7 +608,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                 data-bs-dismiss="modal"
                                 onClick={handleDecline}
                             >
-                                Submit
+                               <span className="view">Submit</span> 
                             </button>
                         </div>
                     </div>

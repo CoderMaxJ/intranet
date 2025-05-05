@@ -386,7 +386,7 @@ export default function () {
                               <div className="modal-body">
                                    <div>
                                         <div>
-                                             <label htmlFor="effectivitydate" className="fw-bold mb-3 fs-6">Schedule</label>
+                                             <label htmlFor="effectivitydate" className="effectivitydate fw-bold mb-3 fs-6">Schedule</label>
                                         </div>
 
                                         <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
@@ -433,7 +433,7 @@ export default function () {
 
                                         {/* Left Side: Unselected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                             <h6>Assign Employees <span className="text-muted">({totalAvailable})</span></h6>
+                                             <h6 className="assign-employees">Assign Employees <span className="text-muted">({totalAvailable})</span></h6>
                                              {/* LEFT SIDE SEARCH */}
                                              <div className="d-flex justity-content-center flex-wrap gap-2 w-100">
                                                   <div className="flex-grow-1"><input
@@ -490,7 +490,7 @@ export default function () {
 
                                         {/* Right Side: Selected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                             <h6>Selected Employees <span className="text-muted">({totalSelected})</span></h6>
+                                             <h6 className="selected-emp">Selected Employees <span className="text-muted">({totalSelected})</span></h6>
 
                                              {/* RIGHT SIDE SEARCH */}
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">
@@ -503,7 +503,7 @@ export default function () {
                                                   /></div>
                                                   <button type="button" className="clearall" onClick={handleClearAll}>Clear All</button>
                                              </div>
-                                             <div className="list-group w-100">
+                                             <div className=" list-group w-100">
                                                   {filteredEmployees
                                                        .filter(emp =>
                                                             selectedEmployees.includes(emp.empno) &&
@@ -547,10 +547,12 @@ export default function () {
                               </div>
                               {/* Add Schedule Button */}
                               <div className="d-flex justify-content-end mt-4 modal-footer" style={{ background: '#EBEDF0' }}>
-                                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                                        <span className="cancel">Cancel</span>
+                                       </button>
                                    <button
                                         type="button"
-                                        className="btn btn-primary d-flex align-items-center"
+                                        className="btn btn-primary clearall d-flex align-items-center"
                                         onClick={handleSetSchedule}
                                    >
                                         <svg
@@ -563,7 +565,7 @@ export default function () {
                                         >
                                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                                         </svg>
-                                        Reschedule Employees
+                                       <span className="reschedule">Reschedule Employees</span>
                                    </button>
                               </div>
                          </div>

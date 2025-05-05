@@ -300,9 +300,9 @@ export default function CreateUD() {
             <div>
               <header>
                 <div className="w-100 d-flex justify-content-between flex-wrap py-2 px-4 gap-3">
-                  <div className="searchbar-containerr">
+                  <div className="searchbar-container">
                     <input
-                      className="searchbar12"
+                      className="form-control"
                       id="search-employee"
                       type="text"
                       placeholder="Search..."
@@ -326,7 +326,7 @@ export default function CreateUD() {
                     <div className="manageemployee-button py-1">
                       <button
                         type="button"
-                        className="btn btn-success btn-sm d-flex align-items-center"
+                        className=" btn btn-success btn-sm d-flex align-items-center"
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
                       >
@@ -340,7 +340,7 @@ export default function CreateUD() {
                         >
                           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                         </svg>
-                        Add Employee
+                        <span className="addemployee-btn">Add Employee</span>
                       </button>
                     </div>
                   )}
@@ -436,7 +436,7 @@ export default function CreateUD() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={11} className="text-center">
+                    <td colSpan={11} className="text-center view">
                       No employees found.
                     </td>
                   </tr>
@@ -484,10 +484,10 @@ export default function CreateUD() {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              <p>Are you sure you want to delete this employee?</p>
+              <p className="view">Are you sure you want to delete this employee?</p>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><span className="view">Cancel</span></button>
               <button
                 type="button"
                 className="btn btn-danger"
@@ -498,7 +498,7 @@ export default function CreateUD() {
                   }
                 }}
               >
-                Delete
+                <span className="view">Delete</span>
               </button>
             </div>
           </div>

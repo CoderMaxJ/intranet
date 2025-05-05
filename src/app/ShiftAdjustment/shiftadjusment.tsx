@@ -68,7 +68,7 @@ export default function ShiftAdjustment() {
   const handleRejectRequest = async (empno: number, acctid: number) => {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/${user_id}/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

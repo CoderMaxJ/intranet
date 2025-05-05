@@ -548,9 +548,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             className="btn btn-danger"
             onClick={clearInputs}
           >
-            Cancel
+            <span className="view">Cancel</span>
           </button>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary view">
             {mode === "edit" ? "Update" : "Create"}
           </button>
         </div>
