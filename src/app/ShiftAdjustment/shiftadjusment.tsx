@@ -4,31 +4,85 @@ import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import Drawer from "../component/Drawer/drawer";
+import RejectedTable from "../component/Rejected/RejectedTable";
+import ApprovedTable from "../component/Approve/ApproveTable";
 import { Decryptor } from "@/security";
 
 interface RequestDetails {
-  requestid:number;
-  empno:number;
-  name:string;
-  shiftdate:string;
-  reason:string;
-  status:number;
-  logs:Object;
-  acctid:number;
-  created_at:string;
-  aprroved_at:string;
-  declined_at:string;
-  }
+  requestid: number;
+  empno: number;
+  name: string;
+  shiftdate: string;
+  reason: string;
+  status: number;
+  logs: Object;
+  acctid: number;
+  created_at: string;
+  aprroved_at: string;
+  declined_at: string;
+}
 
 export default function ShiftAdjustment() {
   const [searchTerm, setSearchTerm] = useState("");
   const [details, setShiftData] = useState<RequestDetails | null>(null);
-  const [data,setData]=useState<any[]>([]);
+  const [data, setData] = useState<any[]>([]);
+  const [approve, setApprove] = useState("");
+  const [filter, setFilter] = useState<"pending" | "approved" | "rejected">("pending");
 
+  const handleTabChange = (value: "pending" | "approved" | "rejected") => {
+    setFilter(value);
+  };
+
+  const filteredData = data.filter((item) => {
+    if (filter === "pending") return item.status === 0;
+    if (filter === "approved") return item.status === 1;
+    if (filter === "rejected") return item.status === 2;
+    return true;
+  });
 
   useEffect(() => {
     fetchShiftAdjustmentData();
   }, []);
+
+  const handleApproved = (e: any) => {
+    setApprove(e.target.value);
+  };
+  const handleApproveRequest = async (decryptedId: string) => {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/requests/${decryptedId}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Decryptor(token || "")}`,
+      }
+    });
+
+    if (response.ok) {
+      fetchShiftAdjustmentData(); // refresh data
+    } else {
+      console.error("Approval failed");
+    }
+  };
+
+  const handleRejectRequest = async (empno: number, acctid: number) => {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/${user_id}/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Decryptor(token || "")}`,
+      }
+    });
+
+    if (response.ok) {
+      fetchShiftAdjustmentData(); // refresh data
+    } else {
+      console.error("Rejection failed");
+    }
+  };
+
 
   const fetchShiftAdjustmentData = async () => {
     const user_id = localStorage.getItem("user_id");
@@ -51,7 +105,7 @@ export default function ShiftAdjustment() {
       if (response.ok) {
         const data = await response.json();
         setData(data.data);
-      
+
         console.log(data)
         setShiftData(data);
         console.log("Shift Adjustment Data:", data);
@@ -64,125 +118,96 @@ export default function ShiftAdjustment() {
     }
   };
 
-//   const filteredData = shiftData.filter((item) =>
-//     item.name?.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
+  const handleViewClick = (item: RequestDetails) => {
+    setShiftData(item);
+  };
 
-const handleViewClick = (item: RequestDetails) => {
-  setShiftData(item); 
-};
   return (
     <div className="d-flex">
       <div>
         <Dashboard />
       </div>
-
       <div className="shiftadjustment-container flex-grow-1">
         <Header title="MANAGE SHIFT ADJUSTMENT" />
 
         <div className="shift-background p-4 px-4">
-          <div className="d-flex gap-5 ">
-            <div><button type="button" className="form-label form-label--shiftadjustment-header">Pending</button></div>
-            <div><button type="button" className="form-label form-label--shiftadjustment-header">Approved</button></div>
-            <div><button type="button" className="form-label form-label--shiftadjustment-header">Rejected/Cancelled</button></div>
+          <div className="d-flex gap-5">
+            <button
+              type="button"
+              className={`form-label form-label--shiftadjustment-header ${filter === "pending" ? "active" : ""}`}
+              onClick={() => handleTabChange("pending")}
+            >
+              Pending
+            </button>
+            <button
+              type="button"
+              className={`form-label form-label--shiftadjustment-header ${filter === "approved" ? "active" : ""}`}
+              onClick={() => handleTabChange("approved")}
+            >
+              Approved
+            </button>
+            <button
+              type="button"
+              className={`form-label form-label--shiftadjustment-header ${filter === "rejected" ? "active" : ""}`}
+              onClick={() => handleTabChange("rejected")}
+            >
+              Rejected/Cancelled
+            </button>
           </div>
-      
-          
-            {/* <div className="col-md-3">
-              <input
-                className="form-control"
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
 
-            <div className="col-md-2">
-              <select className="form-select" defaultValue="">
-                <option value="" disabled hidden>
-                  Account
-                </option>
-           
-              </select>
-            </div>
-
-            <div className="col-md-2">
-              <select className="form-select" defaultValue="">
-                <option value="" disabled hidden>
-                  Break
-                </option>
-               
-              </select>
-            </div>
-
-            <div className="col-md-2">
-              <select className="form-select" defaultValue="">
-                <option value="" disabled hidden>
-                  Work hours
-                </option>
-        
-              </select>
-            </div>
-
-            <div className="col-md-2">
-              <button className="btn btn-warning w-100">Apply</button>
-            </div> */}
-
-          {/* Data Table */}
           <div className="shiftadjustment-table">
+  {filter === "pending" && (
+    <table className="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Reason</th>
+          <th>Department</th>
+          <th>Date Filed</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredData.length > 0 ? (
+          filteredData.map((item) => (
+            <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
+              <td>{item.name || "-"}</td>
+              <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
+              <td>{item.acctid || "-"}</td>
+              <td>{item.created_at || "-"}</td>
+              <td>
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#shiftdrawer"
+                  aria-controls="shiftdrawer"
+                  onClick={() => handleViewClick(item)}
+                >
+                  View
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={5} className="text-center">
+              No shift data found.
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  )}
 
-            <table className="table table-striped table-hover table-bordered">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Reason</th>
-                  <th>Department</th>
-                  {/* <th>Pending Request</th> */}
-                  <th>Date Filed</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.length > 0 ? (
-                      data.map((item) => {
-                        const emptyStatusCount = Object.values(item.logs).filter(
-                          (log) => log?.status === "" || log?.status === 0
-                        ).length;
+  {filter === "approved" && (
+    <ApprovedTable data={filteredData} onView={handleViewClick} />
+  )}
 
-                        return (
-                          <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
-                            <td>{item.name || "-"}</td>
-                            <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
-                            <td>{item.acctid || "-"}</td>
-                            
-                            {/* <td>{emptyStatusCount}</td> */}
-                            <td>{item.created_at || "-"}</td>
-                            <td>
-                              <button
-                               
-                                className="btn btn-sm btn-outline-primary"
-                                type="button"
-                                data-bs-toggle="offcanvas"
-                                data-bs-target="#shiftdrawer"
-                                aria-controls="shiftdrawer"
-                                onClick={()=>handleViewClick(item)}
-                              >
-                                View
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <tr>
-                        <td colSpan={6} className="text-center">
-                          No Request as of now
-                        </td>
-                      </tr>
-                    )}
-              </tbody>
-            </table>
+  {filter === "rejected" && (
+    <RejectedTable data={filteredData} onView={handleViewClick} />
+  )}
+
           </div>
         </div>
       </div>

@@ -326,7 +326,7 @@ export default function ManageDepartment() {
 
                         <div className="employee-header">
                             <div
-                                className="acc-head d-flex justify-content-between px-4 gap-3"
+                                className="acc-head d-flex justify-content-between"
                             >
                                 <div className="search-division"
                                 >
@@ -381,7 +381,7 @@ export default function ManageDepartment() {
                             </>
                         )}
 
-                        <div className="accounta-table-div table-responsive accounts-table px-4" style={{ position: 'relative' }}>
+                        <div className="accounta-table-div table-responsive accounts-table" style={{ position: 'relative' }}>
                             <table className="manage-table table table-light table-hover table-striped border ">
                                 <thead>
                                     <tr>

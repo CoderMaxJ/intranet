@@ -61,6 +61,7 @@ interface DrawerProps {
 export default function Drawer({ data, onSave }: DrawerProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData,setCombinedData]=useState({})
+    const [declineReason, setDeclineReason] = useState("");
     const [status,setStatus]=useState(0);
     console.log(data);
     useEffect(() => {
@@ -86,6 +87,29 @@ export default function Drawer({ data, onSave }: DrawerProps) {
             setBuildData(JSON.parse(JSON.stringify(data.logs)));
         }
     }, [data]);
+
+    const handleDecline = async () => {
+        const declinePayload = {
+            requestid: data?.requestid,
+            status: 0,
+            declined_at: new Date().toISOString(),
+        };
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/decline/request/`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Decryptor(token || "")}`
+            },
+            body: JSON.stringify(declinePayload)
+        });
+
+        if (response.ok) {
+            successToast("Request declined.");
+        } else {
+            errorToast("Failed to decline request.");
+        }
+    };
 
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
@@ -272,7 +296,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                               </div>
                           </div>
                         )}
-                      
+
                         {data?.logs?.break1?.in && (
                         <div className="d-flex justify-content-around align-items-center mb-2">
                             <div className="label-container2">
@@ -365,12 +389,12 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     ×
                                 </button>
 
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                         {/* Lunch - Out */}
 
-                    {data?.logs?.lunch?.out && (
+                        {data?.logs?.lunch?.out && (
 
                    
                         <div className="d-flex justify-content-around align-items-center mb-2">
@@ -400,11 +424,11 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     ×
                                 </button>
 
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                         {/* Break 2 - In */}
-                    {data?.logs?.break2?.in && (
+                        {data?.logs?.break2?.in && (
 
                     
                         <div className="d-flex justify-content-around align-items-center mb-2">
@@ -434,9 +458,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     ×
                                 </button>
 
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                         {/* Break 2 - Out */}
                     {data?.logs?.break2?.out && (
                         <div className="d-flex justify-content-around align-items-center mb-2">
@@ -466,8 +490,8 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     ×
                                 </button>
 
+                                </div>
                             </div>
-                        </div>
                         )}
 
                         {data?.logs?.logout?.out && (
@@ -499,11 +523,11 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     ×
                                 </button>
 
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                     </div>
-                
+
                     <div className="mb-3">
                         <label className="drawer-label">Reason</label>
                         <p className="reason">{data?.reason}</p>
@@ -511,7 +535,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 </div>
 
                 <hr />
-                <div className="modal-footer gap-4 " style={{padding:'20px'}}>
+                <div className="modal-footer gap-4 " style={{ padding: '20px' }}>
                     <div>
                         <button
                             type="button"
@@ -522,12 +546,71 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         </button>
                     </div>
                     <div>
-                        <button type="button" className="btn text-danger fw-bold">
+                        <button
+                            type="button"
+                            className="btn text-danger fw-bold"
+                            data-bs-toggle="modal"
+                            data-bs-target="#declineModal"
+                        >
                             Decline
                         </button>
+
                     </div>
                 </div>
             </div>
+            <div
+                className="modal fade"
+                id="declineModal"
+                tabIndex={-1}
+                aria-labelledby="declineModalLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-light" id="declineModalLabel">Decline Shift Adjustment</h5>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+
+                        <div className="modal-body">
+                            <div className="mb-3">
+                                <label htmlFor="decline-reason" className="form-label">Reason for Decline</label>
+                                <textarea
+                                    id="decline-reason"
+                                    className="form-control"
+                                    rows={5}
+                                    value={declineReason}
+                                    onChange={(e) => setDeclineReason(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                data-bs-dismiss="modal"
+                                onClick={handleDecline}
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 }

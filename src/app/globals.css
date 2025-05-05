@@ -230,11 +230,19 @@
 }
 
 @font-face {
+  font-family: 'Geist';
+  src: url('./fonts/Geist-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+
+/* @font-face {
   font-family: 'roboto';
   src: url('././fonts/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
   font-weight: medium;
   font-style: normal;
-}
+} */
 
 .nav-font {
   font-weight: 700;
@@ -692,6 +700,11 @@ input:focus {
 
 .acc-head input {
   justify-content: center;
+}
+
+.acc-head {
+  padding-left: 24px !important;
+  padding-right: 28px !important;
 }
 
 @media only screen and (max-width: 1020px) {
@@ -3161,6 +3174,8 @@ table {
 
 .accounta-table-div {
   position: relative;
+  padding-left: 24px !important;
+  padding-right: 10px !important;
 }
 
 .accounta-table-div th {
@@ -3385,6 +3400,11 @@ table {
   max-width: 320px;
 }
 
+.form-select--adjustwidth {
+  width: 100%;
+  max-width: 320px;
+}
+
 .selectall,
 .clearall {
   border: none;
@@ -3399,3 +3419,20 @@ table {
   filter: invert(1) brightness(300%) contrast(150%);
   opacity: 1;
 }
+
+.form-label--shiftadjustment-header.active {
+  border-bottom: 3px solid #007bff;
+  font-weight: bold;
+}
+
+/* .circle-indicator {
+  border: 4px solid;
+  color:rgb(90, 89, 89);
+  width: 15px;
+  border-radius: 50%;
+  height: 15px;
+  display: inline-block;
+  margin-right: 30px;
+  position: fixed;
+} */
+

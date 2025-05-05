@@ -59,8 +59,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
-
-
+  
   useEffect(() => {
     if (empData) {
       setFormData({
@@ -334,7 +333,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Close Button */}
           <div className="modal-header">
-            <h5 className="modal-title text-light">Add Employee</h5>
+            <h5 className="modal-title text-light">{mode === "edit" ? "Update Employee Information" : "Add Employee"}</h5>
             <button
               id="buttonclose"
               type="button"

@@ -62,6 +62,7 @@
         localStorage.setItem("name", res.name);
         localStorage.setItem("position", res.position);
         localStorage.setItem("status", "login")
+        localStorage.setItem("active_tab", "1");
         successToast("Login Successful");
         setLog(true);
         } else if (response.status === 403) {
