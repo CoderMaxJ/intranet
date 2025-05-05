@@ -51,6 +51,7 @@ interface RequestDetails {
     created_at: string;
     aprroved_at: string;
     declined_at: string;
+    approved_by:number;
 }
 
 interface DrawerProps {
@@ -77,7 +78,8 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 acctid: data?.acctid,
                 created_at: data?.created_at,
                 aprroved_at: data?.aprroved_at,
-                declined_at: data?.declined_at
+                declined_at: data?.declined_at,
+                approved_by:Decryptor(localStorage.getItem("user_id") || ""),
             });
         }
     }, [buildData,status]);
@@ -169,7 +171,8 @@ export default function Drawer({ data, onSave }: DrawerProps) {
             acctid: data?.acctid,
             created_at: data?.created_at,
             aprroved_at: new Date().toISOString(),
-            declined_at: null
+            declined_at: null,
+            approved_by:Decryptor(localStorage.getItem("user_id") || "")
         };
         approvedRequest(payload);
     };
