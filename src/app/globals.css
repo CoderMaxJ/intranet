@@ -3396,6 +3396,9 @@ table {
 .form-select {
   width: 100%;
 }
+.form-select--filter {
+  max-width: 320px;
+}
 
 .form-select--adjustwidth {
   width: 100%;

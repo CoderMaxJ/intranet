@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
+import "../../../../public/asset/css/drawer.css"
+
 interface RequestDetails {
     requestid: number;
     empno: number;
@@ -58,9 +60,10 @@ interface DrawerProps {
 
 export default function Drawer({ data, onSave }: DrawerProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
-    const [combinedData, setCombinedData] = useState({})
+    const [combinedData,setCombinedData]=useState({})
     const [declineReason, setDeclineReason] = useState("");
-    const [status, setStatus] = useState(1);
+    const [status,setStatus]=useState(0);
+    console.log(data);
     useEffect(() => {
         if (buildData) {
             setCombinedData({
@@ -69,7 +72,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 name: data?.name,
                 shiftdate: data?.shiftdate,
                 reason: data?.reason,
-                status: 1,
+                status:data?.status,
                 logs: buildData,
                 acctid: data?.acctid,
                 created_at: data?.created_at,
@@ -77,8 +80,8 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 declined_at: data?.declined_at
             });
         }
-    }, [buildData]);
-
+    }, [buildData,status]);
+    
     useEffect(() => {
         if (data?.logs) {
             setBuildData(JSON.parse(JSON.stringify(data.logs)));
@@ -135,15 +138,15 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         });
     };
     const token = localStorage.getItem("token");
-    const approvedRequest = async () => {
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
+    const approvedRequest = async (payload:any)=>{
+        
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`,{
+            method:"PATCH",
+            headers:{
+                "Content-Type":"application/json",
                 "Authorization": `Bearer ${Decryptor(token || "")}`
             },
-            body: JSON.stringify(combinedData),
+            body:JSON.stringify(payload),
         })
         if (response.status === 200) {
             successToast("Changes have been applied")
@@ -152,8 +155,23 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         }
     }
     const handleApply = () => {
-        approvedRequest();
-        console.log(combinedData)
+        const updatedStatus = 1;
+        setStatus(updatedStatus);
+    
+        const payload = {
+            requestid: data?.requestid,
+            empno: data?.empno,
+            name: data?.name,
+            shiftdate: data?.shiftdate,
+            reason: data?.reason,
+            status: updatedStatus, 
+            logs: buildData,
+            acctid: data?.acctid,
+            created_at: data?.created_at,
+            aprroved_at: new Date().toISOString(),
+            declined_at: null
+        };
+        approvedRequest(payload);
     };
 
     const successToast = (msg: string) => toast.success(msg, {
@@ -201,20 +219,20 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 <div className="offcanvas-body">
                     <div className="mb-5 d-flex flex-column gap-2">
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 shiftadjustment-info-label">Name</p>
-                            <p className="mb-0 shiftadjustment-info-label">{data?.name}</p>
+                            <p className="drawer-label">Name</p>
+                            <p className="drawer-label">{data?.name}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 shiftadjustment-info-label">Date Filed</p>
-                            <p className="mb-0 shiftadjustment-info-label">{data?.created_at}</p>
+                            <p className="drawer-label">Date Filed</p>
+                            <p className="drawer-label">{data?.created_at}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 shiftadjustment-info-label">Department</p>
-                            <p className="mb-0 shiftadjustment-info-label">{data?.acctid}</p>
+                            <p className="drawer-label">Department</p>
+                            <p className="drawer-label">{data?.acctid}</p>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <p className="mb-0 shiftadjustment-info-label">Request ID</p>
-                            <p className="mb-0 shiftadjustment-info-label">{data?.requestid}</p>
+                            <p className="drawer-label">Request ID</p>
+                            <p className="drawer-label">{data?.requestid}</p>
                         </div>
                     </div>
 
@@ -224,87 +242,97 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         <h5 className="form-label fs-5 text-dark">Summary</h5>
                     </div>
                     <div>
-                        <div><label htmlFor="requesteddate" className="form-label">Requested Date</label></div>
-                        <div><input type="date" className="form-control form-control--narrow mb-3" /></div>
+                        <div><label htmlFor="requesteddate" className="drawer-label">Requested Date</label></div>
+                        <div><input className="drawer-label" type="date" readOnly value={data?.shiftdate || ""} disabled={true} /></div>
                     </div>
 
                     <div className="justify-content-between">
-                        <div className="d-flex form-label mb-2 schedule-summary-label">
+                        <div className="d-flex justify-content-around align-items-center mb-2">
                             <div>
-                                <label htmlFor="attendance">Attendance</label>
+                                <label className="drawer-label" >Attendance</label>
                             </div>
                             <div>
-                                <label htmlFor="attendance">Initial Time</label>
+                                <label className="drawer-label">Requested Time</label>
+                            </div>
+                            <div>
+                                <label className="drawer-label">Recorded Time</label>
+                            </div>
+                            <div>
+                                <button hidden={true} type="button" className="close-btn">
+                                    ×
+                                </button>
+
                             </div>
                         </div>
 
                         {/* Login */}
                         {data?.logs?.login?.in && (
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span className="break-label break-in">Login</span>
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.login?.in || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        onChange={(e) => handleChange("login", "", e.target.value)}
-                                        value={buildData?.login?.record || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <button type="button" className="close-btn">
-                                        ×
-                                    </button>
-                                </div>
-                            </div>
+                              <div className="d-flex justify-content-around align-items-center mb-2">
+                              <div className="label-container">
+                                  <span className="login-label">Login</span>
+                              </div>
+                              <div>
+                                  <input
+                                      type="time"
+                                      disabled={true}
+                                      readOnly
+                                      value={data?.logs?.login?.in || ""}
+                                      className="input-time-field"
+                                  />
+                              </div>
+                              <div>
+                                  <input
+                                      type="time"
+                                      onChange={(e) => handleChange("login", "", e.target.value)}
+                                      value={buildData?.login?.record || ""}
+                                      disabled={true} readOnly
+                                      className="input-time-field"
+                                  />
+                              </div>
+                              <div>
+                              <button type="button" className="close-btn">
+                                    ×
+                                </button>
+                              </div>
+                          </div>
                         )}
 
                         {data?.logs?.break1?.in && (
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span className="break-label break-in">1st Break - In</span>
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.break1?.in || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={!data?.logs?.break1?.in}
-                                        onChange={(e) => handleChange("break1", "in", e.target.value)}
-                                        value={buildData?.break1?.record?.in || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <button type="button" className="close-btn">
-                                        ×
-                                    </button>
-
-                                </div>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container2">
+                                <span className="break1-label">1st Break - In</span>
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true}
+                                    readOnly
+                                    value={data?.logs?.break1?.in || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    onChange={(e) => handleChange("break1", "in", e.target.value)}
+                                    value={buildData?.break1?.record?.in || ""}
+                                    disabled={true} readOnly
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <button type="button" className="close-btn">
+                                    ×
+                                </button>
 
                             </div>
-                        )}
-                        {/* Break 1 - Out */}
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-out">1st Break - Out</span>
+                            
+                        </div>
+                    )}
+                      {data?.logs?.break1?.out && (
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container2">
+                                <span className="break1-label">1st Break - Out</span>
                             </div>
                             <div>
                                 <input
@@ -312,16 +340,16 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true}
                                     readOnly
                                     value={data?.logs?.break1?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
                                 <input
                                     type="time"
-                                    disabled={!data?.logs?.break1?.out}
+                                    disabled={true} readOnly
                                     onChange={(e) => handleChange("break1", "out", e.target.value)}
                                     value={buildData?.break1?.record?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -331,37 +359,35 @@ export default function Drawer({ data, onSave }: DrawerProps) {
 
                             </div>
                         </div>
-
+                    )}
                         {/* Lunch - In */}
                         {data?.logs?.lunch?.in && (
-
-
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span className="break-label lunch-in">Lunch - In</span>
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.lunch?.in || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={!data?.logs?.lunch?.in}
-                                        onChange={(e) => handleChange("lunch", "in", e.target.value)}
-                                        value={buildData?.lunch?.record?.in || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <button type="button" className="close-btn">
-                                        ×
-                                    </button>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container3">
+                                <span className="lunch-in-label">Lunch - In</span>
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true}
+                                    readOnly
+                                    value={data?.logs?.lunch?.in || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true} readOnly
+                                    onChange={(e) => handleChange("lunch", "in", e.target.value)}
+                                    value={buildData?.lunch?.record?.in || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <button type="button" className="close-btn">
+                                    ×
+                                </button>
 
                                 </div>
                             </div>
@@ -370,33 +396,33 @@ export default function Drawer({ data, onSave }: DrawerProps) {
 
                         {data?.logs?.lunch?.out && (
 
-
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span className="break-label lunch-in">Lunch - Out</span>
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.lunch?.out || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={!data?.logs?.lunch?.out}
-                                        onChange={(e) => handleChange("lunch", "out", e.target.value)}
-                                        value={buildData?.lunch?.record?.out || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <button type="button" className="close-btn">
-                                        ×
-                                    </button>
+                   
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container3">
+                                <span className="lunch-in-label">Lunch - Out</span>
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true}
+                                    readOnly
+                                    value={data?.logs?.lunch?.out || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true} readOnly
+                                    onChange={(e) => handleChange("lunch", "out", e.target.value)}
+                                    value={buildData?.lunch?.record?.out || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <button type="button" className="close-btn">
+                                    ×
+                                </button>
 
                                 </div>
                             </div>
@@ -404,99 +430,98 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         {/* Break 2 - In */}
                         {data?.logs?.break2?.in && (
 
-
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span className="break-label break-in">2nd Break - In</span>
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.break2?.in || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={!data?.logs?.break2?.in}
-                                        onChange={(e) => handleChange("break2", "in", e.target.value)}
-                                        value={buildData?.break2?.record?.in || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <button type="button" className="close-btn">
-                                        ×
-                                    </button>
+                    
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container4">
+                                <span className="break2-label">2nd Break - In</span>
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true}
+                                    readOnly
+                                    value={data?.logs?.break2?.in || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true} readOnly
+                                    onChange={(e) => handleChange("break2", "in", e.target.value)}
+                                    value={buildData?.break2?.record?.in || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <button type="button" className="close-btn">
+                                    ×
+                                </button>
 
                                 </div>
                             </div>
                         )}
                         {/* Break 2 - Out */}
-                        {data?.logs?.break2?.out && (
-
-
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span className="break-label break-out">2nd Break - Out</span>
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.break2?.out || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={!data?.logs?.break2?.out}
-                                        onChange={(e) => handleChange("break2", "out", e.target.value)}
-                                        value={buildData?.break2?.record?.out || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <button type="button" className="close-btn">
-                                        ×
-                                    </button>
+                    {data?.logs?.break2?.out && (
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container4">
+                                <span className="break2-label">2nd Break - Out</span>
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true}
+                                    readOnly
+                                    value={data?.logs?.break2?.out || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true} readOnly
+                                    onChange={(e) => handleChange("break2", "out", e.target.value)}
+                                    value={buildData?.break2?.record?.out || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <button type="button" className="close-btn">
+                                    ×
+                                </button>
 
                                 </div>
                             </div>
                         )}
 
                         {data?.logs?.logout?.out && (
-                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span className="break-label logout">Logout</span>
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.logout?.out || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={!data?.logs?.logout?.out}
-                                        onChange={(e) => handleChange("logout", "", e.target.value)}
-                                        value={buildData?.logout?.record || ""}
-                                        className="form-control"
-                                    />
-                                </div>
-                                <div>
-                                    <button type="button" className="close-btn">
-                                        ×
-                                    </button>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container5">
+                                <span className="logout-label">Logout</span>
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    disabled={true}
+                                    readOnly
+                                    value={data?.logs?.logout?.out || ""}
+                                    className="input-time-field"
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="time"
+                                    onChange={(e) => handleChange("logout", "", e.target.value)}
+                                    value={buildData?.logout?.record || ""}
+                                    className="input-time-field"
+                                    readOnly 
+                                    disabled={true}
+                                />
+                            </div>
+                            <div>
+                                <button type="button" className="close-btn">
+                                    ×
+                                </button>
 
                                 </div>
                             </div>
@@ -504,8 +529,8 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     </div>
 
                     <div className="mb-3">
-                        <label className="form-label fs-5 text-dark mt-3">Reason</label>
-                        <p className="form-text fs-5">{data?.reason}</p>
+                        <label className="drawer-label">Reason</label>
+                        <p className="reason">{data?.reason}</p>
                     </div>
                 </div>
 
