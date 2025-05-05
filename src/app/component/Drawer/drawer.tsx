@@ -219,11 +219,11 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     </div>
                     <div>
                         <div><label htmlFor="requesteddate" className="drawer-label">Requested Date</label></div>
-                        <div><input type="date" readOnly value={data?.shiftdate || ""} disabled={true} className="form-control form-control--narrow mb-3"/></div>
+                        <div><input className="drawer-label" type="date" readOnly value={data?.shiftdate || ""} disabled={true} /></div>
                     </div>
 
                     <div className="justify-content-between">
-                        <div className="d-flex form-label mb-2 schedule-summary-label">
+                        <div className="d-flex justify-content-around align-items-center mb-2">
                             <div>
                                 <label className="drawer-label" >Attendance</label>
                             </div>
@@ -233,13 +233,19 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <div>
                                 <label className="drawer-label">Recorded Time</label>
                             </div>
+                            <div>
+                                <button hidden={true} type="button" className="close-btn">
+                                    ×
+                                </button>
+
+                            </div>
                         </div>
 
                         {/* Login */}
                         {data?.logs?.login?.in && (
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                              <div>
-                                  <span className="input-time-field">Login</span>
+                              <div className="d-flex justify-content-around align-items-center mb-2">
+                              <div className="label-container">
+                                  <span className="login-label">Login</span>
                               </div>
                               <div>
                                   <input
@@ -268,9 +274,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         )}
                       
                         {data?.logs?.break1?.in && (
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-in">1st Break - In</span>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container2">
+                                <span className="break1-label">1st Break - In</span>
                             </div>
                             <div>
                                 <input
@@ -278,7 +284,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true}
                                     readOnly
                                     value={data?.logs?.break1?.in || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -287,7 +293,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     onChange={(e) => handleChange("break1", "in", e.target.value)}
                                     value={buildData?.break1?.record?.in || ""}
                                     disabled={true} readOnly
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -300,9 +306,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         </div>
                     )}
                       {data?.logs?.break1?.out && (
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-out">1st Break - Out</span>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container2">
+                                <span className="break1-label">1st Break - Out</span>
                             </div>
                             <div>
                                 <input
@@ -310,7 +316,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true}
                                     readOnly
                                     value={data?.logs?.break1?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -319,7 +325,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true} readOnly
                                     onChange={(e) => handleChange("break1", "out", e.target.value)}
                                     value={buildData?.break1?.record?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -332,9 +338,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     )}
                         {/* Lunch - In */}
                         {data?.logs?.lunch?.in && (
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label lunch-in">Lunch - In</span>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container3">
+                                <span className="lunch-in-label">Lunch - In</span>
                             </div>
                             <div>
                                 <input
@@ -342,7 +348,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true}
                                     readOnly
                                     value={data?.logs?.lunch?.in || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -351,7 +357,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true} readOnly
                                     onChange={(e) => handleChange("lunch", "in", e.target.value)}
                                     value={buildData?.lunch?.record?.in || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -367,9 +373,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     {data?.logs?.lunch?.out && (
 
                    
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label lunch-in">Lunch - Out</span>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container3">
+                                <span className="lunch-in-label">Lunch - Out</span>
                             </div>
                             <div>
                                 <input
@@ -377,7 +383,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true}
                                     readOnly
                                     value={data?.logs?.lunch?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -386,7 +392,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true} readOnly
                                     onChange={(e) => handleChange("lunch", "out", e.target.value)}
                                     value={buildData?.lunch?.record?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -401,9 +407,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     {data?.logs?.break2?.in && (
 
                     
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-in">2nd Break - In</span>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container4">
+                                <span className="break2-label">2nd Break - In</span>
                             </div>
                             <div>
                                 <input
@@ -411,7 +417,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true}
                                     readOnly
                                     value={data?.logs?.break2?.in || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -420,7 +426,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true} readOnly
                                     onChange={(e) => handleChange("break2", "in", e.target.value)}
                                     value={buildData?.break2?.record?.in || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -433,9 +439,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     )}
                         {/* Break 2 - Out */}
                     {data?.logs?.break2?.out && (
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label break-out">2nd Break - Out</span>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container4">
+                                <span className="break2-label">2nd Break - Out</span>
                             </div>
                             <div>
                                 <input
@@ -443,7 +449,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true}
                                     readOnly
                                     value={data?.logs?.break2?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -452,7 +458,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true} readOnly
                                     onChange={(e) => handleChange("break2", "out", e.target.value)}
                                     value={buildData?.break2?.record?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
@@ -465,9 +471,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         )}
 
                         {data?.logs?.logout?.out && (
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span className="break-label logout">Logout</span>
+                        <div className="d-flex justify-content-around align-items-center mb-2">
+                            <div className="label-container5">
+                                <span className="logout-label">Logout</span>
                             </div>
                             <div>
                                 <input
@@ -475,16 +481,17 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                                     disabled={true}
                                     readOnly
                                     value={data?.logs?.logout?.out || ""}
-                                    className="form-control"
+                                    className="input-time-field"
                                 />
                             </div>
                             <div>
                                 <input
                                     type="time"
-                                    disabled={!data?.logs?.logout?.out}
                                     onChange={(e) => handleChange("logout", "", e.target.value)}
                                     value={buildData?.logout?.record || ""}
-                                    className="form-control"
+                                    className="input-time-field"
+                                    readOnly 
+                                    disabled={true}
                                 />
                             </div>
                             <div>

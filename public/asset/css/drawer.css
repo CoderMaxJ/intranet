@@ -26,8 +26,84 @@ font-family: 'roboto';
 
 .input-time-field {
     font-family: 'roboto2';
-    padding: 6px;
+    padding: 4px;
     border-radius: 4px;
     border: none;
+    background-color:#B3B1B1;
+    text-align: center;
+    color: #171616;
     
+}
+.label-container{
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 3px;
+    text-align: center;
+    display: flex;
+    background-color: #EDF1F4;
+}
+.label-container .login-label{
+    color: #2a9df4;
+    font-family: 'roboto2';
+}
+.label-container2{
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    background-color: #FFE4E3;
+    border-radius: 4px;
+}
+.label-container2 .break1-label{
+   color: #ED3B2F;
+    font-family: 'roboto2';
+}
+
+.label-container3{
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    background-color:#FCF2D6;
+    border-radius: 4px;
+}
+.lunch-in-label{
+font-family: 'roboto2';
+color:#FDAA00 ;
+}
+
+.label-container4{
+    background-color: #EDF4ED;
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    border-radius: 4px;
+}
+
+.break2-label{
+    font-family: "roboto2";
+    color: #31A750;
+}
+
+.label-container5{
+    background-color: #EDF1F4;
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    border-radius: 4px;
+}
+.logout-label{
+    color: #0F62EE;
+    font-family: 'roboto2';
 }
