@@ -1,12 +1,35 @@
-import React, { useState } from "react";
-
-export default function ApprovedTable({ data, onView, onDelete }: any) {
+import React, { useEffect, useState } from "react";
+import { Decryptor } from "@/security";
+import { data } from "react-router-dom";
+import { tr } from "date-fns/locale";
+export default function ApprovedTable() {
     const [showSample, setShowSample] = useState(true);
+    const [approvedRequest,setApproveRequest]=useState();
 
     const handleDeleteSample = () => {
         setShowSample(false);
-        onDelete?.("REQ001"); // Pass ID if needed
+        
     };
+    const  token = Decryptor(localStorage.getItem("token")|| "")
+    const user_id = localStorage.getItem("user_id");
+    async function fetchApprovedRequest(){
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approved/requests/list/${Decryptor(user_id || "")}/`,{
+        method:"GET",
+        headers:{
+          "Content-type":"application/json",
+          "Authorization":`Bearer ${token}`
+        }
+      });
+
+      if(response.status === 200){
+        const data = await response.json();
+        setApproveRequest(data.data);
+      }
+    }
+    useEffect(()=>{
+    fetchApprovedRequest();
+    },[])
+    
     return (
         <table className="table table-striped table-hover table-bordered">
             <thead>
@@ -20,14 +43,14 @@ export default function ApprovedTable({ data, onView, onDelete }: any) {
                 </tr>
             </thead>
             <tbody>
-                {showSample && (
-                    <tr key="REQ001">
-                        <td>John Doe</td>
-                        <td>Medical Le...</td>
-                        <td>HR</td>
-                        <td>2025-05-01</td>
-                        <td>Jane Smith</td>
-                        <td>
+               {approvedRequest?.map((request:any,index:any)=>(
+                <tr key={index}>
+                    <td>{request.name}</td>
+                    <td>{request.reason?.slice(0, 10) + "..." || "-"}</td>
+                    <td>{request.acctid}</td>
+                    <td>{request.created_at}</td>
+                    <td>{request.approved_by}</td>
+                    <td>
                             <button
                                 className="btn btn-sm btn-outline-primary"
                                 type="button"
@@ -46,33 +69,8 @@ export default function ApprovedTable({ data, onView, onDelete }: any) {
                                 Delete
                             </button>
                         </td>
-
-                    </tr>
-                )}
-
-                {/* {data.length > 0 ? (
-          data.map((item: any) => (
-            <tr key={item.requestid}>
-              <td>{item.name}</td>
-              <td>{item.reason?.slice(0, 10) + "..."}</td>
-              <td>{item.acctid}</td>
-              <td>{item.created_at}</td>
-              <td>{item.approved_by || "N/A"}</td>
-              <td>
-                <button
-                  className="btn btn-sm btn-success"
-                  onClick={() => onView(item)}
-                >
-                  ✓ Check
-                </button>
-              </td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={6} className="text-center">No approved entries.</td>
-          </tr>
-        )} */}
+                </tr>
+               ))}
             </tbody>
         </table>
     );

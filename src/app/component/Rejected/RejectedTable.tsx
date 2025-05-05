@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Decryptor } from "@/security";
+import { tr } from "date-fns/locale";
 
 export default function RejectedTable({ data, onView, onDelete }: any) {
     const [showSample, setShowSample] = useState(true);
+    const [rejectedRequest,setRejectedRequest]=useState();
 
-    const handleDeleteSample = () => {
-        setShowSample(false);
-        onDelete?.("REQ001"); // Pass ID if needed
-    };
+     const  token = Decryptor(localStorage.getItem("token")|| "");
+     const user_id = localStorage.getItem("user_id");
+    async function fetchRejectedRequest(){
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/`,{
+        method:"GET",
+        headers:{
+          "Content-type":"application/json",
+          "Authorization": `Bearer ${token}`
+        },
+      })
+
+      if(response.status === 200){
+        const data = await response.json();
+        setRejectedRequest(data.data);
+      }
+    }
+
+    useEffect(()=>{
+      fetchRejectedRequest();
+    },[])
 
     return (
         <table className="table table-striped table-hover table-bordered">
@@ -21,14 +40,14 @@ export default function RejectedTable({ data, onView, onDelete }: any) {
                 </tr>
             </thead>
             <tbody>
-                {showSample && (
-                    <tr key="REQ001">
-                        <td>John Doe</td>
-                        <td>Medical Le...</td>
-                        <td>HR</td>
-                        <td>2025-05-01</td>
-                        <td>Jane Smith</td>
-                        <td>
+                  {rejectedRequest?.map((request:any,index:any)=>(
+                    <tr key={index}>
+                      <td>{request.name}</td>
+                      <td>{request.reason?.slice(0, 10) + "..." || "-"}</td>
+                      <td>{request.acctid}</td>
+                      <td>{request.created_at}</td>
+                      <td>{request.approved_by}</td>
+                      <td>
                             <button
                                 className="btn btn-sm btn-outline-primary"
                                 type="button"
@@ -42,36 +61,12 @@ export default function RejectedTable({ data, onView, onDelete }: any) {
                             <button
                                 className="btn btn-sm btn-outline-danger"
                                 type="button"
-                                onClick={handleDeleteSample}
                             >
                                 Delete
                             </button>
                         </td>
                     </tr>
-                )}
-                {/* {data.length > 0 ? (
-          data.map((item: any) => (
-            <tr key={item.requestid}>
-              <td>{item.name}</td>
-              <td>{item.reason?.slice(0, 10) + "..."}</td>
-              <td>{item.acctid}</td>
-              <td>{item.created_at}</td>
-              <td>{item.declined_at || "N/A"}</td>
-              <td>
-                <button
-                  className="btn btn-sm btn-outline-secondary"
-                  onClick={() => onView(item)}
-                >
-                  View
-                </button>
-              </td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={6} className="text-center">No rejected entries.</td>
-          </tr>
-        )} */}
+                  ))}
             </tbody>
         </table>
     );

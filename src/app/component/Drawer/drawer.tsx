@@ -69,21 +69,26 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         if (buildData) {
             setCombinedData({
                 requestid: data?.requestid,
-                empno: data?.requestid,
+                empno: data?.empno,
                 name: data?.name,
                 shiftdate: data?.shiftdate,
-                reason: data?.reason,
+                reason: declineReason,
                 status:data?.status,
                 logs: buildData,
-                acctid: data?.acctid,
+                acctid: '',
                 created_at: data?.created_at,
-                aprroved_at: data?.aprroved_at,
-                declined_at: data?.declined_at,
+                aprroved_at: '',
+                declined_at:'',
                 approved_by:Decryptor(localStorage.getItem("user_id") || ""),
             });
         }
-    }, [buildData,status]);
     
+    }, [buildData,status,declineReason]);
+
+    useEffect(()=>{
+        
+    },[combinedData])
+
     useEffect(() => {
         if (data?.logs) {
             setBuildData(JSON.parse(JSON.stringify(data.logs)));
@@ -91,22 +96,18 @@ export default function Drawer({ data, onSave }: DrawerProps) {
     }, [data]);
 
     const handleDecline = async () => {
-        const declinePayload = {
-            requestid: data?.requestid,
-            status: 0,
-            declined_at: new Date().toISOString(),
-        };
+        alert(declineReason)
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/decline/request/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${Decryptor(token || "")}`
             },
-            body: JSON.stringify(declinePayload)
+            body: JSON.stringify(combinedData)
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
             successToast("Request declined.");
         } else {
             errorToast("Failed to decline request.");
