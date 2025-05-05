@@ -96,7 +96,6 @@ export default function Drawer({ data, onSave }: DrawerProps) {
     }, [data]);
 
     const handleDecline = async () => {
-        alert(declineReason)
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
             method: "PATCH",

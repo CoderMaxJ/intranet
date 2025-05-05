@@ -108,7 +108,6 @@ export default function ShiftAdjustment() {
 
         console.log(data)
         setShiftData(data);
-        console.log("Shift Adjustment Data:", data);
       } else {
         const errorText = await response.text();
         console.error("Failed to fetch data:", response.status, errorText);
