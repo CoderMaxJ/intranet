@@ -319,8 +319,8 @@ export default function CreateUD() {
                                                     src="/svg/update.svg"
                                                     alt="update"
                                                     style={{
-                                                        width: '20px',
-                                                        height: '18px',
+                                                        width: '15px',
+                                                        height: '15px',
                                                         filter: 'brightness(100) contrast(2.5)',
                                                         marginRight: '2px',
                                                         display: 'inline-block',
@@ -328,30 +328,6 @@ export default function CreateUD() {
                                                 />
                                                 <span className="fs-6 text-light">Update Schedule</span>
                                             </button>
-
-                                            {/* <div className="sched-button gap-3 flex-wrap">
-                                            <label htmlFor="timein">Time In:</label>
-                                            <input type="time" value={timeIn} className="timein" onChange={(e) => setTimeIn(e.target.value)} />
-                                            <label htmlFor="timeout">Time Out:</label>
-                                            <input type="time" value={timeOut} className="timeout" onChange={(e) => setTimeOut(e.target.value)} />
-                                        
-                                                <button
-                                                    onClick={CreateSchedule}
-                                                    className="d-flex align-items-center "
-                                                >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="16"
-                                                        height="16"
-                                                        fill="#ffffff"
-                                                        className="bi bi-plus-circle-fill me-2"
-                                                        viewBox="0 0 16 16"
-                                                    >
-                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                                    </svg>
-                                                    Add Schedule
-                                                </button>
-                                            </div> */}
                                         </div>
                                     </div>
                                 </header>
@@ -380,8 +356,8 @@ export default function CreateUD() {
                                 <thead>
                                     <tr>
                                         <th scope="col" >Employee No.</th>
-                                        <th scope="col" >First Name</th>
-                                        <th scope="col" >Last Name</th>
+                                        <th scope="col">Full Name</th>
+
                                         <th scope="col" >Account</th>
                                         <th scope="col" >Position</th>
                                         <th scope="col" >Time In</th>
@@ -392,11 +368,12 @@ export default function CreateUD() {
                                 </thead>
                                 <tbody className="manage-tbody table-data">
                                     {employees?.length ? (
-                                        employees.map((info, index) => (
+                                        employees.map((info: Information) => (
                                             <tr key={info.empno}>
                                                 <td className="p">{info.empno}</td>
-                                                <td>{info.fname}</td>
-                                                <td>{info.lname}</td>
+                                                <td>{`${info.fname} ${info.lname}`}</td>
+
+
                                                 <td>{getAccountName(info.acctid)}</td>
                                                 <td>{info.position}</td>
                                                 <td>{info.schedule?.shiftstart || "--"}</td>

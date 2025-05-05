@@ -74,13 +74,6 @@ export default function Dashboard() {
         setActiveMenu(menuName);
     };
 
-    // useEffect(() => {
-
-    //     if (!token) {
-    //         router.push("/");
-    //     }
-    // }, [router]);
-
     useEffect(() => {
         const savedImage = localStorage.getItem("profileImage");
         if (savedImage) {
@@ -206,7 +199,6 @@ export default function Dashboard() {
             document.getElementById("dashboard-menu")?.classList.remove("is-minimize");
         }
     };
-    // Apply the stored state when the component loads
     useEffect(() => {
         const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
         if (isMinimized) {
@@ -228,7 +220,7 @@ export default function Dashboard() {
             setShowPoweredby(false);
         }
     }, []);
-
+    
     return (
         <>
             <Updatepassword />

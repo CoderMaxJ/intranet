@@ -54,26 +54,45 @@ export default function () {
 
      useEffect(() => {
           const modal = document.getElementById('reassignment');
-        
+
           if (!modal) return;
-        
+
           const handleModalHidden = () => {
-            setFilterText("");
-            setSearchQuery("");
-            setSearchQueryLeft("");
-            setSelectedEmployees([]);
-            setTimeIn("");
-            setTimeOut("");
-            setFilteredEmployees(allEmployees); // Reset employee list
+               setFilterText("");
+               setSearchQuery("");
+               setSearchQueryLeft("");
+               setSelectedEmployees([]);
+               setTimeIn("");
+               setTimeOut("");
+               setFilteredEmployees(allEmployees); // Reset employee list
           };
-        
+
           modal.addEventListener('hidden.bs.modal', handleModalHidden);
-        
+
           return () => {
-            modal.removeEventListener('hidden.bs.modal', handleModalHidden);
+               modal.removeEventListener('hidden.bs.modal', handleModalHidden);
           };
         }, [allEmployees]);
         
+        const successToast = (msg: string) => toast.success(msg, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      
+        const errorToast = (msg: string) => toast.error(msg, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
      const handleRemoveEmployee = (empno: any) => {
           setSelectedEmployees(prev => prev.filter(id => id !== empno));
      }
@@ -84,23 +103,23 @@ export default function () {
           const accountInfo = account.find(acc => acc.acctid === acctid);
           return accountInfo ? accountInfo.acctname : "Unassigned";
      };
-     
+
      const totalAvailable = filteredEmployees.filter(emp =>
           !selectedEmployees.includes(emp.empno) &&
           (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQueryLeft.toLowerCase()) ||
-           getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
+               getAccountName(emp.acctid).toLowerCase().includes(searchQueryLeft.toLowerCase()))
      ).filter(emp =>
           getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
      ).length;
-     
+
      const totalSelected = filteredEmployees.filter(emp =>
           selectedEmployees.includes(emp.empno) &&
           (`${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-           getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
+               getAccountName(emp.acctid).toLowerCase().includes(searchQuery.toLowerCase()))
      ).filter(emp =>
           getAccountName(emp.acctid).toLowerCase().includes(filterText.toLowerCase())
      ).length;
-     
+
      const handleClearAll = () => {
           setSelectedEmployees([]); // Deselect all employees
      };
@@ -166,30 +185,14 @@ export default function () {
                )
           );
      }, [timeIn, timeOut, selectedEmployees]);
-     const create = async () => {
-          const data = {
-               empno: EmpNoList,
-               timein: timeIn,
-               timeout: timeOut
-          }
-
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
-               method: "POST",
-               headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${Decryptor(token || "")}`,
-               },
-               body: JSON.stringify(data),
-          });
-     }
 
      const handleSetSchedule = async () => {
           if (!timeIn || !timeOut) {
-               toast.error("Please set both Time In and Time Out before assigning schedule.");
+               errorToast("Please set both Time In and Time Out before assigning schedule.");
                return;
           }
           if (selectedEmployees.length === 0) {
-               toast.error("Please select at least one employee.");
+               errorToast("Please select at least one employee.");
                return;
           }
 
@@ -212,7 +215,7 @@ export default function () {
 
                if (response.ok) {
                     const data = await response.json();
-                    toast.success(data.message || "Schedule successfully set for selected employees!");
+                    successToast(data.message || "Schedule successfully set for selected employees!");
 
                     // Update local state immediately
                     setAllEmployees(prev =>
@@ -238,15 +241,15 @@ export default function () {
                     const text = await response.text();
                     try {
                          const errorData = JSON.parse(text);
-                         toast.error(`Failed to set schedule: ${errorData.message || "Unknown error"}`);
+                         errorToast(`Failed to set schedule: ${errorData.message || "Unknown error"}`);
                     } catch {
                          console.error("Server response is not JSON:", text);
-                         toast.error("Failed to set schedule: Server error or wrong endpoint.");
+                         errorToast("Failed to set schedule: Server error or wrong endpoint.");
                     }
                }
           } catch (error) {
                console.error("Error setting schedule", error);
-               toast.error("An error occurred while setting schedule.");
+               errorToast("An error occurred while setting schedule.");
           }
      };
 
@@ -274,7 +277,7 @@ export default function () {
           getAccount();
      }, []);
 
-     
+
 
      const token = localStorage.getItem("token");
      const getAccount = async () => {
@@ -386,7 +389,7 @@ export default function () {
                                              <label htmlFor="effectivitydate" className="fw-bold mb-3 fs-6">Schedule</label>
                                         </div>
 
-                                        <div className="effectivity-date d-flex mb-1 align-items-end">
+                                        <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
                                              <div className="d-flex gap-4">
                                                   <div className="input-group mb-3" style={{ minWidth: "200px" }}>
                                                        <span className="input-group-text" id="basic-addon1">From</span>
@@ -413,7 +416,7 @@ export default function () {
                                              <span className="input-group-text" id="basic-addon1">Account</span>
                                              <select
                                                   id="suggestedAccounts"
-                                                  className="form-select form-select--filter" 
+                                                  className="form-select form-select--adjustwidth"
                                                   onChange={(e) => setFilterText(e.target.value)}
                                                   value={filterText}
                                              >
@@ -430,7 +433,7 @@ export default function () {
 
                                         {/* Left Side: Unselected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                        <h6>Assign Employees <span className="text-muted">({totalAvailable})</span></h6>
+                                             <h6>Assign Employees <span className="text-muted">({totalAvailable})</span></h6>
                                              {/* LEFT SIDE SEARCH */}
                                              <div className="d-flex justity-content-center flex-wrap gap-2 w-100">
                                                   <div className="flex-grow-1"><input
@@ -487,7 +490,7 @@ export default function () {
 
                                         {/* Right Side: Selected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                        <h6>Selected Employees <span className="text-muted">({totalSelected})</span></h6>
+                                             <h6>Selected Employees <span className="text-muted">({totalSelected})</span></h6>
 
                                              {/* RIGHT SIDE SEARCH */}
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">
