@@ -220,7 +220,8 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                 </div>
 
                 <div className="offcanvas-body">
-                    <div className="mb-5 d-flex flex-column gap-2">
+                    <div>
+                    <div className="d-flex flex-column">
                         <div className="d-flex justify-content-between">
                             <p className="drawer-label">Name</p>
                             <p className="drawer-label">{data?.name}</p>
@@ -238,27 +239,26 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             <p className="drawer-label">{data?.requestid}</p>
                         </div>
                     </div>
-
+                    </div>
                     <hr />
-                    <div></div>
-                    <div className="d-flex justify-content-between mb-1">
+                    <div className="d-flex justify-content-between mb-1 mt-2">
                         <h5 className="form-label fs-5 text-dark">Summary</h5>
                     </div>
                     <div>
-                        <div><label htmlFor="requesteddate" className="drawer-label">Requested Date</label></div>
-                        <div><input className="drawer-label" type="date" readOnly value={data?.shiftdate || ""} disabled={true} /></div>
+                        <div><label htmlFor="requesteddate" className="drawer-label mb-1">Requested Date</label></div>
+                        <div><input className="form-control form-control--requesteddate mb-3" type="date" readOnly value={data?.shiftdate || ""} disabled={true} /></div>
                     </div>
 
                     <div className="justify-content-between">
-                        <div className="d-flex justify-content-around align-items-center mb-2">
+                        <div className="d-flex justify-content-around align-items-center mb-2 w-100">
                             <div>
-                                <label className="drawer-label" >Attendance</label>
+                                <label className="drawer-label col-4 justify-content-start" >Attendance</label>
                             </div>
                             <div>
-                                <label className="drawer-label">Requested Time</label>
+                                <label className="drawer-label col-4 justify-content-start">Requested Time</label>
                             </div>
                             <div>
-                                <label className="drawer-label">Recorded Time</label>
+                                <label className="drawer-label col-4 justify-content-start">Recorded Time</label>
                             </div>
                             <div>
                                 <button hidden={true} type="button" className="close-btn">
@@ -270,9 +270,10 @@ export default function Drawer({ data, onSave }: DrawerProps) {
 
                         {/* Login */}
                         {data?.logs?.login?.in && (
+                            
                               <div className="d-flex justify-content-around align-items-center mb-2">
                               <div className="label-container">
-                                  <span className="login-label">Login</span>
+                                  <span className="login-label fw-semibold">Login</span>
                               </div>
                               <div>
                                   <input
@@ -303,7 +304,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         {data?.logs?.break1?.in && (
                         <div className="d-flex justify-content-around align-items-center mb-2">
                             <div className="label-container2">
-                                <span className="break1-label">1st Break - In</span>
+                                <span className="break1-label fw-semibold">1st Break - In</span>
                             </div>
                             <div>
                                 <input
@@ -335,7 +336,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                       {data?.logs?.break1?.out && (
                         <div className="d-flex justify-content-around align-items-center mb-2">
                             <div className="label-container2">
-                                <span className="break1-label">1st Break - Out</span>
+                                <span className="break11-label fw-semibold">1st Break - Out</span>
                             </div>
                             <div>
                                 <input
@@ -367,7 +368,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         {data?.logs?.lunch?.in && (
                         <div className="d-flex justify-content-around align-items-center mb-2">
                             <div className="label-container3">
-                                <span className="lunch-in-label">Lunch - In</span>
+                                <span className="lunch-in-label fw-semibold">Lunch - In</span>
                             </div>
                             <div>
                                 <input
@@ -402,7 +403,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                    
                         <div className="d-flex justify-content-around align-items-center mb-2">
                             <div className="label-container3">
-                                <span className="lunch-in-label">Lunch - Out</span>
+                                <span className="lunch-in-label fw-semibold">Lunch - Out</span>
                             </div>
                             <div>
                                 <input
@@ -436,7 +437,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     
                         <div className="d-flex justify-content-around align-items-center mb-2">
                             <div className="label-container4">
-                                <span className="break2-label">2nd Break - In</span>
+                                <span className="break2-label fw-semibold">2nd Break - In</span>
                             </div>
                             <div>
                                 <input
@@ -468,7 +469,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     {data?.logs?.break2?.out && (
                         <div className="d-flex justify-content-around align-items-center mb-2">
                             <div className="label-container4">
-                                <span className="break2-label">2nd Break - Out</span>
+                                <span className="break22-label fw-semibold">2nd Break - Out</span>
                             </div>
                             <div>
                                 <input
@@ -500,7 +501,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                         {data?.logs?.logout?.out && (
                         <div className="d-flex justify-content-around align-items-center mb-2">
                             <div className="label-container5">
-                                <span className="logout-label">Logout</span>
+                                <span className="logout-label fw-semibold">Logout</span>
                             </div>
                             <div>
                                 <input
@@ -532,7 +533,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                     </div>
 
                     <div className="mb-3">
-                        <label className="drawer-label">Reason</label>
+                        <label className="drawer-label fs-5 mt-1">Reason</label>
                         <p className="reason">{data?.reason}</p>
                     </div>
                 </div>

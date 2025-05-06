@@ -244,10 +244,10 @@ export default function ManageDepartment() {
                 <Dashboard />
             </div>
             <div className="modal fade " id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-lg" style={{width:'500px'}}>
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5 text-light" id="deleteModalLabel" style={{minWidth:'500px'}}>Confirmation</h1>
+                            <h1 className="modal-title fs-5 text-light" id="deleteModalLabel">Confirmation</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close text-light"></button>
                         </div>
                         <div className="modal-body">
@@ -474,13 +474,13 @@ export default function ManageDepartment() {
                                                         style={{ cursor: "pointer" }}
                                                         title={add ? "" : "Add"}
                                                     >
-                                                        <i className="bi bi-plus-square add-manager"></i>
+                                                        <img src="/svg/Add.svg" alt="add" className="actions-button"/>
                                                     </button>
                                                     <button
                                                         onClick={() => { setTargetID(instance.acctid); }}
                                                         type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     >
-                                                        <i className="bi bi-trash3 delete-manager"></i>
+                                                         <img src="/svg/Delete.svg" alt="delete" className="actions-button"/>
                                                     </button>
                                                 </div>
                                             </td>

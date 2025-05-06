@@ -176,14 +176,14 @@ export default function ShiftAdjustment() {
                       <td>{item.created_at || "-"}</td>
                       <td>
                         <button
-                          className="btn btn-sm btn-outline-primary"
+                          className="btn-sm btn-outline-primary"
                           type="button"
                           data-bs-toggle="offcanvas"
                           data-bs-target="#shiftdrawer"
                           aria-controls="shiftdrawer"
                           onClick={() => handleViewClick(item)}
                         >
-                          View
+                         <img src="/svg/View.svg" alt="view" className="eye-view" />
                         </button>
                       </td>
                     </tr>

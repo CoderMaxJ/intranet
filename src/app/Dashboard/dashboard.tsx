@@ -44,7 +44,7 @@ export default function Dashboard() {
         setActiveNav(storedTab);
         setShowEmployee(true);
     }, []);
-    
+
     useEffect(() => {
         if (["4", "5", "6"].includes(activeNav)) {
             setActiveMenu("manage");
@@ -54,7 +54,7 @@ export default function Dashboard() {
             setAccordionIconn(false);
         }
     }, [activeNav]);
-    
+
 
     const navigateTo = (path: string, tabId: string) => {
         setActiveNav(tabId);
@@ -220,7 +220,7 @@ export default function Dashboard() {
             setShowPoweredby(false);
         }
     }, []);
-    
+
     return (
         <>
             <Updatepassword />
@@ -300,16 +300,16 @@ export default function Dashboard() {
                     <div className="accordion-item accordion" >
                         <div className="manage-div">
                             <div className="manage-menus d-flex justify-content-between align-items-center"
-                               
+
                                 onClick={() => {
                                     const isManageTab = ["4", "5", "6"].includes(activeNav);
-                                
+
                                     if (activeMenu === "manage" && isManageTab) {
-                                       
+
                                         setActiveMenu("");
                                         setAccordionIconn(false);
                                     } else {
-                                      
+
                                         const newState = activeMenu === "manage" ? "" : "manage";
                                         setActiveMenu(newState);
                                         setAccordionIconn(newState === "manage");
@@ -348,6 +348,7 @@ export default function Dashboard() {
                             <div
                                 id="panelsStayOpen-collapseOne"
                                 className={`accordion-collapse collapse ${activeMenu === "manage" ? "show" : ""}`}
+
                                 aria-labelledby="panelsStayOpen-headingOne"
                                 style={{ marginTop: "-25px" }}
                             >
@@ -362,16 +363,10 @@ export default function Dashboard() {
                                                     color: localStorage.getItem("active_tab") === "4" ? "white" : "",
                                                 }}
                                             >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="16"
-                                                    height="16"
-                                                    fill={localStorage.getItem("active_tab") === "4" ? "white" : "currentColor"}
-                                                    className="accounts-svg bi bi-circle text-dark"
-                                                    viewBox="0 0 16 16"
-                                                >
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                </svg>
+                                                <span
+                                                    className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
+                                                />
+
                                                 {showAccounts && (
                                                     <label
                                                         className="acc-label"
@@ -395,16 +390,7 @@ export default function Dashboard() {
                                                     color: localStorage.getItem("active_tab") === "5" ? "white" : "",
                                                 }}
                                             >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="16"
-                                                    height="16"
-                                                    fill={localStorage.getItem("active_tab") === "5" ? "white" : "currentColor"}
-                                                    className="bi bi-circle text-dark"
-                                                    viewBox="0 0 16 16"
-                                                >
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                </svg>
+                                                <span className={`circle-indicator  ${activeNav === "5" ? "active" : "" } `}></span>
                                                 {showEmployee && (
                                                     <label
                                                         className="emp-label"
@@ -426,16 +412,7 @@ export default function Dashboard() {
                                                     color: localStorage.getItem("active_tab") === "6" ? "white" : "",
                                                 }}
                                             >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="16"
-                                                    height="16"
-                                                    fill={localStorage.getItem("active_tab") === "6" ? "white" : "currentColor"}
-                                                    className="bi bi-circle text-dark"
-                                                    viewBox="0 0 16 16"
-                                                >
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                </svg>
+                                                <span className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}></span>
                                                 {shiftAdjustment && (
                                                     <label
                                                         className="emp-label"

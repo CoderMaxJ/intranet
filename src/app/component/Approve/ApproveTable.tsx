@@ -2,9 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
 import { data } from "react-router-dom";
 import { tr } from "date-fns/locale";
+
+interface ApprovedRequest {
+    name: string;
+    reason: string;
+    acctid: string | number;
+    created_at: string;
+    approved_by: string;
+  }
+
 export default function ApprovedTable() {
     const [showSample, setShowSample] = useState(true);
-    const [approvedRequest,setApproveRequest]=useState();
+    const [approvedRequest, setApproveRequest] = useState< ApprovedRequest []>([]);
 
     const handleDeleteSample = () => {
         setShowSample(false);
@@ -52,21 +61,21 @@ export default function ApprovedTable() {
                     <td>{request.approved_by}</td>
                     <td>
                             <button
-                                className="btn btn-sm btn-outline-primary"
+                                className="btn-outline-primary"
                                 type="button"
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#shiftdrawer"
                                 aria-controls="shiftdrawer"
                                 style={{marginRight:"20px"}}
                             >
-                                View
+                              <img src="/svg/View.svg" alt="view"  className="eye-view"/>
                             </button>
                             <button
-                                className="btn btn-sm btn-outline-danger"
+                                className="btn-outline-danger"
                                 type="button"
                                 onClick={handleDeleteSample}
                             >
-                                Delete
+                               <img src="/svg/Delete.svg" alt="delete" />
                             </button>
                         </td>
                 </tr>

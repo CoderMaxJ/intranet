@@ -540,8 +540,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               </div>
             </div>
           )}
-        </form >
-        <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
+           <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
           <button
             type="button"
             data-bs-dismiss="modal"
@@ -554,9 +553,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             {mode === "edit" ? "Update" : "Create"}
           </button>
         </div>
+        </form >
+       
       </div >
     </div>
   );
-
 
 }  

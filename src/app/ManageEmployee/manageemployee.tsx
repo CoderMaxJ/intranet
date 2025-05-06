@@ -300,9 +300,9 @@ export default function CreateUD() {
             <div>
               <header>
                 <div className="w-100 d-flex justify-content-between flex-wrap py-2 px-4 gap-3">
-                  <div className="searchbar-container">
+                  <div className="searchbar-container py-1">
                     <input
-                      className="form-control"
+                      className="form-control form-control--search"
                       id="search-employee"
                       type="text"
                       placeholder="Search..."

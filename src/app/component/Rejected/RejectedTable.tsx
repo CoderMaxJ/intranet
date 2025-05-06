@@ -2,9 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
 import { tr } from "date-fns/locale";
 
+interface RequestItem {
+  name: string;
+  reason?: string;
+  acctid: string;
+  created_at: string;
+  approved_by: string;
+}
+
 export default function RejectedTable({ data, onView, onDelete }: any) {
     const [showSample, setShowSample] = useState(true);
-    const [rejectedRequest,setRejectedRequest]=useState();
+    const [rejectedRequest,setRejectedRequest]=useState<RequestItem[]>([]);
 
      const  token = Decryptor(localStorage.getItem("token")|| "");
      const user_id = localStorage.getItem("user_id");
@@ -49,20 +57,20 @@ export default function RejectedTable({ data, onView, onDelete }: any) {
                       <td>{request.approved_by}</td>
                       <td>
                             <button
-                                className="btn btn-sm btn-outline-primary"
+                                className="btn-outline-primary"
                                 type="button"
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#shiftdrawer"
                                 aria-controls="shiftdrawer"
                                 style={{marginRight:"20px"}}
                             >
-                                View
+                               <img src="/svg/View.svg" alt="view"  className="eye-view"/>
                             </button>
                             <button
-                                className="btn btn-sm btn-outline-danger"
+                                className="btn-sm btn-outline-danger"
                                 type="button"
                             >
-                                Delete
+                               <img src="/svg/Delete.svg" alt="delete" />
                             </button>
                         </td>
                     </tr>

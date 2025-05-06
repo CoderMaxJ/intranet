@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
     font-family: 'roboto';
     src: url('/src/app/fonts/roboto.ttf') format('truetype');
     font-weight: 500;
@@ -12,42 +12,47 @@
     font-weight: 500;
     font-style: medium;
     font-size: 15px;
+} */
+
+.drawer-label {
+    font-family: 'Geist';
+    white-space: nowrap !important;
 }
 
-.drawer-label{
-font-family: 'roboto';
-}
 
-
-.reason{
-    font-family: 'roboto2';
-
+.reason {
+    font-family: 'Geist';
 }
 
 .input-time-field {
-    font-family: 'roboto2';
+    font-family: 'Geist';
     padding: 4px;
     border-radius: 4px;
     border: none;
-    background-color:#B3B1B1;
+    background-color: #E9ecef;
     text-align: center;
     color: #171616;
-    
+
 }
-.label-container{
+
+.label-container {
     border: none;
     outline: none;
     width: 120px;
     padding: 3px;
     text-align: center;
     display: flex;
-    background-color: #EDF1F4;
+    background-color: #a9e4ff;
+    border-radius: 4px;
 }
-.label-container .login-label{
-    color: #2a9df4;
-    font-family: 'roboto2';
+
+.label-container .login-label {
+    color: #0F62EE;
+    font-family: 'Geist';
+    font-size: 15px;
 }
-.label-container2{
+
+.label-container2 {
     border: none;
     outline: none;
     width: 120px;
@@ -56,29 +61,44 @@ font-family: 'roboto';
     display: flex;
     background-color: #FFE4E3;
     border-radius: 4px;
-}
-.label-container2 .break1-label{
-   color: #ED3B2F;
-    font-family: 'roboto2';
+    
 }
 
-.label-container3{
+.break11-label,
+.label-container2 .break1-label {
+    color: #ED3B2F;
+    font-family: 'Geist';
+    font-size: 15px;
+}
+
+.label-container3 {
     border: none;
     outline: none;
     width: 120px;
     padding: 5px;
     text-align: center;
     display: flex;
-    background-color:#FCF2D6;
+    background-color: #FCF2D6;
     border-radius: 4px;
 }
-.lunch-in-label{
-font-family: 'roboto2';
-color:#FDAA00 ;
+
+.lunch-in-label {
+    font-family: 'Geist';
+    color: #FDAA00;
 }
 
-.label-container4{
-    background-color: #EDF4ED;
+.break11-label {
+    white-space: nowrap;
+    font-size: 15px;
+}
+
+.break22-label {
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.label-container4 {
+    background-color: #ffeda6;
     border: none;
     outline: none;
     width: 120px;
@@ -88,13 +108,18 @@ color:#FDAA00 ;
     border-radius: 4px;
 }
 
-.break2-label{
-    font-family: "roboto2";
-    color: #31A750;
+.break22-label,
+.break2-label {
+    font-family: 'Geist';
+    color: #d6900e;
 }
 
-.label-container5{
-    background-color: #EDF1F4;
+.break2-label {
+    font-size: 15px;
+}
+
+.label-container5 {
+    background-color: #a9e4ff;
     border: none;
     outline: none;
     width: 120px;
@@ -103,7 +128,9 @@ color:#FDAA00 ;
     display: flex;
     border-radius: 4px;
 }
-.logout-label{
+
+.logout-label {
     color: #0F62EE;
-    font-family: 'roboto2';
+    font-family: 'Geist';
+    font-size: 15px;
 }
