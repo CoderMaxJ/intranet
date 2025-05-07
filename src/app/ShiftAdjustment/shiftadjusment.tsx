@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
@@ -47,6 +46,31 @@ export default function ShiftAdjustment() {
   const handleApproved = (e: any) => {
     setApprove(e.target.value);
   };
+  const handleDeleteRequest = async (requestid: number) => {
+    const token = localStorage.getItem("token");
+  
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND}/requests/${requestid}/`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Decryptor(token || "")}`,
+          },
+        }
+      );
+  
+      if (response.ok) {
+        fetchShiftAdjustmentData(); // refresh after delete
+      } else {
+        console.error("Deletion failed:", await response.text());
+      }
+    } catch (error) {
+      console.error("Error during deletion:", error);
+    }
+  };
+  
   const handleApproveRequest = async (decryptedId: string) => {
     const token = localStorage.getItem("token");
 
@@ -155,57 +179,72 @@ export default function ShiftAdjustment() {
           </div>
 
           <div className="shiftadjustment-table">
-          {filter === "pending" && (
-            <table className="table table-striped table-hover table-bordered">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Reason</th>
-                  <th>Department</th>
-                  <th>Date Filed</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.length > 0 ? (
-                  filteredData.map((item) => (
-                    <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
-                      <td>{item.name || "-"}</td>
-                      <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
-                      <td>{item.acctid || "-"}</td>
-                      <td>{item.created_at || "-"}</td>
-                      <td>
-                        <button
-                          className="btn-sm btn-outline-primary"
-                          type="button"
-                          data-bs-toggle="offcanvas"
-                          data-bs-target="#shiftdrawer"
-                          aria-controls="shiftdrawer"
-                          onClick={() => handleViewClick(item)}
-                        >
-                         <img src="/svg/View.svg" alt="view" className="eye-view" />
-                        </button>
+            {filter === "pending" && (
+              <table className="table table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Reason</th>
+                    <th>Department</th>
+                    <th>Date Filed</th>
+                    <th className="actions-th">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredData.length > 0 ? (
+                    filteredData.map((item) => (
+                      <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
+                        <td>{item.name || "-"}</td>
+                        <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
+                        <td>{item.acctid || "-"}</td>
+                        <td>{item.created_at || "-"}</td>
+                        <td>
+                          <div className="d-flex gap-4 actions">
+                            <div>
+                          <button
+                            className="btn-sm btn-outline-primary"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#shiftdrawer"
+                            aria-controls="shiftdrawer"
+                            onClick={() => handleViewClick(item)}
+                          >
+                            <img src="/svg/View.svg" alt="view" className="eye-view" />
+                          </button>
+                          </div>
+                          <div>
+                          <button
+                            className="btn-sm btn-outline-danger"
+                            type="button"
+                            onClick={() =>handleDeleteRequest(item.request)}
+                          >
+                            <img src="/svg/Delete.svg" alt="delete" />
+                          </button>
+                          </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5} className="text-center">
+                        No shift data found.
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={5} className="text-center">
-                      No shift data found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          )}
+                  )}
+                </tbody>
+              </table>
+            )}
 
-  {filter === "approved" && (
-    <ApprovedTable />
-  )}
+            {filter === "approved" && (
+              <ApprovedTable onView={handleViewClick} />
 
-  {filter === "rejected" && (
-    <RejectedTable data={filteredData} onView={handleViewClick} />
-  )}
+            )}
+
+
+            {filter === "rejected" && (
+              <RejectedTable onView={handleViewClick}/>
+            )}
 
           </div>
         </div>

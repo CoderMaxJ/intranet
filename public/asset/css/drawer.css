@@ -19,6 +19,18 @@
     white-space: nowrap !important;
 }
 
+.drawer-labell {
+    font-family: 'Geist';
+    white-space: nowrap !important;
+    margin-left: 40px;
+}
+
+.drawer-label1 {
+    font-family: 'Geist';
+    white-space: nowrap !important;
+    margin-left: 18px;
+}
+
 
 .reason {
     font-family: 'Geist';
@@ -42,12 +54,12 @@
     padding: 3px;
     text-align: center;
     display: flex;
-    background-color: #a9e4ff;
+    background-color: #dff5df;
     border-radius: 4px;
 }
 
 .label-container .login-label {
-    color: #0F62EE;
+    color: #31A750;
     font-family: 'Geist';
     font-size: 15px;
 }
@@ -78,13 +90,13 @@
     padding: 5px;
     text-align: center;
     display: flex;
-    background-color: #FCF2D6;
+    background-color: #a9e4ff;
     border-radius: 4px;
 }
 
 .lunch-in-label {
     font-family: 'Geist';
-    color: #FDAA00;
+    color: #0F62EE;
 }
 
 .break11-label {
@@ -111,7 +123,7 @@
 .break22-label,
 .break2-label {
     font-family: 'Geist';
-    color: #d6900e;
+    color: #a56d05;
 }
 
 .break2-label {
@@ -119,7 +131,7 @@
 }
 
 .label-container5 {
-    background-color: #a9e4ff;
+    background-color: #dff5df;
     border: none;
     outline: none;
     width: 120px;
@@ -130,7 +142,7 @@
 }
 
 .logout-label {
-    color: #0F62EE;
+    color: #31A750;
     font-family: 'Geist';
     font-size: 15px;
 }

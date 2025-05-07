@@ -1500,10 +1500,6 @@ tbody td {
   background-color: #0ebb39;
 }
 
-.actions {
-  margin-left: 35px;
-}
-
 .accounts-edit {
   background: none;
   border: none;
@@ -1513,6 +1509,10 @@ tbody td {
 .add-manager,
 .delete-manager {
   font-size: 20px;
+}
+
+.actions-th {
+  width: 9%;
 }
 
 /* .form-control.form-control--search {
@@ -2056,11 +2056,10 @@ table {
 }
 
 .name {
-  padding-top: 5px;
   letter-spacing: 1px;
   font-weight: bold;
   color: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Geist',;
 }
 
 .delete {
@@ -2400,6 +2399,7 @@ table {
 .admin:active svg {
   fill: white;
 }
+
 
 .employee-anchor a {
   color: white;
@@ -2787,7 +2787,9 @@ table {
   font-size: 14px;
 }
 
-
+.actions {
+  width: 9% !important;
+}
 .reports-division {
   width: 0;
 }

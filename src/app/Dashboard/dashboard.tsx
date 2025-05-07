@@ -8,6 +8,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Decryptor } from "@/security";
 
+declare global {
+    interface Window {
+      bootstrap: any;
+    }
+  }
+  declare var bootstrap: any;
+  
+
 export default function Dashboard() {
     const router = useRouter();
     const [user_privilege, setUserPrivilege] = useState([""]);
@@ -38,7 +46,22 @@ export default function Dashboard() {
     const [activeNav, setActiveNav] = useState("");
     const [shiftAdjustment, setShiftAdjustment] = useState(true);
     const [token, setToken] = useState<string | null>(null);
+    const [isAccountManager, setIsAccountManager] = useState(false);
 
+    useEffect(() => {
+        // Destroy existing tooltips (in case React re-rendered them)
+        const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      
+        tooltipTriggerList.forEach((el) => {
+          // Dispose if already exists
+          const tooltipInstance = bootstrap.Tooltip.getInstance(el);
+          if (tooltipInstance) tooltipInstance.dispose();
+      
+          // Re-create
+          new bootstrap.Tooltip(el);
+        });
+      }, [navWidth, showLogout, showDashboard, showReports]);
+      
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
         setActiveNav(storedTab);
@@ -95,7 +118,10 @@ export default function Dashboard() {
         const array_privilege = IdentifyUser(user_hash_privilege);
         array_privilege.forEach((data) => {
             user_privilege.push(data);
-        })
+            if (data === "account_manager") {
+                setIsAccountManager(true);
+            }
+        });
     }
     const profileImg = localStorage.getItem("profileImage")
     const user_id = localStorage.getItem("user_id");
@@ -388,9 +414,10 @@ export default function Dashboard() {
                                                 style={{
                                                     backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
                                                     color: localStorage.getItem("active_tab") === "5" ? "white" : "",
+                                                    marginTop: isAccountManager ? "25px" : "0px",
                                                 }}
                                             >
-                                                <span className={`circle-indicator  ${activeNav === "5" ? "active" : "" } `}></span>
+                                                <span className={`circle-indicator  ${activeNav === "5" ? "active" : ""} `}></span>
                                                 {showEmployee && (
                                                     <label
                                                         className="emp-label"
@@ -541,12 +568,14 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             )}
-                            {profile != null && showProfileLabel === true && (
+                            {navWidth === "217px" && (
                                 <div>
-                                    <p className="name text-dark mt-3">{localStorage.getItem("name")}</p>
-                                    <p className="name text-dark">{localStorage.getItem("position")}</p>
+                                    <p className="name text-dark mt-3">{localStorage.getItem("name") || "Unnamed User"}</p>
+                                    <p className="name text-dark">{localStorage.getItem("position") || "Position not set"}</p>
                                 </div>
                             )}
+
+
                         </center>
                     </div>
                 </div>
