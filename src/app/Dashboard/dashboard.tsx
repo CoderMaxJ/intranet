@@ -446,7 +446,7 @@ export default function Dashboard() {
                                                         htmlFor="employee"
                                                         style={{ color: localStorage.getItem("active_tab") === "6" ? "white" : "" }}
                                                     >
-                                                        Shift Adjusment
+                                                      Adjusment
                                                     </label>
                                                 )}
                                             </a>
@@ -568,12 +568,12 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             )}
-                            {navWidth === "217px" && (
+                            {/* {navWidth === "217px" && (
                                 <div>
                                     <p className="name text-dark mt-3">{localStorage.getItem("name") || "Unnamed User"}</p>
                                     <p className="name text-dark">{localStorage.getItem("position") || "Position not set"}</p>
                                 </div>
-                            )}
+                            )} */}
 
 
                         </center>

@@ -43,6 +43,8 @@ export default function ShiftAdjustment() {
     fetchShiftAdjustmentData();
   }, []);
 
+  
+
   const handleApproved = (e: any) => {
     setApprove(e.target.value);
   };
@@ -151,7 +153,7 @@ export default function ShiftAdjustment() {
         <Dashboard />
       </div>
       <div className="shiftadjustment-container flex-grow-1">
-        <Header title="MANAGE SHIFT ADJUSTMENT" />
+        <Header title="ADJUSTMENT" />
 
         <div className="shift-background p-4 px-4">
           <div className="d-flex gap-5">

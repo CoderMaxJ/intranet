@@ -18,6 +18,7 @@ interface ApprovedTableProps {
 export default function ApprovedTable({ onView }: ApprovedTableProps) {
   const [showSample, setShowSample] = useState(true);
   const [approvedRequest, setApproveRequest] = useState<ApprovedRequest[]>([]);
+  
 
   const handleDeleteSample = () => {
     setShowSample(false);
