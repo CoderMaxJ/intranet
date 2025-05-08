@@ -102,6 +102,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
 
     const handleDecline = async () => {
         const token = localStorage.getItem("token");
+        
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
             method: "PATCH",
             headers: {

@@ -446,7 +446,7 @@ export default function Dashboard() {
                                                         htmlFor="employee"
                                                         style={{ color: localStorage.getItem("active_tab") === "6" ? "white" : "" }}
                                                     >
-                                                      Adjusment
+                                                      Adjustment
                                                     </label>
                                                 )}
                                             </a>
