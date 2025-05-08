@@ -54,6 +54,10 @@ interface RequestDetails {
     approved_by: number;
 }
 
+interface Account {
+    acctid: number;
+    acctname: string;
+}
 interface DrawerProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
@@ -64,6 +68,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
     const [combinedData, setCombinedData] = useState({})
     const [declineReason, setDeclineReason] = useState("");
     const [status, setStatus] = useState(0);
+    const [accounts, setAccounts] = useState<Account[]>([]);
     console.log(data);
     useEffect(() => {
         if (buildData) {
@@ -96,7 +101,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
     }, [data]);
 
     const handleDecline = async () => {
-
+        const token = localStorage.getItem("token");
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
             method: "PATCH",
             headers: {
@@ -112,6 +117,23 @@ export default function Drawer({ data, onSave }: DrawerProps) {
             errorToast("Failed to decline request.");
         }
     };
+
+    const getAccounts = async () => {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Decryptor(token || "")}`
+            }
+        });
+        const result = await response.json();
+        setAccounts(result.data);
+    };
+
+    useEffect(() => {
+        getAccounts();
+    }, []);
 
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
@@ -232,7 +254,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Department</p>
-                                <p className="drawer-label">{data?.acctid}</p>
+                                <p className="drawer-label">{accounts.find(acc => acc.acctid === data?.acctid)?.acctname || "-"}</p>
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Request ID</p>

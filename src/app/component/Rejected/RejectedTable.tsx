@@ -14,12 +14,36 @@ interface RejectedTableProps {
   onView: (item: RejectedTableProps) => void;
 }
 
+interface Accounts {
+  acctname: string;
+  acctid: number;
+}
+
 export default function RejectedTable({ onView }: RejectedTableProps) {
   const [showSample, setShowSample] = useState(true);
   const [rejectedRequest, setRejectedRequest] = useState<RequestItem[]>([]);
-
+  const [accounts, setAccounts] = useState<Accounts[]>([]);
   const token = Decryptor(localStorage.getItem("token") || "");
   const user_id = localStorage.getItem("user_id");
+
+  async function getAccounts() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
+    method: "GET",
+    headers: {
+      "Content-Type" : "application/json",
+      "Authorization" : `Bearer ${token}` 
+    },
+  })
+  if (!response.ok) {
+    console.error("Faild to fetch accounts")
+    return;
+  }
+
+  const data = await response.json();
+  console.log("Fetched accounts:", data);
+  setAccounts(data.data);
+};
+
   async function fetchRejectedRequest() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/`, {
       method: "GET",
@@ -37,6 +61,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
 
   useEffect(() => {
     fetchRejectedRequest();
+    getAccounts();
   }, [])
 
   return (
@@ -56,7 +81,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
           <tr key={index}>
             <td>{request.name}</td>
             <td>{request.reason?.slice(0, 10) + "..." || "-"}</td>
-            <td>{request.acctid}</td>
+            <td>{accounts.find((acc) => String(acc.acctid) === String(request.acctid))?.acctname || ""}</td>
             <td>{request.created_at}</td>
             <td>{request.approved_by}</td>
             <td>

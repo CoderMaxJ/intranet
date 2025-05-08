@@ -93,7 +93,7 @@ export default function CreateUD() {
     }
   }
   const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
-  async function getAccout() {
+  async function getAccount() {
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -109,7 +109,7 @@ export default function CreateUD() {
   }
 
   useEffect(() => {
-    getAccout();
+    getAccount();
   }, [])
 
   const getAccountName = (acctid: number): string => {
@@ -119,6 +119,7 @@ export default function CreateUD() {
     const accountInfo = account.find(acc => acc.acctid === acctid);
     return accountInfo ? accountInfo.acctname : "Unassigned"; // Return "N/A" if no account is found
   };
+
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,

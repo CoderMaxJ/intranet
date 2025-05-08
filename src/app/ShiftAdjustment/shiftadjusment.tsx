@@ -21,11 +21,17 @@ interface RequestDetails {
   declined_at: string;
 }
 
+interface Account {
+  acctname: string
+  acctid: number
+}
+
 export default function ShiftAdjustment() {
   const [searchTerm, setSearchTerm] = useState("");
   const [details, setShiftData] = useState<RequestDetails | null>(null);
   const [data, setData] = useState<any[]>([]);
   const [approve, setApprove] = useState("");
+  const [account, setAccount] = useState<Account[]>([]);
   const [filter, setFilter] = useState<"pending" | "approved" | "rejected">("pending");
 
   const handleTabChange = (value: "pending" | "approved" | "rejected") => {
@@ -43,11 +49,34 @@ export default function ShiftAdjustment() {
     fetchShiftAdjustmentData();
   }, []);
 
-  
-
   const handleApproved = (e: any) => {
     setApprove(e.target.value);
   };
+
+  const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
+  async function getAccount() {
+    const token = localStorage.getItem("token"); // <-- You missed this line
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${Decryptor(token || "")}`
+      }
+    });
+  
+    if (!response.ok) {
+      console.log("error");
+    }
+  
+    const data = await response.json();
+    setAccount(data.data);
+  }
+  
+
+  useEffect(() => {
+    getAccount();
+  }, []) 
+
   const handleDeleteRequest = async (requestid: number) => {
     const token = localStorage.getItem("token");
   
@@ -198,7 +227,7 @@ export default function ShiftAdjustment() {
                       <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
                         <td>{item.name || "-"}</td>
                         <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
-                        <td>{item.acctid || "-"}</td>
+                        <td> {account.find((acc) => acc.acctid === item.acctid)?.acctname || "-"}</td>
                         <td>{item.created_at || "-"}</td>
                         <td>
                           <div className="d-flex gap-4 actions">

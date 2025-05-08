@@ -552,7 +552,7 @@ export default function () {
                                    </div>
                               </div>
                               {/* Add Schedule Button */}
-                              <div className="d-flex justify-content-end mt-4 modal-footer" style={{ background: '#EBEDF0' }}>
+                              <div className="d-flex justify-content-end modal-footer" style={{ background: '#EBEDF0' }}>
                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                                         <span className="cancel">Cancel</span>
                                    </button>
