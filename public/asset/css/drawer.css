@@ -54,12 +54,12 @@
     padding: 3px;
     text-align: center;
     display: flex;
-    background-color: #dff5df;
+    background-color: #EDF1F4;
     border-radius: 4px;
 }
 
 .label-container .login-label {
-    color: #31A750;
+    color: #0F62EE;
     font-family: 'Geist';
     font-size: 15px;
 }
@@ -90,13 +90,13 @@
     padding: 5px;
     text-align: center;
     display: flex;
-    background-color: #a9e4ff;
+    background-color: #FCF2D6;
     border-radius: 4px;
 }
 
 .lunch-in-label {
     font-family: 'Geist';
-    color: #0F62EE;
+    color: #FDAA00;
 }
 
 .break11-label {
@@ -110,7 +110,7 @@
 }
 
 .label-container4 {
-    background-color: #ffeda6;
+    background-color: #EDF4ED;
     border: none;
     outline: none;
     width: 120px;
@@ -123,7 +123,7 @@
 .break22-label,
 .break2-label {
     font-family: 'Geist';
-    color: #a56d05;
+    color: #31A750;
 }
 
 .break2-label {
@@ -131,7 +131,7 @@
 }
 
 .label-container5 {
-    background-color: #dff5df;
+    background-color: #EDF1F4;
     border: none;
     outline: none;
     width: 120px;
@@ -142,7 +142,7 @@
 }
 
 .logout-label {
-    color: #31A750;
+    color: #0F62EE;
     font-family: 'Geist';
     font-size: 15px;
 }

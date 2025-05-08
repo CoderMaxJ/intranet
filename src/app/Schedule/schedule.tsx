@@ -68,16 +68,6 @@ export default function CreateUD() {
         );
     };
 
-    // const handleSelectAll = (checked: boolean) => {
-    //     setAllSelected(checked);
-    //     if (checked) {
-    //         const allEmpnos = employees.map(emp => emp.empno);
-    //         setSelectedEmployees(allEmpnos);
-
-    //     } else {
-    //         setSelectedEmployees([]);
-    //     }
-    // };
     useEffect(() => {
         EmpNoList.push(...selectedEmployees);
     }, [EmpNoList])

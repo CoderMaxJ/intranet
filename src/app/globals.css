@@ -549,9 +549,67 @@ input:focus {
   align-items: center;
 }
 
+.password-field {
+  width: 100%;
+}
+
+.password-label {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.password-strength {
+  font-size: 13px;
+  margin-left: 10px;
+}
+
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-input {
+  padding-right: 40px;
+}
+
+.password-icon {
+  position: absolute;
+  top: 8px;               /* Adjust as needed */
+  right: 12px;
+  z-index: 10;            /* Ensures it appears above the input */
+  cursor: pointer;
+  color: #555;
+}
+.password-input-wrapper {
+  position: relative;
+}
+.password-icon {
+  border: 1px solid red;
+}
+
+.form-control--password-input {
+  padding: 8px !important;
+}
+
+.password-hint {
+  font-size: 13px;
+  text-align: left;
+  margin-top: 5px;
+}
+
 .newpass-eyetoggle svg {
   position: absolute;
-  transform: translateY(10px) translateX(-25px);
+  transform: translateY(4px) translateX(-15px);
+}
+
+.newpass-eyetogglee svg {
+  position: absolute;
+  transform: translateY(4px) translateX(-16px);
+}
+
+.newpass-eyetoggleee svg {
+  position: absolute;
+  transform: translateY(-8px) translateX(-16px);
 }
 
 .button-login {
@@ -949,7 +1007,8 @@ input:focus {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.6); /* semi-transparent white */
+  background-color: rgba(255, 255, 255, 0.6);
+  /* semi-transparent white */
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -2790,6 +2849,7 @@ table {
 .actions {
   width: 9% !important;
 }
+
 .reports-division {
   width: 0;
 }
@@ -3551,6 +3611,7 @@ table {
   max-width: 200px;
   width: 100%;
 }
+
 .eye-view {
   width: 22px;
   height: 22px;
@@ -3588,7 +3649,7 @@ table {
 
 .circle-indicator {
   border: 4px solid;
-  color:rgb(90, 89, 89);
+  color: rgb(90, 89, 89);
   width: 15px;
   border-radius: 50%;
   height: 15px;
@@ -3600,6 +3661,7 @@ table {
 .manage-anchor a:hover .circle-indicator {
   border-color: white;
 }
+
 .employee-anchor a:hover .circle-indicator {
   border-color: white;
 }
@@ -3608,9 +3670,10 @@ table {
 .employee-anchor a:hover .circle-indicator {
   border-color: white;
 }
+
 .circle-indicator.active {
   border-color: white;
-  background-color: transparent; 
+  background-color: transparent;
 }
 
 
