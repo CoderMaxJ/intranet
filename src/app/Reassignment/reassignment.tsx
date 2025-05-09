@@ -336,7 +336,7 @@ export default function () {
           setFilteredEmployees(allData);   // Also show full list initially
      };
      useEffect(() => {
-          fetchAllEmployees(); // Fetch all employees from database
+          // fetchAllEmployees(); // Fetch all employees from database
           getAccount();        // Fetch all account names
      }, []);
 

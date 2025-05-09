@@ -2,9 +2,13 @@
 import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
-import Drawer from "../component/Drawer/drawer";
+import Pending from "../component/Pending/pending";
+import ApproveTable from "../component/ApproveTable/ApproveTable";
+import ApprovedData from "../component/ApprovedData/ApprovedData";
+import RejectedData from "../component/RejectedData/RejectedData";
 import RejectedTable from "../component/Rejected/RejectedTable";
-import ApprovedTable from "../component/Approve/ApproveTable";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Decryptor } from "@/security";
 
 interface RequestDetails {
@@ -33,9 +37,11 @@ export default function ShiftAdjustment() {
   const [approve, setApprove] = useState("");
   const [account, setAccount] = useState<Account[]>([]);
   const [filter, setFilter] = useState<"pending" | "approved" | "rejected">("pending");
+  const [activeTab, setActiveTab] = useState("pending");
 
   const handleTabChange = (value: "pending" | "approved" | "rejected") => {
     setFilter(value);
+    setActiveTab(value);
   };
 
   const filteredData = data.filter((item) => {
@@ -55,7 +61,7 @@ export default function ShiftAdjustment() {
 
   const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
   async function getAccount() {
-    const token = localStorage.getItem("token"); // <-- You missed this line
+    const token = localStorage.getItem("token");
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -63,23 +69,21 @@ export default function ShiftAdjustment() {
         Authorization: `Bearer ${Decryptor(token || "")}`
       }
     });
-  
+
     if (!response.ok) {
       console.log("error");
     }
-  
     const data = await response.json();
     setAccount(data.data);
   }
-  
 
   useEffect(() => {
     getAccount();
-  }, []) 
+  }, [])
 
   const handleDeleteRequest = async (requestid: number) => {
     const token = localStorage.getItem("token");
-  
+
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/requests/${requestid}/`,
@@ -91,9 +95,9 @@ export default function ShiftAdjustment() {
           },
         }
       );
-  
+
       if (response.ok) {
-        fetchShiftAdjustmentData(); // refresh after delete
+        fetchShiftAdjustmentData();
       } else {
         console.error("Deletion failed:", await response.text());
       }
@@ -101,7 +105,7 @@ export default function ShiftAdjustment() {
       console.error("Error during deletion:", error);
     }
   };
-  
+
   const handleApproveRequest = async (decryptedId: string) => {
     const token = localStorage.getItem("token");
 
@@ -114,9 +118,8 @@ export default function ShiftAdjustment() {
     });
 
     if (response.ok) {
-      fetchShiftAdjustmentData(); // refresh data
+      fetchShiftAdjustmentData();
     } else {
-      console.error("Approval failed");
     }
   };
 
@@ -132,14 +135,12 @@ export default function ShiftAdjustment() {
     });
 
     if (response.ok) {
-      fetchShiftAdjustmentData(); // refresh data
-    } else {
-      console.error("Rejection failed");
+      fetchShiftAdjustmentData();
     }
   };
 
-
   const fetchShiftAdjustmentData = async () => {
+    console.log("Fetching pending data...");
     const user_id = localStorage.getItem("user_id");
     const token = localStorage.getItem("token");
 
@@ -174,6 +175,7 @@ export default function ShiftAdjustment() {
 
   const handleViewClick = (item: RequestDetails) => {
     setShiftData(item);
+    setActiveTab(filter);
   };
 
   return (
@@ -183,7 +185,6 @@ export default function ShiftAdjustment() {
       </div>
       <div className="shiftadjustment-container flex-grow-1">
         <Header title="ADJUSTMENT" />
-
         <div className="shift-background p-4 px-4">
           <div className="d-flex gap-5">
             <button
@@ -232,26 +233,17 @@ export default function ShiftAdjustment() {
                         <td>
                           <div className="d-flex gap-4 actions">
                             <div>
-                          <button
-                            className="btn-sm btn-outline-primary"
-                            type="button"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#shiftdrawer"
-                            aria-controls="shiftdrawer"
-                            onClick={() => handleViewClick(item)}
-                          >
-                            <img src="/svg/View.svg" alt="view" className="eye-view" />
-                          </button>
-                          </div>
-                          <div>
-                          <button
-                            className="btn-sm btn-outline-danger"
-                            type="button"
-                            onClick={() =>handleDeleteRequest(item.request)}
-                          >
-                            <img src="/svg/Delete.svg" alt="delete" />
-                          </button>
-                          </div>
+                              <button
+                                className="btn-sm btn-outline-primary"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#shiftdrawer"
+                                aria-controls="shiftdrawer"
+                                onClick={() => handleViewClick(item)}
+                              >
+                                <img src="/svg/View.svg" alt="view" className="eye-view" />
+                              </button>
+                            </div>
                           </div>
                         </td>
                       </tr>
@@ -266,21 +258,31 @@ export default function ShiftAdjustment() {
                 </tbody>
               </table>
             )}
-
             {filter === "approved" && (
-              <ApprovedTable onView={handleViewClick} />
-
+              <>
+                <ApproveTable onView={handleViewClick} />
+                <ApprovedData data={details} />
+              </>
             )}
-
-
             {filter === "rejected" && (
-              <RejectedTable onView={handleViewClick}/>
+              <>
+                <RejectedTable
+                  data={filteredData.filter(item => item.status === 2)} // 👈 this is critical
+                  onView={handleViewClick}
+                />
+              </>
             )}
-
           </div>
         </div>
       </div>
-      <Drawer data={details} />
+      {activeTab === "pending" && (
+        <Pending data={details} onDeclineComplete={fetchShiftAdjustmentData} activeTab={activeTab} />)}
+      {activeTab === "rejected" && (
+        <RejectedData
+          data={details}
+          onDeclineComplete={fetchShiftAdjustmentData}
+        />
+      )}
     </div>
   );
 }

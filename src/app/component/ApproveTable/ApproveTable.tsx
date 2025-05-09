@@ -11,7 +11,7 @@ interface ApprovedRequest {
   approved_by: string;
 }
 
-interface ApprovedTableProps {
+interface ApproveProps {
   onView: (item: ApprovedRequest) => void;
 }
 
@@ -20,7 +20,7 @@ interface Accounts {
   acctname: string;
 }
 
-export default function ApprovedTable({ onView }: ApprovedTableProps) {
+export default function ApproveTable({ onView }: ApproveProps) {
   const [showSample, setShowSample] = useState(true);
   const [approvedRequest, setApproveRequest] = useState<ApprovedRequest[]>([]);
   const [accounts, setAccounts] = useState<Accounts[]>([]);
@@ -29,8 +29,6 @@ export default function ApprovedTable({ onView }: ApprovedTableProps) {
     setShowSample(false);
 
   };
-
-  // const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
 
   async function getAccounts() {
     try {
@@ -100,8 +98,8 @@ export default function ApprovedTable({ onView }: ApprovedTableProps) {
                   className="btn-outline-primary"
                   type="button"
                   data-bs-toggle="offcanvas"
-                  data-bs-target="#shiftdrawer"
-                  aria-controls="shiftdrawer"
+                  data-bs-target="#approveddrawer"
+                  aria-controls="approveddrawer"
                   style={{ marginRight: "20px" }}
                   onClick={() => onView(request)} // Add this
                 >
