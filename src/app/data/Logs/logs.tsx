@@ -58,7 +58,6 @@ function LogsDataTable() {
 
 			if (response.status === 204) {
 				const message = await response.text();
-				// No new data, use data from local storage
 				const storedData = localStorage.getItem("logsData");
 				if (storedData) {
 					const parsedData = JSON.parse(storedData);
@@ -76,7 +75,6 @@ function LogsDataTable() {
 			const fetchedData = await response.json();
 			localStorage.setItem("total-logs", fetchedData.total);
 			setLatestUpdate(fetchedData.latest_update);
-			// Merge fetched data with the current state
 			const storedData = localStorage.getItem("logsData");
 			const storedLogs = storedData ? JSON.parse(storedData) : [];
 			const updatedLogs = fetchedData.data.map((newLog: Logs) => {
@@ -86,7 +84,6 @@ function LogsDataTable() {
 
 			setData(updatedLogs);
 			logData.current = updatedLogs;
-			// Store the new data in local storage
 			localStorage.setItem("logsData", JSON.stringify(updatedLogs));
 		} catch (err: any) {
 			setError(err.message);
@@ -101,16 +98,16 @@ function LogsDataTable() {
 		return () => clearInterval(intervalId); // Cleanup interval
 	}, [latestUpdate]);
 
-	if (loading)
-		return (
-			<div className={`loading ${loading ? "show" : ""} d-flex justify-content-center align-items-center`}>
-				<div className="spinner-border text-info" role="status">
-					<span className="visually-hidden">Loading...</span>
-				</div>
-			</div>
+	// if (loading)
+	// 	return (
+	// 		<div className={`loading ${loading ? "show" : ""} d-flex justify-content-center align-items-center`}>
+	// 			<div className="spinner-border text-info" role="status">
+	// 				<span className="visually-hidden">Loading...</span>
+	// 			</div>
+	// 		</div>
 
-		);
-	if (error) return <div>Error: {error}</div>;
+	// 	);
+	// if (error) return <div>Error: {error}</div>;
 
 	return (
 		<div className="logs-wrapper px-4">
