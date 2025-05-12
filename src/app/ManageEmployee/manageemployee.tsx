@@ -59,11 +59,6 @@ export default function CreateUD() {
 
   const token = localStorage.getItem("token");
 
-  const toggleSelect = (empno: number) => {
-    setSelectedEmployees(prev =>
-      prev.includes(empno) ? prev.filter(id => id !== empno) : [...prev, empno]
-    );
-  };
 
   useEffect(() => {
     GetEmployee(currentPage);

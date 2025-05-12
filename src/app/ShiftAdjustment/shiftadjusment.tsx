@@ -109,7 +109,7 @@ export default function ShiftAdjustment() {
   const handleApproveRequest = async (decryptedId: string) => {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/requests/${decryptedId}/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/requests/${decryptedId}/`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",

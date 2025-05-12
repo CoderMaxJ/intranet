@@ -83,7 +83,7 @@ export default function CreateUD() {
         const token = localStorage.getItem("token");
         const user_id = localStorage.getItem("user_id");
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/${Decryptor(user_id || "")}/?page=${page}`,
+            `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/schedule/${Decryptor(user_id || "")}/?page=${page}`,
             {
                 method: "GET",
                 headers: {
@@ -94,7 +94,6 @@ export default function CreateUD() {
         );
         if (response.ok) {
             const data = await response.json();
-            console.log(data.data);
             setEmployees(data.data);
             setTotalPages(data.num_pages);
             setTotal(data.total);
@@ -329,11 +328,6 @@ export default function CreateUD() {
                                 aria-labelledby="exampleModalLabel"
                                 aria-hidden="true"
                             >
-                                <div className="modal-dialog modal-xl" role="document">
-                                    <div className="modal-content px-4">
-                                        <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div className="emp-table px-4" style={{ position: 'relative', height: 'auto' }}>
@@ -366,8 +360,8 @@ export default function CreateUD() {
 
                                                 <td>{getAccountName(info.acctid)}</td>
                                                 <td>{info.position}</td>
-                                                <td>{info.schedule?.shiftstart || "--"}</td>
-                                                <td>{info.schedule?.shiftend || "--"}</td>
+                                                <td><input style={{border:"none"}} readOnly type="time" step={1} value={info.schedule?.shiftstart || "--"} /></td>
+                                                <td> <input type="time" style={{border:"none"}} readOnly value={info.schedule?.shiftend || "--"} /></td>
                                                 <td>{info.isdayshift === 0 ? "Night Shift" : "Morning Shift"}</td>
                                                 <td>{info.schedule?.created_at}</td>
                                             </tr>
