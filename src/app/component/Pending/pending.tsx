@@ -62,9 +62,10 @@ interface PendingProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
     onDeclineComplete?: () => void;
+    onApproveComplete?: (requestid: number) => void;
 }
 
-export default function Pending({ data, onSave, onDeclineComplete }: PendingProps) {
+export default function Pending({ data, onSave, onDeclineComplete, onApproveComplete }: PendingProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData, setCombinedData] = useState({})
     const [declineReason, setDeclineReason] = useState("");
@@ -193,6 +194,13 @@ export default function Pending({ data, onSave, onDeclineComplete }: PendingProp
         })
         if (response.status === 200) {
             successToast("Request approved successfully.");
+
+
+            if (typeof onApproveComplete === "function" && data?.requestid) {
+                onApproveComplete(data.requestid);
+            }
+
+
         } else {
             errorToast("Failed to approve request.");
         }
@@ -216,7 +224,7 @@ export default function Pending({ data, onSave, onDeclineComplete }: PendingProp
             approved_by: Decryptor(localStorage.getItem("user_id") || "")
         };
         approvedRequest(payload);
-        
+
     };
 
     const successToast = (msg: string) => toast.success(msg, {
@@ -239,7 +247,7 @@ export default function Pending({ data, onSave, onDeclineComplete }: PendingProp
         progress: undefined,
     });
 
-    
+
     return (
         <div>
             <ToastContainer />

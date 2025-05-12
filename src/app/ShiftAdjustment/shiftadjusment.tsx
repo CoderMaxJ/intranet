@@ -276,7 +276,18 @@ export default function ShiftAdjustment() {
         </div>
       </div>
       {activeTab === "pending" && (
-        <Pending data={details} onDeclineComplete={fetchShiftAdjustmentData} activeTab={activeTab} />)}
+        <Pending
+          data={details}
+          onDeclineComplete={fetchShiftAdjustmentData}
+          onApproveComplete={(approvedId) => {
+            setData(prev => prev.filter(item => item.requestid !== approvedId));
+            setShiftData(null); // Close view
+          }}
+          activeTab={activeTab}
+        />
+
+      )}
+
       {activeTab === "rejected" && (
         <RejectedData
           data={details}

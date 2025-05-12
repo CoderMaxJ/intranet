@@ -44,29 +44,29 @@
 }
 
 .manage-menus:hover {
-  background-color: #0a85ed;
+  background-color: #DDEEFC;
 }
 
-.manage-menus:hover .manage-img {
+/* .manage-menus:hover .manage-img {
   filter: invert(1) brightness(2);
-}
+} */
 
-.manage-menus:hover .manage-label {
-  color: #ffffff;
-}
 
-.manage-menus:hover .arrow-accordion {
+/* .manage-menus:hover .arrow-accordion {
   filter: invert(1) brightness(2);
+} */
+
+.manage-img {
+margin-left: 7px;
 }
 
-
-.manage-nav:hover .manage-img {
+/* .manage-nav:hover .manage-img {
   filter: invert(1) brightness(2);
-}
+} */
 
-.manage-nav:hover .manage-label {
-  color: #ffffff;
-}
+/* .manage-nav:hover .manage-label {
+  color: #000000;
+} */
 
 .acc-label,
 .emp-label {
@@ -80,15 +80,15 @@
   transition: filter 0.3s ease;
 }
 
-.nav-font:hover .accounts-svg,
+/* .nav-font:hover .accounts-svg,
 .nav-font:hover .bi-circle {
   filter: invert(1) brightness(2);
-}
+} */
 
-.nav-font:hover .acc-label,
+/* .nav-font:hover .acc-label,
 .nav-font:hover .emp-label {
   color: #ffffff;
-}
+} */
 
 
 .active-menu {
@@ -257,7 +257,7 @@
 }
 
 .nav-font:hover {
-  color: #f8f9fb;
+  color: #000000;
 }
 
 .nav-fontt {
@@ -290,6 +290,7 @@
 /* Default styles */
 .updatepassword-img {
   transition: filter 0.3s ease;
+  margin-left: 7px;
 }
 
 .updatep {
@@ -315,13 +316,13 @@
 
 /* Hover behavior */
 
-.nav-fontt:hover .updatepassword-img,
+/* .nav-fontt:hover .updatepassword-img,
 .nav-fonttt:hover .logout-img {
   filter: invert(1) brightness(2);
-}
+} */
 
 .nav-fontt:hover .updatep {
-  color: #ffffff;
+  color: #000000;
 }
 
 .generate.active,
@@ -1705,9 +1706,9 @@ table {
   max-height: 20px;
 }
 
-.manage-anchor:hover svg {
+/* .manage-anchor:hover svg {
   color: #ffffff;
-}
+} */
 
 .managereport {
   overflow-y: scroll;
@@ -2280,25 +2281,34 @@ table {
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
-.manage-anchor:hover .accounts-svg {
+/* .manage-anchor:hover .accounts-svg {
   filter: invert(1) brightness(2);
-}
-
+} */
 .generate:hover {
-  background-color: #0a85ed !important;
-
+  background-color: #DDEEFC !important;
+  color: #007bff !important;
 }
 
-.generate:hover .dashboard-img,
+.gen-main-container:hover label{
+  color: blue;
+}
+/* .generate:hover .dashboard-img,
 .generate:hover .reports-img,
 .generate:hover .schedule-img {
   filter: invert(1) brightness(2);
+} */
+
+.dashboard-img,
+.reports-img,
+.schedule-img  {
+  margin-left: 7px;
 }
+
 
 .generate:hover .dash,
 .generate:hover .reps,
 .generate:hover .sched {
-  color: #ffffff;
+  color: #000000;
 }
 
 .generate:hover .nav-font {
@@ -2329,7 +2339,7 @@ table {
 }
 
 .logout-hover:hover {
-  background-color: #0a85ed;
+  background-color: #DDEEFC;
 }
 
 .logout-hover {
@@ -2343,11 +2353,15 @@ table {
 }
 
 .logout-hover:hover {
-  color: #ffffff;
+  color: #000000;
 }
 
-.logout-hover:hover .logout-img {
+/* .logout-hover:hover .logout-img {
   filter: invert(1) brightness(2);
+} */
+
+.logout-img {
+  margin-left: 7px;
 }
 
 .logout-hover svg {
@@ -2356,19 +2370,18 @@ table {
 }
 
 .updatepassword-hover:hover {
-  background-color: #0a85ed;
+  background-color: #DDEEFC;
 }
 
-.updatepassword-hover:hover .updatepassword-img {
+/* .updatepassword-hover:hover .updatepassword-img {
   filter: invert(1) brightness(2);
-}
+} */
 
 .updatepassword-hover {
   display: flex;
   align-items: center;
   padding: 10px;
   margin-top: 5px;
-  color: white;
   cursor: pointer;
   border-radius: 2px;
   height: 45px;
@@ -2376,9 +2389,9 @@ table {
   width: 100%;
 }
 
-.updatepassword-hover:hover .updatep {
+/* .updatepassword-hover:hover .updatep {
   color: white;
-}
+} */
 
 
 .dot-div {
@@ -2641,18 +2654,18 @@ table {
 }
 
 .undermanage-hover a:hover {
-  background-color: #0a85ed;
-  color: white;
+  background-color: #DDEEFC;
+  color: #006CC7;
 }
 
 .admin .accordion-button:hover {
-  background-color: #0a85ed;
-  color: white;
+  background-color: #DDEEFC;
+  color:#006CC7;
 }
 
 .admin .accordion-button:active {
-  background-color: #0a85ed;
-  color: white;
+  background-color: #DDEEFC;
+  color: #006CC7;
 }
 
 .manage-hover {
@@ -3631,7 +3644,7 @@ table {
   box-shadow: none;
 }
 
-.generate.active img,
+/* .generate.active img,
 .generate.active label,
 .nav-font.active img,
 .nav-font.active label,
@@ -3641,7 +3654,7 @@ table {
 .nav-fonttt.active label {
   filter: brightness(0) invert(1);
   color: white !important;
-}
+} */
 
 
 .circle-indicator {
@@ -3653,9 +3666,10 @@ table {
   display: inline-block;
   margin-right: 25px;
   flex-shrink: 0;
+  margin-left: 5px;
 }
 
-.manage-anchor a:hover .circle-indicator {
+/* .manage-anchor a:hover .circle-indicator {
   border-color: white;
 }
 
@@ -3666,21 +3680,38 @@ table {
 .manage-anchor a:hover .circle-indicator,
 .employee-anchor a:hover .circle-indicator {
   border-color: white;
-}
+} */
 
 .circle-indicator.active {
   border-color: white;
-  background-color: transparent;
 }
 
-/* .manage-submenu-wrapper {
-  max-height: 0;
+/* Add to global CSS or component styles */
+.fade-spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 9999;
   opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
 }
 
-.manage-submenu-wrapper.expanded {
-  max-height: 500px;
+.fade-spinner.show {
   opacity: 1;
+  pointer-events: all;
+}
+/* 
+.generate.hover-enabled:hover {
+  background-color: #e0f0ff;
+  cursor: pointer;
+}
+
+.generate.active-tab:hover {
+  background-color: #0a85ed; 
+  cursor: default;
 } */
+

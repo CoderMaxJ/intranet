@@ -46,7 +46,7 @@ export default function () {
      const [allEmployees, setAllEmployees] = useState<Information[]>([]);
      const [filteredEmployees, setFilteredEmployees] = useState<Information[]>([]);
      const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
-     const [submitted, setSubmitted] = useState(false);
+
      const [localEmployees, setLocalEmployees] = useState([]);
      const [searchQueryLeft, setSearchQueryLeft] = useState("");
      const [filterText, setFilterText] = useState(""); // <-- ADD THIS
@@ -72,20 +72,9 @@ export default function () {
           return () => {
                modal.removeEventListener('hidden.bs.modal', handleModalHidden);
           };
-     }, [allEmployees]);
-
-     const successToast = (msg: string) => toast.success(msg, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-     });
+        }, [allEmployees]);
         
-
-     const errorToast = (msg: string) => toast.error(msg, {
+        const successToast = (msg: string) => toast.success(msg, {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: true,
@@ -93,7 +82,17 @@ export default function () {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-     });
+        });
+      
+        const errorToast = (msg: string) => toast.error(msg, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
      const handleRemoveEmployee = (empno: any) => {
           setSelectedEmployees(prev => prev.filter(id => id !== empno));
      }
@@ -188,13 +187,10 @@ export default function () {
      }, [timeIn, timeOut, selectedEmployees]);
 
      const handleSetSchedule = async () => {
-          setSubmitted(true); // <- mark the form as attempted
-
           if (!timeIn || !timeOut) {
                errorToast("Please set both Time In and Time Out before assigning schedule.");
                return;
           }
-
           if (selectedEmployees.length === 0) {
                errorToast("Please select at least one employee.");
                return;
@@ -336,7 +332,7 @@ export default function () {
           setFilteredEmployees(allData);   // Also show full list initially
      };
      useEffect(() => {
-          // fetchAllEmployees(); // Fetch all employees from database
+          fetchAllEmployees(); // Fetch all employees from database
           getAccount();        // Fetch all account names
      }, []);
 
@@ -396,9 +392,7 @@ export default function () {
                                         <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
                                              <div className="d-flex gap-4">
                                                   <div className="input-group mb-3" style={{ minWidth: "200px" }}>
-                                                       <span className="input-group-text" id="basic-addon1">
-                                                            From {submitted && !timeIn && <span className="text-danger">*</span>}
-                                                       </span>
+                                                       <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
                                                             type="time"
                                                             value={timeIn}
@@ -407,7 +401,7 @@ export default function () {
                                                        />
                                                   </div>
                                                   <div className="input-group mb-3" style={{ minWidth: "180px" }}>
-                                                       <span className="input-group-text" id="basic-addon1">To {submitted && !timeOut && <span className="text-danger">*</span>}</span>
+                                                       <span className="input-group-text" id="basic-addon1">To</span>
                                                        <input
                                                             type="time"
                                                             value={timeOut}
@@ -552,17 +546,17 @@ export default function () {
                                    </div>
                               </div>
                               {/* Add Schedule Button */}
-                              <div className="d-flex justify-content-end modal-footer" style={{ background: '#EBEDF0' }}>
+                              <div className="d-flex justify-content-end mt-4 modal-footer" style={{ background: '#EBEDF0' }}>
                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                                         <span className="cancel">Cancel</span>
-                                   </button>
+                                       </button>
                                    <button
                                         type="button"
                                         className="btn btn-primary clearall d-flex align-items-center"
                                         onClick={handleSetSchedule}
                                    >
 
-                                        <span className="reschedule">Reschedule Employees</span>
+                                       <span className="reschedule">Reschedule Employees</span>
                                    </button>
                               </div>
                          </div>
