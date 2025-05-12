@@ -11,6 +11,7 @@ export default function Login() {
     const [error, setError] = useState("");
     const [isLogged, setLog] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -31,6 +32,7 @@ export default function Login() {
                 , 1000);
 
         }
+       
     }, [isLogged, router]);
 
     const successToast = (msg: string) => toast.success(msg, {
@@ -43,6 +45,7 @@ export default function Login() {
         progress: undefined,
     });
     async function login() {
+        setLoading(true);
         const credentials = { username: username, password: password };
         try {
 
@@ -65,6 +68,7 @@ export default function Login() {
                 localStorage.setItem("active_tab", "1");
                 successToast("Login Successful");
                 setLog(true);
+                setLoading(true);
             } else if (response.status === 403) {
                 const message = await response.json();
                 setError(message.warning);
@@ -86,6 +90,16 @@ export default function Login() {
         e.preventDefault();
         login();
     };
+
+    if (loading) {
+    return (
+        <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+            <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    );
+}
 
     return (
         <div className="main-div">

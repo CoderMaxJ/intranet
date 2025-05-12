@@ -15,7 +15,6 @@ declare global {
   }
   declare var bootstrap: any;
   
-
 export default function Dashboard() {
     const router = useRouter();
     const [user_privilege, setUserPrivilege] = useState([""]);
@@ -49,15 +48,11 @@ export default function Dashboard() {
     const [isAccountManager, setIsAccountManager] = useState(false);
 
     useEffect(() => {
-        // Destroy existing tooltips (in case React re-rendered them)
         const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
       
         tooltipTriggerList.forEach((el) => {
-          // Dispose if already exists
           const tooltipInstance = bootstrap.Tooltip.getInstance(el);
           if (tooltipInstance) tooltipInstance.dispose();
-      
-          // Re-create
           new bootstrap.Tooltip(el);
         });
       }, [navWidth, showLogout, showDashboard, showReports]);
@@ -77,7 +72,6 @@ export default function Dashboard() {
             setAccordionIconn(false);
         }
     }, [activeNav]);
-
 
     const navigateTo = (path: string, tabId: string) => {
         setActiveNav(tabId);
@@ -123,6 +117,7 @@ export default function Dashboard() {
             }
         });
     }
+
     const profileImg = localStorage.getItem("profileImage")
     const user_id = localStorage.getItem("user_id");
     const handleLogout = () => {
@@ -184,7 +179,6 @@ export default function Dashboard() {
 
     const toggleMinimizeMaximize = () => {
         const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
-
         if (isMinimized) {
             setNavWidth("217px");
             setShowDashboard(true);
@@ -484,7 +478,7 @@ export default function Dashboard() {
                                         >
                                             <img src="/svg/updatepassword.svg" alt="updatepassword" className="updatepassword-img" height={20} />
                                             {showUpdatepassword === true && (
-                                                <label className="updatep" htmlFor="updatepassword">Update password</label>
+                                                <span className="updatep">Update password</span>
                                             )}
                                         </div>
                                     </div>

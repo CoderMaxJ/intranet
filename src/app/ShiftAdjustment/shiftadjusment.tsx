@@ -267,7 +267,7 @@ export default function ShiftAdjustment() {
             {filter === "rejected" && (
               <>
                 <RejectedTable
-                  data={filteredData.filter(item => item.status === 2)} // 👈 this is critical
+                  data={filteredData.filter(item => item.status === 2)}
                   onView={handleViewClick}
                 />
               </>

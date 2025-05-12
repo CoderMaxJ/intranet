@@ -268,6 +268,12 @@
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
+   display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  margin-left: -10px;
 }
 
 .nav-fontt:hover {
@@ -297,15 +303,6 @@
 }
 
 /* Flexible layout inside nav-fontt */
-.nav-fontt {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  transition: background-color 0.3s ease;
-  border-radius: 4px;
-  margin-left: -10px;
-}
 
 .nav-fonttt {
   display: flex;
