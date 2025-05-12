@@ -349,21 +349,21 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           {/* Row 1 */}
           <div className="row px-4">
             <div className="col-md-4">
-              <label htmlFor="fname" className="form-label">First Name</label>
+              <label htmlFor="fname" className="form-label">First Name <span className="text-danger">*</span></label>
               <input
                 required type="text" name="fname" className="form-control" id="fname"
                 value={formData.fname} onChange={handleInputChange} placeholder="Juan"
               />
             </div>
             <div className="col-md-4">
-              <label htmlFor="mname" className="form-label">Middle Name</label>
+              <label htmlFor="mname" className="form-label">Middle Name </label>
               <input
                 type="text" name="mname" className="form-control" id="mname"
                 value={formData.mname} onChange={handleInputChange} placeholder="Montenegro"
               />
             </div>
             <div className="col-md-4">
-              <label htmlFor="lname" className="form-label">Last Name</label>
+              <label htmlFor="lname" className="form-label">Last Name <span className="text-danger">*</span></label>
               <input
                 required type="text" name="lname" className="form-control" id="lname"
                 value={formData.lname} onChange={handleInputChange} placeholder="Dela Cruz"
@@ -374,14 +374,14 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           {/* Row 2 */}
           <div className="row px-4">
             <div className="col-md-4">
-              <label htmlFor="dateofbirth" className="form-label">Date of Birth</label>
+              <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
                 required type="date" name="dateofbirth" className="form-control" id="dateofbirth"
                 value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
               />
             </div>
             <div className="col-md-4">
-              <label htmlFor="maritalstatus" className="form-label">Marital Status</label>
+              <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
               <select
                 required name="maritalstatus" className="form-select" id="maritalstatus"
                 value={formData.maritalstatus} onChange={handleInputChange}
@@ -396,7 +396,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               </select>
             </div>
             <div className="col-md-4">
-              <label htmlFor="gender" className="form-label">Gender</label>
+              <label htmlFor="gender" className="form-label">Gender <span className="text-danger">*</span></label>
               <select
                 required name="gender" className="form-select" id="gender"
                 value={formData.gender} onChange={handleInputChange}
@@ -418,14 +418,14 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               />
             </div>
             <div className="col-md-4">
-              <label htmlFor="address" className="form-label">Address</label>
+              <label htmlFor="address" className="form-label">Address <span className="text-danger">*</span></label>
               <input
                 required type="text" name="address" className="form-control" id="address"
                 value={formData.address} onChange={handleInputChange} placeholder="Zapatera, Cebu City"
               />
             </div>
             <div className="col-md-4">
-              <label htmlFor="acctid" className="form-label">Account</label>
+              <label htmlFor="acctid" className="form-label">Account <span className="text-danger">*</span></label>
               <select
                 required name="acctid" className="form-select" id="acctid"
                 value={formData.acctid} onChange={handleInputChange}
@@ -441,7 +441,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           {/* Row 4 */}
           <div className="row px-4">
             <div className="col-md-4">
-              <label htmlFor="position" className="form-label">Position</label>
+              <label htmlFor="position" className="form-label">Position <span className="text-danger">*</span></label>
               <select
                 required name="position" className="form-select" id="position"
                 value={formData.position} onChange={handleInputChange}
@@ -456,7 +456,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className="col-md-4">
               {mode === "edit" ? (
                 <>
-                  <label className="form-label">Status</label>
+                  <label className="form-label">Status <span className="text-danger">*</span></label>
                   <select
                     className="form-select" name="status"
                     value={formData.status === 1 ? 1 : 0}
@@ -468,7 +468,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 </>
               ) : (
                 <>
-                  <label htmlFor="shiftstart" className="form-label">Time In</label>
+                  <label htmlFor="shiftstart" className="form-label">Time In <span className="text-danger">*</span></label>
                   <input
                     required type="time" name="shiftstart" className="form-controll" id="shiftstart"
                     autoComplete="off" inputMode="numeric"
@@ -481,7 +481,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className="col-md-4">
               {mode === "edit" ? (
                 <>
-                  <label className="form-label">Assign Privileges</label>
+                  <label className="form-label">Assign Privileges <span className="text-danger">*</span></label>
                   <select
                     name="role_id" className="form-select"
                     value={formData.role_id} onChange={handleInputChange}
@@ -494,7 +494,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 </>
               ) : (
                 <>
-                  <label htmlFor="shiftend" className="form-label">Time Out</label>
+                  <label htmlFor="shiftend" className="form-label">Time Out <span className="text-danger">*</span></label>
                   <input
                     required type="time" name="shiftend" className="form-controll-timeout" id="shiftend"
                     autoComplete="off" inputMode="numeric"

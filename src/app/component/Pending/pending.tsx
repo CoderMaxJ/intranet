@@ -54,17 +54,24 @@ interface RequestDetails {
     approved_by: number;
 }
 
-interface DrawerProps {
+interface Account {
+    acctid: number;
+    acctname: string;
+}
+interface PendingProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
+    onDeclineComplete?: () => void;
 }
 
-export default function Drawer({ data, onSave }: DrawerProps) {
+export default function Pending({ data, onSave, onDeclineComplete }: PendingProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData, setCombinedData] = useState({})
     const [declineReason, setDeclineReason] = useState("");
     const [status, setStatus] = useState(0);
+    const [accounts, setAccounts] = useState<Account[]>([]);
     console.log(data);
+
     useEffect(() => {
         if (buildData) {
             setCombinedData({
@@ -96,6 +103,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
     }, [data]);
 
     const handleDecline = async () => {
+        const token = localStorage.getItem("token");
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
             method: "PATCH",
@@ -107,11 +115,45 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         });
 
         if (response.status === 200) {
-            successToast("Request declined.");
+            toast.success("Request declined.", {
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+            setDeclineReason("");
+
+            if (typeof onDeclineComplete === "function") {
+                onDeclineComplete();
+            }
         } else {
-            errorToast("Failed to decline request.");
+            toast.error("Failed to decline request.", {
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
     };
+
+    const getAccounts = async () => {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Decryptor(token || "")}`
+            }
+        });
+        const result = await response.json();
+        setAccounts(result.data);
+    };
+
+    useEffect(() => {
+        getAccounts();
+    }, []);
 
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
@@ -141,7 +183,6 @@ export default function Drawer({ data, onSave }: DrawerProps) {
     };
     const token = localStorage.getItem("token");
     const approvedRequest = async (payload: any) => {
-
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
             method: "PATCH",
             headers: {
@@ -151,9 +192,9 @@ export default function Drawer({ data, onSave }: DrawerProps) {
             body: JSON.stringify(payload),
         })
         if (response.status === 200) {
-            successToast("Changes have been applied")
+            successToast("Request approved successfully.");
         } else {
-            errorToast("")
+            errorToast("Failed to approve request.");
         }
     }
     const handleApply = () => {
@@ -175,6 +216,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
             approved_by: Decryptor(localStorage.getItem("user_id") || "")
         };
         approvedRequest(payload);
+        
     };
 
     const successToast = (msg: string) => toast.success(msg, {
@@ -197,6 +239,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
         progress: undefined,
     });
 
+    
     return (
         <div>
             <ToastContainer />
@@ -232,7 +275,7 @@ export default function Drawer({ data, onSave }: DrawerProps) {
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Department</p>
-                                <p className="drawer-label">{data?.acctid}</p>
+                                <p className="drawer-label">{accounts.find(acc => acc.acctid === data?.acctid)?.acctname || "-"}</p>
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Request ID</p>
