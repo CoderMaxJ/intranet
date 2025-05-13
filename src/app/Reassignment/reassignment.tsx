@@ -229,7 +229,7 @@ export default function () {
                debouncedSearch.cancel();
           };
      }, [debouncedSearch])
-
+     
      const handleEmployeeClick=(employee:Information)=>{
           setSelectedEmployees(prev => [...prev, employee]);
      }
@@ -303,7 +303,7 @@ export default function () {
 
                                         {/* Left Side: Unselected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                             <h6 className="assign-employees">Assign Employees <span className="text-muted"></span></h6>
+                                             <h6 className="assign-employees">Assign Employees <span>({employee?.length})</span></h6>
                                              {/* LEFT SIDE SEARCH */}
                                              <div className="d-flex justity-content-center flex-wrap gap-2 w-100">
                                                   <div className="flex-grow-1"><input
@@ -350,18 +350,24 @@ export default function () {
                                         </div>
 
                                         {/* Right Side: Selected Employees */}
-                                        <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                             <h6 className="selected-emp">Selected Employees <span className="text-muted"></span></h6>
+                                        <div className="d-flex flex-column  align-items-start" style={{ flex: 1 }}>
+                                             <div className="d-flex align-items-center  gap-4 w-75 ">
+                                                  <h6 className="selected-emp">Selected Employees <span>({selectedEmployees?.length})</span></h6>
+                                             
 
+                                             </div>
+                                                  
                                              {/* RIGHT SIDE SEARCH */}
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">
-                                                  <div className="flex-grow-1"><input
-                                                       className="form-control mb-2"
-                                                       type="text"
-                                                       placeholder="Search selected..."
-                                                       value={searchQuery}
-                                                       onChange={handleSearchEmployee}
-                                                  /></div>
+                                                  <div className="flex-grow-1">
+                                                       <input
+                                                            className="form-control mb-2"
+                                                            type="text"
+                                                            placeholder="Search selected..."
+                                                            value={searchQuery}
+                                                            onChange={handleSearchEmployee}
+                                                       />
+                                                  </div>
                                                   <button type="button" className="clearall" onClick={(e)=>setSelectedEmployees([])} >Clear All</button>
                                              </div>
                                              <div className=" list-group w-100">
@@ -400,8 +406,8 @@ export default function () {
                                    </div>
                               </div>
                               {/* Add Schedule Button */}
-                              <div className="d-flex justify-content-end mt-4 modal-footer" style={{ background: '#EBEDF0' }}>
-                              <div className="d-flex justify-content-end mt-4 modal-footer" style={{ background: '#EBEDF0' }}>
+                              <div className="d-flex justify-content-end mt-4 modal-footer" >
+                              <div className="d-flex gap-3 mt-4 " >
                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                                         <span className="cancel">Cancel</span>
                                        </button>
@@ -409,11 +415,8 @@ export default function () {
                                    <button
                                         type="button"
                                         className="btn btn-primary clearall d-flex align-items-center"
-                                        onClick={handleSetSchedule}
-                                   >
-
-                                       <span className="reschedule">Reschedule Employees</span>
-                                       <span className="reschedule">Reschedule Employees</span>
+                                        onClick={handleSetSchedule}>
+                                        Reschedule 
                                    </button>
                               </div>
                          </div>

@@ -86,7 +86,8 @@ export default function ApproveTable({ onView }: ApproveProps) {
           </tr>
         </thead>
         <tbody>
-          {approvedRequest?.map((request: any, index: any) => (
+          {approvedRequest?.length > 0 ? (
+            approvedRequest.map((request: any, index: any) => (
             <tr key={index}>
               <td>{request.name}</td>
               <td>{request.reason?.slice(0, 10) + "..." || "-"}</td>
@@ -107,7 +108,11 @@ export default function ApproveTable({ onView }: ApproveProps) {
                 </button>
               </td>
             </tr>
-          ))}
+          ))):(
+          <tr>
+           <td><center>No pending shift adjustment requests at this time</center></td>
+          </tr>
+          )}
         </tbody>
       </table>
     );

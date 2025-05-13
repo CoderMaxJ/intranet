@@ -251,7 +251,7 @@ export default function ShiftAdjustment() {
                   ) : (
                     <tr>
                       <td colSpan={5} className="text-center">
-                        No shift data found.
+                          No pending shift adjustment requests at this time
                       </td>
                     </tr>
                   )}
