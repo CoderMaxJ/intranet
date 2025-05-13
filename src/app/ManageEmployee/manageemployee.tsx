@@ -417,6 +417,7 @@ export default function CreateUD() {
                                 <img src="/svg/reset.svg" height={16} width={16} />
                               </button>
                             )}
+                            {/* // */}
                             {user_privilege.includes("manage_users") && (
                               <button
                                 data-bs-toggle="modal"
