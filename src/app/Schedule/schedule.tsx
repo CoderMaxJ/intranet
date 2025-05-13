@@ -94,6 +94,7 @@ export default function CreateUD() {
         );
         if (response.ok) {
             const data = await response.json();
+            console.log(data.data[0])
             setEmployees(data.data);
             setTotalPages(data.num_pages);
             setTotal(data.total);
@@ -356,12 +357,10 @@ export default function CreateUD() {
                                             <tr key={info.empno}>
                                                 <td className="p">{info.empno}</td>
                                                 <td>{`${info.fname} ${info.lname}`}</td>
-
-
                                                 <td>{getAccountName(info.acctid)}</td>
                                                 <td>{info.position}</td>
-                                                <td><input style={{border:"none"}} readOnly type="time" step={1} value={info.schedule?.shiftstart || "--"} /></td>
-                                                <td> <input type="time" style={{border:"none"}} readOnly value={info.schedule?.shiftend || "--"} /></td>
+                                                <td>{info?.schedule?.shiftstart || "--"}</td>
+                                                <td>{info?.schedule?.shiftend || "--"}</td>
                                                 <td>{info.isdayshift === 0 ? "Night Shift" : "Morning Shift"}</td>
                                                 <td>{info.schedule?.created_at}</td>
                                             </tr>

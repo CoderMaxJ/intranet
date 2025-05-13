@@ -83,7 +83,7 @@ function BreakDataTable() {
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
       const storedBreaks = storedData ? JSON.parse(storedData) : [];
-      const updatedBreaks = data.data.map((newBreak: BreakData) => ({
+      const updatedBreaks = (data?.data || []).map((newBreak: BreakData) => ({
         ...newBreak,
         duration: newBreak.duration > 0 ? newBreak.duration : -newBreak.overbreak, // Always use fresh duration
       }));
