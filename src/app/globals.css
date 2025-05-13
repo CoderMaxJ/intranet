@@ -1253,8 +1253,8 @@ input:focus {
 
 .logs-total {
   background-color: #b3efb2;
-  padding: 7px;
-
+  padding: 10px;
+  align-items: center;
   justify-content: center;
   height: 37px;
   text-align: center;
