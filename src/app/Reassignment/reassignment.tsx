@@ -263,7 +263,6 @@ export default function () {
                                              <div className="d-flex gap-4">
                                                   <div className="input-group mb-3" style={{ minWidth: "200px" }}>
                                                        <span className="input-group-text" id="basic-addon1">From</span>
-                                                       <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
                                                             type="time"
                                                             value={timeIn}
@@ -272,7 +271,6 @@ export default function () {
                                                        />
                                                   </div>
                                                   <div className="input-group mb-3" style={{ minWidth: "180px" }}>
-                                                       <span className="input-group-text" id="basic-addon1">To</span>
                                                        <span className="input-group-text" id="basic-addon1">To</span>
                                                        <input
                                                             type="time"
