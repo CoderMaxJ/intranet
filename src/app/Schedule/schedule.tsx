@@ -278,7 +278,7 @@ export default function CreateUD() {
                                         <div className="time d-flex gap-4 flex-wrap">
                                             <div className="searchbar-container">
                                                 <input
-                                                    className="form-control"
+                                                    className="form-control form-control--search"
                                                     id="search-employee"
                                                     type="text"
                                                     placeholder="Search..."
@@ -301,22 +301,24 @@ export default function CreateUD() {
                                             </div>
                                             <button
                                                 type="button"
-                                                className="d-flex align-items-center"
+                                                className="d-flex align-items-center addhover"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#reassignment"
                                             >
-                                                <img
-                                                    src="/svg/update.svg"
-                                                    alt="update"
-                                                    style={{
-                                                        width: '15px',
-                                                        height: '15px',
-                                                        filter: 'brightness(100) contrast(2.5)',
-                                                        marginRight: '2px',
-                                                        display: 'inline-block',
-                                                    }}
-                                                />
-                                                <span className="fs-6 text-light">Update Schedule</span>
+                                                <div>
+                                                    <img
+                                                        src="/svg/update.svg"
+                                                        alt="update"
+                                                        style={{
+                                                            width: '15px',
+                                                            height: '15px',
+                                                            marginRight: '5px',
+                                                            filter: 'brightness(100) contrast(2.5)',
+                                                            display: 'inline-block',
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div><span className="view">Update Schedule</span></div>
                                             </button>
                                         </div>
                                     </div>

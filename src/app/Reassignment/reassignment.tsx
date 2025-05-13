@@ -60,6 +60,9 @@ export default function () {
         });
       
         const errorToast = (msg: string) => toast.error(msg, {
+        });
+      
+        const errorToast = (msg: string) => toast.error(msg, {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: true,
@@ -263,6 +266,7 @@ export default function () {
                                              <div className="d-flex gap-4">
                                                   <div className="input-group mb-3" style={{ minWidth: "200px" }}>
                                                        <span className="input-group-text" id="basic-addon1">From</span>
+                                                       <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
                                                             type="time"
                                                             value={timeIn}
@@ -271,6 +275,7 @@ export default function () {
                                                        />
                                                   </div>
                                                   <div className="input-group mb-3" style={{ minWidth: "180px" }}>
+                                                       <span className="input-group-text" id="basic-addon1">To</span>
                                                        <span className="input-group-text" id="basic-addon1">To</span>
                                                        <input
                                                             type="time"
@@ -401,8 +406,10 @@ export default function () {
                               </div>
                               {/* Add Schedule Button */}
                               <div className="d-flex justify-content-end mt-4 modal-footer" style={{ background: '#EBEDF0' }}>
+                              <div className="d-flex justify-content-end mt-4 modal-footer" style={{ background: '#EBEDF0' }}>
                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                                         <span className="cancel">Cancel</span>
+                                       </button>
                                        </button>
                                    <button
                                         type="button"
@@ -410,6 +417,7 @@ export default function () {
                                         onClick={handleSetSchedule}
                                    >
 
+                                       <span className="reschedule">Reschedule Employees</span>
                                        <span className="reschedule">Reschedule Employees</span>
                                    </button>
                               </div>
@@ -419,3 +427,4 @@ export default function () {
           </div >
      );
 }
+

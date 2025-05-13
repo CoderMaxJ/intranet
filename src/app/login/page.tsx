@@ -32,7 +32,7 @@ export default function Login() {
                 , 1000);
 
         }
-       
+
     }, [isLogged, router]);
 
     const successToast = (msg: string) => toast.success(msg, {
@@ -44,6 +44,7 @@ export default function Login() {
         draggable: true,
         progress: undefined,
     });
+
     async function login() {
         setLoading(true);
         const credentials = { username: username, password: password };
@@ -68,7 +69,10 @@ export default function Login() {
                 localStorage.setItem("active_tab", "1");
                 successToast("Login Successful");
                 setLog(true);
-                setLoading(true);
+                // setTimeout(() => {
+                //     setLoading(false);
+                // }, 500);
+
             } else if (response.status === 403) {
                 const message = await response.json();
                 setError(message.warning);
@@ -91,15 +95,20 @@ export default function Login() {
         login();
     };
 
-    if (loading) {
-    return (
-        <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-            <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </div>
-        </div>
-    );
-}
+    // if (loading) {
+    //     return (
+    //         <div>
+    //             {loading && (
+    //                 <div className="fade-spinner show d-flex justify-content-center align-items-center">
+    //                     <div className="spinner-border text-primary" role="status">
+    //                         <span className="visually-hidden">Loading...</span>
+    //                     </div>
+    //                 </div>
+    //             )}
+    //         </div>
+
+    //     );
+    // }
 
     return (
         <div className="main-div">
