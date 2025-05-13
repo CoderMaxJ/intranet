@@ -324,10 +324,11 @@ export default function CreateUD() {
                       </svg>
                     </div>
                     {user_privilege.includes("manage_users") && (
-                      <div className="manageemployee-button py-1">
+                      <div className=" py-1">
+                       
                         <button
                           type="button"
-                          className=" btn btn-success btn-sm d-flex align-items-center"
+                          className="addhover"
                           data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
                         >
@@ -341,7 +342,7 @@ export default function CreateUD() {
                           >
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                           </svg>
-                          <span className="addemployee-btn">Add Employee</span>
+                          <span className="view">Add Employee</span>
                         </button>
                       </div>
                     )}

@@ -1254,7 +1254,7 @@ input:focus {
 .logs-total {
   background-color: #b3efb2;
   padding: 7px;
-  width: 110px;
+
   justify-content: center;
   height: 37px;
   text-align: center;
@@ -1264,6 +1264,7 @@ input:focus {
 
 .logs-total label {
   font-family: 'Geist';
+  font-size: 13px;
 }
 
 .logs-headername {
@@ -1576,17 +1577,20 @@ tbody td {
   width: 9%;
 }
 
-/* .form-control.form-control--search {
+.form-control.form-control--search {
   border: 3px solid #dbdbdb; 
-  padding: 8px 30px 8px 60px;
   background-color: #ffffff;
   font-family: 'Geist';
-} */
+}
 
 
-.rotate-acc-icon {
+/* .rotate-acc-icon {
   rotate: 180deg;
   transition: 0.3s all ease-in-out;
+} */
+.rotate-acc-icon {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
 }
 
 .bi-chevron-up {
@@ -1648,14 +1652,14 @@ table {
 
 .addhover {
   background-color: #0ebb39 !important;
-  padding: 8px !important;
+  padding: 10px !important;
   color: white;
   border: none;
   border-radius: 4px;
   white-space: nowrap;
   font-weight: bold;
   font-size: small;
-  width: 130px;
+  /* width: 130px; */
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -1856,8 +1860,8 @@ table {
 
 .manageemployee-button button {
   border-radius: 4px;
-  font-weight: 500;
-  padding: 10px;
+
+  padding: 12px;
   white-space: nowrap;
   background-color: #0ebb39;
   border: none;
@@ -3627,8 +3631,8 @@ table {
 }
 
 .actions-button {
-  width: 19px;
-  height: 19px;
+  width: 16px;
+  height: 16px;
 }
 
 .form-control--requesteddate {
@@ -3641,8 +3645,8 @@ table {
 }
 
 .eye-view {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border: none !important;
 }
 
@@ -3722,14 +3726,19 @@ table {
   opacity: 1;
   pointer-events: all;
 }
-/* 
+
+.generate {
+  transition: background-color 0.2s;
+}
+
+
 .generate.hover-enabled:hover {
-  background-color: #e0f0ff;
+  background-color: #e0e0e0;
   cursor: pointer;
 }
 
 .generate.active-tab:hover {
-  background-color: #0a85ed; 
+  background-color: #0a85ed !important;
   cursor: default;
-} */
+}
 

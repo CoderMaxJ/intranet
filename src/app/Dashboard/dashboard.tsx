@@ -68,10 +68,11 @@ export default function Dashboard() {
         if (["4", "5", "6"].includes(activeNav)) {
             setActiveMenu("manage");
             setAccordionIconn(true);
-        } else if (activeMenu === "manage") {
-            setActiveMenu("");
-            setAccordionIconn(false);
         }
+        // else if (activeMenu === "manage") {
+        //     setActiveMenu("");
+        //     setAccordionIconn(false);
+        // }
     }, [activeNav]);
 
     const navigateTo = (path: string, tabId: string) => {
@@ -322,16 +323,13 @@ export default function Dashboard() {
                     )}
                 </div>
                 <div style={{ overflow: 'hidden' }}>
-                    <div className="generate" onClick={() => navigateTo("/WorkforceMonitoring", "1")}
-                        style={{ backgroundColor: localStorage.getItem("active_tab") === "1" ? "#0a85ed" : "" }}>
-                        {/* <div
-                            className={`generate ${activeNav === "1" ? "active-tab" : "hover-enabled"}`}
-                            onClick={() => navigateTo("/WorkforceMonitoring", "1")}
-                            style={{
-                                backgroundColor: activeNav === "1" ? "#0a85ed" : "",
-                            }}
-                        ></div> */}
-
+                    <div
+                        className={`generate ${activeNav === "1" ? "active-tab" : "hover-enabled"}`}
+                        onClick={() => navigateTo("/WorkforceMonitoring", "1")}
+                        style={{
+                            backgroundColor: activeNav === "1" ? "#0a85ed" : "",
+                        }}
+                    >
                         <button id="dashboard" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}>
                             <img
                                 src="/svg/dashboard.svg"
@@ -355,10 +353,13 @@ export default function Dashboard() {
                             )}
                         </button>
                     </div>
-
-                    <div className="generate" onClick={() => navigateTo("/Reports", "2")}
-                        style={{ backgroundColor: localStorage.getItem("active_tab") === "2" ? "#0a85ed" : "" }}>
-
+                    <div
+                        className={`generate ${activeNav === "2" ? "active-tab" : "hover-enabled"}`}
+                        onClick={() => navigateTo("/Reports", "2")}
+                        style={{
+                            backgroundColor: activeNav === "2" ? "#0a85ed" : "",
+                        }}
+                    >
                         <a className="nav-font" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
                             <img
                                 src="/svg/reports.svg"
@@ -377,36 +378,37 @@ export default function Dashboard() {
                         </a>
                     </div>
                     <div>
-                        <div className="generate" onClick={() => navigateTo("/Schedule", "3")}
+                        <div className={`generate ${activeNav === "3" ? "active-tab" : "hover-unable"}`}
+                            onClick={() => navigateTo("/Schedule", "3")}
                             style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0a85ed" : "" }}>
+
                             <a className="nav-font " style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
                                 <img src="/svg/schedule.svg" alt="schedule" className="schedule-img" height={20} style={{
                                     filter: localStorage.getItem("active_tab") === "3" ? "brightness(0) invert(1)" : "",
                                 }} />
                                 {showReports === true && (
-                                    <label htmlFor="label" className="sched" style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>Schedule</label>
+                                    <label htmlFor="label" className="sched" style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
+                                        Schedule
+                                    </label>
                                 )}
                             </a>
                         </div>
                     </div>
                     <div className="accordion-item accordion" >
                         <div className="manage-div">
-                            <div className="manage-menus d-flex justify-content-between align-items-center"
+                            <div className={`manage-menus d-flex justify-content-between align-items-center ${["4", "5", "6"].includes(activeNav) ? "active-tab" : "hover-unable"}`}
 
                                 onClick={() => {
-                                    const isManageTab = ["4", "5", "6"].includes(activeNav);
-
-                                    if (activeMenu === "manage" && isManageTab) {
-
+                                    const isOpen = activeMenu === "manage";
+                                    if (isOpen) {
                                         setActiveMenu("");
                                         setAccordionIconn(false);
                                     } else {
-
-                                        const newState = activeMenu === "manage" ? "" : "manage";
-                                        setActiveMenu(newState);
-                                        setAccordionIconn(newState === "manage");
+                                        setActiveMenu("manage");
+                                        setAccordionIconn(true);
                                     }
                                 }}
+
                                 style={{ cursor: "pointer" }}>
                                 <div className="manage-nav">
                                     <img src="/svg/manage.svg" alt="manage" className="manage-img" height={20} />
@@ -429,6 +431,7 @@ export default function Dashboard() {
                                             height="20"
                                             fill="currentColor"
                                             className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "" : "rotate-acc-icon"}`}
+
                                             viewBox="0 0 16 16"
                                             style={{ color: '#ffffff' }}
                                         >
