@@ -517,6 +517,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
                
                 />
+                
               </div>
               <div className="col-md-4">
                 <label htmlFor="shiftend" className="form-label-timeout1 mb-1">Time Out</label>
