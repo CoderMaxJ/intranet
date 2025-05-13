@@ -257,7 +257,7 @@ export default function Updatepassword() {
                       </div>
                     </div>
                     {/* Submit Button */}
-                    <div className="upd">
+                    <div className="upd mt-3">
                       <button type="submit" className="update-pass mt-3">
                         Update Password
                       </button>
@@ -266,7 +266,6 @@ export default function Updatepassword() {
                 </div>
               </form>
             </div>
-            <div className="modal-footer"></div>
           </div>
         </div>
       </div>

@@ -547,8 +547,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                     </div>
                 </div>
 
-                <hr />
-                <div className="modal-footer gap-4 " style={{ padding: '20px' }}>
+                <div className="modal-footer gap-4 shift-footer" style={{ padding: '20px' }}>
                     <div>
                         <button
                             type="button"

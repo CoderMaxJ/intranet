@@ -414,7 +414,7 @@ export default function CreateUD() {
                                 title={isresetPassword ? "" : "Reset Password"}
                                 onClick={() => handleResetPassword(info.empno)}
                               >
-                                <img src="/svg/reset.svg" height={22} width={22} />
+                                <img src="/svg/reset.svg" height={16} width={16} />
                               </button>
                             )}
                             {user_privilege.includes("manage_users") && (
@@ -427,7 +427,7 @@ export default function CreateUD() {
                                 style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
                                 title={update ? "" : "Update"}
                               >
-                                <img src="/svg/pencil.svg" alt="" />
+                                <img src="/svg/pencil.svg" height={16} width={16} />
                               </button>
                             )}
                           </div>

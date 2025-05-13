@@ -382,14 +382,14 @@ export default function ManageDepartment() {
                         )}
 
                         <div className="accounta-table-div table-responsive accounts-table" style={{ position: 'relative' }}>
-                            <table className="manage-table table table-light table-hover table-striped border ">
+                            <table className="manage-table table table-light table-hover table-striped table-bordered custom-bordered">
                                 <thead>
                                     <tr>
                                         <th className="px-1">Account ID</th>
                                         <th className="px-1">Account Name</th>
                                         <th className="px-1">Status</th>
                                         <th className="th-manager px-1">Manager/Supervisor</th>
-                                        <th className="th-action border border">Actions</th>
+                                        <th className="th-action px-1">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody className="accounts-td" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
