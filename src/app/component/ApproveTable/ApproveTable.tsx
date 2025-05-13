@@ -109,9 +109,11 @@ export default function ApproveTable({ onView }: ApproveProps) {
               </td>
             </tr>
           ))):(
-          <tr>
-           <td><center>No pending shift adjustment requests at this time</center></td>
-          </tr>
+            <tr>
+               <td>
+               <p>No requests have been approved.</p>
+               </td>
+            </tr>
           )}
         </tbody>
       </table>

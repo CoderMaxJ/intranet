@@ -81,7 +81,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
         </tr>
       </thead>
       <tbody>
-        {rejectedRequest?.map((request: any, index: any) => (
+        {rejectedRequest?.length > 0? rejectedRequest.map(((request: any, index: any) => (
           <tr key={index}>
             <td>{request.name}</td>
             <td>{request.reason_for_disapproved?.slice(0, 10) + "..." || "-"}</td>
@@ -102,7 +102,13 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
               </button>
             </td>
           </tr>
-        ))}
+        ))):(
+          <tr>
+            <td>
+                <p>No rejected request at this time</p>
+            </td>
+          </tr>
+        )}
       </tbody>
     </table>
   );
