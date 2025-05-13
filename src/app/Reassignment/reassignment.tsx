@@ -6,7 +6,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // <-- ADD this
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 interface Schedule {
      shiftstart: string;
      shiftend: string;
@@ -59,8 +58,6 @@ export default function () {
           progress: undefined,
         });
       
-        const errorToast = (msg: string) => toast.error(msg, {
-        });
       
         const errorToast = (msg: string) => toast.error(msg, {
           position: "top-right",
@@ -410,7 +407,7 @@ export default function () {
                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                                         <span className="cancel">Cancel</span>
                                        </button>
-                                       </button>
+                                      
                                    <button
                                         type="button"
                                         className="btn btn-primary clearall d-flex align-items-center"
@@ -425,6 +422,7 @@ export default function () {
                     </div>
                </div>
           </div >
+          </div>
      );
 }
 
