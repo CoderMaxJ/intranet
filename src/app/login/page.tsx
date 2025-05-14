@@ -30,7 +30,6 @@ export default function Login() {
                 router.push("/WorkforceMonitoring");
             }
                 , 1000);
-
         }
 
     }, [isLogged, router]);
@@ -69,9 +68,6 @@ export default function Login() {
                 localStorage.setItem("active_tab", "1");
                 successToast("Login Successful");
                 setLog(true);
-                // setTimeout(() => {
-                //     setLoading(false);
-                // }, 500);
 
             } else if (response.status === 403) {
                 const message = await response.json();
@@ -94,21 +90,6 @@ export default function Login() {
         e.preventDefault();
         login();
     };
-
-    // if (loading) {
-    //     return (
-    //         <div>
-    //             {loading && (
-    //                 <div className="fade-spinner show d-flex justify-content-center align-items-center">
-    //                     <div className="spinner-border text-primary" role="status">
-    //                         <span className="visually-hidden">Loading...</span>
-    //                     </div>
-    //                 </div>
-    //             )}
-    //         </div>
-
-    //     );
-    // }
 
     return (
         <div className="main-div">
@@ -158,11 +139,9 @@ export default function Login() {
                         </div>
                     </div>
                     <div>
-                        <button type="submit" className="button-login mb-4
-            ">
+                        <button type="submit" className="button-login mb-4">
                             <span className="view">Login</span>
                         </button>
-
                     </div>
                 </form>
                 <div className="ecomialogo-footer d-flex flex-column align-items-center">
@@ -176,7 +155,5 @@ export default function Login() {
                 </div>
             </div>
         </div>
-
     );
-
 }

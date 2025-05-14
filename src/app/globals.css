@@ -756,6 +756,10 @@ input:focus {
   .tabbreaks {
     width: calc(100% + 100px) !important;
   }
+
+  .adjustment-table {
+    width: calc(100% + 100px) !important;
+  }
 }
 
 @media only screen and (min-width: 400px) {
@@ -1656,7 +1660,7 @@ table {
   padding-bottom: 10px !important;
   border-radius: 4px;
   width: 100% !important;
-  height: 900px;
+  height: 830px;
 }
 
 
@@ -2517,7 +2521,7 @@ table {
 }
 
 .circle-indicator {
-  transform: translateX(8px) translateY(3px);
+  transform: translateX(10px) translateY(3px);
 }
 
 .employee-anchor svg.active {
@@ -3547,4 +3551,8 @@ table {
 
 .add-rows {
   margin-top: -15px !important;
+}
+
+.modal-content--width {
+  width: 500px !important;
 }

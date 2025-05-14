@@ -210,9 +210,9 @@ export default function ShiftAdjustment() {
             </button>
           </div>
 
-          <div className="shiftadjustment-table">
+          <div className="shiftadjustment-table table-responsive">
             {filter === "pending" && (
-              <table className="table table-striped table-hover table-bordered">
+              <table className="adjustment-table table table-striped table-hover table-bordered">
                 <thead>
                   <tr>
                     <th>Name</th>
