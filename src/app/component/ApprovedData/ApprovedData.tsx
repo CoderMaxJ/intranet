@@ -298,6 +298,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     value={buildData?.login?.record || ""}
                     disabled={true} readOnly
                     className="input-time-field"
+                    step={1}
                   />
                 </div>
 
@@ -325,6 +326,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     value={buildData?.break1?.record?.in || ""}
                     disabled={true} readOnly
                     className="input-time-field"
+                    step={1}
                   />
                 </div>
 
@@ -352,6 +354,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     onChange={(e) => handleChange("break1", "out", e.target.value)}
                     value={buildData?.break1?.record?.out || ""}
                     className="input-time-field"
+                    step={1}
                   />
                 </div>
 
@@ -379,6 +382,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     onChange={(e) => handleChange("lunch", "in", e.target.value)}
                     value={buildData?.lunch?.record?.in || ""}
                     className="input-time-field"
+                    step={1}
                   />
                 </div>
 
@@ -409,6 +413,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     onChange={(e) => handleChange("lunch", "out", e.target.value)}
                     value={buildData?.lunch?.record?.out || ""}
                     className="input-time-field"
+                    step={1}
                   />
                 </div>
 
