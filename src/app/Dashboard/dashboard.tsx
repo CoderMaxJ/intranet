@@ -434,9 +434,25 @@ export default function Dashboard() {
                                                     color: localStorage.getItem("active_tab") === "4" ? "white" : "",
                                                 }}
                                             >
-                                                <span
+                                                {/* <span
                                                     className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
-                                                />
+                                                /> */}
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="23"
+                                                    height="23"
+                                                    viewBox="0 0 24 24"
+                                                    className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
+                                                >
+                                                    <circle
+                                                        cx="9"
+                                                        cy="9"
+                                                        r="7"
+                                                        stroke="currentColor"
+                                                        strokeWidth="3"
+                                                        fill="none"
+                                                    />
+                                                </svg>
 
                                                 {showAccounts && (
                                                     <label
@@ -461,7 +477,24 @@ export default function Dashboard() {
                                                     marginTop: isAccountManager ? "25px" : "0px",
                                                 }}
                                             >
-                                                <span className={`circle-indicator  ${activeNav === "5" ? "active" : ""} `}></span>
+                        
+                                                 <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="23"
+                                                    height="23"
+                                                    viewBox="0 0 24 24"
+                                                    className={`circle-indicator ${activeNav === "5" ? "active" : ""}`}
+                                                >
+                                                    <circle
+                                                        cx="9"
+                                                        cy="9"
+                                                        r="7"
+                                                        stroke="currentColor"
+                                                        strokeWidth="3"
+                                                        fill="none"
+                                                    />
+                                                </svg>
+
                                                 {showEmployee && (
                                                     <label
                                                         className="emp-label"
@@ -482,7 +515,22 @@ export default function Dashboard() {
                                                     color: localStorage.getItem("active_tab") === "6" ? "white" : "",
                                                 }}
                                             >
-                                                <span className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}></span>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="23"
+                                                    height="23"
+                                                    viewBox="0 0 24 24"
+                                                     className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}
+                                                >
+                                                    <circle
+                                                        cx="9"
+                                                        cy="9"
+                                                        r="7"
+                                                        stroke="currentColor"
+                                                        strokeWidth="3"
+                                                        fill="none"
+                                                    />
+                                                </svg>
                                                 {shiftAdjustment && (
                                                     <label
                                                         className="emp-label"
@@ -592,17 +640,17 @@ export default function Dashboard() {
                         <center>
                             {open === false && showProfile === true && (
                                 <div className="profile-div position-relative">
-                                    <div className="dot-div position-absolute">
+                                    {/* <div className="dot-div position-absolute">
                                         <svg onClick={toggleinput} xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" className="bi bi-camera-fill text-light" viewBox="0 0 16 16">
                                             <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                                             <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0" />
                                         </svg>
-                                    </div>
-                                    {upload === true && (
+                                    </div> */}
+                                    {/* {upload === true && (
                                         <div>
                                             <input className="input-image" type="file" accept="image/*" onChange={handleImageUpload} />
                                         </div>
-                                    )}
+                                    )} */}
                                     <div className="profile-circle">
                                         {profile ? (
                                             <img onClick={openClose} className="profile-picture" src={profile} alt="" height={70} width={70} />

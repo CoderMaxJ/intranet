@@ -264,7 +264,7 @@ export default function CreateUD() {
     <div className="crud-maindiv">
       <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
         <div className="modal-dialog">
-          <div className="modal-content" style={{width:'500px !important'}}>
+          <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5 text-light" id="resetPasswordModalLabel">Confirmation</h1>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

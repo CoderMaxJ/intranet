@@ -348,21 +348,21 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 1 */}
           <div className="row px-4">
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="fname" className="form-label">First Name <span className="text-danger">*</span></label>
               <input
                 required type="text" name="fname" className="form-control" id="fname"
                 value={formData.fname} onChange={handleInputChange} placeholder="Juan"
               />
             </div>
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="mname" className="form-label">Middle Name </label>
               <input
                 type="text" name="mname" className="form-control" id="mname"
                 value={formData.mname} onChange={handleInputChange} placeholder="Montenegro"
               />
             </div>
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="lname" className="form-label">Last Name <span className="text-danger">*</span></label>
               <input
                 required type="text" name="lname" className="form-control" id="lname"
@@ -372,15 +372,15 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           </div>
 
           {/* Row 2 */}
-          <div className="row px-4">
-            <div className="col-md-4">
+          <div className="row px-4 first-row">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
                 required type="date" name="dateofbirth" className="form-control" id="dateofbirth"
                 value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
               />
             </div>
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
               <select
                 required name="maritalstatus" className="form-select" id="maritalstatus"
@@ -395,7 +395,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <option value="Other">Other</option>
               </select>
             </div>
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="gender" className="form-label">Gender <span className="text-danger">*</span></label>
               <select
                 required name="gender" className="form-select" id="gender"
@@ -410,21 +410,21 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 3 */}
           <div className="row px-4">
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="contactno" className="form-label">Contact No</label>
               <input
                 type="number" name="contactno" className="form-control" id="contactno"
                 value={formData.contactno} onChange={handleInputChange} placeholder="+63 92 6645 9723"
               />
             </div>
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="address" className="form-label">Address <span className="text-danger">*</span></label>
               <input
                 required type="text" name="address" className="form-control" id="address"
                 value={formData.address} onChange={handleInputChange} placeholder="Zapatera, Cebu City"
               />
             </div>
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="acctid" className="form-label">Account <span className="text-danger">*</span></label>
               <select
                 required name="acctid" className="form-select" id="acctid"
@@ -440,7 +440,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 4 */}
           <div className="row px-4">
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               <label htmlFor="position" className="form-label">Position <span className="text-danger">*</span></label>
               <select
                 required name="position" className="form-select" id="position"
@@ -453,7 +453,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               </select>
             </div>
 
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               {mode === "edit" ? (
                 <>
                   <label className="form-label">Status <span className="text-danger">*</span></label>
@@ -478,7 +478,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               )}
             </div>
 
-            <div className="col-md-4">
+            <div className=" col-md-4 add-rows">
               {mode === "edit" ? (
                 <>
                   <label className="form-label">Assign Privileges <span className="text-danger">*</span></label>
@@ -508,7 +508,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           {/* Row 5: Editable Time Controls */}
           {mode === "edit" && (
             <div className="row align-items-end">
-              <div className="col-md-4">
+              <div className=" col-md-4 add-rows">
                 <label htmlFor="shiftstart" className="form-label-ti mb-1">Time In</label>
                 <input
                   required type="time" name="shiftstart" className="form-control-ti" id="shiftstart"
@@ -519,7 +519,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 />
                 
               </div>
-              <div className="col-md-4">
+              <div className=" col-md-4 add-rows">
                 <label htmlFor="shiftend" className="form-label-timeout1 mb-1">Time Out</label>
                 <input
                   required type="time" name="shiftend" className="form-controll-timeout1" id="shiftend"
@@ -528,7 +528,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
                 />
               </div>
-              <div className="col-md-4 d-flex align-items-center">
+              <div className=" col-md-4 add-rows d-flex align-items-center">
                 {formData.schedule.shiftstart && formData.schedule.shiftend && (
                   <button
                     className="edit-schedule-btn btn btn-secondary btn-sm mt-3"

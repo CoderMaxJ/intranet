@@ -1,5 +1,3 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Bebas+Neue&family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+IN:wght@100..400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"); */
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -30,7 +28,6 @@
   width: 100%;
 }
 
-
 .manage-label {
   color: rgb(0, 0, 0);
   font-family: 'Geist';
@@ -47,26 +44,9 @@
   background-color: #DDEEFC;
 }
 
-/* .manage-menus:hover .manage-img {
-  filter: invert(1) brightness(2);
-} */
-
-
-/* .manage-menus:hover .arrow-accordion {
-  filter: invert(1) brightness(2);
-} */
-
 .manage-img {
   margin-left: 7px;
 }
-
-/* .manage-nav:hover .manage-img {
-  filter: invert(1) brightness(2);
-} */
-
-/* .manage-nav:hover .manage-label {
-  color: #000000;
-} */
 
 .acc-label,
 .emp-label {
@@ -80,17 +60,6 @@
   transition: filter 0.3s ease;
 }
 
-/* .nav-font:hover .accounts-svg,
-.nav-font:hover .bi-circle {
-  filter: invert(1) brightness(2);
-} */
-
-/* .nav-font:hover .acc-label,
-.nav-font:hover .emp-label {
-  color: #ffffff;
-} */
-
-
 .active-menu {
   background-color: #343a40;
   /* Or your preferred highlight */
@@ -100,12 +69,12 @@
 
 .acc-label {
   color: rgb(0, 0, 0);
-  margin-left: -15px;
+  margin-left: 6px;
 }
 
 .emp-label {
   color: rgb(0, 0, 0);
-  margin-left: -15px;
+  margin-left: 6px;
 }
 
 .form-row {
@@ -238,14 +207,6 @@
   font-style: normal;
 }
 
-
-/* @font-face {
-  font-family: 'roboto';
-  src: url('././fonts/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
-  font-weight: medium;
-  font-style: normal;
-} */
-
 .nav-font {
   font-weight: 700;
   font-weight: 400;
@@ -313,13 +274,6 @@
   transition: background-color 0.3s ease;
   border-radius: 4px;
 }
-
-/* Hover behavior */
-
-/* .nav-fontt:hover .updatepassword-img,
-.nav-fonttt:hover .logout-img {
-  filter: invert(1) brightness(2);
-} */
 
 .nav-fontt:hover .updatep {
   color: #000000;
@@ -912,17 +866,6 @@ input:focus {
   }
 }
 
-
-/* This triggers when screen width is 688px or less */
-/* @media screen and (max-width: 688px) {
-  .searchbar3 {
-    width: auto;
-    padding-left: 40px;
-    font-size: 13px;
-  }
-} */
-
-
 .searchbar {
   padding: 7px 5px 7px 65px !important;
   border-radius: 5px;
@@ -940,23 +883,6 @@ input:focus {
   box-sizing: border-box;
 
 }
-
-/* .searchbar12 {
-  padding: 8px 12px 8px 60px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  color: #000000;
-  width: 100%;
-  max-width: 400px;
-  font-size: 14px;
-  box-sizing: border-box;
-  margin-top: 5px;
-  min-width: 0;
-  font-family: 'Geist';
-  /* allow shrinking beyond intrinsic size */
-
-
 
 
 .search12:focus {
@@ -1588,11 +1514,6 @@ tbody td {
   font-family: 'Geist';
 }
 
-
-/* .rotate-acc-icon {
-  rotate: 180deg;
-  transition: 0.3s all ease-in-out;
-} */
 .rotate-acc-icon {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
@@ -1721,18 +1642,6 @@ table {
   border-radius: 6px;
   cursor: pointer;
 }
-
-.manage-anchor svg {
-  min-width: 20px;
-  margin-right: 21px;
-  min-height: 20px;
-  max-width: 20px;
-  max-height: 20px;
-}
-
-/* .manage-anchor:hover svg {
-  color: #ffffff;
-} */
 
 .managereport {
   overflow-y: scroll;
@@ -2217,7 +2126,6 @@ table {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 .dashboard svg {
@@ -2305,9 +2213,6 @@ table {
   transition: background-color 0.3s ease, padding 0.3s ease, color 0.3s ease;
 }
 
-/* .manage-anchor:hover .accounts-svg {
-  filter: invert(1) brightness(2);
-} */
 .generate:hover {
   background-color: #DDEEFC !important;
   color: #007bff !important;
@@ -2316,12 +2221,6 @@ table {
 .gen-main-container:hover label {
   color: blue;
 }
-
-/* .generate:hover .dashboard-img,
-.generate:hover .reports-img,
-.generate:hover .schedule-img {
-  filter: invert(1) brightness(2);
-} */
 
 .dashboard-img,
 .reports-img,
@@ -2398,9 +2297,6 @@ table {
   background-color: #DDEEFC;
 }
 
-/* .updatepassword-hover:hover .updatepassword-img {
-  filter: invert(1) brightness(2);
-} */
 
 .updatepassword-hover {
   display: flex;
@@ -2413,11 +2309,6 @@ table {
   box-sizing: border-box;
   width: 100%;
 }
-
-/* .updatepassword-hover:hover .updatep {
-  color: white;
-} */
-
 
 .dot-div {
   width: 35px;
@@ -2610,33 +2501,6 @@ table {
   margin-bottom: 4px;
 }
 
-/* .form-label-timein {
-  font-weight: 600;
-  color: #615959;
-  margin-bottom: 4px;
-  margin-left: -16.8rem;
-}
-.form-label-timeout {
-  font-weight: 600;
-  color: #615959;
-  margin-bottom: 4px;
-  margin-left: -11.8rem;
-}
-
-.form-label-timeout1 {
-  font-weight: 600;
-  color: #615959;
-  margin-bottom: 4px;
-  margin-left: -11.8rem;
-}
-
-.form-label-ti {
-  font-weight: 600;
-  color: #615959;
-  margin-bottom: 4px;
-  margin-left: -11.1rem;
-} */
-
 .form-label-ti {
   margin-left: 20px;
 }
@@ -2652,14 +2516,12 @@ table {
   margin-left: -220px;
 }
 
+.circle-indicator {
+  transform: translateX(8px) translateY(3px);
+}
 
-
-.employee-anchor svg {
-  min-width: 20px;
-  min-height: 20px;
-  margin-right: 21px;
-  max-width: 20px;
-  max-height: 20px;
+.employee-anchor svg.active {
+  color: #ffffff !important;
 }
 
 .undermanage-hover a.default-width {
@@ -3036,44 +2898,20 @@ table {
   }
 }
 
-/* .form-control {
-  position: relative;
-  width: 100%;
-  padding: 10px;
-  padding-right: 40px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-family: 'Geist';
-}
-
-.form-control::after {
-  position: absolute;
-  top: 50%;
-  left: calc(100% - 31px);
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: black !important;
-  pointer-events: none;
-} */
-
 .form-controll {
   position: relative;
   display: block;
   width: 100%;
-  /* min-width: 14.2vw; */
   padding: 5px;
   padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* transform: translateX(-45px); */
 }
 
 .form-controll input {
   width: 100%;
   padding: 7px 40px 7px 10px;
-  /* Leave space for icon */
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -3085,7 +2923,6 @@ table {
   position: absolute;
   top: 50%;
   right: 10px;
-  /* Position icon from right edge */
   transform: translateY(-50%);
   font-size: 18px;
   color: black;
@@ -3096,13 +2933,11 @@ table {
   position: relative;
   display: block;
   width: 100%;
-  /* min-width: 14.2vw; */
   padding: 5px;
   padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* transform: translateX(-190px); */
 }
 
 .form-controll-toupdate::after {
@@ -3120,13 +2955,11 @@ table {
   position: relative;
   display: block;
   width: 100%;
-  /* min-width: 14.2vw; */
   padding: 5px;
   padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* transform: translateX(-90px); */
 }
 
 .form-controll-timeout1 {
@@ -3154,7 +2987,6 @@ table {
 .form-controll-timeout input {
   width: 100%;
   padding: 7px 40px 7px 10px;
-  /* Leave space for icon */
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -3166,7 +2998,6 @@ table {
   position: absolute;
   top: 50%;
   right: 10px;
-  /* Position icon from right edge */
   transform: translateY(-50%);
   font-size: 18px;
   color: black;
@@ -3177,19 +3008,16 @@ table {
   position: relative;
   display: block;
   width: 100%;
-  /* min-width: 14.2vw; */
   padding: 5px;
   padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* transform: translateX(-270px); */
 }
 
 .form-controll-timein input {
   width: 100%;
   padding: 7px 40px 7px 10px;
-  /* Leave space for icon */
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -3216,7 +3044,6 @@ table {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-left: 20px;
-
 }
 
 .form-control-ti::after {
@@ -3676,49 +3503,16 @@ table {
   box-shadow: none;
 }
 
-/* .generate.active img,
-.generate.active label,
-.nav-font.active img,
-.nav-font.active label,
-.nav-fontt.active img,
-.nav-fontt.active label,
-.nav-fonttt.active img,
-.nav-fonttt.active label {
-  filter: brightness(0) invert(1);
-  color: white !important;
-} */
-
-
 .circle-indicator {
-  border: 4px solid;
-  color: rgb(90, 89, 89);
-  width: 15px;
-  border-radius: 50%;
-  height: 15px;
-  display: inline-block;
-  margin-right: 25px;
-  flex-shrink: 0;
-  margin-left: 10px;
+  color: #374957;
+  transition: color 0.3s ease;
 }
-
-/* .manage-anchor a:hover .circle-indicator {
-  border-color: white;
-}
-
-.employee-anchor a:hover .circle-indicator {
-  border-color: white;
-}
-
-.manage-anchor a:hover .circle-indicator,
-.employee-anchor a:hover .circle-indicator {
-  border-color: white;
-} */
 
 .circle-indicator.active {
-  border-color: white;
+  color: white !important;
 }
 
-/* Add to global CSS or component styles */
+
 .fade-spinner {
   position: fixed;
   top: 0;
@@ -3741,7 +3535,6 @@ table {
   transition: background-color 0.2s;
 }
 
-
 .generate.hover-enabled:hover {
   background-color: #e0e0e0;
   cursor: pointer;
@@ -3750,4 +3543,8 @@ table {
 .generate.active-tab:hover {
   background-color: #0a85ed !important;
   cursor: default;
+}
+
+.add-rows {
+  margin-top: -15px !important;
 }
