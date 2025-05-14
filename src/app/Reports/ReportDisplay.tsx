@@ -228,7 +228,7 @@ export default function Daterange() {
                                              {/* Search Input */}
                                              <div className="report-input">
                                                 <input
-                                                    className="form-control"
+                                                    className="form-control form-control--searchreport"
                                                     id="search-employee"
                                                     type="text"
                                                     placeholder="Search..."

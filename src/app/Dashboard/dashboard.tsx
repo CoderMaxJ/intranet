@@ -1,4 +1,5 @@
 "use client";
+import { Tooltip } from 'bootstrap';
 import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
 import { use, useEffect, useState } from "react";
@@ -13,7 +14,7 @@ declare global {
         bootstrap: any;
     }
 }
-declare var bootstrap: any;
+// declare var bootstrap: any;
 
 export default function Dashboard() {
     const router = useRouter();
@@ -47,16 +48,6 @@ export default function Dashboard() {
     const [token, setToken] = useState<string | null>(null);
     const [isAccountManager, setIsAccountManager] = useState(false);
     const [isSuperAdmin, setIsSuperAdmin] = useState(false);
-
-    useEffect(() => {
-        const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-
-        tooltipTriggerList.forEach((el) => {
-            const tooltipInstance = bootstrap.Tooltip.getInstance(el);
-            if (tooltipInstance) tooltipInstance.dispose();
-            new bootstrap.Tooltip(el);
-        });
-    }, [navWidth, showLogout, showDashboard, showReports]);
 
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
@@ -110,22 +101,7 @@ export default function Dashboard() {
     }, []);
 
     const user_hash_privilege = localStorage.getItem("user_privilege");
-    // if (user_hash_privilege) {
-    //     const array_privilege = IdentifyUser(user_hash_privilege);
-
-    //     console.log(array_privilege)
-    //     array_privilege.forEach((data) => {
-    //         user_privilege.push(data);
-    //         console.log(data);
-    //         if (data === "account_manager") {
-    //             setIsAccountManager(true);
-    //         }
-    //     });
-    // }
-
     useEffect(() => {
-
-
         if (user_hash_privilege) {
             const array_privilege = IdentifyUser(user_hash_privilege);
             const allPrivileges = [
@@ -136,28 +112,21 @@ export default function Dashboard() {
                 "update_breaktool_account",
                 "view_multiple_accounts"
             ];
-
             const user_privilege = [...array_privilege]; // Initialize from parsed privileges
-
             const hasOnlyAccountManager =
                 array_privilege.length === 2 &&
                 array_privilege.includes("view_workforce") &&
                 array_privilege.includes("update_breaktool_account");
-
             const isSuperAdmin =
                 allPrivileges.every(priv => array_privilege.includes(priv));
-
             if (hasOnlyAccountManager) {
                 setIsAccountManager(true);
                 console.log("Role: account_manager");
             }
-
             if (isSuperAdmin) {
                 setIsSuperAdmin(true);
                 console.log("Role: superadmin");
             }
-
-
         }
     }, []);
 
@@ -208,6 +177,17 @@ export default function Dashboard() {
         }
     };
 
+    const getTooltipProps = (label: string) => {
+        return !navWidth
+            ? {
+                "data-bs-toggle": "tooltip",
+                "data-bs-placement": "right",
+                title: label,
+            }
+            : {};
+    };
+
+
     const openClose = () => {
         if (open == false) {
             setOpen(true);
@@ -222,7 +202,6 @@ export default function Dashboard() {
 
     useEffect(() => {
         const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
-
         if (!isMinimized) {
             setNavWidth(true);
             setShowDashboard(true);
@@ -307,8 +286,6 @@ export default function Dashboard() {
         }
     };
 
-
-
     return (
         <>
             <Updatepassword />
@@ -326,11 +303,10 @@ export default function Dashboard() {
                     <div
                         className={`generate ${activeNav === "1" ? "active-tab" : "hover-enabled"}`}
                         onClick={() => navigateTo("/WorkforceMonitoring", "1")}
-                        style={{
-                            backgroundColor: activeNav === "1" ? "#0a85ed" : "",
-                        }}
+                        style={{ backgroundColor: activeNav === "1" ? "#0a85ed" : "" }}
                     >
-                        <button id="dashboard" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}>
+                        <button id="dashboard" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
+                        >
                             <img
                                 src="/svg/dashboard.svg"
                                 alt="dashboard"
@@ -408,7 +384,6 @@ export default function Dashboard() {
                                         setAccordionIconn(true);
                                     }
                                 }}
-
                                 style={{ cursor: "pointer" }}>
                                 <div className="manage-nav">
                                     <img src="/svg/manage.svg" alt="manage" className="manage-img" height={20} />
@@ -442,11 +417,10 @@ export default function Dashboard() {
                             </div>
                             <div
                                 id="panelsStayOpen-collapseOne"
-                                className={`accordion-collapse collapse ${activeMenu === "manage" ? "show" : ""}`}
+                                className={`collapse ${activeMenu === "manage" ? "show" : ""}`}
 
                                 aria-labelledby="panelsStayOpen-headingOne"
                                 style={isAccountManager ? {} : { marginTop: "-25px" }}
-
                             >
                                 <div className="undermanage-hover">
                                     {isSuperAdmin && (
@@ -474,7 +448,6 @@ export default function Dashboard() {
                                                     </label>
                                                 )}
                                             </a>
-
                                         </div>
                                     )}
                                     <div className="undermanage-hover">
@@ -500,7 +473,6 @@ export default function Dashboard() {
                                                 )}
                                             </a>
                                         </div>
-
                                         <div className="employee-anchor">
                                             <a
                                                 className="nav-font"
@@ -606,7 +578,6 @@ export default function Dashboard() {
                                 </svg>
                             </span>
                         </button>
-
                         {open && (
                             <img
                                 onClick={() => setOpen(false)}
@@ -639,7 +610,6 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             )}
-
                         </center>
                     </div>
                 </div>
@@ -648,7 +618,6 @@ export default function Dashboard() {
                     <div>{showPoweredby === true && (<img src="/img/eComialogo.png" className="ecomia-db-logo" height={20} />)}</div>
                 </div>
             </div>
-
         </>
     );
 }

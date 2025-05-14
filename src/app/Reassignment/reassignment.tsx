@@ -45,10 +45,10 @@ export default function () {
      const [filteredEmployees, setFilteredEmployees] = useState<Information[]>([]);
      const [selectedEmployees, setSelectedEmployees] = useState<Information[]>([]);
      const [searchQueryLeft, setSearchQueryLeft] = useState("");
-     const [filterText, setFilterText] = useState(""); 
-     
-     
-        const successToast = (msg: string) => toast.success(msg, {
+     const [filterText, setFilterText] = useState("");
+
+
+     const successToast = (msg: string) => toast.success(msg, {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: true,
@@ -56,10 +56,10 @@ export default function () {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-        });
-      
-      
-        const errorToast = (msg: string) => toast.error(msg, {
+     });
+
+
+     const errorToast = (msg: string) => toast.error(msg, {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: true,
@@ -67,8 +67,8 @@ export default function () {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-        });
-   
+     });
+
      const getAccountName = (acctid: number): string => {
           if (acctid === undefined || acctid === null) {
                return '';
@@ -88,7 +88,7 @@ export default function () {
                errorToast("Please select at least one employee.");
                return;
           }
-          const employee_numbers = selectedEmployees.map(emp=>emp.empno);
+          const employee_numbers = selectedEmployees.map(emp => emp.empno);
           const token = localStorage.getItem("token");
           const decryptedToken = Decryptor(token || "");
 
@@ -111,7 +111,7 @@ export default function () {
                     successToast(data.message || "Schedule successfully set for selected employees!");
 
                     // Update local state immediately
-               
+
                     setSelectedEmployees([]);
                     setTimeIn("");
                     setTimeOut("");
@@ -131,6 +131,14 @@ export default function () {
           }
      };
 
+     const HandleSelectAll = () => {
+          setSelectedEmployees(prev => {
+               const newSelection = employee.filter(
+                    emp => !prev.some(selected => selected.empno === emp.empno)
+               );
+               return [...prev, ...newSelection];
+          });
+     };
 
      const handleSearchEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
           const value = e.target.value;
@@ -165,38 +173,38 @@ export default function () {
                console.error("Failed to fetch accounts");
           }
      };
- 
+
      useEffect(() => {
           getAccount();        // Fetch all account names
      }, []);
 
      const id = localStorage.getItem("user_id");
      const decryptedToken = Decryptor(token || '');
-    useEffect(()=>{
-     if(filterText != ""){
-          filterbyAccount();
-     }
-    },[filterText])
-     const filterbyAccount = async ()=>{
-          if(searchQueryLeft === ""){
+     useEffect(() => {
+          if (filterText != "") {
+               filterbyAccount();
+          }
+     }, [filterText])
+     const filterbyAccount = async () => {
+          if (searchQueryLeft === "") {
                setSearchQueryLeft("");
           }
-       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/schedule/account/?user_id=${Decryptor(id || "")}&name=${searchQueryLeft}&account_id=${filterText}`,{
-          method:"GET",
-          headers: {
-               "Content-Type": "application/json",
-               Authorization: `Bearer ${decryptedToken}`
-          }
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/schedule/account/?user_id=${Decryptor(id || "")}&name=${searchQueryLeft}&account_id=${filterText}`, {
+               method: "GET",
+               headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedToken}`
+               }
 
-       });
-       if(response.status === 200){
-          const data = await response.json();
-          setEmployee(data.data);
-       }else{
-          console.error("error");
-       }
+          });
+          if (response.status === 200) {
+               const data = await response.json();
+               setEmployee(data.data);
+          } else {
+               console.error("error");
+          }
      }
-      
+
      const debouncedSearch = useMemo(() => {
           return debounce(async (value: string) => {
                if (value.trim() === "") {
@@ -220,24 +228,20 @@ export default function () {
           }, 300);
      }, []);
      // Optional cleanup to prevent memory leaks
-
-
-
-
      useEffect(() => {
           return () => {
                debouncedSearch.cancel();
           };
      }, [debouncedSearch])
-     
-     const handleEmployeeClick=(employee:Information)=>{
+
+     const handleEmployeeClick = (employee: Information) => {
           setSelectedEmployees(prev => [...prev, employee]);
      }
 
      const handleRemoveClick = (empno: number) => {
           setSelectedEmployees(prev => prev.filter(emp => emp.empno !== empno));
-        };
-    
+     };
+
      return (
           <div>
                <div
@@ -311,34 +315,39 @@ export default function () {
                                                        type="text"
                                                        placeholder="Search available..."
                                                        value={searchQueryLeft}
-                                                       onChange={(e)=>{setSearchQueryLeft(e.target.value);debouncedSearch(e.target.value)}}
+                                                       onChange={(e) => { setSearchQueryLeft(e.target.value); debouncedSearch(e.target.value) }}
                                                   />
                                                   </div>
-                                                  <button type="button" className="selectall" >Select All</button>
-
+                                                  <button
+                                                       type="button"
+                                                       className="selectall"
+                                                       onClick={HandleSelectAll}
+                                                  >
+                                                       Select All
+                                                  </button>
                                              </div>
                                              <div className="list-group w-100">
                                                   <div>
                                                        {Array.isArray(employee) && employee.map(emp => (
-                                                                 <div
-                                                                      key={emp.empno}
-                                                                      className="list-group-item d-flex justify-content-between align-items-center"
-                                                                      style={{
-                                                                           border: "1px solid #f0f0f0",
-                                                                           borderRadius: "8px",
-                                                                           marginBottom: "8px",
-                                                                           padding: "12px 16px",
-                                                                           backgroundColor: "#fafafa",
-                                                                           cursor: "pointer",
-                                                                      }}
-                                                                      onClick={() => handleEmployeeClick(emp)}
-                                                                 >
+                                                            <div
+                                                                 key={emp.empno}
+                                                                 className="list-group-item d-flex justify-content-between align-items-center"
+                                                                 style={{
+                                                                      border: "1px solid #f0f0f0",
+                                                                      borderRadius: "8px",
+                                                                      marginBottom: "8px",
+                                                                      padding: "12px 16px",
+                                                                      backgroundColor: "#fafafa",
+                                                                      cursor: "pointer",
+                                                                 }}
+                                                                 onClick={() => handleEmployeeClick(emp)}
+                                                            >
 
-                                                                      <div className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
-                                                                      <div className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
-                                                                      </div>
+                                                                 <div className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
+                                                                 <div className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
                                                                  </div>
-                                                            ))}
+                                                            </div>
+                                                       ))}
                                                   </div>
                                              </div>
                                         </div>
@@ -353,10 +362,10 @@ export default function () {
                                         <div className="d-flex flex-column  align-items-start" style={{ flex: 1 }}>
                                              <div className="d-flex align-items-center  gap-4 w-75 ">
                                                   <h6 className="selected-emp">Selected Employees <span>({selectedEmployees?.length})</span></h6>
-                                             
+
 
                                              </div>
-                                                  
+
                                              {/* RIGHT SIDE SEARCH */}
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">
                                                   <div className="flex-grow-1">
@@ -368,13 +377,13 @@ export default function () {
                                                             onChange={handleSearchEmployee}
                                                        />
                                                   </div>
-                                                  <button type="button" className="clearall" onClick={(e)=>setSelectedEmployees([])} >Clear All</button>
+                                                  <button type="button" className="clearall" onClick={(e) => setSelectedEmployees([])} >Clear All</button>
                                              </div>
                                              <div className=" list-group w-100">
                                                   {Array.isArray(selectedEmployees) && selectedEmployees.filter(Boolean)
-                                                  .filter(emp =>
-                                                       `${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase())
-                                                     ).map(emp => (
+                                                       .filter(emp =>
+                                                            `${emp.fname} ${emp.lname}`.toLowerCase().includes(searchQuery.toLowerCase())
+                                                       ).map(emp => (
                                                             <div
                                                                  key={emp.empno}
                                                                  className="list-group-item d-flex justify-content-between align-items-center"
@@ -406,23 +415,23 @@ export default function () {
                                    </div>
                               </div>
                               {/* Add Schedule Button */}
-                              <div className="d-flex justify-content-end mt-4 modal-footer" >
-                              <div className="d-flex gap-3 mt-4 " >
-                                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                                        <span className="cancel">Cancel</span>
-                                       </button>
-                                      
-                                   <button
-                                        type="button"
-                                        className="btn btn-primary clearall d-flex align-items-center"
-                                        onClick={handleSetSchedule}>
-                                        Reschedule 
-                                   </button>
+                              <div className="d-flex justify-content-end modal-footer" >
+                                   <div className="d-flex gap-3" >
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                                             <span className="cancel">Cancel</span>
+                                        </button>
+
+                                        <button
+                                             type="button"
+                                             className="btn btn-primary clearall d-flex align-items-center"
+                                             onClick={handleSetSchedule}>
+                                             Reschedule
+                                        </button>
+                                   </div>
                               </div>
                          </div>
                     </div>
-               </div>
-          </div >
+               </div >
           </div>
      );
 }

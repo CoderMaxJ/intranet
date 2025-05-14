@@ -57,7 +57,7 @@
 } */
 
 .manage-img {
-margin-left: 7px;
+  margin-left: 7px;
 }
 
 /* .manage-nav:hover .manage-img {
@@ -268,7 +268,7 @@ margin-left: 7px;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-   display: flex;
+  display: flex;
   align-items: center;
   gap: 10px;
   padding: 10px;
@@ -572,15 +572,19 @@ input:focus {
 
 .password-icon {
   position: absolute;
-  top: 8px;               /* Adjust as needed */
+  top: 8px;
+  /* Adjust as needed */
   right: 12px;
-  z-index: 10;            /* Ensures it appears above the input */
+  z-index: 10;
+  /* Ensures it appears above the input */
   cursor: pointer;
   color: #555;
 }
+
 .password-input-wrapper {
   position: relative;
 }
+
 .password-icon {
   border: 1px solid red;
 }
@@ -1121,7 +1125,7 @@ input:focus {
 }
 
 .modal-footer {
- background: #EBEDF0 !important;
+  background: #EBEDF0 !important;
 }
 
 .right-section {
@@ -1178,6 +1182,7 @@ input:focus {
 
 .breaks-table td {
   font-size: 14px;
+  font-family: 'Geist';
 }
 
 .breaks-table th {
@@ -1578,7 +1583,7 @@ tbody td {
 }
 
 .form-control.form-control--search {
-  border: 3px solid #dbdbdb; 
+  border: 3px solid #dbdbdb;
   background-color: #ffffff;
   font-family: 'Geist';
 }
@@ -1589,8 +1594,8 @@ tbody td {
   transition: 0.3s all ease-in-out;
 } */
 .rotate-acc-icon {
-    transform: rotate(180deg);
-    transition: transform 0.3s ease;
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
 }
 
 .bi-chevron-up {
@@ -1616,11 +1621,12 @@ tbody td {
 
 .custom-bordered th,
 .custom-bordered td {
-    border: 1px solid #dddddd; /* light gray */
+  border: 1px solid #dddddd;
+  /* light gray */
 }
 
 .custom-bordered {
-    border: 1px solid #dddddd;
+  border: 1px solid #dddddd;
 }
 
 
@@ -2307,9 +2313,10 @@ table {
   color: #007bff !important;
 }
 
-.gen-main-container:hover label{
+.gen-main-container:hover label {
   color: blue;
 }
+
 /* .generate:hover .dashboard-img,
 .generate:hover .reports-img,
 .generate:hover .schedule-img {
@@ -2318,7 +2325,7 @@ table {
 
 .dashboard-img,
 .reports-img,
-.schedule-img  {
+.schedule-img {
   margin-left: 7px;
 }
 
@@ -2678,7 +2685,7 @@ table {
 
 .admin .accordion-button:hover {
   background-color: #DDEEFC;
-  color:#006CC7;
+  color: #006CC7;
 }
 
 .admin .accordion-button:active {
@@ -3566,6 +3573,9 @@ table {
   max-width: 320px;
 }
 
+.cancel-btn {
+  margin-left: -2px;
+}
 .assign-employees,
 .clearall,
 .selectall,
@@ -3741,4 +3751,3 @@ table {
   background-color: #0a85ed !important;
   cursor: default;
 }
-
