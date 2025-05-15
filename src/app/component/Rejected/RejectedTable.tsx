@@ -27,7 +27,9 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
   const [accounts, setAccounts] = useState<Accounts[]>([]);
   const token = Decryptor(localStorage.getItem("token") || "");
   const user_id = localStorage.getItem("user_id");
-  const [activeTab, setActiveTab] = useState("pending");
+  const [current_page,setCurrentPage]=useState(1);
+  const [totalPages,setTotalPages]=useState();
+  const [total,setTotal]=useState(0);
 
 
   async function getAccounts() {
@@ -49,7 +51,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
   };
 
   async function fetchRejectedRequest() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -59,7 +61,8 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log("rejected_data",data)
+      setTotal(data.total);
+      setTotalPages(data.num_pages);
       setRejectedRequest(data.data);
     }
   }
@@ -69,7 +72,12 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
     getAccounts();
   }, [])
 
+  const handleChangePage = (page:number)=>{
+    setCurrentPage(page);
+    fetchRejectedRequest();
+  }
   return (
+    <div>
     <table className="table table-striped table-hover table-bordered">
       <thead>
         <tr>
@@ -106,5 +114,27 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
         ))}
       </tbody>
     </table>
+    <div className="d-flex justify-content-end align-items-center gap-3">
+            <div className="adjustment-total">
+              <p><i className="bi bi-people-fill"></i><span> Total: {total} </span></p>
+            </div>
+            <div>
+              <nav aria-label="Page navigation example">
+                <ul className="pagination">
+                  <li className={`page-item ${current_page === 1 ? "disabled" : ""}`} > <button className="page-link" onClick={() => handleChangePage(current_page - 1)}>
+                    <i className="bi bi-caret-left"></i>
+                  </button></li>
+                  <li className="page-item"><span className="page-link" style={{ whiteSpace: 'nowrap' }}>
+                    {current_page} of {totalPages}
+                  </span></li>
+                  <li className={`page-item ${current_page === totalPages ? "disabled" : ""}`}><button className="page-link" onClick={() => handleChangePage(current_page + 1)}>
+                    <i className="bi bi-caret-right"></i>
+                  </button></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+      
+      </div>
   );
 }
