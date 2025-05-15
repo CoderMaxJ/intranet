@@ -2499,7 +2499,7 @@ table {
 }
 
 .edit-schedule-btn {
-  margin-left: -460px;
+  margin-left: -438px;
   transform: translateY(-3px);
 }
 
@@ -2510,7 +2510,7 @@ table {
 }
 
 .form-label-ti {
-  margin-left: 20px;
+  margin-left: 23px;
 }
 
 .rep-label {
@@ -2521,7 +2521,7 @@ table {
 }
 
 .form-label-timeout1 {
-  margin-left: -220px;
+  margin-left: -210px;
 }
 
 .circle-indicator {
@@ -2973,7 +2973,7 @@ table {
 .form-controll-timeout1 {
   position: relative;
   display: block;
-  margin-left: -220px;
+  margin-left: -210px;
   padding: 5px;
   padding-right: 10px;
   font-size: 16px;

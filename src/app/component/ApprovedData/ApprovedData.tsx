@@ -215,7 +215,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
         tabIndex={-1}
         id="approveddrawer"
         aria-labelledby="approvedRightLabel"
-        style={{ width: "600px !important" }}
+        style={{ width: "480px" }}
       >
         <div className="offcanvas-header">
           <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">
@@ -260,9 +260,9 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
           </div>
 
           <div className="justify-content-between">
-            <div className="d-flex justify-content-around align-items-center mb-2 w-100">
+            <div className="d-flex justify-content-around mb-2 w-100">
               <div>
-                <label className="drawer-label col-4 justify-content-start" >Attendance</label>
+                <label className="drawer-label--attendance col-4 justify-content-start" style={{transform:'translateX(-6px)'}}>Attendance</label>
               </div>
               <div>
                 <label className="drawer-labell col-4 justify-content-start">Requested Time</label>

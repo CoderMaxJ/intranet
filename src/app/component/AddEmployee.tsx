@@ -509,23 +509,25 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           {mode === "edit" && (
             <div className="row align-items-end">
               <div className=" col-md-4 add-rows">
-                <label htmlFor="shiftstart" className="form-label-ti mb-1">Time In</label>
+                <label htmlFor="shiftstart" className="form-label form-label-ti mb-1">Time In</label>
                 <input
                   required type="time" name="shiftstart" className="form-control-ti" id="shiftstart"
                   autoComplete="off" inputMode="numeric"
                   value={formData.schedule.shiftstart} onChange={handleInputChange}
                   disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                  step={1}
                
                 />
                 
               </div>
               <div className=" col-md-4 add-rows">
-                <label htmlFor="shiftend" className="form-label-timeout1 mb-1">Time Out</label>
+                <label htmlFor="shiftend" className="form-label form-label-timeout1 mb-1">Time Out</label>
                 <input
                   required type="time" name="shiftend" className="form-controll-timeout1" id="shiftend"
                   autoComplete="off" inputMode="numeric"
                   value={formData.schedule.shiftend} onChange={handleInputChange}
                   disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                  step={1}
                 />
               </div>
               <div className=" col-md-4 add-rows d-flex align-items-center">

@@ -306,15 +306,15 @@ export default function Daterange() {
                                                 <th>Name</th>
                                                 <th>Shift Date</th>
                                                 <th>Login</th>
-                                                <th>Brkin1</th>
-                                                <th>Brkout1</th>
-                                                <th>OB</th>
-                                                <th>Lunchin</th>
-                                                <th>Lunchout</th>
-                                                <th>OB</th>
-                                                <th>Brkin2</th>
-                                                <th>Brkout2</th>
-                                                <th>OB</th>
+                                                <th>1st Break In</th>
+                                                <th>Break Out</th>
+                                                <th>Over Break</th>
+                                                <th>Lunch In</th>
+                                                <th>Lunch Out</th>
+                                                <th>Over Break</th>
+                                                <th>2nd Break In</th>
+                                                <th>Break Out</th>
+                                                <th>Over Break</th>
                                                 <th>Personal Break</th>
                                                 <th>Logout</th>
                                             </tr>

@@ -71,6 +71,9 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
     const [declineReason, setDeclineReason] = useState("");
     const [status, setStatus] = useState(0);
     const [accounts, setAccounts] = useState<Account[]>([]);
+    const [visible, setVisible] = useState<boolean>(!!data);
+    const [declineVisible, setDeclineVisible] = useState(false);
+
     console.log(data);
 
     useEffect(() => {
@@ -123,6 +126,8 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                 pauseOnHover: true,
                 draggable: true,
             });
+            setVisible(false);
+            setDeclineVisible(false);
             setDeclineReason("");
 
             if (typeof onDeclineComplete === "function") {
@@ -194,12 +199,9 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
         })
         if (response.status === 200) {
             successToast("Request approved successfully.");
-
-
             if (typeof onApproveComplete === "function" && data?.requestid) {
                 onApproveComplete(data.requestid);
             }
-
 
         } else {
             errorToast("Failed to approve request.");
@@ -208,7 +210,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
     const handleApply = () => {
         const updatedStatus = 1;
         setStatus(updatedStatus);
-
         const payload = {
             requestid: data?.requestid,
             empno: data?.empno,
@@ -224,6 +225,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
             approved_by: Decryptor(localStorage.getItem("user_id") || "")
         };
         approvedRequest(payload);
+        setVisible(false);
 
     };
 
@@ -303,7 +305,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                     <div className="justify-content-between">
                         <div className="d-flex justify-content-around align-items-center mb-2 w-100">
                             <div>
-                                <label className="drawer-label col-4 justify-content-start" >Attendance</label>
+                                <label className="drawer-label col-4 justify-content-start drawer-label--attendance" style={{ transform: "translateX(-6px)" }}>Attendance</label>
                             </div>
                             <div>
                                 <label className="drawer-labell col-4 justify-content-start">Requested Time</label>
@@ -367,8 +369,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                         className="input-time-field"
                                     />
                                 </div>
-
-
                             </div>
                         )}
                         {data?.logs?.break1?.out && (
@@ -394,7 +394,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                         className="input-time-field"
                                     />
                                 </div>
-
                             </div>
                         )}
                         {/* Lunch - In */}
@@ -421,14 +420,10 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                         className="input-time-field"
                                     />
                                 </div>
-
                             </div>
                         )}
                         {/* Lunch - Out */}
-
                         {data?.logs?.lunch?.out && (
-
-
                             <div className="d-flex justify-content-around align-items-center mb-2">
                                 <div className="label-container3">
                                     <span className="lunch-in-label fw-semibold">Lunch - Out</span>
@@ -451,13 +446,10 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                         className="input-time-field"
                                     />
                                 </div>
-
                             </div>
                         )}
                         {/* Break 2 - In */}
                         {data?.logs?.break2?.in && (
-
-
                             <div className="d-flex justify-content-around align-items-center mb-2">
                                 <div className="label-container4">
                                     <span className="break2-label fw-semibold">2nd Break - In</span>
@@ -480,7 +472,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                         className="input-time-field"
                                     />
                                 </div>
-
                             </div>
                         )}
                         {/* Break 2 - Out */}
@@ -507,7 +498,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                         className="input-time-field"
                                     />
                                 </div>
-
                             </div>
                         )}
 
@@ -535,7 +525,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                         disabled={true}
                                     />
                                 </div>
-
                             </div>
                         )}
                     </div>
@@ -548,13 +537,10 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
 
                 <div className="modal-footer gap-4 shift-footer" style={{ padding: '20px' }}>
                     <div>
-                        <button
-                            type="button"
-                            onClick={handleApply}
-                            className="btn btn-primary"
-                        >
-                            <span className="view">Approved</span>
+                        <button onClick={handleApply} className="custom-btn approve-btn">
+                            Approve
                         </button>
+
                     </div>
                     <div>
                         <button
@@ -565,7 +551,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                         >
                             <span className="view">Decline</span>
                         </button>
-
                     </div>
                 </div>
             </div>
@@ -587,7 +572,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                 aria-label="Close"
                             ></button>
                         </div>
-
                         <div className="modal-body">
                             <div className="mb-3">
                                 <label htmlFor="decline-reason" className="form-label">Reason for Decline</label>
@@ -600,7 +584,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                                 />
                             </div>
                         </div>
-
                         <div className="modal-footer">
                             <button
                                 type="button"
@@ -621,7 +604,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }
