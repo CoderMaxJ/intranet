@@ -133,7 +133,7 @@ export default function Daterange() {
     };
     const handleView = async (e: any) => {
         e.preventDefault();
-        console.log("start",start,"end",end);
+        console.log("start", start, "end", end);
 
         try {
             setError("");
@@ -208,153 +208,152 @@ export default function Daterange() {
                     <div className="flex-fill reports-division">
                         <div className="reportheader"><Header title="DAILY REPORTS" /></div>
                         <div className="px-4">
-                        <div className="background-report">
-                            <div className="px-4 pt-4" style={{ display: 'flex' }}>
-                                <header style={{
-                                    backgroundImage: "url('/img/Breaktool.png')",
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                    position: 'sticky',
-                                    paddingTop: '10px',
-                                    padding: '15px',
-                                    color: 'white',
-                                    width: '100%'
-                                }}>
-                                    {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
-                                    <form onSubmit={handleView}>
-                                        <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
-                                            {/* Date Range Section */}
-                                             {/* Search Input */}
-                                             <div className="report-input">
-                                                <input
-                                                    className="form-control"
-                                                    id="search-employee"
-                                                    type="text"
-                                                    placeholder="Search..."
-                                                    value={searchTerm}
-                                                    onChange={handleSearch}
-                                                />
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="20"
-                                                    height="20"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 16 16"
-                                                >
-                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                                </svg>
-                                            </div>
-                                            <div className="d-flex flex-wrap align-items-center justify-content-center gap-3">
-                                                
-                                                <div className="d-flex align-items-center">
-                                                    <label htmlFor="id-start" className="rep-label mb-0 me-2">From:</label>
-                                                    <input
-                                                        id="id-start"
-                                                        type="date"
-                                                        className="form-control"
-                                                        required
-                                                        onChange={(e) => setStart(e.target.value)}
-                                                        value={start}
-                                                        style={{ color: '#000000' }}
-                                                    />
-                                                </div>
+                            <div className="background-report">
+                                <div className="px-4 pt-4" style={{ display: 'flex' }}>
+                                    <header style={{
+                                        backgroundImage: "url('/img/Breaktool.png')",
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
+                                        position: 'sticky',
+                                        paddingTop: '10px',
+                                        padding: '15px',
+                                        color: 'white',
+                                        width: '100%'
+                                    }}>
+                                        {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
+                                        <form onSubmit={handleView}>
+                                            <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
 
-                                                <div className="d-flex align-items-center">
-                                                    <label htmlFor="id-end" className="rep-label mb-0 me-2">To:</label>
+                                                <div className="report-input">
                                                     <input
-                                                        id="id-end"
-                                                        type="date"
-                                                        className="form-control"
-                                                        required
-                                                        onChange={(e) => setEnd(e.target.value)}
-                                                        value={end}
-                                                        style={{ color: '#000000' }}
+                                                        className="form-control form-control--searchreport"
+                                                        id="search-employee"
+                                                        type="text"
+                                                        placeholder="Search..."
+                                                        value={searchTerm}
+                                                        onChange={handleSearch}
                                                     />
-                                                </div>
-                                                <div className="d-flex align-items-center">
-                                                    <button
-                                                        type="submit"
-                                                        className="daterange-button"
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="20"
+                                                        height="20"
+                                                        fill="currentColor"
+                                                        viewBox="0 0 16 16"
                                                     >
-                                                        View
-                                                    </button>
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                    </svg>
                                                 </div>
-                                                <button
-                                                type="button"
-                                                className="download"
-                                                onClick={handleGenerateAndDownloadCSV}
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
-                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
-                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
-                                                </svg>
-                                                <label htmlFor="downloaf" className="align-items-center">Download</label>
-                                            </button>
-                                            </div>
+                                                <div className="d-flex flex-wrap flex-lg-nowrap align-items-center justify-content-lg-end gap-3">
 
-                                           
-                                           
-                                        </div>
-                                    </form>
-                                </header>
-                       
-                            </div>
-                            <div className="mx-4 table-responsive reports-container">
-                                <table className="tabreport table table-striped table-bordered">
-                                    <thead>
-                                        <tr className="report-header">
-                                            <th>Name</th>
-                                            <th>Shift Date</th>
-                                            <th>Login</th>
-                                            <th>Brkin1</th>
-                                            <th>Brkout1</th>
-                                            <th>OB</th>
-                                            <th>Lunchin</th>
-                                            <th>Lunchout</th>
-                                            <th>OB</th>
-                                            <th>Brkin2</th>
-                                            <th>Brkout2</th>
-                                            <th>OB</th>
-                                            <th>Personal Break</th>
-                                            <th>Logout</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="table-data">
-                                        {data
-                                            .filter((report) => {
-                                                if (!searchTerm) return true;
-                                                return report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
-                                            })
-                                            .sort((a, b) => a.name.localeCompare(b.name))
-                                            .map((report, index) => (
-                                                <tr key={index} className="report-data">
-                                                    <td>{report.name}</td>
-                                                    <td>{report.shiftdate}</td>
-                                                    <td>{report.login}</td>
-                                                    <td>{report.brkin1}</td>
-                                                    <td>{report.brkout1}</td>
-                                                    <td className={report.ob1 ? "overbreak-red" : ""}>{report.ob1}</td>
-                                                    <td>{report.lunchin}</td>
-                                                    <td>{report.lunchout}</td>
-                                                    <td className={report.ob3 ? "overbreak-red" : ""}>{report.ob3}</td>
-                                                    <td>{report.brkin2}</td>
-                                                    <td>{report.brkout2}</td>
-                                                    <td className={report.ob2 ? "overbreak-red" : ""}>{report.ob2}</td>
-                                                    <td>{report.personalbreak}</td>
-                                                    <td>{report.logoff}</td>
-                                                </tr>
-                                            ))}
-                                    </tbody>
-                                </table>
+                                                    <div className="d-flex align-items-center input-group" style={{ maxWidth: '220px'}}>
+                                                        <span className="input-group-text">From</span>
+                                                        
+                                                        <input
+                                                            id="id-start"
+                                                            type="date"
+                                                            className="form-control"
+                                                            required
+                                                            onChange={(e) => setStart(e.target.value)}
+                                                            value={start}
+                                                            style={{ color: '#000000' }}
+                                                        />
+                                                    </div>
+
+                                                    <div className="d-flex align-items-center input-group" style={{ maxWidth: '220px'}}>
+                                                      <span className="input-group-text">To</span>
+                                                        <input
+                                                            id="id-end"
+                                                            type="date"
+                                                            className="form-control"
+                                                            required
+                                                            onChange={(e) => setEnd(e.target.value)}
+                                                            value={end}
+                                                            style={{ color: '#000000' }}
+                                                        />
+                                                    </div>
+                                                    <div className="d-flex align-items-center">
+                                                        <button
+                                                            type="submit"
+                                                            className="daterange-button"
+                                                        >
+                                                            View
+                                                        </button>
+                                                    </div>
+                                                    <div className="d-flex align-items-center">
+                                                    <button
+                                                        type="button"
+                                                        className="download"
+                                                        onClick={handleGenerateAndDownloadCSV}
+                                                    >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
+                                                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                                        </svg>
+                                                        <label htmlFor="downloaf" className="align-items-center">Download</label>
+                                                    </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </header>
+
+                                </div>
+                                <div className="mx-4 table-responsive reports-container">
+                                    <table className="tabreport table table-striped table-bordered">
+                                        <thead>
+                                            <tr className="report-header">
+                                                <th>Name</th>
+                                                <th>Shift Date</th>
+                                                <th>Login</th>
+                                                <th>1st Break In</th>
+                                                <th>Break Out</th>
+                                                <th>Over Break</th>
+                                                <th>Lunch In</th>
+                                                <th>Lunch Out</th>
+                                                <th>Over Break</th>
+                                                <th>2nd Break In</th>
+                                                <th>Break Out</th>
+                                                <th>Over Break</th>
+                                                <th>Personal Break</th>
+                                                <th>Logout</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="table-data">
+                                            {data
+                                                .filter((report) => {
+                                                    if (!searchTerm) return true;
+                                                    return report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
+                                                })
+                                                .sort((a, b) => a.name.localeCompare(b.name))
+                                                .map((report, index) => (
+                                                    <tr key={index} className="report-data">
+                                                        <td>{report.name}</td>
+                                                        <td>{report.shiftdate}</td>
+                                                        <td>{report.login}</td>
+                                                        <td>{report.brkin1}</td>
+                                                        <td>{report.brkout1}</td>
+                                                        <td className={report.ob1 ? "overbreak-red" : ""}>{report.ob1}</td>
+                                                        <td>{report.lunchin}</td>
+                                                        <td>{report.lunchout}</td>
+                                                        <td className={report.ob3 ? "overbreak-red" : ""}>{report.ob3}</td>
+                                                        <td>{report.brkin2}</td>
+                                                        <td>{report.brkout2}</td>
+                                                        <td className={report.ob2 ? "overbreak-red" : ""}>{report.ob2}</td>
+                                                        <td>{report.personalbreak}</td>
+                                                        <td>{report.logoff}</td>
+                                                    </tr>
+                                                ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 ) : (
                     <p></p>
                 )}
             </div>
-        </div> 
+        </div>
     );
 }

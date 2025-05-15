@@ -216,7 +216,7 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                 tabIndex={-1}
                 id="rejecteddrawer"
                 aria-labelledby="rejectedRightLabel"
-                style={{ width: "420px" }}
+                style={{ width: "480px" }}
             >
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">
@@ -263,7 +263,7 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                     <div className="justify-content-between">
                         <div className="d-flex justify-content-around align-items-center mb-2 w-100">
                             <div>
-                                <label className="drawer-label col-4 justify-content-start" >Attendance</label>
+                                <label className="drawer-label col-4 justify-content-start drawer-label--attendance" >Attendance</label>
                             </div>
                             <div>
                                 <label className="drawer-labell col-4 justify-content-start">Requested Time</label>

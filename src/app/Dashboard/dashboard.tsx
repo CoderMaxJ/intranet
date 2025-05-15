@@ -1,4 +1,5 @@
 "use client";
+import { Tooltip } from 'bootstrap';
 import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
 import { use, useEffect, useState } from "react";
@@ -13,7 +14,7 @@ declare global {
         bootstrap: any;
     }
 }
-declare var bootstrap: any;
+// declare var bootstrap: any;
 
 export default function Dashboard() {
     const router = useRouter();
@@ -47,16 +48,6 @@ export default function Dashboard() {
     const [token, setToken] = useState<string | null>(null);
     const [isAccountManager, setIsAccountManager] = useState(false);
     const [isSuperAdmin, setIsSuperAdmin] = useState(false);
-
-    useEffect(() => {
-        const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-
-        tooltipTriggerList.forEach((el) => {
-            const tooltipInstance = bootstrap.Tooltip.getInstance(el);
-            if (tooltipInstance) tooltipInstance.dispose();
-            new bootstrap.Tooltip(el);
-        });
-    }, [navWidth, showLogout, showDashboard, showReports]);
 
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
@@ -110,22 +101,7 @@ export default function Dashboard() {
     }, []);
 
     const user_hash_privilege = localStorage.getItem("user_privilege");
-    // if (user_hash_privilege) {
-    //     const array_privilege = IdentifyUser(user_hash_privilege);
-
-    //     console.log(array_privilege)
-    //     array_privilege.forEach((data) => {
-    //         user_privilege.push(data);
-    //         console.log(data);
-    //         if (data === "account_manager") {
-    //             setIsAccountManager(true);
-    //         }
-    //     });
-    // }
-
     useEffect(() => {
-
-
         if (user_hash_privilege) {
             const array_privilege = IdentifyUser(user_hash_privilege);
             const allPrivileges = [
@@ -136,28 +112,21 @@ export default function Dashboard() {
                 "update_breaktool_account",
                 "view_multiple_accounts"
             ];
-
             const user_privilege = [...array_privilege]; // Initialize from parsed privileges
-
             const hasOnlyAccountManager =
                 array_privilege.length === 2 &&
                 array_privilege.includes("view_workforce") &&
                 array_privilege.includes("update_breaktool_account");
-
             const isSuperAdmin =
                 allPrivileges.every(priv => array_privilege.includes(priv));
-
             if (hasOnlyAccountManager) {
                 setIsAccountManager(true);
                 console.log("Role: account_manager");
             }
-
             if (isSuperAdmin) {
                 setIsSuperAdmin(true);
                 console.log("Role: superadmin");
             }
-
-
         }
     }, []);
 
@@ -208,6 +177,17 @@ export default function Dashboard() {
         }
     };
 
+    const getTooltipProps = (label: string) => {
+        return !navWidth
+            ? {
+                "data-bs-toggle": "tooltip",
+                "data-bs-placement": "right",
+                title: label,
+            }
+            : {};
+    };
+
+
     const openClose = () => {
         if (open == false) {
             setOpen(true);
@@ -222,7 +202,6 @@ export default function Dashboard() {
 
     useEffect(() => {
         const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
-
         if (!isMinimized) {
             setNavWidth(true);
             setShowDashboard(true);
@@ -307,8 +286,6 @@ export default function Dashboard() {
         }
     };
 
-
-
     return (
         <>
             <Updatepassword />
@@ -326,11 +303,10 @@ export default function Dashboard() {
                     <div
                         className={`generate ${activeNav === "1" ? "active-tab" : "hover-enabled"}`}
                         onClick={() => navigateTo("/WorkforceMonitoring", "1")}
-                        style={{
-                            backgroundColor: activeNav === "1" ? "#0a85ed" : "",
-                        }}
+                        style={{ backgroundColor: activeNav === "1" ? "#0a85ed" : "" }}
                     >
-                        <button id="dashboard" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}>
+                        <button id="dashboard" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
+                        >
                             <img
                                 src="/svg/dashboard.svg"
                                 alt="dashboard"
@@ -408,7 +384,6 @@ export default function Dashboard() {
                                         setAccordionIconn(true);
                                     }
                                 }}
-
                                 style={{ cursor: "pointer" }}>
                                 <div className="manage-nav">
                                     <img src="/svg/manage.svg" alt="manage" className="manage-img" height={20} />
@@ -442,11 +417,10 @@ export default function Dashboard() {
                             </div>
                             <div
                                 id="panelsStayOpen-collapseOne"
-                                className={`accordion-collapse collapse ${activeMenu === "manage" ? "show" : ""}`}
+                                className={`collapse ${activeMenu === "manage" ? "show" : ""}`}
 
                                 aria-labelledby="panelsStayOpen-headingOne"
                                 style={isAccountManager ? {} : { marginTop: "-25px" }}
-
                             >
                                 <div className="undermanage-hover">
                                     {isSuperAdmin && (
@@ -460,9 +434,25 @@ export default function Dashboard() {
                                                     color: localStorage.getItem("active_tab") === "4" ? "white" : "",
                                                 }}
                                             >
-                                                <span
+                                                {/* <span
                                                     className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
-                                                />
+                                                /> */}
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
+                                                >
+                                                    <circle
+                                                        cx="9"
+                                                        cy="9"
+                                                        r="7"
+                                                        stroke="currentColor"
+                                                        strokeWidth="3"
+                                                        fill="none"
+                                                    />
+                                                </svg>
 
                                                 {showAccounts && (
                                                     <label
@@ -474,7 +464,6 @@ export default function Dashboard() {
                                                     </label>
                                                 )}
                                             </a>
-
                                         </div>
                                     )}
                                     <div className="undermanage-hover">
@@ -488,7 +477,24 @@ export default function Dashboard() {
                                                     marginTop: isAccountManager ? "25px" : "0px",
                                                 }}
                                             >
-                                                <span className={`circle-indicator  ${activeNav === "5" ? "active" : ""} `}></span>
+                        
+                                                 <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    className={`circle-indicator ${activeNav === "5" ? "active" : ""}`}
+                                                >
+                                                    <circle
+                                                        cx="9"
+                                                        cy="9"
+                                                        r="7"
+                                                        stroke="currentColor"
+                                                        strokeWidth="3"
+                                                        fill="none"
+                                                    />
+                                                </svg>
+
                                                 {showEmployee && (
                                                     <label
                                                         className="emp-label"
@@ -500,7 +506,6 @@ export default function Dashboard() {
                                                 )}
                                             </a>
                                         </div>
-
                                         <div className="employee-anchor">
                                             <a
                                                 className="nav-font"
@@ -510,7 +515,22 @@ export default function Dashboard() {
                                                     color: localStorage.getItem("active_tab") === "6" ? "white" : "",
                                                 }}
                                             >
-                                                <span className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}></span>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                     className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}
+                                                >
+                                                    <circle
+                                                        cx="9"
+                                                        cy="9"
+                                                        r="7"
+                                                        stroke="currentColor"
+                                                        strokeWidth="3"
+                                                        fill="none"
+                                                    />
+                                                </svg>
                                                 {shiftAdjustment && (
                                                     <label
                                                         className="emp-label"
@@ -606,7 +626,6 @@ export default function Dashboard() {
                                 </svg>
                             </span>
                         </button>
-
                         {open && (
                             <img
                                 onClick={() => setOpen(false)}
@@ -621,17 +640,17 @@ export default function Dashboard() {
                         <center>
                             {open === false && showProfile === true && (
                                 <div className="profile-div position-relative">
-                                    <div className="dot-div position-absolute">
+                                    {/* <div className="dot-div position-absolute">
                                         <svg onClick={toggleinput} xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" className="bi bi-camera-fill text-light" viewBox="0 0 16 16">
                                             <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                                             <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0" />
                                         </svg>
-                                    </div>
-                                    {upload === true && (
+                                    </div> */}
+                                    {/* {upload === true && (
                                         <div>
                                             <input className="input-image" type="file" accept="image/*" onChange={handleImageUpload} />
                                         </div>
-                                    )}
+                                    )} */}
                                     <div className="profile-circle">
                                         {profile ? (
                                             <img onClick={openClose} className="profile-picture" src={profile} alt="" height={70} width={70} />
@@ -639,7 +658,6 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             )}
-
                         </center>
                     </div>
                 </div>
@@ -648,7 +666,6 @@ export default function Dashboard() {
                     <div>{showPoweredby === true && (<img src="/img/eComialogo.png" className="ecomia-db-logo" height={20} />)}</div>
                 </div>
             </div>
-
         </>
     );
 }

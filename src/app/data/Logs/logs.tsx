@@ -98,17 +98,6 @@ function LogsDataTable() {
 		return () => clearInterval(intervalId); // Cleanup interval
 	}, [latestUpdate]);
 
-	// if (loading)
-	// 	return (
-	// 		<div className={`loading ${loading ? "show" : ""} d-flex justify-content-center align-items-center`}>
-	// 			<div className="spinner-border text-info" role="status">
-	// 				<span className="visually-hidden">Loading...</span>
-	// 			</div>
-	// 		</div>
-
-	// 	);
-	// if (error) return <div>Error: {error}</div>;
-
 	return (
 		<div className="logs-wrapper px-4">
 			<div className="logs-maindiv px-3">

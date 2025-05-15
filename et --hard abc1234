@@ -1,0 +1,130 @@
+[33m28da302[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackup[m[33m, [m[1;31morigin/workforce[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33m28da302[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackup[m[33m, [m[1;31morigin/workforce[m[33m)[m HEAD@{1}: checkout: moving from develop to backup
+[33mf01c8d2[m[33m ([m[1;32mdevelop[m[33m)[m HEAD@{2}: checkout: moving from backup to develop
+[33m28da302[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackup[m[33m, [m[1;31morigin/workforce[m[33m)[m HEAD@{3}: checkout: moving from develop to backup
+[33mf01c8d2[m[33m ([m[1;32mdevelop[m[33m)[m HEAD@{4}: checkout: moving from develop to develop
+[33mf01c8d2[m[33m ([m[1;32mdevelop[m[33m)[m HEAD@{5}: checkout: moving from workforce to develop
+[33m1db8b52[m[33m ([m[1;32mworkforce[m[33m)[m HEAD@{6}: checkout: moving from backup to workforce
+[33m28da302[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackup[m[33m, [m[1;31morigin/workforce[m[33m)[m HEAD@{7}: reset: moving to HEAD
+[33m28da302[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackup[m[33m, [m[1;31morigin/workforce[m[33m)[m HEAD@{8}: pull origin workforce: Fast-forward
+[33mcdddc5e[m[33m ([m[1;31morigin/backup[m[33m)[m HEAD@{9}: reset: moving to HEAD
+[33mcdddc5e[m[33m ([m[1;31morigin/backup[m[33m)[m HEAD@{10}: commit: latest
+[33me92f8f5[m HEAD@{11}: commit: updates
+[33m11097b2[m HEAD@{12}: commit: ...
+[33m9ca074f[m HEAD@{13}: commit: ...
+[33m1ba4a8b[m HEAD@{14}: commit: ...
+[33m306a8d3[m HEAD@{15}: commit: ...
+[33mfef422c[m HEAD@{16}: commit: ...
+[33m0bccb65[m HEAD@{17}: commit: ...
+[33mf113506[m HEAD@{18}: commit: ...
+[33mfac90fb[m HEAD@{19}: commit: ...
+[33m43b13d5[m HEAD@{20}: commit: ....
+[33m5b0198a[m HEAD@{21}: commit: ....
+[33m0e629f6[m HEAD@{22}: commit: ...
+[33m3534ab4[m HEAD@{23}: commit: ...
+[33ma9e6053[m HEAD@{24}: reset: moving to HEAD
+[33ma9e6053[m HEAD@{25}: pull origin workforce --no-ff: Merge made by the 'ort' strategy.
+[33mca2d54e[m HEAD@{26}: pull origin workforce --no-ff: Merge made by the 'ort' strategy.
+[33ma90bbf8[m HEAD@{27}: commit: ...
+[33m1006bea[m HEAD@{28}: pull origin latest --no-ff: Merge made by the 'ort' strategy.
+[33m39b884a[m HEAD@{29}: checkout: moving from workforce to backup
+[33m1db8b52[m[33m ([m[1;32mworkforce[m[33m)[m HEAD@{30}: commit: .
+[33mfecbbde[m HEAD@{31}: checkout: moving from backup to workforce
+[33m39b884a[m HEAD@{32}: reset: moving to HEAD
+[33m39b884a[m HEAD@{33}: commit: ...
+[33m5234bb1[m HEAD@{34}: commit: ....
+[33m366b17d[m HEAD@{35}: commit: ..
+[33mf5b7b1f[m HEAD@{36}: checkout: moving from latest to backup
+[33md1b5e3d[m[33m ([m[1;32mlatest[m[33m)[m HEAD@{37}: checkout: moving from backup to latest
+[33mf5b7b1f[m HEAD@{38}: commit (merge): .
+[33m53c2edf[m HEAD@{39}: commit: .
+[33m6ce7868[m HEAD@{40}: checkout: moving from latest to backup
+[33md1b5e3d[m[33m ([m[1;32mlatest[m[33m)[m HEAD@{41}: checkout: moving from latest to latest
+[33md1b5e3d[m[33m ([m[1;32mlatest[m[33m)[m HEAD@{42}: reset: moving to HEAD
+[33md1b5e3d[m[33m ([m[1;32mlatest[m[33m)[m HEAD@{43}: checkout: moving from backup to latest
+[33m6ce7868[m HEAD@{44}: pull origin latest --no-ff: Merge made by the 'ort' strategy.
+[33m1c177ec[m HEAD@{45}: commit: ...
+[33m1c695df[m HEAD@{46}: commit: ..
+[33m1ec2594[m HEAD@{47}: commit: schedule updated
+[33m5ce85b8[m HEAD@{48}: commit: /
+[33mdea7abe[m HEAD@{49}: commit: ....
+[33mfbc7f42[m HEAD@{50}: commit: ...
+[33md6d9298[m HEAD@{51}: commit: ...
+[33m20efaeb[m HEAD@{52}: commit: ..
+[33mf39ba5f[m HEAD@{53}: commit: schedule
+[33mf65af68[m[33m ([m[1;31morigin/intranet[m[33m)[m HEAD@{54}: pull origin workforce: Fast-forward
+[33m64b5890[m HEAD@{55}: reset: moving to HEAD
+[33m64b5890[m HEAD@{56}: reset: moving to HEAD
+[33m64b5890[m HEAD@{57}: commit: updates
+[33m1b1b2f7[m HEAD@{58}: commit: updated ui
+[33m639f3ec[m HEAD@{59}: commit: updated
+[33mcea9e2b[m HEAD@{60}: commit: latest update
+[33m06ddbe2[m HEAD@{61}: pull origin workforce: Fast-forward
+[33mb7eaa34[m HEAD@{62}: commit: update
+[33mfecbbde[m HEAD@{63}: checkout: moving from workforce to backup
+[33mfecbbde[m HEAD@{64}: reset: moving to HEAD
+[33mfecbbde[m HEAD@{65}: commit: create and update schedule
+[33m8a9a0d8[m HEAD@{66}: pull origin workforce: Fast-forward
+[33m5db6f95[m HEAD@{67}: checkout: moving from newbranch to workforce
+[33m2a73d50[m[33m ([m[1;32mnewbranch[m[33m)[m HEAD@{68}: pull origin workforce --no-ff: Merge made by the 'ort' strategy.
+[33m6aa3406[m[33m ([m[1;31morigin/newbranch[m[33m)[m HEAD@{69}: reset: moving to HEAD
+[33m6aa3406[m[33m ([m[1;31morigin/newbranch[m[33m)[m HEAD@{70}: commit: ...
+[33md72f7bc[m HEAD@{71}: pull origin workforce --no-ff: Merge made by the 'ort' strategy.
+[33m9f9be72[m HEAD@{72}: commit: ..
+[33m5db6f95[m HEAD@{73}: checkout: moving from workforce to newbranch
+[33m5db6f95[m HEAD@{74}: commit: ..
+[33m0c6abb7[m HEAD@{75}: commit: Schedule updated
+[33m6463a25[m HEAD@{76}: commit: Updated
+[33m116ac9a[m HEAD@{77}: pull origin workforce --no-ff: Merge made by the 'ort' strategy.
+[33mf4ed1fa[m HEAD@{78}: checkout: moving from workforce to workforce
+[33mf4ed1fa[m HEAD@{79}: checkout: moving from workforce to workforce
+[33mf4ed1fa[m HEAD@{80}: checkout: moving from Version2 to workforce
+[33mcf454d7[m[33m ([m[1;31morigin/Version2[m[33m, [m[1;32mVersion2[m[33m)[m HEAD@{81}: commit: ..
+[33m80a5022[m HEAD@{82}: commit: ...
+[33m68798e5[m HEAD@{83}: commit: add schedule
+[33m3406484[m HEAD@{84}: commit: schedule
+[33m51d8fe3[m HEAD@{85}: commit: schedule
+[33mf4ed1fa[m HEAD@{86}: checkout: moving from workforce to Version2
+[33mf4ed1fa[m HEAD@{87}: checkout: moving from Version2 to workforce
+[33mf4ed1fa[m HEAD@{88}: checkout: moving from workforce to Version2
+[33mf4ed1fa[m HEAD@{89}: commit: Resolve Warnings
+[33m50e0d67[m HEAD@{90}: commit: Latest Update
+[33mdb0d460[m HEAD@{91}: commit: fixed
+[33m23eaff6[m HEAD@{92}: commit: fixed Bugs
+[33mdccea4b[m HEAD@{93}: commit: removeconsole
+[33m2a2bf20[m HEAD@{94}: commit: updated
+[33mfc1526a[m HEAD@{95}: commit: Naming convention
+[33m98c9a07[m HEAD@{96}: commit: final updates
+[33m1acb530[m HEAD@{97}: commit: FINAL UPDATE
+[33meb17de6[m HEAD@{98}: commit: Required Fields
+[33m2403f18[m HEAD@{99}: commit: FINAL UPDATE
+[33m233006a[m HEAD@{100}: commit: FINAL
+[33m8be8cb0[m HEAD@{101}: commit: latest update
+[33m46c6d80[m HEAD@{102}: commit: fixes
+[33m65a88c4[m HEAD@{103}: commit: fixes
+[33m52709e9[m HEAD@{104}: commit: cleaning up
+[33m2c752d3[m HEAD@{105}: commit: Fixed
+[33m76b05a0[m HEAD@{106}: pull origin workforce --no-ff: Merge made by the 'ort' strategy.
+[33mc58e436[m[33m ([m[1;32mworkforceV2[m[33m)[m HEAD@{107}: checkout: moving from workforceV2 to workforce
+[33mc58e436[m[33m ([m[1;32mworkforceV2[m[33m)[m HEAD@{108}: checkout: moving from workforce to workforceV2
+[33mc58e436[m[33m ([m[1;32mworkforceV2[m[33m)[m HEAD@{109}: commit: .....
+[33mbca4f20[m HEAD@{110}: commit: latest updates...
+[33m65aadd3[m HEAD@{111}: commit: updated
+[33mb31d691[m HEAD@{112}: commit: .....
+[33m653cf9a[m HEAD@{113}: commit: ....
+[33m9b6cd7b[m HEAD@{114}: commit: final update
+[33m89155ef[m HEAD@{115}: commit: latest updates
+[33m7d768b3[m HEAD@{116}: pull origin develop --no-ff: Merge made by the 'ort' strategy.
+[33m9079363[m HEAD@{117}: commit: latest
+[33mc4f0b66[m HEAD@{118}: commit: updated
+[33m0a854db[m HEAD@{119}: commit: ...
+[33mc9b3673[m HEAD@{120}: commit: updated
+[33m3b64f36[m HEAD@{121}: commit: updated
+[33m6d56a0b[m[33m ([m[1;31morigin/partial[m[33m)[m HEAD@{122}: reset: moving to HEAD
+[33m6d56a0b[m[33m ([m[1;31morigin/partial[m[33m)[m HEAD@{123}: checkout: moving from partial to workforce
+[33m6d56a0b[m[33m ([m[1;31morigin/partial[m[33m)[m HEAD@{124}: commit: latest updates
+[33m80f8122[m HEAD@{125}: commit: fixed
+[33m3393777[m HEAD@{126}: commit: final
+[33mcbed0fe[m HEAD@{127}: commit: latest
+[33m49cc270[m HEAD@{128}: commit: ...
+[33mb803

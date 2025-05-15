@@ -286,7 +286,7 @@ export default function ManageDepartment() {
                                         data-bs-dismiss="modal"
                                         type="button"
                                     >
-                                       <span className="view">Close</span> 
+                                       <span className="cancel-btn">Cancel</span> 
                                     </button>
 
                                     <button className="btn btn-success btn-sm" type="submit">
