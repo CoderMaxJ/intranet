@@ -7,9 +7,11 @@ import ApproveTable from "../component/ApproveTable/ApproveTable";
 import ApprovedData from "../component/ApprovedData/ApprovedData";
 import RejectedData from "../component/RejectedData/RejectedData";
 import RejectedTable from "../component/Rejected/RejectedTable";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Decryptor } from "@/security";
+import { useActionData } from "react-router-dom";
 
 interface RequestDetails {
   requestid: number;
@@ -33,6 +35,9 @@ interface Account {
 export default function ShiftAdjustment() {
   const [searchTerm, setSearchTerm] = useState("");
   const [details, setShiftData] = useState<RequestDetails | null>(null);
+  const [itemsPerPage] = useState(5);
+  const [currentPage, setCurrentPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [data, setData] = useState<any[]>([]);
   const [approve, setApprove] = useState("");
   const [account, setAccount] = useState<Account[]>([]);
@@ -50,6 +55,19 @@ export default function ShiftAdjustment() {
     if (filter === "rejected") return item.status === 2;
     return true;
   });
+
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
+  }, [filteredData, itemsPerPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPages(page);
+  };
 
   useEffect(() => {
     fetchShiftAdjustmentData();
@@ -85,7 +103,7 @@ export default function ShiftAdjustment() {
       const decryptedId = Decryptor(user_id || "");
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/view/scrub/requests/${decryptedId}/`,
+        `${process.env.NEXT_PUBLIC_BACKEND}/view/scrub/requests/${decryptedId}/?page=${currentPage}`,
         {
           method: "GET",
           headers: {
@@ -158,8 +176,8 @@ export default function ShiftAdjustment() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.length > 0 ? (
-                    filteredData.map((item) => (
+                  {paginatedData.length > 0 ? (
+                    paginatedData.map((item) => (
                       <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
                         <td>{item.name || "-"}</td>
                         <td>{item.reason?.slice(0, 40) + "..." || "-"}</td>
@@ -186,13 +204,14 @@ export default function ShiftAdjustment() {
                   ) : (
                     <tr>
                       <td colSpan={5} className="text-center">
-                          No pending shift adjustment requests at this time
+                        No pending shift adjustment requests at this time
                       </td>
                     </tr>
                   )}
                 </tbody>
               </table>
             )}
+
             {filter === "approved" && (
               <>
                 <ApproveTable onView={handleViewClick} />
@@ -207,6 +226,26 @@ export default function ShiftAdjustment() {
                 />
               </>
             )}
+          </div>
+          <div className="d-flex justify-content-end align-items-center gap-3">
+            <div className="adjustment-total">
+              <p><i className="bi bi-people-fill"></i><span> Total: {itemsPerPage}</span></p>
+            </div>
+            <div>
+              <nav aria-label="Page navigation example">
+                <ul className="pagination">
+                  <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`} > <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
+                    <i className="bi bi-caret-left"></i>
+                  </button></li>
+                  <li className="page-item"><span className="page-link" style={{ whiteSpace: 'nowrap' }}>
+                    {currentPage} of {totalPages}
+                  </span></li>
+                  <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}><button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
+                    <i className="bi bi-caret-right"></i>
+                  </button></li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
@@ -229,6 +268,8 @@ export default function ShiftAdjustment() {
           onDeclineComplete={fetchShiftAdjustmentData}
         />
       )}
+
     </div>
+
   );
 }

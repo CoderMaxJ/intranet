@@ -33,6 +33,11 @@
   font-family: 'Geist';
 }
 
+.btn-primary {
+  font-family: 'Geist';
+  font-weight: 500 !important;
+}
+
 .manage-menus {
   padding: 10px 15px;
   width: 100%;
@@ -1871,6 +1876,12 @@ table {
   position: relative;
   top: 13px;
 }
+
+.adjustment-total {
+   color: rgb(88, 87, 87);
+   font-family: 'Geist';
+}
+
 
 .employee-total span {
   font-family: 'Geist';
