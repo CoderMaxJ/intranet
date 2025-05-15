@@ -1872,6 +1872,12 @@ table {
   top: 13px;
 }
 
+.adjustment-total {
+   color: rgb(88, 87, 87);
+   font-family: 'Geist';
+}
+
+
 .employee-total span {
   font-family: 'Geist';
 }
