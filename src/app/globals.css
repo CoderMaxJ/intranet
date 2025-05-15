@@ -33,6 +33,11 @@
   font-family: 'Geist';
 }
 
+.btn-primary {
+  font-family: 'Geist';
+  font-weight: 500 !important;
+}
+
 .manage-menus {
   padding: 10px 15px;
   width: 100%;

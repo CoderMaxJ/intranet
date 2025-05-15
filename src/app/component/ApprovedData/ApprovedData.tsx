@@ -150,7 +150,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
       if (!prev) return prev;
 
       const updated = { ...prev };
-
       if (section === "login" || section === "logout") {
         updated[section] = {
           ...updated[section],
@@ -188,7 +187,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
   const handleApply = () => {
     const updatedStatus = 1;
     setStatus(updatedStatus);
-
     const payload = {
       requestid: data?.requestid,
       empno: data?.empno,
@@ -205,7 +203,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
     };
     approvedRequest(payload);
   };
-
 
   return (
     <div>
@@ -228,7 +225,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
             aria-label="Close"
           ></button>
         </div>
-
         <div className="offcanvas-body">
           <div>
             <div className="d-flex flex-column">
@@ -258,7 +254,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
             <div><label htmlFor="requesteddate" className="drawer-label mb-1">Requested Date</label></div>
             <div><input className="form-control form-control--requesteddate mb-3" type="date" readOnly value={data?.shiftdate || ""} disabled={true} /></div>
           </div>
-
           <div className="justify-content-between">
             <div className="d-flex justify-content-around mb-2 w-100">
               <div>
@@ -271,7 +266,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                 <label className="drawer-label1 col-4 justify-content-start">Recorded Time</label>
               </div>
               <div>
-
               </div>
             </div>
 
@@ -301,10 +295,8 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     step={1}
                   />
                 </div>
-
               </div>
             )}
-
             {data?.logs?.break1?.in && (
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container2">
@@ -329,8 +321,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     step={1}
                   />
                 </div>
-
-
               </div>
             )}
             {data?.logs?.break1?.out && (
@@ -357,7 +347,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     step={1}
                   />
                 </div>
-
               </div>
             )}
             {/* Lunch - In */}
@@ -389,10 +378,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
               </div>
             )}
             {/* Lunch - Out */}
-
             {data?.logs?.lunch?.out && (
-
-
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container3">
                   <span className="lunch-in-label fw-semibold">Lunch - Out</span>
@@ -421,8 +407,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
             )}
             {/* Break 2 - In */}
             {data?.logs?.break2?.in && (
-
-
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container4">
                   <span className="break2-label fw-semibold">2nd Break - In</span>
@@ -445,7 +429,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     className="input-time-field"
                   />
                 </div>
-
               </div>
             )}
             {/* Break 2 - Out */}
@@ -472,10 +455,8 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     className="input-time-field"
                   />
                 </div>
-
               </div>
             )}
-
             {data?.logs?.logout?.out && (
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container5">

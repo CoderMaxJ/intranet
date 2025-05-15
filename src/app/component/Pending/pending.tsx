@@ -537,7 +537,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
 
                 <div className="modal-footer gap-4 shift-footer" style={{ padding: '20px' }}>
                     <div>
-                        <button onClick={handleApply} className="custom-btn approve-btn">
+                        <button onClick={handleApply} className="btn btn-primary">
                             Approve
                         </button>
 
