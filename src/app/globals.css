@@ -539,6 +539,10 @@ input:focus {
   position: relative;
 }
 
+.form-control {
+  font-family: 'Geist';
+}
+
 .password-icon {
   border: 1px solid red;
 }

@@ -44,7 +44,8 @@
     background-color: #E9ecef;
     text-align: center;
     color: #171616;
-
+    width: 100%;
+    min-width: 145px;
 }
 
 .label-container {
@@ -73,14 +74,18 @@
     display: flex;
     background-color: #FFE4E3;
     border-radius: 4px;
-    
+
+}
+
+.drawer-adjustment {
+    width: 600px !important;
 }
 
 .break11-label,
 .label-container2 .break1-label {
     color: #ED3B2F;
     font-family: 'Geist';
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .label-container3 {

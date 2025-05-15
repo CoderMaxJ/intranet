@@ -256,7 +256,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                 tabIndex={-1}
                 id="shiftdrawer"
                 aria-labelledby="ShiftRightLabel"
-                style={{ width: "420px" }}
+                style={{ width: "480px" }}
             >
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">
@@ -344,7 +344,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
 
                             </div>
                         )}
-
                         {data?.logs?.break1?.in && (
                             <div className="d-flex justify-content-around align-items-center mb-2">
                                 <div className="label-container2">

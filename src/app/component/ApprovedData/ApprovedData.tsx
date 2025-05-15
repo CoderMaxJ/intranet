@@ -211,11 +211,11 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
     <div>
       <ToastContainer />
       <div
-        className="offcanvas offcanvas-end"
+        className="offcanvas offcanvas-end drawer-adjustment"
         tabIndex={-1}
         id="approveddrawer"
         aria-labelledby="approvedRightLabel"
-        style={{ width: "420px" }}
+        style={{ width: "600px !important" }}
       >
         <div className="offcanvas-header">
           <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">
