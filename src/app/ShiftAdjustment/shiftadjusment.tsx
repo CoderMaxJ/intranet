@@ -55,10 +55,6 @@ export default function ShiftAdjustment() {
     fetchShiftAdjustmentData();
   }, []);
 
-  const handleApproved = (e: any) => {
-    setApprove(e.target.value);
-  };
-
   const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
   async function getAccount() {
     const token = localStorage.getItem("token");
@@ -81,66 +77,7 @@ export default function ShiftAdjustment() {
     getAccount();
   }, [])
 
-  const handleDeleteRequest = async (requestid: number) => {
-    const token = localStorage.getItem("token");
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/requests/${requestid}/`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${Decryptor(token || "")}`,
-          },
-        }
-      );
-
-      if (response.ok) {
-        fetchShiftAdjustmentData();
-      } else {
-        console.error("Deletion failed:", await response.text());
-      }
-    } catch (error) {
-      console.error("Error during deletion:", error);
-    }
-  };
-
-  const handleApproveRequest = async (decryptedId: string) => {
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/requests/${decryptedId}/`,{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`,
-      }
-    });
-
-    if (response.ok) {
-      fetchShiftAdjustmentData();
-    } else {
-    }
-  };
-
-  const handleRejectRequest = async (empno: number, acctid: number) => {
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`,
-      }
-    });
-
-    if (response.ok) {
-      fetchShiftAdjustmentData();
-    }
-  };
-
   const fetchShiftAdjustmentData = async () => {
-    console.log("Fetching pending data...");
     const user_id = localStorage.getItem("user_id");
     const token = localStorage.getItem("token");
 
@@ -161,8 +98,6 @@ export default function ShiftAdjustment() {
       if (response.ok) {
         const data = await response.json();
         setData(data.data);
-
-        console.log(data)
         setShiftData(data);
       } else {
         const errorText = await response.text();
@@ -227,7 +162,7 @@ export default function ShiftAdjustment() {
                     filteredData.map((item) => (
                       <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
                         <td>{item.name || "-"}</td>
-                        <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
+                        <td>{item.reason?.slice(0, 40) + "..." || "-"}</td>
                         <td> {account.find((acc) => acc.acctid === item.acctid)?.acctname || "-"}</td>
                         <td>{item.created_at || "-"}</td>
                         <td>

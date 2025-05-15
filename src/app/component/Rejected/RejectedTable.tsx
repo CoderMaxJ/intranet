@@ -59,6 +59,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
 
     if (response.status === 200) {
       const data = await response.json();
+      console.log("rejected_data",data)
       setRejectedRequest(data.data);
     }
   }

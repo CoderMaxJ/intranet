@@ -69,6 +69,7 @@ export default function ApproveTable({ onView }: ApproveProps) {
 
       if (response.status === 200) {
         const data = await response.json();
+        console.log("==>",data.total);
         setApproveRequest(data.data);
       }
     }
