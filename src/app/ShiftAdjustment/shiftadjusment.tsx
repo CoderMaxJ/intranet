@@ -101,7 +101,6 @@ export default function ShiftAdjustment() {
 
   const handleDeleteRequest = async (requestid: number) => {
     const token = localStorage.getItem("token");
-
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/requests/${requestid}/`,
@@ -143,7 +142,6 @@ export default function ShiftAdjustment() {
 
   const handleRejectRequest = async (empno: number, acctid: number) => {
     const token = localStorage.getItem("token");
-
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/`, {
       method: "DELETE",
       headers: {
@@ -161,7 +159,6 @@ export default function ShiftAdjustment() {
     console.log("Fetching pending data...");
     const user_id = localStorage.getItem("user_id");
     const token = localStorage.getItem("token");
-
     try {
       const decryptedId = Decryptor(user_id || "");
 
@@ -179,7 +176,6 @@ export default function ShiftAdjustment() {
       if (response.ok) {
         const data = await response.json();
         setData(data.data);
-
         console.log(data)
         setShiftData(data);
       } else {

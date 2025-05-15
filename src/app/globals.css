@@ -20,6 +20,10 @@
   width: 100%;
 }
 
+.offcanvas {
+  width: 480px !important;
+}
+
 .manage-nav {
   display: flex;
   align-items: center;

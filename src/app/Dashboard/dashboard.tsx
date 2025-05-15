@@ -48,6 +48,7 @@ export default function Dashboard() {
     const [token, setToken] = useState<string | null>(null);
     const [isAccountManager, setIsAccountManager] = useState(false);
     const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+    const [isSupervisor, setIsSupervisor] = useState(false);
 
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
@@ -60,10 +61,6 @@ export default function Dashboard() {
             setActiveMenu("manage");
             setAccordionIconn(true);
         }
-        // else if (activeMenu === "manage") {
-        //     setActiveMenu("");
-        //     setAccordionIconn(false);
-        // }
     }, [activeNav]);
 
     const navigateTo = (path: string, tabId: string) => {
@@ -112,13 +109,20 @@ export default function Dashboard() {
                 "update_breaktool_account",
                 "view_multiple_accounts"
             ];
-            const user_privilege = [...array_privilege]; // Initialize from parsed privileges
+            const user_privilege = [...array_privilege];
+
             const hasOnlyAccountManager =
                 array_privilege.length === 2 &&
                 array_privilege.includes("view_workforce") &&
                 array_privilege.includes("update_breaktool_account");
+
             const isSuperAdmin =
                 allPrivileges.every(priv => array_privilege.includes(priv));
+
+            const isSupervisor =
+                array_privilege.includes("view_reports") &&
+                array_privilege.includes("view_multiple_accounts");
+
             if (hasOnlyAccountManager) {
                 setIsAccountManager(true);
                 console.log("Role: account_manager");
@@ -126,6 +130,10 @@ export default function Dashboard() {
             if (isSuperAdmin) {
                 setIsSuperAdmin(true);
                 console.log("Role: superadmin");
+            }
+            if (isSupervisor) {
+                setIsSupervisor(true);
+                console.log("Role: supervisor");
             }
         }
     }, []);
@@ -434,9 +442,6 @@ export default function Dashboard() {
                                                     color: localStorage.getItem("active_tab") === "4" ? "white" : "",
                                                 }}
                                             >
-                                                {/* <span
-                                                    className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
-                                                /> */}
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="20"
@@ -453,7 +458,6 @@ export default function Dashboard() {
                                                         fill="none"
                                                     />
                                                 </svg>
-
                                                 {showAccounts && (
                                                     <label
                                                         className="acc-label"
@@ -474,11 +478,10 @@ export default function Dashboard() {
                                                 style={{
                                                     backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
                                                     color: localStorage.getItem("active_tab") === "5" ? "white" : "",
-                                                    marginTop: isAccountManager ? "25px" : "0px",
+                                                    marginTop: (isAccountManager || isSupervisor) ? "25px" : "0px",
                                                 }}
                                             >
-                        
-                                                 <svg
+                                                <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="20"
                                                     height="20"
@@ -494,7 +497,6 @@ export default function Dashboard() {
                                                         fill="none"
                                                     />
                                                 </svg>
-
                                                 {showEmployee && (
                                                     <label
                                                         className="emp-label"
@@ -520,7 +522,7 @@ export default function Dashboard() {
                                                     width="20"
                                                     height="20"
                                                     viewBox="0 0 24 24"
-                                                     className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}
+                                                    className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}
                                                 >
                                                     <circle
                                                         cx="9"
