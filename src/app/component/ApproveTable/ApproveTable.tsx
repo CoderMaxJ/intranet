@@ -31,6 +31,7 @@ export default function ApproveTable({ onView}: ApproveProps) {
   const [accounts, setAccounts] = useState<Accounts[]>([]);
   const [current_page,setCurrentPage]=useState(1);
   const [totalPage,setTotalPage]=useState();
+  const [total,setTotal]=useState(0);
   
 
   const handleDeleteSample = () => {
@@ -81,6 +82,8 @@ export default function ApproveTable({ onView}: ApproveProps) {
         const data = await response.json();
         setApproveRequest(data.data);
         setTotalPage(data.num_pages);
+        setTotal(data.total);
+        
       }
     }
 
@@ -137,7 +140,7 @@ export default function ApproveTable({ onView}: ApproveProps) {
       </table>
       <div className="d-flex justify-content-end align-items-center gap-3">
             <div className="adjustment-total">
-              <p><i className="bi bi-people-fill"></i><span> Total: </span></p>
+              <p><i className="bi bi-people-fill"></i><span> Total:  {total}</span></p>
             </div>
             <div>
               <nav aria-label="Page navigation example">
