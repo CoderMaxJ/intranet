@@ -126,7 +126,7 @@ function LogsDataTable() {
 						/>
 					</div>
 					<div className="logs-total d-flex">
-						<div><i className=" bi bi-people-fill px-1"></i></div>
+						<div><i className=" bi bi-people px-1"></i></div>
 						<div><label>Total: {localStorage.getItem("total-logs") || 0}</label></div>
 					</div>
 				</div>

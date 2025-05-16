@@ -14,7 +14,6 @@ declare global {
         bootstrap: any;
     }
 }
-// declare var bootstrap: any;
 
 export default function Dashboard() {
     const router = useRouter();
@@ -100,6 +99,7 @@ export default function Dashboard() {
     const user_hash_privilege = localStorage.getItem("user_privilege");
     useEffect(() => {
         if (user_hash_privilege) {
+            console.log("Role: Superadmin", user_hash_privilege);
             const array_privilege = IdentifyUser(user_hash_privilege);
             const allPrivileges = [
                 "manage_users",
@@ -116,12 +116,14 @@ export default function Dashboard() {
                 array_privilege.includes("view_workforce") &&
                 array_privilege.includes("update_breaktool_account");
 
+            const hasOnlySupervisor =
+                array_privilege.includes("view_reports") &&
+                array_privilege.includes("view_multiple_accounts");
+
             const isSuperAdmin =
                 allPrivileges.every(priv => array_privilege.includes(priv));
 
-            const isSupervisor =
-                array_privilege.includes("view_reports") &&
-                array_privilege.includes("view_multiple_accounts");
+
 
             if (hasOnlyAccountManager) {
                 setIsAccountManager(true);
@@ -131,7 +133,7 @@ export default function Dashboard() {
                 setIsSuperAdmin(true);
                 console.log("Role: superadmin");
             }
-            if (isSupervisor) {
+            if (hasOnlySupervisor) {
                 setIsSupervisor(true);
                 console.log("Role: supervisor");
             }
@@ -478,7 +480,7 @@ export default function Dashboard() {
                                                 style={{
                                                     backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
                                                     color: localStorage.getItem("active_tab") === "5" ? "white" : "",
-                                                    marginTop: (isAccountManager || isSupervisor) ? "25px" : "0px",
+                                                    margin: (isAccountManager || isSupervisor) ? "25px 0 15px 0" : "0"
                                                 }}
                                             >
                                                 <svg

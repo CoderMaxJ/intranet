@@ -25,6 +25,7 @@ interface RequestDetails {
   created_at: string;
   aprroved_at: string;
   declined_at: string;
+  total:number;
 }
 
 interface Account {
@@ -34,48 +35,22 @@ interface Account {
 
 export default function ShiftAdjustment() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [details, setShiftData] = useState<RequestDetails | null>(null);
   const [itemsPerPage] = useState(5);
   const [currentPage, setCurrentPages] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [data, setData] = useState<any[]>([]);
+  const [totalPages, setTotalPages] = useState();
+  const [data, setData] = useState<RequestDetails[]>([]);
   const [approve, setApprove] = useState("");
   const [account, setAccount] = useState<Account[]>([]);
-  const [filter, setFilter] = useState<"pending" | "approved" | "rejected">("pending");
-  const [activeTab, setActiveTab] = useState("pending");
+  const [totalData,setTotalData]=useState();
+  const [activeTab,setActiveTab]=useState("pending")
 
-  const handleTabChange = (value: "pending" | "approved" | "rejected") => {
-    setFilter(value);
-    setActiveTab(value);
-  };
-
-  const filteredData = data.filter((item) => {
-    if (filter === "pending") return item.status === 0;
-    if (filter === "approved") return item.status === 1;
-    if (filter === "rejected") return item.status === 2;
-    return true;
-  });
-
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
+ 
   useEffect(() => {
-    setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
-  }, [filteredData, itemsPerPage]);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPages(page);
-  };
-
-  useEffect(() => {
-    fetchShiftAdjustmentData();
-  }, []);
-
-  const handleApproved = (e: any) => {
-    setApprove(e.target.value);
-  };
+    if(activeTab === "pending"){
+      fetchShiftAdjustmentData();
+    }
+    
+  }, [activeTab]);
 
   const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
   async function getAccount() {
@@ -99,64 +74,7 @@ export default function ShiftAdjustment() {
     getAccount();
   }, [])
 
-  const handleDeleteRequest = async (requestid: number) => {
-    const token = localStorage.getItem("token");
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/requests/${requestid}/`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${Decryptor(token || "")}`,
-          },
-        }
-      );
-
-      if (response.ok) {
-        fetchShiftAdjustmentData();
-      } else {
-        console.error("Deletion failed:", await response.text());
-      }
-    } catch (error) {
-      console.error("Error during deletion:", error);
-    }
-  };
-
-  const handleApproveRequest = async (decryptedId: string) => {
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/requests/${decryptedId}/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`,
-      }
-    });
-
-    if (response.ok) {
-      fetchShiftAdjustmentData();
-    } else {
-    }
-  };
-
-  const handleRejectRequest = async (empno: number, acctid: number) => {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/myrequest/`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`,
-      }
-    });
-
-    if (response.ok) {
-      fetchShiftAdjustmentData();
-    }
-  };
-
   const fetchShiftAdjustmentData = async () => {
-    console.log("Fetching pending data...");
     const user_id = localStorage.getItem("user_id");
     const token = localStorage.getItem("token");
     try {
@@ -175,9 +93,10 @@ export default function ShiftAdjustment() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log("data",data.num_pages)
         setData(data.data);
-        console.log(data)
-        setShiftData(data);
+        setTotalPages(data.num_pages);
+        setTotalData(data.total);
       } else {
         const errorText = await response.text();
         console.error("Failed to fetch data:", response.status, errorText);
@@ -187,13 +106,21 @@ export default function ShiftAdjustment() {
     }
   };
 
+
+  const handlePageChange = (page: number) => {
+    setCurrentPages(page);
+  };
+
+  useEffect(()=>{
+    fetchShiftAdjustmentData();
+  },[currentPage])
   const handleViewClick = (item: RequestDetails) => {
-    setShiftData(item);
-    setActiveTab(filter);
+    setData(item);
   };
 
   return (
     <div className="d-flex">
+     
       <div>
         <Dashboard />
       </div>
@@ -203,29 +130,30 @@ export default function ShiftAdjustment() {
           <div className="d-flex gap-5">
             <button
               type="button"
-              className={`form-label form-label--shiftadjustment-header ${filter === "pending" ? "active" : ""}`}
-              onClick={() => handleTabChange("pending")}
+              className={`form-label form-label--shiftadjustment-header ${activeTab === "pending" ? "active" : ""}`}
+              onClick={() => setActiveTab("pending")}
             >
               Pending
             </button>
             <button
               type="button"
-              className={`form-label form-label--shiftadjustment-header ${filter === "approved" ? "active" : ""}`}
-              onClick={() => handleTabChange("approved")}
+              className={`form-label form-label--shiftadjustment-header ${activeTab === "approved" ? "active" : ""}`}
+              onClick={() => setActiveTab("approved")}
             >
               Approved
             </button>
             <button
               type="button"
-              className={`form-label form-label--shiftadjustment-header ${filter === "rejected" ? "active" : ""}`}
-              onClick={() => handleTabChange("rejected")}
+              className={`form-label form-label--shiftadjustment-header ${activeTab === "rejected" ? "active" : ""}`}
+              onClick={() => setActiveTab("rejected")}
             >
               Rejected/Cancelled
             </button>
           </div>
 
           <div className="shiftadjustment-table table-responsive">
-            {filter === "pending" && (
+            {activeTab === "pending" && (
+              <div>
               <table className="adjustment-table table table-striped table-hover table-bordered">
                 <thead>
                   <tr>
@@ -237,11 +165,11 @@ export default function ShiftAdjustment() {
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatedData.length > 0 ? (
-                    paginatedData.map((item) => (
+                  {data?.length > 0 ? (
+                    data?.map((item) => (
                       <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
                         <td>{item.name || "-"}</td>
-                        <td>{item.reason?.slice(0, 10) + "..." || "-"}</td>
+                        <td>{item.reason?.slice(0, 40) + "..." || "-"}</td>
                         <td> {account.find((acc) => acc.acctid === item.acctid)?.acctname || "-"}</td>
                         <td>{item.created_at || "-"}</td>
                         <td>
@@ -271,26 +199,30 @@ export default function ShiftAdjustment() {
                   )}
                 </tbody>
               </table>
+
+              </div>
             )}
 
-            {filter === "approved" && (
+            {activeTab === "approved" && (
+             
               <>
                 <ApproveTable onView={handleViewClick} />
-                <ApprovedData data={details} />
+                <ApprovedData data={data} />
               </>
             )}
-            {filter === "rejected" && (
+            {activeTab === "rejected" && (
               <>
                 <RejectedTable
-                  data={filteredData.filter(item => item.status === 2)}
+                  data={data}
                   onView={handleViewClick}
                 />
               </>
             )}
           </div>
+          {activeTab !== 'rejected' && activeTab !== 'approved' &&  (
           <div className="d-flex justify-content-end align-items-center gap-3">
             <div className="adjustment-total">
-              <p><i className="bi bi-people-fill"></i><span> Total: {itemsPerPage}</span></p>
+              <p><i className="bi bi-people-fill"></i><span> Total: {totalData}</span></p>
             </div>
             <div>
               <nav aria-label="Page navigation example">
@@ -308,24 +240,17 @@ export default function ShiftAdjustment() {
               </nav>
             </div>
           </div>
+          )}
         </div>
       </div>
       {activeTab === "pending" && (
-        <Pending
-          data={details}
-          onDeclineComplete={fetchShiftAdjustmentData}
-          onApproveComplete={(approvedId) => {
-            setData(prev => prev.filter(item => item.requestid !== approvedId));
-            setShiftData(null); // Close view
-          }}
-          activeTab={activeTab}
-        />
+        <Pending data={data}/>
 
       )}
 
       {activeTab === "rejected" && (
         <RejectedData
-          data={details}
+          data={data}
           onDeclineComplete={fetchShiftAdjustmentData}
         />
       )}
