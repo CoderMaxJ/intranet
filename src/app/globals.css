@@ -128,6 +128,10 @@
   margin-right: -90px;
 }
 
+.firstbreak:hover {
+  transform: scale(1.1);
+}
+
 .secondbreak {
   padding: 10px;
   font-family: sans-serif;
@@ -137,11 +141,19 @@
   margin-right: 2px;
 }
 
+.secondbreak:hover {
+  transform: scale(1.1);
+}
+
 .lunchbreak {
   padding: 10px;
   font-family: sans-serif;
   background-color: #a9e4ff;
   margin-right: 2px;
+}
+
+.lunchbreak:hover {
+  transform: scale(1.1);
 }
 
 .overbreak {
@@ -150,6 +162,10 @@
   font-family: sans-serif;
   background-color: #ffdccc;
   text-align: center;
+}
+
+.overbreak:hover {
+  transform: scale(1.1);
 }
 
 .totalbreak {
@@ -171,9 +187,6 @@
     font-size: small !important;
   }
 
-  /* .logs-total {
-    font-size: small !important;
-  } */
 }
 
 @media (max-height: 400px) {
@@ -1675,7 +1688,7 @@ table {
   display: flex;
   align-items: center;
   gap: 5px !important;
-  margin-top: 30px;
+  margin-top:5px;
   padding: 10px !important;
   border-radius: 6px;
   cursor: pointer;
@@ -2324,10 +2337,6 @@ table {
   color: #000000;
 }
 
-/* .logout-hover:hover .logout-img {
-  filter: invert(1) brightness(2);
-} */
-
 .logout-img {
   margin-left: 9px;
 }
@@ -2346,7 +2355,6 @@ table {
   display: flex;
   align-items: center;
   padding: 10px;
-  margin-top: 5px;
   cursor: pointer;
   border-radius: 2px;
   height: 45px;
@@ -3595,3 +3603,15 @@ table {
 .modal-content--width {
   width: 500px !important;
 }
+
+.months {
+  font-family: 'Geist';
+  font-size: medium;
+  font-weight: 500;
+}
+
+.month-pagination button{
+  border:none;
+  background: none;
+}
+
