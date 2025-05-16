@@ -42,14 +42,14 @@ export default function ShiftAdjustment() {
   const [approve, setApprove] = useState("");
   const [account, setAccount] = useState<Account[]>([]);
   const [totalData,setTotalData]=useState();
-  const [activeTab,setActiveTab]=useState("pending")
+  const [activeTab,setActiveTab]=useState("pending");
+  const [selectedData,setSelectedData]=useState<RequestDetails[]>([]); 
 
- 
+
   useEffect(() => {
     if(activeTab === "pending"){
       fetchShiftAdjustmentData();
     }
-    
   }, [activeTab]);
 
   const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
@@ -116,7 +116,8 @@ export default function ShiftAdjustment() {
     fetchShiftAdjustmentData();
   },[currentPage])
   const handleViewClick = (item: RequestDetails) => {
-    setData(item);
+    setSelectedData(item);
+    console.log("============================================================",data.length)
   };
 
   return (
@@ -208,13 +209,13 @@ export default function ShiftAdjustment() {
              
               <>
                 <ApproveTable onView={handleViewClick} />
-                <ApprovedData data={data} />
+                <ApprovedData data={selectedData} />
               </>
             )}
             {activeTab === "rejected" && (
               <>
                 <RejectedTable
-                  data={data}
+                  data={selectedData}
                   onView={handleViewClick}
                 />
               </>
@@ -245,13 +246,14 @@ export default function ShiftAdjustment() {
         </div>
       </div>
       {activeTab === "pending" && (
-        <Pending data={data}/>
+      
+        <Pending data={selectedData}/>
 
       )}
 
       {activeTab === "rejected" && (
         <RejectedData
-          data={data}
+          data={selectedData}
           onDeclineComplete={fetchShiftAdjustmentData}
         />
       )}

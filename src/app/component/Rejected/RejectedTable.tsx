@@ -61,9 +61,11 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
 
     if (response.status === 200) {
       const data = await response.json();
+      console.log(data);
       setTotal(data.total);
       setTotalPages(data.num_pages);
       setRejectedRequest(data.data);
+      setCurrentPage(data.current_page);
     }
   }
 
@@ -72,9 +74,11 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
     getAccounts();
   }, [])
 
+  useEffect(()=>{
+      fetchRejectedRequest();
+  },[current_page])
   const handleChangePage = (page:number)=>{
     setCurrentPage(page);
-    fetchRejectedRequest();
   }
   return (
     <div>
