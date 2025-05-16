@@ -117,7 +117,6 @@ export default function ShiftAdjustment() {
   },[currentPage])
   const handleViewClick = (item: RequestDetails) => {
     setSelectedData(item);
-    console.log("============================================================",data.length)
   };
 
   return (
@@ -247,7 +246,7 @@ export default function ShiftAdjustment() {
       </div>
       {activeTab === "pending" && (
       
-        <Pending data={selectedData}/>
+        <Pending data={selectedData} onApproveComplete={fetchShiftAdjustmentData}/>
 
       )}
 
