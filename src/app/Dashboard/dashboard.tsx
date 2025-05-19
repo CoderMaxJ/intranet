@@ -92,17 +92,17 @@ export default function Dashboard() {
     }, []);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const user_hash_privilege = localStorage.getItem("user_privilege");
-       if (user_hash_privilege) {
-        const array_privilege = IdentifyUser(user_hash_privilege);
-        array_privilege.forEach((data) => {
-            user_privilege.push(data);
-        })
+        if (user_hash_privilege) {
+            const array_privilege = IdentifyUser(user_hash_privilege);
+            array_privilege.forEach((data) => {
+                user_privilege.push(data);
+            })
 
-        console.log(user_privilege);
-    }
-    },[user_privilege])
+            console.log(user_privilege);
+        }
+    }, [user_privilege])
 
     const openClose = () => {
         if (open == false) {
@@ -202,7 +202,8 @@ export default function Dashboard() {
         <>
             <Updatepassword />
             <Logout />
-            <div className="db "
+            <div
+                className="db"
             >
                 <div className="navigation-division">
                     {showImage === true && (
@@ -241,7 +242,7 @@ export default function Dashboard() {
                             )}
                         </button>
                     </div>
-                    { ( user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") || user_privilege.includes("update_breaktool_account"))  && (
+                    {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") || user_privilege.includes("update_breaktool_account")) && (
 
                         <>
                             <div
@@ -337,9 +338,9 @@ export default function Dashboard() {
                                         aria-labelledby="panelsStayOpen-headingOne"
                                     >
                                         <div className="undermanage-hover">
-                                                {user_privilege.includes("manage_users") && (
+                                            {user_privilege.includes("manage_users") && (
 
-                                              
+
                                                 <div className="manage-anchor">
                                                     <a
                                                         className="nav-font"
@@ -376,7 +377,7 @@ export default function Dashboard() {
                                                         )}
                                                     </a>
                                                 </div>
-                                              )}
+                                            )}
                                             <div className="undermanage-hover">
                                                 <div className="employee-anchor">
                                                     <a

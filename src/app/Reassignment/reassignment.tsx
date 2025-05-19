@@ -100,18 +100,15 @@ export default function () {
                          Authorization: `Bearer ${decryptedToken}`
                     },
                     body: JSON.stringify({
-                         empno: employee_numbers,   // <-- must be empno not employees
-                         timein: timeIn,              // <-- must be timein not shiftstart
-                         timeout: timeOut             // <-- must be timeout not shiftend
+                         empno: employee_numbers,  
+                         timein: timeIn,              
+                         timeout: timeOut            
                     })
                });
 
                if (response.ok) {
                     const data = await response.json();
                     successToast(data.message || "Schedule successfully set for selected employees!");
-
-                    // Update local state immediately
-
                     setSelectedEmployees([]);
                     setTimeIn("");
                     setTimeOut("");
@@ -145,7 +142,7 @@ export default function () {
           setSearchQuery(value);
 
           if (value.trim() === "") {
-               setFilteredEmployees(allEmployees); // Show all if empty search
+               setFilteredEmployees(allEmployees); 
           } else {
                const filtered = allEmployees.filter(emp =>
                (`${emp.fname} ${emp.lname}`.toLowerCase().includes(value.toLowerCase()) ||
@@ -175,7 +172,7 @@ export default function () {
      };
 
      useEffect(() => {
-          getAccount();        // Fetch all account names
+          getAccount(); 
      }, []);
 
      const id = localStorage.getItem("user_id");
@@ -227,7 +224,7 @@ export default function () {
                }
           }, 300);
      }, []);
-     // Optional cleanup to prevent memory leaks
+
      useEffect(() => {
           return () => {
                debouncedSearch.cancel();
@@ -235,7 +232,10 @@ export default function () {
      }, [debouncedSearch])
 
      const handleEmployeeClick = (employee: Information) => {
-          setSelectedEmployees(prev => [...prev, employee]);
+          setSelectedEmployees(prev => {
+               const alreadyExists = prev.some(emp => emp.empno === employee.empno);
+               return alreadyExists ? prev : [...prev, employee];
+          });
      }
 
      const handleRemoveClick = (empno: number) => {
@@ -362,10 +362,7 @@ export default function () {
                                         <div className="d-flex flex-column  align-items-start" style={{ flex: 1 }}>
                                              <div className="d-flex align-items-center  gap-4 w-75 ">
                                                   <h6 className="selected-emp">Selected Employees <span>({selectedEmployees?.length})</span></h6>
-
-
                                              </div>
-
                                              {/* RIGHT SIDE SEARCH */}
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">
                                                   <div className="flex-grow-1">

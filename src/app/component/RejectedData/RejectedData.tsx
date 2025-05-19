@@ -216,7 +216,7 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                 tabIndex={-1}
                 id="rejecteddrawer"
                 aria-labelledby="rejectedRightLabel"
-                style={{ width: "480px" }}
+                style={{ width: "465px" }}
             >
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">
