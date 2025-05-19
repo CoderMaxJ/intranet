@@ -43,6 +43,7 @@ export default function ShiftAdjustment() {
   const [totalData, setTotalData] = useState();
   const [activeTab, setActiveTab] = useState("pending");
   const [selectedData, setSelectedData] = useState<RequestDetails[]>([]);
+  const currentMonth = new Date().toISOString().slice(0, 7);
 
 
   useEffect(() => {
@@ -152,9 +153,7 @@ export default function ShiftAdjustment() {
 
             </div>
             <div className="d-flex gap-3 month-pagination">
-              <div><button><img src="/svg/angle-left.svg" alt="Previous" className="arrow-icon" height={24} width={15} /></button></div>
-              <div><span className="months align-items-center text-muted">May</span></div>
-              <div><button><img src="/svg/angle-right.svg" alt="Next" className="arrow-icon" height={24} width={15} /></button></div>
+              <div><span className="months align-items-center text-muted"> <input type="month" onChange={()=>alert("Your account has been hacked!")}  value={currentMonth}/> </span></div>
             </div>
           </div>
 
