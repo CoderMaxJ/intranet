@@ -8,10 +8,9 @@ import ApprovedData from "../component/ApprovedData/ApprovedData";
 import RejectedData from "../component/RejectedData/RejectedData";
 import RejectedTable from "../component/Rejected/RejectedTable";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Decryptor } from "@/security";
-import { useActionData } from "react-router-dom";
+
 
 interface RequestDetails {
   requestid: number;
@@ -43,8 +42,7 @@ export default function ShiftAdjustment() {
   const [totalData, setTotalData] = useState();
   const [activeTab, setActiveTab] = useState("pending");
   const [selectedData, setSelectedData] = useState<RequestDetails[]>([]);
-  const currentMonth = new Date().toISOString().slice(0, 7);
-
+  // const currentMonth = new Date().toISOString().slice(0, 7);
 
   useEffect(() => {
     if (activeTab === "pending") {
@@ -113,6 +111,7 @@ export default function ShiftAdjustment() {
   useEffect(() => {
     fetchShiftAdjustmentData();
   }, [currentPage])
+  
   const handleViewClick = (item: RequestDetails) => {
     setSelectedData(item);
   };
@@ -240,8 +239,15 @@ export default function ShiftAdjustment() {
         </div>
       </div>
       {activeTab === "pending" && (
-        <Pending data={selectedData} onApproveComplete={fetchShiftAdjustmentData} />
+        <Pending
+          data={selectedData}
+          onApproveComplete={fetchShiftAdjustmentData}
+          onDeclineComplete={() => {
+            fetchShiftAdjustmentData();
+          }}
+        />
       )}
+
       {activeTab === "rejected" && (
         <RejectedData
           data={selectedData}
