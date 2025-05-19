@@ -20,6 +20,10 @@
   width: 100%;
 }
 
+.offcanvas {
+  width: 480px !important;
+}
+
 .manage-nav {
   display: flex;
   align-items: center;
@@ -124,6 +128,10 @@
   margin-right: -90px;
 }
 
+.firstbreak:hover {
+  transform: scale(1.1);
+}
+
 .secondbreak {
   padding: 10px;
   font-family: sans-serif;
@@ -133,11 +141,19 @@
   margin-right: 2px;
 }
 
+.secondbreak:hover {
+  transform: scale(1.1);
+}
+
 .lunchbreak {
   padding: 10px;
   font-family: sans-serif;
   background-color: #a9e4ff;
   margin-right: 2px;
+}
+
+.lunchbreak:hover {
+  transform: scale(1.1);
 }
 
 .overbreak {
@@ -146,6 +162,10 @@
   font-family: sans-serif;
   background-color: #ffdccc;
   text-align: center;
+}
+
+.overbreak:hover {
+  transform: scale(1.1);
 }
 
 .totalbreak {
@@ -167,9 +187,6 @@
     font-size: small !important;
   }
 
-  /* .logs-total {
-    font-size: small !important;
-  } */
 }
 
 @media (max-height: 400px) {
@@ -1590,6 +1607,27 @@ table {
   padding: 4px;
 }
 
+.updateschedule {
+  padding: 10px !important;
+  color: white !important;
+  border: none;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: small;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.updateschedule-label {
+  font-family: 'Geist';
+  font-weight:bold;
+  color: #ffffff;
+}
+
+.updateschedule:hover {
+  transform: scale(0.95);
+}
+
 .addhover {
   background-color: #0ebb39 !important;
   padding: 10px !important;
@@ -1599,12 +1637,12 @@ table {
   white-space: nowrap;
   font-weight: bold;
   font-size: small;
-  /* width: 130px; */
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .addhover:hover {
   background-color: #22af10 !important;
+  transform: scale(0.95);
 }
 
 .closebutton {
@@ -1650,7 +1688,7 @@ table {
   display: flex;
   align-items: center;
   gap: 5px !important;
-  margin-top: 30px;
+  margin-top:5px;
   padding: 10px !important;
   border-radius: 6px;
   cursor: pointer;
@@ -2299,10 +2337,6 @@ table {
   color: #000000;
 }
 
-/* .logout-hover:hover .logout-img {
-  filter: invert(1) brightness(2);
-} */
-
 .logout-img {
   margin-left: 9px;
 }
@@ -2321,7 +2355,6 @@ table {
   display: flex;
   align-items: center;
   padding: 10px;
-  margin-top: 5px;
   cursor: pointer;
   border-radius: 2px;
   height: 45px;
@@ -2453,7 +2486,7 @@ table {
   background-position: center center;
   background-repeat: no-repeat;
   position: sticky;
-  padding: 10px;
+  padding: 3px;
   color: white;
   width: 100%;
   justify-content: space-between;
@@ -2790,7 +2823,6 @@ table {
   padding: 6px;
   border-radius: 4px;
   justify-content: center;
-  margin-right: 10px !important;
   transition: background-color 0.3s ease
 }
 
@@ -3571,3 +3603,15 @@ table {
 .modal-content--width {
   width: 500px !important;
 }
+
+.months {
+  font-family: 'Geist';
+  font-size: medium;
+  font-weight: 500;
+}
+
+.month-pagination button{
+  border:none;
+  background: none;
+}
+

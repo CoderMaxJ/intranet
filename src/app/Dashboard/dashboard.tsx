@@ -14,7 +14,6 @@ declare global {
         bootstrap: any;
     }
 }
-// declare var bootstrap: any;
 
 export default function Dashboard() {
     const router = useRouter();
@@ -47,7 +46,6 @@ export default function Dashboard() {
     const [shiftAdjustment, setShiftAdjustment] = useState(true);
     const [token, setToken] = useState<string | null>(null);
     const [isAccountManager, setIsAccountManager] = useState(false);
-    const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
@@ -60,10 +58,6 @@ export default function Dashboard() {
             setActiveMenu("manage");
             setAccordionIconn(true);
         }
-        // else if (activeMenu === "manage") {
-        //     setActiveMenu("");
-        //     setAccordionIconn(false);
-        // }
     }, [activeNav]);
 
     const navigateTo = (path: string, tabId: string) => {
@@ -80,9 +74,6 @@ export default function Dashboard() {
         }
     };
 
-    const handleSetActiveMenu = (menuName: string) => {
-        setActiveMenu(menuName);
-    };
 
     useEffect(() => {
         const savedImage = localStorage.getItem("profileImage");
@@ -100,93 +91,18 @@ export default function Dashboard() {
         }
     }, []);
 
-    const user_hash_privilege = localStorage.getItem("user_privilege");
-    useEffect(() => {
-        if (user_hash_privilege) {
-            const array_privilege = IdentifyUser(user_hash_privilege);
-            const allPrivileges = [
-                "manage_users",
-                "view_reports",
-                "create_account",
-                "view_workforce",
-                "update_breaktool_account",
-                "view_multiple_accounts"
-            ];
-            const user_privilege = [...array_privilege]; // Initialize from parsed privileges
-            const hasOnlyAccountManager =
-                array_privilege.length === 2 &&
-                array_privilege.includes("view_workforce") &&
-                array_privilege.includes("update_breaktool_account");
-            const isSuperAdmin =
-                allPrivileges.every(priv => array_privilege.includes(priv));
-            if (hasOnlyAccountManager) {
-                setIsAccountManager(true);
-                console.log("Role: account_manager");
-            }
-            if (isSuperAdmin) {
-                setIsSuperAdmin(true);
-                console.log("Role: superadmin");
-            }
-        }
-    }, []);
 
-    const profileImg = localStorage.getItem("profileImage")
-    const user_id = localStorage.getItem("user_id");
-    const handleLogout = () => {
-        const deleteToken = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${Decryptor(token || "")}`,
-                },
-                body: JSON.stringify({ user_id: Decryptor(user_id || "") }),
-            });
-            if (response.status === 200) {
-                localStorage.clear();
+    useEffect(()=>{
+        const user_hash_privilege = localStorage.getItem("user_privilege");
+       if (user_hash_privilege) {
+        const array_privilege = IdentifyUser(user_hash_privilege);
+        array_privilege.forEach((data) => {
+            user_privilege.push(data);
+        })
 
-                router.push("/")
-            } else {
-                console.error("Logout failed");
-            }
-        }
-        deleteToken();
-
-        if (profileImg) {
-            localStorage.setItem("profileImage", profileImg)
-        }
+        console.log(user_privilege);
     }
-    const toggleinput = () => {
-        if (upload == false) {
-            setUpload(true)
-        } else {
-            setUpload(false);
-        }
-    }
-    const handleImageUpload = (event: any) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64String = reader.result;
-                localStorage.setItem("profileImage", base64String);
-                setProfile(base64String);
-                setUpload(false);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const getTooltipProps = (label: string) => {
-        return !navWidth
-            ? {
-                "data-bs-toggle": "tooltip",
-                "data-bs-placement": "right",
-                title: label,
-            }
-            : {};
-    };
-
+    },[user_privilege])
 
     const openClose = () => {
         if (open == false) {
@@ -194,10 +110,6 @@ export default function Dashboard() {
         } else {
             setOpen(false);
         }
-    }
-
-    const routerPush = (path: string) => {
-        router.push(path);
     }
 
     useEffect(() => {
@@ -329,224 +241,222 @@ export default function Dashboard() {
                             )}
                         </button>
                     </div>
-                    <div
-                        className={`generate ${activeNav === "2" ? "active-tab" : "hover-enabled"}`}
-                        onClick={() => navigateTo("/Reports", "2")}
-                        style={{
-                            backgroundColor: activeNav === "2" ? "#0a85ed" : "",
-                        }}
-                    >
-                        <a className="nav-font" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
-                            <img
-                                src="/svg/reports.svg"
-                                alt="reports"
-                                className="reports-img"
-                                height={20}
+                    { ( user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") || user_privilege.includes("update_breaktool_account"))  && (
+
+                        <>
+                            <div
+                                className={`generate ${activeNav === "2" ? "active-tab" : "hover-enabled"}`}
+                                onClick={() => navigateTo("/Reports", "2")}
                                 style={{
-                                    filter: localStorage.getItem("active_tab") === "2" ? "brightness(0) invert(1)" : "",
+                                    backgroundColor: activeNav === "2" ? "#0a85ed" : "",
                                 }}
-                            />
-                            {showReports && (
-                                <label htmlFor="label" className="reps" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
-                                    Reports
-                                </label>
-                            )}
-                        </a>
-                    </div>
-                    <div>
-                        <div className={`generate ${activeNav === "3" ? "active-tab" : "hover-unable"}`}
-                            onClick={() => navigateTo("/Schedule", "3")}
-                            style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0a85ed" : "" }}>
+                            >
 
-                            <a className="nav-font " style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
-                                <img src="/svg/schedule.svg" alt="schedule" className="schedule-img" height={20} style={{
-                                    filter: localStorage.getItem("active_tab") === "3" ? "brightness(0) invert(1)" : "",
-                                }} />
-                                {showReports === true && (
-                                    <label htmlFor="label" className="sched" style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
-                                        Schedule
-                                    </label>
-                                )}
-                            </a>
-                        </div>
-                    </div>
-                    <div className="accordion-item accordion" >
-                        <div className="manage-div">
-                            <div className={`manage-menus d-flex justify-content-between align-items-center ${["4", "5", "6"].includes(activeNav) ? "active-tab" : "hover-unable"}`}
-
-                                onClick={() => {
-                                    const isOpen = activeMenu === "manage";
-                                    if (isOpen) {
-                                        setActiveMenu("");
-                                        setAccordionIconn(false);
-                                    } else {
-                                        setActiveMenu("manage");
-                                        setAccordionIconn(true);
-                                    }
-                                }}
-                                style={{ cursor: "pointer" }}>
-                                <div className="manage-nav">
-                                    <img src="/svg/manage.svg" alt="manage" className="manage-img" height={20} />
-                                    <span className="manage-label" style={{
-                                        opacity: navWidth ? 1 : 0,
-                                        width: navWidth ? 'auto' : 0,
-                                        overflow: 'hidden',
-                                        whiteSpace: 'nowrap',
-                                        transition: 'opacity 0.2s ease, width 0.2s ease'
-                                    }}>
-                                        Manage
-                                    </span>
-                                </div>
-                                <div
-                                >
-                                    {showIcon && (
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            fill="currentColor"
-                                            className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "" : "rotate-acc-icon"}`}
-
-                                            viewBox="0 0 16 16"
-                                            style={{ color: '#ffffff' }}
-                                        >
-                                            <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
-                                        </svg>
+                                <a className="nav-font" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
+                                    <img
+                                        src="/svg/reports.svg"
+                                        alt="reports"
+                                        className="reports-img"
+                                        height={20}
+                                        style={{
+                                            filter: localStorage.getItem("active_tab") === "2" ? "brightness(0) invert(1)" : "",
+                                        }}
+                                    />
+                                    {showReports && (
+                                        <label htmlFor="label" className="reps" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
+                                            Reports
+                                        </label>
                                     )}
+                                </a>
+                            </div>
+                            <div>
+                                <div className={`generate ${activeNav === "3" ? "active-tab" : "hover-unable"}`}
+                                    onClick={() => navigateTo("/Schedule", "3")}
+                                    style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0a85ed" : "" }}>
+
+                                    <a className="nav-font " style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
+                                        <img src="/svg/schedule.svg" alt="schedule" className="schedule-img" height={20} style={{
+                                            filter: localStorage.getItem("active_tab") === "3" ? "brightness(0) invert(1)" : "",
+                                        }} />
+                                        {showReports === true && (
+                                            <label htmlFor="label" className="sched" style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
+                                                Schedule
+                                            </label>
+                                        )}
+                                    </a>
                                 </div>
                             </div>
-                            <div
-                                id="panelsStayOpen-collapseOne"
-                                className={`collapse ${activeMenu === "manage" ? "show" : ""}`}
+                            <div className="accordion-item accordion" >
+                                <div className="manage-div">
+                                    <div className={`manage-menus d-flex justify-content-between align-items-center ${["4", "5", "6"].includes(activeNav) ? "active-tab" : "hover-unable"}`}
 
-                                aria-labelledby="panelsStayOpen-headingOne"
-                                style={isAccountManager ? {} : { marginTop: "-25px" }}
-                            >
-                                <div className="undermanage-hover">
-                                    {isSuperAdmin && (
-                                        <div className="manage-anchor">
-
-                                            <a
-                                                className="nav-font"
-                                                onClick={() => navigateTo("/ManageAccount", "4")}
-                                                style={{
-                                                    backgroundColor: localStorage.getItem("active_tab") === "4" ? "#0a85ed" : "",
-                                                    color: localStorage.getItem("active_tab") === "4" ? "white" : "",
-                                                }}
-                                            >
-                                                {/* <span
-                                                    className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
-                                                /> */}
+                                        onClick={() => {
+                                            const isOpen = activeMenu === "manage";
+                                            if (isOpen) {
+                                                setActiveMenu("");
+                                                setAccordionIconn(false);
+                                            } else {
+                                                setActiveMenu("manage");
+                                                setAccordionIconn(true);
+                                            }
+                                        }}
+                                        style={{ cursor: "pointer" }}>
+                                        <div className="manage-nav">
+                                            <img src="/svg/manage.svg" alt="manage" className="manage-img" height={20} />
+                                            <span className="manage-label" style={{
+                                                opacity: navWidth ? 1 : 0,
+                                                width: navWidth ? 'auto' : 0,
+                                                overflow: 'hidden',
+                                                whiteSpace: 'nowrap',
+                                                transition: 'opacity 0.2s ease, width 0.2s ease'
+                                            }}>
+                                                Manage
+                                            </span>
+                                        </div>
+                                        <div
+                                        >
+                                            {showIcon && (
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="20"
                                                     height="20"
-                                                    viewBox="0 0 24 24"
-                                                    className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
+                                                    fill="currentColor"
+                                                    className={`arrow-accordion bi bi-chevron-up text-dark ${accordionIconn ? "" : "rotate-acc-icon"}`}
+                                                    viewBox="0 0 16 16"
+                                                    style={{ color: '#ffffff' }}
                                                 >
-                                                    <circle
-                                                        cx="9"
-                                                        cy="9"
-                                                        r="7"
-                                                        stroke="currentColor"
-                                                        strokeWidth="3"
-                                                        fill="none"
-                                                    />
+                                                    <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
                                                 </svg>
-
-                                                {showAccounts && (
-                                                    <label
-                                                        className="acc-label"
-                                                        htmlFor="label"
-                                                        style={{ color: localStorage.getItem("active_tab") === "4" ? "white" : "" }}
-                                                    >
-                                                        Accounts
-                                                    </label>
-                                                )}
-                                            </a>
+                                            )}
                                         </div>
-                                    )}
-                                    <div className="undermanage-hover">
-                                        <div className="employee-anchor">
-                                            <a
-                                                className="nav-font"
-                                                onClick={() => navigateTo("/ManageEmployee", "5")}
-                                                style={{
-                                                    backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
-                                                    color: localStorage.getItem("active_tab") === "5" ? "white" : "",
-                                                    marginTop: isAccountManager ? "25px" : "0px",
-                                                }}
-                                            >
-                        
-                                                 <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="20"
-                                                    height="20"
-                                                    viewBox="0 0 24 24"
-                                                    className={`circle-indicator ${activeNav === "5" ? "active" : ""}`}
-                                                >
-                                                    <circle
-                                                        cx="9"
-                                                        cy="9"
-                                                        r="7"
-                                                        stroke="currentColor"
-                                                        strokeWidth="3"
-                                                        fill="none"
-                                                    />
-                                                </svg>
+                                    </div>
+                                    <div
+                                        id="panelsStayOpen-collapseOne"
+                                        className={`collapse ${activeMenu === "manage" ? "show" : ""}`}
 
-                                                {showEmployee && (
-                                                    <label
-                                                        className="emp-label"
-                                                        htmlFor="employee"
-                                                        style={{ color: localStorage.getItem("active_tab") === "5" ? "white" : "" }}
+                                        aria-labelledby="panelsStayOpen-headingOne"
+                                    >
+                                        <div className="undermanage-hover">
+                                                {user_privilege.includes("manage_users") && (
+
+                                              
+                                                <div className="manage-anchor">
+                                                    <a
+                                                        className="nav-font"
+                                                        onClick={() => navigateTo("/ManageAccount", "4")}
+                                                        style={{
+                                                            backgroundColor: localStorage.getItem("active_tab") === "4" ? "#0a85ed" : "",
+                                                            color: localStorage.getItem("active_tab") === "4" ? "white" : "",
+                                                        }}
                                                     >
-                                                        Employee
-                                                    </label>
-                                                )}
-                                            </a>
-                                        </div>
-                                        <div className="employee-anchor">
-                                            <a
-                                                className="nav-font"
-                                                onClick={() => navigateTo("/ShiftAdjustment", "6")}
-                                                style={{
-                                                    backgroundColor: localStorage.getItem("active_tab") === "6" ? "#0a85ed" : "",
-                                                    color: localStorage.getItem("active_tab") === "6" ? "white" : "",
-                                                }}
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="20"
-                                                    height="20"
-                                                    viewBox="0 0 24 24"
-                                                     className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}
-                                                >
-                                                    <circle
-                                                        cx="9"
-                                                        cy="9"
-                                                        r="7"
-                                                        stroke="currentColor"
-                                                        strokeWidth="3"
-                                                        fill="none"
-                                                    />
-                                                </svg>
-                                                {shiftAdjustment && (
-                                                    <label
-                                                        className="emp-label"
-                                                        htmlFor="employee"
-                                                        style={{ color: localStorage.getItem("active_tab") === "6" ? "white" : "" }}
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="20"
+                                                            height="20"
+                                                            viewBox="0 0 24 24"
+                                                            className={`circle-indicator ${activeNav === "4" ? "active" : ""}`}
+                                                        >
+                                                            <circle
+                                                                cx="9"
+                                                                cy="9"
+                                                                r="7"
+                                                                stroke="currentColor"
+                                                                strokeWidth="3"
+                                                                fill="none"
+                                                            />
+                                                        </svg>
+                                                        {showAccounts && (
+                                                            <label
+                                                                className="acc-label"
+                                                                htmlFor="label"
+                                                                style={{ color: localStorage.getItem("active_tab") === "4" ? "white" : "" }}
+                                                            >
+                                                                Accounts
+                                                            </label>
+                                                        )}
+                                                    </a>
+                                                </div>
+                                              )}
+                                            <div className="undermanage-hover">
+                                                <div className="employee-anchor">
+                                                    <a
+                                                        className="nav-font"
+                                                        onClick={() => navigateTo("/ManageEmployee", "5")}
+                                                        style={{
+                                                            backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
+                                                            color: localStorage.getItem("active_tab") === "5" ? "white" : "",
+                                                        }}
                                                     >
-                                                        Adjustment
-                                                    </label>
-                                                )}
-                                            </a>
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="20"
+                                                            height="20"
+                                                            viewBox="0 0 24 24"
+                                                            className={`circle-indicator ${activeNav === "5" ? "active" : ""}`}
+                                                        >
+                                                            <circle
+                                                                cx="9"
+                                                                cy="9"
+                                                                r="7"
+                                                                stroke="currentColor"
+                                                                strokeWidth="3"
+                                                                fill="none"
+                                                            />
+                                                        </svg>
+                                                        {showEmployee && (
+                                                            <label
+                                                                className="emp-label"
+                                                                htmlFor="employee"
+                                                                style={{ color: localStorage.getItem("active_tab") === "5" ? "white" : "" }}
+                                                            >
+                                                                Employee
+                                                            </label>
+                                                        )}
+                                                    </a>
+                                                </div>
+                                                <div className="employee-anchor">
+                                                    <a
+                                                        className="nav-font"
+                                                        onClick={() => navigateTo("/ShiftAdjustment", "6")}
+                                                        style={{
+                                                            backgroundColor: localStorage.getItem("active_tab") === "6" ? "#0a85ed" : "",
+                                                            color: localStorage.getItem("active_tab") === "6" ? "white" : "",
+                                                        }}
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="20"
+                                                            height="20"
+                                                            viewBox="0 0 24 24"
+                                                            className={`circle-indicator ${activeNav === "6" ? "active" : ""}`}
+                                                        >
+                                                            <circle
+                                                                cx="9"
+                                                                cy="9"
+                                                                r="7"
+                                                                stroke="currentColor"
+                                                                strokeWidth="3"
+                                                                fill="none"
+                                                            />
+                                                        </svg>
+                                                        {shiftAdjustment && (
+                                                            <label
+                                                                className="emp-label"
+                                                                htmlFor="employee"
+                                                                style={{ color: localStorage.getItem("active_tab") === "6" ? "white" : "" }}
+                                                            >
+                                                                Adjustment
+                                                            </label>
+                                                        )}
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </>
+                    )}
                     <div>
                         <div className="manage-menu accordion-item">
                             <div
@@ -640,17 +550,6 @@ export default function Dashboard() {
                         <center>
                             {open === false && showProfile === true && (
                                 <div className="profile-div position-relative">
-                                    {/* <div className="dot-div position-absolute">
-                                        <svg onClick={toggleinput} xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" className="bi bi-camera-fill text-light" viewBox="0 0 16 16">
-                                            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                            <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0" />
-                                        </svg>
-                                    </div> */}
-                                    {/* {upload === true && (
-                                        <div>
-                                            <input className="input-image" type="file" accept="image/*" onChange={handleImageUpload} />
-                                        </div>
-                                    )} */}
                                     <div className="profile-circle">
                                         {profile ? (
                                             <img onClick={openClose} className="profile-picture" src={profile} alt="" height={70} width={70} />

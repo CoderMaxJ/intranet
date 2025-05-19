@@ -299,9 +299,10 @@ export default function CreateUD() {
                                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                 </svg>
                                             </div>
+                                            <div className="updateschedule">
                                             <button
                                                 type="button"
-                                                className="d-flex align-items-center addhover"
+                                                className="d-flex align-items-center"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#reassignment"
                                             >
@@ -318,8 +319,9 @@ export default function CreateUD() {
                                                         }}
                                                     />
                                                 </div>
-                                                <div><span className="view">Update Schedule</span></div>
+                                                <div><span className="updateschedule-label">Update Schedule</span></div>
                                             </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </header>
