@@ -106,6 +106,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
         }
     }, [data]);
 
+    const btnClose = document.getElementById("buttonclose");
     const handleDecline = async () => {
         const token = localStorage.getItem("token");
 
@@ -126,10 +127,10 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                 pauseOnHover: true,
                 draggable: true,
             });
+            btnClose?.click();
             setVisible(false);
             setDeclineVisible(false);
             setDeclineReason("");
-
             if (typeof onDeclineComplete === "function") {
                 onDeclineComplete();
             }
@@ -142,6 +143,50 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                 draggable: true,
             });
         }
+    };
+
+    const token = localStorage.getItem("token");
+    const approvedRequest = async (payload: any) => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Decryptor(token || "")}`
+            },
+            body: JSON.stringify(payload),
+        })
+        if (response.status === 200) {
+            successToast("Request approved successfully.");
+            if (typeof onApproveComplete === "function" && data?.requestid) {
+                onApproveComplete(data.requestid);
+                btnClose?.click();
+            }
+
+        } else {
+            errorToast("Failed to approve request.");
+        }
+    }
+
+    const handleApply = () => {
+        const updatedStatus = 1;
+        setStatus(updatedStatus);
+        const payload = {
+            requestid: data?.requestid,
+            empno: data?.empno,
+            name: data?.name,
+            shiftdate: data?.shiftdate,
+            reason: data?.reason,
+            status: updatedStatus,
+            logs: buildData,
+            acctid: data?.acctid,
+            created_at: data?.created_at,
+            aprroved_at: new Date().toISOString(),
+            declined_at: null,
+            approved_by: Decryptor(localStorage.getItem("user_id") || "")
+        };
+        approvedRequest(payload);
+        setVisible(false);
+
     };
 
     const getAccounts = async () => {
@@ -187,47 +232,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
             return updated;
         });
     };
-    const token = localStorage.getItem("token");
-    const approvedRequest = async (payload: any) => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Decryptor(token || "")}`
-            },
-            body: JSON.stringify(payload),
-        })
-        if (response.status === 200) {
-            successToast("Request approved successfully.");
-            if (typeof onApproveComplete === "function" && data?.requestid) {
-                onApproveComplete(data.requestid);
-            }
-
-        } else {
-            errorToast("Failed to approve request.");
-        }
-    }
-    const handleApply = () => {
-        const updatedStatus = 1;
-        setStatus(updatedStatus);
-        const payload = {
-            requestid: data?.requestid,
-            empno: data?.empno,
-            name: data?.name,
-            shiftdate: data?.shiftdate,
-            reason: data?.reason,
-            status: updatedStatus,
-            logs: buildData,
-            acctid: data?.acctid,
-            created_at: data?.created_at,
-            aprroved_at: new Date().toISOString(),
-            declined_at: null,
-            approved_by: Decryptor(localStorage.getItem("user_id") || "")
-        };
-        approvedRequest(payload);
-        setVisible(false);
-
-    };
 
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",
@@ -269,6 +273,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                         className="btn-close"
                         data-bs-dismiss="offcanvas"
                         aria-label="Close"
+                        id="buttonclose"
                     ></button>
                 </div>
 

@@ -221,7 +221,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
           <button
             type="button"
             className="btn-close"
-            data-bs-dismiss="offcanvas"
+            data-bs-dismiss="approveddrawer"
             aria-label="Close"
           ></button>
         </div>

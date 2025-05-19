@@ -339,8 +339,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close"
-             
+              aria-label="Close" 
               onClick={clearInputs}
             >
             </button>

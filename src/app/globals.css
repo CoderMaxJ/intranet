@@ -273,7 +273,7 @@
   width: 100%;
   cursor: pointer;
   border-radius: 6px !important;
-
+  margin-top: 5px;
 }
 
 /* Default styles */
@@ -1788,7 +1788,6 @@ table {
   color: #fff;
   font-weight: 500;
 }
-
 
 
 .employee-heade {
@@ -3631,4 +3630,5 @@ table {
   border:none;
   background: none;
 }
+
 
