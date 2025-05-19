@@ -258,7 +258,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                 tabIndex={-1}
                 id="shiftdrawer"
                 aria-labelledby="ShiftRightLabel"
-                style={{ width: "480px" }}
+                style={{ width: "465px" }}
             >
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">

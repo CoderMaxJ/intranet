@@ -106,7 +106,6 @@ export default function ShiftAdjustment() {
     }
   };
 
-
   const handlePageChange = (page: number) => {
     setCurrentPages(page);
   };
@@ -120,7 +119,6 @@ export default function ShiftAdjustment() {
 
   return (
     <div className="d-flex">
-
       <div>
         <Dashboard />
       </div>
@@ -150,13 +148,8 @@ export default function ShiftAdjustment() {
               >
                 Rejected/Cancelled
               </button>
-
-            </div>
-            <div className="d-flex gap-3 month-pagination">
-              <div><span className="months align-items-center text-muted"> <input type="month" onChange={()=>alert("Your account has been hacked!")}  value={currentMonth}/> </span></div>
             </div>
           </div>
-
           <div className="shiftadjustment-table table-responsive">
             {activeTab === "pending" && (
               <div>
@@ -205,12 +198,9 @@ export default function ShiftAdjustment() {
                     )}
                   </tbody>
                 </table>
-
               </div>
             )}
-
             {activeTab === "approved" && (
-
               <>
                 <ApproveTable onView={handleViewClick} />
                 <ApprovedData data={selectedData} />
@@ -250,19 +240,14 @@ export default function ShiftAdjustment() {
         </div>
       </div>
       {activeTab === "pending" && (
-      
-        <Pending data={selectedData} onApproveComplete={fetchShiftAdjustmentData}/>
-
+        <Pending data={selectedData} onApproveComplete={fetchShiftAdjustmentData} />
       )}
-
       {activeTab === "rejected" && (
         <RejectedData
           data={selectedData}
           onDeclineComplete={fetchShiftAdjustmentData}
         />
       )}
-
     </div>
-
   );
 }

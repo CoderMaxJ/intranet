@@ -401,7 +401,7 @@ export default function CreateUD() {
                         {user_privilege.includes("manage_users") && (<td>{getAccountName(info.acctid)}</td>)}
                         <td>{info.position}</td>
                         <td>
-                          <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
+                          <div style={{ display: "flex", gap: "8px"}}>
                             {user_privilege.includes("update_breaktool_account") && (
                               <button
                                 type="button"
@@ -411,7 +411,7 @@ export default function CreateUD() {
                                 title={isresetPassword ? "" : "Reset Password"}
                                 onClick={() => handleResetPassword(info.empno)}
                               >
-                                <img src="/svg/reset.svg" height={16} width={16} />
+                                <img src="/svg/reset.svg" className="actions-button" height={16} width={16} />
                               </button>
                             )}
                             {/* // */}
@@ -425,7 +425,7 @@ export default function CreateUD() {
                                 style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
                                 title={update ? "" : "Update"}
                               >
-                                <img src="/svg/pencil.svg" height={16} width={16} />
+                                <img src="/svg/pencil.svg" className="actions-button" height={16} width={16} />
                               </button>
                             )}
                           </div>

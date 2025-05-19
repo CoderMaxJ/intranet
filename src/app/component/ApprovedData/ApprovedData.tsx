@@ -212,7 +212,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
         tabIndex={-1}
         id="approveddrawer"
         aria-labelledby="approvedRightLabel"
-         style={{width:'480px'}}
+         style={{width:'465px'}}
       >
         <div className="offcanvas-header">
           <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">
