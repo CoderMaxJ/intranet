@@ -540,13 +540,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                     </div>
                 </div>
 
-                <div className="modal-footer gap-4 shift-footer" style={{ padding: '20px' }}>
-                    <div>
-                        <button onClick={handleApply} className="btn btn-primary">
-                            Approve
-                        </button>
-
-                    </div>
+                <div className="modal-footer gap-4 shift-footer" style={{ padding: '20px' }}>  
                     <div>
                         <button
                             type="button"
@@ -556,6 +550,12 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                         >
                             <span className="view">Decline</span>
                         </button>
+                    </div>
+                    <div>
+                        <button onClick={handleApply} className="btn btn-primary">
+                            Approve
+                        </button>
+
                     </div>
                 </div>
             </div>
