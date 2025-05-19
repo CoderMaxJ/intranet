@@ -153,7 +153,6 @@ export default function ShiftAdjustment() {
 
             </div>
             <div className="d-flex gap-3 month-pagination">
-              <div><span className="months align-items-center text-muted"> <input type="month" onChange={()=>alert("Your account has been hacked!")}  value={currentMonth}/> </span></div>
             </div>
           </div>
 

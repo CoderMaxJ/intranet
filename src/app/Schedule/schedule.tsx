@@ -185,7 +185,7 @@ export default function CreateUD() {
             if (value.trim() === "") {
                 GetEmployee(currentPage);
             } else {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${value}/`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/schedule/${Decryptor(id || "")}/${value}/`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -194,7 +194,9 @@ export default function CreateUD() {
                 });
 
                 if (response.ok) {
+                      
                     const data = await response.json();
+                    console.log(data.data);
                     setEmployees(data.data);
                 } else {
                     console.error("Error fetching search results");
@@ -238,6 +240,7 @@ export default function CreateUD() {
 
         if (response.status === 201) {
             const data = await response.json();
+          
 
             successToast(data.message);
             GetEmployee(currentPage);

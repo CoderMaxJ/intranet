@@ -1,10 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Encryptor, Decryptor } from "@/security";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { useRouter } from "next/navigation";
 
 interface BreaksReport {
     name: string;
@@ -41,6 +42,7 @@ export default function Daterange() {
         setSearchTerm(event.target.value.toLowerCase());
     };
 
+    const router = useRouter();
     useEffect(() => {
         if (checker) {
             fetchData();
@@ -193,6 +195,12 @@ export default function Daterange() {
             if (response.status == 200) {
                 setData(result.data);
                 setChecker(false);
+            }else if(response.status == 401){
+                alert("Session expired, please login again.");
+                localStorage.clear();
+                router.push("/");
+                
+
             }
         } catch (e) {
             setError("An error occurred while fetching data.");
