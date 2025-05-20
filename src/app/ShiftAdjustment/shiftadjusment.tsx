@@ -13,6 +13,7 @@ import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
 
 
+
 interface RequestDetails {
   requestid: number;
   empno: number;
@@ -46,6 +47,7 @@ export default function ShiftAdjustment() {
   const currentMonth = new Date().toISOString().slice(0, 7);
 
   const router = useRouter();
+  // const currentMonth = new Date().toISOString().slice(0, 7);
 
   useEffect(() => {
     if (activeTab === "pending") {
@@ -116,6 +118,7 @@ export default function ShiftAdjustment() {
   useEffect(() => {
     fetchShiftAdjustmentData();
   }, [currentPage])
+  
   const handleViewClick = (item: RequestDetails) => {
     setSelectedData(item);
   };
@@ -243,8 +246,22 @@ export default function ShiftAdjustment() {
         </div>
       </div>
       {activeTab === "pending" && (
-        <Pending data={selectedData} onApproveComplete={fetchShiftAdjustmentData} />
+        <Pending
+          data={selectedData}
+          onApproveComplete={fetchShiftAdjustmentData}
+          onDeclineComplete={() => {
+            fetchShiftAdjustmentData();
+          }}
+        />
       )}
+
+      {activeTab === "rejected" && (
+        <RejectedData
+          data={selectedData}
+          onDeclineComplete={fetchShiftAdjustmentData}
+        />
+      )}
+
       {activeTab === "rejected" && (
         <RejectedData data={selectedData} onDeclineComplete={fetchShiftAdjustmentData} />
       )}
