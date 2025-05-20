@@ -28,14 +28,14 @@ function BreakDataTable() {
   };
 
   const user_id = localStorage.getItem("user_id");
-  const deleteToken = async ()=>{
+  const deleteToken = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ user_id: Decryptor(user_id || "") }),
-      });
+    });
     if (response.status === 200) {
       localStorage.clear();
       router.push("/")
@@ -44,7 +44,7 @@ function BreakDataTable() {
       return null;
     }
   }
- 
+
   const fetchBreakData = async () => {
     try {
       const account_id = localStorage.getItem("user_id");
@@ -72,7 +72,7 @@ function BreakDataTable() {
         return;
       }
 
-      if ( response.status === 404 || response.status === 403) {
+      if (response.status === 404 || response.status === 403) {
         deleteToken();
         localStorage.clear();
         router.push("/");
@@ -187,50 +187,56 @@ function BreakDataTable() {
     <div className="workforce px-4">
       <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div p-3"}>
         <div className="d-flex flex-column">
-          <div className="breaksheader d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3">
+          <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between gap-3">
             <div className="d-flex align-items-center">
-              <h4
-                className="agent-header"
-              >
-                Agent Breaks Monitoring Dashboard 
-                 <span className="text-muted small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
+              <h4 className="agent-header mb-0">
+                Agent Breaks Monitoring Dashboard
+                <span className="text-muted small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
               </h4>
+            </div>
+
+            <div className="flex-grow-1 d-flex justify-content-center">
+              <div className="searchbar-container d-flex align-items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+                <input
+                  className="form-control form-control--search ms-2"
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+              </div>
+            </div>
+
+            <div className="d-flex align-items-center ms-md-3">
               <button
                 style={{ border: "none", background: "none" }}
                 onClick={toggleFullscreen}
                 title={fullscreen ? "Compress" : "Fullscreen"}
               >
                 {fullscreen ? (
-                  <img src="/svg/compress.svg" alt="fullscreen" className="icon-circle"/>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src="/svg/compress.svg" alt="fullscreen" className="icon-circle" height={30} />
+                    <span className="text-primary fw-semibold">Compress</span>
+                  </div>
                 ) : (
-                  <img src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle"/>
+                  <div className="d-flex align-items-center gap-2">
+                    <img src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle" height={30} />
+                    <span className="text-primary fw-semibold">Fullscreen</span>
+                  </div>
                 )}
               </button>
             </div>
-            <div
-              className="searchbar-container"
-            >
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-              <input
-                className="form-control form-control--search"
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-            <div
-            >
-            </div>
           </div>
+
           <div className="table-responsive breaks-table">
             <table className="tabbreaks table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>

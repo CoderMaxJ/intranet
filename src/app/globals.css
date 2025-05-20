@@ -136,10 +136,6 @@
   border-radius: 4px;
 }
 
-.firstbreak:hover {
-  transform: scale(1.1);
-}
-
 .secondbreak {
   padding: 10px;
   font-family: sans-serif;
@@ -151,10 +147,6 @@
   border-radius: 4px;
 }
 
-.secondbreak:hover {
-  transform: scale(1.1);
-}
-
 .lunchbreak {
   padding: 10px;
   font-family: sans-serif;
@@ -164,9 +156,6 @@
   border-radius: 4px;
 }
 
-.lunchbreak:hover {
-  transform: scale(1.1);
-}
 
 .overbreak {
   padding: 10px;
@@ -175,10 +164,6 @@
   background-color: #ffdccc;
   text-align: center;
   border-radius: 4px;
-}
-
-.overbreak:hover {
-  transform: scale(1.1);
 }
 
 .totalbreak {
@@ -1245,6 +1230,7 @@ input:focus {
   font-family: 'Geist';
   font-weight: bold;
   font-size: 1.5rem;
+  white-space: nowrap;
 }
 
 .searchbarlogs {
@@ -1733,7 +1719,7 @@ table {
   padding-bottom: 10px !important;
   border-radius: 4px;
   width: 100% !important;
-  height: 830px;
+  height: 799px;
   padding-right: 11px;
   padding-left: 24px;
 }
@@ -3675,5 +3661,13 @@ table {
 }
 
 .icon-circle {
-
+  background-color: #E4EFFE;
+  padding: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  display: block;
 }
+
+
+

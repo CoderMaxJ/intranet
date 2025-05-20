@@ -145,7 +145,7 @@ export default function ShiftAdjustment() {
                 className={`form-label form-label--shiftadjustment-header ${activeTab === "rejected" ? "active" : ""}`}
                 onClick={() => setActiveTab("rejected")}
               >
-                Rejected/Cancelled
+                Rejected
               </button>
             </div>
           </div>
