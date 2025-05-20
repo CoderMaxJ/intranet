@@ -132,6 +132,8 @@
   background-color: #ffffb7;
   text-align: center;
   margin-right: -90px;
+  color: #000000;
+  border-radius: 4px;
 }
 
 .firstbreak:hover {
@@ -142,9 +144,11 @@
   padding: 10px;
   font-family: sans-serif;
   background-color: #ffeda6;
+  color: #000000;
   text-align: center;
   margin-left: 92px;
   margin-right: 2px;
+  border-radius: 4px;
 }
 
 .secondbreak:hover {
@@ -155,7 +159,9 @@
   padding: 10px;
   font-family: sans-serif;
   background-color: #a9e4ff;
+  color: #000000;
   margin-right: 2px;
+  border-radius: 4px;
 }
 
 .lunchbreak:hover {
@@ -168,6 +174,7 @@
   font-family: sans-serif;
   background-color: #ffdccc;
   text-align: center;
+  border-radius: 4px;
 }
 
 .overbreak:hover {
@@ -1626,7 +1633,7 @@ table {
 
 .updateschedule-label {
   font-family: 'Geist';
-  font-weight:bold;
+  font-weight: bold;
   color: #ffffff;
 }
 
@@ -1677,6 +1684,19 @@ table {
   background-color: #807e7e;
 }
 
+.manage-accounts-container {
+  padding-top: 24px;
+  padding-bottom: 1px;
+}
+
+.employee-header {
+  background-image: url('/img/Breaktool.png') !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 16px !important;
+  margin-left: 1px;
+}
 
 .employee-header>div {
   display: flex !important;
@@ -1694,7 +1714,7 @@ table {
   display: flex;
   align-items: center;
   gap: 5px !important;
-  margin-top:5px;
+  margin-top: 5px;
   padding: 10px !important;
   border-radius: 6px;
   cursor: pointer;
@@ -1714,6 +1734,8 @@ table {
   border-radius: 4px;
   width: 100% !important;
   height: 830px;
+  padding-right: 11px;
+  padding-left: 24px;
 }
 
 
@@ -1789,11 +1811,24 @@ table {
   font-weight: 500;
 }
 
+.employee-header-container {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 20px;
+  padding-bottom: 1px;
+}
 
-.employee-heade {
+.employee-header {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+.employee-head {
+  background-image: url('/img/Breaktool.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .container-fluid {
@@ -1831,7 +1866,6 @@ table {
 
 .manageemployee-button button {
   border-radius: 4px;
-
   padding: 12px;
   white-space: nowrap;
   background-color: #0ebb39;
@@ -1840,6 +1874,10 @@ table {
 }
 
 .manageemployee-button {
+  padding-bottom: 1px;
+  padding-top: 25px;
+  padding-right: 25px;
+  padding-left: 25px;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -1888,9 +1926,8 @@ table {
 }
 
 .accounts-table {
-  height: 91%;
+  height: 87%;
   overflow-y: scroll;
-  padding: 5px 5px 5px 0;
   margin: auto;
   width: 100%;
 }
@@ -1921,8 +1958,8 @@ table {
 }
 
 .adjustment-total {
-   color: rgb(88, 87, 87);
-   font-family: 'Geist';
+  color: rgb(88, 87, 87);
+  font-family: 'Geist';
 }
 
 
@@ -2292,7 +2329,7 @@ table {
 
 .dashboard-img {
   margin-left: 7px;
-} 
+}
 
 .generate:hover .dash,
 .generate:hover .reps,
@@ -2498,6 +2535,10 @@ table {
   color: white;
   width: 100%;
   justify-content: space-between;
+  background-image: url('/img/Breaktool.png') !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .time div {
@@ -2514,7 +2555,6 @@ table {
   height: 38px;
   transition: border 0.2s ease-in-out, box-shadow 0.2s;
   background-color: #ffffff;
-  /* soft neutral background */
 }
 
 .time input[type="time"]:focus {
@@ -3221,20 +3261,18 @@ table {
 
 .accounta-table-div {
   position: relative;
-  padding-left: 24px !important;
-  padding-right: 10px !important;
 }
 
 .accounta-table-div th {
   color: #ffffff !important;
-  padding: 15px !important;
+  padding: 7px !important;
   width: 200px;
 }
 
 .accounta-table-div thead {
   position: sticky;
-  transform: translateY(-12px);
   z-index: 10;
+  transform: translateY(-1px);
 }
 
 .th-manager {
@@ -3462,6 +3500,7 @@ table {
 .cancel-btn {
   margin-left: -2px;
 }
+
 .assign-employees,
 .clearall,
 .selectall,
@@ -3626,9 +3665,15 @@ table {
   font-weight: 500;
 }
 
-.month-pagination button{
-  border:none;
+.month-pagination button {
+  border: none;
   background: none;
 }
 
+.hide-n-show:hover {
+  transform: scale(1.4);
+}
 
+.icon-circle {
+
+}

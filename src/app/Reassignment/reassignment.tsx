@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // <-- ADD this
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation";
 
 interface Schedule {
      shiftstart: string;
@@ -47,6 +48,7 @@ export default function () {
      const [searchQueryLeft, setSearchQueryLeft] = useState("");
      const [filterText, setFilterText] = useState("");
 
+     const router = useRouter();
 
      const successToast = (msg: string) => toast.success(msg, {
           position: "top-right",
@@ -167,7 +169,9 @@ export default function () {
                const data = await response.json();
                setAccount(data.data);
           } else {
-               console.error("Failed to fetch accounts");
+               if(!token){
+                router.push("/");
+               }
           }
      };
 
@@ -199,6 +203,9 @@ export default function () {
                setEmployee(data.data);
           } else {
                console.error("error");
+               if(!token){
+                router.push("/");
+            }
           }
      }
 

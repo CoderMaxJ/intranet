@@ -1,19 +1,47 @@
 // "use client";
-
+import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
+import { ToastContainer,toast } from "react-toastify";
 
 export default function Logout() {
 const router = useRouter();
-const handleLogout = () => {
-    const savedProfileImage = localStorage.getItem("profileImage");
-    localStorage.clear();
-    if (savedProfileImage) {
-        localStorage.setItem("profileImage", savedProfileImage);
+
+const token = localStorage.getItem("token");
+const user_id = localStorage.getItem("user_id");
+
+const  logout = async ()=>{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`,{
+        method: "POST",
+        headers:{
+            "Content-type":"application/json",
+            "Authorization":`Bearer ${Decryptor(token || "")}`
+        },
+        body:JSON.stringify({user_id:Decryptor(user_id || "")})
+
+    });
+
+    if(response.status === 200){
+            localStorage.clear();
+          successToast("Logout Successfully");
+            localStorage.clear();
+            window.location.reload();
+   
+      
     }
-    router.push("/")
 }
+
+ const successToast = (msg: string) => toast.success(msg, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 return (
     <div>    
+        <ToastContainer/>
         <div
         className="modal fade"
        id="logoutModal"  aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -33,7 +61,7 @@ return (
                     type="button"
                     className="btn btn-danger"
                     data-bs-dismiss="modal"
-                    onClick={handleLogout}
+                    onClick={logout}
                     >
                     <span className="view">Logout</span>
                     </button>

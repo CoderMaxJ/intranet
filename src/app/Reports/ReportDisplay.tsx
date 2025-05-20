@@ -168,6 +168,7 @@ export default function Daterange() {
             alert("No data found in this given date range!")
         }
     };
+    const token = localStorage.getItem("token");
     const fetchData = async () => {
         try {
             setError("");
@@ -204,13 +205,17 @@ export default function Daterange() {
             }
         } catch (e) {
             setError("An error occurred while fetching data.");
+            if(!token){
+                router.push("/");
+            }
+            
         }
     };
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
             <div className="d-flex" >
-                <Dashboard />
+                <Dashboard/>
                 {error && <div className="alert alert-danger">{error}</div>}
                 {data.length > 0 ? (
                     <div className="flex-fill reports-division">
@@ -232,7 +237,6 @@ export default function Daterange() {
                                         {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
                                         <form onSubmit={handleView}>
                                             <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
-
                                                 <div className="report-input">
                                                     <input
                                                         className="form-control form-control--searchreport"

@@ -72,6 +72,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
   const [status, setStatus] = useState(0);
   const [accounts, setAccounts] = useState<Account[]>([]);
   console.log(data);
+  
   useEffect(() => {
     if (buildData) {
       setCombinedData({
@@ -120,7 +121,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
     } if (onDecline && data) {
       onDecline({
         ...data,
-        reason: declineReason,  // Updated reason
+        reason: declineReason,  
         status: 2,
         declined_at: new Date().toISOString(),
         aprroved_at: "",

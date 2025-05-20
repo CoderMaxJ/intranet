@@ -244,7 +244,7 @@ export default function ManageDepartment() {
                 <Dashboard />
             </div>
             <div className="modal fade " id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-lg" style={{width:'500px'}}>
+                <div className="modal-dialog modal-lg" style={{ width: '500px' }}>
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5 text-light" id="deleteModalLabel">Confirmation</h1>
@@ -262,7 +262,7 @@ export default function ManageDepartment() {
             </div>
             <div className="modal fade" id="addAccountModal" aria-labelledby="addAccountModal">
                 <div className="modal-dialog">
-                    <div className="modal-content" style={{minWidth:'500px'}}>
+                    <div className="modal-content" style={{ minWidth: '500px' }}>
                         <div className="modal-header" >
                             <h1 className="modal-title fs-5 text-light" >Create Account</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -286,11 +286,11 @@ export default function ManageDepartment() {
                                         data-bs-dismiss="modal"
                                         type="button"
                                     >
-                                       <span className="cancel-btn">Cancel</span> 
+                                        <span className="cancel-btn">Cancel</span>
                                     </button>
 
                                     <button className="btn btn-success btn-sm" type="submit">
-                                      <span className="view">Create</span>  
+                                        <span className="view">Create</span>
                                     </button>
                                 </div>
                             </form>
@@ -301,7 +301,7 @@ export default function ManageDepartment() {
             {showModal && (
                 <div className="modal show d-block" id="saveModal" aria-labelledby="saveModalLabel">
                     <div className="modal-dialog">
-                        <div className="modal-content"  style={{minWidth:'500px'}}>
+                        <div className="modal-content" style={{ minWidth: '500px' }}>
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5 text-light" id="saveModalLabel">Confirmation</h1>
                                 <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>
@@ -323,49 +323,52 @@ export default function ManageDepartment() {
                 <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" /></div>
                 <div className="accounts-margin px-4">
                     <div className="manageaccounts-bg">
-
-                        <div className="employee-header">
-                            <div
-                                className="acc-head d-flex justify-content-between"
-                            >
-                                <div className="searchbar-container"
+                        <div className="manage-accounts-container">
+                            <div className="employee-header">
+                                <div
+                                    className="acc-head d-flex justify-content-between"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="currentColor"
-                                        viewBox="0 0 16 16"
+                                    <div className="searchbar-container"
                                     >
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                    <input
-                                        type="text"
-                                        id="myInput"
-                                        className="form-control form-control--search"
-                                        placeholder="Search..."
-                                        value={filter}
-                                        onChange={handleFilterChange}
-                                    />
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="20"
+                                            height="20"
+                                            fill="currentColor"
+                                            viewBox="0 0 16 16"
+                                        >
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                        </svg>
+                                        <input
+                                            type="text"
+                                            id="myInput"
+                                            className="form-control form-control--search"
+                                            placeholder="Search..."
+                                            value={filter}
+                                            onChange={handleFilterChange}
+                                        />
+                                    </div>
+                                    <div>
+                                        <button
+                                            className="addhover"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#addAccountModal"
+                                            style={{ justifyContent: 'flex-end' }}
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16"
+                                                height="16"
+                                                fill="#ffffff"
+                                                className="bi bi-plus-circle-fill me-2 "
+                                                viewBox="0 0 16 16"
+                                            >
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                                            </svg>
+                                            <span className="view">Add Account</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <button
-                                    className="addhover"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#addAccountModal"
-                                    style={{ justifyContent: 'flex-end' }}
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="#ffffff"
-                                        className="bi bi-plus-circle-fill me-2 "
-                                        viewBox="0 0 16 16"
-                                    >
-                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
-                                    </svg>
-                                 <span className="view">Add Account</span>
-                                </button>
                             </div>
                         </div>
                         {showform && (
@@ -381,7 +384,7 @@ export default function ManageDepartment() {
                         )}
 
                         <div className="accounta-table-div table-responsive accounts-table" style={{ position: 'relative' }}>
-                            <table className="manage-table table table-light table-hover table-striped table-bordered custom-bordered">
+                            <table className="manage-table table table-light table-hover table-striped border">
                                 <thead>
                                     <tr>
                                         <th className="px-1">Account ID</th>
@@ -473,13 +476,13 @@ export default function ManageDepartment() {
                                                         style={{ cursor: "pointer" }}
                                                         title={add ? "" : "Add"}
                                                     >
-                                                        <img src="/svg/Add.svg" alt="add" className="actions-button"/>
+                                                        <img src="/svg/Add.svg" alt="add" className="actions-button" />
                                                     </button>
                                                     <button
                                                         onClick={() => { setTargetID(instance.acctid); }}
                                                         type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     >
-                                                         <img src="/svg/Delete.svg" alt="delete" className="actions-button"/>
+                                                        <img src="/svg/Delete.svg" alt="delete" className="actions-button" />
                                                     </button>
                                                 </div>
                                             </td>

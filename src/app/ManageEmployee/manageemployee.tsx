@@ -8,6 +8,7 @@ import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
+import { useRouter } from "next/navigation";
 // import MultiSelect from "../component/CheduleForm";
 // import ShiftAdjustment from "../ShiftAdjustment/shiftadjusment";
 
@@ -56,7 +57,7 @@ export default function CreateUD() {
   const [account, setAccount] = useState<Account[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
 
-
+  const router = useRouter();
   const token = localStorage.getItem("token");
 
 
@@ -86,6 +87,11 @@ export default function CreateUD() {
       setEmployees(data.data);
       setTotalPages(data.num_pages);
       setTotal(data.total);
+    }
+    else{
+      if(!token){
+        router.push("/");
+      }
     }
   }
   const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
@@ -294,9 +300,9 @@ export default function CreateUD() {
         <div className="px-4">
           <div className="manageemployee-division">
             <div>
-              <div>
+              <div className="employee-header-container">
                 <header>
-                  <div className="w-100 d-flex justify-content-between flex-wrap py-2 px-4 gap-3">
+                  <div className=" employee-head w-100 d-flex justify-content-between flex-wrap py-2 px-4 gap-3">
                     <div className="searchbar-container py-1">
                       <input
                         className="form-control form-control--search"
@@ -415,7 +421,7 @@ export default function CreateUD() {
                               </button>
                             )}
                             {/* // */}
-                            {user_privilege.includes("manage_users") && (
+                            {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts")) && (
                               <button
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal"

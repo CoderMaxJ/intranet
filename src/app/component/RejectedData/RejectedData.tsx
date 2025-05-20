@@ -62,7 +62,9 @@ interface Account {
 interface RejectedDataProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
+
 }
+
 
 export default function RejectedData({ data, onSave }: RejectedDataProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
