@@ -287,7 +287,6 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                         id="buttonclose"
                     ></button>
                 </div>
-
                 <div className="offcanvas-body">
                     <div>
                         <div className="d-flex flex-column">

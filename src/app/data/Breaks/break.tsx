@@ -1,5 +1,6 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect, useRef, use } from "react";
 import "../../style/breaks.css";
 import { Decryptor, Encryptor } from "@/security";
@@ -191,7 +192,8 @@ function BreakDataTable() {
               <h4
                 className="agent-header"
               >
-                Agent Breaks Monitoring Dashboard
+                Agent Breaks Monitoring Dashboard 
+                 <span className="text-muted small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
               </h4>
               <button
                 style={{ border: "none", background: "none" }}
@@ -199,9 +201,9 @@ function BreakDataTable() {
                 title={fullscreen ? "Compress" : "Fullscreen"}
               >
                 {fullscreen ? (
-                  <i className="bi bi-fullscreen-exit fw-bold text-dark"></i>
+                  <img src="/svg/compress.svg" alt="fullscreen" className="icon-circle"/>
                 ) : (
-                  <i className="bi bi-fullscreen fw-bold text-dark"></i>
+                  <img src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle"/>
                 )}
               </button>
             </div>
@@ -227,24 +229,6 @@ function BreakDataTable() {
             </div>
             <div
             >
-              <div className="legends">
-                <span className="firstbreak">
-                  1st Break
-                </span>
-                <span className="secondbreak">
-                  2nd Break
-                </span>
-                <span className="lunchbreak">
-                  Lunch
-                </span>
-                <span className="overbreak">
-                  Over Break
-                </span>
-                <span className="totalbreak">
-                  <i className="alarm bi bi-alarm"></i>
-                  Total: <span>{localStorage.getItem("total-on-breaks") || 0}</span>
-                </span>
-              </div>
             </div>
           </div>
           <div className="table-responsive breaks-table">
@@ -261,10 +245,8 @@ function BreakDataTable() {
               <tbody>
                 {filteredBreaks
                   .sort((a, b) => {
-                    // First, sort by duration (less than 300 first)
                     if (a.duration < 300 && b.duration >= 300) return -1;
                     if (a.duration >= 300 && b.duration < 300) return 1;
-                    // Then, sort by break type (First Break, Second Break, Lunch)
                     const breakOrder = {
                       "First Break": 1,
                       "Second Break": 2,

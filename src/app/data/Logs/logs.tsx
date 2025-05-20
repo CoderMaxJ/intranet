@@ -102,10 +102,14 @@ function LogsDataTable() {
 		<div className="logs-wrapper px-4">
 			<div className="logs-maindiv px-3">
 				<div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3 py-3">
-					<h3
-						className="logs-headername">
-						Agent Logs Today
-					</h3>
+					<div>
+						<h3 className="logs-headername">
+							Agent Logs Today
+							<span className="text-muted small ms-2">
+								({localStorage.getItem("total-logs") || 0})
+							</span>
+						</h3>
+					</div>
 					<div
 						className="searchbar-container">
 						<svg
@@ -124,10 +128,6 @@ function LogsDataTable() {
 							value={filter}
 							onChange={handleSearchChange}
 						/>
-					</div>
-					<div className="logs-total d-flex">
-						<div><i className=" bi bi-people px-1"></i></div>
-						<div><label>Total: {localStorage.getItem("total-logs") || 0}</label></div>
 					</div>
 				</div>
 				<div className="table-responsive logs-container" >
@@ -169,7 +169,6 @@ function LogsDataTable() {
 					</table>
 				</div>
 			</div>
-
 		</div>
 	);
 }
