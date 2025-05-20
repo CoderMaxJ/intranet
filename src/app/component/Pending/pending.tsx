@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
 import "../../../../public/asset/css/drawer.css"
+import { useRouter } from "next/navigation";
 
 interface RequestDetails {
     requestid: number;
@@ -61,11 +62,10 @@ interface Account {
 interface PendingProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
-    onDeclineComplete?: () => void;
     onApproveComplete?: (requestid: number) => void;
 }
 
-export default function Pending({ data, onSave, onDeclineComplete, onApproveComplete }: PendingProps) {
+export default function Pending({ data, onSave, onApproveComplete }: PendingProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData, setCombinedData] = useState({})
     const [declineReason, setDeclineReason] = useState("");
@@ -74,7 +74,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
     const [visible, setVisible] = useState<boolean>(!!data);
     const [declineVisible, setDeclineVisible] = useState(false);
 
-    console.log(data);
+    const router = useRouter();
 
     useEffect(() => {
         if (buildData) {
@@ -131,9 +131,7 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
             setVisible(false);
             setDeclineVisible(false);
             setDeclineReason("");
-            if (typeof onDeclineComplete === "function") {
-                onDeclineComplete();
-            }
+          
         } else {
             toast.error("Failed to decline request.", {
                 autoClose: 2000,
@@ -164,6 +162,8 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
 
         } else {
             errorToast("Failed to approve request.");
+             router.push("/");
+            
         }
     }
 
@@ -198,8 +198,14 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                 Authorization: `Bearer ${Decryptor(token || "")}`
             }
         });
+        if(response.status === 200){
+
+     
         const result = await response.json();
         setAccounts(result.data);
+        }else{
+          router.push("/");
+        }
     };
 
     useEffect(() => {

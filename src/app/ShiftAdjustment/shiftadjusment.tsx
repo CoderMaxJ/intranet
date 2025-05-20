@@ -8,10 +8,10 @@ import ApprovedData from "../component/ApprovedData/ApprovedData";
 import RejectedData from "../component/RejectedData/RejectedData";
 import RejectedTable from "../component/Rejected/RejectedTable";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Decryptor } from "@/security";
-import { useActionData } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 
 interface RequestDetails {
   requestid: number;
@@ -45,16 +45,17 @@ export default function ShiftAdjustment() {
   const [selectedData, setSelectedData] = useState<RequestDetails[]>([]);
   const currentMonth = new Date().toISOString().slice(0, 7);
 
+  const router = useRouter();
 
   useEffect(() => {
     if (activeTab === "pending") {
       fetchShiftAdjustmentData();
     }
   }, [activeTab]);
-
+   const token = localStorage.getItem("token");
   const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
   async function getAccount() {
-    const token = localStorage.getItem("token");
+ 
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -64,7 +65,9 @@ export default function ShiftAdjustment() {
     });
 
     if (!response.ok) {
-      console.log("error");
+      if(!token){
+          router.push("/");
+      }
     }
     const data = await response.json();
     setAccount(data.data);
@@ -76,7 +79,6 @@ export default function ShiftAdjustment() {
 
   const fetchShiftAdjustmentData = async () => {
     const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
     try {
       const decryptedId = Decryptor(user_id || "");
 
@@ -98,8 +100,9 @@ export default function ShiftAdjustment() {
         setTotalPages(data.num_pages);
         setTotalData(data.total);
       } else {
-        const errorText = await response.text();
-        console.error("Failed to fetch data:", response.status, errorText);
+        if(!token){
+            router.push("/");
+        }
       }
     } catch (error) {
       console.error("Error fetching shift adjustment data:", error);
@@ -243,10 +246,7 @@ export default function ShiftAdjustment() {
         <Pending data={selectedData} onApproveComplete={fetchShiftAdjustmentData} />
       )}
       {activeTab === "rejected" && (
-        <RejectedData
-          data={selectedData}
-          onDeclineComplete={fetchShiftAdjustmentData}
-        />
+        <RejectedData data={selectedData} onDeclineComplete={fetchShiftAdjustmentData} />
       )}
     </div>
   );

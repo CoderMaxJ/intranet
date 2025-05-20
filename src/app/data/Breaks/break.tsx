@@ -26,24 +26,6 @@ function BreakDataTable() {
     setFullscreen((prev) => !prev);
   };
 
-  const user_id = localStorage.getItem("user_id");
-  const deleteToken = async ()=>{
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user_id: Decryptor(user_id || "") }),
-      });
-    if (response.status === 200) {
-      localStorage.clear();
-      router.push("/")
-      return;
-    } else {
-      return null;
-    }
-  }
- 
   const fetchBreakData = async () => {
     try {
       const account_id = localStorage.getItem("user_id");
@@ -72,7 +54,6 @@ function BreakDataTable() {
       }
 
       if ( response.status === 404 || response.status === 403) {
-        deleteToken();
         localStorage.clear();
         router.push("/");
         return;

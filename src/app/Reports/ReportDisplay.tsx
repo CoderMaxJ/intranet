@@ -168,6 +168,7 @@ export default function Daterange() {
             alert("No data found in this given date range!")
         }
     };
+    const token = localStorage.getItem("token");
     const fetchData = async () => {
         try {
             setError("");
@@ -204,6 +205,10 @@ export default function Daterange() {
             }
         } catch (e) {
             setError("An error occurred while fetching data.");
+            if(!token){
+                router.push("/");
+            }
+            
         }
     };
 

@@ -59,6 +59,20 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
+  const [isEditable,setEditable]=useState(false);
+
+
+  let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
+
+  
+   const array_privilege =user_priviledge.split(",")
+   
+  useEffect(()=>{
+    if(array_privilege.includes("manage_users")){
+      setEditable(true);
+    }
+  },[])
+
   
   useEffect(() => {
     if (empData) {
@@ -350,6 +364,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="fname" className="form-label">First Name <span className="text-danger">*</span></label>
               <input
+                disabled={!isEditable && mode == "edit" ? true:false }
                 required type="text" name="fname" className="form-control" id="fname"
                 value={formData.fname} onChange={handleInputChange} placeholder="Juan"
               />
@@ -357,6 +372,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="mname" className="form-label">Middle Name </label>
               <input
+               disabled={!isEditable && mode == "edit" ? true:false }
                 type="text" name="mname" className="form-control" id="mname"
                 value={formData.mname} onChange={handleInputChange} placeholder="Montenegro"
               />
@@ -364,6 +380,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="lname" className="form-label">Last Name <span className="text-danger">*</span></label>
               <input
+                disabled={!isEditable && mode == "edit" ? true:false }
                 required type="text" name="lname" className="form-control" id="lname"
                 value={formData.lname} onChange={handleInputChange} placeholder="Dela Cruz"
               />
@@ -375,6 +392,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
+                disabled={!isEditable && mode == "edit" ? true:false }
                 required type="date" name="dateofbirth" className="form-control" id="dateofbirth"
                 value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
               />
@@ -382,6 +400,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
               <select
+                disabled={!isEditable && mode == "edit" ? true:false }
                 required name="maritalstatus" className="form-select" id="maritalstatus"
                 value={formData.maritalstatus} onChange={handleInputChange}
               >
@@ -397,6 +416,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="gender" className="form-label">Gender <span className="text-danger">*</span></label>
               <select
+                disabled={!isEditable && mode == "edit" ? true:false }
                 required name="gender" className="form-select" id="gender"
                 value={formData.gender} onChange={handleInputChange}
               >
@@ -412,6 +432,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="contactno" className="form-label">Contact No</label>
               <input
+                disabled={!isEditable && mode == "edit" ? true:false }
                 type="number" name="contactno" className="form-control" id="contactno"
                 value={formData.contactno} onChange={handleInputChange} placeholder="+63 92 6645 9723"
               />
@@ -419,6 +440,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="address" className="form-label">Address <span className="text-danger">*</span></label>
               <input
+                disabled={!isEditable && mode == "edit" ? true:false }
                 required type="text" name="address" className="form-control" id="address"
                 value={formData.address} onChange={handleInputChange} placeholder="Zapatera, Cebu City"
               />
@@ -426,6 +448,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="acctid" className="form-label">Account <span className="text-danger">*</span></label>
               <select
+                disabled={!isEditable && mode == "edit" ? true:false }
                 required name="acctid" className="form-select" id="acctid"
                 value={formData.acctid} onChange={handleInputChange}
               >
@@ -442,6 +465,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="position" className="form-label">Position <span className="text-danger">*</span></label>
               <select
+                disabled={!isEditable && mode == "edit" ? true:false }
                 required name="position" className="form-select" id="position"
                 value={formData.position} onChange={handleInputChange}
               >
@@ -457,6 +481,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <>
                   <label className="form-label">Status <span className="text-danger">*</span></label>
                   <select
+                    disabled={!isEditable && mode == "edit" ? true:false }
                     className="form-select" name="status"
                     value={formData.status === 1 ? 1 : 0}
                     onChange={handleInputChange}
@@ -482,6 +507,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <>
                   <label className="form-label">Assign Privileges <span className="text-danger">*</span></label>
                   <select
+                    disabled={!isEditable && mode == "edit" ? true:false }
                     name="role_id" className="form-select"
                     value={formData.role_id} onChange={handleInputChange}
                   >
