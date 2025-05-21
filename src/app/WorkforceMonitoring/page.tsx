@@ -1,28 +1,27 @@
+"use client";
 import BreakDataTable from "../data/Breaks/break";
 import LogsDataTable from "../data/Logs/logs";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import type { Metadata } from "next";
+import { useState } from "react";
 
-export const metadata: Metadata = {
-  title: "Workforce Monitoring",
-  description: "Monitoring System",
-};
 
 export default function MainDashboard() {
+  const [pageTitle, setPageTitle] = useState("workforce monitoring")
+
   return (
     <div className="d-flex main-page">
       <div id="dashboard-menu" className="d-flex ">
-        <Dashboard />
+        <Dashboard/>
       </div>
       <div className="workforce-div flex-grow d-flex flex-column gap-4 ">
-        <Header title="WORKFORCE MONITORING" text="Connecting Teams, Empowering Innovation" />
+        <Header title="WORKFORCE MONITORING" currentPage={pageTitle}/>
         <div>
-          <BreakDataTable />
+          <BreakDataTable/>
         </div>
         <div>
-          <LogsDataTable />
+          <LogsDataTable/>
         </div>
       </div>
     </div>

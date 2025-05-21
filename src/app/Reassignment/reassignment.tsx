@@ -182,6 +182,7 @@ export default function () {
                filterbyAccount();
           }
      }, [filterText])
+
      const filterbyAccount = async () => {
           if (searchQueryLeft === "") {
                setSearchQueryLeft("");
@@ -192,7 +193,6 @@ export default function () {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${decryptedToken}`
                }
-
           });
           if (response.status === 200) {
                const data = await response.json();
@@ -304,11 +304,8 @@ export default function () {
                                         </div>
                                    </div>
                                    <div className="d-flex flex-wrap justify-content-between align-items-start gap-2">
-
-                                        {/* Left Side: Unselected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
                                              <h6 className="assign-employees">Assign Employees <span>({employee?.length})</span></h6>
-                                             {/* LEFT SIDE SEARCH */}
                                              <div className="d-flex justity-content-center flex-wrap gap-2 w-100">
                                                   <div className="flex-grow-1"><input
                                                        className="form-control mb-2"
@@ -351,19 +348,14 @@ export default function () {
                                                   </div>
                                              </div>
                                         </div>
-
-                                        {/* Arrow */}
                                         <div className="d-flex justify-content-center align-items-center flex-column line" style={{ marginTop: "30px", fontSize: "24px" }}>
                                              <img src="/svg/lr-arrow.svg" alt="arrow" />
                                              <div className="vertical-line"></div>
                                         </div>
-
-                                        {/* Right Side: Selected Employees */}
                                         <div className="d-flex flex-column  align-items-start" style={{ flex: 1 }}>
                                              <div className="d-flex align-items-center  gap-4 w-75 ">
                                                   <h6 className="selected-emp">Selected Employees <span>({selectedEmployees?.length})</span></h6>
                                              </div>
-                                             {/* RIGHT SIDE SEARCH */}
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">
                                                   <div className="flex-grow-1">
                                                        <input

@@ -62,7 +62,7 @@ export default function ManageDepartment() {
             fetchManagerList();
         }
     }, [token]);
-    //
+    
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",
         autoClose: 2000,
@@ -128,7 +128,7 @@ export default function ManageDepartment() {
         createAccount();
         setAccountName("");
     };
-
+const btnClose = document.getElementById("buttonClose")
     const createAccount = async () => {
         try {
             const requestBody = {
@@ -148,6 +148,7 @@ export default function ManageDepartment() {
                 successToast("Account created successfully.");
                 setShowForm(false);
                 fetchAccountList();
+                btnClose?.click();
             }
         } catch (e) {
             console.error(e);
@@ -285,10 +286,10 @@ export default function ManageDepartment() {
                                         className="closebutton btn btn-white btn-sm"
                                         data-bs-dismiss="modal"
                                         type="button"
+                                        id="buttonClose"
                                     >
                                         <span className="cancel-btn">Cancel</span>
                                     </button>
-
                                     <button className="btn btn-success btn-sm" type="submit">
                                         <span className="view">Create</span>
                                     </button>
@@ -394,7 +395,7 @@ export default function ManageDepartment() {
                                         <th className="th-action px-1">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="accounts-td" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+                                <tbody className="accounts-td">
                                     {filteredRows.map((instance) => (
                                         <tr key={instance.acctid}>
                                             <td >{instance.acctid}</td>
@@ -425,7 +426,7 @@ export default function ManageDepartment() {
                                                                             borderRadius: "5px",
                                                                         }}
                                                                     >
-                                                                        <p className="m-0 text-center">
+                                                                        <p className="m-0 text-center add-supervisor">
                                                                             {manager.fname} {manager.lname}
                                                                         </p>
                                                                     </div>
@@ -436,7 +437,7 @@ export default function ManageDepartment() {
                                                             {openDropdownId === instance.acctid && (
                                                                 <div>
                                                                     <select
-                                                                        className="form-select w-100 p-1"
+                                                                        className="form-select w-100 p-1 form-select--add"
                                                                         value={selectedManagerIDs[instance.acctid] || ""}
                                                                         onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
                                                                     >
@@ -453,7 +454,7 @@ export default function ManageDepartment() {
                                                     </div>
                                                 ) : (
                                                     <select
-                                                        className="form-select w-20 p-1 unassigned"
+                                                        className="form-select w-20 p-1 form-select-unassigned"
                                                         style={{ width: "130px" }}
                                                         value={selectedManagerIDs[instance.acctid] || ""}
                                                         onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}

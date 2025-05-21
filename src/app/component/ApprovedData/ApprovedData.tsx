@@ -105,7 +105,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
 
   const handleDecline = async () => {
     const token = localStorage.getItem("token");
-
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
       method: "PATCH",
       headers: {
@@ -157,7 +156,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
           record: value
         };
       }
-      // Handle other sections with record objects
+ 
       else if (section === "break1" || section === "break2" || section === "lunch") {
         updated[section] = {
           ...updated[section],

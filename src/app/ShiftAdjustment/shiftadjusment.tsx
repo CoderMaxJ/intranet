@@ -42,7 +42,6 @@ export default function ShiftAdjustment() {
   const [totalData, setTotalData] = useState();
   const [activeTab, setActiveTab] = useState("pending");
   const [selectedData, setSelectedData] = useState<RequestDetails[]>([]);
-  // const currentMonth = new Date().toISOString().slice(0, 7);
 
   useEffect(() => {
     if (activeTab === "pending") {
@@ -122,7 +121,7 @@ export default function ShiftAdjustment() {
         <Dashboard />
       </div>
       <div className="shiftadjustment-container flex-grow-1">
-        <Header title="ADJUSTMENT" />
+        <Header title="ADJUSTMENT"/>
         <div className="shift-background p-4 px-4">
           <div className="d-flex gap-5">
             <div className="d-flex gap-5">

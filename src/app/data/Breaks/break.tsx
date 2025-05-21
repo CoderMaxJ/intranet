@@ -185,17 +185,17 @@ function BreakDataTable() {
 
   return (
     <div className="workforce px-4">
-      <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div p-3"}>
-        <div className="d-flex flex-column">
-          <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between gap-3">
-            <div className="d-flex align-items-center">
+      <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div px-3"}>
+        <div className="d-flex flex-column py-3">
+          <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3 py-3">
+            <div className="d-flex align-items-center col-5">
               <h4 className="agent-header mb-0">
                 Agent Breaks Monitoring Dashboard
                 <span className="text-muted small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
               </h4>
             </div>
 
-            <div className="flex-grow-1 d-flex justify-content-center">
+            <div className="flex-grow-1 d-flex">
               <div className="searchbar-container d-flex align-items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -207,7 +207,7 @@ function BreakDataTable() {
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                 </svg>
                 <input
-                  className="form-control form-control--search ms-2"
+                  className="form-control form-control--search"
                   type="text"
                   placeholder="Search..."
                   value={searchQuery}

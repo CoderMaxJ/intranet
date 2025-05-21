@@ -873,10 +873,6 @@ input:focus {
     width: 100% !important;
   }
 
-  .tabbreaks {
-    margin-top: 13px !important;
-  }
-
   .breaks-icon {
     transform: translateY(27px) translateX(-135px);
   }
@@ -1541,6 +1537,11 @@ tbody td {
   border: 3px solid #dbdbdb;
   background-color: #ffffff;
   font-family: 'Geist';
+}
+
+.agentslog-search {
+  width: 100%;
+  max-width: 400px;
 }
 
 .rotate-acc-icon {
@@ -3245,6 +3246,13 @@ table {
   color: #888;
 }
 
+.accounta-table-div td {
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 13px !important;
+  padding: 5px;
+}
+
 .accounta-table-div {
   position: relative;
 }
@@ -3259,6 +3267,7 @@ table {
   position: sticky;
   z-index: 10;
   transform: translateY(-1px);
+  font-size: 15px;
 }
 
 .th-manager {
@@ -3483,6 +3492,10 @@ table {
   max-width: 320px;
 }
 
+.form-select--add {
+  font-size: 13px !important;
+}
+
 .cancel-btn {
   margin-left: -2px;
 }
@@ -3511,6 +3524,11 @@ table {
 .offcanvas-header,
 .tablogs {
   font-family: 'Geist' !important;
+}
+
+.form-select-unassigned,
+.add-supervisor {
+  font-size: 13px !important;
 }
 
 .form-select--adjustwidth {
@@ -3669,5 +3687,7 @@ table {
   display: block;
 }
 
-
-
+/* .breaksheader,
+.agentheader-container {
+  background-color: #CDE1FB;
+} */

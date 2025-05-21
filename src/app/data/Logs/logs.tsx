@@ -100,9 +100,9 @@ function LogsDataTable() {
 
 	return (
 		<div className="logs-wrapper px-4">
-			<div className="logs-maindiv px-3">
-				<div className="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-3">
-					<div className="align-items-center">
+			<div className="logs-maindiv px-3 py-3">
+				<div className="agentheader-container d-flex flex-wrap flex-direction-row align-items-center py-3 px-3">
+					<div className="align-items-center col-5">
 						<h3 className="logs-headername">
 							Agent Logs Today
 							<span className="text-muted small ms-2">
@@ -110,7 +110,7 @@ function LogsDataTable() {
 							</span>
 						</h3>
 					</div>
-					<div className="w-100 d-flex justify-content-center">
+					<div className="agentslog-search d-flex align-items-center">
 					<div
 						className="searchbar-container">
 						<svg
