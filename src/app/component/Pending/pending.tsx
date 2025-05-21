@@ -62,7 +62,6 @@ interface Account {
 interface PendingProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
-    onDeclineComplete?: (requestid: number) => void;
     onApproveComplete?: (requestid: number) => void;
 }
 
@@ -74,22 +73,9 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
     const [accounts, setAccounts] = useState<Account[]>([]);
     const [visible, setVisible] = useState<boolean>(!!data);
     const [declineVisible, setDeclineVisible] = useState(false);
-    const [pendingRequests, setPendingRequests] = useState<RequestDetails[]>([]);
-    const [rejectedRequests, setRejectedRequests] = useState<RequestDetails[]>([]);
 
-    const handleDeclineComplete = (requestid: number) => {
-        setPendingRequests(prev => {
-            const declined = prev.find(req => req.requestid === requestid);
-            if (declined) {
-                setRejectedRequests(rej => [...rej, {
-                    ...declined,
-                    status: 2, 
-                    declined_at: new Date().toISOString()
-                }]);
-            }
-            return prev.filter(req => req.requestid !== requestid);
-        });
-    };
+    const router = useRouter();
+
     useEffect(() => {
         if (buildData) {
             setCombinedData({
@@ -145,10 +131,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
             setVisible(false);
             setDeclineVisible(false);
             setDeclineReason("");
-            if (typeof onDeclineComplete === "function" && data?.requestid) {
-                onDeclineComplete(data.requestid);
-            }
-
+          
         } else {
             toast.error("Failed to decline request.", {
                 autoClose: 2000,
@@ -203,6 +186,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
         };
         approvedRequest(payload);
         setVisible(false);
+
     };
 
     const getAccounts = async () => {
@@ -231,14 +215,16 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
             if (!prev) return prev;
+
             const updated = { ...prev };
+
             if (section === "login" || section === "logout") {
                 updated[section] = {
                     ...updated[section],
                     record: value
                 };
             }
-      
+            // Handle other sections with record objects
             else if (section === "break1" || section === "break2" || section === "lunch") {
                 updated[section] = {
                     ...updated[section],
@@ -296,6 +282,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                         id="buttonclose"
                     ></button>
                 </div>
+
                 <div className="offcanvas-body">
                     <div>
                         <div className="d-flex flex-column">
@@ -559,7 +546,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                     </div>
                 </div>
 
-                <div className="modal-footer gap-4 shift-footer" style={{ padding: '20px' }}>
+                <div className="modal-footer gap-4 shift-footer" style={{ padding: '20px' }}>  
                     <div>
                         <button
                             type="button"
