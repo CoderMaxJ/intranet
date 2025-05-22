@@ -1152,12 +1152,8 @@ input:focus {
   left: 0;
   width: 100%;
   z-index: 999;
-  height: 107%;
+  height: 110%;
   min-height: 100vh;
-}
-
-/* logs main div */
-.logs-wrapper {
   background-color: #e7e7e7;
 }
 
