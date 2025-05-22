@@ -136,10 +136,6 @@
   border-radius: 4px;
 }
 
-.firstbreak:hover {
-  transform: scale(1.1);
-}
-
 .secondbreak {
   padding: 10px;
   font-family: sans-serif;
@@ -151,10 +147,6 @@
   border-radius: 4px;
 }
 
-.secondbreak:hover {
-  transform: scale(1.1);
-}
-
 .lunchbreak {
   padding: 10px;
   font-family: sans-serif;
@@ -164,9 +156,6 @@
   border-radius: 4px;
 }
 
-.lunchbreak:hover {
-  transform: scale(1.1);
-}
 
 .overbreak {
   padding: 10px;
@@ -175,10 +164,6 @@
   background-color: #ffdccc;
   text-align: center;
   border-radius: 4px;
-}
-
-.overbreak:hover {
-  transform: scale(1.1);
 }
 
 .totalbreak {
@@ -888,10 +873,6 @@ input:focus {
     width: 100% !important;
   }
 
-  .tabbreaks {
-    margin-top: 13px !important;
-  }
-
   .breaks-icon {
     transform: translateY(27px) translateX(-135px);
   }
@@ -1245,6 +1226,7 @@ input:focus {
   font-family: 'Geist';
   font-weight: bold;
   font-size: 1.5rem;
+  white-space: nowrap;
 }
 
 .searchbarlogs {
@@ -1557,6 +1539,11 @@ tbody td {
   font-family: 'Geist';
 }
 
+.agentslog-search {
+  width: 100%;
+  max-width: 400px;
+}
+
 .rotate-acc-icon {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
@@ -1733,7 +1720,7 @@ table {
   padding-bottom: 10px !important;
   border-radius: 4px;
   width: 100% !important;
-  height: 830px;
+  height: 799px;
   padding-right: 11px;
   padding-left: 24px;
 }
@@ -3259,6 +3246,13 @@ table {
   color: #888;
 }
 
+.accounta-table-div td {
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 13px !important;
+  padding: 5px;
+}
+
 .accounta-table-div {
   position: relative;
 }
@@ -3273,6 +3267,7 @@ table {
   position: sticky;
   z-index: 10;
   transform: translateY(-1px);
+  font-size: 15px;
 }
 
 .th-manager {
@@ -3497,6 +3492,10 @@ table {
   max-width: 320px;
 }
 
+.form-select--add {
+  font-size: 13px !important;
+}
+
 .cancel-btn {
   margin-left: -2px;
 }
@@ -3525,6 +3524,11 @@ table {
 .offcanvas-header,
 .tablogs {
   font-family: 'Geist' !important;
+}
+
+.form-select-unassigned,
+.add-supervisor {
+  font-size: 13px !important;
 }
 
 .form-select--adjustwidth {
@@ -3675,5 +3679,15 @@ table {
 }
 
 .icon-circle {
-
+  background-color: #E4EFFE;
+  padding: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  display: block;
 }
+
+/* .breaksheader,
+.agentheader-container {
+  background-color: #CDE1FB;
+} */

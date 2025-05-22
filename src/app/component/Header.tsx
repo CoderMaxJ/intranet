@@ -1,20 +1,21 @@
 "use client";
-import { useState } from "react";
 import "/public/asset/css/updateps.css";
 
 interface HeaderProps {
   title: string;
   text?: string;
+  currentPage: string;
 }
 
-export default function Header({ title, text }: HeaderProps) {
-  const [showDashboard, setShowDashboard] = useState("");
+export default function Header({ title, currentPage }: HeaderProps) {
+
   return (
     <div className="header-container ">
       <div className="header-text-container text-white py-3 d-flex justify-content-between px-4">
         <div>
           <h1 className=" text-start fw-bold mb-0">{title}</h1>
         </div>
+        {currentPage === "workforce monitoring" && (
          <div className="legends align-items-center">
           <span className="firstbreak">
             1st Break
@@ -28,7 +29,8 @@ export default function Header({ title, text }: HeaderProps) {
           <span className="overbreak">
             Over Break
           </span>
-        </div> 
+        </div>
+      )} 
       </div>
     </div>
   );
