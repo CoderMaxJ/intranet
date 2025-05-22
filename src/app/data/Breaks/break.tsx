@@ -223,12 +223,12 @@ function BreakDataTable() {
                 title={fullscreen ? "Compress" : "Fullscreen"}
               >
                 {fullscreen ? (
-                  <div className="d-flex align-items-center gap-2">
+                  <div className="compress d-flex align-items-center gap-2">
                     <img src="/svg/compress.svg" alt="fullscreen" className="icon-circlee" height={30} />
                     <span className="text-light fw-semibold">Compress</span>
                   </div>
                 ) : (
-                  <div className="d-flex align-items-center gap-2">
+                  <div className="fullscreen d-flex align-items-center gap-2">
                     <img src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle" height={30} />
                     <span className="text-light fw-semibold">Full screen</span>
                   </div>

@@ -3740,6 +3740,10 @@ body.dark-mode .time-icon-group::before {
 .decline-button button {
   border: 1px solid red !important;
 }
+.compress span,
+.fullscreen span {
+  font-family: 'Geist';
+}
 
 .icon-circlee {
   background-color: #E4EFFE;
