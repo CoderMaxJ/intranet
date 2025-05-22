@@ -230,7 +230,7 @@ function BreakDataTable() {
                 ) : (
                   <div className="d-flex align-items-center gap-2">
                     <img src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle" height={30} />
-                    <span className="text-light fw-semibold">Fullscreen</span>
+                    <span className="text-light fw-semibold">Full screen</span>
                   </div>
                 )}
               </button>
