@@ -16,21 +16,34 @@ export default function Header({ title, currentPage }: HeaderProps) {
           <h1 className=" text-start fw-bold mb-0">{title}</h1>
         </div>
         {currentPage === "workforce monitoring" && (
-         <div className="legends align-items-center">
-          <span className="firstbreak">
-            1st Break
-          </span>
-          <span className="secondbreak">
-            2nd Break
-          </span>
-          <span className="lunchbreak">
-            Lunch
-          </span>
-          <span className="overbreak">
-            Over Break
-          </span>
-        </div>
-      )} 
+          <div className="legends align-items-center gap-2">
+            <div>
+              <span className="firstbreak">
+                <img src="/svg/coffee.svg" alt="firstbreak" className="me-1" height={16} />
+                1st Break
+              </span>
+            </div>
+            <div>
+              <span className="secondbreak">
+                <img src="/svg/secondbreak.svg" alt="secondbreak"  className="me-1" height={16} />
+                2nd Break
+              </span>
+            </div>
+            <div>
+              <span className="lunchbreak">
+                <img src="/svg/plate-eating.svg" alt="lunch" className="me-1" height={16} />
+                Lunch
+              </span>
+            </div>
+            <div>
+              <span className="overbreak">
+                <img src="/svg/pending.svg" alt="overbreak" className="me-1" height={16} />
+                Over Break
+              </span>
+            </div>
+
+          </div>
+        )}
       </div>
     </div>
   );

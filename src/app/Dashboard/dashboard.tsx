@@ -208,7 +208,8 @@ export default function Dashboard() {
                 <div className="navigation-division">
                     {showImage === true && (
                         <div className="justify-content-center" style={{ display: 'grid', alignItems: 'center' }}>
-                            <img src="/img/sooos.png" height={60} />
+                            <img src="/img/Sos.png" height={50} />
+                            <hr/>
                         </div>
                     )}
                 </div>
@@ -513,7 +514,7 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div >
-                    <hr className="border-dark border-2 " />
+                    <hr/>
                     <div className="upload-prof">
                         <button
                             onClick={toggleMinimizeMaximize}
