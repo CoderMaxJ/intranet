@@ -3737,6 +3737,10 @@ body.dark-mode .time-icon-group::before {
   display: block;
 }
 
+.decline-button button {
+  border: 1px solid red !important;
+}
+
 .icon-circlee {
   background-color: #E4EFFE;
   padding: -7px;

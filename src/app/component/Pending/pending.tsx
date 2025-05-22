@@ -537,10 +537,10 @@ export default function Pending({ data, onSave, onDeclineComplete, onApproveComp
                     </div>
                 </div>
                 <div className="modal-footer gap-4 shift-footer" style={{ padding: '20px' }}>
-                    <div>
+                    <div className="decline-button ">
                         <button
                             type="button"
-                            className="btn text-danger fw-bold"
+                            className="btn btn-outline-danger fw-bold"
                             data-bs-toggle="modal"
                             data-bs-target="#declineModal"
                         >
