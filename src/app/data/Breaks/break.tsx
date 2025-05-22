@@ -186,12 +186,12 @@ function BreakDataTable() {
   return (
     <div className="workforce px-4">
       <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div px-3"}>
-        <div className="d-flex flex-column py-3">
-          <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3 py-3">
+        <div className="d-flex flex-column monitoring-container">
+          <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3">
             <div className="d-flex align-items-center col-5">
               <h4 className="agent-header mb-0">
                 Agent Breaks Monitoring Dashboard
-                <span className="text-muted small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
+                <span className="text-light small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
               </h4>
             </div>
 
@@ -224,13 +224,13 @@ function BreakDataTable() {
               >
                 {fullscreen ? (
                   <div className="d-flex align-items-center gap-2">
-                    <img src="/svg/compress.svg" alt="fullscreen" className="icon-circle" height={30} />
-                    <span className="text-primary fw-semibold">Compress</span>
+                    <img src="/svg/compress.svg" alt="fullscreen" className="icon-circlee" height={30} />
+                    <span className="text-light fw-semibold">Compress</span>
                   </div>
                 ) : (
                   <div className="d-flex align-items-center gap-2">
                     <img src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle" height={30} />
-                    <span className="text-primary fw-semibold">Fullscreen</span>
+                    <span className="text-light fw-semibold">Fullscreen</span>
                   </div>
                 )}
               </button>

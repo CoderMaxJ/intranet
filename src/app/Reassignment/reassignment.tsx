@@ -265,7 +265,7 @@ export default function () {
 
                                         <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
                                              <div className="d-flex gap-4">
-                                                  <div className="input-group mb-3" style={{ minWidth: "200px" }}>
+                                                  <div className="input-group mb-3  time-icon-group" style={{ minWidth: "200px" }}>
                                                        <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
                                                             type="time"
@@ -274,7 +274,7 @@ export default function () {
                                                             onChange={(e) => setTimeIn(e.target.value)}
                                                        />
                                                   </div>
-                                                  <div className="input-group mb-3" style={{ minWidth: "180px" }}>
+                                                  <div className="input-group mb-3  time-icon-group" style={{ minWidth: "180px" }}>
                                                        <span className="input-group-text" id="basic-addon1">To</span>
                                                        <input
                                                             type="time"
@@ -284,7 +284,6 @@ export default function () {
                                                        />
                                                   </div>
                                              </div>
-
                                         </div>
                                         <div className="input-group mb-3" style={{ minWidth: "400px" }}>
                                              <span className="input-group-text" id="basic-addon1">Account</span>

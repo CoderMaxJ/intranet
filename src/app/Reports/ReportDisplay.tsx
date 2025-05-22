@@ -232,6 +232,7 @@ export default function Daterange() {
                                                         placeholder="Search..."
                                                         value={searchTerm}
                                                         onChange={handleSearch}
+
                                                     />
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +246,7 @@ export default function Daterange() {
                                                 </div>
                                                 <div className="d-flex flex-wrap flex-lg-nowrap align-items-center justify-content-lg-end gap-3">
 
-                                                    <div className="d-flex align-items-center input-group" style={{ maxWidth: '220px'}}>
+                                                    <div className="d-flex align-items-center input-group has-calendar-icon" style={{ maxWidth: '220px'}}>
                                                         <span className="input-group-text">From</span>
                                                         
                                                         <input
@@ -259,7 +260,7 @@ export default function Daterange() {
                                                         />
                                                     </div>
 
-                                                    <div className="d-flex align-items-center input-group" style={{ maxWidth: '220px'}}>
+                                                    <div className="d-flex align-items-center input-group has-calendar-icon" style={{ maxWidth: '220px'}}>
                                                       <span className="input-group-text">To</span>
                                                         <input
                                                             id="id-end"
