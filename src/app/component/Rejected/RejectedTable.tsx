@@ -94,6 +94,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
         </tr>
       </thead>
       <tbody>
+      
         {rejectedRequest?.map((request: any, index: any) => (
           <tr key={index}>
             <td>{request.name}</td>
@@ -115,6 +116,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
               </button>
             </td>
           </tr>
+        
         ))}
       </tbody>
     </table>

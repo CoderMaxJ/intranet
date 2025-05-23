@@ -101,8 +101,8 @@ function LogsDataTable() {
 	return (
 		<div className="logs-wrapper px-4">
 			<div className="logs-maindiv px-3">
-				<div className="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3 py-3">
-					<div>
+				<div className="agentheader-container d-flex flex-wrap flex-direction-row align-items-center">
+					<div className="align-items-center col-5 py-3">
 						<h3 className="logs-headername">
 							Agent Logs Today
 							<span className="text-muted small ms-2">
@@ -110,6 +110,7 @@ function LogsDataTable() {
 							</span>
 						</h3>
 					</div>
+					<div className="agentslog-search d-flex align-items-center">
 					<div
 						className="searchbar-container">
 						<svg
@@ -128,6 +129,7 @@ function LogsDataTable() {
 							value={filter}
 							onChange={handleSearchChange}
 						/>
+					</div>
 					</div>
 				</div>
 				<div className="table-responsive logs-container" >

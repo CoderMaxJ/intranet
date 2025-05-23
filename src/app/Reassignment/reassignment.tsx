@@ -186,6 +186,7 @@ export default function () {
                filterbyAccount();
           }
      }, [filterText])
+
      const filterbyAccount = async () => {
           if (searchQueryLeft === "") {
                setSearchQueryLeft("");
@@ -196,7 +197,6 @@ export default function () {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${decryptedToken}`
                }
-
           });
           if (response.status === 200) {
                const data = await response.json();
@@ -272,7 +272,7 @@ export default function () {
 
                                         <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
                                              <div className="d-flex gap-4">
-                                                  <div className="input-group mb-3" style={{ minWidth: "200px" }}>
+                                                  <div className="input-group mb-3  time-icon-group" style={{ minWidth: "200px" }}>
                                                        <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
                                                             type="time"
@@ -281,7 +281,7 @@ export default function () {
                                                             onChange={(e) => setTimeIn(e.target.value)}
                                                        />
                                                   </div>
-                                                  <div className="input-group mb-3" style={{ minWidth: "180px" }}>
+                                                  <div className="input-group mb-3  time-icon-group" style={{ minWidth: "180px" }}>
                                                        <span className="input-group-text" id="basic-addon1">To</span>
                                                        <input
                                                             type="time"
@@ -291,7 +291,6 @@ export default function () {
                                                        />
                                                   </div>
                                              </div>
-
                                         </div>
                                         <div className="input-group mb-3" style={{ minWidth: "400px" }}>
                                              <span className="input-group-text" id="basic-addon1">Account</span>
@@ -311,11 +310,8 @@ export default function () {
                                         </div>
                                    </div>
                                    <div className="d-flex flex-wrap justify-content-between align-items-start gap-2">
-
-                                        {/* Left Side: Unselected Employees */}
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
                                              <h6 className="assign-employees">Assign Employees <span>({employee?.length})</span></h6>
-                                             {/* LEFT SIDE SEARCH */}
                                              <div className="d-flex justity-content-center flex-wrap gap-2 w-100">
                                                   <div className="flex-grow-1"><input
                                                        className="form-control mb-2"
@@ -358,19 +354,14 @@ export default function () {
                                                   </div>
                                              </div>
                                         </div>
-
-                                        {/* Arrow */}
                                         <div className="d-flex justify-content-center align-items-center flex-column line" style={{ marginTop: "30px", fontSize: "24px" }}>
                                              <img src="/svg/lr-arrow.svg" alt="arrow" />
                                              <div className="vertical-line"></div>
                                         </div>
-
-                                        {/* Right Side: Selected Employees */}
                                         <div className="d-flex flex-column  align-items-start" style={{ flex: 1 }}>
                                              <div className="d-flex align-items-center  gap-4 w-75 ">
                                                   <h6 className="selected-emp">Selected Employees <span>({selectedEmployees?.length})</span></h6>
                                              </div>
-                                             {/* RIGHT SIDE SEARCH */}
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">
                                                   <div className="flex-grow-1">
                                                        <input

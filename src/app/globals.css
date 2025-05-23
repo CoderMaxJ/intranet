@@ -119,7 +119,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1px;
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 .legends span {
@@ -131,13 +131,8 @@
   font-family: sans-serif;
   background-color: #ffffb7;
   text-align: center;
-  margin-right: -90px;
-  color: #000000;
-  border-radius: 4px;
-}
-
-.firstbreak:hover {
-  transform: scale(1.1);
+  color: hsl(0, 0%, 0%);
+  border-radius: 16px;
 }
 
 .secondbreak {
@@ -146,13 +141,7 @@
   background-color: #ffeda6;
   color: #000000;
   text-align: center;
-  margin-left: 92px;
-  margin-right: 2px;
-  border-radius: 4px;
-}
-
-.secondbreak:hover {
-  transform: scale(1.1);
+  border-radius: 16px;
 }
 
 .lunchbreak {
@@ -160,25 +149,17 @@
   font-family: sans-serif;
   background-color: #a9e4ff;
   color: #000000;
-  margin-right: 2px;
-  border-radius: 4px;
+  border-radius: 16px;
 }
 
-.lunchbreak:hover {
-  transform: scale(1.1);
-}
 
 .overbreak {
   padding: 10px;
-  color: red;
+  color: rgb(0, 0, 0);
   font-family: sans-serif;
   background-color: #ffdccc;
   text-align: center;
-  border-radius: 4px;
-}
-
-.overbreak:hover {
-  transform: scale(1.1);
+  border-radius: 16px;
 }
 
 .totalbreak {
@@ -888,10 +869,6 @@ input:focus {
     width: 100% !important;
   }
 
-  .tabbreaks {
-    margin-top: 13px !important;
-  }
-
   .breaks-icon {
     transform: translateY(27px) translateX(-135px);
   }
@@ -1061,6 +1038,7 @@ input:focus {
   font-size: 23px;
   font-family: 'Geist';
   margin-right: 10px;
+  color: #ffffff;
 }
 
 .shield-icon {
@@ -1170,16 +1148,12 @@ input:focus {
   margin: 0;
   position: absolute;
   padding-top: 80px;
-  top: -60px;
+  top: -93px;
   left: 0;
   width: 100%;
   z-index: 999;
-  height: 107%;
+  height: 110%;
   min-height: 100vh;
-}
-
-/* logs main div */
-.logs-wrapper {
   background-color: #e7e7e7;
 }
 
@@ -1245,6 +1219,7 @@ input:focus {
   font-family: 'Geist';
   font-weight: bold;
   font-size: 1.5rem;
+  white-space: nowrap;
 }
 
 .searchbarlogs {
@@ -1557,6 +1532,15 @@ tbody td {
   font-family: 'Geist';
 }
 
+.form-control--searchreport {
+  content: "\1F4C5" !important;
+}
+
+.agentslog-search {
+  width: 100%;
+  max-width: 400px;
+}
+
 .rotate-acc-icon {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
@@ -1581,6 +1565,10 @@ tbody td {
   top: 0;
   z-index: 1;
   font-family: 'Geist';
+}
+
+.monitoring-container {
+  padding-top: 15px;
 }
 
 .custom-bordered th,
@@ -1733,7 +1721,7 @@ table {
   padding-bottom: 10px !important;
   border-radius: 4px;
   width: 100% !important;
-  height: 830px;
+  height: 799px;
   padding-right: 11px;
   padding-left: 24px;
 }
@@ -2212,7 +2200,7 @@ table {
   flex-direction: column;
   z-index: 20;
   min-height: 100vh;
-  gap: 58px;
+  gap: 4px;
   transition: width 0.3s ease-in-out;
 }
 
@@ -3006,6 +2994,7 @@ table {
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #ffffff;
 }
 
 .form-controll input {
@@ -3059,6 +3048,7 @@ table {
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #ffffff;
 }
 
 .form-controll-timeout1 {
@@ -3121,6 +3111,48 @@ table {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+}
+
+.has-calendar-icon {
+  position: relative;
+}
+
+.has-calendar-icon input[type="date"]::before {
+  content: "\1F4C5";
+  position: absolute;
+  right: 12px;
+  /* positions after the 'From'/'To' label */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #0d6efd;
+  /* btn-primary */
+  pointer-events: none;
+}
+
+body.dark-mode .has-calendar-icon input[type="date"]::before {
+  color: #fff;
+}
+
+.time-icon-group {
+  position: relative;
+}
+
+.time-icon-group::before {
+  content: "\1F552";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #0d6efd;
+  pointer-events: none;
+  z-index: 10;
+}
+
+
+body.dark-mode .time-icon-group::before {
+  color: #fff;
 }
 
 .form-controll-timein::after {
@@ -3259,6 +3291,13 @@ table {
   color: #888;
 }
 
+.accounta-table-div td {
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 13px !important;
+  padding: 5px;
+}
+
 .accounta-table-div {
   position: relative;
 }
@@ -3273,6 +3312,7 @@ table {
   position: sticky;
   z-index: 10;
   transform: translateY(-1px);
+  font-size: 15px;
 }
 
 .th-manager {
@@ -3497,6 +3537,10 @@ table {
   max-width: 320px;
 }
 
+.form-select--add {
+  font-size: 13px !important;
+}
+
 .cancel-btn {
   margin-left: -2px;
 }
@@ -3525,6 +3569,11 @@ table {
 .offcanvas-header,
 .tablogs {
   font-family: 'Geist' !important;
+}
+
+.form-select-unassigned,
+.add-supervisor {
+  font-size: 13px !important;
 }
 
 .form-select--adjustwidth {
@@ -3675,5 +3724,39 @@ table {
 }
 
 .icon-circle {
+  background-color: #E4EFFE;
+  padding: 7px;
+  border-radius: 35%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  display: block;
+}
 
+.decline-button button {
+  border: 1px solid red !important;
+}
+.compress span,
+.fullscreen span {
+  font-family: 'Geist';
+}
+
+.icon-circlee {
+  background-color: #E4EFFE;
+  padding: -7px;
+  border-radius: 35%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  display: block;
+}
+
+
+.breaksheader {
+  background-image: url('/img/Breaktool.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
