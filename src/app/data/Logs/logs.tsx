@@ -133,7 +133,7 @@ function LogsDataTable() {
 					</div>
 				</div>
 				<div className="table-responsive logs-container" >
-					<table className="tablogs table table-hover table-bordered table-striped">
+					<table className="tablogs table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>Name</th>
