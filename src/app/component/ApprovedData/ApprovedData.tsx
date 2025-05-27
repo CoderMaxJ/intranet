@@ -220,7 +220,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
           <button
             type="button"
             className="btn-close"
-            data-bs-dismiss="approveddrawer"
+            data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
@@ -245,7 +245,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
               </div>
               <div className="d-flex justify-content-between">
                 <p className="drawer-label">Status</p>
-                <p className="drawer-label" style={{color: data?.status === 1 ? "green" : "" }}>{data?.status === 1 ? "Approved" : "Declined"}</p>
+                <p className="drawer-label" style={{ color: data?.status === 1 ? "green" : "" }}>{data?.status === 1 ? "Approved" : "Declined"}</p>
               </div>
             </div>
           </div>
