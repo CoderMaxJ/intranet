@@ -269,7 +269,7 @@ export default function CreateUD() {
                 <Dashboard />
             </div>
             <div className="main-divv">
-                <Header title="MANAGE SCHEDULE" />
+                <Header title="MANAGE SCHEDULE" currentPage="" />
                 <div className="px-4">
                     <div className="manageemployee-division">
                         <div>
