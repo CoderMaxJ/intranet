@@ -83,7 +83,6 @@ export default function CreateUD() {
     );
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setEmployees(data.data);
       setTotalPages(data.num_pages);
       setTotal(data.total);
@@ -296,7 +295,7 @@ export default function CreateUD() {
         <Dashboard />
       </div>
       <div className="main-divv">
-        <Header title="MANAGE EMPLOYEE" />
+        <Header title="MANAGE EMPLOYEE" currentPage=""/>
         <div className="px-4">
           <div className="manageemployee-division">
             <div>
@@ -421,7 +420,7 @@ export default function CreateUD() {
                               </button>
                             )}
                             {/* // */}
-                            {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts")) && (
+                            {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") ||  user_privilege.includes("update_breaktool_account")) && (
                               <button
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal"

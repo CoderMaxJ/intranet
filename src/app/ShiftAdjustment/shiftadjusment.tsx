@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 
 
 
+
 interface RequestDetails {
   requestid: number;
   empno: number;
@@ -44,7 +45,8 @@ export default function ShiftAdjustment() {
   const [totalData, setTotalData] = useState();
   const [activeTab, setActiveTab] = useState("pending");
   const [selectedData, setSelectedData] = useState<RequestDetails[]>([]);
-
+  
+  const router = useRouter();
   useEffect(() => {
     if (activeTab === "pending") {
       fetchShiftAdjustmentData();
@@ -93,7 +95,6 @@ export default function ShiftAdjustment() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("data", data.num_pages)
         setData(data.data);
         setTotalPages(data.num_pages);
         setTotalData(data.total);
@@ -125,7 +126,7 @@ export default function ShiftAdjustment() {
         <Dashboard />
       </div>
       <div className="shiftadjustment-container flex-grow-1">
-        <Header title="ADJUSTMENT"/>
+        <Header title="ADJUSTMENT" currentPage=""/>
         <div className="shift-background p-4 px-4">
           <div className="d-flex gap-5">
             <div className="d-flex gap-5">
@@ -148,7 +149,7 @@ export default function ShiftAdjustment() {
                 className={`form-label form-label--shiftadjustment-header ${activeTab === "rejected" ? "active" : ""}`}
                 onClick={() => setActiveTab("rejected")}
               >
-                Rejected
+                Declined
               </button>
             </div>
           </div>

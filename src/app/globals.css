@@ -2995,6 +2995,7 @@ table {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #ffffff;
+  color: black;
 }
 
 .form-controll input {
@@ -3049,6 +3050,7 @@ table {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #ffffff;
+  color: black;
 }
 
 .form-controll-timeout1 {

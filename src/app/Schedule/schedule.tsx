@@ -94,7 +94,6 @@ export default function CreateUD() {
         );
         if (response.ok) {
             const data = await response.json();
-            console.log(data.data[0])
             setEmployees(data.data);
             setTotalPages(data.num_pages);
             setTotal(data.total);
@@ -270,7 +269,7 @@ export default function CreateUD() {
                 <Dashboard />
             </div>
             <div className="main-divv">
-                <Header title="MANAGE SCHEDULE" />
+                <Header title="MANAGE SCHEDULE" currentPage="" />
                 <div className="px-4">
                     <div className="manageemployee-division">
                         <div>

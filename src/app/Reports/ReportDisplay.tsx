@@ -135,8 +135,6 @@ export default function Daterange() {
     };
     const handleView = async (e: any) => {
         e.preventDefault();
-        console.log("start", start, "end", end);
-
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");

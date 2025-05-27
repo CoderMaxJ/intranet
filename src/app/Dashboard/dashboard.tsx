@@ -74,14 +74,6 @@ export default function Dashboard() {
         }
     };
 
-
-    useEffect(() => {
-        const savedImage = localStorage.getItem("profileImage");
-        if (savedImage) {
-            setProfile(savedImage);
-        }
-    }, []);
-
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
         if (!storedToken) {
@@ -99,8 +91,6 @@ export default function Dashboard() {
             array_privilege.forEach((data) => {
                 user_privilege.push(data);
             })
-
-            console.log(user_privilege);
         }
     }, [user_privilege])
 
