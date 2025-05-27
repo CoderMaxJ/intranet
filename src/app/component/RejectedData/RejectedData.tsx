@@ -75,8 +75,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
     const [refreshFlag, setRefreshFlag] = useState(false);
     const [activeTab, setActiveTab] = useState("pending"); // or "rejected"
 
-
-    console.log(data);
     useEffect(() => {
         if (buildData) {
             setCombinedData({
@@ -112,7 +110,7 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
         setRefreshFlag(prev => !prev);
         // open offcanvas logic
     };
-    
+
     const handleDecline = async () => {
         const token = localStorage.getItem("token");
 
@@ -250,6 +248,10 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Request ID</p>
                                 <p className="drawer-label">{data?.requestid}</p>
+                            </div>
+                            <div className="d-flex justify-content-between">
+                                <p className="drawer-label">Status</p>
+                                <p className="drawer-label" style={{color: data?.status  === 0 ? "red" : ""}}>{data?.status === 1 ? "Approved" : "Declined"}</p>
                             </div>
                         </div>
                     </div>

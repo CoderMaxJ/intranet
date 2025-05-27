@@ -71,8 +71,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
   const [declineReason, setDeclineReason] = useState("");
   const [status, setStatus] = useState(0);
   const [accounts, setAccounts] = useState<Account[]>([]);
-  console.log(data);
-  
+
   useEffect(() => {
     if (buildData) {
       setCombinedData({
@@ -120,12 +119,12 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
     } if (onDecline && data) {
       onDecline({
         ...data,
-        reason: declineReason,  
+        reason: declineReason,
         status: 2,
         declined_at: new Date().toISOString(),
         aprroved_at: "",
       });
-    } 
+    }
   };
 
   const getAccounts = async () => {
@@ -156,7 +155,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
           record: value
         };
       }
- 
+
       else if (section === "break1" || section === "break2" || section === "lunch") {
         updated[section] = {
           ...updated[section],
@@ -182,7 +181,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
       body: JSON.stringify(payload),
     })
     if (response.status === 200) {
-    } 
+    }
   }
   const handleApply = () => {
     const updatedStatus = 1;
@@ -212,7 +211,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
         tabIndex={-1}
         id="approveddrawer"
         aria-labelledby="approvedRightLabel"
-         style={{width:'465px'}}
+        style={{ width: '465px' }}
       >
         <div className="offcanvas-header">
           <h5 className="offcanvas-title fw-bold text-light" id="ShiftRightLabel">
@@ -244,6 +243,10 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                 <p className="drawer-label">Request ID</p>
                 <p className="drawer-label">{data?.requestid}</p>
               </div>
+              <div className="d-flex justify-content-between">
+                <p className="drawer-label">Status</p>
+                <p className="drawer-label" style={{color: data?.status === 1 ? "green" : "" }}>{data?.status === 1 ? "Approved" : "Declined"}</p>
+              </div>
             </div>
           </div>
           <hr />
@@ -257,7 +260,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
           <div className="justify-content-between">
             <div className="d-flex justify-content-around mb-2 w-100">
               <div>
-                <label className="drawer-label--attendance col-4 justify-content-start" style={{transform:'translateX(-6px)'}}>Attendance</label>
+                <label className="drawer-label--attendance col-4 justify-content-start" style={{ transform: 'translateX(-6px)' }}>Attendance</label>
               </div>
               <div>
                 <label className="drawer-labell col-4 justify-content-start">Requested Time</label>
@@ -485,7 +488,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
               </div>
             )}
           </div>
-
           <div className="mb-3">
             <label className="drawer-label fs-5 mt-1">Reason</label>
             <p className="reason">{data?.reason}</p>

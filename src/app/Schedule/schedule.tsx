@@ -94,7 +94,6 @@ export default function CreateUD() {
         );
         if (response.ok) {
             const data = await response.json();
-            console.log(data.data[0])
             setEmployees(data.data);
             setTotalPages(data.num_pages);
             setTotal(data.total);

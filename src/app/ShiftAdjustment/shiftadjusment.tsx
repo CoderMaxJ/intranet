@@ -93,7 +93,6 @@ export default function ShiftAdjustment() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("data", data.num_pages)
         setData(data.data);
         setTotalPages(data.num_pages);
         setTotalData(data.total);
