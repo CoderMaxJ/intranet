@@ -6,7 +6,6 @@ import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 
-
 export default function MainDashboard() {
   const [pageTitle, setPageTitle] = useState("workforce monitoring")
 
