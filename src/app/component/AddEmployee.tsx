@@ -259,6 +259,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
       } else {
         errorToast("Unable to create employee!")
+        
       }
     } catch (e) {
       console.error(e);
@@ -342,6 +343,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   return (
     <div>
+      <ToastContainer/>
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
 
