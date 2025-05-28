@@ -3,7 +3,7 @@ import BreakDataTable from "../data/Breaks/break";
 import LogsDataTable from "../data/Logs/logs";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import { useState } from "react";
 
 export default function MainDashboard() {
