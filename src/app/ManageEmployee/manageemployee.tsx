@@ -478,7 +478,6 @@ export default function CreateUD() {
             )}
           </div>
         </div>
-        <ToastContainer />
         <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">

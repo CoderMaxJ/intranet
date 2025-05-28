@@ -41,7 +41,6 @@ const  logout = async ()=>{
   });
 return (
     <div>    
-        <ToastContainer/>
         <div
         className="modal fade"
        id="logoutModal"  aria-labelledby="exampleModalLabel" aria-hidden="true"
