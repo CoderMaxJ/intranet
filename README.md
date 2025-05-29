@@ -1,5 +1,5 @@
 # Workforce Monitoring
-A system for managing employee activity—track daily logs, monitor breaks, handle shift adjustment requests, assign account managers, add employees, and generate reports.
+A system for managing employee activity track daily logs, monitor breaks, handle shift adjustment requests, assign account managers, add employees, and generate reports.
 ## Features
 - View and track daily logs
 - Monitor and record employee breaks
@@ -13,11 +13,14 @@ A system for managing employee activity—track daily logs, monitor breaks, hand
    git clone https://repo.ecomia.com/johnsensopeta555/intranet-monitoring.git
 # Navigate to the project folder
 cd your-repo
-# Install dependencies
-npm install
-#Run the development server
-npm run dev
-### Prerequisites
--Node.js , MySQL, Docker
-## License
-This project is licensed under the MIT License.
+Environment Settings
+
+nano .env
+
+NEXT_PUBLIC_BACKEND=WEB_SERVER_ENDPOINT
+NEXT_PUBLIC_SECRET_KEY=ANY_GENERATED_UNIQUE_COMBINATION_OF_KEYS
+
+
+##Testing
+docker-compose build
+docker compose up
