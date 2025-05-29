@@ -32,7 +32,8 @@ interface Information {
   role_id: number;
   isdayshift: number;
   status: number;
-  schedule: Schedule
+  schedule: Schedule,
+  acctname:string;
 }
 
 interface Account {
@@ -63,10 +64,10 @@ export default function CreateUD() {
 
   useEffect(() => {
     GetEmployee(currentPage);
-    setTimeout(() => {
-      setListener(false);
-    }, 2000);
-  }, [listener]);
+    // setTimeout(() => {
+    //   // setListener(false);
+    // }, 2000);
+  }, []);
 
   async function GetEmployee(page: number) {
     const token = localStorage.getItem("token");
@@ -83,6 +84,7 @@ export default function CreateUD() {
     );
     if (response.ok) {
       const data = await response.json();
+      console.log(data.data);
       setEmployees(data.data);
       setTotalPages(data.num_pages);
       setTotal(data.total);
@@ -93,33 +95,33 @@ export default function CreateUD() {
       }
     }
   }
-  const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
-  async function getAccount() {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`
-      }
-    })
-    if (!response.ok) {
-      console.log("error")
-    }
-    const data = await response.json();
-    setAccount(data.data)
-  }
+  // const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
+  // async function getAccount() {
+  //   const response = await fetch(url, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //       Authorization: `Bearer ${Decryptor(token || "")}`
+  //     }
+  //   })
+  //   if (!response.ok) {
+  //     console.log("error")
+  //   }
+  //   const data = await response.json();
+  //   setAccount(data.data)
+  // }
 
-  useEffect(() => {
-    getAccount();
-  }, [])
+  // useEffect(() => {
+  //   getAccount();
+  // }, [])
 
-  const getAccountName = (acctid: number): string => {
-    if (acctid == undefined || acctid == null) {
-      return '';
-    }
-    const accountInfo = account.find(acc => acc.acctid === acctid);
-    return accountInfo ? accountInfo.acctname : "Unassigned"; // Return "N/A" if no account is found
-  };
+  // const getAccountName = (acctid: number): string => {
+  //   if (acctid == undefined || acctid == null) {
+  //     return '';
+  //   }
+  //   const accountInfo = account.find(acc => acc.acctid === acctid);
+  //   return accountInfo ? accountInfo.acctname : "Unassigned"; // Return "N/A" if no account is found
+  // };
 
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
@@ -404,7 +406,7 @@ export default function CreateUD() {
                         {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
                         {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
                         {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
-                        {user_privilege.includes("manage_users") && (<td>{getAccountName(info.acctid)}</td>)}
+                        {user_privilege.includes("manage_users") && (<td>{info.acctname}</td>)}
                         <td>{info.position}</td>
                         <td>
                           <div style={{ display: "flex", gap: "8px"}}>

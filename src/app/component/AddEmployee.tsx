@@ -215,9 +215,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   };
 
   useEffect(() => {
-    fetchRoles();
-    fetchAccounts();
-    fetchPrivileges();
+    // fetchRoles();
+    // fetchAccounts();
+    // fetchPrivileges();
   }, []);
 
   const successToast = (msg: string) => toast.success(msg, {
