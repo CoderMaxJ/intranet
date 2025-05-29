@@ -9,8 +9,8 @@ A system for managing employee activity track daily logs, monitor breaks, handle
 - Generate reports
 ## Getting Started
 Clone the repository:
-git clone ssh://repo.ecomia.com/johnsensopeta555/intranet-monitoring.git
-Navigate to the project folder
+git clone ssh://repo.ecomia.com/johnsensopeta555/intranet-monitoring.git <br>
+Navigate to the project folder <br>
 cd your-repo
 
 ## Environment Settings
