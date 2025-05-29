@@ -8,19 +8,20 @@ A system for managing employee activity track daily logs, monitor breaks, handle
 - Create and manage employee profiles
 - Generate reports
 ## Getting Started
-1. Clone the repository:
-   ```bash
-   git clone https://repo.ecomia.com/johnsensopeta555/intranet-monitoring.git
-# Navigate to the project folder
+Clone the repository:
+git clone ssh://repo.ecomia.com/johnsensopeta555/intranet-monitoring.git
+Navigate to the project folder
 cd your-repo
-Environment Settings
 
+## Environment Settings
+
+Create or edit .env file
 nano .env
 
-NEXT_PUBLIC_BACKEND=WEB_SERVER_ENDPOINT
+NEXT_PUBLIC_BACKEND=WEB_SERVER_ENDPOINT<br>
 NEXT_PUBLIC_SECRET_KEY=ANY_GENERATED_UNIQUE_COMBINATION_OF_KEYS
 
 
-##Testing
-docker-compose build
+## Testing
+docker-compose build <br>
 docker compose up
