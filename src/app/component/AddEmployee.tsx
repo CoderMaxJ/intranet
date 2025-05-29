@@ -59,21 +59,21 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
-  const [isEditable,setEditable]=useState(false);
+  const [isEditable, setEditable] = useState(false);
 
 
   let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
 
-  
-   const array_privilege =user_priviledge.split(",")
-   
-  useEffect(()=>{
-    if(array_privilege.includes("manage_users")){
+
+  const array_privilege = user_priviledge.split(",")
+
+  useEffect(() => {
+    if (array_privilege.includes("manage_users")) {
       setEditable(true);
     }
-  },[])
+  }, [])
 
-  
+
   useEffect(() => {
     if (empData) {
       setFormData({
@@ -259,7 +259,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
       } else {
         errorToast("Unable to create employee!")
-        
+
       }
     } catch (e) {
       console.error(e);
@@ -343,7 +343,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   return (
     <div>
-      <ToastContainer/>
+      <ToastContainer />
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
 
@@ -355,7 +355,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close" 
+              aria-label="Close"
               onClick={clearInputs}
             >
             </button>
@@ -366,7 +366,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="fname" className="form-label">First Name <span className="text-danger">*</span></label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 required type="text" name="fname" className="form-control" id="fname"
                 value={formData.fname} onChange={handleInputChange} placeholder="Juan"
               />
@@ -374,7 +374,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="mname" className="form-label">Middle Name </label>
               <input
-               disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 type="text" name="mname" className="form-control" id="mname"
                 value={formData.mname} onChange={handleInputChange} placeholder="Montenegro"
               />
@@ -382,7 +382,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="lname" className="form-label">Last Name <span className="text-danger">*</span></label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 required type="text" name="lname" className="form-control" id="lname"
                 value={formData.lname} onChange={handleInputChange} placeholder="Dela Cruz"
               />
@@ -394,7 +394,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 required type="date" name="dateofbirth" className="form-control date-with-icon" id="dateofbirth"
                 value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
               />
@@ -402,7 +402,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
               <select
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 required name="maritalstatus" className="form-select" id="maritalstatus"
                 value={formData.maritalstatus} onChange={handleInputChange}
               >
@@ -414,7 +414,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="gender" className="form-label">Gender <span className="text-danger">*</span></label>
               <select
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 required name="gender" className="form-select" id="gender"
                 value={formData.gender} onChange={handleInputChange}
               >
@@ -430,22 +430,57 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             <div className=" col-md-4 add-rows">
               <label htmlFor="contactno" className="form-label">Contact No</label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 type="number" name="contactno" className="form-control" id="contactno"
                 value={formData.contactno} onChange={handleInputChange} placeholder="+63 92 6645 9723"
               />
             </div>
             <div className=" col-md-4 add-rows">
-              <label htmlFor="address" className="form-label">Address <span className="text-danger">*</span></label>
+              <label htmlFor="address" className="form-label">Address <span className="text-danger"></span></label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
-                required type="text" name="address" className="form-control" id="address"
+                disabled={!isEditable && mode == "edit" ? true : false}
+                type="text" name="address" className="form-control" id="address"
                 value={formData.address} onChange={handleInputChange} placeholder="Zapatera, Cebu City"
               />
             </div>
             <div className=" col-md-4 add-rows">
               <label htmlFor="acctid" className="form-label">Account <span className="text-danger">*</span></label>
-              <select
+              <div className="position-relative">
+                <input
+                  type="text"
+                  name="acctname"
+                  className="form-control"
+                  placeholder="Search account..."
+                  value={selectedAccount}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    SetSelectedAccount(val);
+                  }}
+                />
+                {selectedAccount && (
+                  <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                    {accounts
+                      .filter(acc =>
+                        acc.acctname.toLowerCase().includes(selectedAccount.toLowerCase())
+                      )
+                      .map(acc => (
+                        <li
+                          key={acc.acctid}
+                          className="list-group-item list-group-item-action"
+                          onClick={() => {
+                            SetSelectedAccount(acc.acctname);
+                        
+                          }}
+                          style={{ cursor: "pointer" }}
+                        >
+                          {acc.acctname}
+                        </li>
+                      ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* <select
                 disabled={!isEditable && mode == "edit" ? true:false }
                 required name="acctid" className="form-select" id="acctid"
                 value={formData.acctid} onChange={handleInputChange}
@@ -454,7 +489,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 {accounts.map((account, index) => (
                   <option key={index} value={account.acctid}>{account.acctname}</option>
                 ))}
-              </select>
+              </select> */}
             </div>
           </div>
 
@@ -462,7 +497,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           <div className="row px-4">
             <div className=" col-md-4 add-rows">
               <label htmlFor="position" className="form-label">Position <span className="text-danger">*</span></label>
-              <select
+              <input type="text" className="form-control" 
+              />
+
+              {/* <select
                 disabled={!isEditable && mode == "edit" ? true:false }
                 required name="position" className="form-select" id="position"
                 value={formData.position} onChange={handleInputChange}
@@ -471,7 +509,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 {roles.map((role, index) => (
                   <option key={index} value={role}>{role}</option>
                 ))}
-              </select>
+              </select> */}
             </div>
 
             <div className=" col-md-4 add-rows">
@@ -479,7 +517,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <>
                   <label className="form-label">Status <span className="text-danger">*</span></label>
                   <select
-                    disabled={!isEditable && mode == "edit" ? true:false }
+                    disabled={!isEditable && mode == "edit" ? true : false}
                     className="form-select" name="status"
                     value={formData.status === 1 ? 1 : 0}
                     onChange={handleInputChange}
@@ -505,7 +543,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <>
                   <label className="form-label">Assign Privileges <span className="text-danger">*</span></label>
                   <select
-                    disabled={!isEditable && mode == "edit" ? true:false }
+                    disabled={!isEditable && mode == "edit" ? true : false}
                     name="role_id" className="form-select"
                     value={formData.role_id} onChange={handleInputChange}
                   >
@@ -539,9 +577,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   value={formData.schedule.shiftstart} onChange={handleInputChange}
                   disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
                   step={1}
-               
+
                 />
-                
+
               </div>
               <div className=" col-md-4 add-rows">
                 <label htmlFor="shiftend" className="form-label form-label-timeout1 mb-1">Time Out</label>
@@ -566,21 +604,21 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               </div>
             </div>
           )}
-           <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
-          <button
-            type="button"
-            data-bs-dismiss="modal"
-            className="btn btn-danger"
-            onClick={clearInputs}
-          >
-            <span className="view">Cancel</span>
-          </button>
-          <button type="submit" className="btn btn-primary view">
-            {mode === "edit" ? "Update" : "Create"}
-          </button>
-        </div>
+          <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
+            <button
+              type="button"
+              data-bs-dismiss="modal"
+              className="btn btn-danger"
+              onClick={clearInputs}
+            >
+              <span className="view">Cancel</span>
+            </button>
+            <button type="submit" className="btn btn-primary view">
+              {mode === "edit" ? "Update" : "Create"}
+            </button>
+          </div>
         </form >
-       
+
       </div >
     </div>
   );
