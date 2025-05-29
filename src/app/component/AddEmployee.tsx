@@ -44,7 +44,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     lname: empData.lname || "",
     position: empData.position || "",
     dateofbirth: empData.dateofbirth || "",
-    maritalstatus: empData.maritalstatus || "",
+    maritalstatus: empData.maritalstatus || "None",
     gender: empData.gender || "",
     contactno: empData.contactno || "",
     address: empData.address || "",
@@ -83,7 +83,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         lname: empData.lname || "",
         position: empData.position || "",
         dateofbirth: empData.dateofbirth || "",
-        maritalstatus: empData.maritalstatus || "",
+        maritalstatus: empData.maritalstatus || "None",
         gender: empData.gender || "",
         contactno: empData.contactno || "",
         address: empData.address || "",
@@ -406,13 +406,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 required name="maritalstatus" className="form-select" id="maritalstatus"
                 value={formData.maritalstatus} onChange={handleInputChange}
               >
-                <option value="">-- SELECT --</option>
+                <option value="None">-- SELECT --</option>
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
-                <option value="Separated">Separated</option>
-                <option value="Widowed">Widowed</option>
-                <option value="Divorced">Divorced</option>
-                <option value="Other">Other</option>
               </select>
             </div>
             <div className=" col-md-4 add-rows">
