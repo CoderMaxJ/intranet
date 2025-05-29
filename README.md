@@ -15,7 +15,7 @@ cd your-repo
 
 ## Environment Settings
 
-Create or edit .env file
+Create or edit .env file <br>
 nano .env
 
 NEXT_PUBLIC_BACKEND=WEB_SERVER_ENDPOINT<br>
