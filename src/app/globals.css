@@ -2213,6 +2213,7 @@ table {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 40vh;
 }
 
 .dashboard svg {
@@ -3117,6 +3118,24 @@ table {
 
 .has-calendar-icon {
   position: relative;
+}
+
+.date-with-icon {
+  position: relative;
+}
+
+.date-with-icon::before {
+  content: "\1F4C5"; 
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1rem;
+}
+
+.date-with-icon {
+  padding-left: 2rem; /* Makes room for the emoji */
 }
 
 .has-calendar-icon input[type="date"]::before {

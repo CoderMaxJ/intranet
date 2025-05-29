@@ -395,7 +395,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
                 disabled={!isEditable && mode == "edit" ? true:false }
-                required type="date" name="dateofbirth" className="form-control" id="dateofbirth"
+                required type="date" name="dateofbirth" className="form-control date-with-icon" id="dateofbirth"
                 value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
               />
             </div>
