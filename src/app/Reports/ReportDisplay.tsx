@@ -6,6 +6,9 @@ import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 interface BreaksReport {
     name: string;
@@ -154,7 +157,7 @@ export default function Daterange() {
             }
             const result = await response.json();
             if (!result.data.length) {
-                alert("No data available for the selected date range.");
+                toast.info("No data available for the selected date range.");
                 return;
             }
             if (start != "" || end != "") {
@@ -163,7 +166,7 @@ export default function Daterange() {
                 setData(originalData);
             }
         } catch (e) {
-            alert("No data found in this given date range!")
+            toast.error("No data found in this given date range!")
         }
     };
     const token = localStorage.getItem("token");
@@ -187,111 +190,112 @@ export default function Daterange() {
                 throw new Error("Failed to fetch data");
             }
             const result = await response.json();
-            if (!result.data.length) {
-                alert("No data available for the selected date range.");
-                return;
-            }
+            // if (!result.data.length) {
+            //     toast.info("No data available for the selected date range.");
+            //     return;
+            // }
+
             if (response.status == 200) {
                 setData(result.data);
                 setChecker(false);
-            }else if(response.status == 401){
-                alert("Session expired, please login again.");
+            } else if (response.status == 401) {
+                toast.error("Session expired, please login again.");
                 localStorage.clear();
                 router.push("/");
-                
+
 
             }
         } catch (e) {
             setError("An error occurred while fetching data.");
-            if(!token){
+            if (!token) {
                 router.push("/");
             }
-            
+
         }
     };
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
+            <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnHover />
             <div className="d-flex" >
-                <Dashboard/>
+                <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
-                {data.length > 0 ? (
-                    <div className="flex-fill reports-division">
-                        <div className="reportheader"><Header title="DAILY REPORTS" /></div>
-                        <div className="px-4">
-                            <div className="background-report">
-                                <div className="px-4 pt-4" style={{ display: 'flex' }}>
-                                    <header style={{
-                                        backgroundImage: "url('/img/Breaktool.png')",
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        backgroundRepeat: 'no-repeat',
-                                        position: 'sticky',
-                                        paddingTop: '10px',
-                                        padding: '15px',
-                                        color: 'white',
-                                        width: '100%'
-                                    }}>
-                                        {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
-                                        <form onSubmit={handleView}>
-                                            <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
-                                                <div className="report-input">
+                <div className="flex-fill reports-division">
+                    <div className="reportheader"><Header title="DAILY REPORTS" /></div>
+                    <div className="px-4">
+                        <div className="background-report">
+                            <div className="px-4 pt-4" style={{ display: 'flex' }}>
+                                <header style={{
+                                    backgroundImage: "url('/img/Breaktool.png')",
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                    position: 'sticky',
+                                    paddingTop: '10px',
+                                    padding: '15px',
+                                    color: 'white',
+                                    width: '100%'
+                                }}>
+                                    {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
+                                    <form onSubmit={handleView}>
+                                        <div className="d-flex flex-wrap justify-content-center align-items-center gap-3 text-center justify-content-between">
+                                            <div className="report-input">
+                                                <input
+                                                    className="form-control form-control--searchreport"
+                                                    id="search-employee"
+                                                    type="text"
+                                                    placeholder="Search..."
+                                                    value={searchTerm}
+                                                    onChange={handleSearch}
+
+                                                />
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="20"
+                                                    height="20"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
+                                            </div>
+                                            <div className="d-flex flex-wrap flex-lg-nowrap align-items-center justify-content-lg-end gap-3">
+
+                                                <div className="d-flex align-items-center input-group has-calendar-icon" style={{ maxWidth: '220px' }}>
+                                                    <span className="input-group-text">From</span>
+
                                                     <input
-                                                        className="form-control form-control--searchreport"
-                                                        id="search-employee"
-                                                        type="text"
-                                                        placeholder="Search..."
-                                                        value={searchTerm}
-                                                        onChange={handleSearch}
-
+                                                        id="id-start"
+                                                        type="date"
+                                                        className="form-control"
+                                                        required
+                                                        onChange={(e) => setStart(e.target.value)}
+                                                        value={start}
+                                                        style={{ color: '#000000' }}
                                                     />
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="20"
-                                                        height="20"
-                                                        fill="currentColor"
-                                                        viewBox="0 0 16 16"
-                                                    >
-                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                                    </svg>
                                                 </div>
-                                                <div className="d-flex flex-wrap flex-lg-nowrap align-items-center justify-content-lg-end gap-3">
 
-                                                    <div className="d-flex align-items-center input-group has-calendar-icon" style={{ maxWidth: '220px'}}>
-                                                        <span className="input-group-text">From</span>
-                                                        
-                                                        <input
-                                                            id="id-start"
-                                                            type="date"
-                                                            className="form-control"
-                                                            required
-                                                            onChange={(e) => setStart(e.target.value)}
-                                                            value={start}
-                                                            style={{ color: '#000000' }}
-                                                        />
-                                                    </div>
-
-                                                    <div className="d-flex align-items-center input-group has-calendar-icon" style={{ maxWidth: '220px'}}>
-                                                      <span className="input-group-text">To</span>
-                                                        <input
-                                                            id="id-end"
-                                                            type="date"
-                                                            className="form-control"
-                                                            required
-                                                            onChange={(e) => setEnd(e.target.value)}
-                                                            value={end}
-                                                            style={{ color: '#000000' }}
-                                                        />
-                                                    </div>
-                                                    <div className="d-flex align-items-center">
-                                                        <button
-                                                            type="submit"
-                                                            className="daterange-button"
-                                                        >
-                                                            View
-                                                        </button>
-                                                    </div>
-                                                    <div className="d-flex align-items-center">
+                                                <div className="d-flex align-items-center input-group has-calendar-icon" style={{ maxWidth: '220px' }}>
+                                                    <span className="input-group-text">To</span>
+                                                    <input
+                                                        id="id-end"
+                                                        type="date"
+                                                        className="form-control"
+                                                        required
+                                                        onChange={(e) => setEnd(e.target.value)}
+                                                        value={end}
+                                                        style={{ color: '#000000' }}
+                                                    />
+                                                </div>
+                                                <div className="d-flex align-items-center">
+                                                    <button
+                                                        type="submit"
+                                                        className="daterange-button"
+                                                    >
+                                                        View
+                                                    </button>
+                                                </div>
+                                                <div className="d-flex align-items-center">
                                                     <button
                                                         type="button"
                                                         className="download"
@@ -303,35 +307,37 @@ export default function Daterange() {
                                                         </svg>
                                                         <label htmlFor="downloaf" className="align-items-center">Download</label>
                                                     </button>
-                                                    </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </header>
+                                        </div>
+                                    </form>
+                                </header>
 
-                                </div>
-                                <div className="mx-4 table-responsive reports-container">
-                                    <table className="tabreport table table-striped table-bordered">
-                                        <thead>
-                                            <tr className="report-header">
-                                                <th>Name</th>
-                                                <th>Shift Date</th>
-                                                <th>Login</th>
-                                                <th>1st Break In</th>
-                                                <th>Break Out</th>
-                                                <th>Over Break</th>
-                                                <th>Lunch In</th>
-                                                <th>Lunch Out</th>
-                                                <th>Over Break</th>
-                                                <th>2nd Break In</th>
-                                                <th>Break Out</th>
-                                                <th>Over Break</th>
-                                                <th>Personal Break</th>
-                                                <th>Logout</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="table-data">
-                                            {data
+                            </div>
+                            <div className="mx-4 table-responsive reports-container">
+                                <table className="tabreport table table-striped table-bordered">
+                                    <thead>
+                                        <tr className="report-header">
+                                            <th>Name</th>
+                                            <th>Shift Date</th>
+                                            <th>Login</th>
+                                            <th>1st Break In</th>
+                                            <th>Break Out</th>
+                                            <th>Over Break</th>
+                                            <th>Lunch In</th>
+                                            <th>Lunch Out</th>
+                                            <th>Over Break</th>
+                                            <th>2nd Break In</th>
+                                            <th>Break Out</th>
+                                            <th>Over Break</th>
+                                            <th>Personal Break</th>
+                                            <th>Logout</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="table-data">
+
+                                        {data.length > 0 &&
+                                            data
                                                 .filter((report) => {
                                                     if (!searchTerm) return true;
                                                     return report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
@@ -355,15 +361,14 @@ export default function Daterange() {
                                                         <td>{report.logoff}</td>
                                                     </tr>
                                                 ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                ) : (
-                    <p></p>
-                )}
+                </div>
+                )
             </div>
         </div>
     );

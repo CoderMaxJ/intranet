@@ -359,7 +359,7 @@ export default function CreateUD() {
                 data-bs-backdrop="static"
                 data-bs-keyboard="false"
               >
-                <div className="modal-dialog modal-xl" role="document">
+                <div className="modal-dialog modal-xl addemployee-modalsize" role="document">
                   <div className="modal-content">
                     <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
                   </div>

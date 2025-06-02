@@ -55,11 +55,16 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
+  const [positions, setPositions] = useState<{ position: string }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
+  const [showList, setShowList] = useState(false);
+  const [showAccountList, setShowAccountList] = useState(false); // For account dropdown
+  const [showPositionList, setShowPositionList] = useState(false)
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
   const [isEditable, setEditable] = useState(false);
+  const [selectedPosition, setSelectedPosition] = useState("");
 
 
   let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
@@ -164,14 +169,16 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       console.error(e)
     }
   }
-
   const fetchRoles = async () => {
-
     const cachedRoles = localStorage.getItem("roles");
-    if (cachedRoles) {
+    const cachedPositions = localStorage.getItem("positions");
+
+    if (cachedRoles && cachedPositions) {
       setRoles(JSON.parse(cachedRoles));
+      setPositions(JSON.parse(cachedPositions));
       return;
     }
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/roles/list/`, {
         method: "GET",
@@ -180,15 +187,26 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           Authorization: `Bearer ${Decryptor(token || "")}`,
         },
       });
+
       if (response.status === 200) {
         const data = await response.json();
         setRoles(data.data);
         localStorage.setItem("roles", JSON.stringify(data.data));
+
+        const uniquePositionNames = Array.from(
+          new Set<string>(data.data.map((role: { name: string }) => role.name))
+        );
+        const uniquePositions = uniquePositionNames.map((name) => ({ position: name }));
+
+        setPositions(uniquePositions);
+        localStorage.setItem("positions", JSON.stringify(uniquePositions));
       }
+
     } catch (e) {
       console.error(e);
     }
   };
+
 
   const fetchAccounts = async () => {
     const cachedRoles = localStorage.getItem("accounts");
@@ -363,7 +381,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 1 */}
           <div className="row px-4">
-            <div className=" col-md-4 add-rows">
+            <h6>Personal Information</h6>
+            <div className=" col-md-4 add-rows mt-2 ">
               <label htmlFor="fname" className="form-label">First Name <span className="text-danger">*</span></label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
@@ -371,7 +390,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 value={formData.fname} onChange={handleInputChange} placeholder="Juan"
               />
             </div>
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="mname" className="form-label">Middle Name </label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
@@ -379,7 +398,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 value={formData.mname} onChange={handleInputChange} placeholder="Montenegro"
               />
             </div>
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="lname" className="form-label">Last Name <span className="text-danger">*</span></label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
@@ -391,7 +410,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 2 */}
           <div className="row px-4 first-row">
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
@@ -399,19 +418,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
               />
             </div>
-            <div className=" col-md-4 add-rows">
-              <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
-              <select
-                disabled={!isEditable && mode == "edit" ? true : false}
-                required name="maritalstatus" className="form-select" id="maritalstatus"
-                value={formData.maritalstatus} onChange={handleInputChange}
-              >
-                <option value="None">-- SELECT --</option>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-              </select>
-            </div>
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="gender" className="form-label">Gender <span className="text-danger">*</span></label>
               <select
                 disabled={!isEditable && mode == "edit" ? true : false}
@@ -423,11 +430,25 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <option value="Female">Female</option>
               </select>
             </div>
+            <div className=" col-md-4 add-rows mt-2">
+              <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
+              <select
+                disabled={!isEditable && mode == "edit" ? true : false}
+                required name="maritalstatus" className="form-select" id="maritalstatus"
+                value={formData.maritalstatus} onChange={handleInputChange}
+              >
+                <option value="None">-- SELECT --</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+              </select>
+            </div>
+
           </div>
 
           {/* Row 3 */}
           <div className="row px-4">
-            <div className=" col-md-4 add-rows">
+            <h6>Personal Information</h6>
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="contactno" className="form-label">Contact No</label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
@@ -435,7 +456,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 value={formData.contactno} onChange={handleInputChange} placeholder="+63 92 6645 9723"
               />
             </div>
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-8 add-rows mt-2">
               <label htmlFor="address" className="form-label">Address <span className="text-danger"></span></label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
@@ -443,167 +464,224 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 value={formData.address} onChange={handleInputChange} placeholder="Zapatera, Cebu City"
               />
             </div>
-            <div className=" col-md-4 add-rows">
-              <label htmlFor="acctid" className="form-label">Account <span className="text-danger">*</span></label>
-              <div className="position-relative">
-                <input
-                  type="text"
-                  name="acctname"
-                  className="form-control"
-                  placeholder="Search account..."
-                  value={selectedAccount}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    SetSelectedAccount(val);
-                  }}
-                />
-                {selectedAccount && (
-                  <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
-                    {accounts
-                      .filter(acc =>
-                        acc.acctname.toLowerCase().includes(selectedAccount.toLowerCase())
-                      )
-                      .map(acc => (
-                        <li
-                          key={acc.acctid}
-                          className="list-group-item list-group-item-action"
-                          onClick={() => {
-                            SetSelectedAccount(acc.acctname);
-                        
-                          }}
-                          style={{ cursor: "pointer" }}
-                        >
-                          {acc.acctname}
-                        </li>
-                      ))}
-                  </ul>
-                )}
-              </div>
-
-              {/* <select
-                disabled={!isEditable && mode == "edit" ? true:false }
-                required name="acctid" className="form-select" id="acctid"
-                value={formData.acctid} onChange={handleInputChange}
-              >
-                <option value="">Select Account</option>
-                {accounts.map((account, index) => (
-                  <option key={index} value={account.acctid}>{account.acctname}</option>
-                ))}
-              </select> */}
-            </div>
           </div>
 
           {/* Row 4 */}
-          <div className="row px-4">
-            <div className=" col-md-4 add-rows">
+          <div className="row px-4 d-flex">
+            <h6>Account Details</h6>
+            <div className=" col-md-4 add-rows mt-2 position-relative">
               <label htmlFor="position" className="form-label">Position <span className="text-danger">*</span></label>
-              <input type="text" className="form-control" 
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search Position"
+                value={selectedPosition}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setSelectedPosition(val);
+                  setShowPositionList(true);
+                  setShowAccountList(false);
+                }}
               />
-
-              {/* <select
-                disabled={!isEditable && mode == "edit" ? true:false }
-                required name="position" className="form-select" id="position"
-                value={formData.position} onChange={handleInputChange}
-              >
-                <option value="">Select a position</option>
-                {roles.map((role, index) => (
-                  <option key={index} value={role}>{role}</option>
-                ))}
-              </select> */}
-            </div>
-
-            <div className=" col-md-4 add-rows">
-              {mode === "edit" ? (
-                <>
-                  <label className="form-label">Status <span className="text-danger">*</span></label>
-                  <select
-                    disabled={!isEditable && mode == "edit" ? true : false}
-                    className="form-select" name="status"
-                    value={formData.status === 1 ? 1 : 0}
-                    onChange={handleInputChange}
-                  >
-                    <option value="1">Active</option>
-                    <option value="0">Inactive</option>
-                  </select>
-                </>
-              ) : (
-                <>
-                  <label htmlFor="shiftstart" className="form-label">Time In <span className="text-danger">*</span></label>
-                  <input
-                    required type="time" name="shiftstart" className="form-controll" id="shiftstart"
-                    autoComplete="off" inputMode="numeric"
-                    value={formData.schedule.shiftstart} onChange={handleInputChange}
-                  />
-                </>
-              )}
-            </div>
-
-            <div className=" col-md-4 add-rows">
-              {mode === "edit" ? (
-                <>
-                  <label className="form-label">Assign Privileges <span className="text-danger">*</span></label>
-                  <select
-                    disabled={!isEditable && mode == "edit" ? true : false}
-                    name="role_id" className="form-select"
-                    value={formData.role_id} onChange={handleInputChange}
-                  >
-                    <option value="">Select privilege</option>
-                    {privileges.map((role, index) => (
-                      <option key={index} value={role.id}>{role.name}</option>
+              {showPositionList && selectedPosition && (
+                <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  {positions
+                    .filter(
+                      (postn) =>
+                        typeof postn.position === "string" &&
+                        postn.position.toLowerCase().includes(selectedPosition.toLowerCase())
+                    )
+                    .map((postn, index) => (
+                      <li
+                        key={index}
+                        className="list-group-item list-group-item-action"
+                        onClick={() => {
+                          setSelectedPosition(postn.position);
+                          setFormData((prev) => ({ ...prev, position: postn.position }));
+                          setShowPositionList(false);
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {postn.position}
+                      </li>
                     ))}
-                  </select>
-                </>
-              ) : (
-                <>
-                  <label htmlFor="shiftend" className="form-label">Time Out <span className="text-danger">*</span></label>
-                  <input
-                    required type="time" name="shiftend" className="form-controll-timeout" id="shiftend"
-                    autoComplete="off" inputMode="numeric"
-                    value={formData.schedule.shiftend} onChange={handleInputChange}
-                  />
-                </>
+                </ul>
               )}
+            </div>
+
+            <div className=" col-md-4 add-rows mt-2 position-relative">
+              <label htmlFor="acctid" className="form-label">
+                Account
+                <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="acctname"
+                className="form-control"
+                value={selectedAccount}
+                placeholder={mode !== 'edit' ? "Search Account" : ""}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  SetSelectedAccount(val);
+                  setShowAccountList(true);
+                  setShowPositionList(false);
+                }}
+              />
+              {showAccountList && selectedAccount && (
+                <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  {accounts
+                    .filter(acc =>
+                      acc.acctname.toLowerCase().includes(selectedAccount.toLowerCase())
+                    )
+                    .map(acc => (
+                      <li
+                        key={acc.acctid}
+                        className="list-group-item list-group-item-action"
+                        onClick={() => {
+                          SetSelectedAccount(acc.acctname);
+                          setShowAccountList(false);
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {acc.acctname}
+                      </li>
+                    ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          {/* 🔼 Schedule Section Label */}
+          {mode === "create" && (
+            <h6 className="form-section-label emp-schedule-details px-4 mt-2">Schedule Details</h6>
+          )}
+          <div className="mt-4">
+            <div className="d-flex flex-wrap schedule--addemployee gap-1">
+              <div className="col-md-4 add-rows mt-2 create-timein">
+                {mode === "edit" ? (
+                  <>
+                    <label className="form-label">
+                      Assign Privileges <span className="text-danger">*</span>
+                    </label>
+                    <select
+                      disabled={!isEditable && mode === "edit"}
+                      name="role_id"
+                      className="form-select form-select--assignprivileges"
+                      value={formData.role_id}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Select privilege</option>
+                      {privileges.map((role, index) => (
+                        <option key={index} value={role.id}>
+                          {role.name}
+                        </option>
+                      ))}
+                    </select>
+                  </>
+                ) : (
+                  <>
+                    <label htmlFor="shiftend" className="form-label">
+                      Time Out <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      required
+                      type="time"
+                      name="shiftend"
+                      id="shiftend"
+                      className="form-controll-timeout"
+                      autoComplete="off"
+                      inputMode="numeric"
+                      value={formData.schedule.shiftend}
+                      onChange={handleInputChange}
+                    />
+                  </>
+                )}
+              </div>
+              <div className="col-md-4 add-rows mt-2">
+                {mode === "edit" ? (
+                  <>
+                    <label className="form-label">
+                      Status <span className="text-danger">*</span>
+                    </label>
+                    <select
+                      disabled={!isEditable && mode === "edit"}
+                      className="form-select form-select--status"
+                      name="status"
+                      value={formData.status === 1 ? 1 : 0}
+                      onChange={handleInputChange}
+                    >
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                  </>
+                ) : (
+                  <>
+                    <label htmlFor="shiftstart" className="form-label">
+                      Time In <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      required
+                      type="time"
+                      name="shiftstart"
+                      id="shiftstart"
+                      className="form-controll"
+                      autoComplete="off"
+                      inputMode="numeric"
+                      value={formData.schedule.shiftstart}
+                      onChange={handleInputChange}
+                    />
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Row 5: Editable Time Controls */}
-          {mode === "edit" && (
-            <div className="row align-items-end">
-              <div className=" col-md-4 add-rows">
-                <label htmlFor="shiftstart" className="form-label form-label-ti mb-1">Time In</label>
-                <input
-                  required type="time" name="shiftstart" className="form-control-ti" id="shiftstart"
-                  autoComplete="off" inputMode="numeric"
-                  value={formData.schedule.shiftstart} onChange={handleInputChange}
-                  disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
-                  step={1}
+          <div>
+            {mode === "edit" && (
+              <h6 className="form-section-label  schedule-detials mt-4">Schedule Details</h6>
+            )}
+          </div>
+          <div className="align-items-center justify-content-center">
+            {mode === "edit" && (
+              <div className="row align-items-end schedule-details">
+                <div className=" col-md-4 add-rows mb-4">
+                  <label htmlFor="shiftstart" className="form-label form-label-ti mb-1">Time In</label>
+                  <input
+                    required type="time" name="shiftstart" className="form-control-ti" id="shiftstart"
+                    autoComplete="off" inputMode="numeric"
+                    value={formData.schedule.shiftstart} onChange={handleInputChange}
+                    disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                    step={1}
 
-                />
+                  />
 
+                </div>
+
+                <div className=" col-md-4 add-rows update-timeout mb-4">
+                  <label htmlFor="shiftend" className="form-label form-label-timeout1 mb-1">Time Out</label>
+                  <input
+                    required type="time" name="shiftend" className="form-controll-timeout1" id="shiftend"
+                    autoComplete="off" inputMode="numeric"
+                    value={formData.schedule.shiftend} onChange={handleInputChange}
+                    disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                    step={1}
+                  />
+                </div>
+
+                <div className=" col-md-4 add-rows d-flex align-items-center mb-4">
+                  {formData.schedule.shiftstart && formData.schedule.shiftend && (
+                    <button
+                      className="edit-schedule-btn btn btn-secondary btn-sm mt-3"
+                      type="button"
+                      onClick={toggleChangeSchedule}
+                    >
+                      <i className="bi bi-pen sm"></i>
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className=" col-md-4 add-rows">
-                <label htmlFor="shiftend" className="form-label form-label-timeout1 mb-1">Time Out</label>
-                <input
-                  required type="time" name="shiftend" className="form-controll-timeout1" id="shiftend"
-                  autoComplete="off" inputMode="numeric"
-                  value={formData.schedule.shiftend} onChange={handleInputChange}
-                  disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
-                  step={1}
-                />
-              </div>
-              <div className=" col-md-4 add-rows d-flex align-items-center">
-                {formData.schedule.shiftstart && formData.schedule.shiftend && (
-                  <button
-                    className="edit-schedule-btn btn btn-secondary btn-sm mt-3"
-                    type="button"
-                    onClick={toggleChangeSchedule}
-                  >
-                    <i className="bi bi-pen sm"></i>
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
+            )}
+          </div>
           <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
             <button
               type="button"
