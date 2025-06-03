@@ -3,7 +3,7 @@ export default function DeleteModalConfirmation(){
 return (
     <div>
         <button >
-        Delete
+            Delete
         </button>
     </div>
 )

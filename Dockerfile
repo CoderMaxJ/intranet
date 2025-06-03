@@ -1,20 +1,17 @@
 FROM node:22.13-bookworm-slim
 
-
 WORKDIR /app
 
-RUN  mkdir -p src public
-
+# Copy package files and install dependencies
 COPY package*.json ./
-
-
-RUN npm install
-
+RUN npm install --include=dev
+# ENV NODE_ENV=production
 
 COPY . .
 
+RUN npm run build
 
 EXPOSE 3000
 
 
-CMD ["npm", "run", "dev"]
+CMD ["npm","run", "dev"]

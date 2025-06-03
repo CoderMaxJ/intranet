@@ -1,5 +1,4 @@
 "use client";
-import { Tooltip } from 'bootstrap';
 import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
 import { use, useEffect, useState } from "react";
@@ -528,17 +527,6 @@ export default function Dashboard() {
                                 </svg>
                             </span>
                         </button>
-                        {open && (
-                            <img
-                                onClick={() => setOpen(false)}
-                                src={profile}
-                                alt="Enlarged Profile"
-                                className=""
-                                height={200}
-                                width={200}
-                                style={{ borderRadius: "50%", marginTop: "150px" }}
-                            />
-                        )}
                         <center>
                             {open === false && showProfile === true && (
                                 <div className="profile-div position-relative">

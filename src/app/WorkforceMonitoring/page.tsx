@@ -1,6 +1,5 @@
 "use client";
 import BreakDataTable from "../data/Breaks/break";
-// import LogsDataTable from "../data/Logs/logs";
 import Dashboard from "../Dashboard/dashboard";
 import Header from "../component/Header";
 
@@ -18,9 +17,6 @@ export default function MainDashboard() {
         <Header title="WORKFORCE MONITORING" currentPage={pageTitle}/>
         <div>
           <BreakDataTable/>
-        </div>
-        <div>
-          {/* <LogsDataTable/> */}
         </div>
       </div>
     </div>

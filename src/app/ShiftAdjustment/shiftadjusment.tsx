@@ -16,66 +16,74 @@ import { useRouter } from "next/navigation";
 
 
 interface RequestDetails {
-  requestid: number;
-  empno: number;
-  name: string;
-  shiftdate: string;
-  reason: string;
-  status: number;
-  logs: Object;
-  acctid: number;
-  created_at: string;
-  aprroved_at: string;
-  declined_at: string;
-  total: number;
-}
-
-interface Account {
-  acctname: string
-  acctid: number
+      requestid: number;
+    empno: number;
+    name: string;
+    shiftdate: string;
+    reason: string;
+    status: number;
+    logs: {
+        login?: {
+            in?: string;
+            out?: string;
+            record: string;
+        };
+        break1?: {
+            in?: string;
+            out?: string;
+            record: {
+                in: string;
+                out: string;
+            };
+        };
+        break2?: {
+            in?: string;
+            out?: string;
+            record: {
+                in: string;
+                out: string;
+            };
+        };
+        lunch?: {
+            in?: string;
+            out?: string;
+            record: {
+                in: string;
+                out: string;
+            };
+        };
+        logout?: {
+            in?: string;
+            out?: string;
+            record: string;
+        };
+        [key: string]: any;
+    };
+    acctid: number;
+    created_at: string;
+    aprroved_at: string;
+    declined_at: string;
+    approved_by: number;
+    acctname:string;
+    reason_for_disapproved: string;
 }
 
 export default function ShiftAdjustment() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPages] = useState(1);
   const [totalPages, setTotalPages] = useState();
   const [data, setData] = useState<RequestDetails[]>([]);
-  const [approve, setApprove] = useState("");
-  const [account, setAccount] = useState<Account[]>([]);
   const [totalData, setTotalData] = useState();
   const [activeTab, setActiveTab] = useState("pending");
-  const [selectedData, setSelectedData] = useState<RequestDetails[]>([]);
+  const [selectedData, setSelectedData] = useState<RequestDetails| null>(null);
   
   const router = useRouter();
   useEffect(() => {
     if (activeTab === "pending") {
       fetchShiftAdjustmentData();
     }
-  }, [activeTab]);
+  }, [activeTab,currentPage]);
+
    const token = localStorage.getItem("token");
-  const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`
-  async function getAccount() {
- 
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`
-      }
-    });
-
-    if (!response.ok) {
-      if(!token){
-          router.push("/");
-      }
-    }
-    const data = await response.json();
-    setAccount(data.data);
-  }
-
-  useEffect(() => {
-    getAccount();
-  }, [])
 
   const fetchShiftAdjustmentData = async () => {
     const user_id = localStorage.getItem("user_id");
@@ -111,11 +119,6 @@ export default function ShiftAdjustment() {
   const handlePageChange = (page: number) => {
     setCurrentPages(page);
   };
-
-  useEffect(() => {
-    fetchShiftAdjustmentData();
-  }, [currentPage])
-  
   const handleViewClick = (item: RequestDetails) => {
     setSelectedData(item);
   };
@@ -172,7 +175,7 @@ export default function ShiftAdjustment() {
                         <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
                           <td>{item.name || "-"}</td>
                           <td>{item.reason?.slice(0, 40) + "..." || "-"}</td>
-                          <td> {account.find((acc) => acc.acctid === item.acctid)?.acctname || "-"}</td>
+                          <td> {item.acctname|| "Unassigned"}</td>
                           <td>{item.created_at || "-"}</td>
                           <td>
                             <div className="d-flex gap-4 actions">
@@ -205,7 +208,7 @@ export default function ShiftAdjustment() {
             )}
             {activeTab === "approved" && (
               <>
-                <ApproveTable onView={handleViewClick} />
+                <ApproveTable onView={handleViewClick} data={selectedData}  />
                 <ApprovedData data={selectedData} />
               </>
             )}
@@ -246,9 +249,6 @@ export default function ShiftAdjustment() {
         <Pending
           data={selectedData}
           onApproveComplete={fetchShiftAdjustmentData}
-          onDeclineComplete={() => {
-            fetchShiftAdjustmentData();
-          }}
         />
       )}
 
