@@ -796,6 +796,7 @@ input:focus {
   }
 
 
+
   .searchbar-wrapper {
     display: flex;
     flex-direction: column;
@@ -1899,10 +1900,6 @@ table {
   padding-top: 22px;
 }
 
-.schedule-detials {
-  margin-left: 25px;
-}
-
 .search-input {
   border-radius: 4px;
   padding-inline: 60px;
@@ -2186,7 +2183,11 @@ table {
 }
 
 .schedule--addemployee {
-  margin-left: 23px;
+  margin-left: 25px;
+}
+
+.update-status {
+ transform: translateY(-25px) !important;
 }
 
 .blink {
@@ -3001,7 +3002,7 @@ table {
   border-radius: 5px;
   background-color: #ffffff;
   color: black;
-  max-width: 13vw;
+  max-width: 12.9vw;
 }
 
 .form-controll input {
@@ -3057,11 +3058,11 @@ table {
   border-radius: 5px;
   background-color: #ffffff;
   color: black;
-  max-width: 13.2vw;
+  max-width: 13vw;
 }
 .form-select--status {
   width: 100%;
-  max-width: 13.1vw;
+  max-width: 110px;
 }
 
 .form-select--assignprivileges {
@@ -3076,11 +3077,11 @@ table {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  max-width: 13.1vw;
+  min-width: 13.1vw;
 }
 
-.schedule-details {
- transform: translateX(24px);
+.edit-timein-out button{
+  margin-top: 15px !important;
 }
 
 .form-controll-timeout1::after {
@@ -3214,7 +3215,7 @@ body.dark-mode .time-icon-group::before {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  max-width: 13.1vw;
+  min-width: 13.1vw;
 }
 
 /* .update-timeout {
