@@ -575,9 +575,14 @@ useEffect(()=>{
             )}
 
           </div>
-          {/* 🔼 Schedule Section Label */}
-
+          
           <div className="mt-4">
+              {mode != 'edit' && (
+                <div>
+                  <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
+                </div>
+              
+              )}
             <div className="d-flex flex-wrap schedule--addemployee">
 
               {mode !== "edit" && (
@@ -619,9 +624,9 @@ useEffect(()=>{
           </div>
           {/* Row 5: Editable Time Controls */}
           <div>
-     
+            {mode === "edit" && (
               <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
-         
+            )}
           </div>
 
           <div className="align-items-center justify-content-center mt-4">
