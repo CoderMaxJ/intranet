@@ -66,9 +66,9 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
   const [rejectedRequest, setRejectedRequest] = useState<RequestItem[]>([]);
   const token = Decryptor(localStorage.getItem("token") || "");
   const user_id = localStorage.getItem("user_id");
-  const [current_page,setCurrentPage]=useState(1);
-  const [totalPages,setTotalPages]=useState();
-  const [total,setTotal]=useState(0);
+  const [current_page, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+  const [total, setTotal] = useState(0);
 
 
   async function fetchRejectedRequest() {
@@ -94,10 +94,10 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
     fetchRejectedRequest();
   }, [])
 
-  useEffect(()=>{
-      fetchRejectedRequest();
-  },[current_page])
-  const handleChangePage = (page:number)=>{
+  useEffect(() => {
+    fetchRejectedRequest();
+  }, [current_page])
+  const handleChangePage = (page: number) => {
     setCurrentPage(page);
   }
   return (

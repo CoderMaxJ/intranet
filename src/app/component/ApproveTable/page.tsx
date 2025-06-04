@@ -150,7 +150,7 @@ export default function ApproveTable({ onView }: ApproveProps) {
             ))) : (
             <tr>
               <td colSpan={6} className="text-center">
-                No pending shift adjustment requests at this time
+             No approved shift adjustment requests at this time
               </td>
             </tr>
           )}

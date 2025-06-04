@@ -61,25 +61,30 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
+  const [positions, setPositions] = useState<{ position: string }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
+  const [showList, setShowList] = useState(false);
+  const [showAccountList, setShowAccountList] = useState(false); // For account dropdown
+  const [showPositionList, setShowPositionList] = useState(false)
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
-  const [isEditable,setEditable]=useState(false);
+  const [isEditable, setEditable] = useState(false);
+  const [selectedPosition, setSelectedPosition] = useState("");
 
 
   let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
 
-  
-   const array_privilege =user_priviledge.split(",")
-   
-  useEffect(()=>{
-    if(array_privilege.includes("manage_users")){
+
+  const array_privilege = user_priviledge.split(",")
+
+  useEffect(() => {
+    if (array_privilege.includes("manage_users")) {
       setEditable(true);
     }
-  },[])
+  }, [])
 
-  
+
   useEffect(() => {
     if (empData) {
       setFormData({
@@ -102,8 +107,14 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         isdayshift:empData.isdayshift ?? 0
 
       });
+      const matchedAccount = accounts.find(acc => acc.acctid === empData.acctid);
+      if (matchedAccount) {
+        SetSelectedAccount(matchedAccount.acctname);
+      }
     }
+
   }, [empData]);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -173,14 +184,16 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       console.error(e)
     }
   }
-
   const fetchRoles = async () => {
-
     const cachedRoles = localStorage.getItem("roles");
-    if (cachedRoles) {
+    const cachedPositions = localStorage.getItem("positions");
+
+    if (cachedRoles && cachedPositions) {
       setRoles(JSON.parse(cachedRoles));
+      setPositions(JSON.parse(cachedPositions));
       return;
     }
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/roles/list/`, {
         method: "GET",
@@ -189,20 +202,34 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           Authorization: `Bearer ${Decryptor(token || "")}`,
         },
       });
+
       if (response.status === 200) {
         const data = await response.json();
         setRoles(data.data);
         localStorage.setItem("roles", JSON.stringify(data.data));
+
+        const uniquePositionNames = Array.from(
+          new Set<string>(data.data.map((role: { name: string }) => role.name))
+        );
+        const uniquePositions = uniquePositionNames.map((name) => ({ position: name }));
+
+        setPositions(uniquePositions);
+        localStorage.setItem("positions", JSON.stringify(uniquePositions));
       }
+
     } catch (e) {
       console.error(e);
     }
   };
+  useEffect(() => {
+    console.log("Positions:", positions); // ✅ Check output
+  }, [positions]);
+
 
   const fetchAccounts = async () => {
-    const cachedRoles = localStorage.getItem("accounts");
-    if (cachedRoles) {
-      setRoles(JSON.parse(cachedRoles));
+    const cachedAccounts = localStorage.getItem("accounts");
+    if (cachedAccounts) {
+      setAccounts(JSON.parse(cachedAccounts));
       return;
     }
     try {
@@ -216,7 +243,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         const data = await response.json();
         setAccounts(data.data);
-        localStorage.setItem("Accounts", JSON.stringify(data.data));
+        localStorage.setItem("accounts", JSON.stringify(data.data));
       }
     } catch (e) {
       console.error(e);
@@ -228,6 +255,16 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     // fetchAccounts();
     // fetchPrivileges();
   }, []);
+
+  useEffect(() => {
+    if (empData?.acctid && accounts.length > 0) {
+      const matchedAccount = accounts.find(acc => acc.acctid === empData.acctid);
+      if (matchedAccount) {
+        SetSelectedAccount(matchedAccount.acctname);
+      }
+    }
+  }, [accounts]);
+
 
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
@@ -263,12 +300,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
       if (response.status === 201) {
         successToast("Created successfully!");
-        btnClose?.click();
-        clearInputs();
-
+        setTimeout(() => {
+          btnClose?.click();
+          clearInputs();
+        }, 100);
       } else {
         errorToast("Unable to create employee!")
-        
+
       }
     } catch (e) {
       console.error(e);
@@ -291,7 +329,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         setIsEditSchedule(false);
         successToast("Updated successfully!");
-        btnClose?.click();
+        setTimeout(() => {
+          btnClose?.click();
+        }, 100);
       } else {
         errorToast("Unable to update records!")
       }
@@ -306,11 +346,11 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     user_id: Decryptor(localStorage.getItem("user_id") || "")
 
   }
+
   const handleSubmitForm = async (e: React.FormEvent) => {
-
     e.preventDefault();
-
     onButtonClick("clicked");
+
     if (mode === 'edit') {
       await Update();
     } else {
@@ -356,7 +396,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   console.log(empData)
   return (
     <div>
-      <ToastContainer/>
+      <ToastContainer />
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
 
@@ -368,7 +408,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close" 
+              aria-label="Close"
               onClick={clearInputs}
             >
             </button>
@@ -376,26 +416,27 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 1 */}
           <div className="row px-4">
-            <div className=" col-md-4 add-rows">
+            <h6>Personal Information</h6>
+            <div className=" col-md-4 add-rows mt-2 ">
               <label htmlFor="fname" className="form-label">First Name <span className="text-danger">*</span></label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 required type="text" name="fname" className="form-control" id="fname"
                 value={formData.fname} onChange={handleInputChange} placeholder="Juan"
               />
             </div>
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="mname" className="form-label">Middle Name </label>
               <input
-               disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 type="text" name="mname" className="form-control" id="mname"
                 value={formData.mname} onChange={handleInputChange} placeholder="Montenegro"
               />
             </div>
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="lname" className="form-label">Last Name <span className="text-danger">*</span></label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 required type="text" name="lname" className="form-control" id="lname"
                 value={formData.lname} onChange={handleInputChange} placeholder="Dela Cruz"
               />
@@ -404,30 +445,18 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 2 */}
           <div className="row px-4 first-row">
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
-                required type="date" name="dateofbirth" className="form-control" id="dateofbirth"
+                disabled={!isEditable && mode == "edit" ? true : false}
+                required type="date" name="dateofbirth" className="form-control date-with-icon" id="dateofbirth"
                 value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
               />
             </div>
-            <div className=" col-md-4 add-rows">
-              <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
-              <select
-                disabled={!isEditable && mode == "edit" ? true:false }
-                required name="maritalstatus" className="form-select" id="maritalstatus"
-                value={formData.maritalstatus} onChange={handleInputChange}
-              >
-                <option value="None">-- SELECT --</option>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-              </select>
-            </div>
-            <div className=" col-md-4 add-rows">
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="gender" className="form-label">Gender <span className="text-danger">*</span></label>
               <select
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 required name="gender" className="form-select" id="gender"
                 value={formData.gender} onChange={handleInputChange}
               >
@@ -436,167 +465,300 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <option value="Female">Female</option>
               </select>
             </div>
+            <div className=" col-md-4 add-rows mt-2">
+              <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
+              <select
+                disabled={!isEditable && mode == "edit" ? true : false}
+                required name="maritalstatus" className="form-select" id="maritalstatus"
+                value={formData.maritalstatus} onChange={handleInputChange}
+              >
+                <option value="None">-- SELECT --</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+              </select>
+            </div>
+
           </div>
 
           {/* Row 3 */}
           <div className="row px-4">
-            <div className=" col-md-4 add-rows">
+            <h6>Personal Information</h6>
+            <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="contactno" className="form-label">Contact No</label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
+                disabled={!isEditable && mode == "edit" ? true : false}
                 type="number" name="contactno" className="form-control" id="contactno"
                 value={formData.contactno} onChange={handleInputChange} placeholder="+63 92 6645 9723"
               />
             </div>
-            <div className=" col-md-4 add-rows">
-              <label htmlFor="address" className="form-label">Address <span className="text-danger">*</span></label>
+            <div className=" col-md-8 add-rows mt-2">
+              <label htmlFor="address" className="form-label">Address <span className="text-danger"></span></label>
               <input
-                disabled={!isEditable && mode == "edit" ? true:false }
-                required type="text" name="address" className="form-control" id="address"
+                disabled={!isEditable && mode == "edit" ? true : false}
+                type="text" name="address" className="form-control" id="address"
                 value={formData.address} onChange={handleInputChange} placeholder="Zapatera, Cebu City"
               />
-            </div>
-            <div className=" col-md-4 add-rows">
-              <label htmlFor="acctid" className="form-label">Account <span className="text-danger">*</span></label>
-                <input type="text" 
-                disabled={!isEditable && mode == "edit" ? true:false }
-                required name="acctid" className="form-control" id="acctid"
-                value={(mode === 'edit'? empData.acctname: formData.acctname) || ""} onChange={handleInputChange}
-              />
-             
             </div>
           </div>
 
           {/* Row 4 */}
-          <div className="row px-4">
-            <div className=" col-md-4 add-rows">
-              <label htmlFor="position" className="form-label">Position <span className="text-danger">*</span></label>
-              <select
-                disabled={!isEditable && mode == "edit" ? true:false }
-                required name="position" className="form-select" id="position"
-                value={formData.position} onChange={handleInputChange}
-              >
-                <option value="">Select a position</option>
-                {roles.map((role, index) => (
-                  <option key={index} value={role}>{role}</option>
-                ))}
-              </select>
+          <div className="row px-4 d-flex">
+            <h6>Account Details</h6>
+            <div className=" col-md-4 add-rows mt-2 position-relative">
+              <label htmlFor="position" className="form-label">Position<span className="text-danger">*</span></label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search Position"
+                value={formData.position}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setFormData((prev) => ({ ...prev, position: val }));
+                  setShowPositionList(true);
+                  setShowAccountList(false);
+                }}
+                onFocus={() => {
+                  if (formData.position) {
+                    setShowPositionList(true);
+                  }
+                }}
+              />
+
+              {showPositionList && formData.position && (
+                <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  {positions
+                    .filter((p) =>
+                      typeof p.position === "string" &&
+                      p.position.toLowerCase().includes(formData.position.toLowerCase())
+                    )
+                    .map((p, index) => (
+                      <li
+                        key={index}
+                        className="list-group-item list-group-item-action"
+                        onMouseDown={() => {
+                          setFormData((prev) => ({ ...prev, position: p.position }));
+                          setShowPositionList(false);
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {p.position}
+                      </li>
+                    ))}
+                </ul>
+              )}
+
             </div>
 
-            <div className=" col-md-4 add-rows">
-              {mode === "edit" ? (
-                <>
-                  <label className="form-label">Status <span className="text-danger">*</span></label>
+            <div className=" col-md-4 add-rows mt-2 position-relative">
+              <label htmlFor="acctid" className="form-label">
+                Account
+                <span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="acctname"
+                className="form-control"
+                value={selectedAccount}
+                placeholder={mode !== 'edit' ? "Search Account" : ""}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  SetSelectedAccount(val);
+                  setShowAccountList(true);
+                  setShowPositionList(false);
+                  if (accounts.length === 0) fetchAccounts();
+                }}
+                onFocus={() => {
+                  if (accounts.length === 0) fetchAccounts(); // Lazy load on focus too
+                }}
+                onBlur={() => setTimeout(() => setShowAccountList(false), 100)}
+
+              />
+              {showAccountList && selectedAccount && (
+                <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  {accounts
+                    .filter(acc =>
+                      acc.acctname.toLowerCase().includes(selectedAccount.toLowerCase())
+                    )
+                    .map(acc => (
+                      <li
+                        key={acc.acctid}
+                        className="list-group-item list-group-item-action"
+                        onClick={() => {
+                          SetSelectedAccount(acc.acctname);
+                          setFormData((prev) => ({ ...prev, acctid: acc.acctid }));
+                          setShowAccountList(false);
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {acc.acctname}
+                      </li>
+                    ))}
+                </ul>
+              )}
+
+            </div>
+            {mode === "edit" && (
+              <div className="col-md-4 add-rows mt-2 create-timein">
+                <label className="form-label">
+                  Assign Privileges <span className="text-danger">*</span>
+                </label>
+                <select
+                  disabled={!isEditable}
+                  name="role_id"
+                  className="form-select form-select--assignprivileges"
+                  value={formData.role_id}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select privilege</option>
+                  {privileges.map((role, index) => (
+                    <option key={index} value={role.id}>
+                      {role.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+          </div>
+          {/* 🔼 Schedule Section Label */}
+          {mode === "create" && (
+            <h6 className="form-section-label emp-schedule-details px-4 mt-2">Schedule Details</h6>
+          )}
+          <div className="mt-4">
+            <div className="d-flex flex-wrap schedule--addemployee">
+
+              {mode !== "edit" && (
+                <div className="col-md-4 add-rows mt-2">
+                  <>
+                    <label htmlFor="shiftstart" className="form-label">
+                      Time In <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      required
+                      type="time"
+                      name="shiftstart"
+                      id="shiftstart"
+                      className="form-controll"
+                      autoComplete="off"
+                      inputMode="numeric"
+                      value={formData.schedule.shiftstart}
+                      onChange={handleInputChange}
+                    />
+                  </>
+                </div>
+              )}
+
+              {mode !== "edit" && (
+                <div className="col-md-4 add-rows mt-2 create-timein">
+                  <label htmlFor="shiftend" className="form-label">
+                    Time Out <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    required
+                    type="time"
+                    name="shiftend"
+                    id="shiftend"
+                    className="form-controll-timeout"
+                    autoComplete="off"
+                    inputMode="numeric"
+                    value={formData.schedule.shiftend}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+          {/* Row 5: Editable Time Controls */}
+          <div>
+            {mode === "edit" && (
+              <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
+            )}
+          </div>
+
+          <div className="align-items-center justify-content-center mt-4">
+            {mode === "edit" && (
+              <div className="d-flex flex-wrap schedule-details gap-4 px-4">
+                <div className="add-rows mb-4">
+                  <label htmlFor="shiftstart" className="form-label form-label-ti mb-2">Time In</label>
+                  <input
+                    required
+                    type="time"
+                    name="shiftstart"
+                    className="form-control-ti"
+                    id="shiftstart"
+                    autoComplete="off"
+                    inputMode="numeric"
+                    value={formData.schedule.shiftstart}
+                    onChange={handleInputChange}
+                    disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                    step={1}
+                  />
+                </div>
+
+                <div className="add-rows update-timeout mb-4">
+                  <label htmlFor="shiftend" className="form-label form-label-timeout1 mb-2">Time Out</label>
+                  <input
+                    required
+                    type="time"
+                    name="shiftend"
+                    className="form-controll-timeout1"
+                    id="shiftend"
+                    autoComplete="off"
+                    inputMode="numeric"
+                    value={formData.schedule.shiftend}
+                    onChange={handleInputChange}
+                    disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                    step={1}
+                  />
+                </div>
+
+                <div className="add-rows d-flex align-items-center edit-timein-out me-4">
+                  {formData.schedule.shiftstart && formData.schedule.shiftend && (
+                    <button
+                      className="edit-schedule-btn btn btn-secondary btn-sm mt-3"
+                      type="button"
+                      onClick={toggleChangeSchedule}
+                    >
+                      <i className="bi bi-pen sm"></i>
+                    </button>
+                  )}
+                </div>
+
+                <div className="col-md-2 add-rows mt-2 update-status">
+                  <label className="form-label">
+                    Status <span className="text-danger">*</span>
+                  </label>
                   <select
-                    disabled={!isEditable && mode == "edit" ? true:false }
-                    className="form-select" name="status"
+                    disabled={!isEditable && mode === "edit"}
+                    className="form-select form-select--status"
+                    name="status"
                     value={formData.status === 1 ? 1 : 0}
                     onChange={handleInputChange}
                   >
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
                   </select>
-                </>
-              ) : (
-                <>
-                  <label htmlFor="shiftstart" className="form-label">Time In <span className="text-danger">*</span></label>
-                  <input
-                    required type="time" name="shiftstart" className="form-controll" id="shiftstart"
-                    autoComplete="off" inputMode="numeric"
-                    value={formData.schedule.shiftstart} onChange={handleInputChange}
-                  />
-                </>
-              )}
-            </div>
+                </div>
 
-            <div className=" col-md-4 add-rows">
-              {mode === "edit" ? (
-                <>
-                  <label className="form-label">Assign Privileges <span className="text-danger">*</span></label>
-                  <select
-                    disabled={!isEditable && mode == "edit" ? true:false }
-                    name="role_id" className="form-select"
-                    value={formData.role_id} onChange={handleInputChange}
-                  >
-                    <option value="">Select privilege</option>
-                    {privileges.map((role, index) => (
-                      <option key={index} value={role.id}>{role.name}</option>
-                    ))}
-                  </select>
-                </>
-              ) : (
-                <>
-                  <label htmlFor="shiftend" className="form-label">Time Out <span className="text-danger">*</span></label>
-                  <input
-                    required type="time" name="shiftend" className="form-controll-timeout" id="shiftend"
-                    autoComplete="off" inputMode="numeric"
-                    value={formData.schedule.shiftend} onChange={handleInputChange}
-                  />
-                </>
-              )}
-            </div>
+              </div>
+
+            )}
           </div>
 
-          {/* Row 5: Editable Time Controls */}
-          {mode === "edit" && (
-            <div className="row align-items-end">
-              <div className=" col-md-4 add-rows">
-                <label htmlFor="shiftstart" className="form-label form-label-ti mb-1">Time In</label>
-                <input
-                  required type="time" name="shiftstart" className="form-control-ti" id="shiftstart"
-                  autoComplete="off" inputMode="numeric"
-                  value={formData.schedule.shiftstart} onChange={handleInputChange}
-               disabled={
-                !!formData.schedule.shiftstart &&
-                !!formData.schedule.shiftend &&
-                !isEditSchedule
-              }
-               
-                />
-                
-              </div>
-              <div className=" col-md-4 add-rows">
-                <label htmlFor="shiftend" className="form-label form-label-timeout1 mb-1">Time Out</label>
-                <input
-                  required type="time" name="shiftend" className="form-controll-timeout1" id="shiftend"
-                  autoComplete="off" inputMode="numeric"
-                  value={formData.schedule.shiftend} onChange={handleInputChange}
-                  disabled={
-                    !!formData.schedule.shiftstart &&
-                    !!formData.schedule.shiftend &&
-                    !isEditSchedule
-                  }
-                  step={1}
-                />
-              </div>
-              <div className=" col-md-4 add-rows d-flex align-items-center">
-                {formData.schedule.shiftstart && formData.schedule.shiftend && (
-                  <button
-                    className="edit-schedule-btn btn btn-secondary btn-sm mt-3"
-                    type="button"
-                    onClick={toggleChangeSchedule}
-                  >
-                    <i className="bi bi-pen sm"></i>
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-           <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
-          <button
-            type="button"
-            data-bs-dismiss="modal"
-            className="btn btn-danger"
-            onClick={clearInputs}
-          >
-            <span className="view">Cancel</span>
-          </button>
-          <button type="submit" className="btn btn-primary view">
-            {mode === "edit" ? "Update" : "Create"}
-          </button>
-        </div>
+          <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
+            <button
+              type="button"
+              data-bs-dismiss="modal"
+              className="btn btn-danger"
+              onClick={clearInputs}
+            >
+              <span className="view">Cancel</span>
+            </button>
+            <button type="submit" className="btn btn-primary view">
+              {mode === "edit" ? "Update" : "Create"}
+            </button>
+          </div>
         </form >
-       
       </div >
     </div>
   );
