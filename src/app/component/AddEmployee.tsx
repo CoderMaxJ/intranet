@@ -337,11 +337,11 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     user_id: Decryptor(localStorage.getItem("user_id") || "")
 
   }
+
   const handleSubmitForm = async (e: React.FormEvent) => {
-
     e.preventDefault();
-
     onButtonClick("clicked");
+
     if (mode === 'edit') {
       await Update();
     } else {
