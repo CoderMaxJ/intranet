@@ -1,4 +1,5 @@
 import { Decryptor } from "@/security";
+import { set } from "date-fns";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -181,8 +182,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         const data = await respose.json();
         setPrivileges(data.data);
 
-      } else {
-        console.log("Error while fetching privileges");
       }
     }
     catch (e) {
@@ -190,7 +189,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
   const fetchRoles = async () => {
-    
+    console.log("=============================================================================>")
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`,{
         method: "GET",
@@ -203,7 +202,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         const data = await response.json();
         setRoles(data.data);
-        console.log("Roles fetched:", data.data);
       }
 
     } catch (e) {
@@ -222,7 +220,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       });
       if (response.status === 200) {
         const data = await response.json();
-        console.log("Accounts fetched:", data.data);
         setAccounts(data.data);
       
       }
@@ -358,19 +355,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       setIsEditSchedule(true);
     }
   }
- const selectAccount = (acct: { acctid: number, acctname: string }) => {
-  SetSelectedAccount(acct.acctname);
-  setKey("");
-  setFormData(prev => ({
-    ...prev,
-    acctid: acct.acctid,
-    acctname: acct.acctname
-  }));
-}
 
 useEffect(()=>{
   fetchPrivileges();
-})
+},[])
   return (
     <div>
       <ToastContainer />
@@ -486,20 +474,23 @@ useEffect(()=>{
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search Position"
+                placeholder={mode != 'edit'? "Position":""}
                 value={role_keyword}
-                onChange={(e) => {setRoleKeyword(e.target.value)}}
-                 onKeyUp={() => {fetchRoles();}}
+                onChange={(e) => {setRoleKeyword(e.target.value);
+                  fetchRoles();
+                }}
+                
               />
-
-              
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
                       <li
                         key={index}
                         className="list-group-item list-group-item-action"
-    
                         style={{ cursor: "pointer" }}
+                        onClick={()=>{
+                          setRoleKeyword(p.position);
+                          setRoles([]);
+                        }}
                       >
                         {p.position}
                       </li>
@@ -520,7 +511,7 @@ useEffect(()=>{
               name="acctname"
               className="form-control"
               value={keyword}
-              placeholder={mode !== 'edit' ? "Search Account" : ""}
+              placeholder={mode !== 'edit' ? "Account" : ""}
               onChange={(e) => {
                 // Always update the keyword when typing
                 setKey(e.target.value);
@@ -585,9 +576,7 @@ useEffect(()=>{
 
           </div>
           {/* 🔼 Schedule Section Label */}
-          {mode === "create" && (
-            <h6 className="form-section-label emp-schedule-details px-4 mt-2">Schedule Details</h6>
-          )}
+
           <div className="mt-4">
             <div className="d-flex flex-wrap schedule--addemployee">
 
@@ -595,15 +584,13 @@ useEffect(()=>{
                 <div className="col-md-4 add-rows mt-2">
                   <>
                     <label htmlFor="shiftstart" className="form-label">
-                      Time In <span className="text-danger">*</span>
+                      Time In<span className="text-danger">*</span>
                     </label>
                     <input
-                      required
                       type="time"
                       name="shiftstart"
                       id="shiftstart"
                       className="form-controll"
-                      autoComplete="off"
                       inputMode="numeric"
                       value={formData.schedule.shiftstart}
                       onChange={handleInputChange}
@@ -618,12 +605,10 @@ useEffect(()=>{
                     Time Out <span className="text-danger">*</span>
                   </label>
                   <input
-                    required
                     type="time"
                     name="shiftend"
                     id="shiftend"
                     className="form-controll-timeout"
-                    autoComplete="off"
                     inputMode="numeric"
                     value={formData.schedule.shiftend}
                     onChange={handleInputChange}
@@ -634,9 +619,9 @@ useEffect(()=>{
           </div>
           {/* Row 5: Editable Time Controls */}
           <div>
-            {mode === "edit" && (
+     
               <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
-            )}
+         
           </div>
 
           <div className="align-items-center justify-content-center mt-4">
@@ -645,7 +630,6 @@ useEffect(()=>{
                 <div className="add-rows mb-4">
                   <label htmlFor="shiftstart" className="form-label form-label-ti mb-2">Time In</label>
                   <input
-                    required
                     type="time"
                     name="shiftstart"
                     className="form-control-ti"
@@ -667,7 +651,6 @@ useEffect(()=>{
                 <div className="add-rows update-timeout mb-4">
                   <label htmlFor="shiftend" className="form-label form-label-timeout1 mb-2">Time Out</label>
                   <input
-                    required
                     type="time"
                     name="shiftend"
                     className="form-controll-timeout1"

@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";

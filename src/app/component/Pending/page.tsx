@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+"use client";
+import { useState, useEffect, use } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
 import "../../../../public/asset/css/drawer.css"
