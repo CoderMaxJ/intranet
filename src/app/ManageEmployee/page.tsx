@@ -1,5 +1,5 @@
 "use client";
-import Dashboard from "../Dashboard/dashboard";
+import Dashboard from "../Dashboard/page";
 import AddEmp from "../component/AddEmployee";
 import { useEffect, useState, useMemo } from "react";
 import Header from "../component/Header";

@@ -2,7 +2,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
-import Dashboard from "../Dashboard/dashboard";
+import Dashboard from "../Dashboard/page";
 import { useRouter } from "next/navigation";
 import Header from "../component/Header";
 import { ToastContainer, toast } from "react-toastify";

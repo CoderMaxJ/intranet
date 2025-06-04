@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, use } from "react";
 import { Encryptor, Decryptor } from "@/security";
-import Dashboard from "../Dashboard/dashboard";
+import Dashboard from "../Dashboard/page";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
