@@ -15,6 +15,7 @@
     "date-fns": "^4.1.0",
     "lodash.debounce": "^4.0.8",
     "next": "15.1.5",
+    "punycode": "^2.3.1",
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/crypto-js": "^4.2.2",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^19",

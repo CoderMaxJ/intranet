@@ -3,51 +3,73 @@ import { Decryptor } from "@/security";
 import { tr } from "date-fns/locale";
 
 interface RequestItem {
-  name: string;
-  reason?: string;
-  acctid: string;
-  created_at: string;
-  approved_by: string;
-  reason_for_disapproved:string;
+   requestid: number;
+    empno: number;
+    name: string;
+    shiftdate: string;
+    reason: string;
+    status: number;
+    logs: {
+        login?: {
+            in?: string;
+            out?: string;
+            record: string;
+        };
+        break1?: {
+            in?: string;
+            out?: string;
+            record: {
+                in: string;
+                out: string;
+            };
+        };
+        break2?: {
+            in?: string;
+            out?: string;
+            record: {
+                in: string;
+                out: string;
+            };
+        };
+        lunch?: {
+            in?: string;
+            out?: string;
+            record: {
+                in: string;
+                out: string;
+            };
+        };
+        logout?: {
+            in?: string;
+            out?: string;
+            record: string;
+        };
+        [key: string]: any;
+    };
+    acctid: number;
+    created_at: string;
+    aprroved_at: string;
+    declined_at: string;
+    approved_by: number;
+    acctname:string;
+    reason_for_disapproved: string;
 }
 interface RejectedTableProps {
-  data: RequestItem[];
+  data: RequestItem | null;
   onView: (item: RequestItem) => void;
 }
 
 
-interface Accounts {
-  acctname: string;
-  acctid: number;
-}
 
 export default function RejectedTable({ onView }: RejectedTableProps) {
   const [showSample, setShowSample] = useState(true);
   const [rejectedRequest, setRejectedRequest] = useState<RequestItem[]>([]);
-  const [accounts, setAccounts] = useState<Accounts[]>([]);
   const token = Decryptor(localStorage.getItem("token") || "");
   const user_id = localStorage.getItem("user_id");
-  const [current_page,setCurrentPage]=useState(1);
-  const [totalPages,setTotalPages]=useState();
-  const [total,setTotal]=useState(0);
+  const [current_page, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+  const [total, setTotal] = useState(0);
 
-
-  async function getAccounts() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-    })
-    if (!response.ok) {
-      console.error("Faild to fetch accounts")
-      return;
-    }
-
-    const data = await response.json();
-    setAccounts(data.data);
-  };
 
   async function fetchRejectedRequest() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
@@ -69,13 +91,12 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
 
   useEffect(() => {
     fetchRejectedRequest();
-    getAccounts();
   }, [])
 
-  useEffect(()=>{
-      fetchRejectedRequest();
-  },[current_page])
-  const handleChangePage = (page:number)=>{
+  useEffect(() => {
+    fetchRejectedRequest();
+  }, [current_page])
+  const handleChangePage = (page: number) => {
     setCurrentPage(page);
   }
   return (
@@ -97,7 +118,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
           <tr key={index}>
             <td>{request.name}</td>
             <td>{request.reason_for_disapproved?.slice(0, 10) + "..." || "-"}</td>
-            <td>{accounts.find((acc) => String(acc.acctid) === String(request.acctid))?.acctname || ""}</td>
+            <td>{request.acctname || "Unassigned"}</td>
             <td>{request.created_at}</td>
             <td>{request.approved_by}</td>
             <td>

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+"use client";
+import { useState, useEffect, use } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
 import "../../../../public/asset/css/drawer.css"
@@ -53,12 +54,11 @@ interface RequestDetails {
     aprroved_at: string;
     declined_at: string;
     approved_by: number;
+    acctname:string;
+        
+    
 }
 
-interface Account {
-    acctid: number;
-    acctname: string;
-}
 interface PendingProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
@@ -70,7 +70,6 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
     const [combinedData, setCombinedData] = useState({})
     const [declineReason, setDeclineReason] = useState("");
     const [status, setStatus] = useState(0);
-    const [accounts, setAccounts] = useState<Account[]>([]);
     const [visible, setVisible] = useState<boolean>(!!data);
     const [declineVisible, setDeclineVisible] = useState(false);
 
@@ -189,29 +188,6 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
 
     };
 
-    const getAccounts = async () => {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${Decryptor(token || "")}`
-            }
-        });
-        if(response.status === 200){
-
-     
-        const result = await response.json();
-        setAccounts(result.data);
-        }else{
-          router.push("/");
-        }
-    };
-
-    useEffect(() => {
-        getAccounts();
-    }, []);
-
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
             if (!prev) return prev;
@@ -229,8 +205,8 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                 updated[section] = {
                     ...updated[section],
                     record: {
-                        ...updated[section]?.record,
-                        [field]: value
+                        in: field === "in" ? value : updated[section]?.record?.in || "",
+                        out: field === "out" ? value : updated[section]?.record?.out || ""
                     }
                 };
             }
@@ -295,7 +271,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Department</p>
-                                <p className="drawer-label">{accounts.find(acc => acc.acctid === data?.acctid)?.acctname || "-"}</p>
+                                <p className="drawer-label">{data?.acctname}</p>
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Request ID</p>

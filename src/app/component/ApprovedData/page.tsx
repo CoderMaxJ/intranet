@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
@@ -52,12 +53,10 @@ interface RequestDetails {
   aprroved_at: string;
   declined_at: string;
   approved_by: number;
+  acctname:string;
 }
 
-interface Account {
-  acctid: number;
-  acctname: string;
-}
+
 interface ApprovedDataProps {
   data?: RequestDetails | null;
   onSave?: (updatedData: RequestDetails["logs"]) => void;
@@ -70,7 +69,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
   const [combinedData, setCombinedData] = useState({})
   const [declineReason, setDeclineReason] = useState("");
   const [status, setStatus] = useState(0);
-  const [accounts, setAccounts] = useState<Account[]>([]);
+
 
   useEffect(() => {
     if (buildData) {
@@ -91,10 +90,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
     }
 
   }, [buildData, status, declineReason]);
-
-  useEffect(() => {
-
-  }, [combinedData])
 
   useEffect(() => {
     if (data?.logs) {
@@ -127,22 +122,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
     }
   };
 
-  const getAccounts = async () => {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`
-      }
-    });
-    const result = await response.json();
-    setAccounts(result.data);
-  };
-
-  useEffect(() => {
-    getAccounts();
-  }, []);
 
   const handleChange = (section: string, field: string, value: string) => {
     setBuildData(prev => {
@@ -160,7 +139,8 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
         updated[section] = {
           ...updated[section],
           record: {
-            ...updated[section]?.record,
+            in: updated[section]?.record?.in ?? "",
+            out: updated[section]?.record?.out ?? "",
             [field]: value
           }
         };
@@ -237,7 +217,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
               </div>
               <div className="d-flex justify-content-between">
                 <p className="drawer-label">Department</p>
-                <p className="drawer-label">{accounts.find(acc => acc.acctid === data?.acctid)?.acctname || "-"}</p>
+                <p className="drawer-label">{data?.acctname}</p>
               </div>
               <div className="d-flex justify-content-between">
                 <p className="drawer-label">Request ID</p>

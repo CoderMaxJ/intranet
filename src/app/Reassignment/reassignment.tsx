@@ -33,7 +33,8 @@ interface Information {
      role_id: number;
      isdayshift: number;
      status: number;
-     schedule: Schedule
+     schedule: Schedule;
+     acctname:string;
 }
 
 export default function () {
