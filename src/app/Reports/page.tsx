@@ -24,7 +24,6 @@ interface BreaksReport {
     logoff: string;
 }
 
-<<<<<<< HEAD
 export default function Daterange() {
     const today = new Date();
     const nextMonth = new Date();
@@ -210,12 +209,6 @@ export default function Daterange() {
             
         }
     };
-=======
-// export const metadata: Metadata = {
-//   title: "Reports",
-//   description: "Monitoring System",
-// };
->>>>>>> origin/fix
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>

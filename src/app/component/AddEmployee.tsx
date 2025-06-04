@@ -242,6 +242,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       });
       if (response.status === 200) {
         const data = await response.json();
+        console.log("Accounts fetched:", data.data); // ✅ Check output
         setAccounts(data.data);
         localStorage.setItem("accounts", JSON.stringify(data.data));
       }
@@ -568,7 +569,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   if (accounts.length === 0) fetchAccounts();
                 }}
                 onFocus={() => {
-                  if (accounts.length === 0) fetchAccounts(); // Lazy load on focus too
+                  if (accounts.length === 0) fetchAccounts(); 
                 }}
                 onBlur={() => setTimeout(() => setShowAccountList(false), 100)}
 
@@ -690,7 +691,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                     inputMode="numeric"
                     value={formData.schedule.shiftstart}
                     onChange={handleInputChange}
-                    disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                    disabled={
+                      !!formData.schedule.shiftstart &&
+                      !!formData.schedule.shiftend &&
+                      !isEditSchedule
+                    }
+
                     step={1}
                   />
                 </div>
@@ -707,7 +713,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                     inputMode="numeric"
                     value={formData.schedule.shiftend}
                     onChange={handleInputChange}
-                    disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                    disabled={
+                    !!formData.schedule.shiftstart &&
+                    !!formData.schedule.shiftend &&
+                    !isEditSchedule
+                  }
+
                     step={1}
                   />
                 </div>
