@@ -212,7 +212,7 @@ export default function Daterange() {
             }
             const result = await response.json();
             if (!result.data.length) {
-                errorToast("No data available for the selected date range!.");
+                errorToast("No data available on this shift date!");
                 return;
             }
             if (response.status == 200) {
