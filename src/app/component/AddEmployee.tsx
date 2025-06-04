@@ -59,7 +59,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     schedule: empData.schedule || { shiftstart: "", shiftend: "" },
     un:empData.un || ""
   });
-  const [roles, setRoles] = useState<string[]>([]);
+  interface Position {
+    position: string;
+  }
+  const [roles, setRoles] = useState<Position[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [positions, setPositions] = useState<{ position: string }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
@@ -72,6 +75,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [isEditable, setEditable] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState("");
   const [keyword, setKey] = useState("");
+  const [role_keyword, setRoleKeyword] = useState("");
 
 
   let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
@@ -186,17 +190,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
   const fetchRoles = async () => {
-    const cachedRoles = localStorage.getItem("roles");
-    const cachedPositions = localStorage.getItem("positions");
-
-    if (cachedRoles && cachedPositions) {
-      setRoles(JSON.parse(cachedRoles));
-      setPositions(JSON.parse(cachedPositions));
-      return;
-    }
-
+    
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/roles/list/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`,{
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -207,15 +203,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         const data = await response.json();
         setRoles(data.data);
-        localStorage.setItem("roles", JSON.stringify(data.data));
-
-        const uniquePositionNames = Array.from(
-          new Set<string>(data.data.map((role: { name: string }) => role.name))
-        );
-        const uniquePositions = uniquePositionNames.map((name) => ({ position: name }));
-
-        setPositions(uniquePositions);
-        localStorage.setItem("positions", JSON.stringify(uniquePositions));
+        console.log("Roles fetched:", data.data);
       }
 
     } catch (e) {
@@ -242,22 +230,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       console.error(e);
     }
   };
-
-  useEffect(() => {
-    // fetchRoles();
-    // fetchAccounts();
-    // fetchPrivileges();
-  }, []);
-
-  useEffect(() => {
-    if (empData?.acctid && accounts.length > 0) {
-      const matchedAccount = accounts.find(acc => acc.acctid === empData.acctid);
-      if (matchedAccount) {
-        SetSelectedAccount(matchedAccount.acctname);
-      }
-    }
-  }, [accounts]);
-
 
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
@@ -395,6 +367,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     acctname: acct.acctname
   }));
 }
+
+useEffect(()=>{
+  fetchPrivileges();
+})
   return (
     <div>
       <ToastContainer />
@@ -511,42 +487,25 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 type="text"
                 className="form-control"
                 placeholder="Search Position"
-                value={formData.position}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  setFormData((prev) => ({ ...prev, position: val }));
-                  setShowPositionList(true);
-                  setShowAccountList(false);
-                }}
-                onFocus={() => {
-                  if (formData.position) {
-                    setShowPositionList(true);
-                  }
-                }}
+                value={role_keyword}
+                onChange={(e) => {setRoleKeyword(e.target.value)}}
+                 onKeyUp={() => {fetchRoles();}}
               />
 
-              {showPositionList && formData.position && (
+              
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
-                  {positions
-                    .filter((p) =>
-                      typeof p.position === "string" &&
-                      p.position.toLowerCase().includes(formData.position.toLowerCase())
-                    )
-                    .map((p, index) => (
+                  {roles.map((p, index) => (
                       <li
                         key={index}
                         className="list-group-item list-group-item-action"
-                        onMouseDown={() => {
-                          setFormData((prev) => ({ ...prev, position: p.position }));
-                          setShowPositionList(false);
-                        }}
+    
                         style={{ cursor: "pointer" }}
                       >
                         {p.position}
                       </li>
                     ))}
                 </ul>
-              )}
+              
 
             </div>
 
@@ -557,49 +516,49 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               </label>
               
            <input
-            type="text"
-            name="acctname"
-            className="form-control"
-            value={formData.acctname || keyword}
-            placeholder={mode !== 'edit' ? "Search Account" : ""}
-            onChange={(e) => {
-              // Always update the keyword when typing
-              setKey(e.target.value);
-              
-              // Clear the selected account if user is deleting
-              if (e.target.value === "") {
-                setFormData(prev => ({
-                  ...prev,
-                  acctid: 0,
-                  acctname: ""
-                }));
-              }
-            }}
-            onKeyUp={fetchAccounts}
+              type="text"
+              name="acctname"
+              className="form-control"
+              value={keyword}
+              placeholder={mode !== 'edit' ? "Search Account" : ""}
+              onChange={(e) => {
+                // Always update the keyword when typing
+                setKey(e.target.value);
+                
+                // Clear the selected account if user is deleting
+                if (e.target.value === "") {
+                  setFormData(prev => ({
+                    ...prev,
+                    acctid: 0,
+                    acctname: ""
+                  }));
+                }
+              }}
+              onKeyUp={fetchAccounts}
           />
              {keyword && accounts.length > 0 && (
-    <ul className="list-group position-absolute w-100 z-3" 
-        style={{ maxHeight: "200px", overflowY: "auto" }}>
-      {accounts.map(acc => (
-        <li
-          key={acc.acctid}
-          className="list-group-item list-group-item-action"
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            // When an account is selected:
-            setKey(""); // Clear search term
-            setFormData(prev => ({
-              ...prev,
-              acctid: acc.acctid,
-              acctname: acc.acctname
-            }));
-          }}
-        >
-          {acc.acctname}
-        </li>
-      ))}
-    </ul>
-  )}
+              <ul className="list-group position-absolute w-100 z-3" 
+                  style={{ maxHeight: "200px", overflowY: "auto" }}>
+                {accounts.map(acc => (
+                  <li
+                    key={acc.acctid}
+                    className="list-group-item list-group-item-action"
+                    style={{ cursor: "pointer" }}
+                  onClick={() => {
+                  setAccounts([]);
+                  setKey(acc.acctname);  // This sets the visible input text
+                  setFormData(prev => ({
+                    ...prev,
+                    acctid: acc.acctid,
+                    acctname: acc.acctname
+                  }));
+                }}
+                  >
+                    {acc.acctname}
+                  </li>
+                ))}
+              </ul>
+            )}
 
             </div>
             {mode === "edit" && (
