@@ -8,7 +8,7 @@ interface Schedule {
   shiftend: string;
 }
 interface AddEmployeeData {
-  empno: string;
+  empno: number;
   fname: string;
   mname: string;
   lname: string;
@@ -22,6 +22,9 @@ interface AddEmployeeData {
   role_id: number;
   status: number
   schedule: Schedule;
+  acctname:string;
+  isdayshift:number;
+  un:string;
 }
 
 interface AddEmpProps {
@@ -38,20 +41,23 @@ interface PrivilegesType {
 export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmpProps) {
 
   const [formData, setFormData] = useState<AddEmployeeData>({
-    empno: empData.empno || "",
+    empno: empData.empno ?? 0,
     fname: empData.fname || "",
     mname: empData.mname || "",
     lname: empData.lname || "",
     position: empData.position || "",
     dateofbirth: empData.dateofbirth || "",
-    maritalstatus: empData.maritalstatus || "",
+    maritalstatus: empData.maritalstatus || "None",
     gender: empData.gender || "",
     contactno: empData.contactno || "",
     address: empData.address || "",
     acctid: empData.acctid || 0,
     role_id: empData.role_id || 0,
     status: empData.status,
-    schedule: empData.schedule || { shiftstart: "", shiftend: "" }
+    acctname:empData.acctname,
+    isdayshift: empData.isdayshift ?? 0,
+    schedule: empData.schedule || { shiftstart: "", shiftend: "" },
+    un:empData.un || ""
   });
   const [roles, setRoles] = useState<string[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
@@ -77,20 +83,23 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   useEffect(() => {
     if (empData) {
       setFormData({
-        empno: empData.empno || "",
+        empno: empData.empno  ?? 0,
         fname: empData.fname || "",
         mname: empData.mname || "",
         lname: empData.lname || "",
         position: empData.position || "",
         dateofbirth: empData.dateofbirth || "",
-        maritalstatus: empData.maritalstatus || "",
+        maritalstatus: empData.maritalstatus || "None",
         gender: empData.gender || "",
         contactno: empData.contactno || "",
         address: empData.address || "",
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
         status: empData.status,
-        schedule: empData.schedule || { shiftstart: "", shiftend: "" }
+        acctname:empData.acctname,
+        schedule: empData.schedule || { shiftstart: "", shiftend: "" },
+        un:empData.un || "",
+        isdayshift:empData.isdayshift ?? 0
 
       });
     }
@@ -215,9 +224,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   };
 
   useEffect(() => {
-    fetchRoles();
-    fetchAccounts();
-    fetchPrivileges();
+    // fetchRoles();
+    // fetchAccounts();
+    // fetchPrivileges();
   }, []);
 
   const successToast = (msg: string) => toast.success(msg, {
@@ -311,7 +320,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
   const clearInputs = () => {
     setFormData({
-      empno: "",
+      empno: 0,
       fname: "",
       mname: "",
       lname: "",
@@ -324,7 +333,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       acctid: 0,
       role_id: 0,
       status: 1,
-      schedule: { shiftend: "", shiftstart: "" }
+      acctname:"",
+      schedule: { shiftend: "", shiftstart: "" },
+      isdayshift: 0,
+      un:"",
     });
     isClose();
 
@@ -341,6 +353,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       setIsEditSchedule(true);
     }
   }
+  console.log(empData)
   return (
     <div>
       <ToastContainer/>
@@ -406,13 +419,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 required name="maritalstatus" className="form-select" id="maritalstatus"
                 value={formData.maritalstatus} onChange={handleInputChange}
               >
-                <option value="">-- SELECT --</option>
+                <option value="None">-- SELECT --</option>
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
-                <option value="Separated">Separated</option>
-                <option value="Widowed">Widowed</option>
-                <option value="Divorced">Divorced</option>
-                <option value="Other">Other</option>
               </select>
             </div>
             <div className=" col-md-4 add-rows">
@@ -449,16 +458,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             </div>
             <div className=" col-md-4 add-rows">
               <label htmlFor="acctid" className="form-label">Account <span className="text-danger">*</span></label>
-              <select
+                <input type="text" 
                 disabled={!isEditable && mode == "edit" ? true:false }
-                required name="acctid" className="form-select" id="acctid"
-                value={formData.acctid} onChange={handleInputChange}
-              >
-                <option value="">Select Account</option>
-                {accounts.map((account, index) => (
-                  <option key={index} value={account.acctid}>{account.acctname}</option>
-                ))}
-              </select>
+                required name="acctid" className="form-control" id="acctid"
+                value={(mode === 'edit'? empData.acctname: formData.acctname) || ""} onChange={handleInputChange}
+              />
+             
             </div>
           </div>
 
@@ -541,8 +546,11 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   required type="time" name="shiftstart" className="form-control-ti" id="shiftstart"
                   autoComplete="off" inputMode="numeric"
                   value={formData.schedule.shiftstart} onChange={handleInputChange}
-                  disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
-                  step={1}
+               disabled={
+                !!formData.schedule.shiftstart &&
+                !!formData.schedule.shiftend &&
+                !isEditSchedule
+              }
                
                 />
                 
@@ -553,7 +561,11 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   required type="time" name="shiftend" className="form-controll-timeout1" id="shiftend"
                   autoComplete="off" inputMode="numeric"
                   value={formData.schedule.shiftend} onChange={handleInputChange}
-                  disabled={formData.schedule.shiftstart && formData.schedule.shiftend && !isEditSchedule}
+                  disabled={
+                    !!formData.schedule.shiftstart &&
+                    !!formData.schedule.shiftend &&
+                    !isEditSchedule
+                  }
                   step={1}
                 />
               </div>

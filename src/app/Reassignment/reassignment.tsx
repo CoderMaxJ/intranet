@@ -33,7 +33,8 @@ interface Information {
      role_id: number;
      isdayshift: number;
      status: number;
-     schedule: Schedule
+     schedule: Schedule;
+     acctname:string;
 }
 
 export default function () {
@@ -223,6 +224,7 @@ export default function () {
                     });
                     if (response.ok) {
                          const data = await response.json();
+                         console.log(data.data);
                          setEmployee(data.data);
                     } else {
                          console.error("Error fetching search results");

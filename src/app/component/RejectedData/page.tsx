@@ -53,6 +53,7 @@ interface RequestDetails {
     declined_at: string;
     approved_by: number;
     reason_for_disapproved: string;
+    acctname:string;
 }
 
 interface Account {
@@ -62,151 +63,14 @@ interface Account {
 interface RejectedDataProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
+    onDeclineComplete:()=> void;
 
 }
 
 
-export default function RejectedData({ data, onSave }: RejectedDataProps) {
+export default function RejectedData({ data, onSave,onDeclineComplete }: RejectedDataProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData, setCombinedData] = useState({})
-    const [declineReason, setDeclineReason] = useState("");
-    const [status, setStatus] = useState(0);
-    const [accounts, setAccounts] = useState<Account[]>([]);
-    const [refreshFlag, setRefreshFlag] = useState(false);
-    const [activeTab, setActiveTab] = useState("pending"); // or "rejected"
-
-    useEffect(() => {
-        if (buildData) {
-            setCombinedData({
-                requestid: data?.requestid,
-                empno: data?.empno,
-                name: data?.name,
-                shiftdate: data?.shiftdate,
-                reason: declineReason,
-                // status: data?.status,
-                status: 2,
-                logs: buildData,
-                acctid: data?.acctid,
-                created_at: data?.created_at,
-                aprroved_at: '',
-                declined_at: new Date().toISOString(),
-                approved_by: Decryptor(localStorage.getItem("user_id") || ""),
-            });
-        }
-
-    }, [buildData, status, declineReason]);
-
-    useEffect(() => {
-
-    }, [combinedData])
-
-    useEffect(() => {
-        if (data?.logs) {
-            setBuildData(JSON.parse(JSON.stringify(data.logs)));
-        }
-    }, [data]);
-
-    const handleViewClick = () => {
-        setRefreshFlag(prev => !prev);
-        // open offcanvas logic
-    };
-
-    const handleDecline = async () => {
-        const token = localStorage.getItem("token");
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${Decryptor(token || "")}`
-            },
-            body: JSON.stringify(combinedData)
-        });
-
-        if (response.status === 200) {
-
-            // fetchShiftAdjustmentData();
-        }
-
-    };
-
-    const getAccounts = async () => {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${Decryptor(token || "")}`
-            }
-        });
-        const result = await response.json();
-        setAccounts(result.data);
-    };
-
-    useEffect(() => {
-        getAccounts();
-    }, []);
-
-    const handleChange = (section: string, field: string, value: string) => {
-        setBuildData(prev => {
-            if (!prev) return prev;
-
-            const updated = { ...prev };
-
-            if (section === "login" || section === "logout") {
-                updated[section] = {
-                    ...updated[section],
-                    record: value
-                };
-            }
-            // Handle other sections with record objects
-            else if (section === "break1" || section === "break2" || section === "lunch") {
-                updated[section] = {
-                    ...updated[section],
-                    record: {
-                        ...updated[section]?.record,
-                        [field]: value
-                    }
-                };
-            }
-
-            return updated;
-        });
-    };
-    const token = localStorage.getItem("token");
-    const approvedRequest = async (payload: any) => {
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Decryptor(token || "")}`
-            },
-            body: JSON.stringify(payload),
-        })
-
-    }
-    const handleApply = () => {
-        const updatedStatus = 1;
-        setStatus(updatedStatus);
-
-        const payload = {
-            requestid: data?.requestid,
-            empno: data?.empno,
-            name: data?.name,
-            shiftdate: data?.shiftdate,
-            reason: data?.reason,
-            status: updatedStatus,
-            logs: buildData,
-            acctid: data?.acctid,
-            created_at: data?.created_at,
-            aprroved_at: new Date().toISOString(),
-            declined_at: null,
-            approved_by: Decryptor(localStorage.getItem("user_id") || "")
-        };
-        approvedRequest(payload);
-    };
-
 
     return (
         <div>
@@ -243,7 +107,7 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Department</p>
-                                <p className="drawer-label">{accounts.find(acc => acc.acctid === data?.acctid)?.acctname || "-"}</p>
+                                <p className="drawer-label">{data?.acctname}</p>
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Request ID</p>
@@ -299,7 +163,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                                 <div>
                                     <input
                                         type="time"
-                                        onChange={(e) => handleChange("login", "", e.target.value)}
                                         value={buildData?.login?.record || ""}
                                         disabled={true} readOnly
                                         className="input-time-field"
@@ -326,7 +189,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                                 <div>
                                     <input
                                         type="time"
-                                        onChange={(e) => handleChange("break1", "in", e.target.value)}
                                         value={buildData?.break1?.record?.in || ""}
                                         disabled={true} readOnly
                                         className="input-time-field"
@@ -354,7 +216,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        onChange={(e) => handleChange("break1", "out", e.target.value)}
                                         value={buildData?.break1?.record?.out || ""}
                                         className="input-time-field"
                                     />
@@ -381,7 +242,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        onChange={(e) => handleChange("lunch", "in", e.target.value)}
                                         value={buildData?.lunch?.record?.in || ""}
                                         className="input-time-field"
                                     />
@@ -411,7 +271,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        onChange={(e) => handleChange("lunch", "out", e.target.value)}
                                         value={buildData?.lunch?.record?.out || ""}
                                         className="input-time-field"
                                     />
@@ -440,7 +299,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        onChange={(e) => handleChange("break2", "in", e.target.value)}
                                         value={buildData?.break2?.record?.in || ""}
                                         className="input-time-field"
                                     />
@@ -467,7 +325,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        onChange={(e) => handleChange("break2", "out", e.target.value)}
                                         value={buildData?.break2?.record?.out || ""}
                                         className="input-time-field"
                                     />
@@ -493,7 +350,6 @@ export default function RejectedData({ data, onSave }: RejectedDataProps) {
                                 <div>
                                     <input
                                         type="time"
-                                        onChange={(e) => handleChange("logout", "", e.target.value)}
                                         value={buildData?.logout?.record || ""}
                                         className="input-time-field"
                                         readOnly
