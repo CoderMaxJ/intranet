@@ -222,14 +222,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       console.error(e);
     }
   };
-  useEffect(() => {
-    console.log("Positions:", positions); 
-  }, [positions]);
-
 
   const fetchAccounts = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/accounts/${keyword}/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/accounts/?key=${keyword || ""}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -390,7 +386,15 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       setIsEditSchedule(true);
     }
   }
-  console.log(empData)
+ const selectAccount = (acct: { acctid: number, acctname: string }) => {
+  SetSelectedAccount(acct.acctname);
+  setKey("");
+  setFormData(prev => ({
+    ...prev,
+    acctid: acct.acctid,
+    acctname: acct.acctname
+  }));
+}
   return (
     <div>
       <ToastContainer />
@@ -551,28 +555,51 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 Account
                 <span className="text-danger">*</span>
               </label>
-              <input
-                type="text"
-                name="acctname"
-                className="form-control"
-                value={keyword}
-                placeholder={mode !== 'edit' ? "Search Account" : ""}
-                onChange={(e)=>setKey(e.target.value)}
-                onKeyUp={fetchAccounts}
-              />
-              {accounts.length > 0 && (
-                <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
-                  {accounts.map(acc => (
-                      <li
-                        key={acc.acctid}
-                        className="list-group-item list-group-item-action"
-                        style={{ cursor: "pointer" }}
-                      >
-                        {acc.acctname}
-                      </li>
-                    ))}
-                </ul>
-              )}
+              
+           <input
+            type="text"
+            name="acctname"
+            className="form-control"
+            value={formData.acctname || keyword}
+            placeholder={mode !== 'edit' ? "Search Account" : ""}
+            onChange={(e) => {
+              // Always update the keyword when typing
+              setKey(e.target.value);
+              
+              // Clear the selected account if user is deleting
+              if (e.target.value === "") {
+                setFormData(prev => ({
+                  ...prev,
+                  acctid: 0,
+                  acctname: ""
+                }));
+              }
+            }}
+            onKeyUp={fetchAccounts}
+          />
+             {keyword && accounts.length > 0 && (
+    <ul className="list-group position-absolute w-100 z-3" 
+        style={{ maxHeight: "200px", overflowY: "auto" }}>
+      {accounts.map(acc => (
+        <li
+          key={acc.acctid}
+          className="list-group-item list-group-item-action"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            // When an account is selected:
+            setKey(""); // Clear search term
+            setFormData(prev => ({
+              ...prev,
+              acctid: acc.acctid,
+              acctname: acc.acctname
+            }));
+          }}
+        >
+          {acc.acctname}
+        </li>
+      ))}
+    </ul>
+  )}
 
             </div>
             {mode === "edit" && (
