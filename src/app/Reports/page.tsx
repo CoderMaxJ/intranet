@@ -240,7 +240,6 @@ export default function Daterange() {
             <div className="d-flex" >
                 <Dashboard/>
                 {error && <div className="alert alert-danger">{error}</div>}
-                {data.length > 0 ? (
                     <div className="flex-fill reports-division">
                         <div className="reportheader"><Header title="DAILY REPORTS" currentPage="" /></div>
                         <div className="px-4">
@@ -386,9 +385,6 @@ export default function Daterange() {
                             </div>
                         </div>
                     </div>
-                ) : (
-                    <p></p>
-                )}
             </div>
         </div>
     );
