@@ -6,6 +6,7 @@ import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useRouter } from "next/navigation";
+import { ToastContainer,toast } from "react-toastify";
 
 interface BreaksReport {
     name: string;
@@ -42,6 +43,27 @@ export default function Daterange() {
         setSearchTerm(event.target.value.toLowerCase());
     };
 
+
+
+      const successToast = (msg: string) => toast.success(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+  const errorToast = (msg: string) => toast.error(msg, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
     const router = useRouter();
     useEffect(() => {
         if (checker) {
@@ -74,7 +96,9 @@ export default function Daterange() {
                 result = await response.json();
             }
             if (!result.data.length) {
+                 errorToast("No data available for the selected date range!");
                 return;
+               
             }
             const filteredData = result.data.filter((report: any) =>
                 report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
@@ -130,7 +154,7 @@ export default function Daterange() {
             setOriginalData(result.data);
             setData(result.data);
         } catch (e) {
-            setError("An error occurred while fetching data.");
+          errorToast("Unable to download reports!");
         }
     };
     const handleView = async (e: any) => {
@@ -153,8 +177,8 @@ export default function Daterange() {
                 throw new Error("Failed to fetch data");
             }
             const result = await response.json();
-            if (!result.data.length) {
-                alert("No data available for the selected date range.");
+            if (result.data.length < 1) {
+               errorToast("No data available for the selected date range!");
                 return;
             }
             if (start != "" || end != "") {
@@ -163,7 +187,7 @@ export default function Daterange() {
                 setData(originalData);
             }
         } catch (e) {
-            alert("No data found in this given date range!")
+           errorToast("Unable to download reports!");
         }
     };
     const token = localStorage.getItem("token");
@@ -188,7 +212,7 @@ export default function Daterange() {
             }
             const result = await response.json();
             if (!result.data.length) {
-                alert("No data available for the selected date range.");
+                errorToast("No data available for the selected date range!.");
                 return;
             }
             if (response.status == 200) {
@@ -212,6 +236,7 @@ export default function Daterange() {
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
+            <ToastContainer/>
             <div className="d-flex" >
                 <Dashboard/>
                 {error && <div className="alert alert-danger">{error}</div>}

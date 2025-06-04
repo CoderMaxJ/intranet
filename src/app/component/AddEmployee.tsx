@@ -71,6 +71,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [isEditSchedule, setIsEditSchedule] = useState(false);
   const [isEditable, setEditable] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState("");
+  const [keyword, setKey] = useState("");
 
 
   let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
@@ -222,18 +223,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   };
   useEffect(() => {
-    console.log("Positions:", positions); // ✅ Check output
+    console.log("Positions:", positions); 
   }, [positions]);
 
 
   const fetchAccounts = async () => {
-    const cachedAccounts = localStorage.getItem("accounts");
-    if (cachedAccounts) {
-      setAccounts(JSON.parse(cachedAccounts));
-      return;
-    }
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/accounts/${keyword}/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -242,9 +238,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       });
       if (response.status === 200) {
         const data = await response.json();
-        console.log("Accounts fetched:", data.data); // ✅ Check output
+        console.log("Accounts fetched:", data.data);
         setAccounts(data.data);
-        localStorage.setItem("accounts", JSON.stringify(data.data));
+      
       }
     } catch (e) {
       console.error(e);
@@ -483,7 +479,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
           {/* Row 3 */}
           <div className="row px-4">
-            <h6>Personal Information</h6>
+            <h6>Address Line</h6>
             <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="contactno" className="form-label">Contact No</label>
               <input
@@ -559,36 +555,17 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 type="text"
                 name="acctname"
                 className="form-control"
-                value={selectedAccount}
+                value={keyword}
                 placeholder={mode !== 'edit' ? "Search Account" : ""}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  SetSelectedAccount(val);
-                  setShowAccountList(true);
-                  setShowPositionList(false);
-                  if (accounts.length === 0) fetchAccounts();
-                }}
-                onFocus={() => {
-                  if (accounts.length === 0) fetchAccounts(); 
-                }}
-                onBlur={() => setTimeout(() => setShowAccountList(false), 100)}
-
+                onChange={(e)=>setKey(e.target.value)}
+                onKeyUp={fetchAccounts}
               />
-              {showAccountList && selectedAccount && (
+              {accounts.length > 0 && (
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
-                  {accounts
-                    .filter(acc =>
-                      acc.acctname.toLowerCase().includes(selectedAccount.toLowerCase())
-                    )
-                    .map(acc => (
+                  {accounts.map(acc => (
                       <li
                         key={acc.acctid}
                         className="list-group-item list-group-item-action"
-                        onClick={() => {
-                          SetSelectedAccount(acc.acctname);
-                          setFormData((prev) => ({ ...prev, acctid: acc.acctid }));
-                          setShowAccountList(false);
-                        }}
                         style={{ cursor: "pointer" }}
                       >
                         {acc.acctname}
