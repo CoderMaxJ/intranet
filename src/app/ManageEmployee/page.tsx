@@ -51,26 +51,26 @@ export default function CreateUD() {
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
 const [empData, setEmpData] = useState<Information>({
-  empno: 0,                // Default number value
-  fname: "",               // Default empty string
-  mname: "",               // Default empty string
-  lname: "",               // Default empty string
-  position: "",            // Default empty string
-  dateofbirth: "",         // Default empty string
-  maritalstatus: "None",   // Default value
-  gender: "",              // Default empty string
-  contactno: "",           // Default empty string
-  address: "",             // Default empty string
-  acctid: 0,               // Default number value
-  role_id: 0,              // Default number value
-  status: 1,               // Default active status
-  acctname: "",            // Default empty string
-  schedule: {              // Default schedule object
+  empno: 0,               
+  fname: "",               
+  mname: "",               
+  lname: "",               
+  position: "",            
+  dateofbirth: "",         
+  maritalstatus: "None",  
+  gender: "",              
+  contactno: "",           
+  address: "",             
+  acctid: 0,              
+  role_id: 0,             
+  status: 1,              
+  acctname: "",            
+  schedule: {              
     shiftstart: "", 
     shiftend: "" 
   },
-  isdayshift: 0,           // Default number value
-  un: ""                   // Default empty string
+  isdayshift: 0,          
+  un: ""                   
 });
   const router = useRouter();
   const token = localStorage.getItem("token");
@@ -99,7 +99,6 @@ const [empData, setEmpData] = useState<Information>({
     );
     if (response.ok) {
       const data = await response.json();
-      console.log(data.data);
       setEmployees(data.data);
       setTotalPages(data.num_pages);
       setTotal(data.total);
@@ -179,7 +178,6 @@ const [empData, setEmpData] = useState<Information>({
 
         if (response.ok) {
           const data = await response.json();
-          console.log("------------------------->",data.data);
           setEmployees(data.data);
         } else {
           console.error("Error fetching search results");
@@ -254,7 +252,6 @@ const [empData, setEmpData] = useState<Information>({
     } else {
       const warning = await response.json();
       errorToast(warning.warning);
-      console.log("error");
     }
   };
 

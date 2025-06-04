@@ -224,7 +224,6 @@ export default function () {
                     });
                     if (response.ok) {
                          const data = await response.json();
-                         console.log(data.data);
                          setEmployee(data.data);
                     } else {
                          console.error("Error fetching search results");

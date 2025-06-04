@@ -144,7 +144,7 @@ export default function Login() {
                     </div>
                     <div>
                         <button type="submit" className="button-login mb-4">
-                            <span className="view">Login</span>
+                            <span className="view">Log in</span>
                         </button>
                     </div>
                 </form>

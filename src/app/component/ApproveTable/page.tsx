@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
 
@@ -66,7 +67,7 @@ interface Accounts {
 
 }
 
-export default function ApproveTable({ onView }: ApproveProps) {
+export default function ApproveTable() {
 
   const [showSample, setShowSample] = useState(true);
   const [approvedRequest, setApproveRequest] = useState<ApprovedRequest[]>([]);
@@ -95,7 +96,6 @@ export default function ApproveTable({ onView }: ApproveProps) {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data.data);
       setApproveRequest(data.data);
       setTotalPage(data.num_pages);
       setTotal(data.total);
@@ -141,7 +141,6 @@ export default function ApproveTable({ onView }: ApproveProps) {
                     data-bs-target="#approveddrawer"
                     aria-controls="approveddrawer"
                     style={{ marginRight: "20px" }}
-                    onClick={() => onView(request)} 
                   >
                     <img src="/svg/View.svg" alt="view" className="eye-view" />
                   </button>
@@ -150,7 +149,7 @@ export default function ApproveTable({ onView }: ApproveProps) {
             ))) : (
             <tr>
               <td colSpan={6} className="text-center">
-                No pending shift adjustment requests at this time
+             No approved shift adjustment requests at this time
               </td>
             </tr>
           )}

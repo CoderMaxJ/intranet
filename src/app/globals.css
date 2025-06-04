@@ -758,6 +758,14 @@ input:focus {
   padding-right: 28px !important;
 }
 
+
+@media only screen and (max-width: 991px) {
+.modal-dialog {
+  --bs-modal-width: 340px !important;
+  max-width: var(--bs-modal-width) !important;
+}
+}
+
 @media only screen and (max-width: 1020px) {
   .emp-table {
     font-size: small !important;
@@ -786,6 +794,8 @@ input:focus {
   .login-logo {
     width: 100px !important;
   }
+
+
 
   .searchbar-wrapper {
     display: flex;
@@ -1887,7 +1897,7 @@ table {
 }
 
 .row {
-  padding-top: 40px;
+  padding-top: 22px;
 }
 
 .search-input {
@@ -2172,6 +2182,14 @@ table {
   padding: 8px;
 }
 
+.schedule--addemployee {
+  margin-left: 25px;
+}
+
+.update-status {
+ transform: translateY(-25px) !important;
+}
+
 .blink {
   animation: blinkAnimation 1s steps(1, end) infinite,
     blink-animation 1s steps(5, start) infinite;
@@ -2213,6 +2231,7 @@ table {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 40vh;
 }
 
 .dashboard svg {
@@ -2578,19 +2597,10 @@ table {
   box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
 }
 
-.edit-schedule-btn {
-  margin-left: -438px;
-  transform: translateY(-3px);
-}
-
 .form-label {
   font-weight: 600;
   color: #615959;
   margin-bottom: 4px;
-}
-
-.form-label-ti {
-  margin-left: 23px;
 }
 
 .rep-label {
@@ -2598,10 +2608,6 @@ table {
   color: #ffffff;
   margin-bottom: 4px;
   font-family: 'Geist';
-}
-
-.form-label-timeout1 {
-  margin-left: -210px;
 }
 
 .circle-indicator {
@@ -2996,6 +3002,7 @@ table {
   border-radius: 5px;
   background-color: #ffffff;
   color: black;
+  max-width: 12.9vw;
 }
 
 .form-controll input {
@@ -3051,17 +3058,30 @@ table {
   border-radius: 5px;
   background-color: #ffffff;
   color: black;
+  max-width: 13vw;
+}
+.form-select--status {
+  width: 100%;
+  max-width: 110px;
 }
 
+.form-select--assignprivileges {
+  width: 100%;
+  max-width: 13.1vw;
+}
 .form-controll-timeout1 {
   position: relative;
   display: block;
-  margin-left: -210px;
   padding: 5px;
-  padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 100%;
+  min-width: 13.1vw;
+}
+
+.edit-timein-out button{
+  margin-top: 15px !important;
 }
 
 .form-controll-timeout1::after {
@@ -3119,6 +3139,25 @@ table {
   position: relative;
 }
 
+.date-with-icon {
+  position: relative;
+}
+
+.date-with-icon::before {
+  content: "\1F4C5";
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1rem;
+}
+
+.date-with-icon {
+  padding-left: 2rem;
+  /* Makes room for the emoji */
+}
+
 .has-calendar-icon input[type="date"]::before {
   content: "\1F4C5";
   position: absolute;
@@ -3172,12 +3211,16 @@ body.dark-mode .time-icon-group::before {
   position: relative;
   display: block;
   padding: 5px;
-  padding-right: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-left: 20px;
+  width: 100%;
+  min-width: 13.1vw;
 }
+
+/* .update-timeout {
+  margin-left: -14px;
+} */
 
 .form-control-ti::after {
   content: "\1F552";
@@ -3220,11 +3263,6 @@ body.dark-mode .time-icon-group::before {
 .timeout-create {
   min-width: 250px;
   width: 100%;
-}
-
-.list-group {
-  height: 55vh;
-  overflow-y: scroll;
 }
 
 .arrow-btn {
@@ -3573,6 +3611,23 @@ body.dark-mode .time-icon-group::before {
   font-family: 'Geist' !important;
 }
 
+.edit-schedule-btn {
+  transform: translateX(0px) translateY(-3px);
+}
+
+.create-timein {
+  margin-left: -2px;
+}
+
+.emp-schedule-details {
+  transform: translateY(14px);
+}
+
+.addemployee-modalsize {
+  width: 100%;
+  max-width: 44vw !important;
+}
+
 .form-select-unassigned,
 .add-supervisor {
   font-size: 13px !important;
@@ -3738,6 +3793,7 @@ body.dark-mode .time-icon-group::before {
 .decline-button button {
   border: 1px solid red !important;
 }
+
 .compress span,
 .fullscreen span {
   font-family: 'Geist';
