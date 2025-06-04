@@ -177,10 +177,6 @@ export default function Daterange() {
                 throw new Error("Failed to fetch data");
             }
             const result = await response.json();
-            if (result.data.length < 1) {
-               errorToast("No data available for the selected date range!");
-                return;
-            }
             if (start != "" || end != "") {
                 setData(result.data);
             } else {
