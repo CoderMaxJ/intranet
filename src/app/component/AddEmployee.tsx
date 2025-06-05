@@ -107,7 +107,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
         status: empData.status,
-        acctname:empData.acctname || "Unassinged",
+        acctname:empData.acctname || "",
         schedule: empData.schedule || { shiftstart: "", shiftend: "" },
         un: empData.un || "",
         isdayshift: empData.isdayshift ?? 0
@@ -189,7 +189,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
   const fetchRoles = async () => {
-    console.log("=============================================================================>")
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`, {
         method: "GET",
@@ -511,7 +510,7 @@ setKey('');
                 }}
 
               />
-             {formData.position != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
+             {(formData.position != "" && mode === 'edit') && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
                     <li
@@ -556,7 +555,7 @@ setKey('');
               }}
               onKeyUp={fetchAccounts}
           />
-          {formData.acctname != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
+          {(formData.acctname != "" && mode === 'edit') &&(<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
              {keyword && accounts.length > 0 && (
               <ul className="list-group position-absolute w-100 z-3" 
                   style={{ maxHeight: "200px", overflowY: "auto" }}>
