@@ -527,8 +527,6 @@ setKey('');
                     </li>
                   ))}
                 </ul>
-
-              )}
             </div>
 
             <div className=" col-md-4 add-rows mt-2 position-relative">
