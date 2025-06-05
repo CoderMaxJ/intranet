@@ -1810,8 +1810,6 @@ table {
 }
 
 .employee-header-container {
-  padding-left: 25px;
-  padding-right: 25px;
   padding-top: 20px;
   padding-bottom: 1px;
 }
@@ -1874,8 +1872,6 @@ table {
 .manageemployee-button {
   padding-bottom: 1px;
   padding-top: 25px;
-  padding-right: 25px;
-  padding-left: 25px;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -3507,7 +3503,7 @@ body.dark-mode .time-icon-group::before {
 .shift-background {
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
   background-color: #ffffff;
-  margin: 25px;
+  /* margin: 25px; */
   border-radius: 4px;
 }
 

@@ -287,11 +287,11 @@ const [empData, setEmpData] = useState<Information>({
       <div className="main-divv">
         <Header title="MANAGE EMPLOYEE" currentPage=""/>
         <div className="px-4">
-          <div className="manageemployee-division">
+          <div className="manageemployee-division px-4">
             <div>
               <div className="employee-header-container">
                 <header>
-                  <div className=" employee-head w-100 d-flex justify-content-between flex-wrap py-2 px-4 gap-3">
+                  <div className=" employee-head w-100 d-flex justify-content-between flex-wrap py-2 px-4 gap-1">
                     <div className="searchbar-container py-1">
                       <input
                         className="form-control form-control--search"
@@ -356,7 +356,7 @@ const [empData, setEmpData] = useState<Information>({
                 </div>
               </div>
             </div>
-            <div className="emp-table px-4" style={{ position: 'relative', height: 'auto' }}>
+            <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
               <table
                 className="tabemp table table-striped table-hover table-bordered"
                 id="table-employee"

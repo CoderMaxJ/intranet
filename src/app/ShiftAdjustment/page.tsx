@@ -131,7 +131,8 @@ export default function ShiftAdjustment() {
       </div>
       <div className="shiftadjustment-container flex-grow-1">
         <Header title="ADJUSTMENT" currentPage=""/>
-        <div className="shift-background p-4 px-4">
+        <div className="px-4 py-4">
+        <div className="shift-background p-4 ">
           <div className="d-flex gap-5">
             <div className="d-flex gap-5">
               <button
@@ -263,6 +264,7 @@ export default function ShiftAdjustment() {
       {activeTab === "rejected" && (
         <RejectedData data={selectedData} onDeclineComplete={fetchShiftAdjustmentData} />
       )}
+    </div>
     </div>
   );
 }

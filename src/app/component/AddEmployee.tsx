@@ -23,9 +23,9 @@ interface AddEmployeeData {
   role_id: number;
   status: number
   schedule: Schedule;
-  acctname:string;
-  isdayshift:number;
-  un:string;
+  acctname: string;
+  isdayshift: number;
+  un: string;
 }
 
 interface AddEmpProps {
@@ -55,10 +55,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     acctid: empData.acctid || 0,
     role_id: empData.role_id || 0,
     status: empData.status,
-    acctname:empData.acctname,
+    acctname: empData.acctname,
     isdayshift: empData.isdayshift ?? 0,
     schedule: empData.schedule || { shiftstart: "", shiftend: "" },
-    un:empData.un || ""
+    un: empData.un || ""
   });
   interface Position {
     position: string;
@@ -94,7 +94,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   useEffect(() => {
     if (empData) {
       setFormData({
-        empno: empData.empno  ?? 0,
+        empno: empData.empno ?? 0,
         fname: empData.fname || "",
         mname: empData.mname || "",
         lname: empData.lname || "",
@@ -109,8 +109,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         status: empData.status,
         acctname:empData.acctname || "Unassinged",
         schedule: empData.schedule || { shiftstart: "", shiftend: "" },
-        un:empData.un || "",
-        isdayshift:empData.isdayshift ?? 0
+        un: empData.un || "",
+        isdayshift: empData.isdayshift ?? 0
 
       });
       const matchedAccount = accounts.find(acc => acc.acctid === empData.acctid);
@@ -191,7 +191,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const fetchRoles = async () => {
     console.log("=============================================================================>")
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`,{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -221,7 +221,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         const data = await response.json();
         setAccounts(data.data);
-      
+
       }
     } catch (e) {
       console.error(e);
@@ -335,10 +335,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       acctid: 0,
       role_id: 0,
       status: 1,
-      acctname:"",
+      acctname: "",
       schedule: { shiftend: "", shiftstart: "" },
       isdayshift: 0,
-      un:"",
+      un: "",
     });
     isClose();
 
@@ -489,7 +489,9 @@ setKey('');
           <div className="row px-4 d-flex">
             <h6>Account Details</h6>
             <div className=" col-md-4 add-rows mt-2 position-relative">
-              <label htmlFor="position" className="form-label">Position<span className="text-danger">*</span></label>
+              <label htmlFor="position" className="form-label">
+                Position<span className="text-danger">*</span>
+              </label>
               <input
                 required
                 type="text"
@@ -498,27 +500,35 @@ setKey('');
                 value={formData.position || role_keyword}
                 onChange={(e) => {setRoleKeyword(e.target.value);
                   fetchRoles();
+
+                  if (e.target.value === "") {
+                    setFormData(prev => ({
+                      ...prev,
+                      acctid: 0,
+                      acctname: ""
+                    }));
+                  }
                 }}
-                
+
               />
              {formData.position != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
-                      <li
-                        key={index}
-                        className="list-group-item list-group-item-action"
-                        style={{ cursor: "pointer" }}
-                        onClick={()=>{
-                          setRoleKeyword(p.position);
-                          setRoles([]);
-                        }}
-                      >
-                        {p.position}
-                      </li>
-                    ))}
+                    <li
+                      key={index}
+                      className="list-group-item list-group-item-action"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setRoleKeyword(p.position);
+                        setRoles([]);
+                      }}
+                    >
+                      {p.position}
+                    </li>
+                  ))}
                 </ul>
-              
 
+              )}
             </div>
 
             <div className=" col-md-4 add-rows mt-2 position-relative">
@@ -552,26 +562,26 @@ setKey('');
              {keyword && accounts.length > 0 && (
               <ul className="list-group position-absolute w-100 z-3" 
                   style={{ maxHeight: "200px", overflowY: "auto" }}>
-                {accounts.map(acc => (
-                  <li
-                    key={acc.acctid}
-                    className="list-group-item list-group-item-action"
-                    style={{ cursor: "pointer" }}
-                  onClick={() => {
-                  setAccounts([]);
-                  setKey(acc.acctname);  // This sets the visible input text
-                  setFormData(prev => ({
-                    ...prev,
-                    acctid: acc.acctid,
-                    acctname: acc.acctname
-                  }));
-                }}
-                  >
-                    {acc.acctname}
-                  </li>
-                ))}
-              </ul>
-            )}
+                  {accounts.map(acc => (
+                    <li
+                      key={acc.acctid}
+                      className="list-group-item list-group-item-action"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setAccounts([]);
+                        setKey(acc.acctname);  // This sets the visible input text
+                        setFormData(prev => ({
+                          ...prev,
+                          acctid: acc.acctid,
+                          acctname: acc.acctname
+                        }));
+                      }}
+                    >
+                      {acc.acctname}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
             </div>
             {mode === "edit" && (
@@ -597,14 +607,14 @@ setKey('');
             )}
 
           </div>
-          
+
           <div className="mt-4">
-              {mode != 'edit' && (
-                <div>
-                  <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
-                </div>
-              
-              )}
+            {mode != 'edit' && (
+              <div>
+                <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
+              </div>
+
+            )}
             <div className="d-flex flex-wrap schedule--addemployee">
 
               {mode !== "edit" && (
