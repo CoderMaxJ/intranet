@@ -61,7 +61,7 @@ export default function ManageDepartment() {
             fetchAccountList();
         }
     }, [token]);
-    
+
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",
         autoClose: 2000,
@@ -108,10 +108,20 @@ export default function ManageDepartment() {
             errorToast("Account name is required.");
             return;
         }
+
+        const isDuplicate = department.some(
+            dept => dept.acctname.trim().toLowerCase() === accountName.trim().toLowerCase()
+        );
+
+        if (isDuplicate) {
+            errorToast("Duplicate account name. Please choose another name.");
+            return;
+        }
+
         createAccount();
         setAccountName("");
     };
-const btnClose = document.getElementById("buttonClose")
+    const btnClose = document.getElementById("buttonClose")
     const createAccount = async () => {
         try {
             const requestBody = {
@@ -304,7 +314,7 @@ const btnClose = document.getElementById("buttonClose")
                 </div>
             )}
             <div className="manage-department">
-                <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" currentPage=""/></div>
+                <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" currentPage="" /></div>
                 <div className="accounts-margin px-4">
                     <div className="manageaccounts-bg">
                         <div className="manage-accounts-container">
@@ -387,7 +397,7 @@ const btnClose = document.getElementById("buttonClose")
                                             <td>
                                                 {instance.manager && instance.manager.length > 0 ? (
                                                     <div className="manage-account-form" >
-                                                        <form>
+                                                        <form className="d-flex gap-3">
                                                             {instance.manager?.map((manager: any, index: any) => (
                                                                 <div
                                                                     key={index}
@@ -415,6 +425,17 @@ const btnClose = document.getElementById("buttonClose")
                                                                     </div>
                                                                 </div>
                                                             ))}
+                                                            <div className="d-flex">
+                                                                <button
+                                                                    onClick={() => handleShowDropdown(instance.acctid)}
+                                                                    type="button"
+                                                                    className="accounts-edit"
+                                                                    style={{ cursor: "pointer" }}
+                                                                    title={add ? "" : "Add"}
+                                                                >
+                                                                    <img src="/svg/Add.svg" alt="add" className="actions-button" />
+                                                                </button>
+                                                            </div>
                                                         </form>
                                                         <div>
                                                             {openDropdownId === instance.acctid && (
@@ -453,15 +474,6 @@ const btnClose = document.getElementById("buttonClose")
                                             </td>
                                             <td >
                                                 <div className="actions">
-                                                    <button
-                                                        onClick={() => handleShowDropdown(instance.acctid)}
-                                                        type="button"
-                                                        className="accounts-edit"
-                                                        style={{ cursor: "pointer" }}
-                                                        title={add ? "" : "Add"}
-                                                    >
-                                                        <img src="/svg/Add.svg" alt="add" className="actions-button" />
-                                                    </button>
                                                     <button
                                                         onClick={() => { setTargetID(instance.acctid); }}
                                                         type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"

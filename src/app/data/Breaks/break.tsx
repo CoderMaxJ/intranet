@@ -321,12 +321,12 @@ function BreakDataTable() {
       </div>
 
       <div className="logs-wrapper mt-4">
-			<div className="logs-maindiv px-3">
+			<div className="logs-maindiv px-3 py-3">
 				<div className="agentheader-container d-flex flex-wrap flex-direction-row align-items-center">
 					<div className="align-items-center col-5 py-3">
-						<h3 className="logs-headername">
+						<h3 className="logs-headername text-light px-3">
 							Agent Logs Today
-							<span className="text-muted small ms-2">
+							<span className="text-light small ms-2">
 								({localStorage.getItem("total-logs") || 0})
 							</span>
 						</h3>

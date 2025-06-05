@@ -221,7 +221,7 @@ export default function CreateUD() {
                             <div>
                                 <header>
                                     <div className="manageemployee-button w-100 d-flex flex-wrap">
-                                        <div className="time d-flex gap-4 flex-wrap px-3">
+                                        <div className="time d-flex gap-1 flex-wrap px-3">
                                             <div className="searchbar-container">
                                                 <input
                                                     className="form-control form-control--search"

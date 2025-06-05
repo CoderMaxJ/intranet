@@ -582,8 +582,11 @@ setKey('');
               )}
 
             </div>
-            {mode === "edit" && (
-              <div className="col-md-4 add-rows mt-2 create-timein">
+           
+
+          </div>
+           {mode === "edit" && (
+              <div className="col-md-4 add-rows mt-3 create-timein px-4">
                 <label className="form-label">
                   Assign Privileges <span className="text-danger">*</span>
                 </label>
@@ -604,8 +607,6 @@ setKey('');
               </div>
             )}
 
-          </div>
-
           <div className="mt-4">
             {mode != 'edit' && (
               <div>
@@ -613,7 +614,7 @@ setKey('');
               </div>
 
             )}
-            <div className="d-flex flex-wrap schedule--addemployee">
+            <div className="d-flex flex-wrap schedule--addemployee px-4 gap-2">
 
               {mode !== "edit" && (
                 <div className="col-md-4 add-rows mt-2">

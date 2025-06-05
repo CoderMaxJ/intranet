@@ -34,7 +34,7 @@ interface Information {
      isdayshift: number;
      status: number;
      schedule: Schedule;
-     acctname:string;
+     acctname: string;
 }
 
 export default function () {
@@ -42,12 +42,14 @@ export default function () {
      const [timeIn, setTimeIn] = useState("");
      const [timeOut, setTimeOut] = useState("");
      const [searchQuery, setSearchQuery] = useState("");
+     const [schedule, setSchedule] = useState<Schedule[]>([]);
      const [account, setAccount] = useState<Account[]>([]);
      const [allEmployees, setAllEmployees] = useState<Information[]>([]);
      const [filteredEmployees, setFilteredEmployees] = useState<Information[]>([]);
      const [selectedEmployees, setSelectedEmployees] = useState<Information[]>([]);
      const [searchQueryLeft, setSearchQueryLeft] = useState("");
      const [filterText, setFilterText] = useState("");
+     const [showModal, setShowModal] = useState(false);
 
      const router = useRouter();
 
@@ -103,9 +105,9 @@ export default function () {
                          Authorization: `Bearer ${decryptedToken}`
                     },
                     body: JSON.stringify({
-                         empno: employee_numbers,  
-                         timein: timeIn,              
-                         timeout: timeOut            
+                         empno: employee_numbers,
+                         timein: timeIn,
+                         timeout: timeOut
                     })
                });
 
@@ -145,7 +147,7 @@ export default function () {
           setSearchQuery(value);
 
           if (value.trim() === "") {
-               setFilteredEmployees(allEmployees); 
+               setFilteredEmployees(allEmployees);
           } else {
                const filtered = allEmployees.filter(emp =>
                (`${emp.fname} ${emp.lname}`.toLowerCase().includes(value.toLowerCase()) ||
@@ -170,14 +172,14 @@ export default function () {
                const data = await response.json();
                setAccount(data.data);
           } else {
-               if(!token){
-                router.push("/");
+               if (!token) {
+                    router.push("/");
                }
           }
      };
 
      useEffect(() => {
-          getAccount(); 
+          getAccount();
      }, []);
 
      const id = localStorage.getItem("user_id");
@@ -204,9 +206,9 @@ export default function () {
                setEmployee(data.data);
           } else {
                console.error("error");
-               if(!token){
-                router.push("/");
-            }
+               if (!token) {
+                    router.push("/");
+               }
           }
      }
 
@@ -331,26 +333,33 @@ export default function () {
                                              </div>
                                              <div className="list-group w-100">
                                                   <div>
-                                                       {Array.isArray(employee) && employee.map(emp => (
-                                                            <div
-                                                                 key={emp.empno}
-                                                                 className="list-group-item d-flex justify-content-between align-items-center"
-                                                                 style={{
-                                                                      border: "1px solid #f0f0f0",
-                                                                      borderRadius: "8px",
-                                                                      marginBottom: "8px",
-                                                                      padding: "12px 16px",
-                                                                      backgroundColor: "#fafafa",
-                                                                      cursor: "pointer",
-                                                                 }}
-                                                                 onClick={() => handleEmployeeClick(emp)}
-                                                            >
+                                                       {Array.isArray(employee) && employee
+                                                            .filter(emp => !selectedEmployees.some(sel => sel.empno === emp.empno))
+                                                            .map(emp => (
+                                                                 <div
+                                                                      key={emp.empno}
+                                                                      className="list-group-item d-flex justify-content-between align-items-center"
+                                                                      style={{
+                                                                           border: "1px solid #f0f0f0",
+                                                                           borderRadius: "8px",
+                                                                           marginBottom: "8px",
+                                                                           padding: "12px 16px",
+                                                                           backgroundColor: "#fafafa",
+                                                                           cursor: "pointer",
+                                                                      }}
+                                                                      onClick={() => handleEmployeeClick(emp)}
+                                                                 >
 
-                                                                 <div className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
-                                                                 <div className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
+                                                                      <div className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
+                                                                      <div className="d-flex justify-content-between displayed-data ms-auto me-3"> <small className="text-muted">
+                                                                           {emp.schedule && emp.schedule.shiftstart && emp.schedule.shiftend
+                                                                                ? `${emp.schedule.shiftstart} - ${emp.schedule.shiftend}`
+                                                                                : "No schedule set"}
+                                                                      </small></div>
+                                                                      <div className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
+                                                                      </div>
                                                                  </div>
-                                                            </div>
-                                                       ))}
+                                                            ))}
                                                   </div>
                                              </div>
                                         </div>
@@ -392,7 +401,7 @@ export default function () {
                                                                  }}
                                                             >
                                                                  <div className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
-                                                                 <div className="d-flex justify-content-between displayed-data"><small className="text-muted">{getAccountName(emp.acctid)}</small>
+                                                                 <div className="d-flex ms-auto me-3 justify-content-between displayed-data"><small className="text-muted ">{getAccountName(emp.acctid)}</small>
                                                                  </div>
                                                                  <button
                                                                       className="x-button btn btn-sm btn-danger"
@@ -410,6 +419,38 @@ export default function () {
                                    </div>
                               </div>
                               {/* Add Schedule Button */}
+                              {showModal && (
+                                   <div
+                                        className={`modal fade slide-from-top ${showModal ? 'show d-block' : ''}`}
+                                        id="saveModal"
+                                        tabIndex={-1}
+                                        aria-labelledby="saveModalLabel"
+                                        aria-hidden={!showModal}
+                                        style={{ backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : 'transparent' }}
+                                   >
+                                        <div className="modal-dialog" style={{minWidth:'500px'}}>
+                                             <div className="modal-content">
+                                                  <div className="modal-header">
+                                                       <h1 className="modal-title fs-5 text-light" id="saveModalLabel">Confirmation</h1>
+                                                       <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>
+                                                  </div>
+                                                  <div className="modal-body">
+                                                       <p className="view">Are you sure you want to save changes?</p>
+                                                  </div>
+                                                  <div className="modal-footer">
+                                                       <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
+                                                       <button type="button" className="btn btn-primary" onClick={() => {
+                                                            handleSetSchedule();
+                                                            setShowModal(false);
+                                                       }}>
+                                                            Save changes
+                                                       </button>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+
+                              )}
                               <div className="d-flex justify-content-end modal-footer" >
                                    <div className="d-flex gap-3" >
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
@@ -419,7 +460,9 @@ export default function () {
                                         <button
                                              type="button"
                                              className="btn btn-primary clearall d-flex align-items-center"
-                                             onClick={handleSetSchedule}>
+                                             onClick={() => {
+                                                  setShowModal(true);
+                                             }}>
                                              Reschedule
                                         </button>
                                    </div>

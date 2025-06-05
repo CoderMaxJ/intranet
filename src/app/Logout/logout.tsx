@@ -24,9 +24,7 @@ const  logout = async ()=>{
             localStorage.clear();
           successToast("Logout Successfully");
             localStorage.clear();
-            window.location.reload();
-   
-      
+            window.location.reload();    
     }
 }
 
@@ -39,6 +37,7 @@ const  logout = async ()=>{
     draggable: true,
     progress: undefined,
   });
+  
 return (
     <div>    
         <div

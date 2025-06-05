@@ -691,6 +691,13 @@ input:focus {
   margin-right: 20px;
 }
 
+.agentheader-container {
+  background-image: url('/img/Breaktool.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .db-poweredby {
   font-size: 10px;
   font-weight: bold;
@@ -760,10 +767,10 @@ input:focus {
 
 
 @media only screen and (max-width: 991px) {
-.modal-dialog {
-  --bs-modal-width: 340px !important;
-  max-width: var(--bs-modal-width) !important;
-}
+  .modal-dialog {
+    --bs-modal-width: 340px !important;
+    max-width: var(--bs-modal-width) !important;
+  }
 }
 
 @media only screen and (max-width: 1020px) {
@@ -2178,12 +2185,8 @@ table {
   padding: 8px;
 }
 
-.schedule--addemployee {
-  margin-left: 25px;
-}
-
 .update-status {
- transform: translateY(-25px) !important;
+  transform: translateY(-25px) !important;
 }
 
 .blink {
@@ -2998,7 +3001,7 @@ table {
   border-radius: 5px;
   background-color: #ffffff;
   color: black;
-  max-width: 12.9vw;
+  max-width: 18.5vw;
 }
 
 .form-controll input {
@@ -3054,8 +3057,9 @@ table {
   border-radius: 5px;
   background-color: #ffffff;
   color: black;
-  max-width: 13vw;
+  max-width: 18.6vw;
 }
+
 .form-select--status {
   width: 100%;
   max-width: 110px;
@@ -3063,8 +3067,9 @@ table {
 
 .form-select--assignprivileges {
   width: 100%;
-  max-width: 13.1vw;
+  min-width: 18.6vw;
 }
+
 .form-controll-timeout1 {
   position: relative;
   display: block;
@@ -3073,10 +3078,10 @@ table {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  min-width: 13.1vw;
+  min-width: 18.5vw;
 }
 
-.edit-timein-out button{
+.edit-timein-out button {
   margin-top: 15px !important;
 }
 
@@ -3211,7 +3216,7 @@ body.dark-mode .time-icon-group::before {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  min-width: 13.1vw;
+  min-width: 18.5vw;
 }
 
 /* .update-timeout {
@@ -3430,6 +3435,11 @@ body.dark-mode .time-icon-group::before {
 
 #reassignment .list-group-item {
   padding: 0px;
+}
+
+.list-group {
+  max-height: 55vh;
+  overflow-y: scroll;
 }
 
 .displayed-data span {
@@ -3814,17 +3824,18 @@ body.dark-mode .time-icon-group::before {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.btn-x-position{
-    position: absolute;
-    right: 16px;
-    top: 40px;
-    width: 20px;
-    height: 20px;
-    background-color: #e60023;
-    color: white;
-    font-size: 13px;
-    font-weight: bold;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
+
+.btn-x-position {
+  position: absolute;
+  right: 16px;
+  top: 40px;
+  width: 20px;
+  height: 20px;
+  background-color: #e60023;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
 }
