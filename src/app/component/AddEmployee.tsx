@@ -100,14 +100,14 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         lname: empData.lname || "",
         position: empData.position || "",
         dateofbirth: empData.dateofbirth || "",
-        maritalstatus: empData.maritalstatus || "None",
+        maritalstatus: empData.maritalstatus || "",
         gender: empData.gender || "",
         contactno: empData.contactno || "",
         address: empData.address || "",
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
         status: empData.status,
-        acctname:empData.acctname,
+        acctname:empData.acctname || "Unassinged",
         schedule: empData.schedule || { shiftstart: "", shiftend: "" },
         un:empData.un || "",
         isdayshift:empData.isdayshift ?? 0
@@ -359,6 +359,22 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 useEffect(()=>{
   fetchPrivileges();
 },[])
+
+const handleInputChanges = ()=>{
+  setFormData(prev => ({
+  ...prev,
+  position: ''
+}));
+setRoleKeyword('');
+}
+
+const handleInputChanges2 = ()=>{
+  setFormData(prev => ({
+  ...prev,
+  acctname: ''
+}));
+setKey('');
+}
   return (
     <div>
       <ToastContainer />
@@ -414,15 +430,17 @@ useEffect(()=>{
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
-                required type="date" name="dateofbirth" className="form-control date-with-icon" id="dateofbirth"
-                value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
+                required 
+                type="date" name="dateofbirth" className="form-control date-with-icon" id="dateofbirth"
+                value={formData.dateofbirth} onChange={handleInputChange} max="2018-12-31"
               />
             </div>
             <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="gender" className="form-label">Gender <span className="text-danger">*</span></label>
               <select
                 disabled={!isEditable && mode == "edit" ? true : false}
-                required name="gender" className="form-select" id="gender"
+                required
+                name="gender" className="form-select" id="gender"
                 value={formData.gender} onChange={handleInputChange}
               >
                 <option value="">-- SELECT --</option>
@@ -433,11 +451,12 @@ useEffect(()=>{
             <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
               <select
+                required
                 disabled={!isEditable && mode == "edit" ? true : false}
-                required name="maritalstatus" className="form-select" id="maritalstatus"
+                name="maritalstatus" className="form-select" id="maritalstatus"
                 value={formData.maritalstatus} onChange={handleInputChange}
               >
-                <option value="None">-- SELECT --</option>
+                <option value="">-- SELECT --</option>
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
               </select>
@@ -472,15 +491,17 @@ useEffect(()=>{
             <div className=" col-md-4 add-rows mt-2 position-relative">
               <label htmlFor="position" className="form-label">Position<span className="text-danger">*</span></label>
               <input
+                required
                 type="text"
                 className="form-control"
                 placeholder={mode != 'edit'? "Position":""}
-                value={role_keyword}
+                value={formData.position || role_keyword}
                 onChange={(e) => {setRoleKeyword(e.target.value);
                   fetchRoles();
                 }}
                 
               />
+             {formData.position != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
                       <li
@@ -507,10 +528,11 @@ useEffect(()=>{
               </label>
               
            <input
+              required
               type="text"
               name="acctname"
               className="form-control"
-              value={keyword}
+              value={formData.acctname || keyword}
               placeholder={mode !== 'edit' ? "Account" : ""}
               onChange={(e) => {
                 // Always update the keyword when typing
@@ -520,13 +542,13 @@ useEffect(()=>{
                 if (e.target.value === "") {
                   setFormData(prev => ({
                     ...prev,
-                    acctid: 0,
                     acctname: ""
                   }));
                 }
               }}
               onKeyUp={fetchAccounts}
           />
+          {formData.acctname != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
              {keyword && accounts.length > 0 && (
               <ul className="list-group position-absolute w-100 z-3" 
                   style={{ maxHeight: "200px", overflowY: "auto" }}>
@@ -648,6 +670,7 @@ useEffect(()=>{
                       !!formData.schedule.shiftend &&
                       !isEditSchedule
                     }
+                    required
 
                     step={1}
                   />
@@ -669,7 +692,7 @@ useEffect(()=>{
                     !!formData.schedule.shiftend &&
                     !isEditSchedule
                   }
-
+                  required
                     step={1}
                   />
                 </div>

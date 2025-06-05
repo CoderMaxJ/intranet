@@ -388,7 +388,7 @@ const btnClose = document.getElementById("buttonClose")
                                                 {instance.manager && instance.manager.length > 0 ? (
                                                     <div className="manage-account-form" >
                                                         <form>
-                                                            {instance.manager.map((manager: any, index: any) => (
+                                                            {instance.manager?.map((manager: any, index: any) => (
                                                                 <div
                                                                     key={index}
                                                                     style={{ position: "relative", display: "inline-block", margin: "8px" }}
