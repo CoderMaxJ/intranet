@@ -272,7 +272,7 @@ export default function () {
 
                                         <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
                                              <div className="d-flex gap-4">
-                                                  <div className="input-group mb-3  time-icon-group" style={{ minWidth: "200px" }}>
+                                                  <div className="input-group mb-3  time-icon-group">
                                                        <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
                                                             type="time"
@@ -281,7 +281,7 @@ export default function () {
                                                             onChange={(e) => setTimeIn(e.target.value)}
                                                        />
                                                   </div>
-                                                  <div className="input-group mb-3  time-icon-group" style={{ minWidth: "180px" }}>
+                                                  <div className="input-group mb-3  time-icon-group">
                                                        <span className="input-group-text" id="basic-addon1">To</span>
                                                        <input
                                                             type="time"
@@ -292,7 +292,7 @@ export default function () {
                                                   </div>
                                              </div>
                                         </div>
-                                        <div className="input-group mb-3" style={{ minWidth: "400px" }}>
+                                        <div className="input-group mb-3">
                                              <span className="input-group-text" id="basic-addon1">Account</span>
                                              <select
                                                   id="suggestedAccounts"
@@ -359,7 +359,7 @@ export default function () {
                                              <div className="vertical-line"></div>
                                         </div>
                                         <div className="d-flex flex-column  align-items-start" style={{ flex: 1 }}>
-                                             <div className="d-flex align-items-center  gap-4 w-75 ">
+                                             <div className="d-flex align-items-center  gap-4">
                                                   <h6 className="selected-emp">Selected Employees <span>({selectedEmployees?.length})</span></h6>
                                              </div>
                                              <div className="d-flex flex-wrap justify-content-center gap-2 w-100">

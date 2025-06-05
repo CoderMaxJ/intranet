@@ -23,9 +23,9 @@ interface AddEmployeeData {
   role_id: number;
   status: number
   schedule: Schedule;
-  acctname:string;
-  isdayshift:number;
-  un:string;
+  acctname: string;
+  isdayshift: number;
+  un: string;
 }
 
 interface AddEmpProps {
@@ -55,10 +55,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     acctid: empData.acctid || 0,
     role_id: empData.role_id || 0,
     status: empData.status,
-    acctname:empData.acctname,
+    acctname: empData.acctname,
     isdayshift: empData.isdayshift ?? 0,
     schedule: empData.schedule || { shiftstart: "", shiftend: "" },
-    un:empData.un || ""
+    un: empData.un || ""
   });
   interface Position {
     position: string;
@@ -94,23 +94,23 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   useEffect(() => {
     if (empData) {
       setFormData({
-        empno: empData.empno  ?? 0,
+        empno: empData.empno ?? 0,
         fname: empData.fname || "",
         mname: empData.mname || "",
         lname: empData.lname || "",
         position: empData.position || "",
         dateofbirth: empData.dateofbirth || "",
-        maritalstatus: empData.maritalstatus || "None",
+        maritalstatus: empData.maritalstatus || "",
         gender: empData.gender || "",
         contactno: empData.contactno || "",
         address: empData.address || "",
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
         status: empData.status,
-        acctname:empData.acctname,
+        acctname:empData.acctname || "Unassinged",
         schedule: empData.schedule || { shiftstart: "", shiftend: "" },
-        un:empData.un || "",
-        isdayshift:empData.isdayshift ?? 0
+        un: empData.un || "",
+        isdayshift: empData.isdayshift ?? 0
 
       });
       const matchedAccount = accounts.find(acc => acc.acctid === empData.acctid);
@@ -191,7 +191,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const fetchRoles = async () => {
     console.log("=============================================================================>")
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`,{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -221,7 +221,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         const data = await response.json();
         setAccounts(data.data);
-      
+
       }
     } catch (e) {
       console.error(e);
@@ -335,10 +335,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       acctid: 0,
       role_id: 0,
       status: 1,
-      acctname:"",
+      acctname: "",
       schedule: { shiftend: "", shiftstart: "" },
       isdayshift: 0,
-      un:"",
+      un: "",
     });
     isClose();
 
@@ -359,6 +359,22 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 useEffect(()=>{
   fetchPrivileges();
 },[])
+
+const handleInputChanges = ()=>{
+  setFormData(prev => ({
+  ...prev,
+  position: ''
+}));
+setRoleKeyword('');
+}
+
+const handleInputChanges2 = ()=>{
+  setFormData(prev => ({
+  ...prev,
+  acctname: ''
+}));
+setKey('');
+}
   return (
     <div>
       <ToastContainer />
@@ -414,15 +430,17 @@ useEffect(()=>{
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
-                required type="date" name="dateofbirth" className="form-control date-with-icon" id="dateofbirth"
-                value={formData.dateofbirth} onChange={handleInputChange} max="2015-12-31"
+                required 
+                type="date" name="dateofbirth" className="form-control date-with-icon" id="dateofbirth"
+                value={formData.dateofbirth} onChange={handleInputChange} max="2018-12-31"
               />
             </div>
             <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="gender" className="form-label">Gender <span className="text-danger">*</span></label>
               <select
                 disabled={!isEditable && mode == "edit" ? true : false}
-                required name="gender" className="form-select" id="gender"
+                required
+                name="gender" className="form-select" id="gender"
                 value={formData.gender} onChange={handleInputChange}
               >
                 <option value="">-- SELECT --</option>
@@ -433,11 +451,12 @@ useEffect(()=>{
             <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="maritalstatus" className="form-label">Marital Status <span className="text-danger">*</span></label>
               <select
+                required
                 disabled={!isEditable && mode == "edit" ? true : false}
-                required name="maritalstatus" className="form-select" id="maritalstatus"
+                name="maritalstatus" className="form-select" id="maritalstatus"
                 value={formData.maritalstatus} onChange={handleInputChange}
               >
-                <option value="None">-- SELECT --</option>
+                <option value="">-- SELECT --</option>
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
               </select>
@@ -470,34 +489,44 @@ useEffect(()=>{
           <div className="row px-4 d-flex">
             <h6>Account Details</h6>
             <div className=" col-md-4 add-rows mt-2 position-relative">
-              <label htmlFor="position" className="form-label">Position<span className="text-danger">*</span></label>
+              <label htmlFor="position" className="form-label">
+                Position<span className="text-danger">*</span>
+              </label>
               <input
+                required
                 type="text"
                 className="form-control"
                 placeholder={mode != 'edit'? "Position":""}
-                value={role_keyword}
+                value={formData.position || role_keyword}
                 onChange={(e) => {setRoleKeyword(e.target.value);
                   fetchRoles();
+
+                  if (e.target.value === "") {
+                    setFormData(prev => ({
+                      ...prev,
+                      acctid: 0,
+                      acctname: ""
+                    }));
+                  }
                 }}
-                
+
               />
+             {formData.position != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
-                      <li
-                        key={index}
-                        className="list-group-item list-group-item-action"
-                        style={{ cursor: "pointer" }}
-                        onClick={()=>{
-                          setRoleKeyword(p.position);
-                          setRoles([]);
-                        }}
-                      >
-                        {p.position}
-                      </li>
-                    ))}
+                    <li
+                      key={index}
+                      className="list-group-item list-group-item-action"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setRoleKeyword(p.position);
+                        setRoles([]);
+                      }}
+                    >
+                      {p.position}
+                    </li>
+                  ))}
                 </ul>
-              
-
             </div>
 
             <div className=" col-md-4 add-rows mt-2 position-relative">
@@ -507,10 +536,11 @@ useEffect(()=>{
               </label>
               
            <input
+              required
               type="text"
               name="acctname"
               className="form-control"
-              value={keyword}
+              value={formData.acctname || keyword}
               placeholder={mode !== 'edit' ? "Account" : ""}
               onChange={(e) => {
                 // Always update the keyword when typing
@@ -520,36 +550,36 @@ useEffect(()=>{
                 if (e.target.value === "") {
                   setFormData(prev => ({
                     ...prev,
-                    acctid: 0,
                     acctname: ""
                   }));
                 }
               }}
               onKeyUp={fetchAccounts}
           />
+          {formData.acctname != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
              {keyword && accounts.length > 0 && (
               <ul className="list-group position-absolute w-100 z-3" 
                   style={{ maxHeight: "200px", overflowY: "auto" }}>
-                {accounts.map(acc => (
-                  <li
-                    key={acc.acctid}
-                    className="list-group-item list-group-item-action"
-                    style={{ cursor: "pointer" }}
-                  onClick={() => {
-                  setAccounts([]);
-                  setKey(acc.acctname);  // This sets the visible input text
-                  setFormData(prev => ({
-                    ...prev,
-                    acctid: acc.acctid,
-                    acctname: acc.acctname
-                  }));
-                }}
-                  >
-                    {acc.acctname}
-                  </li>
-                ))}
-              </ul>
-            )}
+                  {accounts.map(acc => (
+                    <li
+                      key={acc.acctid}
+                      className="list-group-item list-group-item-action"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setAccounts([]);
+                        setKey(acc.acctname);  // This sets the visible input text
+                        setFormData(prev => ({
+                          ...prev,
+                          acctid: acc.acctid,
+                          acctname: acc.acctname
+                        }));
+                      }}
+                    >
+                      {acc.acctname}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
             </div>
             {mode === "edit" && (
@@ -575,14 +605,14 @@ useEffect(()=>{
             )}
 
           </div>
-          
+
           <div className="mt-4">
-              {mode != 'edit' && (
-                <div>
-                  <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
-                </div>
-              
-              )}
+            {mode != 'edit' && (
+              <div>
+                <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
+              </div>
+
+            )}
             <div className="d-flex flex-wrap schedule--addemployee">
 
               {mode !== "edit" && (
@@ -648,6 +678,7 @@ useEffect(()=>{
                       !!formData.schedule.shiftend &&
                       !isEditSchedule
                     }
+                    required
 
                     step={1}
                   />
@@ -669,7 +700,7 @@ useEffect(()=>{
                     !!formData.schedule.shiftend &&
                     !isEditSchedule
                   }
-
+                  required
                     step={1}
                   />
                 </div>

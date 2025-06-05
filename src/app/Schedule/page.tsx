@@ -216,7 +216,7 @@ export default function CreateUD() {
             <div className="main-divv">
                 <Header title="MANAGE SCHEDULE" currentPage="" />
                 <div className="px-4">
-                    <div className="manageemployee-division">
+                    <div className="manageemployee-division px-4">
                         <div>
                             <div>
                                 <header>
@@ -282,7 +282,7 @@ export default function CreateUD() {
                             >
                             </div>
                         </div>
-                        <div className="emp-table px-4" style={{ position: 'relative', height: 'auto' }}>
+                        <div className="emp-table" style={{ position: 'relative', height: 'auto' }}>
 
                             <table
                                 className="tabemp table table-striped table-hover table-bordered"
