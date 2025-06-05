@@ -310,7 +310,7 @@ const btnClose = document.getElementById("buttonClose")
                         <div className="manage-accounts-container">
                             <div className="employee-header">
                                 <div
-                                    className="acc-head d-flex justify-content-between"
+                                    className="acc-head d-flex justify-content-between gap-1"
                                 >
                                     <div className="searchbar-container"
                                     >
@@ -443,7 +443,7 @@ const btnClose = document.getElementById("buttonClose")
                                                         onChange={(e) => handleManagerChange(instance.acctid, Number(e.target.value))}
                                                     >
                                                         <option value="">Unassigned</option>
-                                                        {manager.map((manager) => (
+                                                        {manager?.map((manager) => (
                                                             <option key={manager.empno} value={manager.empno}>
                                                                 {manager.fname} {manager.lname}
                                                             </option>
