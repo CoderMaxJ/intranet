@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, use } from "react";
 import "../../style/breaks.css";
 import { Decryptor, Encryptor } from "@/security";
 import { useRouter } from "next/navigation"
+import { log } from "node:console";
 
 interface BreakData {
   name: string;
@@ -39,11 +40,11 @@ function BreakDataTable() {
   const breaksRef = useRef<BreakData[]>([]);
 
 
-  //Logs property
+  // Logs property
 
   const [data, setData] = useState<Logs[]>([]);
 	const [filter, setFilter] = useState("");
-  const filteredRows = data.filter((row) =>
+  const filteredRows = data?.filter((row) =>
 		Object.values(row)
 			.join(" ")
 			.toUpperCase()
@@ -371,7 +372,7 @@ function BreakDataTable() {
 							</tr>
 						</thead>
 						<tbody style={{ overflowY: "auto" }}>
-							{filteredRows.map((logs) => (
+							{filteredRows?.map((logs) => (
 								<tr key={logs.name}>
 									<td>{logs.name}</td>
 									<td>{logs.login}</td>

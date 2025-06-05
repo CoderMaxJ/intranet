@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
@@ -64,11 +65,9 @@ interface RejectedDataProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
     onDeclineComplete:()=> void;
-
 }
 
-
-export default function RejectedData({ data, onSave,onDeclineComplete }: RejectedDataProps) {
+function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData, setCombinedData] = useState({})
 
@@ -371,3 +370,5 @@ export default function RejectedData({ data, onSave,onDeclineComplete }: Rejecte
 
     );
 }
+ 
+export default RejectedData;

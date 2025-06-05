@@ -41,20 +41,14 @@ interface Account {
 }
 
 export default function CreateUD() {
-    const [empData, setEmpData] = useState({});
-    const [currentMode, setCurrentMode] = useState("");
     const [employees, setEmployees] = useState<Information[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [targetID, setTargetID] = useState<number | null>(null);
-    const [resetPasswordTargetID, setResetPasswordTargetID] = useState<number | null>(null);
     const [total, setTotal] = useState(0);
     const [listener, setListener] = useState(false);
     const [user_privilege, setUserPrivilege] = useState([""]);
-    const [isresetPassword, setResetPassword] = useState(false);
-    const [update, setUpdate] = useState(false);
-    const [account, setAccount] = useState<Account[]>([]);
     const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
     const [allSelected, setAllSelected] = useState(false);
     const [timeIn, setTimeIn] = useState("");
@@ -165,7 +159,6 @@ export default function CreateUD() {
                 if (response.ok) {
                       
                     const data = await response.json();
-                    console.log(data.data);
                     setEmployees(data.data);
                 } else {
                     console.error("Error fetching search results");
@@ -180,12 +173,6 @@ export default function CreateUD() {
             debouncedSearch.cancel();
         };
     }, [debouncedSearch]);
-
-    // useEffect(() => {
-    //     return () => {
-    //         debouncedSearch.cancel();
-    //     };
-    // }, [debouncedSearch])
     const handlePageChange = (page: number) => {
         setCurrentPage(page); // Update the current page
         GetEmployee(page); // Fetch data for the new page
@@ -217,15 +204,6 @@ export default function CreateUD() {
             errorToast(error.message);
         }
     }
-    const CreateSchedule = () => {
-        if (timeIn === "" || timeOut === "" || EmpNoList == 0) {
-            return null;
-        } else {
-            create();
-        }
-
-    }
-
     return (
 
         <div className="crud-maindiv">
