@@ -492,6 +492,7 @@ setKey('');
                 Position<span className="text-danger">*</span>
               </label>
               <input
+                disabled={!user_priviledge.includes("manage_users")? true : false}
                 required
                 type="text"
                 className="form-control"
@@ -510,7 +511,7 @@ setKey('');
                 }}
 
               />
-             {(formData.position != "" && mode === 'edit') && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
+             {(formData.position != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
                     <li
@@ -535,6 +536,7 @@ setKey('');
               </label>
               
            <input
+              disabled={!user_priviledge.includes("manage_users")? true : false}
               required
               type="text"
               name="acctname"
@@ -555,7 +557,7 @@ setKey('');
               }}
               onKeyUp={fetchAccounts}
           />
-          {(formData.acctname != "" && mode === 'edit') &&(<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
+          {(formData.acctname != "" && mode === 'edit') && user_priviledge.includes("manage_users") &&(<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
              {keyword && accounts.length > 0 && (
               <ul className="list-group position-absolute w-100 z-3" 
                   style={{ maxHeight: "200px", overflowY: "auto" }}>

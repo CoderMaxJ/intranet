@@ -173,7 +173,9 @@ export default function Daterange() {
                     },
                 }
             );
+
             if (!response.ok) {
+                
                 throw new Error("Failed to fetch data");
             }
             const result = await response.json();
@@ -183,7 +185,7 @@ export default function Daterange() {
                 setData(originalData);
             }
         } catch (e) {
-           errorToast("Unable to download reports!");
+           errorToast("No logs available for the selected date range!");
         }
     };
     const token = localStorage.getItem("token");
