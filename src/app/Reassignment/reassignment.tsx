@@ -82,6 +82,12 @@ export default function () {
           return accountInfo ? accountInfo.acctname : "Unassigned";
      };
 
+     useEffect(() => {
+          if (!showModal) {
+               const timer = setTimeout(() => setShowModal(false), 200);
+               return () => clearTimeout(timer);
+          }
+     }, [showModal]);
 
 
      const handleSetSchedule = async () => {
@@ -428,7 +434,7 @@ export default function () {
                                         aria-hidden={!showModal}
                                         style={{ backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : 'transparent' }}
                                    >
-                                        <div className="modal-dialog" style={{minWidth:'500px'}}>
+                                        <div className="modal-dialog" style={{ minWidth: '500px' }}>
                                              <div className="modal-content">
                                                   <div className="modal-header">
                                                        <h1 className="modal-title fs-5 text-light" id="saveModalLabel">Confirmation</h1>
@@ -449,7 +455,6 @@ export default function () {
                                              </div>
                                         </div>
                                    </div>
-
                               )}
                               <div className="d-flex justify-content-end modal-footer" >
                                    <div className="d-flex gap-3" >

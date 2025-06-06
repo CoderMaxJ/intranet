@@ -2959,6 +2959,23 @@ table {
   background-color: #e7e7e7;
 }
 
+@keyframes slideFromTop {
+  0% {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-from-top .modal-dialog {
+  animation: slideFromTop 0.4s ease-out forwards;
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
 @keyframes blinkAnimation {
   0% {
     background: #ffeeab;
@@ -3001,7 +3018,7 @@ table {
   border-radius: 5px;
   background-color: #ffffff;
   color: black;
-  max-width: 18.5vw;
+  max-width: 18.2vw;
 }
 
 .form-controll input {
@@ -3057,7 +3074,7 @@ table {
   border-radius: 5px;
   background-color: #ffffff;
   color: black;
-  max-width: 18.6vw;
+  max-width: 18.2vw;
 }
 
 .form-select--status {
@@ -3067,7 +3084,7 @@ table {
 
 .form-select--assignprivileges {
   width: 100%;
-  min-width: 18.6vw;
+  min-width: 18.2vw;
 }
 
 .form-controll-timeout1 {
@@ -3216,7 +3233,7 @@ body.dark-mode .time-icon-group::before {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  min-width: 18.5vw;
+  min-width: 18.2vw;
 }
 
 /* .update-timeout {

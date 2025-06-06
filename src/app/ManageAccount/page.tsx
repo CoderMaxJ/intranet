@@ -397,7 +397,7 @@ export default function ManageDepartment() {
                                             <td>
                                                 {instance.manager && instance.manager.length > 0 ? (
                                                     <div className="manage-account-form" >
-                                                        <form className="d-flex gap-3">
+                                                        <form className="d-flex gap-2">
                                                             {instance.manager?.map((manager: any, index: any) => (
                                                                 <div
                                                                     key={index}
@@ -425,19 +425,9 @@ export default function ManageDepartment() {
                                                                     </div>
                                                                 </div>
                                                             ))}
-                                                            <div className="d-flex">
-                                                                <button
-                                                                    onClick={() => handleShowDropdown(instance.acctid)}
-                                                                    type="button"
-                                                                    className="accounts-edit"
-                                                                    style={{ cursor: "pointer" }}
-                                                                    title={add ? "" : "Add"}
-                                                                >
-                                                                    <img src="/svg/Add.svg" alt="add" className="actions-button" />
-                                                                </button>
-                                                            </div>
+                                                            
                                                         </form>
-                                                        <div>
+                                                        <div className="d-flex gap-3">
                                                             {openDropdownId === instance.acctid && (
                                                                 <div>
                                                                     <select
@@ -454,6 +444,17 @@ export default function ManageDepartment() {
                                                                     </select>
                                                                 </div>
                                                             )}
+                                                            <div className="d-flex">
+                                                                <button
+                                                                    onClick={() => handleShowDropdown(instance.acctid)}
+                                                                    type="button"
+                                                                    className="accounts-edit"
+                                                                    style={{ cursor: "pointer" }}
+                                                                    title={add ? "" : "Add"}
+                                                                >
+                                                                    <img src="/svg/Add.svg" alt="add" className="actions-button" />
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 ) : (
