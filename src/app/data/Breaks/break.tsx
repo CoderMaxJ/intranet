@@ -201,7 +201,7 @@ function BreakDataTable() {
     <div className="workforce px-4">
       <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div px-3"}>
         <div className="d-flex flex-column monitoring-container">
-          <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3">
+          <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3 gap-2">
             <div className="d-flex align-items-center col-5">
               <h4 className="agent-header mb-0">
                 Agent Breaks Monitoring Dashboard

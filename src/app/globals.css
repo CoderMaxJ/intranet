@@ -3195,6 +3195,7 @@ body.dark-mode .has-calendar-icon input[type="date"]::before {
 
 .time-icon-group {
   position: relative;
+  min-width: 9vw;
 }
 
 .time-icon-group::before {

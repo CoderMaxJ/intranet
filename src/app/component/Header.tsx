@@ -11,7 +11,7 @@ export default function Header({ title, currentPage }: HeaderProps) {
 
   return (
     <div className="header-container ">
-      <div className="header-text-container text-white py-3 d-flex justify-content-between px-4">
+      <div className="header-text-container text-white py-3 d-flex justify-content-between px-4 flex-wrap gap-2">
         <div>
           <h1 className=" text-start fw-bold mb-0">{title}</h1>
         </div>
