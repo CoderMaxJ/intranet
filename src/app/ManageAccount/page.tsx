@@ -171,8 +171,7 @@ export default function ManageDepartment() {
                 fetchAccountList();
                 setShowModal(false);
             } else {
-                const error = await response.json();
-                errorToast(error.warning);
+                errorToast("You are trying to assign a manager that is already assigned to this account.");
             }
         } catch (e) {
             console.error(e);
