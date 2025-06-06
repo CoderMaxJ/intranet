@@ -3,7 +3,6 @@ import { set } from "date-fns";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
-const token = localStorage.getItem("token");
 interface Schedule {
   shiftstart: string;
   shiftend: string;
@@ -60,21 +59,18 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     schedule: empData.schedule || { shiftstart: "", shiftend: "" },
     un: empData.un || ""
   });
+
+  const token = localStorage.getItem("token");
   interface Position {
     position: string;
   }
   const [roles, setRoles] = useState<Position[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
-  const [positions, setPositions] = useState<{ position: string }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
-  const [showList, setShowList] = useState(false);
-  const [showAccountList, setShowAccountList] = useState(false); // For account dropdown
-  const [showPositionList, setShowPositionList] = useState(false)
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
   const [isEditable, setEditable] = useState(false);
-  const [selectedPosition, setSelectedPosition] = useState("");
   const [keyword, setKey] = useState("");
   const [role_keyword, setRoleKeyword] = useState("");
 
@@ -90,6 +86,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }, [])
 
+  useEffect(()=>{
+  fetchPrivileges();
+},[])
 
   useEffect(() => {
     if (empData) {
@@ -354,11 +353,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       setIsEditSchedule(true);
     }
   }
-
-useEffect(()=>{
-  fetchPrivileges();
-},[])
-
 const handleInputChanges = ()=>{
   setFormData(prev => ({
   ...prev,
