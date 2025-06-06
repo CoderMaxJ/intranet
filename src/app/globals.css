@@ -3193,9 +3193,13 @@ body.dark-mode .has-calendar-icon input[type="date"]::before {
   color: #fff;
 }
 
+.form-control--to {
+
+}
+
 .time-icon-group {
   position: relative;
-  min-width: 9vw;
+  min-width: 10.1vw !important;
 }
 
 .time-icon-group::before {

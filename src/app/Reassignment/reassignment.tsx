@@ -279,7 +279,7 @@ export default function () {
                                         </div>
 
                                         <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
-                                             <div className="d-flex gap-4">
+                                             <div className="d-flex gap-3">
                                                   <div className="input-group mb-3  time-icon-group">
                                                        <span className="input-group-text" id="basic-addon1">From</span>
                                                        <input
@@ -294,7 +294,7 @@ export default function () {
                                                        <input
                                                             type="time"
                                                             value={timeOut}
-                                                            className="form-control"
+                                                            className="form-control form-control--to"
                                                             onChange={(e) => setTimeOut(e.target.value)}
                                                        />
                                                   </div>
