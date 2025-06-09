@@ -168,7 +168,7 @@ export default function ShiftAdjustment() {
                       <th>Reason</th>
                       <th>Department</th>
                       <th>Date Filed</th>
-                      <th className="actions-th">Actions</th>
+                      <th className="actions-th">Action</th>
                     </tr>
                   </thead>
                   <tbody>

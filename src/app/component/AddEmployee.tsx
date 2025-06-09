@@ -3,7 +3,6 @@ import { set } from "date-fns";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
-const token = localStorage.getItem("token");
 interface Schedule {
   shiftstart: string;
   shiftend: string;
@@ -60,21 +59,18 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     schedule: empData.schedule || { shiftstart: "", shiftend: "" },
     un: empData.un || ""
   });
+
+  const token = localStorage.getItem("token");
   interface Position {
     position: string;
   }
   const [roles, setRoles] = useState<Position[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
-  const [positions, setPositions] = useState<{ position: string }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
-  const [showList, setShowList] = useState(false);
-  const [showAccountList, setShowAccountList] = useState(false); // For account dropdown
-  const [showPositionList, setShowPositionList] = useState(false)
   const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
   const [isEditable, setEditable] = useState(false);
-  const [selectedPosition, setSelectedPosition] = useState("");
   const [keyword, setKey] = useState("");
   const [role_keyword, setRoleKeyword] = useState("");
 
@@ -90,6 +86,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }, [])
 
+  useEffect(()=>{
+  fetchPrivileges();
+},[])
 
   useEffect(() => {
     if (empData) {
@@ -107,7 +106,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
         status: empData.status,
-        acctname:empData.acctname || "Unassinged",
+        acctname:empData.acctname || "",
         schedule: empData.schedule || { shiftstart: "", shiftend: "" },
         un: empData.un || "",
         isdayshift: empData.isdayshift ?? 0
@@ -189,7 +188,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
   const fetchRoles = async () => {
-    console.log("=============================================================================>")
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`, {
         method: "GET",
@@ -355,11 +353,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       setIsEditSchedule(true);
     }
   }
-
-useEffect(()=>{
-  fetchPrivileges();
-},[])
-
 const handleInputChanges = ()=>{
   setFormData(prev => ({
   ...prev,
@@ -493,6 +486,7 @@ setKey('');
                 Position<span className="text-danger">*</span>
               </label>
               <input
+                disabled={!user_priviledge.includes("manage_users")? true : false}
                 required
                 type="text"
                 className="form-control"
@@ -511,7 +505,7 @@ setKey('');
                 }}
 
               />
-             {formData.position != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
+             {(formData.position != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
                     <li
@@ -536,6 +530,7 @@ setKey('');
               </label>
               
            <input
+              disabled={!user_priviledge.includes("manage_users")? true : false}
               required
               type="text"
               name="acctname"
@@ -556,7 +551,7 @@ setKey('');
               }}
               onKeyUp={fetchAccounts}
           />
-          {formData.acctname != "" && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
+          {(formData.acctname != "" && mode === 'edit') && user_priviledge.includes("manage_users") &&(<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
              {keyword && accounts.length > 0 && (
               <ul className="list-group position-absolute w-100 z-3" 
                   style={{ maxHeight: "200px", overflowY: "auto" }}>
