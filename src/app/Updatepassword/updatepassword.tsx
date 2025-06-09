@@ -202,7 +202,7 @@ export default function Updatepassword() {
                       {focus && (
                         <div className="password-hint mt-2">
                           <div><label style={{ color: password.length >= 8 ? 'green' : 'grey' }}>✔ 8 to 20 characters</label></div>
-                          <div><label style={{ color: passwordStrength ? 'green' : 'grey' }}>Letters, numbers, and special characters</label></div>
+                          <div><label style={{ color: passwordStrength ? 'green' : 'grey' }}>one uppercase letter, one lowercase letter, numbers, and special characters</label></div>
                         </div>
                       )}
                     </div>

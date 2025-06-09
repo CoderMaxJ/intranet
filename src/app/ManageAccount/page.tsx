@@ -376,7 +376,7 @@ export default function ManageDepartment() {
                             </>
                         )}
 
-                        <div className="accounta-table-div table-responsive accounts-table" style={{ position: 'relative' }}>
+                        <div className="accounta-table-div table-responsive accounts-table">
                             <table className="manage-table table table-light table-hover table-striped border">
                                 <thead>
                                     <tr>
