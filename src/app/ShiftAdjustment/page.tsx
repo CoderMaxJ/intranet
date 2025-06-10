@@ -176,7 +176,7 @@ export default function ShiftAdjustment() {
                       data?.map((item) => (
                         <tr key={item.requestid || `${item.name}-${item.shiftdate}`}>
                           <td>{item.name || "-"}</td>
-                          <td>{item.reason?.slice(0, 40) + "..." || "-"}</td>
+                          <td>{item.reason?.slice(0,40) + "..." || "-"}</td>
                           <td> {item.acctname|| "Unassigned"}</td>
                           <td>{item.created_at || "-"}</td>
                           <td>

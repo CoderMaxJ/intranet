@@ -301,7 +301,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   const formDataWithToken = {
     ...formData,
-    token: Decryptor(localStorage.getItem("token") || ""),
+    token: Decryptor(token || ""),
     user_priviledge: Decryptor(localStorage.getItem("user_privilege") || ""),
     user_id: Decryptor(localStorage.getItem("user_id") || "")
 
