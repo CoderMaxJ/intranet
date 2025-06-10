@@ -113,7 +113,7 @@ export default function ApproveTable() {
   }
   return (
     <div>
-      <table className="table table-striped table-hover table-bordered">
+      <table className="table table-striped table-hover table-bordered table-responsive">
         <thead>
           <tr>
             <th>Name</th>

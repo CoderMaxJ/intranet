@@ -528,7 +528,7 @@ input:focus {
 
 .password-strength {
   font-size: 13px;
-  margin-left: 10px;
+  margin-left: 182px;
 }
 
 .password-input-wrapper {
@@ -2230,7 +2230,7 @@ table {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40vh;
+  height: 20vh;
 }
 
 .dashboard svg {

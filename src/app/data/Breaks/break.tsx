@@ -18,18 +18,18 @@ interface BreakData {
 
 
 interface Logs {
-	name: string;
-	login: string;
-	brkin1: string;
-	brkout1: string;
-	ob1: string;
-	lunchin: string;
-	lunchout: string;
-	ob3: string;
-	brkin2: string;
-	brkout2: string;
-	ob2: string;
-	logoff: string;
+  name: string;
+  login: string;
+  brkin1: string;
+  brkout1: string;
+  ob1: string;
+  lunchin: string;
+  lunchout: string;
+  ob3: string;
+  brkin2: string;
+  brkout2: string;
+  ob2: string;
+  logoff: string;
 }
 
 function BreakDataTable() {
@@ -43,14 +43,14 @@ function BreakDataTable() {
   // Logs property
 
   const [data, setData] = useState<Logs[]>([]);
-	const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("");
   const filteredRows = data?.filter((row) =>
-		Object.values(row)
-			.join(" ")
-			.toUpperCase()
-			.toLowerCase()
-			.includes(filter)
-	);
+    Object.values(row)
+      .join(" ")
+      .toUpperCase()
+      .toLowerCase()
+      .includes(filter)
+  );
 
 
   const router = useRouter();
@@ -85,7 +85,7 @@ function BreakDataTable() {
         return;
       }
 
-      if ( response.status === 404 || response.status === 403) {
+      if (response.status === 404 || response.status === 403) {
         localStorage.clear();
         router.push("/");
         return;
@@ -191,6 +191,10 @@ function BreakDataTable() {
     setSearchQuery(e.target.value);
   };
 
+  const handleLogSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(e.target.value);
+  };
+
   const filteredBreaks = breaks.filter(
     (breakItem) =>
       breakItem.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -204,7 +208,7 @@ function BreakDataTable() {
           <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3 gap-2">
             <div className="d-flex align-items-center col-5">
               <h4 className="agent-header mb-0">
-                Agent Breaks Monitoring Dashboard
+                Dashboard
                 <span className="text-light small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
               </h4>
             </div>
@@ -321,78 +325,78 @@ function BreakDataTable() {
       </div>
 
       <div className="logs-wrapper mt-4">
-			<div className="logs-maindiv px-3 py-3">
-				<div className="agentheader-container d-flex flex-wrap flex-direction-row align-items-center">
-					<div className="align-items-center col-5 py-3">
-						<h3 className="logs-headername text-light px-3">
-							Agent Logs Today
-							<span className="text-light small ms-2">
-								({localStorage.getItem("total-logs") || 0})
-							</span>
-						</h3>
-					</div>
-					<div className="agentslog-search d-flex align-items-center">
-					<div
-						className="searchbar-container">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							fill="currentColor"
-							viewBox="0 0 16 16"
-						>
-							<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-						</svg>
-						<input
-							className="form-control form-control--search"
-							type="text"
-							placeholder="Search..."
-							value={filter}
-							onChange={handleSearchChange}
-						/>
-					</div>
-					</div>
-				</div>
-				<div className="table-responsive logs-container" >
-					<table className="tablogs table table-bordered table-striped">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Login</th>
-								<th>First Break</th>
-								<th>Breakout</th>
-								<th>Over Break</th>
-								<th>Lunch In</th>
-								<th>Lunch Out</th>
-								<th>Over Break</th>
-								<th>Second Break</th>
-								<th>Breakout</th>
-								<th>Over Break</th>
-								<th>Log Out</th>
-							</tr>
-						</thead>
-						<tbody style={{ overflowY: "auto" }}>
-							{filteredRows?.map((logs) => (
-								<tr key={logs.name}>
-									<td>{logs.name}</td>
-									<td>{logs.login}</td>
-									<td>{logs.brkin1}</td>
-									<td>{logs.brkout1}</td>
-									<td style={{ color: "red", fontWeight: "bold" }}>{logs.ob1}</td>
-									<td>{logs.lunchin}</td>
-									<td>{logs.lunchout}</td>
-									<td style={{ color: "red", fontWeight: "bold" }}>{logs.ob3}</td>
-									<td>{logs.brkin2}</td>
-									<td>{logs.brkout2}</td>
-									<td style={{ color: "red", fontWeight: "bold" }}>{logs.ob2}</td>
-									<td>{logs.logoff}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+        <div className="logs-maindiv px-3 py-3">
+          <div className="agentheader-container gap-2 d-flex flex-wrap flex-direction-row align-items-center">
+            <div className="align-items-center col-5 py-3">
+              <h3 className="logs-headername text-light px-3">
+                Logs Today
+                <span className="text-light small ms-2">
+                  ({localStorage.getItem("total-logs") || 0})
+                </span>
+              </h3>
+            </div>
+            <div className="agentslog-search d-flex align-items-center">
+              <div
+                className="searchbar-container">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+                <input
+                  className="form-control form-control--search"
+                  type="text"
+                  placeholder="Search..."
+                  value={filter}
+                  onChange={handleLogSearchChange}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="table-responsive logs-container" >
+            <table className="tablogs table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Login</th>
+                  <th>First Break</th>
+                  <th>Breakout</th>
+                  <th>Over Break</th>
+                  <th>Lunch In</th>
+                  <th>Lunch Out</th>
+                  <th>Over Break</th>
+                  <th>Second Break</th>
+                  <th>Breakout</th>
+                  <th>Over Break</th>
+                  <th>Log Out</th>
+                </tr>
+              </thead>
+              <tbody style={{ overflowY: "auto" }}>
+                {filteredRows?.map((logs) => (
+                  <tr key={logs.name}>
+                    <td>{logs.name}</td>
+                    <td>{logs.login}</td>
+                    <td>{logs.brkin1}</td>
+                    <td>{logs.brkout1}</td>
+                    <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob1}</td>
+                    <td>{logs.lunchin}</td>
+                    <td>{logs.lunchout}</td>
+                    <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob3}</td>
+                    <td>{logs.brkin2}</td>
+                    <td>{logs.brkout2}</td>
+                    <td style={{ color: "red", fontWeight: "bold" }}>{logs.ob2}</td>
+                    <td>{logs.logoff}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
 
 
