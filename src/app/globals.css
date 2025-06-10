@@ -1306,8 +1306,17 @@ input:focus {
   transform: scale(0.95)
 }
 
+.approved-tabale-data,
+.rejected-table-data {
+  width: calc(100% + 200px) !important;
+}
+
 .table-data {
   font-size: smaller;
+}
+
+.minimized-border {
+  border-bottom: 2px solid #ccc; /* adjust color or thickness as needed */
 }
 
 .input-daterange {

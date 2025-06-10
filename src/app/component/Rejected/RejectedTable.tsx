@@ -101,7 +101,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
   }
   return (
     <div>
-      <table className="table table-striped table-hover table-bordered table-responsive">
+      <table className="table table-striped table-hover table-bordered table-responsive rejected-table-data">
         <thead>
           <tr>
             <th>Name</th>
