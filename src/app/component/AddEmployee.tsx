@@ -73,6 +73,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [isEditable, setEditable] = useState(false);
   const [keyword, setKey] = useState("");
   const [role_keyword, setRoleKeyword] = useState("");
+  const [isPositionFocused, setIsPositionFocused] = useState(false);
+  const [isAccountFocused, setIsAccountFocused] = useState(false);
+  const [highlightedRoleIndex, setHighlightedRoleIndex] = useState(-1);
+  const [highlightedAccountIndex, setHighlightedAccountIndex] = useState(-1);
+
+
 
 
   let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
@@ -86,9 +92,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }, [])
 
-  useEffect(()=>{
-  fetchPrivileges();
-},[])
+  useEffect(() => {
+    fetchPrivileges();
+  }, [])
 
   useEffect(() => {
     if (empData) {
@@ -106,7 +112,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         acctid: empData.acctid || 0,
         role_id: empData.role_id || 0,
         status: empData.status,
-        acctname:empData.acctname || "",
+        acctname: empData.acctname || "",
         schedule: empData.schedule || { shiftstart: "", shiftend: "" },
         un: empData.un || "",
         isdayshift: empData.isdayshift ?? 0
@@ -353,21 +359,21 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       setIsEditSchedule(true);
     }
   }
-const handleInputChanges = ()=>{
-  setFormData(prev => ({
-  ...prev,
-  position: ''
-}));
-setRoleKeyword('');
-}
+  const handleInputChanges = () => {
+    setFormData(prev => ({
+      ...prev,
+      position: ''
+    }));
+    setRoleKeyword('');
+  }
 
-const handleInputChanges2 = ()=>{
-  setFormData(prev => ({
-  ...prev,
-  acctname: ''
-}));
-setKey('');
-}
+  const handleInputChanges2 = () => {
+    setFormData(prev => ({
+      ...prev,
+      acctname: ''
+    }));
+    setKey('');
+  }
   return (
     <div>
       <ToastContainer />
@@ -423,7 +429,7 @@ setKey('');
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
-                required 
+                required
                 type="date" name="dateofbirth" className="form-control date-with-icon" id="dateofbirth"
                 value={formData.dateofbirth} onChange={handleInputChange} max="2018-12-31"
               />
@@ -486,14 +492,16 @@ setKey('');
                 Position<span className="text-danger">*</span>
               </label>
               <input
-                disabled={!user_priviledge.includes("manage_users")? true : false}
+                disabled={!user_priviledge.includes("manage_users") ? true : false}
                 required
                 type="text"
                 className="form-control"
-                placeholder={mode != 'edit'? "Position":""}
+                placeholder={mode != 'edit' ? "Position" : ""}
                 value={formData.position || role_keyword}
-                onChange={(e) => {setRoleKeyword(e.target.value);
+                onChange={(e) => {
+                  setRoleKeyword(e.target.value);
                   fetchRoles();
+                  setHighlightedRoleIndex(-1); // reset index
 
                   if (e.target.value === "") {
                     setFormData(prev => ({
@@ -504,23 +512,43 @@ setKey('');
                   }
                 }}
 
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown") {
+                    setHighlightedRoleIndex(prev => Math.min(prev + 1, roles.length - 1));
+                  } else if (e.key === "ArrowUp") {
+                    setHighlightedRoleIndex(prev => Math.max(prev - 1, 0));
+                  } else if (e.key === "Enter" && highlightedRoleIndex >= 0) {
+                    const selected = roles[highlightedRoleIndex];
+                    setRoleKeyword(selected.position);
+                    setFormData(prev => ({ ...prev, position: selected.position }));
+                    setRoles([]);
+                    setIsPositionFocused(false);
+                  }
+                }}
+                onFocus={() => setIsPositionFocused(true)}
+                onBlur={() => setTimeout(() => setIsPositionFocused(false), 150)}
+
               />
-             {(formData.position != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
+              {(formData.position != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
+              {isPositionFocused && roles.length > 0 && (
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
                     <li
                       key={index}
-                      className="list-group-item list-group-item-action"
+                      className={`list-group-item list-group-item-action ${highlightedRoleIndex === index ? "active" : ""}`}
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         setRoleKeyword(p.position);
+                        setFormData(prev => ({ ...prev, position: p.position }));
                         setRoles([]);
+                        setIsPositionFocused(false); // Also hide after selecting
                       }}
                     >
                       {p.position}
                     </li>
                   ))}
                 </ul>
+              )}
             </div>
 
             <div className=" col-md-4 add-rows mt-2 position-relative">
@@ -528,37 +556,60 @@ setKey('');
                 Account
                 <span className="text-danger">*</span>
               </label>
-              
-           <input
-              disabled={!user_priviledge.includes("manage_users")? true : false}
-              required
-              type="text"
-              name="acctname"
-              className="form-control"
-              value={formData.acctname || keyword}
-              placeholder={mode !== 'edit' ? "Account" : ""}
-              onChange={(e) => {
-                // Always update the keyword when typing
-                setKey(e.target.value);
-                
-                // Clear the selected account if user is deleting
-                if (e.target.value === "") {
-                  setFormData(prev => ({
-                    ...prev,
-                    acctname: ""
-                  }));
-                }
-              }}
-              onKeyUp={fetchAccounts}
-          />
-          {(formData.acctname != "" && mode === 'edit') && user_priviledge.includes("manage_users") &&(<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
-             {keyword && accounts.length > 0 && (
-              <ul className="list-group position-absolute w-100 z-3" 
+
+              <input
+                disabled={!user_priviledge.includes("manage_users") ? true : false}
+                required
+                type="text"
+                name="acctname"
+                className="form-control"
+                value={formData.acctname || keyword}
+                placeholder={mode !== 'edit' ? "Account" : ""}
+                onChange={(e) => {
+                  // Always update the keyword when typing
+                  setKey(e.target.value);
+                  fetchAccounts();
+                  setHighlightedAccountIndex(-1);
+                  // Clear the selected account if user is deleting
+                  if (e.target.value === "") {
+                    setFormData(prev => ({
+                      ...prev,
+                      acctname: ""
+                    }));
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown") {
+                    setHighlightedAccountIndex(prev => Math.min(prev + 1, accounts.length - 1));
+                  } else if (e.key === "ArrowUp") {
+                    setHighlightedAccountIndex(prev => Math.max(prev - 1, 0));
+                  } else if (e.key === "Enter" && highlightedAccountIndex >= 0) {
+                    const selected = accounts[highlightedAccountIndex];
+                    setKey(selected.acctname);
+                    setFormData(prev => ({
+                      ...prev,
+                      acctid: selected.acctid,
+                      acctname: selected.acctname
+                    }));
+                    setAccounts([]);
+                    setIsAccountFocused(false);
+                  }
+                }}
+                onKeyUp={fetchAccounts}
+                onFocus={() => {
+                  setIsAccountFocused(true);
+                  setIsPositionFocused(false); // ⬅️ This hides the position list when switching to account
+                }}
+                onBlur={() => setTimeout(() => setIsAccountFocused(false), 150)}
+              />
+              {(formData.acctname != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
+              {isAccountFocused && keyword && accounts.length > 0 && (
+                <ul className="list-group position-absolute w-100 z-3"
                   style={{ maxHeight: "200px", overflowY: "auto" }}>
-                  {accounts.map(acc => (
+                  {accounts.map((acc, index) => (
                     <li
                       key={acc.acctid}
-                      className="list-group-item list-group-item-action"
+                      className={`list-group-item list-group-item-action ${highlightedAccountIndex === index ? "active" : ""}`}
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         setAccounts([]);
@@ -577,30 +628,30 @@ setKey('');
               )}
 
             </div>
-           
+
 
           </div>
-           {mode === "edit" && (
-              <div className="col-md-4 add-rows mt-3 create-timein px-4">
-                <label className="form-label">
-                  Assign Privileges <span className="text-danger">*</span>
-                </label>
-                <select
-                  disabled={!isEditable}
-                  name="role_id"
-                  className="form-select form-select--assignprivileges"
-                  value={formData.role_id}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select privilege</option>
-                  {privileges.map((role, index) => (
-                    <option key={index} value={role.id}>
-                      {role.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+          {mode === "edit" && (
+            <div className="col-md-4 add-rows mt-3 create-timein px-4">
+              <label className="form-label">
+                Assign Privileges <span className="text-danger">*</span>
+              </label>
+              <select
+                disabled={!isEditable}
+                name="role_id"
+                className="form-select form-select--assignprivileges"
+                value={formData.role_id}
+                onChange={handleInputChange}
+              >
+                <option value="">Select privilege</option>
+                {privileges.map((role, index) => (
+                  <option key={index} value={role.id}>
+                    {role.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="mt-4">
             {mode != 'edit' && (
@@ -692,11 +743,11 @@ setKey('');
                     value={formData.schedule.shiftend}
                     onChange={handleInputChange}
                     disabled={
-                    !!formData.schedule.shiftstart &&
-                    !!formData.schedule.shiftend &&
-                    !isEditSchedule
-                  }
-                  required
+                      !!formData.schedule.shiftstart &&
+                      !!formData.schedule.shiftend &&
+                      !isEditSchedule
+                    }
+                    required
                     step={1}
                   />
                 </div>

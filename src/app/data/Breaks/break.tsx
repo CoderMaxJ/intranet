@@ -9,6 +9,7 @@ import { log } from "node:console";
 
 interface BreakData {
   name: string;
+  acctname: string;
   start: string;
   end: string;
   duration: number;
@@ -16,9 +17,9 @@ interface BreakData {
   overbreak: number; // Add overbreak duration to the interface
 }
 
-
 interface Logs {
   name: string;
+  acctname: string;
   login: string;
   brkin1: string;
   brkout1: string;
@@ -38,7 +39,7 @@ function BreakDataTable() {
   const [fullscreen, setFullscreen] = useState(false);
   const [latestUpdate, setLatestUpdate] = useState<string | null>(null);
   const breaksRef = useRef<BreakData[]>([]);
-
+  const [userPrivilege, setUserPrivilege] = useState<string | null>(null);
 
   // Logs property
 
@@ -52,6 +53,13 @@ function BreakDataTable() {
       .includes(filter)
   );
 
+  // const privilege = Decryptor(localStorage.getItem("user_privilege") || "");
+
+  useEffect(() => {
+    const privilege = localStorage.getItem("user_privilege");
+    console.log("Loaded privilege:", privilege);
+    setUserPrivilege(privilege);
+  }, []);
 
   const router = useRouter();
   const toggleFullscreen = () => {
@@ -93,8 +101,8 @@ function BreakDataTable() {
 
       const data = await response.json();
       setData(data.log_data);
+      localStorage.setItem("total-logs",(data.log_data.length));
 
-      localStorage.setItem("total-on-breaks", data.total);
       // Merge fetched data with the current countdown state
       const storedData = localStorage.getItem("breakData");
       const storedBreaks = storedData ? JSON.parse(storedData) : [];
@@ -107,6 +115,7 @@ function BreakDataTable() {
       setLatestUpdate(data.latest_update);
       // Store the new data in local storage
       localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
+      localStorage.setItem("total-on-breaks", String(updatedBreaks.length))
     } catch (error) {
       console.error("Failed to fetch break data:", error);
     }
@@ -260,6 +269,7 @@ function BreakDataTable() {
               <thead>
                 <tr>
                   <th>Name</th>
+                  {userPrivilege === "super_admin" && <th>Account</th>}
                   <th>Start</th>
                   <th>End</th>
                   <th>Duration</th>
@@ -297,6 +307,8 @@ function BreakDataTable() {
                       <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
                         {instance.name}
                       </td>
+                      {userPrivilege === "super_admin" && <td>{instance.acctname}</td>}
+
                       <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
                         {instance.start}
                       </td>
@@ -362,6 +374,7 @@ function BreakDataTable() {
               <thead>
                 <tr>
                   <th>Name</th>
+                  {userPrivilege === "super_admin" && <th>Account</th>}
                   <th>Login</th>
                   <th>First Break</th>
                   <th>Breakout</th>
@@ -379,6 +392,7 @@ function BreakDataTable() {
                 {filteredRows?.map((logs) => (
                   <tr key={logs.name}>
                     <td>{logs.name}</td>
+                    {userPrivilege === "super_admin" && <td>{logs.acctname}</td>}
                     <td>{logs.login}</td>
                     <td>{logs.brkin1}</td>
                     <td>{logs.brkout1}</td>

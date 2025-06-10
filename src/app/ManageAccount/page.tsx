@@ -319,7 +319,7 @@ export default function ManageDepartment() {
                         <div className="manage-accounts-container">
                             <div className="employee-header">
                                 <div
-                                    className="acc-head d-flex justify-content-between gap-1"
+                                    className="acc-head d-flex justify-content-between gap-3"
                                 >
                                     <div className="searchbar-container"
                                     >
