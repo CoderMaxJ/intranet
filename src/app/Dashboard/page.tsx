@@ -198,7 +198,7 @@ export default function Dashboard() {
                     {showImage === true && (
                         <div className="justify-content-center" style={{ display: 'grid', alignItems: 'center' }}>
                             <img src="/img/Sos.png" height={50} />
-                            <hr/>
+                            <hr />
                         </div>
                     )}
                 </div>
@@ -279,7 +279,7 @@ export default function Dashboard() {
                             </div>
                             <div className="accordion-item accordion" >
                                 <div className="manage-div">
-                                    <div className={`manage-menus d-flex justify-content-between align-items-center ${["4", "5", "6"].includes(activeNav) ? "active-tab" : "hover-unable"}`}
+                                    <div className={`manage-menus d-flex justify-content-between align-items-center ${["4", "5", "6"].includes(activeNav) ? "active-tab" : "hover-unable"} ${navWidth ? "" : "minimized-border"}`}
 
                                         onClick={() => {
                                             const isOpen = activeMenu === "manage";
@@ -503,7 +503,7 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div >
-                    <hr/>
+                    <hr />
                     <div className="upload-prof">
                         <button
                             onClick={toggleMinimizeMaximize}

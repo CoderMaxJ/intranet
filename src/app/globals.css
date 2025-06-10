@@ -528,7 +528,7 @@ input:focus {
 
 .password-strength {
   font-size: 13px;
-  margin-left: 10px;
+  margin-left: 182px;
 }
 
 .password-input-wrapper {
@@ -1306,8 +1306,17 @@ input:focus {
   transform: scale(0.95)
 }
 
+.approved-tabale-data,
+.rejected-table-data {
+  width: calc(100% + 200px) !important;
+}
+
 .table-data {
   font-size: smaller;
+}
+
+.minimized-border {
+  border-bottom: 2px solid #ccc; /* adjust color or thickness as needed */
 }
 
 .input-daterange {
@@ -2230,7 +2239,7 @@ table {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40vh;
+  height: 20vh;
 }
 
 .dashboard svg {
