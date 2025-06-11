@@ -34,6 +34,64 @@ interface Logs {
 }
 
 function BreakDataTable() {
+
+
+
+
+const socket = new WebSocket('ws://localhost:8000/ws/breaks/');
+
+socket.onopen = function(e) {
+    console.log("WebSocket is open now.");
+    // Send a message to Django
+    socket.send(JSON.stringify({
+        'message': 'Hello from JS!'
+    }));
+};
+
+socket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    console.log("Received from server:", data.message);
+};
+
+socket.onclose = function(e) {
+    console.log("WebSocket is closed.");
+};
+
+socket.onerror = function(error) {
+    console.error("WebSocket error:", error);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [breaks, setBreaks] = useState<BreakData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [fullscreen, setFullscreen] = useState(false);
@@ -179,9 +237,9 @@ function BreakDataTable() {
   useEffect(() => {
     if (status !== "login") return;
     fetchBreakData();
-    const fetchIntervalId = setInterval(fetchBreakData, 3000);
+    // const fetchIntervalId = setInterval(fetchBreakData, 3000);
 
-    return () => clearInterval(fetchIntervalId);
+    // return () => clearInterval(fetchIntervalId);
   }, [latestUpdate]);
 
   const formatTime = (time: number) => {
