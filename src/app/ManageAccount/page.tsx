@@ -315,7 +315,7 @@ export default function ManageDepartment() {
             <div className="manage-department">
                 <div className="manageaccounts-header"><Header title="MANAGE ACCOUNTS" currentPage="" /></div>
                 <div className="accounts-margin px-4">
-                    <div className="manageaccounts-bg">
+                    <div className="manageaccounts-bg px-4">
                         <div className="manage-accounts-container">
                             <div className="employee-header">
                                 <div
