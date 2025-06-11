@@ -1,64 +1,21 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
-
+import { data } from "react-router-dom";
+import { tr } from "date-fns/locale";
 
 interface ApprovedRequest {
-      requestid: number;
-    empno: number;
-    name: string;
-    shiftdate: string;
-    reason: string;
-    status: number;
-    logs: {
-        login?: {
-            in?: string;
-            out?: string;
-            record: string;
-        };
-        break1?: {
-            in?: string;
-            out?: string;
-            record: {
-                in: string;
-                out: string;
-            };
-        };
-        break2?: {
-            in?: string;
-            out?: string;
-            record: {
-                in: string;
-                out: string;
-            };
-        };
-        lunch?: {
-            in?: string;
-            out?: string;
-            record: {
-                in: string;
-                out: string;
-            };
-        };
-        logout?: {
-            in?: string;
-            out?: string;
-            record: string;
-        };
-        [key: string]: any;
-    };
-    acctid: number;
-    created_at: string;
-    aprroved_at: string;
-    declined_at: string;
-    approved_by: number;
-    acctname:string;
-    reason_for_disapproved: string;
+  name: string;
+  reason: string;
+  acctid: string | number;
+  created_at: string;
+  approved_by: string;
+  current_page: number;
 }
 
 interface ApproveProps {
   onView: (item: ApprovedRequest) => void;
-  data:ApprovedRequest | null;
+  current_page: number;
+  total: number;
 }
 
 interface Accounts {
@@ -67,7 +24,7 @@ interface Accounts {
 
 }
 
-export default function ApproveTable() {
+export default function ApproveTable({ onView }: ApproveProps) {
 
   const [showSample, setShowSample] = useState(true);
   const [approvedRequest, setApproveRequest] = useState<ApprovedRequest[]>([]);
@@ -77,7 +34,34 @@ export default function ApproveTable() {
   const [total, setTotal] = useState(0);
 
 
+  const handleDeleteSample = () => {
+    setShowSample(false);
+
+  };
+
+  async function getAccounts() {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setAccounts(result.data || []);
+      } else {
+        console.error("Failed to fetch accounts");
+      }
+    } catch (error) {
+      console.error("Error fetching accounts", error);
+    }
+  }
+
   useEffect(() => {
+    getAccounts();
     fetchApprovedRequest();
   }, [])
 
@@ -113,7 +97,7 @@ export default function ApproveTable() {
   }
   return (
     <div>
-      <table className="table table-striped table-hover table-bordered table-responsive approved-tabale-data">
+      <table className="table table-striped table-hover table-bordered">
         <thead>
           <tr>
             <th>Name</th>
@@ -130,7 +114,7 @@ export default function ApproveTable() {
               <tr key={index}>
                 <td>{request.name}</td>
                 <td>{request.reason?.slice(0, 10) + "..." || "-"}</td>
-                <td>{request.acctname || "Unassigned"}</td>
+                <td>{accounts.find((acc) => acc.acctid === request.acctid)?.acctname || ""}</td>
                 <td>{request.created_at}</td>
                 <td>{request.approved_by}</td>
                 <td>
@@ -141,6 +125,7 @@ export default function ApproveTable() {
                     data-bs-target="#approveddrawer"
                     aria-controls="approveddrawer"
                     style={{ marginRight: "20px" }}
+                    onClick={() => onView(request)} 
                   >
                     <img src="/svg/View.svg" alt="view" className="eye-view" />
                   </button>
@@ -149,7 +134,7 @@ export default function ApproveTable() {
             ))) : (
             <tr>
               <td colSpan={6} className="text-center">
-             No approved shift adjustment requests at this time
+                No pending shift adjustment requests at this time
               </td>
             </tr>
           )}
@@ -179,4 +164,3 @@ export default function ApproveTable() {
     </div>
   );
 }
-
