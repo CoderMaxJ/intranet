@@ -795,6 +795,11 @@ input:focus {
   .adjustment-table {
     width: calc(100% + 100px) !important;
   }
+
+  .approved-tabale-data,
+  .rejected-table-data {
+  width: calc(100% + 200px) !important;
+}
 }
 
 @media only screen and (min-width: 400px) {
@@ -1306,10 +1311,7 @@ input:focus {
   transform: scale(0.95)
 }
 
-.approved-tabale-data,
-.rejected-table-data {
-  width: calc(100% + 200px) !important;
-}
+
 
 .table-data {
   font-size: smaller;

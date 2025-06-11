@@ -14,7 +14,7 @@ const  logout = async ()=>{
         method: "POST",
         headers:{
             "Content-type":"application/json",
-            "Authorization":`Bearer ${Decryptor(token || "")}`
+            // "Authorization":`Bearer ${Decryptor(token || "")}`
         },
         body:JSON.stringify({user_id:Decryptor(user_id || "")})
 
