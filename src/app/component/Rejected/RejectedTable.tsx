@@ -109,7 +109,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
             <th>Department</th>
             <th>Date Filed</th>
             <th>Rejected By</th>
-            <th className="actions-th">Action</th>
+            <th className="actions-th">Status</th>
           </tr>
         </thead>
         <tbody>

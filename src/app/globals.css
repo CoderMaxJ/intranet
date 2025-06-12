@@ -392,23 +392,55 @@ body {
   background-image: url("/img/Group4.png"), url("/img/Group4.png");
   background-repeat: no-repeat;
   background-size: 27% auto, 27% auto;
-  background-position: 40% 20%, 58% 80%
+  background-position: 37% 17%, 60% 84%
 }
 
 .login-div {
-  background: rgb(251 251 251);
-  box-shadow: 6px 19px 28px rgb(167 178 198);
-  backdrop-filter: blur(0);
-  border-radius: 6px;
-  padding: 20px 20px 85px 20px;
-  width: 390px;
-  height: 470px;
-  display: block;
-  justify-content: center;
-  align-items: center;
-  border: none !important;
-  outline: none !important;
+  background: rgba(255, 255, 255, 0.15);
+  /* Semi-transparent white */
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+  animation: fadeIn 1s ease-in-out;
   place-items: center;
+}
+
+.error-message1 {
+  background-color: #ff4d4d !important;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 0.3rem;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.success-message {
+  background-color: rgba(40, 167, 69, 0.1);
+  /* light green */
+  background-color: #28a745;
+  /* Bootstrap's success green */
+  text-align: center;
+  color: #ffffff !important;
+  padding: 0.5rem;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.errorr-message {
+  background-color: #ff4d4d !important;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .login-div label {
@@ -451,6 +483,8 @@ input:focus {
 .login-logo {
   width: 105px;
   height: 80%;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .poweredby-label {
@@ -627,7 +661,6 @@ input:focus {
 .success-message {
   color: rgb(6, 168, 46);
   text-align: center;
-  margin-bottom: 15px;
 }
 
 .search12 {
@@ -798,8 +831,8 @@ input:focus {
 
   .approved-tabale-data,
   .rejected-table-data {
-  width: calc(100% + 200px) !important;
-}
+    width: calc(100% + 200px) !important;
+  }
 }
 
 @media only screen and (min-width: 400px) {
@@ -1318,7 +1351,8 @@ input:focus {
 }
 
 .minimized-border {
-  border-bottom: 2px solid #ccc; /* adjust color or thickness as needed */
+  border-bottom: 2px solid #ccc;
+  /* adjust color or thickness as needed */
 }
 
 .input-daterange {
@@ -2979,6 +3013,7 @@ table {
     transform: translateY(-50%);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
@@ -3208,9 +3243,7 @@ body.dark-mode .has-calendar-icon input[type="date"]::before {
   color: #fff;
 }
 
-.form-control--to {
-
-}
+.form-control--to {}
 
 .time-icon-group {
   position: relative;
@@ -3652,6 +3685,11 @@ body.dark-mode .time-icon-group::before {
 .offcanvas-header,
 .tablogs {
   font-family: 'Geist' !important;
+}
+
+.selectall,
+.clearall {
+  margin-bottom: 10px;
 }
 
 .edit-schedule-btn {
