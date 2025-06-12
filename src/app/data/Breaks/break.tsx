@@ -34,73 +34,11 @@ interface Logs {
 }
 
 function BreakDataTable() {
-
-
-
-
-const socket = new WebSocket('ws://localhost:8000/ws/breaks/');
-
-socket.onopen = function(e) {
-    console.log("WebSocket is open now.");
-    // Send a message to Django
-    socket.send(JSON.stringify({
-        'message': 'Hello from JS!'
-    }));
-};
-
-socket.onmessage = function(e) {
-    const data = JSON.parse(e.data);
-    console.log("Received from server:", data.message);
-};
-
-socket.onclose = function(e) {
-    console.log("WebSocket is closed.");
-};
-
-socket.onerror = function(error) {
-    console.error("WebSocket error:", error);
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const [breaks, setBreaks] = useState<BreakData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [fullscreen, setFullscreen] = useState(false);
-  const [latestUpdate, setLatestUpdate] = useState<string | null>(null);
   const breaksRef = useRef<BreakData[]>([]);
   const [userPrivilege, setUserPrivilege] = useState<string | null>(null);
-
-  // Logs property
-
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
   const filteredRows = data?.filter((row) =>
@@ -111,12 +49,11 @@ socket.onerror = function(error) {
       .includes(filter)
   );
 
-  // const privilege = Decryptor(localStorage.getItem("user_privilege") || "");
-
   useEffect(() => {
     const privilege = localStorage.getItem("user_privilege");
     console.log("Loaded privilege:", privilege);
     setUserPrivilege(privilege);
+    fetchBreakData();
   }, []);
 
   const router = useRouter();
@@ -125,11 +62,12 @@ socket.onerror = function(error) {
   };
 
   const fetchBreakData = async () => {
+    
     try {
       const account_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/?last_update=${latestUpdate || ""}`,
+        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/`,
         {
           method: "GET",
           headers: {
@@ -139,18 +77,6 @@ socket.onerror = function(error) {
         }
       );
 
-      if (response.status === 204) {
-        const message = await response.text();
-        // No new data, use data from local storage
-        const storedData = localStorage.getItem("breakData");
-        if (storedData) {
-          const parsedData = JSON.parse(storedData);
-          setBreaks(parsedData);
-          breaksRef.current = parsedData;
-        }
-        return;
-      }
-
       if (response.status === 404 || response.status === 403) {
         localStorage.clear();
         router.push("/");
@@ -158,19 +84,16 @@ socket.onerror = function(error) {
       }
 
       const data = await response.json();
+
       setData(data.log_data);
       localStorage.setItem("total-logs",(data.log_data.length));
-
       // Merge fetched data with the current countdown state
-      const storedData = localStorage.getItem("breakData");
-      const storedBreaks = storedData ? JSON.parse(storedData) : [];
       const updatedBreaks = (data?.data || []).map((newBreak: BreakData) => ({
         ...newBreak,
         duration: newBreak.duration > 0 ? newBreak.duration : -newBreak.overbreak, // Always use fresh duration
       }));
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
-      setLatestUpdate(data.latest_update);
       // Store the new data in local storage
       localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
       localStorage.setItem("total-on-breaks", String(updatedBreaks.length))
@@ -180,50 +103,13 @@ socket.onerror = function(error) {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        const udpateTimeStamp = async () => {
-          try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/updatetimestamp/`, {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${Decryptor(token || "")}`
-              }
-            })
-            if (response.status === 200) {
-
-            } else {
-              console.error("error");
-            }
-          } catch (e) {
-
-            console.error(e);
-          }
-        }
-        udpateTimeStamp();
-        setTimeout(() => {
-          udpateTimeStamp();
-        }, 2000)
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);
-
-  useEffect(() => {
     const countdownIntervalId = setInterval(() => {
       setBreaks((prevBreaks) => {
         const updatedBreaks = prevBreaks.map((breakItem) => ({
           ...breakItem,
           duration: breakItem.duration - 1,
         }));
-        breaksRef.current = updatedBreaks; // Update the ref
+        breaksRef.current = updatedBreaks; 
         localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
         return updatedBreaks;
       });
@@ -234,13 +120,28 @@ socket.onerror = function(error) {
 
   const status = localStorage.getItem("status");
 
+async function updateChecker() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/`,{
+    method:"GET",
+    headers:{
+      "Content-type":"application/json"
+    }
+  });
+
+  if(response.status === 200){
+    const message = await response.json();
+    if(message.message === "NEW UPDATE"){
+      fetchBreakData();
+    }
+  }
+}
+
   useEffect(() => {
     if (status !== "login") return;
-    fetchBreakData();
-    // const fetchIntervalId = setInterval(fetchBreakData, 3000);
+    const fetchIntervalId = setInterval(updateChecker, 3000);
 
-    // return () => clearInterval(fetchIntervalId);
-  }, [latestUpdate]);
+    return () => clearInterval(fetchIntervalId);
+  }, []);
 
   const formatTime = (time: number) => {
     const isNegative = time < 0;
