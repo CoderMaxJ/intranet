@@ -51,7 +51,6 @@ function BreakDataTable() {
 
   useEffect(() => {
     const privilege = localStorage.getItem("user_privilege");
-    console.log("Loaded privilege:", privilege);
     setUserPrivilege(privilege);
     fetchBreakData();
   }, []);
