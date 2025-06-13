@@ -14,6 +14,7 @@ export default function Updatepassword() {
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(false);
+  const [isSamePassword, setIsSamePassword] = useState(false);
   const [focus, setFocus] = useState(false);
 
   // Check if passwords match
@@ -40,6 +41,14 @@ export default function Updatepassword() {
         newpassword: password,
         password2: confirmPassword,
       };
+      if (currentpassword === password) {
+        setIsSamePassword(true);
+        setMessage("The new password must be different from the current one.");
+        return;
+      } else {
+        setIsSamePassword(false);
+      }
+
       const token = localStorage.getItem("token");
       try {
         const response = await fetch(
@@ -115,19 +124,19 @@ export default function Updatepassword() {
                 aria-label="Close"
               />
             </div>
-            {success ? (
+            {message && (
               <div>
                 <center>
-                  <p style={{ color: "green", fontSize: "15px" }}>{message}</p>
-                </center>
-              </div>
-            ) : (
-              <div>
-                <center>
-                  <p style={{ color: "#FF3131", fontSize: "15px" }}>{message}</p>
+                  <p
+                    className={`${success ? "success-message" : "errorr-message"
+                      } message-visible`}
+                  >
+                    {message}
+                  </p>
                 </center>
               </div>
             )}
+
             <div className="modal-body p-4" style={{ display: 'block' }}>
               <form onSubmit={handleSubmit} className="gap">
                 <div className="passwords-inputs"
@@ -201,8 +210,8 @@ export default function Updatepassword() {
 
                       {focus && (
                         <div className="password-hint mt-2">
-                          <div><label style={{ color: password.length >= 8 ? 'green' : 'grey' }}>✔ 8 to 20 characters</label></div>
-                          <div><label style={{ color: passwordStrength ? 'green' : 'grey' }}>one uppercase letter, one lowercase letter, numbers, and special characters</label></div>
+                          <div><label style={{ color: password.length >= 8 ? 'green' : 'grey' }}>✔ Must be 8 to 20 characters in length and include</label></div>
+                          <div><label style={{ color: passwordStrength ? 'green' : 'grey' }}>uppercase letter, lowercase letter, numbers, and special characters</label></div>
                         </div>
                       )}
                     </div>

@@ -105,7 +105,7 @@ export default function ApproveTable({ onView }: ApproveProps) {
             <th>Department</th>
             <th>Date Filed</th>
             <th>Approved By</th>
-            <th className="actions-th">Action</th>
+            <th className="actions-th">Status</th>
           </tr>
         </thead>
         <tbody>

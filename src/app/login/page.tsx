@@ -105,55 +105,57 @@ export default function Login() {
                 <div>
                     <img
                         className="login-logo"
-                        src="/img/Bluesos.png"
+                        src="/img/soslogo.webp"
                         alt="Staff Outsourcing Logo"
                     />
                 </div>
-                <form className="username" onSubmit={handleSubmit}>
-                    {error && <div className="error-message">{error}</div>}
-                    <div className="inp-lab">
-                        <label htmlFor="username"><span className="view">Username</span></label>
-                        <input
-                            className="form-control"
-                            id="username"
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="inputpassword">
-                        <label htmlFor="password"><span className="view">Password</span></label>
-                        <div className="inputfields">
+                <div>
+                    <form className="username" onSubmit={handleSubmit}>
+                        {error && <div className="error-message1">{error}</div>}
+                        <div className="inp-lab">
+                            <label htmlFor="username"><span className="view">Username</span></label>
                             <input
-                                id="password"
                                 className="form-control"
-                                type={showPassword ? "text" : "password"}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                id="username"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
-                            <span onClick={() => setShowPassword(!showPassword)} className="eyetoggle">
-                                {showPassword ? (<img src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
-                                    height={16} />
-                                ) : (<img src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
-                                    height={16} />
-                                )}
-                            </span>
                         </div>
-                    </div>
-                    <div>
-                        <button type="submit" className="button-login mb-4">
-                            <span className="view">Log in</span>
-                        </button>
-                    </div>
-                </form>
+                        <div className="inputpassword">
+                            <label htmlFor="password"><span className="view">Password</span></label>
+                            <div className="inputfields">
+                                <input
+                                    id="password"
+                                    className="form-control"
+                                    type={showPassword ? "text" : "password"}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <span onClick={() => setShowPassword(!showPassword)} className="eyetoggle">
+                                    {showPassword ? (<img src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
+                                        height={16} />
+                                    ) : (<img src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
+                                        height={16} />
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" className="button-login mb-4">
+                                <span className="view">Log in</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
                 <div className="ecomialogo-footer d-flex flex-column align-items-center">
 
                     <label className="poweredby-label" htmlFor="poweredby"><span className="view">powered by</span></label>
                     <img
                         className="ecomialogo"
-                        src="/img/eComialogo.png"
+                        src="/img/poweredbyecomia.webp"
                         alt="Staff Outsourcing Logo"
                     />
                 </div>
