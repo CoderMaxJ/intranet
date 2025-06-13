@@ -3,9 +3,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect, useRef, use } from "react";
 import "../../style/breaks.css";
-import { Decryptor, Encryptor } from "@/security";
+import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
-import { log } from "node:console";
+import { IdentifyUser } from "@/app/user_identifier";
 
 interface BreakData {
   name: string;
@@ -38,9 +38,12 @@ function BreakDataTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [fullscreen, setFullscreen] = useState(false);
   const breaksRef = useRef<BreakData[]>([]);
-  const [userPrivilege, setUserPrivilege] = useState<string | null>(null);
+const [userPrivilege, setUserPrivilege] = useState([""]);
+  
+
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
+
   const filteredRows = data?.filter((row) =>
     Object.values(row)
       .join(" ")
@@ -50,8 +53,6 @@ function BreakDataTable() {
   );
 
   useEffect(() => {
-    const privilege = localStorage.getItem("user_privilege");
-    setUserPrivilege(privilege);
     fetchBreakData();
   }, []);
 
@@ -63,10 +64,10 @@ function BreakDataTable() {
   const fetchBreakData = async () => {
     
     try {
-      const account_id = localStorage.getItem("user_id");
+      const user_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(account_id || "")}/`,
+        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(user_id|| "")}/`,
         {
           method: "GET",
           headers: {
@@ -117,7 +118,21 @@ function BreakDataTable() {
     return () => clearInterval(countdownIntervalId);
   }, []);
 
-  const status = localStorage.getItem("status");
+const status = localStorage.getItem("status");
+const account_id = localStorage.getItem("account_id");
+const account_id_list = Decryptor(localStorage.getItem("account_id_list") || "");
+const array_account_id = account_id_list?.split(',')
+
+
+
+  const user_hash_privilege = localStorage.getItem("user_privilege");
+
+  if (user_hash_privilege) {
+    const array_privilege = IdentifyUser(user_hash_privilege);
+    array_privilege.forEach((data) => {
+      userPrivilege.push(data);
+    });
+  }
 
 async function updateChecker() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/`,{
@@ -126,12 +141,16 @@ async function updateChecker() {
       "Content-type":"application/json"
     }
   });
-
   if(response.status === 200){
     const message = await response.json();
-    if(message.message === "NEW UPDATE"){
+    if(message.message === Number(Decryptor(account_id || ""))){
+      fetchBreakData();
+    }else if(array_account_id.includes(message.message.toString())){
+      fetchBreakData();
+    }else if(message.message != "NO UPDATE" && userPrivilege.includes("manage_users")){
       fetchBreakData();
     }
+
   }
 }
 
