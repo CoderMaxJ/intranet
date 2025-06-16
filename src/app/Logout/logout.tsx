@@ -1,45 +1,28 @@
-// "use client";
+
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
-import { ToastContainer,toast } from "react-toastify";
 
 export default function Logout() {
 const router = useRouter();
 
-const token = localStorage.getItem("token");
 const user_id = localStorage.getItem("user_id");
 
 const  logout = async ()=>{
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`,{
         method: "POST",
         headers:{
-            "Content-type":"application/json",
-            // "Authorization":`Bearer ${Decryptor(token || "")}`
+            "Content-type":"application/json"
         },
         body:JSON.stringify({user_id:Decryptor(user_id || "")})
 
     });
 
     if(response.status === 200){
-
-          successToast("Logout Successfully");
-          setTimeout(()=>{
           router.push("/login");
-          },1000)
           localStorage.clear();  
     }
 }
 
- const successToast = (msg: string) => toast.success(msg, {
-    position: "top-right",
-    autoClose: 3000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
-  
 return (
     <div>    
         <div

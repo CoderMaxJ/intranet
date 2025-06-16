@@ -190,7 +190,7 @@ async function updateChecker() {
 
   return (
     <div className="workforce px-4">
-    <ToastContainer/>
+    {/* <ToastContainer/> */}
       <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div px-3"}>
         <div className="d-flex flex-column monitoring-container">
           <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3 gap-2">
@@ -248,7 +248,7 @@ async function updateChecker() {
               <thead>
                 <tr>
                   <th>Name</th>
-                  {userPrivilege === "super_admin" && <th>Account</th>}
+                  {userPrivilege.includes("manage_users") && <th>Account</th>}
                   <th>Start</th>
                   <th>End</th>
                   <th>Duration</th>
@@ -286,7 +286,7 @@ async function updateChecker() {
                       <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
                         {instance.name}
                       </td>
-                      {userPrivilege === "super_admin" && <td>{instance.acctname}</td>}
+                      {userPrivilege.includes("manage_users") && <td>{instance.acctname}</td>}
 
                       <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
                         {instance.start}
@@ -353,7 +353,7 @@ async function updateChecker() {
               <thead>
                 <tr>
                   <th>Name</th>
-                  {userPrivilege === "super_admin" && <th>Account</th>}
+                  {userPrivilege.includes("manage_users") && <th>Account</th>}
                   <th>Login</th>
                   <th>First Break</th>
                   <th>Breakout</th>
@@ -371,7 +371,7 @@ async function updateChecker() {
                 {filteredRows?.map((logs) => (
                   <tr key={logs.name}>
                     <td>{logs.name}</td>
-                    {userPrivilege === "super_admin" && <td>{logs.acctname}</td>}
+                    {userPrivilege.includes("manage_users") && <td>{logs.acctname}</td>}
                     <td>{logs.login}</td>
                     <td>{logs.brkin1}</td>
                     <td>{logs.brkout1}</td>
@@ -390,9 +390,6 @@ async function updateChecker() {
           </div>
         </div>
       </div>
-
-
-
     </div>
   );
 }
