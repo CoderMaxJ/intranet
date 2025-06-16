@@ -21,10 +21,12 @@ const  logout = async ()=>{
     });
 
     if(response.status === 200){
-            localStorage.clear();
+
           successToast("Logout Successfully");
-            localStorage.clear();
-            window.location.reload();    
+          setTimeout(()=>{
+          router.push("/login");
+          },1000)
+          localStorage.clear();  
     }
 }
 

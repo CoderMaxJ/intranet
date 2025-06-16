@@ -6,6 +6,7 @@ import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
 import { IdentifyUser } from "@/app/user_identifier";
+import { ToastContainer } from "react-toastify";
 
 interface BreakData {
   name: string;
@@ -189,6 +190,7 @@ async function updateChecker() {
 
   return (
     <div className="workforce px-4">
+    <ToastContainer/>
       <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div px-3"}>
         <div className="d-flex flex-column monitoring-container">
           <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3 gap-2">
