@@ -13,33 +13,14 @@ export default function Login() {
     const [error, setError] = useState("");
     const [isLogged, setLog] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const [animate, setAnimate] = useState(false);
-
-    useEffect(() => {
-        setAnimate(true);
-    }, []);
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const token = localStorage.getItem("token");
-            if (token) {
-                setLog(true);
-            }
-        }
-    }, []);
 
     useEffect(() => {
 
         if (isLogged) {
-            setTimeout(() => {
-                router.push("/WorkforceMonitoring");
+             router.push("/WorkforceMonitoring");    
             }
-                , 1000);
-        }
-
-    }, [isLogged, router]);
+    }, [isLogged]);
 
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",
@@ -52,7 +33,6 @@ export default function Login() {
     });
 
     async function login() {
-        setLoading(true);
         const credentials = { username: username, password: password };
         try {
 
@@ -78,21 +58,15 @@ export default function Login() {
                 successToast("Login Successful");
                 setLog(true);
 
-            } else if (response.status === 403) {
-                const message = await response.json();
-                setError(message.warning);
-                localStorage.clear();
             } else if (response.status === 401) {
                 const message = await response.json();
-                setError(message.warning);
-            }
-            else {
-                const res = await response.json();
-
-                setError("Invalid Credentials");
+                setTimeout(()=>{
+                    setError(message.warning);
+                },1000)
             }
         } catch {
-            setError("Invalid Credentials");
+            // setError("Invalid Credentials");
+        
         }
     }
     const handleSubmit = async (e: any) => {
@@ -102,7 +76,7 @@ export default function Login() {
 
     return (
         <div className="main-div">
-            <ToastContainer />
+            {/* <ToastContainer/> */}
             <div className="login-div">
                 <div>
                     <img

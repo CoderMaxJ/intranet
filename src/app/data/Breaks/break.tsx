@@ -45,15 +45,6 @@ const [userPrivilege, setUserPrivilege] = useState([""]);
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
 
-
-  // const filteredRows = data?.filter((row) =>
-  //   Object.values(row)
-  //     .join(" ")
-  //     .toUpperCase()
-  //     .toLowerCase()
-  //     .includes(filter)
-  // );
-
     const filteredRows = data.filter(
     (rows) =>
       rows.name.toLowerCase().includes(filter.toLowerCase())
@@ -195,7 +186,6 @@ async function updateChecker() {
 
   return (
     <div className="workforce px-4">
-    {/* <ToastContainer/> */}
       <div className={fullscreen ? "breaks-div fullscreen px-4" : "breaks-div px-3"}>
         <div className="d-flex flex-column monitoring-container">
           <div className="breaksheader d-flex flex-wrap align-items-center justify-content-between px-3 gap-2">

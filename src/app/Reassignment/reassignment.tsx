@@ -444,7 +444,7 @@ export default function () {
                                                        <p className="view">Are you sure you want to save changes?</p>
                                                   </div>
                                                   <div className="modal-footer">
-                                                       <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
+                                                       <button type="button" className="btn btn-secondary " onClick={() => setShowModal(false)}>Close</button>
                                                        <button type="button" className="btn btn-primary" onClick={() => {
                                                             handleSetSchedule();
                                                             setShowModal(false);
@@ -458,7 +458,7 @@ export default function () {
                               )}
                               <div className="d-flex justify-content-end modal-footer" >
                                    <div className="d-flex gap-3" >
-                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                                        <button type="button" className="btn btn-secondary cancel-btn" data-bs-dismiss="modal">
                                              <span className="cancel">Cancel</span>
                                         </button>
 
