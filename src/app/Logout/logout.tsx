@@ -1,13 +1,17 @@
 
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "../component/LoadSpinner/spinner";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function Logout() {
 const router = useRouter();
-
+const [isloading,setLoading]=useState(false);
 const user_id = localStorage.getItem("user_id");
 
 const  logout = async ()=>{
+    setLoading(true);
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/logout/`,{
         method: "POST",
         headers:{
@@ -18,13 +22,17 @@ const  logout = async ()=>{
     });
 
     if(response.status === 200){
+           setLoading(false);
           router.push("/login");
-          localStorage.clear();  
+          localStorage.clear();
     }
 }
 
 return (
-    <div>    
+    <div>  
+        {isloading === false ? (
+
+         
         <div
         className="modal fade"
        id="logoutModal"  aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -46,12 +54,15 @@ return (
                     data-bs-dismiss="modal"
                     onClick={logout}
                     >
-                    <span className="view">Logout</span>
+                    <span className="view">Log out</span>
                     </button>
                 </div>
                 </div>
             </div>
-        </div>    
+        </div> 
+        ):(
+            <ToastContainer/>
+        )}  
     </div>
 );
 }
