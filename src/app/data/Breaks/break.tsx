@@ -45,14 +45,19 @@ const [userPrivilege, setUserPrivilege] = useState([""]);
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
 
-  const filteredRows = data?.filter((row) =>
-    Object.values(row)
-      .join(" ")
-      .toUpperCase()
-      .toLowerCase()
-      .includes(filter)
-  );
 
+  // const filteredRows = data?.filter((row) =>
+  //   Object.values(row)
+  //     .join(" ")
+  //     .toUpperCase()
+  //     .toLowerCase()
+  //     .includes(filter)
+  // );
+
+    const filteredRows = data.filter(
+    (rows) =>
+      rows.name.toLowerCase().includes(filter.toLowerCase())
+  );
   useEffect(() => {
     fetchBreakData();
   }, []);
@@ -286,7 +291,7 @@ async function updateChecker() {
                       <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
                         {instance.name}
                       </td>
-                      {userPrivilege.includes("manage_users") && <td>{instance.acctname}</td>}
+                      {userPrivilege.includes("manage_users") && <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>{instance.acctname}</td>}
 
                       <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
                         {instance.start}

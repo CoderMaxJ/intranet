@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, use } from "react";
-import { Encryptor, Decryptor } from "@/security";
+import { Decryptor } from "@/security";
 import Dashboard from "../Dashboard/page";
 import Header from "../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -40,7 +40,7 @@ export default function Daterange() {
     const [end, setEnd] = useState("");
     const [checker, setChecker] = useState(true);
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value.toLowerCase());
+        setSearchTerm(event.target.value);
     };
 
 
@@ -354,10 +354,16 @@ export default function Daterange() {
                                         </thead>
                                         <tbody className="table-data">
                                             {data
-                                                .filter((report) => {
-                                                    if (!searchTerm) return true;
-                                                    return report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
-                                                })
+                                                 .filter((report) => {
+                                                if (!searchTerm) {
+                                                    return true;
+                                                }
+
+                                                const lowerSearch = searchTerm.toLowerCase();
+                                                return (
+                                                    report.name.toLowerCase().includes(lowerSearch)
+                                                );
+                                            })
                                                 .sort((a, b) => a.name.localeCompare(b.name))
                                                 .map((report, index) => (
                                                     <tr key={index} className="report-data">
