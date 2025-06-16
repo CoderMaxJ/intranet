@@ -287,6 +287,7 @@ const [empData, setEmpData] = useState<Information>({
       </div>
       <div className="db-employee">
         <Dashboard />
+        <ToastContainer/>  
       </div>
       <div className="main-divv">
         <Header title="MANAGE EMPLOYEE" currentPage=""/>
@@ -499,8 +500,7 @@ const [empData, setEmpData] = useState<Information>({
               </div>
             </div>
           </div>
-        </div>
-             <ToastContainer/>
+        </div> 
       </div>
     </div>
 

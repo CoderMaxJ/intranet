@@ -24,16 +24,6 @@ export default function Login() {
             }
     }, [isLogged,router]);
 
-    const successToast = (msg: string) => toast.success(msg, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
-
     async function login() {
         const credentials = { username: username, password: password };
         try {
@@ -57,7 +47,6 @@ export default function Login() {
                 localStorage.setItem("status", "login"),
                 localStorage.setItem("account_id_list",Encryptor(res.account_id_list.toString()));
                 localStorage.setItem("active_tab", "1");
-                successToast("Login Successfully");
                 setLog(true);
             } else if (response.status === 401) {
                 const message = await response.json();
