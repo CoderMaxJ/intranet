@@ -13,7 +13,6 @@ const SuccessMessage = () => {
   const handleCancel = () => setShowModal(false);
   return (
     <div>
-
       <div className="modal">
         <div className="modal-content">
           <h2>Are you sure you want to delete this account?</h2>
@@ -21,13 +20,12 @@ const SuccessMessage = () => {
           <button onClick={handleCancel}>Cancel</button>
         </div>
       </div>
-
       {accountDeleted && (
         <div className="success-message">
           <p>Your account has been successfully deleted.</p>
         </div>
       )}
-
+  
       <style jsx>{`
         .modal {
           position: fixed;

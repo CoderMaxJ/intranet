@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
-import { tr } from "date-fns/locale";
 
 interface RequestItem {
   requestid: number;
@@ -54,12 +53,11 @@ interface RequestItem {
   acctname: string;
   reason_for_disapproved: string;
 }
+
 interface RejectedTableProps {
   data: RequestItem | null;
   onView: (item: RequestItem) => void;
 }
-
-
 
 export default function RejectedTable({ onView }: RejectedTableProps) {
   const [showSample, setShowSample] = useState(true);
@@ -70,7 +68,6 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
   const [totalPages, setTotalPages] = useState();
   const [total, setTotal] = useState(0);
 
-
   async function fetchRejectedRequest() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",
@@ -79,7 +76,6 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
         "Authorization": `Bearer ${token}`
       },
     })
-
     if (response.status === 200) {
       const data = await response.json();
       setTotal(data.total);
@@ -113,7 +109,6 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
           </tr>
         </thead>
         <tbody>
-
           {rejectedRequest.length > 0 ? (
             rejectedRequest?.map((request: any, index: any) => (
               <tr key={index}>
@@ -136,7 +131,6 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
                   </button>
                 </td>
               </tr>
-
             ))
           ) : (
             <tr>
@@ -167,7 +161,6 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
           </nav>
         </div>
       </div>
-
     </div>
   );
 }

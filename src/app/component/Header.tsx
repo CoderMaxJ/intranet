@@ -41,7 +41,6 @@ export default function Header({ title, currentPage }: HeaderProps) {
                 Over Break
               </span>
             </div>
-
           </div>
         )}
       </div>

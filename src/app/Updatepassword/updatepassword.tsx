@@ -17,7 +17,6 @@ export default function Updatepassword() {
   const [isSamePassword, setIsSamePassword] = useState(false);
   const [focus, setFocus] = useState(false);
 
-  // Check if passwords match
   const passwordsMatch = password === confirmPassword && confirmPassword !== "";
   const toggleShow = () => {
     setShowPassword((prev) => !prev);
@@ -136,12 +135,10 @@ export default function Updatepassword() {
                 </center>
               </div>
             )}
-
             <div className="modal-body p-4" style={{ display: 'block' }}>
               <form onSubmit={handleSubmit} className="gap">
                 <div className="passwords-inputs"
                 >
-                  {/* Current Password */}
                   <div className="gap-3">
                     <div className="currentpass" style={{ position: 'relative', width: '100%' }}>
                       <label htmlFor="currentpassword" className="updatepass-label" style={{ display: 'block' }}>
@@ -169,8 +166,6 @@ export default function Updatepassword() {
                             height={16} />)}
                       </span>
                     </div>
-
-                    {/* New Password */}
                     <div className="password-field mt-3">
                       <label htmlFor="password" className="updatepass-label d-block">
                         New Password{" "}
@@ -180,7 +175,6 @@ export default function Updatepassword() {
                           </span>
                         )}
                       </label>
-
                       <div className="password-input-wrapper">
                         <input
                           id="password"
@@ -192,7 +186,6 @@ export default function Updatepassword() {
                           onChange={(e) => setPassword(e.target.value)}
                           required
                         />
-
                         <span onClick={() => setShowPassword1(!showPassword1)} className="newpass-eyetoggleee" style={{
                           position: 'absolute',
                           right: '10px',
@@ -207,7 +200,6 @@ export default function Updatepassword() {
                               height={16} />)}
                         </span>
                       </div>
-
                       {focus && (
                         <div className="password-hint mt-2">
                           <div><label style={{ color: password.length >= 8 ? 'green' : 'grey' }}>✔ Must be 8 to 20 characters in length and include</label></div>
@@ -215,8 +207,6 @@ export default function Updatepassword() {
                         </div>
                       )}
                     </div>
-
-                    {/* Confirm Password */}
                     <div className="confirmpass mt-3" style={{ position: 'relative', width: '100%' }}>
                       <label htmlFor="confirmpassword" className="updatepass-label" style={{ display: 'block' }}>
                         Confirm Password
@@ -250,7 +240,6 @@ export default function Updatepassword() {
                         </span>
                       </div>
                     </div>
-                    {/* Submit Button */}
                     <div className="upd mt-3">
                       <button type="submit" className="update-pass mt-3">
                         Update Password

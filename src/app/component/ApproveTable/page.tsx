@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
-import { data } from "react-router-dom";
-import { tr } from "date-fns/locale";
 
 interface ApprovedRequest {
   name: string;
@@ -21,11 +19,9 @@ interface ApproveProps {
 interface Accounts {
   acctid: number;
   acctname: string;
-
 }
 
 export default function ApproveTable({ onView }: ApproveProps) {
-
   const [showSample, setShowSample] = useState(true);
   const [approvedRequest, setApproveRequest] = useState<ApprovedRequest[]>([]);
   const [accounts, setAccounts] = useState<Accounts[]>([]);
@@ -33,10 +29,8 @@ export default function ApproveTable({ onView }: ApproveProps) {
   const [totalPage, setTotalPage] = useState();
   const [total, setTotal] = useState(0);
 
-
   const handleDeleteSample = () => {
     setShowSample(false);
-
   };
 
   async function getAccounts() {
@@ -48,7 +42,6 @@ export default function ApproveTable({ onView }: ApproveProps) {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (response.ok) {
         const result = await response.json();
         setAccounts(result.data || []);
@@ -68,7 +61,6 @@ export default function ApproveTable({ onView }: ApproveProps) {
   const token = Decryptor(localStorage.getItem("token") || "")
   const user_id = localStorage.getItem("user_id");
 
-
   async function fetchApprovedRequest() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approved/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",
@@ -77,13 +69,11 @@ export default function ApproveTable({ onView }: ApproveProps) {
         "Authorization": `Bearer ${token}`
       }
     });
-
     if (response.status === 200) {
       const data = await response.json();
       setApproveRequest(data.data);
       setTotalPage(data.num_pages);
       setTotal(data.total);
-
     }
   }
 
@@ -91,10 +81,10 @@ export default function ApproveTable({ onView }: ApproveProps) {
     fetchApprovedRequest();
   }, [current_page])
 
-
   const changePage = (page: number) => {
     setCurrentPage(page);
   }
+
   return (
     <div>
       <table className="table table-striped table-hover table-bordered">
@@ -125,7 +115,7 @@ export default function ApproveTable({ onView }: ApproveProps) {
                     data-bs-target="#approveddrawer"
                     aria-controls="approveddrawer"
                     style={{ marginRight: "20px" }}
-                    onClick={() => onView(request)} 
+                    onClick={() => onView(request)}
                   >
                     <img src="/svg/View.svg" alt="view" className="eye-view" />
                   </button>
@@ -160,7 +150,6 @@ export default function ApproveTable({ onView }: ApproveProps) {
           </nav>
         </div>
       </div>
-
     </div>
   );
 }

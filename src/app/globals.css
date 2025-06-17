@@ -15,6 +15,15 @@
     --foreground: #ededed;
   }
 }
+
+/* Custom checkbox alignment if needed */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
 .loading-overlay {
   position: fixed;
   top: 0;

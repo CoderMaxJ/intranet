@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useCallback, use } from "react";
 import { Decryptor, Encryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // <-- ADD this
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
@@ -52,7 +52,6 @@ export default function () {
      const [showModal, setShowModal] = useState(false);
 
      const router = useRouter();
-
      const successToast = (msg: string) => toast.success(msg, {
           position: "top-right",
           autoClose: 2000,
@@ -62,7 +61,6 @@ export default function () {
           draggable: true,
           progress: undefined,
      });
-
 
      const errorToast = (msg: string) => toast.error(msg, {
           position: "top-right",
@@ -89,7 +87,6 @@ export default function () {
           }
      }, [showModal]);
 
-
      const handleSetSchedule = async () => {
           if (!timeIn || !timeOut) {
                errorToast("Please set both Time In and Time Out before assigning schedule.");
@@ -102,7 +99,6 @@ export default function () {
           const employee_numbers = selectedEmployees.map(emp => emp.empno);
           const token = localStorage.getItem("token");
           const decryptedToken = Decryptor(token || "");
-
           try {
                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
                     method: "POST",
@@ -116,7 +112,6 @@ export default function () {
                          timeout: timeOut
                     })
                });
-
                if (response.ok) {
                     const data = await response.json();
                     successToast(data.message || "Schedule successfully set for selected employees!");
@@ -141,17 +136,16 @@ export default function () {
 
      const HandleSelectAll = () => {
           setSelectedEmployees(prev => {
-               const newSelection = employee.filter(
-                    emp => !prev.some(selected => selected.empno === emp.empno)
-               );
-               return [...prev, ...newSelection];
+               if (prev.length === employee.length) {
+                    return [];
+               }
+               return [...employee];
           });
      };
 
      const handleSearchEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
           const value = e.target.value;
           setSearchQuery(value);
-
           if (value.trim() === "") {
                setFilteredEmployees(allEmployees);
           } else {
@@ -259,7 +253,7 @@ export default function () {
 
      return (
           <div>
-               <ToastContainer/>
+               <ToastContainer />
                <div
                     className="modal fade"
                     id="reassignment"
@@ -320,7 +314,9 @@ export default function () {
                                    </div>
                                    <div className="d-flex flex-wrap justify-content-between align-items-start gap-2">
                                         <div className="d-flex flex-column align-items-start" style={{ flex: 1 }}>
-                                             <h6 className="assign-employees">Assign Employees <span>({employee?.length})</span></h6>
+                                             <h6 className="assign-employees">
+                                                  Assign Employees <span>({employee?.length - selectedEmployees.length})</span>
+                                             </h6>
                                              <div className="d-flex justity-content-center flex-wrap gap-2 w-100">
                                                   <div className="flex-grow-1"><input
                                                        className="form-control mb-2"
@@ -425,7 +421,6 @@ export default function () {
                                         </div>
                                    </div>
                               </div>
-                              {/* Add Schedule Button */}
                               {showModal && (
                                    <div
                                         className={`modal fade slide-from-top ${showModal ? 'show d-block' : ''}`}
@@ -462,7 +457,6 @@ export default function () {
                                         <button type="button" className="btn btn-secondary cancel-btn" data-bs-dismiss="modal">
                                              <span className="cancel">Cancel</span>
                                         </button>
-
                                         <button
                                              type="button"
                                              className="btn btn-primary clearall d-flex align-items-center"

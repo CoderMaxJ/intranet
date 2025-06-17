@@ -1,13 +1,10 @@
 "use client";
-import { Encryptor, Decryptor } from "@/security";
+import { Encryptor } from "@/security";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { ToastContainer, toast } from 'react-toastify';
-import Loading from "../component/LoadingProgress/loading";
 import LoadingSpinner from "../component/LoadSpinner/spinner";
-
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -15,14 +12,14 @@ export default function Login() {
     const [error, setError] = useState("");
     const [isLogged, setLog] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [isloading,setLoading]=useState(false);
+    const [isloading, setLoading] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
         if (isLogged) {
-            router.push("/WorkforceMonitoring");    
-            }
-    }, [isLogged,router]);
+            router.push("/WorkforceMonitoring");
+        }
+    }, [isLogged, router]);
 
     async function login() {
         const credentials = { username: username, password: password };
@@ -43,19 +40,17 @@ export default function Login() {
                 localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
                 localStorage.setItem("name", res.name);
                 localStorage.setItem("position", res.position);
-                localStorage.setItem("account_id",Encryptor(res.account_id.toString()));
+                localStorage.setItem("account_id", Encryptor(res.account_id.toString()));
                 localStorage.setItem("status", "login"),
-                localStorage.setItem("account_id_list",Encryptor(res.account_id_list.toString()));
+                    localStorage.setItem("account_id_list", Encryptor(res.account_id_list.toString()));
                 localStorage.setItem("active_tab", "1");
                 setLog(true);
             } else if (response.status === 401) {
                 const message = await response.json();
-                    setError(message.warning);
-                    setLoading(false);
+                setError(message.warning);
+                setLoading(false);
             }
         } catch {
-            // setError("Invalid Credentials");
-        
         }
     }
     const handleSubmit = async (e: any) => {
@@ -65,9 +60,8 @@ export default function Login() {
     };
 
     return (
-       
         <div className="main-div">
-             {isloading != true ?(
+            {isloading != true ? (
                 <div className="login-div">
                     <div>
                         <img
@@ -76,47 +70,54 @@ export default function Login() {
                             alt="Staff Outsourcing Logo"
                         />
                     </div>
-                    <div>
-                        <form className="username" onSubmit={handleSubmit}>
-                            {error && <div className="error-message1">{error}</div>}
-                            <div className="inp-lab">
-                                <label htmlFor="username"><span className="view">Username</span></label>
+                    <form className="username" onSubmit={handleSubmit}>
+                        {error && <div className="error-message1">{error}</div>}
+                        <div className="inp-lab">
+                            <label htmlFor="username"><span className="view">Username</span></label>
+                            <input
+                                className="form-control"
+                                id="username"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="inputpassword">
+                            <label htmlFor="password"><span className="view">Password</span></label>
+                            <div className="inputfields">
                                 <input
+                                    id="password"
                                     className="form-control"
-                                    id="username"
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
+                                    type={showPassword ? "text" : "password"}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
+                                <span onClick={() => setShowPassword(!showPassword)} className="eyetoggle">
+                                    {showPassword ? (<img src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
+                                        height={16} />
+                                    ) : (<img src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
+                                        height={16} />
+                                    )}
+                                </span>
                             </div>
-                            <div className="inputpassword">
-                                <label htmlFor="password"><span className="view">Password</span></label>
-                                <div className="inputfields">
-                                    <input
-                                        id="password"
-                                        className="form-control"
-                                        type={showPassword ? "text" : "password"}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                    />
-                                    <span onClick={() => setShowPassword(!showPassword)} className="eyetoggle">
-                                        {showPassword ? (<img src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
-                                            height={16} />
-                                        ) : (<img src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
-                                            height={16} />
-                                        )}
-                                    </span>
-                                </div>
-                            </div>
-                            <div>
-                                <button type="submit" className="button-login mb-4">
-                                    <span className="view">Log in</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                            />
+                            <label className="form-check-label" htmlFor="rememberMe">
+                                Remember me
+                            </label>
+                        </div>
+                        <div>
+                            <button type="submit" className="button-login">
+                                <span className="view">Log in</span>
+                            </button>
+                        </div>
+                    </form>
                     <div className="ecomialogo-footer d-flex flex-column align-items-center">
 
                         <label className="poweredby-label" htmlFor="poweredby"><span className="view">powered by</span></label>
@@ -126,8 +127,8 @@ export default function Login() {
                             alt="Staff Outsourcing Logo"
                         />
                     </div>
-            </div>
-            ):(<LoadingSpinner/>)}
+                </div>
+            ) : (<LoadingSpinner />)}
         </div>
     );
 }

@@ -9,12 +9,12 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import { useRouter } from "next/navigation";
-import LoadingSpinner from "../component/LoadSpinner/spinner";
 
 interface Schedule {
   shiftstart: string;
   shiftend: string;
 }
+
 interface Information {
   empno: number;
   gender: string;
@@ -32,13 +32,10 @@ interface Information {
   isdayshift: number;
   status: number;
   schedule: Schedule,
-  acctname:string;
+  acctname: string;
 }
 
-
-
 export default function CreateUD() {
-  // const [empData, setEmpData] = useState({});
   const [currentMode, setCurrentMode] = useState("");
   const [employees, setEmployees] = useState<Information[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -51,40 +48,35 @@ export default function CreateUD() {
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
-  const [isloading,setLoading]=useState(false);
-const [empData, setEmpData] = useState<Information>({
-  empno: 0,               
-  fname: "",               
-  mname: "",               
-  lname: "",               
-  position: "",            
-  dateofbirth: "",         
-  maritalstatus: "None",  
-  gender: "",              
-  contactno: "",           
-  address: "",             
-  acctid: 0,              
-  role_id: 0,             
-  status: 1,              
-  acctname: "",            
-  schedule: {              
-    shiftstart: "", 
-    shiftend: "" 
-  },
-  isdayshift: 0,          
-  un: ""                   
-});
+  const [isloading, setLoading] = useState(false);
+  const [empData, setEmpData] = useState<Information>({
+    empno: 0,
+    fname: "",
+    mname: "",
+    lname: "",
+    position: "",
+    dateofbirth: "",
+    maritalstatus: "None",
+    gender: "",
+    contactno: "",
+    address: "",
+    acctid: 0,
+    role_id: 0,
+    status: 1,
+    acctname: "",
+    schedule: {
+      shiftstart: "",
+      shiftend: ""
+    },
+    isdayshift: 0,
+    un: ""
+  });
   const router = useRouter();
   const token = localStorage.getItem("token");
-
 
   useEffect(() => {
     GetEmployee(currentPage);
   }, [listener]);
-
-    // setTimeout(() => {
-    //   // setListener(false);
-    // }, 2000);
 
   async function GetEmployee(page: number) {
     setLoading(true);
@@ -107,8 +99,8 @@ const [empData, setEmpData] = useState<Information>({
       setTotal(data.total);
       setLoading(false);
     }
-    else{
-      if(!token){
+    else {
+      if (!token) {
         router.push("/");
       }
     }
@@ -187,10 +179,9 @@ const [empData, setEmpData] = useState<Information>({
           console.error("Error fetching search results");
         }
       }
-    }, 300); // 300ms debounce
+    }, 300);
   }, [currentPage, id, token]);
 
-  // Optional cleanup to prevent memory leaks
   useEffect(() => {
     return () => {
       debouncedSearch.cancel();
@@ -204,9 +195,8 @@ const [empData, setEmpData] = useState<Information>({
   }, [debouncedSearch])
 
   const handleData = (data: any) => {
-
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status, schedule,acctname,un, } = data;
+    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status, schedule, acctname, un, } = data;
     let currentData = {
       empno,
       fname,
@@ -229,8 +219,8 @@ const [empData, setEmpData] = useState<Information>({
     setEmpData(currentData);
   };
   const handlePageChange = (page: number) => {
-    setCurrentPage(page); // Update the current page
-    GetEmployee(page); // Fetch data for the new page
+    setCurrentPage(page);
+    GetEmployee(page);
   };
 
   const handleResetPassword = (empno: number) => {
@@ -287,10 +277,10 @@ const [empData, setEmpData] = useState<Information>({
       </div>
       <div className="db-employee">
         <Dashboard />
-        <ToastContainer/>  
+        <ToastContainer />
       </div>
       <div className="main-divv">
-        <Header title="MANAGE EMPLOYEE" currentPage=""/>
+        <Header title="MANAGE EMPLOYEE" currentPage="" />
         <div className="px-4">
           <div className="manageemployee-division px-4">
             <div>
@@ -321,7 +311,7 @@ const [empData, setEmpData] = useState<Information>({
                     </div>
                     {user_privilege.includes("manage_users") && (
                       <div className=" py-1">
-                       
+
                         <button
                           type="button"
                           className="addhover"
@@ -372,10 +362,7 @@ const [empData, setEmpData] = useState<Information>({
                     <th scope="col" >Employee No.</th>
                     <th scope="col" >Username</th>
                     <th scope="col" >First Name</th>
-                    {/* <th scope="col" >Middle Name</th> */}
                     <th scope="col" >Last Name</th>
-                    {/* {user_privilege.includes("manage_users") && (<th scope="col" >Address</th>)}
-                  {user_privilege.includes("manage_users") && (<th scope="col" >Marital Status</th>)} */}
                     {user_privilege.includes("manage_users") && (<th scope="col" >Date of Birth</th>)}
                     {user_privilege.includes("manage_users") && (<th scope="col" >Gender</th>)}
                     {user_privilege.includes("manage_users") && (<th scope="col" >Contact No.</th>)}
@@ -391,17 +378,14 @@ const [empData, setEmpData] = useState<Information>({
                         <td className="empno-data-column">{info.empno}</td>
                         <td>{info.un}</td>
                         <td>{info.fname}</td>
-                        {/* <td>{info.mname}</td> */}
                         <td>{info.lname}</td>
-                        {/* {user_privilege.includes("manage_users") && (<td>{info.address}</td>)}
-                      {user_privilege.includes("manage_users") && (<td>{info.maritalstatus}</td>)} */}
                         {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
                         {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
                         {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
-                        {(user_privilege.includes("manage_users") || user_privilege.includes("update_breaktool_account"))  && (<td>{info.acctname || "Unassigned"}</td>)}
+                        {(user_privilege.includes("manage_users") || user_privilege.includes("update_breaktool_account")) && (<td>{info.acctname || "Unassigned"}</td>)}
                         <td>{info.position}</td>
                         <td>
-                          <div style={{ display: "flex", gap: "8px"}}>
+                          <div style={{ display: "flex", gap: "8px" }}>
                             {user_privilege.includes("update_breaktool_account") && (
                               <button
                                 type="button"
@@ -414,8 +398,7 @@ const [empData, setEmpData] = useState<Information>({
                                 <img src="/svg/reset.svg" className="actions-button" height={16} width={16} />
                               </button>
                             )}
-                            {/* // */}
-                            {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") ||  user_privilege.includes("update_breaktool_account")) && (
+                            {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") || user_privilege.includes("update_breaktool_account")) && (
                               <button
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal"
@@ -442,7 +425,6 @@ const [empData, setEmpData] = useState<Information>({
                 </tbody>
               </table>
             </div>
-
             {searchTerm == "" && (
               <div className="manageemployee-div">
                 <div className="employee-total">
@@ -500,9 +482,8 @@ const [empData, setEmpData] = useState<Information>({
               </div>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
-
   );
 }

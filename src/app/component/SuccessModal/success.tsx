@@ -3,25 +3,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 
 interface SuccessMessageProps {
-    message: string; // Define the type for the message prop
+    message: string;
 }
 
 export default function SuccessMessage({ message }: SuccessMessageProps) {
-    const [showModal, setShowModal] = useState(true); // State to control modal visibility
+    const [showModal, setShowModal] = useState(true);
     const closeModal = () => {
-        setShowModal(false); // Function to close the modal
+        setShowModal(false);
     };
+
     useEffect(() => {
-        // Automatically close the modal after a certain time (optional)
         const timer = setTimeout(() => {
             closeModal();
-        }, 3000); // Close after 3 seconds
-        return () => clearTimeout(timer); // Cleanup the timer on unmount
+        }, 3000);
+        return () => clearTimeout(timer);
     }, []);
 
     return (
         <div>
-            {/* Modal Structure */}
             {showModal && (
                 <div className="modal fade show" id="successModal" aria-labelledby="successModalLabel" style={{ display: "block" }}>
                     <div className="modal-dialog">

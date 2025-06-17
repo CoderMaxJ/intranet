@@ -54,9 +54,7 @@ interface RequestDetails {
     aprroved_at: string;
     declined_at: string;
     approved_by: number;
-    acctname:string;
-        
-    
+    acctname: string;
 }
 
 interface PendingProps {
@@ -72,7 +70,6 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
     const [status, setStatus] = useState(0);
     const [visible, setVisible] = useState<boolean>(!!data);
     const [declineVisible, setDeclineVisible] = useState(false);
-
     const router = useRouter();
 
     useEffect(() => {
@@ -130,7 +127,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
             setVisible(false);
             setDeclineVisible(false);
             setDeclineReason("");
-          
+
         } else {
             toast.error("Failed to decline request.", {
                 autoClose: 2000,
@@ -158,11 +155,9 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                 onApproveComplete(data.requestid);
                 btnClose?.click();
             }
-
         } else {
             errorToast("Failed to approve request.");
-             router.push("/");
-            
+            router.push("/");
         }
     }
 
@@ -185,22 +180,18 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
         };
         approvedRequest(payload);
         setVisible(false);
-
     };
 
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
             if (!prev) return prev;
-
             const updated = { ...prev };
-
             if (section === "login" || section === "logout") {
                 updated[section] = {
                     ...updated[section],
                     record: value
                 };
             }
-            // Handle other sections with record objects
             else if (section === "break1" || section === "break2" || section === "lunch") {
                 updated[section] = {
                     ...updated[section],
@@ -210,7 +201,6 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                     }
                 };
             }
-
             return updated;
         });
     };
@@ -257,7 +247,6 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                         id="buttonclose"
                     ></button>
                 </div>
-
                 <div className="offcanvas-body">
                     <div>
                         <div className="d-flex flex-column">
@@ -306,7 +295,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                                 <div className="label-container">
                                     <span className="login-label fw-semibold">Login</span>
                                 </div>
-                                     <div>
+                                <div>
                                     <input
                                         type="time"
                                         onChange={(e) => handleChange("login", "", e.target.value)}
@@ -331,7 +320,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                                 <div className="label-container2">
                                     <span className="break1-label fw-semibold">1st Break - In</span>
                                 </div>
-                                   <div>
+                                <div>
                                     <input
                                         type="time"
                                         onChange={(e) => handleChange("break1", "in", e.target.value)}
@@ -356,7 +345,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                                 <div className="label-container2">
                                     <span className="break11-label fw-semibold">1st Break - Out</span>
                                 </div>
-                                  <div>
+                                <div>
                                     <input
                                         type="time"
                                         disabled={true} readOnly
@@ -381,7 +370,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                                 <div className="label-container3">
                                     <span className="lunch-in-label fw-semibold">Lunch - In</span>
                                 </div>
-                                 <div>
+                                <div>
                                     <input
                                         type="time"
                                         disabled={true} readOnly
@@ -406,7 +395,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                                 <div className="label-container3">
                                     <span className="lunch-in-label fw-semibold">Lunch - Out</span>
                                 </div>
-                                 <div>
+                                <div>
                                     <input
                                         type="time"
                                         disabled={true} readOnly
@@ -431,7 +420,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                                 <div className="label-container4">
                                     <span className="break2-label fw-semibold">2nd Break - In</span>
                                 </div>
-                                   <div>
+                                <div>
                                     <input
                                         type="time"
                                         disabled={true} readOnly
@@ -456,7 +445,7 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                                 <div className="label-container4">
                                     <span className="break22-label fw-semibold">2nd Break - Out</span>
                                 </div>
-                                   <div>
+                                <div>
                                     <input
                                         type="time"
                                         disabled={true} readOnly

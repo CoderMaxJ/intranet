@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
 import "../../../../public/asset/css/drawer.css"
 
@@ -54,7 +53,7 @@ interface RequestDetails {
     declined_at: string;
     approved_by: number;
     reason_for_disapproved: string;
-    acctname:string;
+    acctname: string;
 }
 
 interface Account {
@@ -64,7 +63,7 @@ interface Account {
 interface RejectedDataProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
-    onDeclineComplete:()=> void;
+    onDeclineComplete: () => void;
 }
 
 function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
@@ -92,7 +91,6 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                         aria-label="Close"
                     ></button>
                 </div>
-
                 <div className="offcanvas-body">
                     <div>
                         <div className="d-flex flex-column">
@@ -114,7 +112,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                             </div>
                             <div className="d-flex justify-content-between">
                                 <p className="drawer-label">Status</p>
-                                <p className="drawer-label" style={{color: data?.status  === 0 ? "red" : ""}}>{data?.status === 1 ? "Approved" : "Declined"}</p>
+                                <p className="drawer-label" style={{ color: data?.status === 0 ? "red" : "" }}>{data?.status === 1 ? "Approved" : "Declined"}</p>
                             </div>
                         </div>
                     </div>
@@ -126,29 +124,32 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                         <div><label htmlFor="requesteddate" className="drawer-label mb-1">Requested Date</label></div>
                         <div><input className="form-control form-control--requesteddate mb-3" type="date" readOnly value={data?.shiftdate || ""} disabled={true} /></div>
                     </div>
-
                     <div className="justify-content-between">
                         <div className="d-flex justify-content-around align-items-center mb-2 w-100">
                             <div>
                                 <label className="drawer-label col-4 justify-content-start drawer-label--attendance" >Attendance</label>
                             </div>
                             <div>
-                                <label className="drawer-labell col-4 justify-content-start">Requested Time</label>
-                            </div>
-                            <div>
                                 <label className="drawer-label1 col-4 justify-content-start">Recorded Time</label>
                             </div>
                             <div>
-
+                                <label className="drawer-labell col-4 justify-content-start">Requested Time</label>
+                            </div>
+                            <div>
                             </div>
                         </div>
-
-                        {/* Login */}
                         {data?.logs?.login?.in && (
-
                             <div className="d-flex justify-content-around align-items-center mb-2">
                                 <div className="label-container">
                                     <span className="login-label fw-semibold">Login</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        value={buildData?.login?.record || ""}
+                                        disabled={true} readOnly
+                                        className="input-time-field"
+                                    />
                                 </div>
                                 <div>
                                     <input
@@ -159,22 +160,20 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                         className="input-time-field"
                                     />
                                 </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        value={buildData?.login?.record || ""}
-                                        disabled={true} readOnly
-                                        className="input-time-field"
-                                    />
-                                </div>
-
                             </div>
                         )}
-
                         {data?.logs?.break1?.in && (
                             <div className="d-flex justify-content-around align-items-center mb-2">
                                 <div className="label-container2">
                                     <span className="break1-label fw-semibold">1st Break - In</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        value={buildData?.break1?.record?.in || ""}
+                                        disabled={true} readOnly
+                                        className="input-time-field"
+                                    />
                                 </div>
                                 <div>
                                     <input
@@ -185,16 +184,6 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                         className="input-time-field"
                                     />
                                 </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        value={buildData?.break1?.record?.in || ""}
-                                        disabled={true} readOnly
-                                        className="input-time-field"
-                                    />
-                                </div>
-
-
                             </div>
                         )}
                         {data?.logs?.break1?.out && (
@@ -205,28 +194,34 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                 <div>
                                     <input
                                         type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.break1?.out || ""}
+                                        disabled={true} readOnly
+                                        value={buildData?.break1?.record?.out || ""}
                                         className="input-time-field"
                                     />
                                 </div>
                                 <div>
                                     <input
                                         type="time"
-                                        disabled={true} readOnly
-                                        value={buildData?.break1?.record?.out || ""}
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.break1?.out || ""}
                                         className="input-time-field"
                                     />
                                 </div>
-
                             </div>
                         )}
-                        {/* Lunch - In */}
                         {data?.logs?.lunch?.in && (
                             <div className="d-flex justify-content-around align-items-center mb-2">
                                 <div className="label-container3">
                                     <span className="lunch-in-label fw-semibold">Lunch - In</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true} readOnly
+                                        value={buildData?.lunch?.record?.in || ""}
+                                        className="input-time-field"
+                                    />
                                 </div>
                                 <div>
                                     <input
@@ -237,25 +232,20 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                         className="input-time-field"
                                     />
                                 </div>
+                            </div>
+                        )}
+                        {data?.logs?.lunch?.out && (
+                            <div className="d-flex justify-content-around align-items-center mb-2">
+                                <div className="label-container3">
+                                    <span className="lunch-in-label fw-semibold">Lunch - Out</span>
+                                </div>
                                 <div>
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        value={buildData?.lunch?.record?.in || ""}
+                                        value={buildData?.lunch?.record?.out || ""}
                                         className="input-time-field"
                                     />
-                                </div>
-
-                            </div>
-                        )}
-                        {/* Lunch - Out */}
-
-                        {data?.logs?.lunch?.out && (
-
-
-                            <div className="d-flex justify-content-around align-items-center mb-2">
-                                <div className="label-container3">
-                                    <span className="lunch-in-label fw-semibold">Lunch - Out</span>
                                 </div>
                                 <div>
                                     <input
@@ -266,24 +256,20 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                         className="input-time-field"
                                     />
                                 </div>
+                            </div>
+                        )}
+                        {data?.logs?.break2?.in && (
+                            <div className="d-flex justify-content-around align-items-center mb-2">
+                                <div className="label-container4">
+                                    <span className="break2-label fw-semibold">2nd Break - In</span>
+                                </div>
                                 <div>
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        value={buildData?.lunch?.record?.out || ""}
+                                        value={buildData?.break2?.record?.in || ""}
                                         className="input-time-field"
                                     />
-                                </div>
-
-                            </div>
-                        )}
-                        {/* Break 2 - In */}
-                        {data?.logs?.break2?.in && (
-
-
-                            <div className="d-flex justify-content-around align-items-center mb-2">
-                                <div className="label-container4">
-                                    <span className="break2-label fw-semibold">2nd Break - In</span>
                                 </div>
                                 <div>
                                     <input
@@ -294,22 +280,20 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                         className="input-time-field"
                                     />
                                 </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true} readOnly
-                                        value={buildData?.break2?.record?.in || ""}
-                                        className="input-time-field"
-                                    />
-                                </div>
-
                             </div>
                         )}
-                        {/* Break 2 - Out */}
                         {data?.logs?.break2?.out && (
                             <div className="d-flex justify-content-around align-items-center mb-2">
                                 <div className="label-container4">
                                     <span className="break22-label fw-semibold">2nd Break - Out</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true} readOnly
+                                        value={buildData?.break2?.record?.out || ""}
+                                        className="input-time-field"
+                                    />
                                 </div>
                                 <div>
                                     <input
@@ -320,15 +304,6 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                         className="input-time-field"
                                     />
                                 </div>
-                                <div>
-                                    <input
-                                        type="time"
-                                        disabled={true} readOnly
-                                        value={buildData?.break2?.record?.out || ""}
-                                        className="input-time-field"
-                                    />
-                                </div>
-
                             </div>
                         )}
 
@@ -340,26 +315,24 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                 <div>
                                     <input
                                         type="time"
-                                        disabled={true}
-                                        readOnly
-                                        value={data?.logs?.logout?.out || ""}
-                                        className="input-time-field"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="time"
                                         value={buildData?.logout?.record || ""}
                                         className="input-time-field"
                                         readOnly
                                         disabled={true}
                                     />
                                 </div>
-
+                                <div>
+                                    <input
+                                        type="time"
+                                        disabled={true}
+                                        readOnly
+                                        value={data?.logs?.logout?.out || ""}
+                                        className="input-time-field"
+                                    />
+                                </div>
                             </div>
                         )}
                     </div>
-
                     <div className="mb-3">
                         <label className="drawer-label fs-5 mt-1">Reason</label>
                         <p className="reason">{data?.reason_for_disapproved}</p>
@@ -367,8 +340,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                 </div>
             </div>
         </div>
-
     );
 }
- 
+
 export default RejectedData;

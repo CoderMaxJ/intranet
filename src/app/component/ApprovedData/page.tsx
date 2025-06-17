@@ -56,7 +56,6 @@ interface RequestDetails {
   acctname:string;
 }
 
-
 interface ApprovedDataProps {
   data?: RequestDetails | null;
   onSave?: (updatedData: RequestDetails["logs"]) => void;
@@ -69,7 +68,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
   const [combinedData, setCombinedData] = useState({})
   const [declineReason, setDeclineReason] = useState("");
   const [status, setStatus] = useState(0);
-
 
   useEffect(() => {
     if (buildData) {
@@ -121,7 +119,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
       });
     }
   };
-
 
   const handleChange = (section: string, field: string, value: string) => {
     setBuildData(prev => {
@@ -242,19 +239,16 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
               <div>
                 <label className="drawer-label--attendance col-4 justify-content-start" style={{ transform: 'translateX(-6px)' }}>Attendance</label>
               </div>
+               <div>
+                <label className="drawer-label1 col-4 justify-content-start">Recorded Time</label>
+              </div>
               <div>
                 <label className="drawer-labell col-4 justify-content-start">Requested Time</label>
               </div>
               <div>
-                <label className="drawer-label1 col-4 justify-content-start">Recorded Time</label>
-              </div>
-              <div>
               </div>
             </div>
-
-            {/* Login */}
             {data?.logs?.login?.in && (
-
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container">
                   <span className="login-label fw-semibold">Login</span>
@@ -332,7 +326,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                 </div>
               </div>
             )}
-            {/* Lunch - In */}
             {data?.logs?.lunch?.in && (
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container3">
@@ -357,10 +350,8 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     step={1}
                   />
                 </div>
-
               </div>
             )}
-            {/* Lunch - Out */}
             {data?.logs?.lunch?.out && (
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container3">
@@ -385,10 +376,8 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     step={1}
                   />
                 </div>
-
               </div>
             )}
-            {/* Break 2 - In */}
             {data?.logs?.break2?.in && (
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container4">
@@ -414,7 +403,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                 </div>
               </div>
             )}
-            {/* Break 2 - Out */}
             {data?.logs?.break2?.out && (
               <div className="d-flex justify-content-around align-items-center mb-2">
                 <div className="label-container4">
@@ -464,7 +452,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     disabled={true}
                   />
                 </div>
-
               </div>
             )}
           </div>
@@ -475,6 +462,5 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
         </div>
       </div>
     </div>
-
   );
 }

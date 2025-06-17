@@ -15,6 +15,7 @@ interface Schedule {
     shiftend: string;
     created_at: string;
 }
+
 interface Information {
     empno: number;
     gender: string;
@@ -32,7 +33,7 @@ interface Information {
     isdayshift: number;
     status: number;
     schedule: Schedule;
-    acctname:string;
+    acctname: string;
 }
 
 interface Account {
@@ -56,8 +57,6 @@ export default function CreateUD() {
     const EmpNoList: any = [];
 
     const token = localStorage.getItem("token");
-
-
     useEffect(() => {
         EmpNoList.push(...selectedEmployees);
     }, [EmpNoList])
@@ -89,7 +88,7 @@ export default function CreateUD() {
             setTotal(data.total);
         }
     }
- 
+
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",
         autoClose: 2000,
@@ -157,25 +156,24 @@ export default function CreateUD() {
                 });
 
                 if (response.ok) {
-                      
+
                     const data = await response.json();
                     setEmployees(data.data);
                 } else {
                     console.error("Error fetching search results");
                 }
             }
-        }, 300); // 300ms debounce
+        }, 300);
     }, [currentPage, id, token]);
 
-    // Optional cleanup to prevent memory leaks
     useEffect(() => {
         return () => {
             debouncedSearch.cancel();
         };
     }, [debouncedSearch]);
     const handlePageChange = (page: number) => {
-        setCurrentPage(page); // Update the current page
-        GetEmployee(page); // Fetch data for the new page
+        setCurrentPage(page);
+        GetEmployee(page);
     };
 
     const create = async () => {
@@ -204,8 +202,8 @@ export default function CreateUD() {
             errorToast(error.message);
         }
     }
-    return (
 
+    return (
         <div className="crud-maindiv">
             <div>
                 <Reassignment />
@@ -245,29 +243,28 @@ export default function CreateUD() {
                                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                 </svg>
                                             </div>
-                                            
                                             <div className="updateschedule">
-                                            <button
-                                                type="button"
-                                                className="d-flex align-items-center"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#reassignment"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/svg/update.svg"
-                                                        alt="update"
-                                                        style={{
-                                                            width: '15px',
-                                                            height: '15px',
-                                                            marginRight: '5px',
-                                                            filter: 'brightness(100) contrast(2.5)',
-                                                            display: 'inline-block',
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div><span className="updateschedule-label">Update Schedule</span></div>
-                                            </button>
+                                                <button
+                                                    type="button"
+                                                    className="d-flex align-items-center"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#reassignment"
+                                                >
+                                                    <div>
+                                                        <img
+                                                            src="/svg/update.svg"
+                                                            alt="update"
+                                                            style={{
+                                                                width: '15px',
+                                                                height: '15px',
+                                                                marginRight: '5px',
+                                                                filter: 'brightness(100) contrast(2.5)',
+                                                                display: 'inline-block',
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div><span className="updateschedule-label">Update Schedule</span></div>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -293,7 +290,6 @@ export default function CreateUD() {
                                     <tr>
                                         <th scope="col" >Employee No.</th>
                                         <th scope="col">Full Name</th>
-
                                         <th scope="col" >Account</th>
                                         <th scope="col" >Position</th>
                                         <th scope="col" >Time In</th>
