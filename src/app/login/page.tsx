@@ -103,17 +103,9 @@ export default function Login() {
                                 </span>
                             </div>
                         </div>
-                        <div className="form-check">
-                            <input
-                                type="checkbox"
-                                id="rememberMe"
-                            />
-                            <label className="form-check-label" htmlFor="rememberMe">
-                                Remember me
-                            </label>
-                        </div>
+                       
                         <div>
-                            <button type="submit" className="button-login">
+                            <button type="submit" className="button-login mb-5">
                                 <span className="view">Log in</span>
                             </button>
                         </div>
