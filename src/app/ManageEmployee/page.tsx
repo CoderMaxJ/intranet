@@ -9,6 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "../component/LoadSpinner/spinner";
 
 interface Schedule {
   shiftstart: string;
@@ -50,6 +51,7 @@ export default function CreateUD() {
   const [user_privilege, setUserPrivilege] = useState([""]);
   const [isresetPassword, setResetPassword] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [isloading,setLoading]=useState(false);
 const [empData, setEmpData] = useState<Information>({
   empno: 0,               
   fname: "",               
@@ -85,6 +87,7 @@ const [empData, setEmpData] = useState<Information>({
     // }, 2000);
 
   async function GetEmployee(page: number) {
+    setLoading(true);
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
     const response = await fetch(
@@ -102,6 +105,7 @@ const [empData, setEmpData] = useState<Information>({
       setEmployees(data.data);
       setTotalPages(data.num_pages);
       setTotal(data.total);
+      setLoading(false);
     }
     else{
       if(!token){
@@ -283,6 +287,7 @@ const [empData, setEmpData] = useState<Information>({
       </div>
       <div className="db-employee">
         <Dashboard />
+        <ToastContainer/>  
       </div>
       <div className="main-divv">
         <Header title="MANAGE EMPLOYEE" currentPage=""/>
@@ -495,8 +500,7 @@ const [empData, setEmpData] = useState<Information>({
               </div>
             </div>
           </div>
-        </div>
-             <ToastContainer/>
+        </div> 
       </div>
     </div>
 

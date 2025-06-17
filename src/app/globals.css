@@ -15,7 +15,16 @@
     --foreground: #ededed;
   }
 }
-
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(6px);
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 2000;
+}
 .cancel-btn {
   max-height: 40px !important;
 }
@@ -3917,3 +3926,7 @@ body.dark-mode .time-icon-group::before {
   border-radius: 50%;
   cursor: pointer;
 }
+
+
+
+

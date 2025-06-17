@@ -299,7 +299,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
           btnClose?.click();
         }, 100);
       } else {
-        errorToast("Unable to update records!")
+        const message = await response.json();
+        errorToast(message.warning);
       }
     } catch (e) {
       console.error(e);
@@ -376,7 +377,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   return (
     <div>
-      <ToastContainer />
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
 

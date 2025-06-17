@@ -42,19 +42,6 @@ export default function Daterange() {
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     };
-
-
-
-      const successToast = (msg: string) => toast.success(msg, {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
-
   const errorToast = (msg: string) => toast.error(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -234,7 +221,7 @@ export default function Daterange() {
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
-            <ToastContainer/>
+            {/* <ToastContainer/> */}
             <div className="d-flex" >
                 <Dashboard/>
                 {error && <div className="alert alert-danger">{error}</div>}
