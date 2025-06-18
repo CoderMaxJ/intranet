@@ -19,25 +19,25 @@ export default function Header({ title, currentPage }: HeaderProps) {
           <div className="legends align-items-center gap-2">
             <div>
               <span className="firstbreak">
-                <img src="/svg/coffee.svg" alt="firstbreak" className="me-1" height={16} />
+                <img src="/svg/coffee.svg" alt="firstbreak" className="me-1 mb-1" height={14} />
                 1st Break
               </span>
             </div>
             <div>
               <span className="secondbreak">
-                <img src="/svg/secondbreak.svg" alt="secondbreak"  className="me-1" height={16} />
+                <img src="/svg/secondbreak.svg" alt="secondbreak"  className="me-1 mb-1" height={14} />
                 2nd Break
               </span>
             </div>
             <div>
               <span className="lunchbreak">
-                <img src="/svg/plate-eating.svg" alt="lunch" className="me-1" height={16} />
+                <img src="/svg/plate-eating.svg" alt="lunch" className="me-1 mb-1" height={14} />
                 Lunch
               </span>
             </div>
             <div>
               <span className="overbreak">
-                <img src="/svg/pending.svg" alt="overbreak" className="me-1" height={16} />
+                <img src="/svg/pending.svg" alt="overbreak" className="me-1 mb-1" height={14} />
                 Over Break
               </span>
             </div>
