@@ -1,5 +1,4 @@
 import { Decryptor } from "@/security";
-import { set } from "date-fns";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -39,7 +38,6 @@ interface PrivilegesType {
   id: number
 }
 export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmpProps) {
-
   const [formData, setFormData] = useState<AddEmployeeData>({
     empno: empData.empno ?? 0,
     fname: empData.fname || "",
@@ -78,11 +76,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [highlightedRoleIndex, setHighlightedRoleIndex] = useState(-1);
   const [highlightedAccountIndex, setHighlightedAccountIndex] = useState(-1);
 
-
-
-
   let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
-
 
   const array_privilege = user_priviledge.split(",")
 
@@ -123,9 +117,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         SetSelectedAccount(matchedAccount.acctname);
       }
     }
-
   }, [empData]);
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -150,7 +142,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         [name]: isChecked ? 1 : 0,
       }));
       return;
-
     }
 
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -171,7 +162,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         }
       ))
     }
-
   }
 
   const fetchPrivileges = async () => {
@@ -207,7 +197,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         const data = await response.json();
         setRoles(data.data);
       }
-
     } catch (e) {
       console.error(e);
     }
@@ -225,7 +214,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         const data = await response.json();
         setAccounts(data.data);
-
       }
     } catch (e) {
       console.error(e);
@@ -311,13 +299,11 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     token: Decryptor(token || ""),
     user_priviledge: Decryptor(localStorage.getItem("user_privilege") || ""),
     user_id: Decryptor(localStorage.getItem("user_id") || "")
-
   }
 
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     onButtonClick("clicked");
-
     if (mode === 'edit') {
       await Update();
     } else {
@@ -346,9 +332,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       un: "",
     });
     isClose();
-
     setBreaktoolUser("");
-
     SetSelectedAccount("");
     mode = "create"
   }
@@ -375,12 +359,11 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }));
     setKey('');
   }
+
   return (
     <div>
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
-
-          {/* Close Button */}
           <div className="modal-header">
             <h5 className="modal-title text-light">{mode === "edit" ? "Update Employee Information" : "Add Employee"}</h5>
             <button
@@ -393,8 +376,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
             >
             </button>
           </div>
-
-          {/* Row 1 */}
           <div className="row px-4">
             <h6>Personal Information</h6>
             <div className=" col-md-4 add-rows mt-2 ">
@@ -422,8 +403,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               />
             </div>
           </div>
-
-          {/* Row 2 */}
           <div className="row px-4 first-row">
             <div className=" col-md-4 add-rows mt-2">
               <label htmlFor="dateofbirth" className="form-label">Date of Birth <span className="text-danger">*</span></label>
@@ -460,10 +439,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <option value="Married">Married</option>
               </select>
             </div>
-
           </div>
-
-          {/* Row 3 */}
           <div className="row px-4">
             <h6>Address Line</h6>
             <div className=" col-md-4 add-rows mt-2">
@@ -483,8 +459,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               />
             </div>
           </div>
-
-          {/* Row 4 */}
           <div className="row px-4 d-flex">
             <h6>Account Details</h6>
             <div className=" col-md-4 add-rows mt-2 position-relative">
@@ -501,8 +475,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 onChange={(e) => {
                   setRoleKeyword(e.target.value);
                   fetchRoles();
-                  setHighlightedRoleIndex(-1); // reset index
-
+                  setHighlightedRoleIndex(-1); 
                   if (e.target.value === "") {
                     setFormData(prev => ({
                       ...prev,
@@ -511,7 +484,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                     }));
                   }
                 }}
-
                 onKeyDown={(e) => {
                   if (e.key === "ArrowDown") {
                     setHighlightedRoleIndex(prev => Math.min(prev + 1, roles.length - 1));
@@ -527,7 +499,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 }}
                 onFocus={() => setIsPositionFocused(true)}
                 onBlur={() => setTimeout(() => setIsPositionFocused(false), 150)}
-
               />
               {(formData.position != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
               {isPositionFocused && roles.length > 0 && (
@@ -541,7 +512,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                         setRoleKeyword(p.position);
                         setFormData(prev => ({ ...prev, position: p.position }));
                         setRoles([]);
-                        setIsPositionFocused(false); // Also hide after selecting
+                        setIsPositionFocused(false);
                       }}
                     >
                       {p.position}
@@ -550,13 +521,11 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 </ul>
               )}
             </div>
-
             <div className=" col-md-4 add-rows mt-2 position-relative">
               <label htmlFor="acctid" className="form-label">
                 Account
                 <span className="text-danger">*</span>
               </label>
-
               <input
                 disabled={!user_priviledge.includes("manage_users") ? true : false}
                 required
@@ -566,11 +535,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 value={formData.acctname || keyword}
                 placeholder={mode !== 'edit' ? "Account" : ""}
                 onChange={(e) => {
-                  // Always update the keyword when typing
                   setKey(e.target.value);
                   fetchAccounts();
                   setHighlightedAccountIndex(-1);
-                  // Clear the selected account if user is deleting
                   if (e.target.value === "") {
                     setFormData(prev => ({
                       ...prev,
@@ -598,7 +565,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 onKeyUp={fetchAccounts}
                 onFocus={() => {
                   setIsAccountFocused(true);
-                  setIsPositionFocused(false); // ⬅️ This hides the position list when switching to account
+                  setIsPositionFocused(false); 
                 }}
                 onBlur={() => setTimeout(() => setIsAccountFocused(false), 150)}
               />
@@ -613,7 +580,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         setAccounts([]);
-                        setKey(acc.acctname);  // This sets the visible input text
+                        setKey(acc.acctname);  
                         setFormData(prev => ({
                           ...prev,
                           acctid: acc.acctid,
@@ -626,10 +593,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   ))}
                 </ul>
               )}
-
             </div>
-
-
           </div>
           {mode === "edit" && (
             <div className="col-md-4 add-rows mt-3 create-timein px-4">
@@ -652,16 +616,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               </select>
             </div>
           )}
-
           <div className="mt-4">
             {mode != 'edit' && (
               <div>
                 <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
               </div>
-
             )}
             <div className="d-flex flex-wrap schedule--addemployee px-4 gap-2">
-
               {mode !== "edit" && (
                 <div className="col-md-4 add-rows mt-2">
                   <>
@@ -680,7 +641,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                   </>
                 </div>
               )}
-
               {mode !== "edit" && (
                 <div className="col-md-4 add-rows mt-2 create-timein">
                   <label htmlFor="shiftend" className="form-label">
@@ -699,7 +659,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               )}
             </div>
           </div>
-          {/* Row 5: Editable Time Controls */}
           <div>
             {mode === "edit" && (
               <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
@@ -726,11 +685,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                       !isEditSchedule
                     }
                     required
-
                     step={1}
                   />
                 </div>
-
                 <div className="add-rows update-timeout mb-4">
                   <label htmlFor="shiftend" className="form-label form-label-timeout1 mb-2">Time Out</label>
                   <input
@@ -751,7 +708,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                     step={1}
                   />
                 </div>
-
                 <div className="add-rows d-flex align-items-center edit-timein-out me-4">
                   {formData.schedule.shiftstart && formData.schedule.shiftend && (
                     <button
@@ -763,7 +719,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                     </button>
                   )}
                 </div>
-
                 <div className="col-md-2 add-rows mt-2 update-status">
                   <label className="form-label">
                     Status <span className="text-danger">*</span>
@@ -779,12 +734,9 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                     <option value="0">Inactive</option>
                   </select>
                 </div>
-
               </div>
-
             )}
           </div>
-
           <div className="modal-footer mt-4 col-12 d-flex justify-content-end gap-3" style={{ background: "#e7e7e7" }}>
             <button
               type="button"
@@ -802,5 +754,4 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       </div >
     </div>
   );
-
 }  

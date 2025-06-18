@@ -1,12 +1,10 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect, useRef, use } from "react";
 import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
 import { IdentifyUser } from "@/app/user_identifier";
-import { ToastContainer } from "react-toastify";
 
 interface BreakData {
   name: string;
@@ -15,7 +13,7 @@ interface BreakData {
   end: string;
   duration: number;
   breaktype: string;
-  overbreak: number; // Add overbreak duration to the interface
+  overbreak: number;
 }
 
 interface Logs {
@@ -39,13 +37,11 @@ function BreakDataTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [fullscreen, setFullscreen] = useState(false);
   const breaksRef = useRef<BreakData[]>([]);
-const [userPrivilege, setUserPrivilege] = useState([""]);
-  
-
+  const [userPrivilege, setUserPrivilege] = useState([""]);
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
 
-    const filteredRows = data.filter(
+  const filteredRows = data.filter(
     (rows) =>
       rows.name.toLowerCase().includes(filter.toLowerCase())
   );
@@ -59,12 +55,11 @@ const [userPrivilege, setUserPrivilege] = useState([""]);
   };
 
   const fetchBreakData = async () => {
-    
     try {
       const user_id = localStorage.getItem("user_id");
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(user_id|| "")}/`,
+        `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(user_id || "")}/`,
         {
           method: "GET",
           headers: {
@@ -81,17 +76,14 @@ const [userPrivilege, setUserPrivilege] = useState([""]);
       }
 
       const data = await response.json();
-
       setData(data.log_data);
-      localStorage.setItem("total-logs",(data.log_data.length));
-      // Merge fetched data with the current countdown state
+      localStorage.setItem("total-logs", (data.log_data.length));
       const updatedBreaks = (data?.data || []).map((newBreak: BreakData) => ({
         ...newBreak,
-        duration: newBreak.duration > 0 ? newBreak.duration : -newBreak.overbreak, // Always use fresh duration
+        duration: newBreak.duration > 0 ? newBreak.duration : -newBreak.overbreak, 
       }));
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
-      // Store the new data in local storage
       localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
       localStorage.setItem("total-on-breaks", String(updatedBreaks.length))
     } catch (error) {
@@ -106,22 +98,18 @@ const [userPrivilege, setUserPrivilege] = useState([""]);
           ...breakItem,
           duration: breakItem.duration - 1,
         }));
-        breaksRef.current = updatedBreaks; 
+        breaksRef.current = updatedBreaks;
         localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
         return updatedBreaks;
       });
     }, 1000);
-
     return () => clearInterval(countdownIntervalId);
   }, []);
 
-const status = localStorage.getItem("status");
-const account_id = localStorage.getItem("account_id");
-const account_id_list = Decryptor(localStorage.getItem("account_id_list") || "");
-const array_account_id = account_id_list?.split(',')
-
-
-
+  const status = localStorage.getItem("status");
+  const account_id = localStorage.getItem("account_id");
+  const account_id_list = Decryptor(localStorage.getItem("account_id_list") || "");
+  const array_account_id = account_id_list?.split(',')
   const user_hash_privilege = localStorage.getItem("user_privilege");
 
   if (user_hash_privilege) {
@@ -131,30 +119,28 @@ const array_account_id = account_id_list?.split(',')
     });
   }
 
-async function updateChecker() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/`,{
-    method:"GET",
-    headers:{
-      "Content-type":"application/json"
+  async function updateChecker() {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json"
+      }
+    });
+    if (response.status === 200) {
+      const message = await response.json();
+      if (message.message === Number(Decryptor(account_id || ""))) {
+        fetchBreakData();
+      } else if (array_account_id.includes(message.message.toString())) {
+        fetchBreakData();
+      } else if (message.message != "NO UPDATE" && userPrivilege.includes("manage_users")) {
+        fetchBreakData();
+      }
     }
-  });
-  if(response.status === 200){
-    const message = await response.json();
-    if(message.message === Number(Decryptor(account_id || ""))){
-      fetchBreakData();
-    }else if(array_account_id.includes(message.message.toString())){
-      fetchBreakData();
-    }else if(message.message != "NO UPDATE" && userPrivilege.includes("manage_users")){
-      fetchBreakData();
-    }
-
   }
-}
 
   useEffect(() => {
     if (status !== "login") return;
     const fetchIntervalId = setInterval(updateChecker, 3000);
-
     return () => clearInterval(fetchIntervalId);
   }, []);
 
@@ -195,7 +181,6 @@ async function updateChecker() {
                 <span className="text-light small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
               </h4>
             </div>
-
             <div className="flex-grow-1 d-flex">
               <div className="searchbar-container d-flex align-items-center">
                 <svg
@@ -216,7 +201,6 @@ async function updateChecker() {
                 />
               </div>
             </div>
-
             <div className="d-flex align-items-center ms-md-3">
               <button
                 style={{ border: "none", background: "none" }}
@@ -237,7 +221,6 @@ async function updateChecker() {
               </button>
             </div>
           </div>
-
           <div className="table-responsive breaks-table">
             <table className="tabbreaks table table-bordered" style={{ borderCollapse: "collapse" }}>
               <thead>
@@ -282,7 +265,6 @@ async function updateChecker() {
                         {instance.name}
                       </td>
                       {userPrivilege.includes("manage_users") && <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>{instance.acctname}</td>}
-
                       <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
                         {instance.start}
                       </td>
@@ -309,7 +291,6 @@ async function updateChecker() {
           </div>
         </div>
       </div>
-
       <div className="logs-wrapper mt-4">
         <div className="logs-maindiv px-3 py-3">
           <div className="agentheader-container gap-2 d-flex flex-wrap flex-direction-row align-items-center">

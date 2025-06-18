@@ -34,7 +34,6 @@ export default function ManageDepartment() {
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
     const [add, setAdd] = useState(false);
     const [filter, setFilter] = useState('');
-
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(event.target.value);
     };
@@ -101,23 +100,19 @@ export default function ManageDepartment() {
         }
     };
 
-
     const handleSubmit = (e: any) => {
         e.preventDefault();
         if (!accountName.trim()) {
             errorToast("Account name is required.");
             return;
         }
-
         const isDuplicate = department.some(
             dept => dept.acctname.trim().toLowerCase() === accountName.trim().toLowerCase()
         );
-
         if (isDuplicate) {
             errorToast("Duplicate account name. Please choose another name.");
             return;
         }
-
         createAccount();
         setAccountName("");
     };
@@ -201,7 +196,6 @@ export default function ManageDepartment() {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             },
-
         })
         if (response.status === 204) {
             successToast("Manager successfully remove.")
@@ -211,7 +205,6 @@ export default function ManageDepartment() {
             errorToast(error.warning);
         }
     }
-
     const formShow = () => {
         setShowForm(true);
     };
@@ -375,7 +368,6 @@ export default function ManageDepartment() {
                                 ></div>
                             </>
                         )}
-
                         <div className="accounta-table-div table-responsive accounts-table">
                             <table className="manage-table table table-light table-hover table-striped border">
                                 <thead>
@@ -424,7 +416,6 @@ export default function ManageDepartment() {
                                                                     </div>
                                                                 </div>
                                                             ))}
-                                                            
                                                         </form>
                                                         <div className="d-flex gap-3">
                                                             {openDropdownId === instance.acctid && (

@@ -15,6 +15,7 @@
     --foreground: #ededed;
   }
 }
+
 .loading-overlay {
   position: fixed;
   top: 0;

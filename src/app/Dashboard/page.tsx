@@ -6,7 +6,6 @@ import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { Decryptor } from "@/security";
 
 declare global {
     interface Window {
@@ -81,7 +80,6 @@ export default function Dashboard() {
             setToken(storedToken);
         }
     }, []);
-
 
     useEffect(() => {
         const user_hash_privilege = localStorage.getItem("user_privilege");
@@ -213,8 +211,8 @@ export default function Dashboard() {
                             <img
                                 src="/svg/dashboard.svg"
                                 alt="dashboard"
-                                className="dashboard-img"
-                                height={20}
+                                className="dashboard-img mb-1"
+                                height={17}
                                 style={{
                                     filter: localStorage.getItem("active_tab") === "1" ? "brightness(0) invert(1)" : "",
                                 }}
@@ -233,7 +231,6 @@ export default function Dashboard() {
                         </button>
                     </div>
                     {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") || user_privilege.includes("update_breaktool_account")) && (
-
                         <>
                             <div
                                 className={`generate ${activeNav === "2" ? "active-tab" : "hover-enabled"}`}
@@ -247,8 +244,8 @@ export default function Dashboard() {
                                     <img
                                         src="/svg/reports.svg"
                                         alt="reports"
-                                        className="reports-img"
-                                        height={20}
+                                        className="reports-img mb-1"
+                                        height={17}
                                         style={{
                                             filter: localStorage.getItem("active_tab") === "2" ? "brightness(0) invert(1)" : "",
                                         }}
@@ -266,7 +263,7 @@ export default function Dashboard() {
                                     style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0a85ed" : "" }}>
 
                                     <a className="nav-font " style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
-                                        <img src="/svg/schedule.svg" alt="schedule" className="schedule-img" height={20} style={{
+                                        <img src="/svg/schedule.svg" alt="schedule" className="schedule-img mb-1" height={17} style={{
                                             filter: localStorage.getItem("active_tab") === "3" ? "brightness(0) invert(1)" : "",
                                         }} />
                                         {showReports === true && (
@@ -293,7 +290,7 @@ export default function Dashboard() {
                                         }}
                                         style={{ cursor: "pointer" }}>
                                         <div className="manage-nav">
-                                            <img src="/svg/manage.svg" alt="manage" className="manage-img" height={20} />
+                                            <img src="/svg/manage.svg" alt="manage" className="manage-img mb-1" height={18} />
                                             <span className="manage-label" style={{
                                                 opacity: navWidth ? 1 : 0,
                                                 width: navWidth ? 'auto' : 0,
@@ -474,7 +471,7 @@ export default function Dashboard() {
                                     >
                                         <div id="dashboard" className={`nav-fontt ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`} data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
                                         >
-                                            <img src="/svg/updatepassword.svg" alt="updatepassword" className="updatepassword-img" height={20} />
+                                            <img src="/svg/updatepassword.svg" alt="updatepassword" className="updatepassword-img mb-1" height={17} />
                                             {showUpdatepassword === true && (
                                                 <span className="updatep">Update password</span>
                                             )}
@@ -490,7 +487,7 @@ export default function Dashboard() {
                                         id="dashboard"
                                         className={`nav-fonttt d-flex ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
                                     >
-                                        <img src="/svg/logout.svg" alt="logout" className="logout-img" height={20} />
+                                        <img src="/svg/logout.svg" alt="logout" className="logout-img mb-1" height={17} />
                                         {showLogout === true && (
                                             <span className="logoutbutton">Log Out</span>
                                         )}
