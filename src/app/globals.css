@@ -3703,11 +3703,6 @@ body.dark-mode .time-icon-group::before {
   font-family: 'Geist' !important;
 }
 
-.selectall,
-.clearall {
-  margin-bottom: 10px;
-}
-
 .edit-schedule-btn {
   transform: translateX(0px) translateY(-3px);
 }
