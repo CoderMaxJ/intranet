@@ -206,7 +206,7 @@ export default function Dashboard() {
                         onClick={() => navigateTo("/WorkforceMonitoring", "1")}
                         style={{ backgroundColor: activeNav === "1" ? "#0a85ed" : "" }}
                     >
-                        <button id="dashboard" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
+                        <button id="dashboard"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tooltip on right" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
                         >
                             <img
                                 src="/svg/dashboard.svg"

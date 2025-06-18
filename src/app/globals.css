@@ -393,6 +393,15 @@ body {
   background-color: #fff;
 }
 
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinner {
+  -moz-appearance: textfield;
+}
 
 .main-div {
   min-height: 100vh;
@@ -1244,7 +1253,7 @@ input:focus {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
+  padding-top: 1rem;
 }
 
 .logs-container th {
@@ -2898,6 +2907,9 @@ table {
   font-size: 14px;
 }
 
+.reports-container {
+  padding-bottom: 10px;
+}
 .actions {
   width: 9% !important;
 }
@@ -3698,11 +3710,6 @@ body.dark-mode .time-icon-group::before {
 .offcanvas-header,
 .tablogs {
   font-family: 'Geist' !important;
-}
-
-.selectall,
-.clearall {
-  margin-bottom: 10px;
 }
 
 .edit-schedule-btn {

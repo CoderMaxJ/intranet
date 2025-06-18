@@ -292,7 +292,7 @@ function BreakDataTable() {
         </div>
       </div>
       <div className="logs-wrapper mt-4">
-        <div className="logs-maindiv px-3 py-3">
+        <div className="logs-maindiv px-3">
           <div className="agentheader-container gap-2 d-flex flex-wrap flex-direction-row align-items-center">
             <div className="align-items-center col-5 py-3">
               <h3 className="logs-headername text-light px-3">

@@ -48,6 +48,9 @@ export default function Login() {
             } else if (response.status === 401) {
                 const message = await response.json();
                 setError(message.warning);
+                setTimeout(() => {
+                    setError("");
+                }, 2000);
                 setLoading(false);
             }
         } catch {
@@ -102,7 +105,7 @@ export default function Login() {
                                     )}
                                 </span>
                             </div>
-                        </div>               
+                        </div>
                         <div>
                             <button type="submit" className="button-login mb-5">
                                 <span className="view">Log in</span>

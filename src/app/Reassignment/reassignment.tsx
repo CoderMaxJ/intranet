@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState, useMemo, useCallback, use } from "react";
 import { Decryptor, Encryptor } from "@/security";
 import debounce from 'lodash.debounce';

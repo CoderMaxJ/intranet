@@ -1,3 +1,4 @@
+"use client";
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -260,7 +261,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         }, 100);
       } else {
         errorToast("Unable to create employee!")
-
       }
     } catch (e) {
       console.error(e);
@@ -446,7 +446,10 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
               <label htmlFor="contactno" className="form-label">Contact No</label>
               <input
                 disabled={!isEditable && mode == "edit" ? true : false}
-                type="number" name="contactno" className="form-control" id="contactno"
+                type="number" 
+                name="contactno" 
+                className="form-control no-spinner" 
+                id="contactno"
                 value={formData.contactno} onChange={handleInputChange} placeholder="+63 92 6645 9723"
               />
             </div>
