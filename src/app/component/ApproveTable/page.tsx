@@ -23,16 +23,12 @@ interface Accounts {
 }
 
 export default function ApproveTable({ onView }: ApproveProps) {
-  const [showSample, setShowSample] = useState(true);
+
   const [approvedRequest, setApproveRequest] = useState<ApprovedRequest[]>([]);
   const [accounts, setAccounts] = useState<Accounts[]>([]);
   const [current_page, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
   const [total, setTotal] = useState(0);
-
-  const handleDeleteSample = () => {
-    setShowSample(false);
-  };
 
   async function getAccounts() {
     try {
