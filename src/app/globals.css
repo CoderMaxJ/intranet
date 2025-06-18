@@ -26,9 +26,11 @@
   background-color: rgba(255, 255, 255, 0.6);
   z-index: 2000;
 }
+
 .cancel-btn {
   max-height: 40px !important;
 }
+
 .addemployee-form {
   width: 100%;
 }
@@ -419,7 +421,6 @@ body {
 
 .login-div {
   background: rgba(255, 255, 255, 0.15);
-  /* Semi-transparent white */
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -446,9 +447,7 @@ body {
 
 .success-message {
   background-color: rgba(40, 167, 69, 0.1);
-  /* light green */
   background-color: #28a745;
-  /* Bootstrap's success green */
   text-align: center;
   color: #ffffff !important;
   padding: 0.5rem;
@@ -499,7 +498,6 @@ input:focus {
 
 .ecomialogo-footer img {
   width: 80px;
-
 }
 
 .login-logo {
@@ -512,7 +510,6 @@ input:focus {
 .poweredby-label {
   font-size: 10px;
   font-weight: bold;
-
 }
 
 .inputfields {
@@ -560,7 +557,6 @@ input:focus {
   padding-right: 40px;
   box-sizing: border-box;
 }
-
 
 .eye-icon {
   position: absolute;
@@ -2910,6 +2906,7 @@ table {
 .reports-container {
   padding-bottom: 10px;
 }
+
 .actions {
   width: 9% !important;
 }
@@ -3934,7 +3931,3 @@ body.dark-mode .time-icon-group::before {
   border-radius: 50%;
   cursor: pointer;
 }
-
-
-
-
