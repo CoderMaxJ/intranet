@@ -95,31 +95,6 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
     }
   }, [data]);
 
-  const handleDecline = async () => {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`
-      },
-      body: JSON.stringify(combinedData)
-    });
-
-    if (response.status === 200) {
-      if (refreshData) refreshData();
-
-    } if (onDecline && data) {
-      onDecline({
-        ...data,
-        reason: declineReason,
-        status: 2,
-        declined_at: new Date().toISOString(),
-        aprroved_at: "",
-      });
-    }
-  };
-
   const handleChange = (section: string, field: string, value: string) => {
     setBuildData(prev => {
       if (!prev) return prev;

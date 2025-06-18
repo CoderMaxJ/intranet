@@ -69,7 +69,7 @@ interface RejectedDataProps {
 function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData, setCombinedData] = useState({})
-
+console.log("=========================",data)
     return (
         <div>
             <ToastContainer />
@@ -146,7 +146,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                 <div>
                                     <input
                                         type="time"
-                                        value={buildData?.login?.record || ""}
+                                        value={data?.logs.login?.record || ""}
                                         disabled={true} readOnly
                                         className="input-time-field"
                                     />
@@ -170,7 +170,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                 <div>
                                     <input
                                         type="time"
-                                        value={buildData?.break1?.record?.in || ""}
+                                        value={data?.logs?.break1?.record?.in || ""}
                                         disabled={true} readOnly
                                         className="input-time-field"
                                     />
@@ -195,7 +195,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        value={buildData?.break1?.record?.out || ""}
+                                        value={data?.logs?.break1?.record?.out || ""}
                                         className="input-time-field"
                                     />
                                 </div>
@@ -219,7 +219,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        value={buildData?.lunch?.record?.in || ""}
+                                        value={data?.logs?.lunch?.record?.in || ""}
                                         className="input-time-field"
                                     />
                                 </div>
@@ -243,7 +243,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        value={buildData?.lunch?.record?.out || ""}
+                                        value={data?.logs?.lunch?.record?.out || ""}
                                         className="input-time-field"
                                     />
                                 </div>
@@ -267,7 +267,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        value={buildData?.break2?.record?.in || ""}
+                                        value={data?.logs?.break2?.record?.in || ""}
                                         className="input-time-field"
                                     />
                                 </div>
@@ -291,7 +291,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                     <input
                                         type="time"
                                         disabled={true} readOnly
-                                        value={buildData?.break2?.record?.out || ""}
+                                        value={data?.logs?.break2?.record?.out || ""}
                                         className="input-time-field"
                                     />
                                 </div>
@@ -315,7 +315,7 @@ function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
                                 <div>
                                     <input
                                         type="time"
-                                        value={buildData?.logout?.record || ""}
+                                        value={data?.logs?.logout?.record || ""}
                                         className="input-time-field"
                                         readOnly
                                         disabled={true}
