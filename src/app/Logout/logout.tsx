@@ -1,4 +1,4 @@
-
+"use client";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
