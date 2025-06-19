@@ -52,6 +52,13 @@ export default function Login() {
                     setError("");
                 }, 2000);
                 setLoading(false);
+            } else if(response.status === 403) {
+                const message = await response.json();
+                setError(message.warning);
+                setTimeout(() => {
+                    setError("");
+                }, 2000);
+                setLoading(false);
             }
         } catch {
         }
