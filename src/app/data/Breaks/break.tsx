@@ -5,6 +5,7 @@ import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
 import { IdentifyUser } from "@/app/user_identifier";
+import { set } from "date-fns";
 
 interface BreakData {
   name: string;
@@ -40,6 +41,9 @@ function BreakDataTable() {
   const [userPrivilege, setUserPrivilege] = useState([""]);
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
+  
+  const isRenderRef = useRef(false);
+
 
   const filteredRows = data.filter(
     (rows) =>
@@ -54,10 +58,30 @@ function BreakDataTable() {
     setFullscreen((prev) => !prev);
   };
 
+  useEffect(() => {
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      isRenderRef.current = false;
+     
+    } else if (document.visibilityState === 'visible') {
+       isRenderRef.current = true
+       setTimeout(()=>{
+        isRenderRef.current = false;
+       },3000)
+      
+    }
+  };
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  return () => {
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+  };
+}, []);
+
+const user_id = localStorage.getItem("user_id");
+const token = localStorage.getItem("token");
   const fetchBreakData = async () => {
     try {
-      const user_id = localStorage.getItem("user_id");
-      const token = localStorage.getItem("token");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(user_id || "")}/`,
         {
@@ -69,13 +93,7 @@ function BreakDataTable() {
         }
       );
 
-      if (response.status === 404 || response.status === 403) {
-        localStorage.clear();
-        router.push("/");
-        return;
-      }
-
-      const data = await response.json();
+       const data = await response.json();
       setData(data.log_data);
       localStorage.setItem("total-logs", (data.log_data.length));
       const updatedBreaks = (data?.data || []).map((newBreak: BreakData) => ({
@@ -84,12 +102,11 @@ function BreakDataTable() {
       }));
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
-      localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
-      localStorage.setItem("total-on-breaks", String(updatedBreaks.length))
     } catch (error) {
       console.error("Failed to fetch break data:", error);
     }
   };
+
 
   useEffect(() => {
     const countdownIntervalId = setInterval(() => {
@@ -99,12 +116,12 @@ function BreakDataTable() {
           duration: breakItem.duration - 1,
         }));
         breaksRef.current = updatedBreaks;
-        localStorage.setItem("breakData", JSON.stringify(updatedBreaks));
         return updatedBreaks;
       });
     }, 1000);
     return () => clearInterval(countdownIntervalId);
   }, []);
+
 
   const status = localStorage.getItem("status");
   const account_id = localStorage.getItem("account_id");
@@ -120,7 +137,7 @@ function BreakDataTable() {
   }
 
   async function updateChecker() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&account_id=${Decryptor(user_id || "")}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json"
@@ -178,7 +195,7 @@ function BreakDataTable() {
             <div className="d-flex align-items-center col-5">
               <h4 className="agent-header mb-0">
                 Dashboard
-                <span className="text-light small ms-2">({localStorage.getItem("total-on-breaks") || 0})</span>
+                <span className="text-light small ms-2">({breaks.length})</span>
               </h4>
             </div>
             <div className="flex-grow-1 d-flex">
@@ -298,7 +315,7 @@ function BreakDataTable() {
               <h3 className="logs-headername text-light px-3">
                 Logs Today
                 <span className="text-light small ms-2">
-                  ({localStorage.getItem("total-logs") || 0})
+                  ({data.length})
                 </span>
               </h3>
             </div>

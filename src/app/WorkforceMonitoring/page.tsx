@@ -6,8 +6,7 @@ import Header from "../component/Header";
 import { useState } from "react";
 
 export default function MainDashboard() {
-  const [pageTitle, setPageTitle] = useState("workforce monitoring")
-
+  const [pageTitle, setPageTitle] = useState("workforce monitoring");
   return (
     <div className="d-flex main-page">
       <div id="dashboard-menu" className="d-flex ">
