@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
@@ -13,8 +14,6 @@ interface ApprovedRequest {
 
 interface ApproveProps {
   onView: (item: ApprovedRequest) => void;
-  current_page: number;
-  total: number;
 }
 
 interface Accounts {

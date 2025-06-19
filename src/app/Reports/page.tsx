@@ -218,6 +218,7 @@ export default function Daterange() {
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
+            <ToastContainer/>
             <div className="d-flex" >
                 <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}

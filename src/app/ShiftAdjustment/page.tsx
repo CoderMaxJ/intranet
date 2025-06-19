@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard/page";
 import Header from "../component/Header";
 import Pending from "../component/Pending/page";
-import ApproveTable from "../component/ApproveTable/page";
+import ApproveTable from "../component/ApproveTable/ApproveTable";
 import ApprovedData from "../component/ApprovedData/page";
 import RejectedData from "../component/RejectedData/page";
 import RejectedTable from "../component/Rejected/RejectedTable";
