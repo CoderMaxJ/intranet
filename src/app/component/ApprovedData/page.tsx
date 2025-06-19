@@ -233,7 +233,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true}
                     readOnly
-                    value={data?.logs?.login?.in || ""}
+                    value={buildData?.login?.record || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -241,7 +241,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                   <input
                     type="time"
                     onChange={(e) => handleChange("login", "", e.target.value)}
-                    value={buildData?.login?.record || ""}
+                    value={data?.logs?.login?.in || ""}
                     disabled={true} readOnly
                     className="input-time-field"
                     step={1}
@@ -259,7 +259,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true}
                     readOnly
-                    value={data?.logs?.break1?.in || ""}
+                     value={buildData?.break1?.record?.in || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -267,7 +267,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                   <input
                     type="time"
                     onChange={(e) => handleChange("break1", "in", e.target.value)}
-                    value={buildData?.break1?.record?.in || ""}
+                    value={data?.logs?.break1?.in || ""}
                     disabled={true} readOnly
                     className="input-time-field"
                     step={1}
@@ -285,7 +285,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true}
                     readOnly
-                    value={data?.logs?.break1?.out || ""}
+                    value={buildData?.break1?.record?.out || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -294,7 +294,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true} readOnly
                     onChange={(e) => handleChange("break1", "out", e.target.value)}
-                    value={buildData?.break1?.record?.out || ""}
+                    value={data?.logs?.break1?.out || ""}
                     className="input-time-field"
                     step={1}
                   />
@@ -311,7 +311,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true}
                     readOnly
-                    value={data?.logs?.lunch?.in || ""}
+                    value={buildData?.lunch?.record?.in || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -320,7 +320,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true} readOnly
                     onChange={(e) => handleChange("lunch", "in", e.target.value)}
-                    value={buildData?.lunch?.record?.in || ""}
+                    value={data?.logs?.lunch?.in || ""}
                     className="input-time-field"
                     step={1}
                   />
@@ -337,7 +337,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true}
                     readOnly
-                    value={data?.logs?.lunch?.out || ""}
+                    value={buildData?.lunch?.record?.out || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -346,7 +346,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true} readOnly
                     onChange={(e) => handleChange("lunch", "out", e.target.value)}
-                    value={buildData?.lunch?.record?.out || ""}
+                    value={data?.logs?.lunch?.out || ""}
                     className="input-time-field"
                     step={1}
                   />
@@ -363,7 +363,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true}
                     readOnly
-                    value={data?.logs?.break2?.in || ""}
+                    value={buildData?.break2?.record?.in || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -372,7 +372,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true} readOnly
                     onChange={(e) => handleChange("break2", "in", e.target.value)}
-                    value={buildData?.break2?.record?.in || ""}
+                    value={data?.logs?.break2?.in || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -388,7 +388,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true}
                     readOnly
-                    value={data?.logs?.break2?.out || ""}
+                    value={buildData?.break2?.record?.out || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -397,7 +397,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true} readOnly
                     onChange={(e) => handleChange("break2", "out", e.target.value)}
-                    value={buildData?.break2?.record?.out || ""}
+                    value={data?.logs?.break2?.out || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -413,7 +413,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                     type="time"
                     disabled={true}
                     readOnly
-                    value={data?.logs?.logout?.out || ""}
+                    value={buildData?.logout?.record || ""}
                     className="input-time-field"
                   />
                 </div>
@@ -421,7 +421,7 @@ export default function ApprovedData({ data, onSave, refreshData, onDecline }: A
                   <input
                     type="time"
                     onChange={(e) => handleChange("logout", "", e.target.value)}
-                    value={buildData?.logout?.record || ""}
+                    value={data?.logs?.logout?.out || ""}
                     className="input-time-field"
                     readOnly
                     disabled={true}
