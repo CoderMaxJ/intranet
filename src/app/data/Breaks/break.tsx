@@ -1,11 +1,10 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
 import { IdentifyUser } from "@/app/user_identifier";
-import { set } from "date-fns";
 
 interface BreakData {
   name: string;
@@ -95,7 +94,6 @@ const token = localStorage.getItem("token");
 
        const data = await response.json();
       setData(data.log_data);
-      localStorage.setItem("total-logs", (data.log_data.length));
       const updatedBreaks = (data?.data || []).map((newBreak: BreakData) => ({
         ...newBreak,
         duration: newBreak.duration > 0 ? newBreak.duration : -newBreak.overbreak, 
@@ -195,7 +193,7 @@ const token = localStorage.getItem("token");
             <div className="d-flex align-items-center col-5">
               <h4 className="agent-header mb-0">
                 Dashboard
-                <span className="text-light small ms-2">({breaks.length})</span>
+                <span className="text-light small ms-2">({breaks?.length})</span>
               </h4>
             </div>
             <div className="flex-grow-1 d-flex">
@@ -315,7 +313,7 @@ const token = localStorage.getItem("token");
               <h3 className="logs-headername text-light px-3">
                 Logs Today
                 <span className="text-light small ms-2">
-                  ({data.length})
+                  ({data?.length})
                 </span>
               </h3>
             </div>
