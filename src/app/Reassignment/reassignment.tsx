@@ -72,7 +72,7 @@ export default function () {
           draggable: true,
           progress: undefined,
      });
-
+     const user_id = localStorage.getItem("user_id");
      const getAccountName = (acctid: number): string => {
           if (acctid === undefined || acctid === null) {
                return '';
@@ -161,7 +161,7 @@ export default function () {
      const token = localStorage.getItem("token");
      const getAccount = async () => {
           const token = localStorage.getItem("token");
-          const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/`;
+          const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/option/${Decryptor(user_id || "")}/`;
           const response = await fetch(url, {
                method: "GET",
                headers: {
