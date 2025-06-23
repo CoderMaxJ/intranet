@@ -44,7 +44,7 @@ function BreakDataTable() {
   const isRenderRef = useRef(false);
 
 
-  const filteredRows = data.filter(
+  const filteredRows = data?.filter(
     (rows) =>
       rows.name.toLowerCase().includes(filter.toLowerCase())
   );
