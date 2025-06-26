@@ -144,11 +144,11 @@ const token = localStorage.getItem("token");
     });
     if (response.status === 200) {
       const data = await response.json();
-      if (data.account_id === Number(account_id)) {
+      if (data?.account_id === Number(account_id)) {
         fetchBreakData();
-      } else if (array_account_id.includes(data?.account_id.toString())) {
+      } else if (array_account_id.includes(data?.account_id?.toString())) {
         fetchBreakData();
-      } else if (data.status == "NEW UPDATE" && userPrivilege.includes("manage_users")) {
+      } else if (data?.status == "NEW UPDATE" && userPrivilege.includes("manage_users")) {
         fetchBreakData();
       }
     }
