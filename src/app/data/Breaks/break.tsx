@@ -40,6 +40,7 @@ function BreakDataTable() {
   const [userPrivilege, setUserPrivilege] = useState([""]);
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
+  const [isSuperAdmin,setSuperAdmin]=useState(false);
   
   const isRenderRef = useRef(false);
 
@@ -122,32 +123,33 @@ const token = localStorage.getItem("token");
 
 
   const status = localStorage.getItem("status");
-  const account_id = localStorage.getItem("account_id");
+  const account_id = Decryptor(localStorage.getItem("account_id") || "");
   const account_id_list = Decryptor(localStorage.getItem("account_id_list") || "");
   const array_account_id = account_id_list?.split(',')
   const user_hash_privilege = localStorage.getItem("user_privilege");
 
-  if (user_hash_privilege) {
+ if (user_hash_privilege) {
     const array_privilege = IdentifyUser(user_hash_privilege);
     array_privilege.forEach((data) => {
       userPrivilege.push(data);
     });
   }
-
+ 
   async function updateChecker() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&account_id=${Decryptor(user_id || "")}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&user_id=${Decryptor(user_id || "")}&account_id=${account_id}`,{
       method: "GET",
       headers: {
         "Content-type": "application/json"
       }
     });
     if (response.status === 200) {
-      const message = await response.json();
-      if (message.message === Number(Decryptor(account_id || ""))) {
+      const data = await response.json();
+      console.log(data);
+      if (data.account_id === Number(account_id)) {
         fetchBreakData();
-      } else if (array_account_id.includes(message.message.toString())) {
+      } else if (array_account_id.includes(data?.account_id.toString())) {
         fetchBreakData();
-      } else if (message.message != "NO UPDATE" && userPrivilege.includes("manage_users")) {
+      } else if (data.status == "NEW UPDATE" && userPrivilege.includes("manage_users")) {
         fetchBreakData();
       }
     }
