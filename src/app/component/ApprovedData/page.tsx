@@ -63,7 +63,7 @@ interface ApprovedDataProps {
   refreshData?: () => void;
 }
 
-export default function ApprovedData({ data, onSave, refreshData, onDecline }: ApprovedDataProps) {
+export default function ApprovedData({ data }: ApprovedDataProps) {
   const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
   const [combinedData, setCombinedData] = useState({})
   const [declineReason, setDeclineReason] = useState("");

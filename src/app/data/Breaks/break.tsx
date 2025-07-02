@@ -40,7 +40,6 @@ function BreakDataTable() {
   const [userPrivilege, setUserPrivilege] = useState([""]);
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
-  const [isSuperAdmin,setSuperAdmin]=useState(false);
   
   const isRenderRef = useRef(false);
 
