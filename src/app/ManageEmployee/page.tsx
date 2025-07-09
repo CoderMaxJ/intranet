@@ -92,6 +92,12 @@ export default function CreateUD() {
         },
       }
     );
+
+     if(response.status == 401){
+        alert('Session Expired!')
+        localStorage.clear();
+        router.push('/');
+      }
     if (response.ok) {
       const data = await response.json();
       setEmployees(data.data);

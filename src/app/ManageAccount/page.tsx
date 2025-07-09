@@ -90,6 +90,11 @@ export default function ManageDepartment() {
                     Authorization: `Bearer ${token}`,
                 },
             });
+            if(response.status == 401){
+                alert('Session Expired!');
+                localStorage.clear();
+                router.push('/');
+            }
             if (response.status === 200) {
                 const data = await response.json();
                 setDepartment(data.data);

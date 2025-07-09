@@ -80,8 +80,9 @@ export default function Daterange() {
                         },
                     }
                 );
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data");
+                 if(response.status == 401){
+                    localStorage.clear();
+                    router.push('/');
                 }
                 result = await response.json();
             }
@@ -162,9 +163,10 @@ export default function Daterange() {
                     },
                 }
             );
-            if (!response.ok) {
 
-                throw new Error("Failed to fetch data");
+            if(response.status == 401){
+                localStorage.clear();
+                router.push('/');
             }
             const result = await response.json();
             if (start != "" || end != "") {
@@ -193,8 +195,10 @@ export default function Daterange() {
                     },
                 }
             );
-            if (!response.ok) {
-                throw new Error("Failed to fetch data");
+             if(response.status == 401){
+                alert('Session Expired!')
+                localStorage.clear();
+                router.push('/');
             }
             const result = await response.json();
             if (!result.data.length) {

@@ -92,6 +92,12 @@ const token = localStorage.getItem("token");
         }
       );
 
+      if(response.status == 401){
+        alert('Session Expired!')
+        localStorage.clear();
+        router.push('/');
+      }
+
        const data = await response.json();
       setData(data.log_data);
       const updatedBreaks = (data?.data || []).map((newBreak: BreakData) => ({

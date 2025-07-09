@@ -9,6 +9,7 @@ import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
+import { useRouter } from "next/navigation";
 
 interface Schedule {
     shiftstart: string;
@@ -56,6 +57,7 @@ export default function CreateUD() {
     const [timeOut, setTimeOut] = useState("");
     const EmpNoList: any = [];
 
+    const router = useRouter();
     const token = localStorage.getItem("token");
     useEffect(() => {
         EmpNoList.push(...selectedEmployees);
@@ -81,6 +83,11 @@ export default function CreateUD() {
                 },
             }
         );
+        if(response.status == 401){
+            alert('Session Expired!')
+            localStorage.clear();
+            router.push('/');
+        }
         if (response.ok) {
             const data = await response.json();
             setEmployees(data.data);

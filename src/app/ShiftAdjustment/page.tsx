@@ -95,6 +95,11 @@ export default function ShiftAdjustment() {
           }
         }
       );
+      if(response.status == 401){
+        alert('Session Expired!');
+        localStorage.clear();
+        router.push('/');
+      }
       if (response.ok) {
         const data = await response.json();
         setData(data.data);
