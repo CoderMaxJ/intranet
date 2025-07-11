@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build --no-lint",
-    "start": "HTTPS=true SSL_CRT_FILE=./certs/fullchain.cer SSL_KEY_FILE=./certs/key.pem react-scripts start",
-    "lint": "next lint"
-  },
+  "dev": "next dev",
+  "build": "next build --no-lint",
+  "start": "next start",
+  "lint": "next lint"
+},
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
