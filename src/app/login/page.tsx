@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import LoadingSpinner from "../component/LoadSpinner/spinner";
+import LoadingSpinner from "../../component/LoadSpinner/spinner";
 
 export default function Login() {
     const [username, setUsername] = useState("");

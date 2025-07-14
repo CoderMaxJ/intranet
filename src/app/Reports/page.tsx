@@ -2,7 +2,7 @@
 import { useState, useEffect, use } from "react";
 import { Decryptor } from "@/security";
 import Dashboard from "../Dashboard/page";
-import Header from "../component/Header";
+import Header from "../../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useRouter } from "next/navigation";
