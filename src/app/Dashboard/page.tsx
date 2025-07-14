@@ -331,7 +331,7 @@ export default function Dashboard() {
                                                 <div className="manage-anchor">
                                                     <a
                                                         className="nav-font"
-                                                        onClick={() => navigateTo("/ManageAccount", "4")}
+                                                        onClick={() => navigateTo("/Account", "4")}
                                                         style={{
                                                             backgroundColor: localStorage.getItem("active_tab") === "4" ? "#0a85ed" : "",
                                                             color: localStorage.getItem("active_tab") === "4" ? "white" : "",
@@ -369,7 +369,7 @@ export default function Dashboard() {
                                                 <div className="employee-anchor">
                                                     <a
                                                         className="nav-font"
-                                                        onClick={() => navigateTo("/ManageEmployee", "5")}
+                                                        onClick={() => navigateTo("/Employee", "5")}
                                                         style={{
                                                             backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
                                                             color: localStorage.getItem("active_tab") === "5" ? "white" : "",
