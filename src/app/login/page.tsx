@@ -33,16 +33,18 @@ export default function Login() {
                 body: JSON.stringify(credentials),
             });
             if (response.status === 200) {
-                const res = await response.json();
-                localStorage.setItem("token", Encryptor(res.token));
-                localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
-                localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
-                localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
-                localStorage.setItem("name", res.name);
-                localStorage.setItem("position", res.position);
-                localStorage.setItem("account_id", Encryptor(res.account_id.toString()));
+                const data = await response.json();
+
+                const  {token,user_id,user_privilege,user_name,name,position,account_id,account_id_list} = data;
+                localStorage.setItem("token", Encryptor(token));
+                localStorage.setItem("user_id", Encryptor(user_id.toString()));
+                localStorage.setItem("user_privilege", Encryptor(user_privilege.toString()));
+                localStorage.setItem("user_name", Encryptor(user_name.toString()));
+                localStorage.setItem("name", name);
+                localStorage.setItem("position", position);
+                localStorage.setItem("account_id", Encryptor(account_id.toString()));
                 localStorage.setItem("status", "login"),
-                    localStorage.setItem("account_id_list", Encryptor(res.account_id_list.toString()));
+                    localStorage.setItem("account_id_list", Encryptor(account_id_list.toString()));
                 localStorage.setItem("active_tab", "1");
                 setLog(true);
             } else if (response.status === 401) {

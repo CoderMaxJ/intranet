@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import "/public/asset/css/updateps.css";
+import "../../app/style/updateps.css";
 import { Decryptor } from "@/security";
 
 export default function Updatepassword() {

@@ -1,5 +1,5 @@
 "use client";
-import "/public/asset/css/updateps.css";
+import "../app/style/updateps.css";
 
 interface HeaderProps {
   title: string;

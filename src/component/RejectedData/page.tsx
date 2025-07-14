@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import "../../../../public/asset/css/drawer.css"
+import "../../app/style/drawer.css"
 
 interface RequestDetails {
     requestid: number;
