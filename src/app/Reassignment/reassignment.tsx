@@ -1,12 +1,13 @@
 "use client";
-import { useEffect, useState, useMemo, useCallback, use } from "react";
-import { Decryptor, Encryptor } from "@/security";
+import { useEffect, useState, useMemo} from "react";
+import { Decryptor} from "@/security";
 import debounce from 'lodash.debounce';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 interface Schedule {
      shiftstart: string;
@@ -43,7 +44,6 @@ export default function () {
      const [timeIn, setTimeIn] = useState("");
      const [timeOut, setTimeOut] = useState("");
      const [searchQuery, setSearchQuery] = useState("");
-     const [schedule, setSchedule] = useState<Schedule[]>([]);
      const [account, setAccount] = useState<Account[]>([]);
      const [allEmployees, setAllEmployees] = useState<Information[]>([]);
      const [filteredEmployees, setFilteredEmployees] = useState<Information[]>([]);
@@ -53,6 +53,8 @@ export default function () {
      const [showModal, setShowModal] = useState(false);
 
      const router = useRouter();
+     const token = getUserToken();
+     
      const successToast = (msg: string) => toast.success(msg, {
           position: "top-right",
           autoClose: 2000,
@@ -98,14 +100,12 @@ export default function () {
                return;
           }
           const employee_numbers = selectedEmployees.map(emp => emp.empno);
-          const token = localStorage.getItem("token");
-          const decryptedToken = Decryptor(token || "");
           try {
                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
                     method: "POST",
                     headers: {
                          "Content-Type": "application/json",
-                         Authorization: `Bearer ${decryptedToken}`
+                         Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({
                          empno: employee_numbers,
@@ -147,26 +147,19 @@ export default function () {
      const handleSearchEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
           const value = e.target.value;
           setSearchQuery(value);
-          if (value.trim() === "") {
-               setFilteredEmployees(allEmployees);
-          } else {
-               const filtered = allEmployees.filter(emp =>
-               (`${emp.fname} ${emp.lname}`.toLowerCase().includes(value.toLowerCase()) ||
-                    getAccountName(emp.acctid).toLowerCase().includes(value.toLowerCase()))
-               );
-               setFilteredEmployees(filtered);
-          }
+          const filtered = allEmployees.filter(emp =>
+          (`${emp.fname} ${emp.lname}`.toLowerCase().includes(value.toLowerCase()) ||
+               getAccountName(emp.acctid).toLowerCase().includes(value.toLowerCase()))
+           );
+          setFilteredEmployees(filtered);
      };
-
-     const token = localStorage.getItem("token");
      const getAccount = async () => {
-          const token = localStorage.getItem("token");
           const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/option/${Decryptor(user_id || "")}/`;
           const response = await fetch(url, {
                method: "GET",
                headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${Decryptor(token || "")}`
+                    Authorization: `Bearer ${token}`
                }
           });
           if (response.ok) {
@@ -184,7 +177,6 @@ export default function () {
      }, []);
 
      const id = localStorage.getItem("user_id");
-     const decryptedToken = Decryptor(token || '');
      useEffect(() => {
           if (filterText != "") {
                filterbyAccount();
@@ -199,7 +191,7 @@ export default function () {
                method: "GET",
                headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${decryptedToken}`
+                    Authorization: `Bearer ${token}`
                }
           });
           if (response.status === 200) {
@@ -222,7 +214,7 @@ export default function () {
                          method: "GET",
                          headers: {
                               "Content-Type": "application/json",
-                              Authorization: `Bearer ${decryptedToken}`
+                              Authorization: `Bearer ${token}`
                          }
                     });
                     if (response.ok) {

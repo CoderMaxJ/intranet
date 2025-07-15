@@ -4,11 +4,12 @@ import AddEmp from "../../component/AddEmployee";
 import { useEffect, useState, useMemo } from "react";
 import Header from "../../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
-import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import { useRouter } from "next/navigation";
+import { getUserToken } from "@/services/UserToken/authUserToken";
+import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
 
 interface Schedule {
   shiftstart: string;
@@ -41,14 +42,9 @@ export default function CreateUD() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [targetID, setTargetID] = useState<number | null>(null);
   const [resetPasswordTargetID, setResetPasswordTargetID] = useState<number | null>(null);
   const [total, setTotal] = useState(0);
   const [listener, setListener] = useState(false);
-  const [user_privilege, setUserPrivilege] = useState([""]);
-  const [isresetPassword, setResetPassword] = useState(false);
-  const [update, setUpdate] = useState(false);
-  const [isloading, setLoading] = useState(false);
   const [empData, setEmpData] = useState<Information>({
     empno: 0,
     fname: "",
@@ -72,15 +68,14 @@ export default function CreateUD() {
     un: ""
   });
   const router = useRouter();
-  const token = localStorage.getItem("token");
+  const token = getUserToken();
+  const userPrivilege = getUserPrivilege();
 
   useEffect(() => {
     GetEmployee(currentPage);
   }, [listener]);
 
   async function GetEmployee(page: number) {
-    setLoading(true);
-    const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/${Decryptor(user_id || "")}/?page=${page}`,
@@ -88,7 +83,7 @@ export default function CreateUD() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -103,12 +98,6 @@ export default function CreateUD() {
       setEmployees(data.data);
       setTotalPages(data.num_pages);
       setTotal(data.total);
-      setLoading(false);
-    }
-    else {
-      if (!token) {
-        router.push("/");
-      }
     }
   }
 
@@ -132,38 +121,6 @@ export default function CreateUD() {
     progress: undefined,
   });
 
-  const handleDelete = async (empno: number) => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${Decryptor(token || "")}`,
-          },
-        }
-      );
-      if (response.status === 204) {
-        successToast("Deleted successfully.");
-        GetEmployee(currentPage);
-      } else {
-        alert("Failed to delete employee.");
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const user_hash_privilege = localStorage.getItem("user_privilege");
-
-  if (user_hash_privilege) {
-    const array_privilege = IdentifyUser(user_hash_privilege);
-    array_privilege.forEach((data) => {
-      user_privilege.push(data);
-    });
-  }
-
   const id = localStorage.getItem("user_id");
   const debouncedSearch = useMemo(() => {
     return debounce(async (value: string) => {
@@ -174,7 +131,7 @@ export default function CreateUD() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${Decryptor(token || '')}`
+            Authorization: `Bearer ${token}`
           }
         });
 
@@ -243,7 +200,7 @@ export default function CreateUD() {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${Decryptor(token || "")}`
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(data)
     });
@@ -315,7 +272,7 @@ export default function CreateUD() {
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                       </svg>
                     </div>
-                    {user_privilege.includes("manage_users") && (
+                    {userPrivilege.includes("manage_users") && (
                       <div className=" py-1">
 
                         <button
@@ -369,10 +326,10 @@ export default function CreateUD() {
                     <th scope="col" >Username</th>
                     <th scope="col" >First Name</th>
                     <th scope="col" >Last Name</th>
-                    {user_privilege.includes("manage_users") && (<th scope="col" >Date of Birth</th>)}
-                    {user_privilege.includes("manage_users") && (<th scope="col" >Gender</th>)}
-                    {user_privilege.includes("manage_users") && (<th scope="col" >Contact No.</th>)}
-                    {(user_privilege.includes("manage_users") || user_privilege.includes("update_breaktool_account")) && (<th scope="col" >Account</th>)}
+                    {userPrivilege.includes("manage_users") && (<th scope="col" >Date of Birth</th>)}
+                    {userPrivilege.includes("manage_users") && (<th scope="col" >Gender</th>)}
+                    {userPrivilege.includes("manage_users") && (<th scope="col" >Contact No.</th>)}
+                    {(userPrivilege.includes("manage_users") || userPrivilege.includes("update_breaktool_account")) && (<th scope="col" >Account</th>)}
                     <th scope="col" >Position</th>
                     <th scope="col" >Actions</th>
                   </tr>
@@ -385,26 +342,25 @@ export default function CreateUD() {
                         <td>{info.un}</td>
                         <td>{info.fname}</td>
                         <td>{info.lname}</td>
-                        {user_privilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
-                        {user_privilege.includes("manage_users") && (<td>{info.gender}</td>)}
-                        {user_privilege.includes("manage_users") && (<td>{info.contactno}</td>)}
-                        {(user_privilege.includes("manage_users") || user_privilege.includes("update_breaktool_account")) && (<td>{info.acctname || "Unassigned"}</td>)}
+                        {userPrivilege.includes("manage_users") && (<td>{new Date(info.dateofbirth).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</td>)}
+                        {userPrivilege.includes("manage_users") && (<td>{info.gender}</td>)}
+                        {userPrivilege.includes("manage_users") && (<td>{info.contactno}</td>)}
+                        {(userPrivilege.includes("manage_users") || userPrivilege.includes("update_breaktool_account")) && (<td>{info.acctname || "Unassigned"}</td>)}
                         <td>{info.position}</td>
                         <td>
                           <div style={{ display: "flex", gap: "8px" }}>
-                            {user_privilege.includes("update_breaktool_account") && (
+                            {userPrivilege.includes("update_breaktool_account") && (
                               <button
                                 type="button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#resetPasswordModal"
                                 style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
-                                title={isresetPassword ? "" : "Reset Password"}
                                 onClick={() => handleResetPassword(info.empno)}
                               >
                                 <img src="/svg/reset.svg" className="actions-button" height={16} width={16} />
                               </button>
                             )}
-                            {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") || user_privilege.includes("update_breaktool_account")) && (
+                            {(userPrivilege.includes("manage_users") || userPrivilege.includes("view_multiple_accounts") || userPrivilege.includes("update_breaktool_account")) && (
                               <button
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal"
@@ -412,7 +368,6 @@ export default function CreateUD() {
                                 className="edit-button ms-3"
                                 onClick={() => handleData(info)}
                                 style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
-                                title={update ? "" : "Update"}
                               >
                                 <img src="/svg/pencil.svg" className="actions-button" height={16} width={16} />
                               </button>
@@ -459,34 +414,6 @@ export default function CreateUD() {
                 </div>
               </div>
             )}
-          </div>
-        </div>
-        <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div className="modal-body">
-                <p className="view">Are you sure you want to delete this employee?</p>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"><span className="view">Cancel</span></button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  data-bs-dismiss="modal"
-                  onClick={() => {
-                    if (targetID !== null) {
-                      handleDelete(targetID);
-                    }
-                  }}
-                >
-                  <span className="view">Delete</span>
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>

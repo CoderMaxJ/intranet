@@ -3,17 +3,62 @@
 import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
 
-interface ApprovedRequest {
-  name: string;
-  reason: string;
-  acctid: string | number;
-  created_at: string;
-  approved_by: string;
-  current_page: number;
-}
 
+interface RequestDetails {
+  requestid: number;
+  empno: number;
+  name: string;
+  shiftdate: string;
+  reason: string;
+  status: number;
+  logs: {
+    login?: {
+      in?: string;
+      out?: string;
+      record: string;
+    };
+    break1?: {
+      in?: string;
+      out?: string;
+      record: {
+        in: string;
+        out: string;
+      };
+    };
+    break2?: {
+      in?: string;
+      out?: string;
+      record: {
+        in: string;
+        out: string;
+      };
+    };
+    lunch?: {
+      in?: string;
+      out?: string;
+      record: {
+        in: string;
+        out: string;
+      };
+    };
+    logout?: {
+      in?: string;
+      out?: string;
+      record: string;
+    };
+    [key: string]: any;
+  };
+  acctid: number;
+  created_at: string;
+  aprroved_at: string;
+  declined_at: string;
+  approved_by: number;
+  acctname:string;
+  reason_for_disapproved:string;
+}
 interface ApproveProps {
-  onView: (item: ApprovedRequest) => void;
+  onView: (item: RequestDetails) => void;
+  data:RequestDetails | null;
 }
 
 interface Accounts {
@@ -23,7 +68,7 @@ interface Accounts {
 
 export default function ApproveTable({ onView }: ApproveProps) {
 
-  const [approvedRequest, setApproveRequest] = useState<ApprovedRequest[]>([]);
+  const [approvedRequest, setApproveRequest] = useState<ApproveProps[]>([]);
   const [accounts, setAccounts] = useState<Accounts[]>([]);
   const [current_page, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState();

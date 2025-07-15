@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 interface BreaksReport {
     name: string;
@@ -31,11 +32,8 @@ export default function Daterange() {
     nextMonth.setMonth(today.getMonth());
     const [originalData, setOriginalData] = useState<BreaksReport[]>([]);
     const [data, setData] = useState<BreaksReport[]>([]);
-    const [dataToDownload, setDataToDownload] = useState<BreaksReport[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState(true);
-    const [buttonFilter, setButtonFilter] = useState("");
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
     const [checker, setChecker] = useState(true);
@@ -55,6 +53,7 @@ export default function Daterange() {
     });
 
     const router = useRouter();
+    const token = getUserToken();
     useEffect(() => {
         if (checker) {
             fetchData();
@@ -65,18 +64,17 @@ export default function Daterange() {
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
-            const token = localStorage.getItem("token");
             let result;
             if (start === "" && end === "") {
                 result = { data: data };
             } else {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id || "")}/${start}/${end}/`,
+                    `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${token}/${start}/${end}/`,
                     {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${Decryptor(token || "")}`,
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
@@ -94,7 +92,6 @@ export default function Daterange() {
                 report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
             );
             setData(filteredData);
-            setSuccess(true);
             const csvContent = [
                 [
                     "Name",
@@ -152,14 +149,13 @@ export default function Daterange() {
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
-            const token = localStorage.getItem("token");
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id || "")}/${start}/${end}/`,
                 {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${Decryptor(token || "")}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
@@ -178,12 +174,11 @@ export default function Daterange() {
             errorToast("No logs available for the selected date range!");
         }
     };
-    const token = localStorage.getItem("token");
+
     const fetchData = async () => {
         try {
             setError("");
             const account_id = localStorage.getItem("user_id");
-            const token = localStorage.getItem("token");
 
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/`,
@@ -191,7 +186,7 @@ export default function Daterange() {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${Decryptor(token || "")}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );

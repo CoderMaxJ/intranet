@@ -2,6 +2,7 @@
 import { useState } from "react";
 import "../../app/style/updateps.css";
 import { Decryptor } from "@/security";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 export default function Updatepassword() {
   const [currentpassword, setCurrentPassword] = useState("");
@@ -9,24 +10,14 @@ export default function Updatepassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(false);
-  const [isSamePassword, setIsSamePassword] = useState(false);
   const [focus, setFocus] = useState(false);
 
   const passwordsMatch = password === confirmPassword && confirmPassword !== "";
-  const toggleShow = () => {
-    setShowPassword((prev) => !prev);
-  };
-  const toggleShoww = () => {
-    setShowPassword1((prev) => !prev);
-  };
-  const toggleShowww = () => {
-    setShowPassword2((prev) => !prev);
-  };
+
   const empno = localStorage.getItem("user_id");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,15 +31,8 @@ export default function Updatepassword() {
         newpassword: password,
         password2: confirmPassword,
       };
-      if (currentpassword === password) {
-        setIsSamePassword(true);
-        setMessage("The new password must be different from the current one.");
-        return;
-      } else {
-        setIsSamePassword(false);
-      }
 
-      const token = localStorage.getItem("token");
+      const token = getUserToken();
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND}/change/password/`,
@@ -56,7 +40,7 @@ export default function Updatepassword() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${Decryptor(token || "")}`,
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(newAccount),
           }

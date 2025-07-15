@@ -1,16 +1,18 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { Decryptor } from "../../security";
+import { useRouter } from "next/navigation";
 import Dashboard from "../Dashboard/page";
 import Header from "../../component/Header";
 import Pending from "../../component/Pending/page";
 import ApproveTable from "../../component/ApproveTable/ApproveTable";
-import ApprovedData from "../../component/ApprovedData/page";
-import RejectedData from "../../component/RejectedData/page";
-import RejectedTable from "../../component/Rejected/RejectedTable";
+import ApprovedData from "../../component//ApprovedData/page";
+import RejectedData from "../../component/RejectedData/page"; 
+import Rejected from "../../component/Rejected/RejectedTable";
+import Image from "next/image";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import "react-toastify/dist/ReactToastify.css";
-import { Decryptor } from "@/security";
-import { useRouter } from "next/navigation";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 interface RequestDetails {
   requestid: number;
@@ -54,7 +56,7 @@ interface RequestDetails {
       out?: string;
       record: string;
     };
-    [key: string]: any;
+    [key: string]: unknown;
   };
   acctid: number;
   created_at: string;
@@ -65,7 +67,7 @@ interface RequestDetails {
   reason_for_disapproved: string;
 }
 
-export default function ShiftAdjustment() {
+export default function Adjustment() {
   const [currentPage, setCurrentPages] = useState(1);
   const [totalPages, setTotalPages] = useState();
   const [data, setData] = useState<RequestDetails[]>([]);
@@ -74,14 +76,9 @@ export default function ShiftAdjustment() {
   const [selectedData, setSelectedData] = useState<RequestDetails | null>(null);
 
   const router = useRouter();
-  useEffect(() => {
-    if (activeTab === "pending") {
-      fetchShiftAdjustmentData();
-    }
-  }, [activeTab, currentPage]);
-  const token = localStorage.getItem("token");
-  const fetchShiftAdjustmentData = async () => {
-    const user_id = localStorage.getItem("user_id");
+  const token = getUserToken();
+  const fetchShiftAdjustmentData = useCallback(async () => {
+  const user_id = localStorage.getItem("user_id");
     try {
       const decryptedId = Decryptor(user_id || "");
 
@@ -91,15 +88,16 @@ export default function ShiftAdjustment() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${Decryptor(token || "")}`,
+            Authorization: `Bearer ${token}`,
           }
         }
       );
-      if(response.status == 401){
-        alert('Session Expired!');
+
+        if(response.status == 401){
+        alert('Session Expired!')
         localStorage.clear();
         router.push('/');
-      }
+      }      
       if (response.ok) {
         const data = await response.json();
         setData(data.data);
@@ -113,7 +111,7 @@ export default function ShiftAdjustment() {
     } catch (error) {
       console.error("Error fetching shift adjustment data:", error);
     }
-  };
+  }, [currentPage, token, router]);
 
   const handlePageChange = (page: number) => {
     setCurrentPages(page);
@@ -121,6 +119,12 @@ export default function ShiftAdjustment() {
   const handleViewClick = (item: RequestDetails) => {
     setSelectedData(item);
   };
+
+  useEffect(() => {
+    if (activeTab === "pending") {
+      fetchShiftAdjustmentData();
+    }
+  }, [activeTab, currentPage, fetchShiftAdjustmentData]);
 
   return (
     <div className="d-flex">
@@ -188,7 +192,7 @@ export default function ShiftAdjustment() {
                                     aria-controls="shiftdrawer"
                                     onClick={() => handleViewClick(item)}
                                   >
-                                    <img src="/svg/View.svg" alt="view" className="eye-view" />
+                                    <Image src="/svg/View.svg" alt="view" className="eye-view" height={16} width={16} />
                                   </button>
                                 </div>
                               </div>
@@ -214,7 +218,7 @@ export default function ShiftAdjustment() {
               )}
               {activeTab === "rejected" && (
                 <>
-                  <RejectedTable
+                  <Rejected
                     data={selectedData}
                     onView={handleViewClick}
                   />
@@ -249,6 +253,7 @@ export default function ShiftAdjustment() {
           <Pending
             data={selectedData}
             onApproveComplete={fetchShiftAdjustmentData}
+            onDeclineComplete={fetchShiftAdjustmentData}
           />
         )}
         {activeTab === "rejected" && (

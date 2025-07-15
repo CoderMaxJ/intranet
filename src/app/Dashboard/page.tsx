@@ -6,6 +6,7 @@ import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 declare global {
     interface Window {
@@ -15,16 +16,12 @@ declare global {
 
 export default function Dashboard() {
     const router = useRouter();
-    const [user_privilege, setUserPrivilege] = useState([""]);
+    const [user_privilege] = useState([""]);
     const [accordionIconn, setAccordionIconn] = useState(false);
-    const [logout, setLogout] = useState(false);
-    const [upload, setUpload] = useState(false);
-    const [profile, setProfile] = useState(null)
     const [open, setOpen] = useState(false);
     const [navWidth, setNavWidth] = useState(false);
     const [showDashboard, setShowDashboard] = useState(true);
     const [showReports, setShowReports] = useState(true);
-    const [showManage, setShowManage] = useState(true);
     const [showUpdatepassword, setShowUpdatepassword] = useState(true);
     const [showLogout, setShowLogout] = useState(true);
     const [showImage, setShowImage] = useState(true);
@@ -33,18 +30,13 @@ export default function Dashboard() {
     const [showProfile, setShowProfile] = useState(true);
     const [showAccounts, setShowAccounts] = useState(true);
     const [showEmployee, setShowEmployee] = useState(true);
-    const [showProfileLabel, setShowProfileLabel] = useState(true);
     const [showPoweredby, setShowPoweredby] = useState(true);
     const [showEcomia, setShowEcomia] = useState(true);
-    const [cameraHover, setCameraHover] = useState(true);
-    const [accountsMenu, setAccountsMenu] = useState(true);
-    const [manageMenu, setManageMenu] = useState(true);
     const [activeMenu, setActiveMenu] = useState("");
     const [activeNav, setActiveNav] = useState("");
     const [shiftAdjustment, setShiftAdjustment] = useState(true);
-    const [token, setToken] = useState<string | null>(null);
-    const [isAccountManager, setIsAccountManager] = useState(false);
 
+    const token = getUserToken();
     useEffect(() => {
         const storedTab = localStorage.getItem("active_tab") || "1";
         setActiveNav(storedTab);
@@ -73,13 +65,10 @@ export default function Dashboard() {
     };
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token");
-        if (!storedToken) {
+        if (!token) {
             router.push("/");
-        } else {
-            setToken(storedToken);
-        }
-    }, []);
+        } 
+    },[]);
 
     useEffect(() => {
         const user_hash_privilege = localStorage.getItem("user_privilege");
@@ -107,14 +96,12 @@ export default function Dashboard() {
             setShowUpdatepassword(true);
             setShowImage(true);
             setShowReports(true);
-            setShowManage(true);
             setShowLogout(true);
             setShowIcon(true);
             setArrowIcon(true);
             setShowProfile(true);
             setShowAccounts(true);
             setShowEmployee(true);
-            setShowProfileLabel(true);
             setShowEcomia(true);
             setShowPoweredby(true);
             setShiftAdjustment(true);
@@ -126,14 +113,12 @@ export default function Dashboard() {
             setShowUpdatepassword(false);
             setShowImage(false);
             setShowReports(false);
-            setShowManage(false);
             setShowLogout(false);
             setShowIcon(false);
             setArrowIcon(false);
             setShowProfile(false);
             setShowAccounts(false);
             setShowEmployee(false);
-            setShowProfileLabel(false);
             setShowEcomia(false);
             setShowPoweredby(false);
             setShiftAdjustment(false);
@@ -150,14 +135,12 @@ export default function Dashboard() {
             setShowUpdatepassword(true);
             setShowImage(true);
             setShowReports(true);
-            setShowManage(true);
             setShowLogout(true);
             setShowIcon(true);
             setArrowIcon(true);
             setShowProfile(true);
             setShowAccounts(true);
             setShowEmployee(true);
-            setShowProfileLabel(true);
             setShowEcomia(true);
             setShowPoweredby(true);
             setShiftAdjustment(true);
@@ -169,14 +152,12 @@ export default function Dashboard() {
             setShowUpdatepassword(false);
             setShowImage(false);
             setShowReports(false);
-            setShowManage(false);
             setShowLogout(false);
             setShowIcon(false);
             setArrowIcon(false);
             setShowProfile(false);
             setShowAccounts(false);
             setShowEmployee(false);
-            setShowProfileLabel(false);
             setShowEcomia(false);
             setShowPoweredby(false);
             setShiftAdjustment(false);
@@ -528,9 +509,7 @@ export default function Dashboard() {
                             {open === false && showProfile === true && (
                                 <div className="profile-div position-relative">
                                     <div className="profile-circle">
-                                        {profile ? (
-                                            <img onClick={openClose} className="profile-picture" src={profile} alt="" height={70} width={70} />
-                                        ) : (<p className="username-label-profile">{localStorage.getItem("name")?.charAt(0)}</p>)}
+                                        <p className="username-label-profile">{localStorage.getItem("name")?.charAt(0)}</p>
                                     </div>
                                 </div>
                             )}

@@ -61,6 +61,7 @@ interface PendingProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
     onApproveComplete?: (requestid: number) => void;
+    onDeclineComplete?:(requestid: number) => void;
 }
 
 export default function Pending({ data, onSave, onApproveComplete }: PendingProps) {

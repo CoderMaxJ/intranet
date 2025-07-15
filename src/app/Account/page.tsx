@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Header from "../../component/Header";
 import { ToastContainer, toast } from "react-toastify";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 interface DepartmentProps {
     acctid: number;
@@ -22,7 +23,6 @@ interface ManagerProps {
 }
 
 export default function ManageDepartment() {
-    const [token, setToken] = useState("");
     const [department, setDepartment] = useState<DepartmentProps[]>([]);
     const [manager, setManager] = useState<ManagerProps[]>([]);
     const [showform, setShowForm] = useState(false);
@@ -48,18 +48,11 @@ export default function ManageDepartment() {
     });
 
     const router = useRouter();
-    useEffect(() => {
-        const storedToken = localStorage.getItem("token");
-        if (storedToken) {
-            setToken(Decryptor(storedToken));
-        }
-    }, []);
+    const token = getUserToken();
 
     useEffect(() => {
-        if (token) {
             fetchAccountList();
-        }
-    }, [token]);
+    }, []);
 
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",

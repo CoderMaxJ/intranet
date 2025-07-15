@@ -1,11 +1,8 @@
 "use client";
 import Dashboard from "../Dashboard/page";
-import AddEmp from "../../component/AddEmployee";
 import Reassignment from "../Reassignment/reassignment";
 import { useEffect, useState, useMemo } from "react";
 import Header from "../../component/Header";
-import { ToastContainer, toast } from 'react-toastify';
-import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
@@ -37,24 +34,14 @@ interface Information {
     acctname: string;
 }
 
-interface Account {
-    acctname: string
-    acctid: number
-}
-
 export default function CreateUD() {
     const [employees, setEmployees] = useState<Information[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [targetID, setTargetID] = useState<number | null>(null);
     const [total, setTotal] = useState(0);
     const [listener, setListener] = useState(false);
-    const [user_privilege, setUserPrivilege] = useState([""]);
     const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
-    const [allSelected, setAllSelected] = useState(false);
-    const [timeIn, setTimeIn] = useState("");
-    const [timeOut, setTimeOut] = useState("");
     const EmpNoList: any = [];
 
     const router = useRouter();
@@ -95,59 +82,6 @@ export default function CreateUD() {
             setTotal(data.total);
         }
     }
-
-    const successToast = (msg: string) => toast.success(msg, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
-
-    const errorToast = (msg: string) => toast.error(msg, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
-
-    const handleDelete = async (empno: number) => {
-        try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND}/employee/delete/${empno}/`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${Decryptor(token || "")}`,
-                    },
-                }
-            );
-            if (response.status === 204) {
-                successToast("Deleted successfully.");
-                GetEmployee(currentPage);
-            } else {
-                alert("Failed to delete employee.");
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    const user_hash_privilege = localStorage.getItem("user_privilege");
-
-    if (user_hash_privilege) {
-        const array_privilege = IdentifyUser(user_hash_privilege);
-        array_privilege.forEach((data) => {
-            user_privilege.push(data);
-        });
-    }
-
     const id = localStorage.getItem("user_id");
     const debouncedSearch = useMemo(() => {
         return debounce(async (value: string) => {
@@ -182,33 +116,6 @@ export default function CreateUD() {
         setCurrentPage(page);
         GetEmployee(page);
     };
-
-    const create = async () => {
-        const data = {
-            empno: EmpNoList,
-            timein: timeIn,
-            timeout: timeOut
-        }
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/bulk/create/schedule/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${Decryptor(token || "")}`,
-            },
-            body: JSON.stringify(data),
-        });
-
-        if (response.status === 201) {
-            const data = await response.json();
-            GetEmployee(currentPage);
-            setSelectedEmployees([]);
-            setAllSelected(false);
-        } else {
-            const error = await response.json();
-            errorToast(error.message);
-        }
-    }
 
     return (
         <div className="crud-maindiv">
@@ -357,34 +264,6 @@ export default function CreateUD() {
                                 </div>
                             </div>
                         )}
-                    </div>
-                </div>
-                <div className="modal fade" id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="deleteModalLabel">Confirmation</h1>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                <p>Are you sure you want to delete this employee?</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button
-                                    type="button"
-                                    className="btn btn-danger"
-                                    data-bs-dismiss="modal"
-                                    onClick={() => {
-                                        if (targetID !== null) {
-                                            handleDelete(targetID);
-                                        }
-                                    }}
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
-import { IdentifyUser } from "@/app/user_identifier";
+import { getUserToken } from "@/services/UserToken/authUserToken";
+import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
 
 interface BreakData {
   name: string;
@@ -37,20 +38,17 @@ function BreakDataTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [fullscreen, setFullscreen] = useState(false);
   const breaksRef = useRef<BreakData[]>([]);
-  const [userPrivilege, setUserPrivilege] = useState([""]);
   const [data, setData] = useState<Logs[]>([]);
   const [filter, setFilter] = useState("");
   
   const isRenderRef = useRef(false);
 
+  const token = getUserToken();
 
   const filteredRows = data?.filter(
     (rows) =>
       rows.name.toLowerCase().includes(filter.toLowerCase())
   );
-  useEffect(() => {
-    fetchBreakData();
-  }, []);
 
   const router = useRouter();
   const toggleFullscreen = () => {
@@ -58,6 +56,7 @@ function BreakDataTable() {
   };
 
   useEffect(() => {
+  fetchBreakData();
   const handleVisibilityChange = () => {
     if (document.visibilityState === 'hidden') {
       isRenderRef.current = false;
@@ -78,7 +77,6 @@ function BreakDataTable() {
 }, []);
 
 const user_id = localStorage.getItem("user_id");
-const token = localStorage.getItem("token");
   const fetchBreakData = async () => {
     try {
       const response = await fetch(
@@ -87,7 +85,7 @@ const token = localStorage.getItem("token");
           method: "GET",
           headers: {
             "Content-type": "application/json",
-            Authorization: `Bearer ${Decryptor(token || "")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -131,14 +129,8 @@ const token = localStorage.getItem("token");
   const account_id = Decryptor(localStorage.getItem("account_id") || "");
   const account_id_list = Decryptor(localStorage.getItem("account_id_list") || "");
   const array_account_id = account_id_list?.split(',')
-  const user_hash_privilege = localStorage.getItem("user_privilege");
-
- if (user_hash_privilege) {
-    const array_privilege = IdentifyUser(user_hash_privilege);
-    array_privilege.forEach((data) => {
-      userPrivilege.push(data);
-    });
-  }
+ 
+  const userPrivilege = getUserPrivilege();
  
   async function updateChecker() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&user_id=${Decryptor(user_id || "")}&account_id=${account_id}`,{
