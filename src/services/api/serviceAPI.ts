@@ -10,11 +10,11 @@ class ApiService {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${this.token}`,
+      "Authorization": `Bearer ${this.token}`,
     },
   });
 
-  console.log("========>", this.baseUrl);
+ 
 
   if (response.ok) {
     return await response.json();
@@ -35,6 +35,32 @@ class ApiService {
     if (!response.ok) throw new Error("Failed to post");
     return await response.json();
   }
+
+
+ async patch(endpoint:string, empno:any) {
+     const data = { empno: empno };
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization":`Bearer ${this.token}`
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.status !== 204){
+     return 400;
+    }
+    else if(response.status === 204){
+     return 204;
+    }
+    
+  }
+
+
 }
+
+
+
+
 
 export default ApiService;

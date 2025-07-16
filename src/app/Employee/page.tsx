@@ -10,7 +10,7 @@ import debounce from 'lodash.debounce';
 import { useRouter } from "next/navigation";
 import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
-import ApiService from "@/services/api/request";
+import ApiService from "@/services/api/serviceAPI";
 
 
 interface Schedule {
@@ -69,45 +69,24 @@ export default function CreateUD() {
     isdayshift: 0,
     un: ""
   });
-  const router = useRouter();
+
   const token = getUserToken();
   const userPrivilege = getUserPrivilege();
-
+  const user_id = localStorage.getItem("user_id");
   const api = new ApiService()
+useEffect(()=>{
+  load(currentPage);
+},[currentPage,listener])
+ 
 
-  const result = api.get(`/employee/list/${8}/?page=${1}`)
-  console.log("->>>>>>>>>>>>>>>>>>>>>>>>>>",result);
-
-  useEffect(() => {
-    GetEmployee(currentPage);
-  }, [listener]);
-
-  async function GetEmployee(page: number) {
-    const user_id = localStorage.getItem("user_id");
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/${Decryptor(user_id || "")}/?page=${page}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-     if(response.status == 401){
-        alert('Session Expired!')
-        localStorage.clear();
-        router.push('/');
-      }
-    if (response.ok) {
-      const data = await response.json();
-      setEmployees(data.data);
-      setTotalPages(data.num_pages);
-      setTotal(data.total);
-    }
-  }
-
+  const load = async (page:number) => {
+    const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`)
+    const {data,num_pages,current_page,total}=response;
+    setEmployees(data);
+    setTotalPages(num_pages);
+    setCurrentPage(current_page);
+    setTotal(total);
+  };
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -117,6 +96,7 @@ export default function CreateUD() {
     draggable: true,
     progress: undefined,
   });
+
 
   const errorToast = (msg: string) => toast.error(msg, {
     position: "top-right",
@@ -130,25 +110,14 @@ export default function CreateUD() {
 
   const id = localStorage.getItem("user_id");
   const debouncedSearch = useMemo(() => {
-    return debounce(async (value: string) => {
-      if (value.trim() === "") {
-        GetEmployee(currentPage);
-      } else {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${value}/`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
-        });
 
-        if (response.ok) {
-          const data = await response.json();
-          setEmployees(data.data);
-        } else {
-          console.error("Error fetching search results");
-        }
-      }
+    return debounce(async (value: string) => {
+        if(value.trim() === "" || value.trim() === undefined ){
+        load(currentPage);
+        }else{
+        const response = await api.get(`/search/employee/${Decryptor(id || "")}/${value || ""}/`);
+        setEmployees(response.data);
+         }
     }, 300);
   }, [currentPage, id, token]);
 
@@ -157,12 +126,6 @@ export default function CreateUD() {
       debouncedSearch.cancel();
     };
   }, [debouncedSearch]);
-
-  useEffect(() => {
-    return () => {
-      debouncedSearch.cancel();
-    };
-  }, [debouncedSearch])
 
   const handleData = (data: any) => {
     setCurrentMode("edit");
@@ -190,7 +153,6 @@ export default function CreateUD() {
   };
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    GetEmployee(page);
   };
 
   const handleResetPassword = (empno: number) => {
@@ -201,23 +163,15 @@ export default function CreateUD() {
     resetPassword(Number(resetPasswordTargetID));
   }
 
-  const resetPassword = async (empno: number) => {
-    const data = { empno: empno };
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reset/password/`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(data)
-    });
-    if (response.status === 204) {
-      successToast("Password has been reset");
-    } else {
-      const warning = await response.json();
-      errorToast(warning.warning);
-    }
-  };
+ const resetPassword = async (empno: number) => {
+  const response = await api.patch("/reset/password/", empno);
+
+  if (response === 204) {
+    successToast("Password has been reset");
+  } else {
+    errorToast("Make sure that this employee has birthdate!")
+  }
+};
 
   return (
     <div className="crud-maindiv">

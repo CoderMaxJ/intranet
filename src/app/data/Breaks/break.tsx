@@ -107,7 +107,7 @@ const user_id = localStorage.getItem("user_id");
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
     } catch (error) {
-      console.error("Failed to fetch break data:", error);
+      // console.error("Failed to fetch break data:", error);
     }
   };
 
