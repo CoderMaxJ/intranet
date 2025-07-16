@@ -7,6 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Schedule {
     shiftstart: string;
@@ -41,21 +42,14 @@ export default function CreateUD() {
     const [totalPages, setTotalPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [listener, setListener] = useState(false);
-    const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
-    const EmpNoList: any = [];
+    const [selectedEmployees, ] = useState<number[]>([]);
+    const EmpNoList: number[] = [];
 
     const router = useRouter();
     const token = localStorage.getItem("token");
     useEffect(() => {
         EmpNoList.push(...selectedEmployees);
     }, [EmpNoList])
-
-    useEffect(() => {
-        GetEmployee(currentPage);
-        setTimeout(() => {
-            setListener(false);
-        }, 2000);
-    }, [listener]);
 
     async function GetEmployee(page: number) {
         const token = localStorage.getItem("token");
@@ -82,6 +76,14 @@ export default function CreateUD() {
             setTotal(data.total);
         }
     }
+
+      useEffect(() => {
+        GetEmployee(currentPage);
+        setTimeout(() => {
+            setListener(false);
+        }, 2000);
+    }, [listener]);
+    
     const id = localStorage.getItem("user_id");
     const debouncedSearch = useMemo(() => {
         return debounce(async (value: string) => {
@@ -165,17 +167,18 @@ export default function CreateUD() {
                                                     data-bs-target="#reassignment"
                                                 >
                                                     <div>
-                                                        <img
+                                                        <Image
                                                             src="/svg/update.svg"
                                                             alt="update"
                                                             style={{
-                                                                width: '15px',
-                                                                height: '15px',
                                                                 marginRight: '5px',
                                                                 filter: 'brightness(100) contrast(2.5)',
                                                                 display: 'inline-block',
                                                             }}
+                                                            height={16}
+                                                            width={16}
                                                         />
+
                                                     </div>
                                                     <div><span className="updateschedule-label">Update Schedule</span></div>
                                                 </button>

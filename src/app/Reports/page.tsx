@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { Decryptor } from "@/security";
 import Dashboard from "../Dashboard/page";
 import Header from "../../component/Header";
@@ -63,7 +63,7 @@ export default function Daterange() {
     const handleGenerateAndDownloadCSV = async () => {
         try {
             setError("");
-            const account_id = localStorage.getItem("user_id");
+            Decryptor(localStorage.getItem("user_id") || "")
             let result;
             if (start === "" && end === "") {
                 result = { data: data };
@@ -88,9 +88,10 @@ export default function Daterange() {
                 errorToast("No data available for the selected date range!");
                 return;
             }
-            const filteredData = result.data.filter((report: any) =>
+            const filteredData = result.data.filter((report: BreaksReport) =>
                 report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
             );
+
             setData(filteredData);
             const csvContent = [
                 [
@@ -140,11 +141,11 @@ export default function Daterange() {
             document.body.removeChild(a);
             setOriginalData(result.data);
             setData(result.data);
-        } catch (e) {
+        } catch {
             errorToast("Unable to download reports!");
         }
     };
-    const handleView = async (e: any) => {
+    const handleView = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             setError("");
@@ -170,7 +171,7 @@ export default function Daterange() {
             } else {
                 setData(originalData);
             }
-        } catch (e) {
+        } catch {
             errorToast("No logs available for the selected date range!");
         }
     };
@@ -207,7 +208,7 @@ export default function Daterange() {
                 localStorage.clear();
                 router.push("/");
             }
-        } catch (e) {
+        } catch {
             setError("An error occurred while fetching data.");
             if (!token) {
                 router.push("/");

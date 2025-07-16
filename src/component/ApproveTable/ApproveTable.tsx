@@ -1,8 +1,7 @@
-
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Decryptor } from "@/security";
-
+import Image from "next/image";
 
 interface RequestDetails {
   requestid: number;
@@ -46,16 +45,17 @@ interface RequestDetails {
       out?: string;
       record: string;
     };
-    [key: string]: any;
+    [key: string]: unknown;
   };
   acctid: number;
   created_at: string;
   aprroved_at: string;
   declined_at: string;
   approved_by: number;
-  acctname:string;
-  reason_for_disapproved:string;
+  acctname: string;
+  reason_for_disapproved: string;
 }
+
 interface ApproveProps {
   onView: (item: RequestDetails) => void;
   data:RequestDetails | null;
@@ -66,15 +66,22 @@ interface Accounts {
   acctname: string;
 }
 
-export default function ApproveTable({ onView }: ApproveProps) {
-
-  const [approvedRequest, setApproveRequest] = useState<ApproveProps[]>([]);
+export default function ApproveTable({ onView, data }: ApproveProps) {
+  console.log(data)
+  const [approvedRequest, setApproveRequest] = useState<RequestDetails[]>([]);
   const [accounts, setAccounts] = useState<Accounts[]>([]);
   const [current_page, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
   const [total, setTotal] = useState(0);
 
-  async function getAccounts() {
+let token = "";
+let user_id = "";
+
+if (typeof window !== "undefined") {
+  token = Decryptor(localStorage.getItem("token") || "");
+  user_id = localStorage.getItem("user_id") || "";
+}
+  const getAccounts = useCallback(async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
         method: "GET",
@@ -92,17 +99,13 @@ export default function ApproveTable({ onView }: ApproveProps) {
     } catch (error) {
       console.error("Error fetching accounts", error);
     }
-  }
+  },[token]);
 
   useEffect(() => {
     getAccounts();
-    fetchApprovedRequest();
-  }, [])
+  },[getAccounts]);
 
-  const token = Decryptor(localStorage.getItem("token") || "")
-  const user_id = localStorage.getItem("user_id");
-
-  async function fetchApprovedRequest() {
+  const fetchApprovedRequest = useCallback(async () =>{
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approved/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",
       headers: {
@@ -111,16 +114,17 @@ export default function ApproveTable({ onView }: ApproveProps) {
       }
     });
     if (response.status === 200) {
-      const data = await response.json();
-      setApproveRequest(data.data);
-      setTotalPage(data.num_pages);
-      setTotal(data.total);
+      const responseData = await response.json();
+      const {data,num_pages,total} = responseData;
+      setApproveRequest(data);
+      setTotalPage(num_pages);
+      setTotal(total);
     }
-  }
+  },[user_id, token, current_page]);
 
   useEffect(() => {
     fetchApprovedRequest();
-  }, [current_page])
+  }, [fetchApprovedRequest, current_page]);
 
   const changePage = (page: number) => {
     setCurrentPage(page);
@@ -141,8 +145,8 @@ export default function ApproveTable({ onView }: ApproveProps) {
         </thead>
         <tbody>
           {approvedRequest?.length > 0 ? (
-            approvedRequest.map((request: any, index: any) => (
-              <tr key={index}>
+            approvedRequest.map((request: RequestDetails) => (
+              <tr key={request.requestid}>
                 <td>{request.name}</td>
                 <td>{request.reason?.slice(0, 10) + "..." || "-"}</td>
                 <td>{accounts.find((acc) => acc.acctid === request.acctid)?.acctname || ""}</td>
@@ -158,14 +162,14 @@ export default function ApproveTable({ onView }: ApproveProps) {
                     style={{ marginRight: "20px" }}
                     onClick={() => onView(request)}
                   >
-                    <img src="/svg/View.svg" alt="view" className="eye-view" />
+                    <Image src="/svg/View.svg" alt="view" className="eye-view" height={16} width={16} />
                   </button>
                 </td>
               </tr>
             ))) : (
             <tr>
               <td colSpan={6} className="text-center">
-                No pending shift adjustment requests at this time
+                No approved shift adjustment requests at this time
               </td>
             </tr>
           )}

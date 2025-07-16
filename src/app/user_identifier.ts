@@ -1,6 +1,6 @@
 import { Decryptor } from "@/security";
 
-export function IdentifyUser(data: any) {
+export function IdentifyUser(data: string | null | undefined): string[] {
 
   if (data) {
     const decrypted_data = Decryptor(data);

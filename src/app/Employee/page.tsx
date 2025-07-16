@@ -1,17 +1,16 @@
 "use client";
 import Dashboard from "../Dashboard/page";
 import AddEmp from "../../component/AddEmployee";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import Header from "../../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
-import { useRouter } from "next/navigation";
 import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
 import ApiService from "@/services/api/serviceAPI";
-
+import Image from "next/image";
 
 interface Schedule {
   shiftstart: string;
@@ -73,20 +72,22 @@ export default function CreateUD() {
   const token = getUserToken();
   const userPrivilege = getUserPrivilege();
   const user_id = localStorage.getItem("user_id");
-  const api = new ApiService()
-useEffect(()=>{
-  load(currentPage);
-},[currentPage,listener])
- 
+  const api = useMemo(() => new ApiService(), []);
 
-  const load = async (page:number) => {
-    const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`)
-    const {data,num_pages,current_page,total}=response;
-    setEmployees(data);
-    setTotalPages(num_pages);
-    setCurrentPage(current_page);
-    setTotal(total);
-  };
+ 
+const load = useCallback(async (page: number) => {
+  const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`);
+  const { data, num_pages, current_page, total } = response;
+  setEmployees(data);
+  setTotalPages(num_pages);
+  setCurrentPage(current_page);
+  setTotal(total);
+}, [api, user_id]);
+
+useEffect(() => {
+  load(currentPage);
+}, [currentPage, listener, load]);
+
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -109,17 +110,28 @@ useEffect(()=>{
   });
 
   const id = localStorage.getItem("user_id");
-  const debouncedSearch = useMemo(() => {
-
+    const debouncedSearch = useMemo(() => {
     return debounce(async (value: string) => {
-        if(value.trim() === "" || value.trim() === undefined ){
-        load(currentPage);
-        }else{
-        const response = await api.get(`/search/employee/${Decryptor(id || "")}/${value || ""}/`);
-        setEmployees(response.data);
-         }
+      if (value.trim() === "") {
+
+      } else {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/employee/${Decryptor(id || "")}/${value}/`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Decryptor(token || '')}`
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setEmployees(data.data);
+        } else {
+          console.error("Error fetching search results");
+        }
+      }
     }, 300);
-  }, [currentPage, id, token]);
+  }, [id, token]);
 
   useEffect(() => {
     return () => {
@@ -127,10 +139,10 @@ useEffect(()=>{
     };
   }, [debouncedSearch]);
 
-  const handleData = (data: any) => {
+  const handleData = (data: Information) => {
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status, schedule, acctname, un, } = data;
-    let currentData = {
+    const  { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status, schedule, acctname, un, } = data;
+    const  currentData = {
       empno,
       fname,
       mname,
@@ -153,6 +165,7 @@ useEffect(()=>{
   };
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    
   };
 
   const handleResetPassword = (empno: number) => {
@@ -297,7 +310,7 @@ useEffect(()=>{
                 </thead>
                 <tbody className="manage-tbody table-data">
                   {employees?.length ? (
-                    employees.map((info, index) => (
+                    employees.map((info) => (
                       <tr key={info.empno}>
                         <td className="empno-data-column">{info.empno}</td>
                         <td>{info.un}</td>
@@ -318,7 +331,7 @@ useEffect(()=>{
                                 style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
                                 onClick={() => handleResetPassword(info.empno)}
                               >
-                                <img src="/svg/reset.svg" className="actions-button" height={16} width={16} />
+                               <Image src="/svg/reset.svg" className="actions-button" alt="reset password" height={16} width={16} />
                               </button>
                             )}
                             {(userPrivilege.includes("manage_users") || userPrivilege.includes("view_multiple_accounts") || userPrivilege.includes("update_breaktool_account")) && (
@@ -330,7 +343,7 @@ useEffect(()=>{
                                 onClick={() => handleData(info)}
                                 style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
                               >
-                                <img src="/svg/pencil.svg" className="actions-button" height={16} width={16} />
+                                <Image src="/svg/pencil.svg" className="actions-button" alt="edit" height={16} width={16} />
                               </button>
                             )}
                           </div>

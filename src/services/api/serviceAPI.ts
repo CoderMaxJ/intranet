@@ -4,8 +4,7 @@ class ApiService {
   private baseUrl = process.env.NEXT_PUBLIC_BACKEND;
   private token = getUserToken();
 
-
- async get(endpoint: string): Promise<any> {
+async get<T>(endpoint: string): Promise<T> {
   const response = await fetch(`${this.baseUrl}${endpoint}`, {
     method: "GET",
     headers: {
@@ -13,8 +12,6 @@ class ApiService {
       "Authorization": `Bearer ${this.token}`,
     },
   });
-
- 
 
   if (response.ok) {
     return await response.json();
@@ -36,8 +33,7 @@ class ApiService {
     return await response.json();
   }
 
-
- async patch(endpoint:string, empno:any) {
+async patch(endpoint: string, empno: string | number) {
      const data = { empno: empno };
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       method: "PATCH",

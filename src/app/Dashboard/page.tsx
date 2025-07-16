@@ -1,16 +1,17 @@
 "use client";
 import Logout from "../Logout/logout";
 import Updatepassword from "../Updatepassword/updatepassword";
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { IdentifyUser } from "../user_identifier";
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { getUserToken } from "@/services/UserToken/authUserToken";
+import Image from "next/image";
 
 declare global {
     interface Window {
-        bootstrap: any;
+        bootstrap: unknown;
     }
 }
 
@@ -18,7 +19,7 @@ export default function Dashboard() {
     const router = useRouter();
     const [user_privilege] = useState([""]);
     const [accordionIconn, setAccordionIconn] = useState(false);
-    const [open, setOpen] = useState(false);
+    const [open,] = useState(false);
     const [navWidth, setNavWidth] = useState(false);
     const [showDashboard, setShowDashboard] = useState(true);
     const [showReports, setShowReports] = useState(true);
@@ -68,7 +69,7 @@ export default function Dashboard() {
         if (!token) {
             router.push("/");
         } 
-    },[]);
+    },[router, token]);
 
     useEffect(() => {
         const user_hash_privilege = localStorage.getItem("user_privilege");
@@ -79,14 +80,6 @@ export default function Dashboard() {
             })
         }
     }, [user_privilege])
-
-    const openClose = () => {
-        if (open == false) {
-            setOpen(true);
-        } else {
-            setOpen(false);
-        }
-    }
 
     useEffect(() => {
         const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
@@ -176,7 +169,7 @@ export default function Dashboard() {
                 <div className="navigation-division">
                     {showImage === true && (
                         <div className="justify-content-center" style={{ display: 'grid', alignItems: 'center' }}>
-                            <img src="/img/Sos.png" height={50} />
+                            <Image src="/img/Sos.png" alt="sos logo" height={50} width={200} />
                             <hr />
                         </div>
                     )}
@@ -189,13 +182,15 @@ export default function Dashboard() {
                     >
                         <button id="dashboard"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tooltip on right" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
                         >
-                            <img
+                           <Image
                                 src="/svg/dashboard.svg"
                                 alt="dashboard"
                                 className="dashboard-img mb-1"
                                 height={17}
+                                width={17}
                                 style={{
-                                    filter: localStorage.getItem("active_tab") === "1" ? "brightness(0) invert(1)" : "",
+                                    filter: activeNav === "1" ? "brightness(0) invert(1)" : ""
+                                    ,
                                 }}
                             />
                             {showDashboard && (
@@ -222,13 +217,14 @@ export default function Dashboard() {
                             >
 
                                 <a className="nav-font" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
-                                    <img
+                                     <Image
                                         src="/svg/reports.svg"
                                         alt="reports"
                                         className="reports-img mb-1"
                                         height={17}
+                                        width={17}
                                         style={{
-                                            filter: localStorage.getItem("active_tab") === "2" ? "brightness(0) invert(1)" : "",
+                                            filter: activeNav === "2" ? "brightness(0) invert(1)" : ""
                                         }}
                                     />
                                     {showReports && (
@@ -244,8 +240,8 @@ export default function Dashboard() {
                                     style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0a85ed" : "" }}>
 
                                     <a className="nav-font " style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
-                                        <img src="/svg/schedule.svg" alt="schedule" className="schedule-img mb-1" height={17} style={{
-                                            filter: localStorage.getItem("active_tab") === "3" ? "brightness(0) invert(1)" : "",
+                                        <Image src="/svg/schedule.svg" alt="schedule" className="schedule-img mb-1" height={17} width={17} style={{
+                                            filter: activeNav === "3" ? "brightness(0) invert(1)" : ""
                                         }} />
                                         {showReports === true && (
                                             <label htmlFor="label" className="sched" style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
@@ -271,7 +267,7 @@ export default function Dashboard() {
                                         }}
                                         style={{ cursor: "pointer" }}>
                                         <div className="manage-nav">
-                                            <img src="/svg/manage.svg" alt="manage" className="manage-img mb-1" height={18} />
+                                             <Image src="/svg/manage.svg" alt="manage" className="manage-img mb-1" height={18} width={18} />
                                             <span className="manage-label" style={{
                                                 opacity: navWidth ? 1 : 0,
                                                 width: navWidth ? 'auto' : 0,
@@ -452,7 +448,7 @@ export default function Dashboard() {
                                     >
                                         <div id="dashboard" className={`nav-fontt ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`} data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
                                         >
-                                            <img src="/svg/updatepassword.svg" alt="updatepassword" className="updatepassword-img mb-1" height={17} />
+                                          <Image src="/svg/updatepassword.svg" alt="updatepassword" className="updatepassword-img mb-1" height={17} width={17} />
                                             {showUpdatepassword === true && (
                                                 <span className="updatep">Update password</span>
                                             )}
@@ -468,7 +464,7 @@ export default function Dashboard() {
                                         id="dashboard"
                                         className={`nav-fonttt d-flex ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
                                     >
-                                        <img src="/svg/logout.svg" alt="logout" className="logout-img mb-1" height={17} />
+                                          <Image src="/svg/logout.svg" alt="logout" className="logout-img mb-1" height={17} width={17} />
                                         {showLogout === true && (
                                             <span className="logoutbutton">Log Out</span>
                                         )}
@@ -518,7 +514,7 @@ export default function Dashboard() {
                 </div>
                 <div className="ecomia-footer">
                     <div>{showEcomia === true && (<label htmlFor="poweredby" className="db-poweredby">powered by</label>)}</div>
-                    <div>{showPoweredby === true && (<img src="/img/eComialogo.png" className="ecomia-db-logo" height={20} />)}</div>
+                  <div>{showPoweredby === true && (<Image src="/img/eComialogo.png" alt="ecomia logo" className="ecomia-db-logo" height={25} width={72} />)}</div>
                 </div>
             </div>
         </>

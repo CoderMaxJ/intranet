@@ -1,6 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Decryptor } from "@/security";
+import Image from "next/image";
 
 interface RequestItem {
   requestid: number;
@@ -44,7 +45,7 @@ interface RequestItem {
       out?: string;
       record: string;
     };
-    [key: string]: any;
+    [key: string]: unknown;
   };
   acctid: number;
   created_at: string;
@@ -61,7 +62,6 @@ interface RejectedTableProps {
 }
 
 export default function RejectedTable({ onView }: RejectedTableProps) {
-  const [showSample, setShowSample] = useState(true);
   const [rejectedRequest, setRejectedRequest] = useState<RequestItem[]>([]);
   const token = Decryptor(localStorage.getItem("token") || "");
   const user_id = localStorage.getItem("user_id");
@@ -69,7 +69,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
   const [totalPages, setTotalPages] = useState();
   const [total, setTotal] = useState(0);
 
-  async function fetchRejectedRequest() {
+const fetchRejectedRequest = useCallback(async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",
       headers: {
@@ -84,15 +84,12 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
       setRejectedRequest(data.data);
       setCurrentPage(data.current_page);
     }
-  }
+  }, [user_id, token, current_page]);
 
   useEffect(() => {
     fetchRejectedRequest();
-  }, [])
+  }, [current_page, fetchRejectedRequest])
 
-  useEffect(() => {
-    fetchRejectedRequest();
-  }, [current_page])
   const handleChangePage = (page: number) => {
     setCurrentPage(page);
   }
@@ -111,8 +108,8 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
         </thead>
         <tbody>
           {rejectedRequest.length > 0 ? (
-            rejectedRequest?.map((request: any, index: any) => (
-              <tr key={index}>
+            rejectedRequest?.map((request: RequestItem) => (
+              <tr key={request.requestid}>
                 <td>{request.name}</td>
                 <td>{request.reason_for_disapproved?.slice(0, 10) + "..." || "-"}</td>
                 <td>{request.acctname || "Unassigned"}</td>
@@ -128,7 +125,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
                     style={{ marginRight: "20px" }}
                     onClick={() => onView(request)}
                   >
-                    <img src="/svg/View.svg" alt="view" className="eye-view" />
+                          <Image src="/svg/View.svg" alt="view" className="eye-view" height={16} width={16} />
                   </button>
                 </td>
               </tr>

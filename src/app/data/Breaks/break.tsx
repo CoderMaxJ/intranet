@@ -1,11 +1,12 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
 import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
+import Image from "next/image";
 
 interface BreakData {
   name: string;
@@ -107,7 +108,7 @@ const user_id = localStorage.getItem("user_id");
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
     } catch (error) {
-      // console.error("Failed to fetch break data:", error);
+      console.error("Failed to fetch break data:", error);
     }
   };
 
@@ -132,34 +133,33 @@ const user_id = localStorage.getItem("user_id");
   const array_account_id = account_id_list?.split(',')
  
   const userPrivilege = getUserPrivilege();
- 
-  async function updateChecker() {
+
+   const updateChecker = useCallback(async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&user_id=${Decryptor(user_id || "")}&account_id=${account_id}`,{
       method: "GET",
       headers: {
         "Content-type": "application/json"
       }
     });
-    if (response.status === 200) {
-      const data = await response.json();
-      if (data?.account_id === Number(account_id)) {
-        fetchBreakData();
-      } else if (data.account_id != "NO UPDATE" && array_account_id.includes(data.account_id?.toString())) {
-        fetchBreakData();
-      } else if (data?.status == "NEW UPDATE" && userPrivilege.includes("manage_users")) {
-        fetchBreakData();
-      }
-    }else if(response.status === 401 || response.status === 404){
-      localStorage.clear();
-      router.push("/");
+      if (response.status !== 200) return;
+    const data = await response.json();
+    const shouldUpdate =
+      data?.account_id === Number(account_id) ||
+      (data.account_id !== "NO UPDATE" &&
+        array_account_id.includes(data.account_id?.toString())) ||
+      (data?.status === "NEW UPDATE" &&
+        userPrivilege.includes("manage_users"));
+
+    if (shouldUpdate) {
+      fetchBreakData();
     }
-  }
+  },  [user_id, account_id, array_account_id, userPrivilege, fetchBreakData]);
 
   useEffect(() => {
     if (status !== "login") return;
     const fetchIntervalId = setInterval(updateChecker, 3000);
     return () => clearInterval(fetchIntervalId);
-  }, []);
+  }, [status, updateChecker]);
 
   const formatTime = (time: number) => {
     const isNegative = time < 0;
@@ -224,14 +224,14 @@ const user_id = localStorage.getItem("user_id");
                 onClick={toggleFullscreen}
                 title={fullscreen ? "Compress" : "Fullscreen"}
               >
-                {fullscreen ? (
+                 {fullscreen ? (
                   <div className="compress d-flex align-items-center gap-2">
-                    <img src="/svg/compress.svg" alt="fullscreen" className="icon-circlee" height={30} />
+                    <Image src="/svg/compress.svg" alt="fullscreen" className="icon-circlee" height={30} width={30} />
                     <span className="text-light fw-semibold">Compress</span>
                   </div>
                 ) : (
                   <div className="fullscreen d-flex align-items-center gap-2">
-                    <img src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle" height={30} />
+                    <Image src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle" height={30} width={30} />
                     <span className="text-light fw-semibold">Full screen</span>
                   </div>
                 )}

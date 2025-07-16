@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo} from "react";
+import { useEffect, useState, useMemo, useCallback} from "react";
 import { Decryptor} from "@/security";
 import debounce from 'lodash.debounce';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,6 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import { getUserToken } from "@/services/UserToken/authUserToken";
+import Image from "next/image";
 
 interface Schedule {
      shiftstart: string;
@@ -39,14 +40,14 @@ interface Information {
      acctname: string;
 }
 
-export default function () {
+export default function Reassignment() {
      const [employee, setEmployee] = useState<Information[]>([])
      const [timeIn, setTimeIn] = useState("");
      const [timeOut, setTimeOut] = useState("");
      const [searchQuery, setSearchQuery] = useState("");
      const [account, setAccount] = useState<Account[]>([]);
-     const [allEmployees, setAllEmployees] = useState<Information[]>([]);
-     const [filteredEmployees, setFilteredEmployees] = useState<Information[]>([]);
+     const [allEmployees, ] = useState<Information[]>([]);
+     const [, setFilteredEmployees] = useState<Information[]>([]);
      const [selectedEmployees, setSelectedEmployees] = useState<Information[]>([]);
      const [searchQueryLeft, setSearchQueryLeft] = useState("");
      const [filterText, setFilterText] = useState("");
@@ -153,7 +154,7 @@ export default function () {
            );
           setFilteredEmployees(filtered);
      };
-     const getAccount = async () => {
+     const getAccount = useCallback(async () => {
           const url = `${process.env.NEXT_PUBLIC_BACKEND}/account/list/option/${Decryptor(user_id || "")}/`;
           const response = await fetch(url, {
                method: "GET",
@@ -170,20 +171,14 @@ export default function () {
                     router.push("/");
                }
           }
-     };
+     }, [token, user_id, router]);
 
-     useEffect(() => {
+        useEffect(() => {
           getAccount();
-     }, []);
+     }, [getAccount]);
 
      const id = localStorage.getItem("user_id");
-     useEffect(() => {
-          if (filterText != "") {
-               filterbyAccount();
-          }
-     }, [filterText])
-
-     const filterbyAccount = async () => {
+        const filterbyAccount = useCallback(async () => {
           if (searchQueryLeft === "") {
                setSearchQueryLeft("");
           }
@@ -203,7 +198,13 @@ export default function () {
                     router.push("/");
                }
           }
-     }
+       }, [searchQueryLeft, filterText, id, token, router])
+
+          useEffect(() => {
+          if (filterText != "") {
+               filterbyAccount();
+          }
+     }, [filterText, filterbyAccount]);
 
      const debouncedSearch = useMemo(() => {
           return debounce(async (value: string) => {
@@ -225,7 +226,7 @@ export default function () {
                     }
                }
           }, 300);
-     }, []);
+      }, [id, token]);
 
      useEffect(() => {
           return () => {
@@ -360,7 +361,7 @@ export default function () {
                                              </div>
                                         </div>
                                         <div className="d-flex justify-content-center align-items-center flex-column line" style={{ marginTop: "30px", fontSize: "24px" }}>
-                                             <img src="/svg/lr-arrow.svg" alt="arrow" />
+                                             <Image src="/svg/lr-arrow.svg" alt="arrow"  height={16} width={16}/>
                                              <div className="vertical-line"></div>
                                         </div>
                                         <div className="d-flex flex-column  align-items-start" style={{ flex: 1 }}>
@@ -377,7 +378,7 @@ export default function () {
                                                             onChange={handleSearchEmployee}
                                                        />
                                                   </div>
-                                                  <button type="button" className="clearall" onClick={(e) => setSelectedEmployees([])} >Clear All</button>
+                                                  <button type="button" className="clearall" onClick={() => setSelectedEmployees([])} >Clear All</button>
                                              </div>
                                              <div className=" list-group w-100">
                                                   {Array.isArray(selectedEmployees) && selectedEmployees.filter(Boolean)
@@ -401,7 +402,7 @@ export default function () {
                                                                  </div>
                                                                  <button
                                                                       className="x-button btn btn-sm btn-danger"
-                                                                      onClick={(e) => {
+                                                                      onClick={() => {
                                                                            handleRemoveClick(emp.empno)
                                                                       }}
                                                                       style={{ padding: '2px 6px', fontSize: '10px', lineHeight: 1 }}

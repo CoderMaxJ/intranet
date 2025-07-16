@@ -1,13 +1,14 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Decryptor } from "@/security";
-import { useEffect, useState } from "react";
+import { FormEvent } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Dashboard from "../Dashboard/page";
 import { useRouter } from "next/navigation";
 import Header from "../../component/Header";
 import { ToastContainer, toast } from "react-toastify";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { getUserToken } from "@/services/UserToken/authUserToken";
+import Image from "next/image";
 
 interface DepartmentProps {
     acctid: number;
@@ -30,9 +31,8 @@ export default function ManageDepartment() {
     const [selectedManagerIDs, setSelectedManagerIDs] = useState<{ [key: number]: number }>({});
     const [targetID, setTargetID] = useState<number>(0);
     const [showModal, setShowModal] = useState(false);
-    const [showDropDown, setShowDropdown] = useState(false);
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-    const [add, setAdd] = useState(false);
+    const [add,] = useState(false);
     const [filter, setFilter] = useState('');
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(event.target.value);
@@ -40,7 +40,7 @@ export default function ManageDepartment() {
 
     const filteredRows = department.filter((dept) => {
         const managerNames = Array.isArray(dept.manager)
-            ? dept.manager.map((m: any) => `${m.fname} ${m.lname}`).join(" ")
+            ? dept.manager.map((m: ManagerProps) => `${m.fname} ${m.lname}`).join(" ")
             : dept.manager;
 
         const searchString = `${dept.acctid} ${dept.acctname} ${dept.status === 1 ? "Active" : "Not Active"} ${managerNames}`.toLowerCase();
@@ -49,10 +49,6 @@ export default function ManageDepartment() {
 
     const router = useRouter();
     const token = getUserToken();
-
-    useEffect(() => {
-            fetchAccountList();
-    }, []);
 
     const successToast = (msg: string) => toast.success(msg, {
         position: "top-right",
@@ -74,7 +70,7 @@ export default function ManageDepartment() {
         progress: undefined,
     });
 
-    const fetchAccountList = async () => {
+   const fetchAccountList = useCallback(async () => {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
                 method: "GET",
@@ -96,9 +92,15 @@ export default function ManageDepartment() {
         } catch (e) {
             console.error(e);
         }
-    };
+   }, [token, router]);
 
-    const handleSubmit = (e: any) => {
+  useEffect(() => {
+    if (token) {
+        fetchAccountList();
+    }
+}, [token, fetchAccountList]);
+
+const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!accountName.trim()) {
             errorToast("Account name is required.");
@@ -203,9 +205,7 @@ export default function ManageDepartment() {
             errorToast(error.warning);
         }
     }
-    const formShow = () => {
-        setShowForm(true);
-    };
+
     const formClose = () => {
         setShowForm(false);
     };
@@ -387,9 +387,9 @@ export default function ManageDepartment() {
                                                 {instance.manager && instance.manager.length > 0 ? (
                                                     <div className="manage-account-form" >
                                                         <form className="d-flex gap-2">
-                                                            {instance.manager?.map((manager: any, index: any) => (
+                                                            {instance.manager?.map((manager: ManagerProps) => (
                                                                 <div
-                                                                    key={index}
+                                                                    key={manager.empno}
                                                                     style={{ position: "relative", display: "inline-block", margin: "8px" }}
                                                                 >
                                                                     <button className="emp-plus"
@@ -440,7 +440,7 @@ export default function ManageDepartment() {
                                                                     style={{ cursor: "pointer" }}
                                                                     title={add ? "" : "Add"}
                                                                 >
-                                                                    <img src="/svg/Add.svg" alt="add" className="actions-button" />
+                                                                     <Image src="/svg/Add.svg" alt="add" className="actions-button" height={16} width={16} />
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -467,7 +467,7 @@ export default function ManageDepartment() {
                                                         onClick={() => { setTargetID(instance.acctid); }}
                                                         type="button" className="accounts-button" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                                     >
-                                                        <img src="/svg/Delete.svg" alt="delete" className="actions-button" />
+                                                     <Image src="/svg/Delete.svg" alt="delete" className="actions-button" height={16} width={16} />
                                                     </button>
                                                 </div>
                                             </td>

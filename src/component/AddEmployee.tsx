@@ -1,7 +1,7 @@
 "use client";
 import { Decryptor } from "@/security";
-import { useEffect, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { useEffect, useState, useCallback } from "react";
+import { toast } from 'react-toastify';
 
 interface Schedule {
   shiftstart: string;
@@ -65,8 +65,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   const [roles, setRoles] = useState<Position[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
-  const [selectedAccount, SetSelectedAccount] = useState("");
-  const [breaktool_user, setBreaktoolUser] = useState("");
+  const [, SetSelectedAccount] = useState("");
+  const [, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
   const [isEditable, setEditable] = useState(false);
@@ -77,18 +77,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [highlightedRoleIndex, setHighlightedRoleIndex] = useState(-1);
   const [highlightedAccountIndex, setHighlightedAccountIndex] = useState(-1);
 
-  let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
-
+  const user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
   const array_privilege = user_priviledge.split(",")
 
   useEffect(() => {
     if (array_privilege.includes("manage_users")) {
       setEditable(true);
     }
-  }, [])
-
-  useEffect(() => {
-    fetchPrivileges();
   }, [])
 
   useEffect(() => {
@@ -165,7 +160,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
 
-  const fetchPrivileges = async () => {
+  const fetchPrivileges = useCallback (async () => {
     try {
       const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/role/list/`, {
         method: "GET",
@@ -183,7 +178,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     catch (e) {
       console.error(e)
     }
-  }
+  },[token])
+
+
+  useEffect(() => {
+    fetchPrivileges();
+  }, [fetchPrivileges])
+
   const fetchRoles = async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`, {
@@ -312,6 +313,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   };
 
   const clearInputs = () => {
+    setRoleKeyword(""); 
+    setKey("");   
     setFormData({
       empno: 0,
       fname: "",
@@ -331,9 +334,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       isdayshift: 0,
       un: "",
     });
-    isClose();
-    setBreaktoolUser("");
+    setAccounts([]);
+    setRoles([]);
     SetSelectedAccount("");
+    setBreaktoolUser("");
+    setIsEditSchedule(false);
+    isClose();
     mode = "create"
   }
 

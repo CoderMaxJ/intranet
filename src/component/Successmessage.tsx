@@ -2,10 +2,9 @@
 import React, { useState } from "react";
 
 const SuccessMessage = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [, setShowModal] = useState(false);
   const [accountDeleted, setAccountDeleted] = useState(false);
-  const handleOpenModal = () => setShowModal(true);
-
+  
   const handleDeleteAccount = () => {
     setAccountDeleted(true);
     setShowModal(false);

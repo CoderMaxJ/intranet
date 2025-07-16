@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "../../app/style/drawer.css"
 
 interface RequestDetails {
@@ -46,14 +46,14 @@ interface RequestDetails {
       out?: string;
       record: string;
     };
-    [key: string]: any;
+    [key: string]: unknown;
   };
   acctid: number;
   created_at: string;
   aprroved_at: string;
   declined_at: string;
   approved_by: number;
-  acctname:string;
+  acctname: string;
 }
 
 interface ApprovedDataProps {
@@ -65,8 +65,8 @@ interface ApprovedDataProps {
 
 export default function ApprovedData({ data }: ApprovedDataProps) {
   const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
-  const [combinedData, setCombinedData] = useState({})
-  const [declineReason, setDeclineReason] = useState("");
+  const [, setCombinedData] = useState({})
+  const [declineReason,] = useState("");
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
@@ -83,11 +83,12 @@ export default function ApprovedData({ data }: ApprovedDataProps) {
         created_at: data?.created_at,
         aprroved_at: '',
         declined_at: '',
-        approved_by: Decryptor(localStorage.getItem("user_id") || ""),
+       approved_by: typeof window !== "undefined" ? Number(Decryptor(localStorage.getItem("user_id") || "")) : 0,
       });
+
     }
 
-  }, [buildData, status, declineReason]);
+  }, [buildData, status, declineReason, data]);
 
   useEffect(() => {
     if (data?.logs) {
@@ -121,8 +122,8 @@ export default function ApprovedData({ data }: ApprovedDataProps) {
       return updated;
     });
   };
-  const token = localStorage.getItem("token");
-  const approvedRequest = async (payload: any) => {
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
+  const approvedRequest = async (payload: RequestDetails) => {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
       method: "PATCH",
@@ -133,24 +134,40 @@ export default function ApprovedData({ data }: ApprovedDataProps) {
       body: JSON.stringify(payload),
     })
     if (response.status === 200) {
+      handleApply();
     }
   }
   const handleApply = () => {
     const updatedStatus = 1;
     setStatus(updatedStatus);
-    const payload = {
-      requestid: data?.requestid,
-      empno: data?.empno,
-      name: data?.name,
-      shiftdate: data?.shiftdate,
-      reason: data?.reason,
+
+    if (
+      data?.requestid === undefined ||
+      data?.empno === undefined ||
+      data?.name === undefined ||
+      data?.shiftdate === undefined ||
+      data?.reason === undefined ||
+      buildData === null ||
+      data?.acctid === undefined ||
+      data?.created_at === undefined ||
+      data?.acctname === undefined
+    ) {
+      return;
+    }
+    const payload: RequestDetails = {
+      requestid: data.requestid,
+      empno: data.empno,
+      name: data.name,
+      shiftdate: data.shiftdate,
+      reason: data.reason,
       status: updatedStatus,
       logs: buildData,
-      acctid: data?.acctid,
-      created_at: data?.created_at,
+      acctid: data.acctid,
+      created_at: data.created_at,
       aprroved_at: new Date().toISOString(),
-      declined_at: null,
-      approved_by: Decryptor(localStorage.getItem("user_id") || "")
+      declined_at: null as unknown as string,
+      approved_by: typeof window !== "undefined" ? Number(Decryptor(localStorage.getItem("user_id") || "")) : 0,
+      acctname: data.acctname
     };
     approvedRequest(payload);
   };
@@ -214,7 +231,7 @@ export default function ApprovedData({ data }: ApprovedDataProps) {
               <div>
                 <label className="drawer-label--attendance col-4 justify-content-start" style={{ transform: 'translateX(-6px)' }}>Attendance</label>
               </div>
-               <div>
+              <div>
                 <label className="drawer-label1 col-4 justify-content-start">Recorded Time</label>
               </div>
               <div>
@@ -259,7 +276,7 @@ export default function ApprovedData({ data }: ApprovedDataProps) {
                     type="time"
                     disabled={true}
                     readOnly
-                     value={buildData?.break1?.record?.in || ""}
+                    value={buildData?.break1?.record?.in || ""}
                     className="input-time-field"
                   />
                 </div>
