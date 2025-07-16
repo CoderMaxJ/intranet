@@ -90,7 +90,7 @@ const user_id = localStorage.getItem("user_id");
         }
       );
 
-      if(response.status == 401){
+      if(response.status == 401 || response.status === 404){
         alert('Session Expired!')
         localStorage.clear();
         router.push('/');
@@ -150,7 +150,7 @@ const user_id = localStorage.getItem("user_id");
       }
     }else if(response.status === 401 || response.status === 404){
       localStorage.clear();
-      router.push("/login");
+      router.push("/");
     }
   }
 
