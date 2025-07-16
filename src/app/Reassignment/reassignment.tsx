@@ -39,7 +39,7 @@ interface Information {
      acctname: string;
 }
 
-export default function () {
+export default function Reassignment() {
      const [employee, setEmployee] = useState<Information[]>([])
      const [timeIn, setTimeIn] = useState("");
      const [timeOut, setTimeOut] = useState("");

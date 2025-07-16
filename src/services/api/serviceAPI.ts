@@ -13,9 +13,6 @@ class ApiService {
       "Authorization": `Bearer ${this.token}`,
     },
   });
-
- 
-
   if (response.ok) {
     return await response.json();
   } else {

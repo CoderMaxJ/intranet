@@ -30,9 +30,7 @@ export default function ManageDepartment() {
     const [selectedManagerIDs, setSelectedManagerIDs] = useState<{ [key: number]: number }>({});
     const [targetID, setTargetID] = useState<number>(0);
     const [showModal, setShowModal] = useState(false);
-    const [showDropDown, setShowDropdown] = useState(false);
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-    const [add, setAdd] = useState(false);
     const [filter, setFilter] = useState('');
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(event.target.value);
@@ -438,7 +436,6 @@ export default function ManageDepartment() {
                                                                     type="button"
                                                                     className="accounts-edit"
                                                                     style={{ cursor: "pointer" }}
-                                                                    title={add ? "" : "Add"}
                                                                 >
                                                                     <img src="/svg/Add.svg" alt="add" className="actions-button" />
                                                                 </button>
