@@ -69,8 +69,6 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
     const [combinedData, setCombinedData] = useState({})
     const [declineReason, setDeclineReason] = useState("");
     const [status, setStatus] = useState(0);
-    const [visible, setVisible] = useState<boolean>(!!data);
-    const [declineVisible, setDeclineVisible] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -125,8 +123,6 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
                 draggable: true,
             });
             btnClose?.click();
-            setVisible(false);
-            setDeclineVisible(false);
             setDeclineReason("");
 
         } else {
@@ -180,7 +176,6 @@ export default function Pending({ data, onSave, onApproveComplete }: PendingProp
             approved_by: Decryptor(localStorage.getItem("user_id") || "")
         };
         approvedRequest(payload);
-        setVisible(false);
     };
 
     const handleChange = (section: string, field: string, value: string) => {

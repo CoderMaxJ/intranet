@@ -1,8 +1,8 @@
 "use client";
 import { Decryptor } from "@/security";
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-
+import {toast } from 'react-toastify';
+import { getUserToken } from "@/services/UserToken/authUserToken";
 interface Schedule {
   shiftstart: string;
   shiftend: string;
@@ -59,14 +59,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     un: empData.un || ""
   });
 
-  const token = localStorage.getItem("token");
+  const token = getUserToken();
   interface Position {
     position: string;
   }
   const [roles, setRoles] = useState<Position[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [selectedAccount, SetSelectedAccount] = useState("");
-  const [breaktool_user, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
   const [isEditable, setEditable] = useState(false);
@@ -171,7 +170,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`
+          Authorization: `Bearer ${token}`
         }
       })
       if (respose.status === 200) {
@@ -190,7 +189,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -209,7 +208,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (response.status === 200) {
@@ -248,7 +247,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formDataWithToken),
       });
@@ -275,7 +274,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formDataWithToken),
       });
@@ -296,7 +295,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   const formDataWithToken = {
     ...formData,
-    token: Decryptor(token || ""),
+    token: token,
     user_priviledge: Decryptor(localStorage.getItem("user_privilege") || ""),
     user_id: Decryptor(localStorage.getItem("user_id") || "")
   }
@@ -332,7 +331,6 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       un: "",
     });
     isClose();
-    setBreaktoolUser("");
     SetSelectedAccount("");
     mode = "create"
   }

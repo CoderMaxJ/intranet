@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
-
+import { getUserToken } from "@/services/UserToken/authUserToken";
 interface RequestItem {
   requestid: number;
   empno: number;
@@ -61,14 +61,13 @@ interface RejectedTableProps {
 }
 
 export default function RejectedTable({ onView }: RejectedTableProps) {
-  const [showSample, setShowSample] = useState(true);
   const [rejectedRequest, setRejectedRequest] = useState<RequestItem[]>([]);
-  const token = Decryptor(localStorage.getItem("token") || "");
   const user_id = localStorage.getItem("user_id");
   const [current_page, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
   const [total, setTotal] = useState(0);
 
+  const token = getUserToken();
   async function fetchRejectedRequest() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",

@@ -1,7 +1,7 @@
-
 "use client";
 import React, { useEffect, useState } from "react";
 import { Decryptor } from "@/security";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 
 interface RequestDetails {
@@ -74,6 +74,7 @@ export default function ApproveTable({ onView }: ApproveProps) {
   const [totalPage, setTotalPage] = useState();
   const [total, setTotal] = useState(0);
 
+  const token = getUserToken();
   async function getAccounts() {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
@@ -99,7 +100,6 @@ export default function ApproveTable({ onView }: ApproveProps) {
     fetchApprovedRequest();
   }, [])
 
-  const token = Decryptor(localStorage.getItem("token") || "")
   const user_id = localStorage.getItem("user_id");
 
   async function fetchApprovedRequest() {

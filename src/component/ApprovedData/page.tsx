@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Decryptor } from "@/security";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "../../app/style/drawer.css"
+
 
 interface RequestDetails {
   requestid: number;
@@ -65,29 +65,6 @@ interface ApprovedDataProps {
 
 export default function ApprovedData({ data }: ApprovedDataProps) {
   const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
-  const [combinedData, setCombinedData] = useState({})
-  const [declineReason, setDeclineReason] = useState("");
-  const [status, setStatus] = useState(0);
-
-  useEffect(() => {
-    if (buildData) {
-      setCombinedData({
-        requestid: data?.requestid,
-        empno: data?.empno,
-        name: data?.name,
-        shiftdate: data?.shiftdate,
-        reason: declineReason,
-        status: data?.status,
-        logs: buildData,
-        acctid: '',
-        created_at: data?.created_at,
-        aprroved_at: '',
-        declined_at: '',
-        approved_by: Decryptor(localStorage.getItem("user_id") || ""),
-      });
-    }
-
-  }, [buildData, status, declineReason]);
 
   useEffect(() => {
     if (data?.logs) {
@@ -120,39 +97,6 @@ export default function ApprovedData({ data }: ApprovedDataProps) {
 
       return updated;
     });
-  };
-  const token = localStorage.getItem("token");
-  const approvedRequest = async (payload: any) => {
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${Decryptor(token || "")}`
-      },
-      body: JSON.stringify(payload),
-    })
-    if (response.status === 200) {
-    }
-  }
-  const handleApply = () => {
-    const updatedStatus = 1;
-    setStatus(updatedStatus);
-    const payload = {
-      requestid: data?.requestid,
-      empno: data?.empno,
-      name: data?.name,
-      shiftdate: data?.shiftdate,
-      reason: data?.reason,
-      status: updatedStatus,
-      logs: buildData,
-      acctid: data?.acctid,
-      created_at: data?.created_at,
-      aprroved_at: new Date().toISOString(),
-      declined_at: null,
-      approved_by: Decryptor(localStorage.getItem("user_id") || "")
-    };
-    approvedRequest(payload);
   };
 
   return (

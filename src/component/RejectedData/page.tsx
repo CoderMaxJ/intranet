@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 import "../../app/style/drawer.css"
 
 interface RequestDetails {
@@ -67,9 +67,6 @@ interface RejectedDataProps {
 }
 
 function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
-    const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
-    const [combinedData, setCombinedData] = useState({})
-console.log("=========================",data)
     return (
         <div>
             <ToastContainer />
