@@ -94,7 +94,7 @@ const user_id = localStorage.getItem("user_id");
         alert('Session Expired!')
         localStorage.clear();
         router.push('/');
-      }else{
+      }else if (response.status === 404){
         router.push('/');
       }
 
