@@ -148,7 +148,7 @@ const user_id = localStorage.getItem("user_id");
       } else if (data?.status == "NEW UPDATE" && userPrivilege.includes("manage_users")) {
         fetchBreakData();
       }
-    }else{
+    }else if(response.status === 401 || response.status === 404){
       localStorage.clear();
       router.push("/login");
     }
