@@ -21,18 +21,6 @@ class ApiService {
   }
 }
 
-  async post(endpoint:string, data:string) {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error("Failed to post");
-    return await response.json();
-  }
-
 
  async patch(endpoint:string, empno:any) {
      const data = { empno: empno };
