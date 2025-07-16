@@ -111,7 +111,6 @@ const user_id = localStorage.getItem("user_id");
     }
   };
 
-
   useEffect(() => {
     const countdownIntervalId = setInterval(() => {
       setBreaks((prevBreaks) => {

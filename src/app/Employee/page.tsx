@@ -10,6 +10,8 @@ import debounce from 'lodash.debounce';
 import { useRouter } from "next/navigation";
 import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
+import ApiService from "@/services/api/request";
+
 
 interface Schedule {
   shiftstart: string;
@@ -70,6 +72,11 @@ export default function CreateUD() {
   const router = useRouter();
   const token = getUserToken();
   const userPrivilege = getUserPrivilege();
+
+  const api = new ApiService()
+
+  const result = api.get(`/employee/list/${8}/?page=${1}`)
+  console.log("->>>>>>>>>>>>>>>>>>>>>>>>>>",result);
 
   useEffect(() => {
     GetEmployee(currentPage);
