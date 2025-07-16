@@ -150,7 +150,7 @@ const user_id = localStorage.getItem("user_id");
       }
     }else{
       localStorage.clear();
-      router.push("/");
+      router.push("/login");
     }
   }
 
