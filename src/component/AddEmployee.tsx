@@ -364,6 +364,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const handleInputChanges2 = () => {
     setFormData(prev => ({
       ...prev,
+      acctid: 0,
       acctname: ''
     }));
     setKey('');
@@ -513,7 +514,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 onFocus={() => setIsPositionFocused(true)}
                 onBlur={() => setTimeout(() => setIsPositionFocused(false), 150)}
               />
-              {(formData.position != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
+              {(formData.position != "" ) && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
               {isPositionFocused && roles.length > 0 && (
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
@@ -582,7 +583,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 }}
                 onBlur={() => setTimeout(() => setIsAccountFocused(false), 150)}
               />
-              {(formData.acctname != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
+              {(formData.acctname != "" ) && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
               {isAccountFocused && keyword && accounts.length > 0 && (
                 <ul className="list-group position-absolute w-100 z-3"
                   style={{ maxHeight: "200px", overflowY: "auto" }}>
