@@ -54,15 +54,13 @@ interface RequestDetails {
     reason_for_disapproved: string;
     acctname: string;
 }
-
 interface RejectedDataProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
     onDeclineComplete: () => void;
 }
 
-function RejectedData({ data}: RejectedDataProps) {
-
+function RejectedData({ data }: RejectedDataProps) {
     return (
         <div>
             <ToastContainer />

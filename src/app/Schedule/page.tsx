@@ -47,9 +47,10 @@ export default function CreateUD() {
 
     const router = useRouter();
     const token = localStorage.getItem("token");
+    
     useEffect(() => {
-        EmpNoList.push(...selectedEmployees);
-    }, [EmpNoList])
+    EmpNoList.push(...selectedEmployees);
+}, [selectedEmployees]);
 
     async function GetEmployee(page: number) {
         const token = localStorage.getItem("token");

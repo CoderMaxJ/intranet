@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Decryptor } from "@/security";
 import { ToastContainer, toast } from "react-toastify";
-import "../../app/style/drawer.css"
+import "@/app/style/drawer.css";
 import { useRouter } from "next/navigation";
 
 interface RequestDetails {
@@ -61,14 +61,16 @@ interface PendingProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
     onApproveComplete?: (requestid: number) => void;
-    onDeclineComplete?:(requestid: number) => void;
+    onDeclineComplete?: (requestid: number) => void;
 }
 
-export default function Pending({ data, onApproveComplete }: PendingProps) {
+export default function Pending({ data, onApproveComplete, onDeclineComplete }: PendingProps) {
     const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
     const [combinedData, setCombinedData] = useState({})
     const [declineReason, setDeclineReason] = useState("");
     const [status, setStatus] = useState(0);
+    const [, setVisible] = useState<boolean>(!!data);
+    const [, setDeclineVisible] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -85,7 +87,8 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
                 created_at: data?.created_at,
                 aprroved_at: '',
                 declined_at: '',
-                approved_by: Decryptor(localStorage.getItem("user_id") || ""),
+                approved_by: typeof window !== "undefined" ? Decryptor(localStorage.getItem("user_id") || "") : "",
+
             });
         }
 
@@ -98,6 +101,7 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
         data?.shiftdate,
         data?.status,
         data?.created_at,]);
+
     useEffect(() => {
 
     }, [combinedData])
@@ -108,9 +112,20 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
         }
     }, [data]);
 
-    const btnClose = document.getElementById("buttonclose");
+
     const handleDecline = async () => {
-        const token = localStorage.getItem("token");
+        if (!declineReason.trim()) {
+            toast.error("Decline reason is required.", {
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+            return;
+        }
+        const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
+
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
             method: "PATCH",
@@ -128,10 +143,20 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
-            });
-            btnClose?.click();
-            setDeclineReason("");
 
+            });
+            
+            setVisible(false);
+            setDeclineVisible(false);
+            setDeclineReason("");
+            if (typeof onDeclineComplete === "function" && data?.requestid) {
+                onDeclineComplete(data.requestid);
+            }
+
+            if (typeof document !== "undefined") {
+                const btnClose = document.getElementById("buttonclose");
+                btnClose?.click();
+            }
         } else {
             toast.error("Failed to decline request.", {
                 autoClose: 2000,
@@ -143,7 +168,7 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
         }
     };
 
-    const token = localStorage.getItem("token");
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
     const approvedRequest = async (payload: Partial<RequestDetails>) => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
             method: "PATCH",
@@ -157,7 +182,10 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
             successToast("Request approved successfully.");
             if (typeof onApproveComplete === "function" && data?.requestid) {
                 onApproveComplete(data.requestid);
-                btnClose?.click();
+            }
+             if (typeof document !== "undefined") {
+                 const btnClose = document.getElementById("buttonclose");
+                 btnClose?.click();
             }
         } else {
             errorToast("Failed to approve request.");
@@ -187,8 +215,8 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
             approved_by: typeof window !== "undefined" ? Number(Decryptor(localStorage.getItem("user_id") || "0")) : 0
         };
         approvedRequest(payload);
+        setVisible(false);
     };
-
 
     const handleChange = (section: string, field: string, value: string) => {
         setBuildData(prev => {
@@ -548,6 +576,7 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
                                     id="decline-reason"
                                     className="form-control"
                                     rows={5}
+                                    required
                                     value={declineReason}
                                     onChange={(e) => setDeclineReason(e.target.value)}
                                 />

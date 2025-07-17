@@ -29,13 +29,21 @@
 
 .cancel-btn {
   max-height: 40px !important;
+  margin-left: -2px;
 }
 
 .addemployee-form {
   width: 100%;
 }
 
-/* styles.css */
+.manager-assignment {
+  background-color: #9fedba;
+  border: solid 1px #57cc99;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
 .gray-icon {
   filter: grayscale(100%) brightness(0.6);
   opacity: 0.6;
@@ -51,23 +59,19 @@
   cursor: pointer;
   background-color: transparent;
   width: 100%;
+  gap: 10px;
 }
 
 .manage-label {
   color: rgb(0, 0, 0);
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
+
 }
 
 .btn-primary {
-  font-family: 'Geist';
-  font-weight: 500 !important;
-}
+  font-family: 'Geist', sans-serif;
 
-.manage-menus {
-  padding: 10px 15px;
-  width: 100%;
-  cursor: pointer;
-  border-radius: 4px;
+  font-weight: 500 !important;
 }
 
 .manage-menus:hover {
@@ -75,12 +79,12 @@
 }
 
 .manage-img {
-  margin-left: 7px;
+  margin-left: 12px;
 }
 
 .acc-label,
 .emp-label {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   color: black;
   transition: color 0.3s ease;
 }
@@ -138,49 +142,13 @@
 }
 
 .legends span {
-  font-family: 'Geist';
-}
-
-.firstbreak {
-  padding: 10px;
-  font-family: sans-serif;
-  background-color: #ffffb7;
-  text-align: center;
-  color: hsl(0, 0%, 0%);
-  border-radius: 16px;
-}
-
-.secondbreak {
-  padding: 10px;
-  font-family: sans-serif;
-  background-color: #ffeda6;
-  color: #000000;
-  text-align: center;
-  border-radius: 16px;
-}
-
-.lunchbreak {
-  padding: 10px;
-  font-family: sans-serif;
-  background-color: #a9e4ff;
-  color: #000000;
-  border-radius: 16px;
-}
-
-
-.overbreak {
-  padding: 10px;
-  color: rgb(0, 0, 0);
-  font-family: sans-serif;
-  background-color: #ffdccc;
-  text-align: center;
-  border-radius: 16px;
+  font-family: 'Geist', sans-serif;
 }
 
 .totalbreak {
   padding: 10px;
   margin-left: 10px;
-  font-family: sans-serif;
+  font-family: 'Geist', sans-serif;
   background-color: #b3efb2;
   text-align: center;
 }
@@ -188,8 +156,52 @@
 .alarm {
   padding: 4px;
 }
+ 
+.legend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-family: 'Geist', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 14px;
+  color: #000;
+  backdrop-filter: blur(5px) saturate(150%);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: all 0.15s ease-in-out;
+  white-space: nowrap;
+}
 
+.legend-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
 
+/* Color-specific backgrounds (your palette) */
+.firstbreak {
+  background-color: #ffffb7;
+}
+
+.secondbreak {
+  background-color: #ffeda6;
+}
+
+.lunchbreak {
+  background-color: #a9e4ff;
+}
+
+.overbreak {
+  background-color: #ffdccc;
+}
+
+/* Optional: icon cleanup */
+.legend-pill img {
+  height: 14px;
+  width: 14px;
+  margin-bottom: 1px;
+}
 
 @media (min-height: 782px) {
   .legends {
@@ -232,7 +244,7 @@
 }
 
 @font-face {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   src: url('./fonts/Geist-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
@@ -272,13 +284,6 @@
   color: #f8f9fb;
 }
 
-.updatepassword-hover {
-  width: 100%;
-  cursor: pointer;
-  border-radius: 6px !important;
-  margin-top: 5px;
-}
-
 /* Default styles */
 .updatepassword-img {
   transition: filter 0.3s ease;
@@ -286,13 +291,13 @@
 }
 
 .updatep {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   color: black;
   transition: color 0.3s ease;
 }
 
 .logoutbutton {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 /* Flexible layout inside nav-fontt */
@@ -346,7 +351,7 @@ body {
   background: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .workforce {
@@ -365,15 +370,6 @@ body {
   padding: 5px;
   max-width: 300px;
   background-color: #f9f9f9;
-}
-
-.password-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 4px;
 }
 
 .toggle-password-button {
@@ -590,29 +586,25 @@ input:focus {
 
 .password-input {
   padding-right: 40px;
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  border-radius: 4px;
 }
 
 .password-icon {
   position: absolute;
   top: 8px;
-  /* Adjust as needed */
   right: 12px;
   z-index: 10;
-  /* Ensures it appears above the input */
   cursor: pointer;
   color: #555;
-}
-
-.password-input-wrapper {
-  position: relative;
+  border: 1px solid red;
 }
 
 .form-control {
-  font-family: 'Geist';
-}
-
-.password-icon {
-  border: 1px solid red;
+  font-family: 'Geist', sans-serif;
 }
 
 .form-control--password-input {
@@ -674,11 +666,6 @@ input:focus {
   color: red;
   margin-left: 15px;
   margin-bottom: 15px;
-}
-
-.success-message {
-  color: rgb(6, 168, 46);
-  text-align: center;
 }
 
 .search12 {
@@ -966,7 +953,7 @@ input:focus {
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: #f0f0f0;
   color: #000000;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   margin-bottom: 3px;
   padding-left: 34px;
   padding-top: 10px;
@@ -1060,7 +1047,7 @@ input:focus {
   padding-right: 16px;
   padding-top: 10px;
   padding-bottom: 10px;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   font-size: 14px;
   box-sizing: border-box;
 }
@@ -1109,7 +1096,7 @@ input:focus {
   margin: 0;
   font-weight: bold;
   font-size: 23px;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   margin-right: 10px;
   color: #ffffff;
 }
@@ -1202,12 +1189,12 @@ input:focus {
 
 .breaks-table td {
   font-size: 14px;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .breaks-table th {
   background-color: #0a85ed !important;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   color: #ffffff !important;
 }
 
@@ -1254,7 +1241,7 @@ input:focus {
 
 .logs-container th {
   background-color: #0a85ed !important;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   color: #ffffff !important;
 }
 
@@ -1284,12 +1271,12 @@ input:focus {
 }
 
 .logs-total label {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   font-size: 13px;
 }
 
 .logs-headername {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   font-weight: bold;
   font-size: 1.5rem;
   white-space: nowrap;
@@ -1335,7 +1322,7 @@ input:focus {
 
 .report-data td {
   white-space: nowrap;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .background-report {
@@ -1354,7 +1341,7 @@ input:focus {
   color: white;
   background-color: #0ebb39;
   transition: background-color 0.3s ease;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .daterange-button:hover {
@@ -1609,7 +1596,7 @@ tbody td {
 .form-control.form-control--search {
   border: 3px solid #dbdbdb;
   background-color: #ffffff;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .form-control--searchreport {
@@ -1644,7 +1631,7 @@ tbody td {
   position: sticky;
   top: 0;
   z-index: 1;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .monitoring-container {
@@ -1659,12 +1646,6 @@ tbody td {
 
 .custom-bordered {
   border: 1px solid #dddddd;
-}
-
-
-.emp-table thead {
-  white-space: nowrap;
-  font-family: 'Geist';
 }
 
 table {
@@ -1700,7 +1681,7 @@ table {
 }
 
 .updateschedule-label {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   font-weight: bold;
   color: #ffffff;
 }
@@ -1763,6 +1744,9 @@ table {
   background-repeat: no-repeat;
   background-size: cover;
   margin-left: 1px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .employee-header>div {
@@ -1835,7 +1819,7 @@ table {
 
 .username-label-profile {
   color: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 40px;
   letter-spacing: 1px;
   font-weight: bold;
@@ -1858,13 +1842,6 @@ table {
   position: absolute;
 }
 
-.dot-div {
-
-  top: 70%;
-  right: 0%;
-}
-
-
 .profile-circle {
   display: flex;
   justify-content: center;
@@ -1881,12 +1858,6 @@ table {
 .employee-header-container {
   padding-top: 20px;
   padding-bottom: 1px;
-}
-
-.employee-header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
 }
 
 .employee-head {
@@ -1945,7 +1916,7 @@ table {
 }
 
 .manageemployee-button span {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .manageaccount-dashboard {
@@ -2001,7 +1972,7 @@ table {
 }
 
 .effectivitydate {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .employee-information {
@@ -2009,11 +1980,11 @@ table {
 }
 
 .modal-title {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .input-group-text {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .employee-total p {
@@ -2027,12 +1998,12 @@ table {
 
 .adjustment-total {
   color: rgb(88, 87, 87);
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 
 .employee-total span {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .employee-pagination {
@@ -2053,7 +2024,7 @@ table {
 }
 
 .tabemp th {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .emp-table th {
@@ -2073,11 +2044,13 @@ table {
   padding: 15px;
   z-index: 10;
   transform: translateY(-1px);
+  white-space: nowrap;
+  font-family: 'Geist', sans-serif;
 }
 
 .manage-tbody td {
   font-size: 500;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .manageemployee-division {
@@ -2216,7 +2189,7 @@ table {
   letter-spacing: 1px;
   font-weight: bold;
   color: white;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .delete {
@@ -2309,7 +2282,7 @@ table {
 .dash {
   margin-left: 10px;
   color: gray;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .dashboard a {
@@ -2424,21 +2397,16 @@ table {
 .generate label {
   color: rgb(0, 0, 0);
   margin-left: 10px;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .manage-div {
   margin-top: 5px;
 }
 
-.manage-nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .logout-hover:hover {
   background-color: #DDEEFC;
+  color: #000000;
 }
 
 .logout-hover {
@@ -2449,10 +2417,6 @@ table {
   color: rgb(0, 0, 0);
   cursor: pointer;
   border-radius: 6px;
-}
-
-.logout-hover:hover {
-  color: #000000;
 }
 
 .logout-img {
@@ -2468,13 +2432,13 @@ table {
   background-color: #DDEEFC;
 }
 
-
 .updatepassword-hover {
   display: flex;
   align-items: center;
   padding: 10px;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 6px !important;
+  margin-top: 5px;
   height: 45px;
   box-sizing: border-box;
   width: 100%;
@@ -2482,28 +2446,23 @@ table {
 
 .dot-div {
   width: 35px;
-  /* Adjust size as you want */
   height: 35px;
   background-color: #0a85ed;
-  /* Example: blue background */
   border: 3px solid #ffffff;
-  /* Thick white border */
   border-radius: 50%;
-  /* Make it a perfect circle */
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  top: 70%;
+  right: 0%;
 }
 
-/* Optional: make it pop a little on hover */
 .dot-div:hover {
   background-color: #0846b5;
-  /* Darker blue when hovering */
   transform: scale(1.05);
 }
 
-/* Existing styles */
 .admin {
   display: flex;
   align-items: center;
@@ -2601,7 +2560,6 @@ table {
   gap: 1rem;
   align-items: center;
   background-size: cover;
-  background-position: center center;
   background-repeat: no-repeat;
   position: sticky;
   padding: 3px;
@@ -2610,8 +2568,6 @@ table {
   justify-content: space-between;
   background-image: url('/img/Breaktool.png') !important;
   background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .time div {
@@ -2673,23 +2629,11 @@ table {
   font-weight: 600;
   color: #ffffff;
   margin-bottom: 4px;
-  font-family: 'Geist';
-}
-
-.circle-indicator {
-  transform: translateX(10px) translateY(3px);
+  font-family: 'Geist', sans-serif;
 }
 
 .employee-anchor svg.active {
   color: #ffffff !important;
-}
-
-.undermanage-hover a.default-width {
-  width: 9vw !important;
-}
-
-.undermanage-hover a.condensed-width {
-  width: 2vw !important;
 }
 
 .undermanage-hover a.default-width {
@@ -2751,7 +2695,7 @@ table {
 }
 
 .manage-menus {
-  padding: 10px;
+  padding: 5px !important;
   border-radius: 2px;
   border-radius: 6px;
   color: #000000;
@@ -2896,7 +2840,7 @@ table {
 .reports-container th {
   background-color: #0a85ed !important;
   color: white !important;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .reports-container td {
@@ -2939,7 +2883,7 @@ table {
 }
 
 .download label {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .download:hover {
@@ -2981,7 +2925,7 @@ table {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .reportheader {
@@ -3229,9 +3173,6 @@ table {
   position: relative;
 }
 
-.date-with-icon {
-  position: relative;
-}
 
 .date-with-icon::before {
   content: "\1F4C5";
@@ -3245,7 +3186,7 @@ table {
 
 .date-with-icon {
   padding-left: 2rem;
-  /* Makes room for the emoji */
+  position: relative;
 }
 
 .has-calendar-icon input[type="date"]::before {
@@ -3264,8 +3205,6 @@ table {
 body.dark-mode .has-calendar-icon input[type="date"]::before {
   color: #fff;
 }
-
-.form-control--to {}
 
 .time-icon-group {
   position: relative;
@@ -3362,15 +3301,15 @@ body.dark-mode .time-icon-group::before {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 60px;
-  width: 60px;
+  height: 45px;
+  width: 45px;
   padding: 0;
   margin: auto;
-  z-index: 1;
+  z-index: 10;
   margin-right: -26px;
   border-radius: 50% !important;
   background-color: whitesmoke !important;
-  border: 10px solid #e7e7e7 !important;
+  border: 6px solid #e7e7e7 !important;
 }
 
 .modal-header {
@@ -3461,19 +3400,23 @@ body.dark-mode .time-icon-group::before {
 
 .emp-plus {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: #FAA0A0;
-  color: red;
+  top: -4px;
+  right: -7px;
+  background-color: #e21818;
+  color: rgb(240, 240, 240);
   border: none;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   font-size: 14px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.emp-plus:hover {
+  transform: scale(1.2);
 }
 
 .manage-account-form {
@@ -3503,7 +3446,7 @@ body.dark-mode .time-icon-group::before {
 .shiftadjustment-table th {
   color: #ffffff !important;
   background-color: #0a85ed !important;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .shiftadjustment-table {
@@ -3511,7 +3454,7 @@ body.dark-mode .time-icon-group::before {
 }
 
 .tbody-data {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .shiftadjustment-container {
@@ -3522,7 +3465,7 @@ body.dark-mode .time-icon-group::before {
 .form-label--shiftadjustment-header {
   border: none;
   background: none;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 #reassignment .list-group-item {
@@ -3668,7 +3611,7 @@ body.dark-mode .time-icon-group::before {
 
 .form-select {
   width: 100%;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .form-select--filter {
@@ -3677,10 +3620,6 @@ body.dark-mode .time-icon-group::before {
 
 .form-select--add {
   font-size: 13px !important;
-}
-
-.cancel-btn {
-  margin-left: -2px;
 }
 
 .assign-employees,
@@ -3706,7 +3645,7 @@ body.dark-mode .time-icon-group::before {
 .drawer-label,
 .offcanvas-header,
 .tablogs {
-  font-family: 'Geist' !important;
+  font-family: 'Geist', sans-serif !important;
 }
 
 .edit-schedule-btn {
@@ -3745,7 +3684,7 @@ body.dark-mode .time-icon-group::before {
 .shiftadjustment-table td {
   line-height: 1;
   vertical-align: middle;
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   font-size: 14px;
 }
 
@@ -3816,6 +3755,7 @@ body.dark-mode .time-icon-group::before {
 .circle-indicator {
   color: #374957;
   transition: color 0.3s ease;
+  transform: translateX(10px) translateY(3px);
 }
 
 .circle-indicator.active {
@@ -3841,10 +3781,6 @@ body.dark-mode .time-icon-group::before {
   pointer-events: all;
 }
 
-.generate {
-  transition: background-color 0.2s;
-}
-
 .generate.hover-enabled:hover {
   background-color: #e0e0e0;
   cursor: pointer;
@@ -3864,7 +3800,7 @@ body.dark-mode .time-icon-group::before {
 }
 
 .months {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
   font-size: medium;
   font-weight: 500;
 }
@@ -3882,7 +3818,6 @@ body.dark-mode .time-icon-group::before {
   background-color: #E4EFFE;
   padding: 7px;
   border-radius: 35%;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   display: block;
@@ -3894,14 +3829,13 @@ body.dark-mode .time-icon-group::before {
 
 .compress span,
 .fullscreen span {
-  font-family: 'Geist';
+  font-family: 'Geist', sans-serif;
 }
 
 .icon-circlee {
   background-color: #E4EFFE;
   padding: -7px;
   border-radius: 35%;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   display: block;

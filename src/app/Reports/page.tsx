@@ -208,7 +208,7 @@ export default function Reports() {
                 router.push("/");
             }
         }
-    }, [router, token]);
+    }, [router, token, account_id]);
 
     useEffect(() => {
         if (checker) {

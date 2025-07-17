@@ -3,6 +3,7 @@ import { Decryptor } from "@/security";
 import { useEffect, useState, useCallback } from "react";
 import { toast } from 'react-toastify';
 import { getUserToken } from "@/services/UserToken/authUserToken";
+
 interface Schedule {
   shiftstart: string;
   shiftend: string;
@@ -243,7 +244,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   });
 
   const btnClose = document.getElementById("buttonclose");
-  async function Create() {
+  async function Create() { 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
         method: "POST",
@@ -351,6 +352,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
   const handleInputChanges = () => {
+      setRoleKeyword("");
+      setRoles([]);
     setFormData(prev => ({
       ...prev,
       position: ''
@@ -368,6 +371,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
   return (
     <div>
+    
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
           <div className="modal-header">

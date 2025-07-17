@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Decryptor } from "@/security";
 import { getUserToken } from "@/services/UserToken/authUserToken";
 import Image from "next/image";
@@ -70,7 +70,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
   const [total, setTotal] = useState(0);
 
   const token = getUserToken();
-const fetchRejectedRequest = useCallback(async () => {
+  const fetchRejectedRequest = useCallback(async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",
       headers: {
@@ -78,7 +78,6 @@ const fetchRejectedRequest = useCallback(async () => {
         "Authorization": `Bearer ${token}`
       },
     })
-
     if (response.status === 200) {
       const data = await response.json();
       setTotal(data.total);
@@ -86,11 +85,15 @@ const fetchRejectedRequest = useCallback(async () => {
       setRejectedRequest(data.data);
       setCurrentPage(data.current_page);
     }
-  }, [user_id, token, current_page]);
+  },[ current_page, token, user_id ]);
 
-   useEffect(() => {
+  useEffect(() => {
     fetchRejectedRequest();
-  }, [current_page, fetchRejectedRequest])
+  }, [fetchRejectedRequest])
+
+  useEffect(() => {
+    fetchRejectedRequest();
+  }, [current_page,fetchRejectedRequest])
 
   const handleChangePage = (page: number) => {
     setCurrentPage(page);
@@ -127,7 +130,7 @@ const fetchRejectedRequest = useCallback(async () => {
                     style={{ marginRight: "20px" }}
                     onClick={() => onView(request)}
                   >
-                    <Image src="/svg/View.svg" alt="view" className="eye-view" height={16} width={16} />
+                     <Image src="/svg/View.svg" alt="view" className="eye-view" height={16} width={16} />
                   </button>
                 </td>
               </tr>

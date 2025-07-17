@@ -1,8 +1,8 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Decryptor } from "@/security";
-import Image from "next/image";
 import { getUserToken } from "@/services/UserToken/authUserToken";
+import Image from "next/image";
 
 interface RequestDetails {
   requestid: number;
@@ -53,10 +53,9 @@ interface RequestDetails {
   aprroved_at: string;
   declined_at: string;
   approved_by: number;
-  acctname: string;
-  reason_for_disapproved: string;
+  acctname:string;
+  reason_for_disapproved:string;
 }
-
 interface ApproveProps {
   onView: (item: RequestDetails) => void;
   data:RequestDetails | null;
@@ -67,23 +66,16 @@ interface Accounts {
   acctname: string;
 }
 
-export default function ApproveTable({ onView, data }: ApproveProps) {
-  console.log(data)
+export default function ApproveTable({ onView }: ApproveProps) {
+
   const [approvedRequest, setApproveRequest] = useState<RequestDetails[]>([]);
   const [accounts, setAccounts] = useState<Accounts[]>([]);
   const [current_page, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
   const [total, setTotal] = useState(0);
 
-let token = "";
-let user_id = "";
-
-if (typeof window !== "undefined") {
-  token = Decryptor(localStorage.getItem("token") || "");
-  user_id = localStorage.getItem("user_id") || "";
-}
-  const getAccounts = useCallback(async () => {
   const token = getUserToken();
+const getAccounts = useCallback(async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
         method: "GET",
@@ -101,13 +93,11 @@ if (typeof window !== "undefined") {
     } catch (error) {
       console.error("Error fetching accounts", error);
     }
-  },[token]);
+  },[ token ]);
 
-  useEffect(() => {
-    getAccounts();
-  },[getAccounts]);
+  const user_id = localStorage.getItem("user_id");
 
-  const fetchApprovedRequest = useCallback(async () =>{
+const fetchApprovedRequest = useCallback(async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approved/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",
       headers: {
@@ -116,17 +106,21 @@ if (typeof window !== "undefined") {
       }
     });
     if (response.status === 200) {
-      const responseData = await response.json();
-      const {data,num_pages,total} = responseData;
-      setApproveRequest(data);
-      setTotalPage(num_pages);
-      setTotal(total);
+      const data = await response.json();
+      setApproveRequest(data.data);
+      setTotalPage(data.num_pages);
+      setTotal(data.total);
     }
-  },[token, current_page]);
+  },[ current_page, token, user_id ]);
 
-  useEffect(() => {
-    fetchApprovedRequest();
-  }, [fetchApprovedRequest, current_page]);
+useEffect(() => {
+  getAccounts();
+  fetchApprovedRequest();
+}, [getAccounts, fetchApprovedRequest]);
+
+useEffect(() => {
+  fetchApprovedRequest();
+}, [fetchApprovedRequest]);
 
   const changePage = (page: number) => {
     setCurrentPage(page);
@@ -164,14 +158,14 @@ if (typeof window !== "undefined") {
                     style={{ marginRight: "20px" }}
                     onClick={() => onView(request)}
                   >
-                    <Image src="/svg/View.svg" alt="view" className="eye-view" height={16} width={16} />
+                   <Image src="/svg/View.svg" alt="view" className="eye-view" height={16} width={16} />
                   </button>
                 </td>
               </tr>
             ))) : (
             <tr>
               <td colSpan={6} className="text-center">
-                No approved shift adjustment requests at this time
+                No pending shift adjustment requests at this time
               </td>
             </tr>
           )}

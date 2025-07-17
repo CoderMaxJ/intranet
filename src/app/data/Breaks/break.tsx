@@ -43,9 +43,7 @@ function BreakDataTable() {
   const [filter, setFilter] = useState("");
   
   const isRenderRef = useRef(false);
-
   const token = getUserToken();
-
   const filteredRows = data?.filter(
     (rows) =>
       rows.name.toLowerCase().includes(filter.toLowerCase())
@@ -126,7 +124,6 @@ const user_id = localStorage.getItem("user_id");
     return () => clearInterval(countdownIntervalId);
   }, []);
 
-
   const status = localStorage.getItem("status");
   const account_id = Decryptor(localStorage.getItem("account_id") || "");
   const account_id_list = Decryptor(localStorage.getItem("account_id_list") || "");
@@ -163,13 +160,12 @@ const user_id = localStorage.getItem("user_id");
   }, []);
 
   const formatTime = (time: number) => {
-    const isNegative = time < 0;
     const absoluteTime = Math.abs(time);
     const hours = Math.floor(absoluteTime / 3600);
     const minutes = Math.floor((absoluteTime % 3600) / 60);
     const seconds = absoluteTime % 60;
 
-    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(
+    return `${String(hours).padStart(2, "0")}:${String(
       Math.abs(minutes)
     ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };

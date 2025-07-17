@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo, useCallback} from "react";
+import { useEffect, useState, useMemo, useCallback, useRef} from "react";
 import { Decryptor} from "@/security";
 import debounce from 'lodash.debounce';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -55,7 +55,7 @@ export default function Reassignment() {
 
      const router = useRouter();
      const token = getUserToken();
-     
+     const reassignmentCloseRef = useRef<HTMLButtonElement>(null);
      const successToast = (msg: string) => toast.success(msg, {
           position: "top-right",
           autoClose: 2000,
@@ -259,7 +259,7 @@ export default function Reassignment() {
                          <div className="modal-content">
                               <div className="modal-header text-light">
                                    <h1 className="modal-title fs-5">Update Employee Schedule Assignment</h1>
-                                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"  ref={reassignmentCloseRef}></button>
                               </div>
                               <div className="modal-body">
                                    <div>
@@ -438,6 +438,7 @@ export default function Reassignment() {
                                                        <button type="button" className="btn btn-primary" onClick={() => {
                                                             handleSetSchedule();
                                                             setShowModal(false);
+                                                            reassignmentCloseRef.current?.click();
                                                        }}>
                                                             Save changes
                                                        </button>
