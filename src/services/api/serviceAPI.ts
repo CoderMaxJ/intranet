@@ -1,10 +1,13 @@
 import { getUserToken } from "../UserToken/authUserToken";
+import { useRouter } from "next/navigation";
+
+
 class ApiService {
  
   private baseUrl = process.env.NEXT_PUBLIC_BACKEND;
   private token = getUserToken();
 
-async get<T>(endpoint: string): Promise<T> {
+ async get(endpoint: string): Promise<any> {
   const response = await fetch(`${this.baseUrl}${endpoint}`, {
     method: "GET",
     headers: {
@@ -12,14 +15,13 @@ async get<T>(endpoint: string): Promise<T> {
       "Authorization": `Bearer ${this.token}`,
     },
   });
-  
   if (response.ok) {
     return await response.json();
-  } else {
-    const errorText = await response.text();
-    throw new Error(`Fetch failed: ${response.status} - ${errorText}`);
+  }else if(response.status === 401){
+    return response.status;
   }
 }
+
 
   async post(endpoint:string, data:string) {
     const response = await fetch(`${this.baseUrl}${endpoint}`, {

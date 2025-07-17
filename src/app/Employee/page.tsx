@@ -11,6 +11,7 @@ import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
 import ApiService from "@/services/api/serviceAPI";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Schedule {
   shiftstart: string;
@@ -72,15 +73,24 @@ export default function CreateUD() {
   const token = getUserToken();
   const userPrivilege = getUserPrivilege();
   const user_id = localStorage.getItem("user_id");
+  const router = useRouter();
   const api = new ApiService()
-useEffect(()=>{
-  load(currentPage);
-},[currentPage,listener])
+  
+  useEffect(()=>{
+    load(currentPage);
+  },[currentPage,listener])
  
 
   const load = async (page:number) => {
-    const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`)
-    const {data,num_pages,current_page,total}=response;
+    const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`);
+    if(response.status === 401){
+      alert('Session Expired!');
+      localStorage.clear();
+      router.push("/");
+      
+    }
+
+    const {data,num_pages,current_page,total}=response || {};
     setEmployees(data);
     setTotalPages(num_pages);
     setCurrentPage(current_page);
