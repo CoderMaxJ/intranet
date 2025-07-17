@@ -1,7 +1,7 @@
 "use client";
 import Dashboard from "../Dashboard/page";
 import Reassignment from "../Reassignment/reassignment";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import Header from "../../component/Header";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
@@ -42,17 +42,10 @@ export default function CreateUD() {
     const [totalPages, setTotalPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [listener, setListener] = useState(false);
-    const [selectedEmployees, ] = useState<number[]>([]);
-    const EmpNoList: number[] = [];
-
     const router = useRouter();
     const token = localStorage.getItem("token");
     
-    useEffect(() => {
-    EmpNoList.push(...selectedEmployees);
-}, [selectedEmployees]);
-
-    async function GetEmployee(page: number) {
+        const GetEmployee = useCallback(async (page: number) => {
         const token = localStorage.getItem("token");
         const user_id = localStorage.getItem("user_id");
         const response = await fetch(
@@ -76,14 +69,14 @@ export default function CreateUD() {
             setTotalPages(data.num_pages);
             setTotal(data.total);
         }
-    }
+    },[router ]);
 
       useEffect(() => {
         GetEmployee(currentPage);
         setTimeout(() => {
             setListener(false);
         }, 2000);
-    }, [listener]);
+    }, [listener, GetEmployee, currentPage]);
     
     const id = localStorage.getItem("user_id");
     const debouncedSearch = useMemo(() => {
@@ -108,7 +101,7 @@ export default function CreateUD() {
                 }
             }
         }, 300);
-    }, [currentPage, id, token]);
+    }, [currentPage, id, token, GetEmployee ]);
 
     useEffect(() => {
         return () => {

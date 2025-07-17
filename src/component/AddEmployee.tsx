@@ -85,7 +85,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     if (array_privilege.includes("manage_users")) {
       setEditable(true);
     }
-  }, [])
+  }, [array_privilege])
 
   useEffect(() => {
     if (empData) {
