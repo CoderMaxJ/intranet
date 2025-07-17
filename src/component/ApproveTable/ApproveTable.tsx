@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Decryptor } from "@/security";
 import Image from "next/image";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 interface RequestDetails {
   requestid: number;
@@ -82,6 +83,7 @@ if (typeof window !== "undefined") {
   user_id = localStorage.getItem("user_id") || "";
 }
   const getAccounts = useCallback(async () => {
+  const token = getUserToken();
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
         method: "GET",
@@ -120,7 +122,7 @@ if (typeof window !== "undefined") {
       setTotalPage(num_pages);
       setTotal(total);
     }
-  },[user_id, token, current_page]);
+  },[token, current_page]);
 
   useEffect(() => {
     fetchApprovedRequest();

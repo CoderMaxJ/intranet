@@ -12,7 +12,7 @@ async get<T>(endpoint: string): Promise<T> {
       "Authorization": `Bearer ${this.token}`,
     },
   });
-
+  
   if (response.ok) {
     return await response.json();
   } else {

@@ -2,7 +2,7 @@
 import { Decryptor } from "@/security";
 import { useEffect, useState, useCallback } from "react";
 import { toast } from 'react-toastify';
-
+import { getUserToken } from "@/services/UserToken/authUserToken";
 interface Schedule {
   shiftstart: string;
   shiftend: string;
@@ -59,7 +59,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     un: empData.un || ""
   });
 
-  const token = localStorage.getItem("token");
+  const token = getUserToken();
   interface Position {
     position: string;
   }
@@ -166,7 +166,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`
+          Authorization: `Bearer ${token}`
         }
       })
       if (respose.status === 200) {
@@ -191,7 +191,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -210,7 +210,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (response.status === 200) {
@@ -249,7 +249,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formDataWithToken),
       });
@@ -276,7 +276,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${Decryptor(token || "")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formDataWithToken),
       });
@@ -297,7 +297,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   const formDataWithToken = {
     ...formData,
-    token: Decryptor(token || ""),
+    token: token,
     user_priviledge: Decryptor(localStorage.getItem("user_privilege") || ""),
     user_id: Decryptor(localStorage.getItem("user_id") || "")
   }
@@ -514,7 +514,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
                     <li
-                      key={index}
+                      key={p.position}
                       className={`list-group-item list-group-item-action ${highlightedRoleIndex === index ? "active" : ""}`}
                       style={{ cursor: "pointer" }}
                       onClick={() => {
@@ -617,8 +617,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 onChange={handleInputChange}
               >
                 <option value="">Select privilege</option>
-                {privileges.map((role, index) => (
-                  <option key={index} value={role.id}>
+                {privileges.map((role) => (
+                  <option key={role.id} value={role.id}>
                     {role.name}
                   </option>
                 ))}

@@ -1,9 +1,10 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Decryptor } from "@/security";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 import Image from "next/image";
 
-interface RequestDetails {
+interface RequestItem {
   requestid: number;
   empno: number;
   name: string;
@@ -56,100 +57,64 @@ interface RequestDetails {
   reason_for_disapproved: string;
 }
 
-interface ApproveProps {
-  onView: (item: RequestDetails) => void;
-  data:RequestDetails | null;
+interface RejectedTableProps {
+  data: RequestItem | null;
+  onView: (item: RequestItem) => void;
 }
 
-interface Accounts {
-  acctid: number;
-  acctname: string;
-}
-
-export default function ApproveTable({ onView, data }: ApproveProps) {
-  console.log(data)
-  const [approvedRequest, setApproveRequest] = useState<RequestDetails[]>([]);
-  const [accounts, setAccounts] = useState<Accounts[]>([]);
+export default function RejectedTable({ onView }: RejectedTableProps) {
+  const [rejectedRequest, setRejectedRequest] = useState<RequestItem[]>([]);
+  const user_id = localStorage.getItem("user_id");
   const [current_page, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState();
+  const [totalPages, setTotalPages] = useState();
   const [total, setTotal] = useState(0);
 
-let token = "";
-let user_id = "";
-
-if (typeof window !== "undefined") {
-  token = Decryptor(localStorage.getItem("token") || "");
-  user_id = localStorage.getItem("user_id") || "";
-}
-  const getAccounts = useCallback(async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/account/list/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const result = await response.json();
-        setAccounts(result.data || []);
-      } else {
-        console.error("Failed to fetch accounts");
-      }
-    } catch (error) {
-      console.error("Error fetching accounts", error);
-    }
-  },[token]);
-
-  useEffect(() => {
-    getAccounts();
-  },[getAccounts]);
-
-  const fetchApprovedRequest = useCallback(async () =>{
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approved/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
+  const token = getUserToken();
+const fetchRejectedRequest = useCallback(async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/rejected/requests/list/${Decryptor(user_id || "")}/?page=${current_page}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${token}`
-      }
-    });
+      },
+    })
+
     if (response.status === 200) {
-      const responseData = await response.json();
-      const {data,num_pages,total} = responseData;
-      setApproveRequest(data);
-      setTotalPage(num_pages);
-      setTotal(total);
+      const data = await response.json();
+      setTotal(data.total);
+      setTotalPages(data.num_pages);
+      setRejectedRequest(data.data);
+      setCurrentPage(data.current_page);
     }
-  },[user_id, token, current_page]);
+  }, [user_id, token, current_page]);
 
-  useEffect(() => {
-    fetchApprovedRequest();
-  }, [fetchApprovedRequest, current_page]);
+   useEffect(() => {
+    fetchRejectedRequest();
+  }, [current_page, fetchRejectedRequest])
 
-  const changePage = (page: number) => {
+  const handleChangePage = (page: number) => {
     setCurrentPage(page);
   }
-
   return (
     <div>
-      <table className="table table-striped table-hover table-bordered">
+      <table className="table table-striped table-hover table-bordered table-responsive rejected-table-data">
         <thead>
           <tr>
             <th>Name</th>
             <th>Reason</th>
             <th>Department</th>
             <th>Date Filed</th>
-            <th>Approved By</th>
+            <th>Rejected By</th>
             <th className="actions-th">Status</th>
           </tr>
         </thead>
         <tbody>
-          {approvedRequest?.length > 0 ? (
-            approvedRequest.map((request: RequestDetails) => (
+          {rejectedRequest.length > 0 ? (
+            rejectedRequest?.map((request: RequestItem) => (
               <tr key={request.requestid}>
                 <td>{request.name}</td>
-                <td>{request.reason?.slice(0, 10) + "..." || "-"}</td>
-                <td>{accounts.find((acc) => acc.acctid === request.acctid)?.acctname || ""}</td>
+                <td>{request.reason_for_disapproved?.slice(0, 10) + "..." || "-"}</td>
+                <td>{request.acctname || "Unassigned"}</td>
                 <td>{request.created_at}</td>
                 <td>{request.approved_by}</td>
                 <td>
@@ -157,8 +122,8 @@ if (typeof window !== "undefined") {
                     className="btn-outline-primary"
                     type="button"
                     data-bs-toggle="offcanvas"
-                    data-bs-target="#approveddrawer"
-                    aria-controls="approveddrawer"
+                    data-bs-target="#rejecteddrawer"
+                    aria-controls="shiftdrawer"
                     style={{ marginRight: "20px" }}
                     onClick={() => onView(request)}
                   >
@@ -166,10 +131,11 @@ if (typeof window !== "undefined") {
                   </button>
                 </td>
               </tr>
-            ))) : (
+            ))
+          ) : (
             <tr>
               <td colSpan={6} className="text-center">
-                No approved shift adjustment requests at this time
+                No declined shift adjustment requests at this time
               </td>
             </tr>
           )}
@@ -177,18 +143,18 @@ if (typeof window !== "undefined") {
       </table>
       <div className="d-flex justify-content-end align-items-center gap-3">
         <div className="adjustment-total">
-          <p><i className="bi bi-people-fill"></i><span> Total:  {total}</span></p>
+          <p><i className="bi bi-people-fill"></i><span> Total: {total} </span></p>
         </div>
         <div>
           <nav aria-label="Page navigation example">
             <ul className="pagination">
-              <li className={`page-item ${current_page === 1 ? "disabled" : ""}`} > <button className="page-link" onClick={() => changePage(current_page - 1)}>
+              <li className={`page-item ${current_page === 1 ? "disabled" : ""}`} > <button className="page-link" onClick={() => handleChangePage(current_page - 1)}>
                 <i className="bi bi-caret-left"></i>
               </button></li>
               <li className="page-item"><span className="page-link" style={{ whiteSpace: 'nowrap' }}>
-                {current_page} of {totalPage}
+                {current_page} of {totalPages}
               </span></li>
-              <li className={`page-item ${current_page === totalPage ? "disabled" : ""}`}><button className="page-link" onClick={() => changePage(current_page + 1)}>
+              <li className={`page-item ${current_page === totalPages ? "disabled" : ""}`}><button className="page-link" onClick={() => handleChangePage(current_page + 1)}>
                 <i className="bi bi-caret-right"></i>
               </button></li>
             </ul>

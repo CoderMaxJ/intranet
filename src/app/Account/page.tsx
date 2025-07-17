@@ -32,7 +32,7 @@ export default function ManageDepartment() {
     const [targetID, setTargetID] = useState<number>(0);
     const [showModal, setShowModal] = useState(false);
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-    const [add,] = useState(false);
+    // const [add,] = useState(false);
     const [filter, setFilter] = useState('');
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(event.target.value);
@@ -438,7 +438,6 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
                                                                     type="button"
                                                                     className="accounts-edit"
                                                                     style={{ cursor: "pointer" }}
-                                                                    title={add ? "" : "Add"}
                                                                 >
                                                                      <Image src="/svg/Add.svg" alt="add" className="actions-button" height={16} width={16} />
                                                                 </button>

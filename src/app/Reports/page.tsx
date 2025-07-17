@@ -1,12 +1,12 @@
 "use client";
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Decryptor } from "@/security";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
 import Dashboard from "../Dashboard/page";
 import Header from "../../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
 import { getUserToken } from "@/services/UserToken/authUserToken";
 
 interface BreaksReport {
@@ -26,7 +26,7 @@ interface BreaksReport {
     logoff: string;
 }
 
-export default function Daterange() {
+export default function Reports() {
     const today = new Date();
     const nextMonth = new Date();
     nextMonth.setMonth(today.getMonth());
@@ -34,13 +34,17 @@ export default function Daterange() {
     const [data, setData] = useState<BreaksReport[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [error, setError] = useState("");
+    const [, setSuccess] = useState(true);
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
     const [checker, setChecker] = useState(true);
-
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     };
+
+    const router = useRouter();
+    const token = getUserToken();
+    const account_id = localStorage.getItem("user_id") || "";
 
     const errorToast = (msg: string) => toast.error(msg, {
         position: "top-right",
@@ -52,104 +56,99 @@ export default function Daterange() {
         progress: undefined,
     });
 
-    const router = useRouter();
-    const token = getUserToken();
-    useEffect(() => {
-        if (checker) {
-            fetchData();
-        }
-    }, [data])
+    const getCredentials = () => {
+        if (typeof window === "undefined") return { account_id: "", token: "" };
+        return {
+            account_id: localStorage.getItem("user_id") || "",
+            token : token || "",
+        };
+    };
+    const fetchReportData = async (account_id: string) => {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id)}/${start}/${end}/`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        
+        if (!response.ok) 
+            throw new Error("Failed to fetch data");
+        return await response.json();
+    };
+
+    const filterReportData = (data: BreaksReport[], searchTerm: string) =>
+        data.filter((report) =>
+            report.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            report.login.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+    const convertToCSV = (data: BreaksReport[]) => {
+        const headers = [
+            "Name", "Shift Date", "Login", "First Break", "Breakout", "Over Break",
+            "Lunch In", "Lunch Out", "Over Break", "Second Break", "Breakout",
+            "Over Break", "Personal Break", "Log Out",
+        ];
+
+        const rows = data.map((row) =>
+            [
+                row.name, row.shiftdate, row.login || "", row.brkin1 || "", row.brkout1 || "",
+                row.ob1 || "", row.lunchin || "", row.lunchout || "", row.ob3 || "",
+                row.brkin2 || "", row.brkout2 || "", row.ob2 || "", row.personalbreak, row.logoff || "",
+            ].map((value) => `${value}`).join(",")
+        );
+
+        return [headers.join(","), ...rows].join("\n");
+    };
+
+    const downloadCSV = (csvContent: string, fileName: string) => {
+        const blob = new Blob([csvContent], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
 
     const handleGenerateAndDownloadCSV = async () => {
         try {
             setError("");
-            Decryptor(localStorage.getItem("user_id") || "")
-            let result;
-            if (start === "" && end === "") {
-                result = { data: data };
-            } else {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${token}/${start}/${end}/`,
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-                 if(response.status == 401){
-                    localStorage.clear();
-                    router.push('/');
-                }
-                result = await response.json();
+            const { account_id } = getCredentials();
+            let result = { data };
+
+            if (start !== "" || end !== "") {
+                result = await fetchReportData(account_id);
             }
+
             if (!result.data.length) {
                 errorToast("No data available for the selected date range!");
                 return;
             }
-            const filteredData = result.data.filter((report: BreaksReport) =>
-                report.name.toLowerCase().includes(searchTerm) || report.login.toLowerCase().includes(searchTerm)
-            );
 
+            const filteredData = filterReportData(result.data, searchTerm);
             setData(filteredData);
-            const csvContent = [
-                [
-                    "Name",
-                    "Shift Date",
-                    "Login",
-                    "First Break",
-                    "Breakout",
-                    "Over Break",
-                    "Lunch In",
-                    "Lunch Out",
-                    "Over Break",
-                    "Second Break",
-                    "Breakout",
-                    "Over Break",
-                    "Personal Break",
-                    "Log Out",
-                ],
-                ...filteredData.map((row: BreaksReport) =>
-                    [
-                        row.name,
-                        row.shiftdate,
-                        row.login || "",
-                        row.brkin1 || "",
-                        row.brkout1 || "",
-                        row.ob1 || "",
-                        row.lunchin || "",
-                        row.lunchout || "",
-                        row.ob3 || "",
-                        row.brkin2 || "",
-                        row.brkout2 || "",
-                        row.ob2 || "",
-                        row.personalbreak,
-                        row.logoff || "",
-                    ]
-                        .map((value) => `${value}`)
-                        .join(",")
-                ),
-            ].join("\n");
-            const blob = new Blob([csvContent], { type: "text/csv" });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `report_${start || "all"}_${end || "all"}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            setSuccess(true);
+
+            const csv = convertToCSV(filteredData);
+            const fileName = `report_${start || "all"}_${end || "all"}.csv`;
+            downloadCSV(csv, fileName);
+
             setOriginalData(result.data);
             setData(result.data);
         } catch {
             errorToast("Unable to download reports!");
         }
     };
-    const handleView = async (e: FormEvent<HTMLFormElement>) => {
+
+    const handleView = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            setError("");
-            const account_id = localStorage.getItem("user_id");
+            setError("");    
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_BACKEND}/download/report/${Decryptor(account_id || "")}/${start}/${end}/`,
                 {
@@ -160,11 +159,11 @@ export default function Daterange() {
                     },
                 }
             );
-
-            if(response.status == 401){
-                localStorage.clear();
-                router.push('/');
+            if (!response.ok) {
+                
+                throw new Error("Failed to fetch data");
             }
+
             const result = await response.json();
             if (start != "" || end != "") {
                 setData(result.data);
@@ -175,12 +174,9 @@ export default function Daterange() {
             errorToast("No logs available for the selected date range!");
         }
     };
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             setError("");
-            const account_id = localStorage.getItem("user_id");
-
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_BACKEND}/monitoring/report/${Decryptor(account_id || "")}/`,
                 {
@@ -191,10 +187,8 @@ export default function Daterange() {
                     },
                 }
             );
-             if(response.status == 401){
-                alert('Session Expired!')
-                localStorage.clear();
-                router.push('/');
+            if (!response.ok) {
+                throw new Error("Failed to fetch data");
             }
             const result = await response.json();
             if (!result.data.length) {
@@ -214,11 +208,17 @@ export default function Daterange() {
                 router.push("/");
             }
         }
-    };
+    }, [router, token]);
+
+    useEffect(() => {
+        if (checker) {
+            fetchData();
+        }
+    }, [checker, fetchData])
 
     return (
         <div style={{ backgroundColor: '#e7e7e7' }}>
-            <ToastContainer/>
+            <ToastContainer />
             <div className="d-flex" >
                 <Dashboard />
                 {error && <div className="alert alert-danger">{error}</div>}
@@ -249,7 +249,6 @@ export default function Daterange() {
                                                     placeholder="Search..."
                                                     value={searchTerm}
                                                     onChange={handleSearch}
-
                                                 />
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -344,8 +343,8 @@ export default function Daterange() {
                                                 );
                                             })
                                             .sort((a, b) => a.name.localeCompare(b.name))
-                                            .map((report, index) => (
-                                                <tr key={index} className="report-data">
+                                            .map((report) => (
+                                                <tr key={`${report.login}-${report.shiftdate}`} className="report-data">
                                                     <td>{report.name}</td>
                                                     <td>{report.shiftdate}</td>
                                                     <td>{report.login}</td>

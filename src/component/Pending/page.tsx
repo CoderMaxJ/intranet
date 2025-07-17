@@ -69,8 +69,6 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
     const [combinedData, setCombinedData] = useState({})
     const [declineReason, setDeclineReason] = useState("");
     const [status, setStatus] = useState(0);
-    const [, setVisible] = useState<boolean>(!!data);
-    const [, setDeclineVisible] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -132,8 +130,6 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
                 draggable: true,
             });
             btnClose?.click();
-            setVisible(false);
-            setDeclineVisible(false);
             setDeclineReason("");
 
         } else {
@@ -191,7 +187,6 @@ export default function Pending({ data, onApproveComplete }: PendingProps) {
             approved_by: typeof window !== "undefined" ? Number(Decryptor(localStorage.getItem("user_id") || "0")) : 0
         };
         approvedRequest(payload);
-        setVisible(false);
     };
 
 
