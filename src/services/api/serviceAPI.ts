@@ -1,9 +1,11 @@
 import { getUserToken } from "../UserToken/authUserToken";
+import { useRouter } from "next/navigation";
+
+
 class ApiService {
  
   private baseUrl = process.env.NEXT_PUBLIC_BACKEND;
   private token = getUserToken();
-
 
  async get(endpoint: string): Promise<any> {
   const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -15,14 +17,25 @@ class ApiService {
   });
   if (response.ok) {
     return await response.json();
-  } else {
-    const errorText = await response.text();
-    throw new Error(`Fetch failed: ${response.status} - ${errorText}`);
+  }else if(response.status === 401){
+    return response.status;
   }
 }
 
 
- async patch(endpoint:string, empno:any) {
+  async post(endpoint:string, data:string) {
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error("Failed to post");
+    return await response.json();
+  }
+
+async patch(endpoint: string, empno: string | number) {
      const data = { empno: empno };
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       method: "PATCH",

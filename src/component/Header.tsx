@@ -1,5 +1,6 @@
 "use client";
-import "../app/style/updateps.css";
+import "@/app/style/updateps.css";
+import Image from "next/image";
 
 interface HeaderProps {
   title: string;
@@ -9,41 +10,42 @@ interface HeaderProps {
 
 export default function Header({ title, currentPage }: HeaderProps) {
 
-  return (
-    <div className="header-container ">
-      <div className="header-text-container text-white py-3 d-flex justify-content-between px-4 flex-wrap gap-2">
-        <div>
-          <h1 className=" text-start fw-bold mb-0">{title}</h1>
-        </div>
-        {currentPage === "workforce monitoring" && (
-          <div className="legends align-items-center gap-2">
-            <div>
-              <span className="firstbreak">
-                <img src="/svg/coffee.svg" alt="firstbreak" className="me-1 mb-1" height={14} />
-                1st Break
-              </span>
-            </div>
-            <div>
-              <span className="secondbreak">
-                <img src="/svg/secondbreak.svg" alt="secondbreak"  className="me-1 mb-1" height={14} />
-                2nd Break
-              </span>
-            </div>
-            <div>
-              <span className="lunchbreak">
-                <img src="/svg/plate-eating.svg" alt="lunch" className="me-1 mb-1" height={14} />
-                Lunch
-              </span>
-            </div>
-            <div>
-              <span className="overbreak">
-                <img src="/svg/pending.svg" alt="overbreak" className="me-1 mb-1" height={14} />
-                Over Break
-              </span>
-            </div>
-          </div>
-        )}
+ return (
+  <div className="header-container">
+    <div className="header-text-container text-white py-3 d-flex justify-content-between px-4 flex-wrap gap-2">
+      <div>
+        <h1 className="text-start fw-bold mb-0">{title}</h1>
       </div>
+
+      {currentPage === "workforce monitoring" && (
+        <div className="legends d-flex align-items-center gap-2 flex-wrap">
+          <div>
+            <span className="legend-pill firstbreak">
+              <Image src="/svg/coffee.svg" alt="1st break" height={16} width={16} className="me-1 mb-1" />
+              1st Break
+            </span>
+          </div>
+          <div>
+            <span className="legend-pill secondbreak">
+              <Image src="/svg/secondbreak.svg" alt="2nd break" height={16} width={16} className="me-1 mb-1" />
+              2nd Break
+            </span>
+          </div>
+          <div>
+            <span className="legend-pill lunchbreak">
+              <Image src="/svg/plate-eating.svg" alt="lunch" height={16} width={16} className="me-1 mb-1" />
+              Lunch
+            </span>
+          </div>
+          <div>
+            <span className="legend-pill overbreak">
+              <Image src="/svg/pending.svg" alt="over break" height={16} width={16} className="me-1 mb-1" />
+              Over Break
+            </span>
+          </div>
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
 }

@@ -1,6 +1,6 @@
 "use client";
 import BreakDataTable from "../data/Breaks/break";
-import Dashboard from "../Dashboard/page";
+import Dashboard from "../../component/Dashboard/page";
 import Header from "../../component/Header";
 
 import { useState } from "react";

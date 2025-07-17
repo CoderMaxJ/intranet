@@ -1,24 +1,31 @@
 "use client";
-import { useState } from "react";
-import "../../app/style/updateps.css";
+import { useState, useEffect} from "react";
 import { Decryptor } from "@/security";
-import { getUserToken } from "@/services/UserToken/authUserToken";
+import Image from "next/image";
+import "@/app/style/updateps.css";
 
-export default function Updatepassword() {
+export default function Password() {
   const [currentpassword, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
-  const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
-  const [showPassword3, setShowPassword3] = useState(false);
+  const [newPassword, setNewPassword] = useState(false);
+  const [confirmPass, setConfirmPass] = useState(false);
+  const [currentPass, setCurrentPass] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(false);
+  const [, setIsSamePassword] = useState(false);
   const [focus, setFocus] = useState(false);
+  const [empno, setEmpno] = useState<string | null>(null);
+
 
   const passwordsMatch = password === confirmPassword && confirmPassword !== "";
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    setEmpno(localStorage.getItem("user_id"));
+  }
+}, []);
 
-  const empno = localStorage.getItem("user_id");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password != confirmPassword) {
@@ -31,8 +38,15 @@ export default function Updatepassword() {
         newpassword: password,
         password2: confirmPassword,
       };
+      if (currentpassword === password) {
+        setIsSamePassword(true);
+        setMessage("The new password must be different from the current one.");
+        return;
+      } else {
+        setIsSamePassword(false);
+      }
 
-      const token = getUserToken();
+      const token = localStorage.getItem("token");
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND}/change/password/`,
@@ -40,7 +54,7 @@ export default function Updatepassword() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${Decryptor(token || "")}`,
             },
             body: JSON.stringify(newAccount),
           }
@@ -55,7 +69,7 @@ export default function Updatepassword() {
           setTimeout(() => {
             setMessage("");
             document.getElementById("btn-close")?.click();
-          }, 2000);
+          }, 1000);
         } else {
           const res = await response.json();
           setMessage(res.res);
@@ -130,13 +144,13 @@ export default function Updatepassword() {
                       </label>
                       <input
                         className="form-control updatepassword-input"
-                        type={showPassword3 ? 'text' : 'password'}
+                        type={currentPass ? 'text' : 'password'}
                         value={currentpassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
                         required
                         style={{ width: '100%', paddingRight: '40px' }}
                       />
-                      <span onClick={() => setShowPassword3(!showPassword3)} className="newpass-eyetogglee" style={{
+                      <span onClick={() => setCurrentPass(!currentPass)} className="newpass-eyetogglee" style={{
                         position: 'absolute',
                         right: '10px',
                         top: '65%',
@@ -145,9 +159,9 @@ export default function Updatepassword() {
                         zIndex: 2,
                         color: '#555'
                       }}>
-                        {showPassword3 ? (<img src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
-                          height={16} />) : (<img src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
-                            height={16} />)}
+                        {currentPass ? (<Image src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
+                          height={16} width={16}/>) : (<Image src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
+                            height={16} width={16}/>)}
                       </span>
                     </div>
                     <div className="password-field mt-3">
@@ -162,7 +176,7 @@ export default function Updatepassword() {
                       <div className="password-input-wrapper">
                         <input
                           id="password"
-                          type={showPassword1 ? 'text' : 'password'}
+                          type={newPassword ? 'text' : 'password'}
                           className="form-control form-control--password-input"
                           value={password}
                           onFocus={() => setFocus(true)}
@@ -170,7 +184,7 @@ export default function Updatepassword() {
                           onChange={(e) => setPassword(e.target.value)}
                           required
                         />
-                        <span onClick={() => setShowPassword1(!showPassword1)} className="newpass-eyetoggleee" style={{
+                        <span onClick={() => setNewPassword (!newPassword)} className="newpass-eyetoggleee" style={{
                           position: 'absolute',
                           right: '10px',
                           top: '50%',
@@ -179,9 +193,9 @@ export default function Updatepassword() {
                           zIndex: 2,
                           color: '#555'
                         }}>
-                          {showPassword1 ? (<img src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
-                            height={16} />) : (<img src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
-                              height={16} />)}
+                          {newPassword ? (<Image src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
+                            height={16} width={16}/>) : (<Image src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
+                              height={16} width={16}/>)}
                         </span>
                       </div>
                       {focus && (
@@ -199,7 +213,7 @@ export default function Updatepassword() {
                         <input
                           className="form-control updatepassword-input"
                           onFocus={() => setFocus(false)}
-                          type={showPassword2 ? 'text' : 'password'}
+                          type={confirmPass ? 'text' : 'password'}
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           required
@@ -209,7 +223,7 @@ export default function Updatepassword() {
                             border: passwordsMatch ? '1px solid green' : '1px solid #ccc',
                           }}
                         />
-                        <span onClick={() => setShowPassword2(!showPassword2)} className="newpass-eyetoggle" style={{
+                        <span onClick={() => setConfirmPass(!confirmPass)} className="newpass-eyetoggle" style={{
                           position: 'absolute',
                           right: '10px',
                           top: '65%',
@@ -218,9 +232,9 @@ export default function Updatepassword() {
                           zIndex: 2,
                           color: '#555'
                         }}>
-                          {showPassword2 ? (<img src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
-                            height={16} />) : (<img src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
-                              height={16} />)}
+                          {confirmPass ? (<Image src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
+                            height={16} width={16}/>) : (<Image src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
+                              height={16} width={16}/>)}
                         </span>
                       </div>
                     </div>

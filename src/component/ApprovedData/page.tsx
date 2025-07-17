@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "../../app/style/drawer.css"
 
-
 interface RequestDetails {
   requestid: number;
   empno: number;
@@ -46,14 +45,14 @@ interface RequestDetails {
       out?: string;
       record: string;
     };
-    [key: string]: any;
+    [key: string]: unknown;
   };
   acctid: number;
   created_at: string;
   aprroved_at: string;
   declined_at: string;
   approved_by: number;
-  acctname:string;
+  acctname: string;
 }
 
 interface ApprovedDataProps {
@@ -62,6 +61,7 @@ interface ApprovedDataProps {
   onDecline?: (updatedData: RequestDetails) => void;
   refreshData?: () => void;
 }
+
 
 export default function ApprovedData({ data }: ApprovedDataProps) {
   const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);

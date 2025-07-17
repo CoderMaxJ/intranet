@@ -1,5 +1,5 @@
 "use client";
-import Dashboard from "../Dashboard/page";
+import Dashboard from "../../component/Dashboard/page";
 import AddEmp from "../../component/AddEmployee";
 import { useEffect, useState, useMemo } from "react";
 import Header from "../../component/Header";
@@ -10,7 +10,8 @@ import debounce from 'lodash.debounce';
 import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
 import ApiService from "@/services/api/serviceAPI";
-
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Schedule {
   shiftstart: string;
@@ -72,15 +73,24 @@ export default function CreateUD() {
   const token = getUserToken();
   const userPrivilege = getUserPrivilege();
   const user_id = localStorage.getItem("user_id");
+  const router = useRouter();
   const api = new ApiService()
-useEffect(()=>{
-  load(currentPage);
-},[currentPage,listener])
+  
+  useEffect(()=>{
+    load(currentPage);
+  },[currentPage,listener])
  
 
   const load = async (page:number) => {
-    const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`)
-    const {data,num_pages,current_page,total}=response;
+    const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`);
+    if(response.status === 401){
+      alert('Session Expired!');
+      localStorage.clear();
+      router.push("/");
+      
+    }
+
+    const {data,num_pages,current_page,total}=response || {};
     setEmployees(data);
     setTotalPages(num_pages);
     setCurrentPage(current_page);
@@ -126,10 +136,10 @@ useEffect(()=>{
     };
   }, [debouncedSearch]);
 
-  const handleData = (data: any) => {
+  const handleData = (data: Information) => {
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status, schedule, acctname, un, } = data;
-    let currentData = {
+    const { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status, schedule, acctname, un, } = data;
+    const currentData = {
       empno,
       fname,
       mname,
@@ -296,7 +306,7 @@ useEffect(()=>{
                 </thead>
                 <tbody className="manage-tbody table-data">
                   {employees?.length ? (
-                    employees.map((info, index) => (
+                    employees.map((info) => (
                       <tr key={info.empno}>
                         <td className="empno-data-column">{info.empno}</td>
                         <td>{info.un}</td>
@@ -317,7 +327,7 @@ useEffect(()=>{
                                 style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
                                 onClick={() => handleResetPassword(info.empno)}
                               >
-                                <img src="/svg/reset.svg" className="actions-button" height={16} width={16} />
+                                <Image src="/svg/reset.svg" className="actions-button" alt="reset" height={16} width={16} />
                               </button>
                             )}
                             {(userPrivilege.includes("manage_users") || userPrivilege.includes("view_multiple_accounts") || userPrivilege.includes("update_breaktool_account")) && (
@@ -329,7 +339,7 @@ useEffect(()=>{
                                 onClick={() => handleData(info)}
                                 style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
                               >
-                                <img src="/svg/pencil.svg" className="actions-button" height={16} width={16} />
+                                <Image src="/svg/pencil.svg" className="actions-button" alt="pencil" height={16} width={16} />
                               </button>
                             )}
                           </div>
