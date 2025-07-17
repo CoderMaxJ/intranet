@@ -2,9 +2,10 @@
 import { Encryptor } from "@/security";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "../../component/LoadSpinner/spinner";
+import Image from "next/image";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import LoadingSpinner from "../../component/LoadSpinner/spinner";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -13,6 +14,8 @@ export default function Login() {
     const [isLogged, setLog] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [isloading, setLoading] = useState(false);
+    const [errorTimeoutId, setErrorTimeoutId] = useState<NodeJS.Timeout | null>(null);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -32,40 +35,39 @@ export default function Login() {
                 },
                 body: JSON.stringify(credentials),
             });
+            const res = await response.json();
             if (response.status === 200) {
-                const data = await response.json();
-
-                const  {token,user_id,user_privilege,user_name,name,position,account_id,account_id_list} = data;
-                localStorage.setItem("token", Encryptor(token));
-                localStorage.setItem("user_id", Encryptor(user_id.toString()));
-                localStorage.setItem("user_privilege", Encryptor(user_privilege.toString()));
-                localStorage.setItem("user_name", Encryptor(user_name.toString()));
-                localStorage.setItem("name", name);
-                localStorage.setItem("position", position);
-                localStorage.setItem("account_id", Encryptor(account_id.toString()));
-                localStorage.setItem("status", "login"),
-                    localStorage.setItem("account_id_list", Encryptor(account_id_list.toString()));
-                localStorage.setItem("active_tab", "1");
+                if (typeof window !== "undefined") {
+                    localStorage.setItem("token", Encryptor(res.token));
+                    localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
+                    localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
+                    localStorage.setItem("user_name", Encryptor(res.user_name.toString()));
+                    localStorage.setItem("name", res.name);
+                    localStorage.setItem("position", res.position);
+                    localStorage.setItem("account_id", Encryptor(res.account_id.toString()));
+                    localStorage.setItem("status", "login");
+                    localStorage.setItem("account_id_list", Encryptor(res.account_id_list.toString()));
+                    localStorage.setItem("active_tab", "1");
+                }
                 setLog(true);
-            } else if (response.status === 401) {
-                const message = await response.json();
-                setError(message.warning);
-                setTimeout(() => {
+            } else if (response.status === 401 || response.status === 403) {
+                if (errorTimeoutId) {
+                    clearTimeout(errorTimeoutId);
+                }
+                setError(res.warning);
+                const timeout = setTimeout(() => {
                     setError("");
+                    setErrorTimeoutId(null);
                 }, 2000);
-                setLoading(false);
-            } else if(response.status === 403) {
-                const message = await response.json();
-                setError(message.warning);
-                setTimeout(() => {
-                    setError("");
-                }, 2000);
+
+                setErrorTimeoutId(timeout);
                 setLoading(false);
             }
+
         } catch {
         }
     }
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         login();
@@ -73,13 +75,15 @@ export default function Login() {
 
     return (
         <div className="main-div">
-            {isloading != true ? (
+            {!isloading ? (
                 <div className="login-div">
                     <div>
-                        <img
+                        <Image
                             className="login-logo"
                             src="/img/soslogo.webp"
                             alt="Staff Outsourcing Logo"
+                            height={16}
+                            width={200}
                         />
                     </div>
                     <form className="username" onSubmit={handleSubmit}>
@@ -107,10 +111,10 @@ export default function Login() {
                                     required
                                 />
                                 <span onClick={() => setShowPassword(!showPassword)} className="eyetoggle">
-                                    {showPassword ? (<img src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
-                                        height={16} />
-                                    ) : (<img src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
-                                        height={16} />
+                                    {showPassword ? (<Image src="/svg/eye.svg" alt="eye-crossed" className="gray-icon"
+                                        height={16} width={16} />
+                                    ) : (<Image src="/svg/eye-crossed.svg" alt="eye-crossed" className="gray-icon"
+                                        height={16} width={16} />
                                     )}
                                 </span>
                             </div>
@@ -122,12 +126,13 @@ export default function Login() {
                         </div>
                     </form>
                     <div className="ecomialogo-footer d-flex flex-column align-items-center">
-
                         <label className="poweredby-label" htmlFor="poweredby"><span className="view">powered by</span></label>
-                        <img
+                        <Image
                             className="ecomialogo"
                             src="/img/poweredbyecomia.webp"
                             alt="Staff Outsourcing Logo"
+                            height={25}
+                            width={100}
                         />
                     </div>
                 </div>

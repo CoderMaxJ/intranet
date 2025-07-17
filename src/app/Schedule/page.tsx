@@ -1,12 +1,13 @@
 "use client";
 import Dashboard from "../Dashboard/page";
 import Reassignment from "../Reassignment/reassignment";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import Header from "../../component/Header";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Schedule {
     shiftstart: string;
@@ -41,23 +42,10 @@ export default function CreateUD() {
     const [totalPages, setTotalPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [listener, setListener] = useState(false);
-    const [selectedEmployees, setSelectedEmployees] = useState<number[]>([]);
-    const EmpNoList: any = [];
-
     const router = useRouter();
     const token = localStorage.getItem("token");
-    useEffect(() => {
-        EmpNoList.push(...selectedEmployees);
-    }, [EmpNoList])
-
-    useEffect(() => {
-        GetEmployee(currentPage);
-        setTimeout(() => {
-            setListener(false);
-        }, 2000);
-    }, [listener]);
-
-    async function GetEmployee(page: number) {
+    
+        const GetEmployee = useCallback(async (page: number) => {
         const token = localStorage.getItem("token");
         const user_id = localStorage.getItem("user_id");
         const response = await fetch(
@@ -81,7 +69,15 @@ export default function CreateUD() {
             setTotalPages(data.num_pages);
             setTotal(data.total);
         }
-    }
+    },[router ]);
+
+      useEffect(() => {
+        GetEmployee(currentPage);
+        setTimeout(() => {
+            setListener(false);
+        }, 2000);
+    }, [listener, GetEmployee, currentPage]);
+    
     const id = localStorage.getItem("user_id");
     const debouncedSearch = useMemo(() => {
         return debounce(async (value: string) => {
@@ -105,7 +101,7 @@ export default function CreateUD() {
                 }
             }
         }, 300);
-    }, [currentPage, id, token]);
+    }, [currentPage, id, token, GetEmployee ]);
 
     useEffect(() => {
         return () => {
@@ -165,17 +161,18 @@ export default function CreateUD() {
                                                     data-bs-target="#reassignment"
                                                 >
                                                     <div>
-                                                        <img
+                                                        <Image
                                                             src="/svg/update.svg"
                                                             alt="update"
                                                             style={{
-                                                                width: '15px',
-                                                                height: '15px',
                                                                 marginRight: '5px',
                                                                 filter: 'brightness(100) contrast(2.5)',
                                                                 display: 'inline-block',
                                                             }}
+                                                            height={16}
+                                                            width={16}
                                                         />
+
                                                     </div>
                                                     <div><span className="updateschedule-label">Update Schedule</span></div>
                                                 </button>

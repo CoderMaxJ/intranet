@@ -6,7 +6,7 @@ import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
 import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
-import ApiService from "@/services/api/serviceAPI";
+import Image from "next/image";
 
 interface BreakData {
   name: string;
@@ -43,9 +43,7 @@ function BreakDataTable() {
   const [filter, setFilter] = useState("");
   
   const isRenderRef = useRef(false);
-
   const token = getUserToken();
-
   const filteredRows = data?.filter(
     (rows) =>
       rows.name.toLowerCase().includes(filter.toLowerCase())
@@ -108,7 +106,7 @@ const user_id = localStorage.getItem("user_id");
       setBreaks(updatedBreaks);
       breaksRef.current = updatedBreaks;
     } catch (error) {
-      // console.error("Failed to fetch break data:", error);
+      console.error("Failed to fetch break data:", error);
     }
   };
 
@@ -125,7 +123,6 @@ const user_id = localStorage.getItem("user_id");
     }, 1000);
     return () => clearInterval(countdownIntervalId);
   }, []);
-
 
   const status = localStorage.getItem("status");
   const account_id = Decryptor(localStorage.getItem("account_id") || "");
@@ -163,13 +160,12 @@ const user_id = localStorage.getItem("user_id");
   }, []);
 
   const formatTime = (time: number) => {
-    const isNegative = time < 0;
     const absoluteTime = Math.abs(time);
     const hours = Math.floor(absoluteTime / 3600);
     const minutes = Math.floor((absoluteTime % 3600) / 60);
     const seconds = absoluteTime % 60;
 
-    return `${isNegative ? "" : ""}${String(hours).padStart(2, "0")}:${String(
+    return `${String(hours).padStart(2, "0")}:${String(
       Math.abs(minutes)
     ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
@@ -227,12 +223,12 @@ const user_id = localStorage.getItem("user_id");
               >
                 {fullscreen ? (
                   <div className="compress d-flex align-items-center gap-2">
-                    <img src="/svg/compress.svg" alt="fullscreen" className="icon-circlee" height={30} />
+                    <Image src="/svg/compress.svg" alt="fullscreen" className="icon-circlee" height={30} width={30} />
                     <span className="text-light fw-semibold">Compress</span>
                   </div>
                 ) : (
                   <div className="fullscreen d-flex align-items-center gap-2">
-                    <img src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle" height={30} />
+                    <Image src="/svg/fullscreen.svg" alt="fullscreen" className="icon-circle" height={30} width={30} />
                     <span className="text-light fw-semibold">Full screen</span>
                   </div>
                 )}

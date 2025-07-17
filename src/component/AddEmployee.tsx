@@ -1,8 +1,9 @@
 "use client";
 import { Decryptor } from "@/security";
-import { useEffect, useState } from "react";
-import {toast } from 'react-toastify';
+import { useEffect, useState, useCallback } from "react";
+import { toast } from 'react-toastify';
 import { getUserToken } from "@/services/UserToken/authUserToken";
+
 interface Schedule {
   shiftstart: string;
   shiftend: string;
@@ -65,7 +66,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   }
   const [roles, setRoles] = useState<Position[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
-  const [selectedAccount, SetSelectedAccount] = useState("");
+  const [, SetSelectedAccount] = useState("");
+  const [, setBreaktoolUser] = useState("");
   const [privileges, setPrivileges] = useState<PrivilegesType[]>([]);
   const [isEditSchedule, setIsEditSchedule] = useState(false);
   const [isEditable, setEditable] = useState(false);
@@ -76,19 +78,14 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [highlightedRoleIndex, setHighlightedRoleIndex] = useState(-1);
   const [highlightedAccountIndex, setHighlightedAccountIndex] = useState(-1);
 
-  let user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
-
+  const user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
   const array_privilege = user_priviledge.split(",")
 
   useEffect(() => {
     if (array_privilege.includes("manage_users")) {
       setEditable(true);
     }
-  }, [])
-
-  useEffect(() => {
-    fetchPrivileges();
-  }, [])
+  }, [array_privilege])
 
   useEffect(() => {
     if (empData) {
@@ -164,7 +161,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
 
-  const fetchPrivileges = async () => {
+  const fetchPrivileges = useCallback (async () => {
     try {
       const respose = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/role/list/`, {
         method: "GET",
@@ -182,7 +179,13 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     catch (e) {
       console.error(e)
     }
-  }
+  },[token])
+
+
+  useEffect(() => {
+    fetchPrivileges();
+  }, [fetchPrivileges])
+
   const fetchRoles = async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/search/roles/?key=${role_keyword}`, {
@@ -241,7 +244,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   });
 
   const btnClose = document.getElementById("buttonclose");
-  async function Create() {
+  async function Create() { 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
         method: "POST",
@@ -311,6 +314,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   };
 
   const clearInputs = () => {
+    setRoleKeyword(""); 
+    setKey("");   
     setFormData({
       empno: 0,
       fname: "",
@@ -330,8 +335,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       isdayshift: 0,
       un: "",
     });
-    isClose();
+    setAccounts([]);
+    setRoles([]);
     SetSelectedAccount("");
+    setBreaktoolUser("");
+    setIsEditSchedule(false);
+    isClose();
     mode = "create"
   }
 
@@ -343,6 +352,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }
   const handleInputChanges = () => {
+      setRoleKeyword("");
+      setRoles([]);
     setFormData(prev => ({
       ...prev,
       position: ''
@@ -353,6 +364,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const handleInputChanges2 = () => {
     setFormData(prev => ({
       ...prev,
+      acctid: 0,
       acctname: ''
     }));
     setKey('');
@@ -360,6 +372,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
   return (
     <div>
+    
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
           <div className="modal-header">
@@ -501,12 +514,12 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 onFocus={() => setIsPositionFocused(true)}
                 onBlur={() => setTimeout(() => setIsPositionFocused(false), 150)}
               />
-              {(formData.position != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
+              {(formData.position != "" ) && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
               {isPositionFocused && roles.length > 0 && (
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
                     <li
-                      key={index}
+                      key={p.position}
                       className={`list-group-item list-group-item-action ${highlightedRoleIndex === index ? "active" : ""}`}
                       style={{ cursor: "pointer" }}
                       onClick={() => {
@@ -570,7 +583,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 }}
                 onBlur={() => setTimeout(() => setIsAccountFocused(false), 150)}
               />
-              {(formData.acctname != "" && mode === 'edit') && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
+              {(formData.acctname != "" ) && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
               {isAccountFocused && keyword && accounts.length > 0 && (
                 <ul className="list-group position-absolute w-100 z-3"
                   style={{ maxHeight: "200px", overflowY: "auto" }}>
@@ -609,8 +622,8 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 onChange={handleInputChange}
               >
                 <option value="">Select privilege</option>
-                {privileges.map((role, index) => (
-                  <option key={index} value={role.id}>
+                {privileges.map((role) => (
+                  <option key={role.id} value={role.id}>
                     {role.name}
                   </option>
                 ))}

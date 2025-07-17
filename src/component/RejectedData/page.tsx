@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "../../app/style/drawer.css"
 
@@ -45,7 +44,7 @@ interface RequestDetails {
             out?: string;
             record: string;
         };
-        [key: string]: any;
+        [key: string]: unknown;
     };
     acctid: number;
     created_at: string;
@@ -55,18 +54,13 @@ interface RequestDetails {
     reason_for_disapproved: string;
     acctname: string;
 }
-
-interface Account {
-    acctid: number;
-    acctname: string;
-}
 interface RejectedDataProps {
     data?: RequestDetails | null;
     onSave?: (updatedData: RequestDetails["logs"]) => void;
     onDeclineComplete: () => void;
 }
 
-function RejectedData({ data, onSave, onDeclineComplete }: RejectedDataProps) {
+function RejectedData({ data }: RejectedDataProps) {
     return (
         <div>
             <ToastContainer />

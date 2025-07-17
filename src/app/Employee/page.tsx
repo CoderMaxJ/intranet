@@ -10,7 +10,7 @@ import debounce from 'lodash.debounce';
 import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
 import ApiService from "@/services/api/serviceAPI";
-
+import Image from "next/image";
 
 interface Schedule {
   shiftstart: string;
@@ -126,10 +126,10 @@ useEffect(()=>{
     };
   }, [debouncedSearch]);
 
-  const handleData = (data: any) => {
+  const handleData = (data: Information) => {
     setCurrentMode("edit");
-    let { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status, schedule, acctname, un, } = data;
-    let currentData = {
+    const { empno, fname, mname, lname, dateofbirth, contactno, address, position, gender, maritalstatus, acctid, role_id, isdayshift, status, schedule, acctname, un, } = data;
+    const currentData = {
       empno,
       fname,
       mname,
@@ -296,7 +296,7 @@ useEffect(()=>{
                 </thead>
                 <tbody className="manage-tbody table-data">
                   {employees?.length ? (
-                    employees.map((info, index) => (
+                    employees.map((info) => (
                       <tr key={info.empno}>
                         <td className="empno-data-column">{info.empno}</td>
                         <td>{info.un}</td>
@@ -317,7 +317,7 @@ useEffect(()=>{
                                 style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}
                                 onClick={() => handleResetPassword(info.empno)}
                               >
-                                <img src="/svg/reset.svg" className="actions-button" height={16} width={16} />
+                                <Image src="/svg/reset.svg" className="actions-button" alt="reset" height={16} width={16} />
                               </button>
                             )}
                             {(userPrivilege.includes("manage_users") || userPrivilege.includes("view_multiple_accounts") || userPrivilege.includes("update_breaktool_account")) && (
@@ -329,7 +329,7 @@ useEffect(()=>{
                                 onClick={() => handleData(info)}
                                 style={{ cursor: "pointer", border: "none", backgroundColor: "transparent" }}
                               >
-                                <img src="/svg/pencil.svg" className="actions-button" height={16} width={16} />
+                                <Image src="/svg/pencil.svg" className="actions-button" alt="pencil" height={16} width={16} />
                               </button>
                             )}
                           </div>
