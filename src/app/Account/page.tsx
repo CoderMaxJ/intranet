@@ -2,7 +2,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FormEvent } from "react";
 import { useEffect, useState, useCallback } from "react";
-import Dashboard from "../Dashboard/page";
+import Dashboard from "../../component/Dashboard/page";
 import { useRouter } from "next/navigation";
 import Header from "../../component/Header";
 import { ToastContainer, toast } from "react-toastify";
