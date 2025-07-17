@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
-import Dashboard from "../Dashboard/page";
+import Dashboard from "../../component/Dashboard/page";
 import Header from "../../component/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -343,8 +343,8 @@ export default function Reports() {
                                                 );
                                             })
                                             .sort((a, b) => a.name.localeCompare(b.name))
-                                            .map((report) => (
-                                                <tr key={`${report.login}-${report.shiftdate}`} className="report-data">
+                                            .map((report, index) => (
+                                                <tr key={index} className="report-data">
                                                     <td>{report.name}</td>
                                                     <td>{report.shiftdate}</td>
                                                     <td>{report.login}</td>

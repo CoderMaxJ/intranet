@@ -1,13 +1,12 @@
 "use client";
-import Logout from "../Logout/logout";
-import Updatepassword from "../Updatepassword/updatepassword";
-import {  useEffect, useState } from "react";
-import { IdentifyUser } from "../user_identifier";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Logout from "../Logout/logout";
+import Password from "../Updatepassword/updatepassword";
+import Image from "next/image";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { getUserToken } from "@/services/UserToken/authUserToken";
-import Image from "next/image";
+import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
 
 declare global {
     interface Window {
@@ -16,13 +15,13 @@ declare global {
 }
 
 export default function Dashboard() {
-    const router = useRouter();
-    const [user_privilege] = useState([""]);
     const [accordionIconn, setAccordionIconn] = useState(false);
-    const [open,] = useState(false);
+    const [profile,] = useState(null)
+    const [open, setOpen] = useState(false);
     const [navWidth, setNavWidth] = useState(false);
     const [showDashboard, setShowDashboard] = useState(true);
     const [showReports, setShowReports] = useState(true);
+    const [, setShowManage] = useState(true);
     const [showUpdatepassword, setShowUpdatepassword] = useState(true);
     const [showLogout, setShowLogout] = useState(true);
     const [showImage, setShowImage] = useState(true);
@@ -31,17 +30,20 @@ export default function Dashboard() {
     const [showProfile, setShowProfile] = useState(true);
     const [showAccounts, setShowAccounts] = useState(true);
     const [showEmployee, setShowEmployee] = useState(true);
+    const [, setShowProfileLabel] = useState(true);
     const [showPoweredby, setShowPoweredby] = useState(true);
     const [showEcomia, setShowEcomia] = useState(true);
     const [activeMenu, setActiveMenu] = useState("");
     const [activeNav, setActiveNav] = useState("");
     const [shiftAdjustment, setShiftAdjustment] = useState(true);
 
-    const token = getUserToken();
+    const router = useRouter();
+    const user_privilege = getUserPrivilege();
+
     useEffect(() => {
-        const storedTab = localStorage.getItem("active_tab") || "1";
-        setActiveNav(storedTab);
-        setShowEmployee(true);
+            const storedTab = localStorage.getItem("active_tab") || "1";
+            setActiveNav(storedTab);
+            setShowEmployee(true);
     }, []);
 
     useEffect(() => {
@@ -65,103 +67,48 @@ export default function Dashboard() {
         }
     };
 
-    useEffect(() => {
-        if (!token) {
-            router.push("/");
-        } 
-    },[router, token]);
+    const openClose = () => {
+        setOpen(prev => !prev);
+    };
+
+    const applySidebarState = (isMinimized: boolean) => {
+        const visible = !isMinimized;
+        setNavWidth(visible);
+        setShowDashboard(visible);
+        setShowUpdatepassword(visible);
+        setShowImage(visible);
+        setShowReports(visible);
+        setShowManage(visible);
+        setShowLogout(visible);
+        setShowIcon(visible);
+        setArrowIcon(visible);
+        setShowProfile(visible);
+        setShowAccounts(visible);
+        setShowEmployee(visible);
+        setShowProfileLabel?.(visible);
+        setShowEcomia(visible);
+        setShowPoweredby(visible);
+        setShiftAdjustment(visible);
+        localStorage.setItem("sidebarMinimized", isMinimized.toString());
+
+        const menu = document.getElementById("dashboard-menu");
+        if (visible) menu?.classList.add("is-minimize");
+        else menu?.classList.remove("is-minimize");
+    };
 
     useEffect(() => {
-        const user_hash_privilege = localStorage.getItem("user_privilege");
-        if (user_hash_privilege) {
-            const array_privilege = IdentifyUser(user_hash_privilege);
-            array_privilege.forEach((data) => {
-                user_privilege.push(data);
-            })
-        }
-    }, [user_privilege])
-
-    useEffect(() => {
-        const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
-        if (!isMinimized) {
-            setNavWidth(true);
-            setShowDashboard(true);
-            setShowUpdatepassword(true);
-            setShowImage(true);
-            setShowReports(true);
-            setShowLogout(true);
-            setShowIcon(true);
-            setArrowIcon(true);
-            setShowProfile(true);
-            setShowAccounts(true);
-            setShowEmployee(true);
-            setShowEcomia(true);
-            setShowPoweredby(true);
-            setShiftAdjustment(true);
-            localStorage.setItem("sidebarMinimized", "false");
-            document.getElementById("dashboard-menu")?.classList.add("is-minimize");
-        } else {
-            setNavWidth(false);
-            setShowDashboard(false);
-            setShowUpdatepassword(false);
-            setShowImage(false);
-            setShowReports(false);
-            setShowLogout(false);
-            setShowIcon(false);
-            setArrowIcon(false);
-            setShowProfile(false);
-            setShowAccounts(false);
-            setShowEmployee(false);
-            setShowEcomia(false);
-            setShowPoweredby(false);
-            setShiftAdjustment(false);
-            localStorage.setItem("sidebarMinimized", "true");
-            document.getElementById("dashboard-menu")?.classList.remove("is-minimize");
-        }
+            const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
+            applySidebarState(isMinimized);
     }, []);
 
     const toggleMinimizeMaximize = () => {
         const isMinimized = localStorage.getItem("sidebarMinimized") === "true";
-        if (isMinimized) {
-            setNavWidth(true);
-            setShowDashboard(true);
-            setShowUpdatepassword(true);
-            setShowImage(true);
-            setShowReports(true);
-            setShowLogout(true);
-            setShowIcon(true);
-            setArrowIcon(true);
-            setShowProfile(true);
-            setShowAccounts(true);
-            setShowEmployee(true);
-            setShowEcomia(true);
-            setShowPoweredby(true);
-            setShiftAdjustment(true);
-            localStorage.setItem("sidebarMinimized", "false");
-            document.getElementById("dashboard-menu")?.classList.add("is-minimize");
-        } else {
-            setNavWidth(false);
-            setShowDashboard(false);
-            setShowUpdatepassword(false);
-            setShowImage(false);
-            setShowReports(false);
-            setShowLogout(false);
-            setShowIcon(false);
-            setArrowIcon(false);
-            setShowProfile(false);
-            setShowAccounts(false);
-            setShowEmployee(false);
-            setShowEcomia(false);
-            setShowPoweredby(false);
-            setShiftAdjustment(false);
-            localStorage.setItem("sidebarMinimized", "true");
-            document.getElementById("dashboard-menu")?.classList.remove("is-minimize");
-        }
+        applySidebarState(!isMinimized);
     };
 
     return (
-        <>
-            <Updatepassword />
+        <div>
+            <Password />
             <Logout />
             <div
                 className="db"
@@ -180,9 +127,9 @@ export default function Dashboard() {
                         onClick={() => navigateTo("/WorkforceMonitoring", "1")}
                         style={{ backgroundColor: activeNav === "1" ? "#0a85ed" : "" }}
                     >
-                        <button id="dashboard"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tooltip on right" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
+                        <button id="dashboard" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tooltip on right" className={`nav-font ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
                         >
-                           <Image
+                            <Image
                                 src="/svg/dashboard.svg"
                                 alt="dashboard"
                                 className="dashboard-img mb-1"
@@ -207,7 +154,7 @@ export default function Dashboard() {
                         </button>
                     </div>
                     {(user_privilege.includes("manage_users") || user_privilege.includes("view_multiple_accounts") || user_privilege.includes("update_breaktool_account")) && (
-                        <>
+                        <div>
                             <div
                                 className={`generate ${activeNav === "2" ? "active-tab" : "hover-enabled"}`}
                                 onClick={() => navigateTo("/Reports", "2")}
@@ -217,7 +164,7 @@ export default function Dashboard() {
                             >
 
                                 <a className="nav-font" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
-                                     <Image
+                                    <Image
                                         src="/svg/reports.svg"
                                         alt="reports"
                                         className="reports-img mb-1"
@@ -228,7 +175,8 @@ export default function Dashboard() {
                                         }}
                                     />
                                     {showReports && (
-                                        <label htmlFor="label" className="reps" style={{ color: localStorage.getItem("active_tab") === "2" ? "#ffffff" : "" }}>
+                                        <label htmlFor="label" className="reps" style={{ color: activeNav === "2" ? "#ffffff" : "" }}
+                                        >
                                             Reports
                                         </label>
                                     )}
@@ -237,9 +185,9 @@ export default function Dashboard() {
                             <div>
                                 <div className={`generate ${activeNav === "3" ? "active-tab" : "hover-unable"}`}
                                     onClick={() => navigateTo("/Schedule", "3")}
-                                    style={{ backgroundColor: localStorage.getItem("active_tab") === "3" ? "#0a85ed" : "" }}>
+                                    style={{ backgroundColor: activeNav === "3" ? "#0a85ed" : "" }}>
 
-                                    <a className="nav-font " style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
+                                    <a className="nav-font" style={{ color: localStorage.getItem("active_tab") === "3" ? "#ffffff" : "" }}>
                                         <Image src="/svg/schedule.svg" alt="schedule" className="schedule-img mb-1" height={17} width={17} style={{
                                             filter: activeNav === "3" ? "brightness(0) invert(1)" : ""
                                         }} />
@@ -267,7 +215,7 @@ export default function Dashboard() {
                                         }}
                                         style={{ cursor: "pointer" }}>
                                         <div className="manage-nav">
-                                             <Image src="/svg/manage.svg" alt="manage" className="manage-img mb-1" height={18} width={18} />
+                                            <Image src="/svg/manage.svg" alt="manage" className="manage-img mb-1" height={18} width={18} />
                                             <span className="manage-label" style={{
                                                 opacity: navWidth ? 1 : 0,
                                                 width: navWidth ? 'auto' : 0,
@@ -310,8 +258,8 @@ export default function Dashboard() {
                                                         className="nav-font"
                                                         onClick={() => navigateTo("/Account", "4")}
                                                         style={{
-                                                            backgroundColor: localStorage.getItem("active_tab") === "4" ? "#0a85ed" : "",
-                                                            color: localStorage.getItem("active_tab") === "4" ? "white" : "",
+                                                            backgroundColor: activeNav === "4" ? "#0a85ed" : "",
+                                                            color: activeNav === "4" ? "#ffffff" : "",
                                                         }}
                                                     >
                                                         <svg
@@ -334,7 +282,7 @@ export default function Dashboard() {
                                                             <label
                                                                 className="acc-label"
                                                                 htmlFor="label"
-                                                                style={{ color: localStorage.getItem("active_tab") === "4" ? "white" : "" }}
+                                                                style={{ color: activeNav === "4" ? "#ffffff" : "" }}
                                                             >
                                                                 Accounts
                                                             </label>
@@ -348,8 +296,8 @@ export default function Dashboard() {
                                                         className="nav-font"
                                                         onClick={() => navigateTo("/Employee", "5")}
                                                         style={{
-                                                            backgroundColor: localStorage.getItem("active_tab") === "5" ? "#0a85ed" : "",
-                                                            color: localStorage.getItem("active_tab") === "5" ? "white" : "",
+                                                            backgroundColor: activeNav === "5" ? "#0a85ed" : "",
+                                                            color: activeNav === "5" ? "#ffffff" : "",
                                                         }}
                                                     >
                                                         <svg
@@ -384,8 +332,8 @@ export default function Dashboard() {
                                                         className="nav-font"
                                                         onClick={() => navigateTo("/ShiftAdjustment", "6")}
                                                         style={{
-                                                            backgroundColor: localStorage.getItem("active_tab") === "6" ? "#0a85ed" : "",
-                                                            color: localStorage.getItem("active_tab") === "6" ? "white" : "",
+                                                            backgroundColor: activeNav === "6" ? "#0a85ed" : "",
+                                                            color: activeNav === "6" ? "#ffffff" : "",
                                                         }}
                                                     >
                                                         <svg
@@ -420,7 +368,7 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                        </>
+                        </div>
                     )}
                     <div>
                         <div className="manage-menu accordion-item">
@@ -448,7 +396,7 @@ export default function Dashboard() {
                                     >
                                         <div id="dashboard" className={`nav-fontt ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`} data-bs-toggle="modal" data-bs-target="#updatePasswordModal"
                                         >
-                                          <Image src="/svg/updatepassword.svg" alt="updatepassword" className="updatepassword-img mb-1" height={17} width={17} />
+                                            <Image src="/svg/updatepassword.svg" alt="updatepassword" className="updatepassword-img mb-1" height={17} width={17} />
                                             {showUpdatepassword === true && (
                                                 <span className="updatep">Update password</span>
                                             )}
@@ -464,7 +412,7 @@ export default function Dashboard() {
                                         id="dashboard"
                                         className={`nav-fonttt d-flex ${navWidth ? 'hide-icon-name' : 'show-icon-name'}`}
                                     >
-                                          <Image src="/svg/logout.svg" alt="logout" className="logout-img mb-1" height={17} width={17} />
+                                        <Image src="/svg/logout.svg" alt="logout" className="logout-img mb-1" height={17} width={17} />
                                         {showLogout === true && (
                                             <span className="logoutbutton">Log Out</span>
                                         )}
@@ -488,8 +436,8 @@ export default function Dashboard() {
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="25"
-                                    height="25"
+                                    width="20"
+                                    height="20"
                                     fill="white"
                                     className="arrow-img bi bi-chevron-left"
                                     viewBox="0 0 16 16"
@@ -505,7 +453,9 @@ export default function Dashboard() {
                             {open === false && showProfile === true && (
                                 <div className="profile-div position-relative">
                                     <div className="profile-circle">
-                                        <p className="username-label-profile">{localStorage.getItem("name")?.charAt(0)}</p>
+                                        {profile ? (
+                                            <Image onClick={openClose} className="profile-picture" src={profile} alt="profile" height={70} width={70} />
+                                        ) : (<p className="username-label-profile">{typeof window !== "undefined" ? localStorage.getItem("name")?.charAt(0) : ""}</p>)}
                                     </div>
                                 </div>
                             )}
@@ -514,9 +464,9 @@ export default function Dashboard() {
                 </div>
                 <div className="ecomia-footer">
                     <div>{showEcomia === true && (<label htmlFor="poweredby" className="db-poweredby">powered by</label>)}</div>
-                  <div>{showPoweredby === true && (<Image src="/img/eComialogo.png" alt="ecomia logo" className="ecomia-db-logo" height={25} width={72} />)}</div>
+                    <div>{showPoweredby === true && (<Image src="/img/eComialogo.png" alt="ecomia logo" className="ecomia-db-logo" height={25} width={72} />)}</div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

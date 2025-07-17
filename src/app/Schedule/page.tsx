@@ -1,6 +1,6 @@
 "use client";
-import Dashboard from "../Dashboard/page";
-import Reassignment from "../Reassignment/reassignment";
+import Dashboard from "../../component/Dashboard/page";
+import Reassignment from "../../component/Reassignment/reassignment";
 import { useEffect, useState, useMemo, useCallback } from "react";
 import Header from "../../component/Header";
 import 'bootstrap-icons/font/bootstrap-icons.css';

@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Decryptor } from "../../security";
 import { useRouter } from "next/navigation";
-import Dashboard from "../Dashboard/page";
+import Dashboard from "../../component/Dashboard/page";
 import Header from "../../component/Header";
 import Pending from "../../component/Pending/page";
 import ApproveTable from "../../component/ApproveTable/ApproveTable";
