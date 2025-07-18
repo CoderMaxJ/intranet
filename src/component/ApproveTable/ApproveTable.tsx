@@ -88,10 +88,10 @@ const getAccounts = useCallback(async () => {
         const result = await response.json();
         setAccounts(result.data || []);
       } else {
-        console.error("Failed to fetch accounts");
+        console.warn("Failed to fetch accounts");
       }
     } catch (error) {
-      console.error("Error fetching accounts", error);
+      console.warn("Error fetching accounts", error);
     }
   },[ token ]);
 

@@ -72,7 +72,7 @@ export default function Password() {
           setMessage(res.res);
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.warn("Error:", error);
       }
     }
     if (passwordStrength === true && passwordsMatch) {

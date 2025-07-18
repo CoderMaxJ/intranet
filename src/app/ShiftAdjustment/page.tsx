@@ -109,7 +109,7 @@ export default function Adjustment() {
         }
       }
     } catch (error) {
-      console.error("Error fetching shift adjustment data:", error);
+      console.warn("Error fetching shift adjustment data:", error);
     }
   }, [currentPage, token, router]);
 
