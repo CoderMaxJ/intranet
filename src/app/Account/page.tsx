@@ -90,7 +90,7 @@ export default function ManageDepartment() {
                 setManager(data.roles);
             }
         } catch (e) {
-            console.error(e);
+            console.warn(e);
         }
    }, [token, router]);
 
@@ -139,7 +139,7 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
                 btnClose?.click();
             }
         } catch (e) {
-            console.error(e);
+            console.warn(e);
         }
     };
     const handleCreateManager = (acctid: number) => {
@@ -169,7 +169,7 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
                 errorToast("You are trying to assign a manager that is already assigned to this account.");
             }
         } catch (e) {
-            console.error(e);
+            console.warn(e);
         }
     };
     const deleteAccount = async (empno: number) => {
@@ -186,7 +186,7 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
                 fetchAccountList();
             }
         } catch (e) {
-            console.error(e);
+           console.warn(e);
         }
     };
     const removeManager = async (empno: number, acctid: number) => {

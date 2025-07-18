@@ -97,7 +97,7 @@ export default function CreateUD() {
                     const data = await response.json();
                     setEmployees(data.data);
                 } else {
-                    console.error("Error fetching search results");
+                    console.warn("Error fetching search results");
                 }
             }
         }, 300);

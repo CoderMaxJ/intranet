@@ -167,7 +167,7 @@ useEffect(() => {
       }
     }
     catch (e) {
-      console.error(e)
+      console.warn(e);
     }
   },[])
 
@@ -191,7 +191,7 @@ useEffect(() => {
         setRoles(data.data);
       }
     } catch (e) {
-      console.error(e);
+      console.warn(e);
     }
   };
 
@@ -209,7 +209,7 @@ useEffect(() => {
         setAccounts(data.data);
       }
     } catch (e) {
-      console.error(e);
+      console.warn(e);
     }
   };
 
@@ -256,7 +256,7 @@ useEffect(() => {
         errorToast("Unable to create employee!")
       }
     } catch (e) {
-      console.error(e);
+      console.warn(e);
       alert(e);
     }
   }
@@ -285,7 +285,7 @@ useEffect(() => {
         errorToast(message.warning);
       }
     } catch (e) {
-      console.error(e);
+      console.warn(e);
     }
   }
   const formDataWithToken = {

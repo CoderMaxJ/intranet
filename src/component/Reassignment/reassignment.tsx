@@ -126,12 +126,12 @@ export default function Reassignment() {
                          const errorData = JSON.parse(text);
                          errorToast(`Failed to set schedule: ${errorData.message || "Unknown error"}`);
                     } catch {
-                         console.error("Server response is not JSON:", text);
+                         console.warn("Server response is not JSON:", text);
                          errorToast("Failed to set schedule: Server error or wrong endpoint.");
                     }
                }
           } catch (error) {
-               console.error("Error setting schedule", error);
+               console.warn("Error setting schedule", error);
                errorToast("An error occurred while setting schedule.");
           }
      };
@@ -193,7 +193,7 @@ export default function Reassignment() {
                const data = await response.json();
                setEmployee(data.data);
           } else {
-               console.error("error");
+               console.warn("error");
                if (!token) {
                     router.push("/");
                }
@@ -222,7 +222,7 @@ export default function Reassignment() {
                          const data = await response.json();
                          setEmployee(data.data);
                     } else {
-                         console.error("Error fetching search results");
+                         console.warn("Error fetching search results");
                     }
                }
           }, 300);
