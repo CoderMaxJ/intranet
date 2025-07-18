@@ -157,11 +157,12 @@ const fetchBreakData = useCallback(async () => {
   },  [user_id, account_id, array_account_id, userPrivilege, fetchBreakData]);
 
 
-  useEffect(() => {
+ useEffect(() => {
     if (status !== "login") return;
     const fetchIntervalId = setInterval(updateChecker, 3000);
     return () => clearInterval(fetchIntervalId);
-  }, [status, updateChecker]);
+  }, []);
+
 
   const formatTime = (time: number) => {
     const absoluteTime = Math.abs(time);
