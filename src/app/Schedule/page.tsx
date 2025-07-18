@@ -186,7 +186,6 @@ export default function CreateUD() {
                                 id="exampleModal"
                                 role="dialog"
                                 aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
                             >
                             </div>
                         </div>

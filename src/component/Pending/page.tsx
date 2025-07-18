@@ -554,7 +554,6 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
                 id="declineModal"
                 tabIndex={-1}
                 aria-labelledby="declineModalLabel"
-                aria-hidden="true"
             >
                 <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                     <div className="modal-content">

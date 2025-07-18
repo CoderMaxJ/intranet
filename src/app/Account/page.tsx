@@ -227,7 +227,7 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
             <div className="manageaccount-dashboard">
                 <Dashboard />
             </div>
-            <div className="modal fade " id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div className="modal fade " id="deleteModal" aria-labelledby="deleteModalLabel">
                 <div className="modal-dialog modal-lg" style={{ width: '500px' }}>
                     <div className="modal-content">
                         <div className="modal-header">

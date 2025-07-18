@@ -1,7 +1,7 @@
 "use client";
 import Dashboard from "../../component/Dashboard/page";
 import AddEmp from "../../component/AddEmployee";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo,useCallback } from "react";
 import Header from "../../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -11,6 +11,7 @@ import { getUserToken } from "@/services/UserToken/authUserToken";
 import { getUserPrivilege } from "@/services/UserPrivileges/userPrivileges";
 import ApiService from "@/services/api/serviceAPI";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Schedule {
   shiftstart: string;
@@ -71,21 +72,43 @@ export default function CreateUD() {
 
   const token = getUserToken();
   const userPrivilege = getUserPrivilege();
-  const user_id = localStorage.getItem("user_id");
+  const router = useRouter();
   const api = new ApiService()
 
-  useEffect(()=>{
-    load(currentPage);
-    },[currentPage,listener])
+  
  
-  const load = async (page:number) => {
-    const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`)
-    const {data,num_pages,current_page,total}=response;
-    setEmployees(data);
-    setTotalPages(num_pages);
-    setCurrentPage(current_page);
-    setTotal(total);
-  };
+   const GetEmployee = useCallback (async (page: number) => {
+    const user_id = localStorage.getItem("user_id");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/${Decryptor(user_id || "")}/?page=${page}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      setEmployees(data.data);
+      setTotalPages(data.num_pages);
+      setTotal(data.total);
+    }
+    else {
+      if (!token) {
+        router.push("/");
+      }
+    }
+
+
+  },[router]);
+
+   useEffect(() => {
+  GetEmployee(currentPage);
+}, [listener, currentPage, GetEmployee]);
+
+   
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -112,7 +135,7 @@ export default function CreateUD() {
 
     return debounce(async (value: string) => {
         if(value.trim() === "" || value.trim() === undefined ){
-        load(currentPage);
+        GetEmployee(currentPage);
         }else{
         const response = await api.get(`/search/employee/${Decryptor(id || "")}/${value || ""}/`);
         setEmployees(response.data);
@@ -174,7 +197,7 @@ export default function CreateUD() {
 
   return (
     <div className="crud-maindiv">
-      <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+      <div className="modal fade" id="resetPasswordModal" aria-labelledby="resetPasswordModalLabel">
         <div className="modal-dialog">
           <div className="modal-content modal-content--width" >
             <div className="modal-header">
@@ -263,7 +286,6 @@ export default function CreateUD() {
                 id="exampleModal"
                 role="dialog"
                 aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
                 data-bs-backdrop="static"
                 data-bs-keyboard="false"
               >
