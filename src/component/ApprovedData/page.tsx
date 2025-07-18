@@ -62,7 +62,6 @@ interface ApprovedDataProps {
   refreshData?: () => void;
 }
 
-
 export default function ApprovedData({ data }: ApprovedDataProps) {
   const [buildData, setBuildData] = useState<RequestDetails["logs"] | null>(null);
 
@@ -94,7 +93,6 @@ export default function ApprovedData({ data }: ApprovedDataProps) {
           }
         };
       }
-
       return updated;
     });
   };

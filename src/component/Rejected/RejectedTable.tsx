@@ -98,6 +98,7 @@ export default function RejectedTable({ onView }: RejectedTableProps) {
   const handleChangePage = (page: number) => {
     setCurrentPage(page);
   }
+  
   return (
     <div>
       <table className="table table-striped table-hover table-bordered table-responsive rejected-table-data">

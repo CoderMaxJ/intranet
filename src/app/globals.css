@@ -1,4 +1,4 @@
-:root {
+rounded d-flex justify-content-center align-items-center:root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -36,14 +36,6 @@
   width: 100%;
 }
 
-.manager-assignment {
-  background-color: #9fedba;
-  border: solid 1px #57cc99;
-  height: 30px;
-  padding: 0 10px;
-  border-radius: 5px;
-}
-
 .gray-icon {
   filter: grayscale(100%) brightness(0.6);
   opacity: 0.6;
@@ -53,6 +45,13 @@
   width: 480px !important;
 }
 
+.supervisor-column {
+  background-color: #9fedba;
+  border: solid 1px #5bd8a2 !important;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 5px;
+}
 .manage-nav {
   display: flex;
   align-items: center;
@@ -494,6 +493,10 @@ input:focus {
 
 .ecomialogo-footer img {
   width: 80px;
+}
+
+.ecomialogo {
+  height: auto;
 }
 
 .login-logo {
@@ -3853,8 +3856,8 @@ body.dark-mode .time-icon-group::before {
 
 .btn-x-position {
   position: absolute;
-  right: 16px;
-  top: 40px;
+  right: 22px;
+  top: 41px;
   width: 20px;
   height: 20px;
   background-color: #e60023;

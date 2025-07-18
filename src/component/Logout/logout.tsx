@@ -19,7 +19,6 @@ export default function Logout() {
             body: JSON.stringify({ user_id: Decryptor(user_id || "") })
 
         });
-
         if (response.status === 200) {
             setLoading(false);
             router.push("/login");
