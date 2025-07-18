@@ -253,7 +253,6 @@ export default function Reassignment() {
                     id="reassignment"
                     tabIndex={-1}
                     aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
                >
                     <div className="modal-dialog modal-xl">
                          <div className="modal-content">
@@ -419,7 +418,6 @@ export default function Reassignment() {
                                         id="saveModal"
                                         tabIndex={-1}
                                         aria-labelledby="saveModalLabel"
-                                        aria-hidden={!showModal}
                                         style={{ backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : 'transparent' }}
                                    >
                                         <div className="modal-dialog" style={{ minWidth: '500px' }}>

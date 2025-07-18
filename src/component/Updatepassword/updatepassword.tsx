@@ -102,7 +102,6 @@ export default function Password() {
         id="updatePasswordModal"
         tabIndex={-1}
         aria-labelledby="updatePasswordModalLabel"
-        aria-hidden="true"
         style={{ zIndex: 10000 }}
       >
         <div className="modal-dialog" style={{ minWidth: '450px' }}>
