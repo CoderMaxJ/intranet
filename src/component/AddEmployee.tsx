@@ -39,31 +39,33 @@ interface PrivilegesType {
   name: string,
   id: number
 }
-export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmpProps) {
-  const [formData, setFormData] = useState<AddEmployeeData>({
-    empno: empData.empno ?? 0,
-    fname: empData.fname || "",
-    mname: empData.mname || "",
-    lname: empData.lname || "",
-    position: empData.position || "",
-    dateofbirth: empData.dateofbirth || "",
-    maritalstatus: empData.maritalstatus || "None",
-    gender: empData.gender || "",
-    contactno: empData.contactno || "",
-    address: empData.address || "",
-    acctid: empData.acctid || 0,
-    role_id: empData.role_id || 0,
-    status: empData.status,
-    acctname: empData.acctname,
-    isdayshift: empData.isdayshift ?? 0,
-    schedule: empData.schedule || { shiftstart: "", shiftend: "" },
-    un: empData.un || ""
-  });
+
+const getInitialFormData = (empData: AddEmployeeData): AddEmployeeData => ({
+  empno: empData.empno ?? 0,
+  fname: empData.fname || "",
+  mname: empData.mname || "",
+  lname: empData.lname || "",
+  position: empData.position || "",
+  dateofbirth: empData.dateofbirth || "",
+  maritalstatus: empData.maritalstatus || "None",
+  gender: empData.gender || "",
+  contactno: empData.contactno || "",
+  address: empData.address || "",
+  acctid: empData.acctid || 0,
+  role_id: empData.role_id || 0,
+  status: empData.status,
+  acctname: empData.acctname,
+  isdayshift: empData.isdayshift ?? 0,
+  schedule: empData.schedule || { shiftstart: "", shiftend: "" },
+  un: empData.un || ""
+});
 
   const token = getUserToken();
   interface Position {
     position: string;
   }
+ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmpProps) {
+  const [formData, setFormData] = useState<AddEmployeeData>(() => getInitialFormData(empData));
   const [roles, setRoles] = useState<Position[]>([]);
   const [accounts, setAccounts] = useState<{ acctid: number, acctname: string, status: number }[]>([]);
   const [, SetSelectedAccount] = useState("");
@@ -78,6 +80,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
   const [highlightedRoleIndex, setHighlightedRoleIndex] = useState(-1);
   const [highlightedAccountIndex, setHighlightedAccountIndex] = useState(-1);
 
+
   const user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
   const array_privilege = user_priviledge.split(",")
 
@@ -87,34 +90,21 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     }
   }, [array_privilege])
 
-  useEffect(() => {
-    if (empData) {
-      setFormData({
-        empno: empData.empno ?? 0,
-        fname: empData.fname || "",
-        mname: empData.mname || "",
-        lname: empData.lname || "",
-        position: empData.position || "",
-        dateofbirth: empData.dateofbirth || "",
-        maritalstatus: empData.maritalstatus || "",
-        gender: empData.gender || "",
-        contactno: empData.contactno || "",
-        address: empData.address || "",
-        acctid: empData.acctid || 0,
-        role_id: empData.role_id || 0,
-        status: empData.status,
-        acctname: empData.acctname || "",
-        schedule: empData.schedule || { shiftstart: "", shiftend: "" },
-        un: empData.un || "",
-        isdayshift: empData.isdayshift ?? 0
+  const updateSelectedAccount = useCallback(async (acctid: number) => {
+  const matchedAccount = accounts.find(acc => acc.acctid === acctid);
+  if (matchedAccount) {
+    SetSelectedAccount(matchedAccount.acctname);
+  }
+},[]);
 
-      });
-      const matchedAccount = accounts.find(acc => acc.acctid === empData.acctid);
-      if (matchedAccount) {
-        SetSelectedAccount(matchedAccount.acctname);
-      }
-    }
-  }, [empData]);
+useEffect(() => {
+  if (!empData) return;
+
+  setFormData(getInitialFormData(empData));
+  updateSelectedAccount(empData.acctid);
+}, [empData, updateSelectedAccount]);
+
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -179,7 +169,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
     catch (e) {
       console.error(e)
     }
-  },[token])
+  },[])
 
 
   useEffect(() => {
@@ -257,6 +247,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
 
       if (response.status === 201) {
         successToast("Created successfully!");
+        onButtonClick("created");
         setTimeout(() => {
           btnClose?.click();
           clearInputs();
@@ -285,6 +276,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
       if (response.status === 200) {
         setIsEditSchedule(false);
         successToast("Updated successfully!");
+        onButtonClick("updated");
         setTimeout(() => {
           btnClose?.click();
         }, 100);
@@ -514,7 +506,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 onFocus={() => setIsPositionFocused(true)}
                 onBlur={() => setTimeout(() => setIsPositionFocused(false), 150)}
               />
-              {(formData.position != "" ) && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>x</button>)}
+              {(formData.position != "" ) && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges}>×</button>)}
               {isPositionFocused && roles.length > 0 && (
                 <ul className="list-group position-absolute w-100 z-3" style={{ maxHeight: "200px", overflowY: "auto" }}>
                   {roles.map((p, index) => (
@@ -583,7 +575,7 @@ export default function AddEmp({ empData, mode, isClose, onButtonClick }: AddEmp
                 }}
                 onBlur={() => setTimeout(() => setIsAccountFocused(false), 150)}
               />
-              {(formData.acctname != "" ) && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}> x</button>)}
+              {(formData.acctname != "" ) && user_priviledge.includes("manage_users") && (<button className="btn-x-position" type="button" onClick={handleInputChanges2}>×</button>)}
               {isAccountFocused && keyword && accounts.length > 0 && (
                 <ul className="list-group position-absolute w-100 z-3"
                   style={{ maxHeight: "200px", overflowY: "auto" }}>

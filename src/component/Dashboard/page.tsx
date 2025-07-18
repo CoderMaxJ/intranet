@@ -455,7 +455,7 @@ export default function Dashboard() {
                                     <div className="profile-circle">
                                         {profile ? (
                                             <Image onClick={openClose} className="profile-picture" src={profile} alt="profile" height={70} width={70} />
-                                        ) : (<p className="username-label-profile">{typeof window !== "undefined" ? localStorage.getItem("name")?.charAt(0) : ""}</p>)}
+                                        ) : (<p className="username-label-profile">{localStorage.getItem("name")?.charAt(0)}</p>)}
                                     </div>
                                 </div>
                             )}

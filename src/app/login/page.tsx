@@ -17,7 +17,6 @@ export default function Login() {
     const [errorTimeoutId, setErrorTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
     const router = useRouter();
-
     useEffect(() => {
         if (isLogged) {
             router.push("/WorkforceMonitoring");
@@ -37,7 +36,6 @@ export default function Login() {
             });
             const res = await response.json();
             if (response.status === 200) {
-                if (typeof window !== "undefined") {
                     localStorage.setItem("token", Encryptor(res.token));
                     localStorage.setItem("user_id", Encryptor(res.user_id.toString()));
                     localStorage.setItem("user_privilege", Encryptor(res.user_privilege.toString()));
@@ -48,7 +46,6 @@ export default function Login() {
                     localStorage.setItem("status", "login");
                     localStorage.setItem("account_id_list", Encryptor(res.account_id_list.toString()));
                     localStorage.setItem("active_tab", "1");
-                }
                 setLog(true);
             } else if (response.status === 401 || response.status === 403) {
                 if (errorTimeoutId) {
@@ -63,7 +60,6 @@ export default function Login() {
                 setErrorTimeoutId(timeout);
                 setLoading(false);
             }
-
         } catch {
         }
     }

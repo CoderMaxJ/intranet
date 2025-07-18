@@ -19,7 +19,6 @@ export default function Logout() {
             body: JSON.stringify({ user_id: Decryptor(user_id || "") })
 
         });
-
         if (response.status === 200) {
             setLoading(false);
             router.push("/login");
@@ -32,7 +31,7 @@ export default function Logout() {
             {isloading === false ? (
                 <div
                     className="modal fade"
-                    id="logoutModal" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                    id="logoutModal" aria-labelledby="exampleModalLabel"
                 >
                     <div className="modal-dialog">
                         <div className="modal-content modal-xl" style={{ minWidth: '500px' }}>

@@ -2,7 +2,6 @@
 import BreakDataTable from "../data/Breaks/break";
 import Dashboard from "../../component/Dashboard/page";
 import Header from "../../component/Header";
-
 import { useState } from "react";
 
 export default function MainDashboard() {

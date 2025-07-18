@@ -18,13 +18,10 @@ export default function Password() {
   const [focus, setFocus] = useState(false);
   const [empno, setEmpno] = useState<string | null>(null);
 
-
   const passwordsMatch = password === confirmPassword && confirmPassword !== "";
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    setEmpno(localStorage.getItem("user_id"));
-  }
-}, []);
+    useEffect(() => {
+      setEmpno(localStorage.getItem("user_id"));
+    },[]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,7 +102,6 @@ useEffect(() => {
         id="updatePasswordModal"
         tabIndex={-1}
         aria-labelledby="updatePasswordModalLabel"
-        aria-hidden="true"
         style={{ zIndex: 10000 }}
       >
         <div className="modal-dialog" style={{ minWidth: '450px' }}>

@@ -253,7 +253,6 @@ export default function Reassignment() {
                     id="reassignment"
                     tabIndex={-1}
                     aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
                >
                     <div className="modal-dialog modal-xl">
                          <div className="modal-content">
@@ -266,7 +265,6 @@ export default function Reassignment() {
                                         <div>
                                              <label htmlFor="effectivitydate" className="effectivitydate fw-bold mb-3 fs-6">Schedule</label>
                                         </div>
-
                                         <div className="effectivity-date d-flex flex-wrap mb-1 align-items-end">
                                              <div className="d-flex gap-3">
                                                   <div className="input-group mb-3  time-icon-group">
@@ -346,7 +344,6 @@ export default function Reassignment() {
                                                                       }}
                                                                       onClick={() => handleEmployeeClick(emp)}
                                                                  >
-
                                                                       <div className="d-flex justify-content-between displayed-data"><span>{emp.fname} {emp.lname}</span></div>
                                                                       <div className="d-flex justify-content-between displayed-data ms-auto me-3"> <small className="text-muted">
                                                                            {emp.schedule && emp.schedule.shiftstart && emp.schedule.shiftend
@@ -421,7 +418,6 @@ export default function Reassignment() {
                                         id="saveModal"
                                         tabIndex={-1}
                                         aria-labelledby="saveModalLabel"
-                                        aria-hidden={!showModal}
                                         style={{ backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : 'transparent' }}
                                    >
                                         <div className="modal-dialog" style={{ minWidth: '500px' }}>

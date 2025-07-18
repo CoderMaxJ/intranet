@@ -227,7 +227,7 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
             <div className="manageaccount-dashboard">
                 <Dashboard />
             </div>
-            <div className="modal fade " id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div className="modal fade " id="deleteModal" aria-labelledby="deleteModalLabel">
                 <div className="modal-dialog modal-lg" style={{ width: '500px' }}>
                     <div className="modal-content">
                         <div className="modal-header">
@@ -400,13 +400,7 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
                                                                         ×
                                                                     </button>
                                                                     <div
-                                                                        className="rounded d-flex justify-content-center align-items-center"
-                                                                        style={{
-                                                                            backgroundColor: "#9fedba",
-                                                                            height: "30px",
-                                                                            padding: "0 10px",
-                                                                            borderRadius: "5px",
-                                                                        }}
+                                                                        className="rounded d-flex justify-content-center align-items-center supervisor-column"
                                                                     >
                                                                         <p className="m-0 text-center add-supervisor">
                                                                             {manager.fname} {manager.lname}
