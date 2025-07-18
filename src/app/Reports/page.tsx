@@ -57,7 +57,6 @@ export default function Reports() {
     });
 
     const getCredentials = () => {
-        if (typeof window === "undefined") return { account_id: "", token: "" };
         return {
             account_id: localStorage.getItem("user_id") || "",
             token : token || "",

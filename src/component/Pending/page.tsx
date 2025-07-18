@@ -87,7 +87,7 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
                 created_at: data?.created_at,
                 aprroved_at: '',
                 declined_at: '',
-                approved_by: typeof window !== "undefined" ? Decryptor(localStorage.getItem("user_id") || "") : "",
+                approved_by: Decryptor(localStorage.getItem("user_id") || ""),
 
             });
         }
@@ -124,7 +124,7 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
             });
             return;
         }
-        const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
+        const token =  localStorage.getItem("token");
 
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/reject/request/`, {
@@ -143,7 +143,6 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
-
             });
             
             setVisible(false);
@@ -152,7 +151,6 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
             if (typeof onDeclineComplete === "function" && data?.requestid) {
                 onDeclineComplete(data.requestid);
             }
-
             if (typeof document !== "undefined") {
                 const btnClose = document.getElementById("buttonclose");
                 btnClose?.click();
@@ -168,7 +166,7 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
         }
     };
 
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
+    const token = localStorage.getItem("token");
     const approvedRequest = async (payload: Partial<RequestDetails>) => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/approve/request/`, {
             method: "PATCH",
@@ -212,7 +210,7 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
             created_at: data?.created_at,
             aprroved_at: new Date().toISOString(),
             declined_at: undefined,
-            approved_by: typeof window !== "undefined" ? Number(Decryptor(localStorage.getItem("user_id") || "0")) : 0
+            approved_by: Number(Decryptor(localStorage.getItem("user_id") || "0"))
         };
         approvedRequest(payload);
         setVisible(false);

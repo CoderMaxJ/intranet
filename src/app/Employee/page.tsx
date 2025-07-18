@@ -75,12 +75,11 @@ export default function CreateUD() {
   const user_id = localStorage.getItem("user_id");
   const router = useRouter();
   const api = new ApiService()
-  
+
   useEffect(()=>{
     load(currentPage);
-  },[currentPage,listener])
+    },[currentPage,listener])
  
-
   const load = async (page:number) => {
     const response = await api.get(`/employee/list/${Decryptor(user_id || "")}/?page=${page}`);
     if(response.status === 401){
@@ -279,7 +278,11 @@ export default function CreateUD() {
               >
                 <div className="modal-dialog modal-xl" role="document">
                   <div className="modal-content">
-                    <AddEmp empData={empData} mode={currentMode} isClose={() => setCurrentMode("create")} onButtonClick={() => setListener(true)} />
+                    <AddEmp 
+                    empData={empData} 
+                    mode={currentMode} 
+                    isClose={() => setCurrentMode("create")} 
+                    onButtonClick={() => setListener(prev => !prev)} />
                   </div>
                 </div>
               </div>

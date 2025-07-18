@@ -1,6 +1,6 @@
 "use client";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import "../../style/breaks.css";
 import { Decryptor } from "@/security";
 import { useRouter } from "next/navigation"
@@ -49,6 +49,9 @@ function BreakDataTable() {
       rows.name.toLowerCase().includes(filter.toLowerCase())
   );
 
+  const BREAK_DURATION_THRESHOLD = 300;
+  const RENDER_RESET_DELAY_MS = 3000;
+
   const router = useRouter();
   const toggleFullscreen = () => {
     setFullscreen((prev) => !prev);
@@ -64,7 +67,7 @@ function BreakDataTable() {
        isRenderRef.current = true
        setTimeout(()=>{
         isRenderRef.current = false;
-       },3000)
+       },RENDER_RESET_DELAY_MS)
       
     }
   };
@@ -76,7 +79,7 @@ function BreakDataTable() {
 }, []);
 
 const user_id = localStorage.getItem("user_id");
-  const fetchBreakData = async () => {
+const fetchBreakData = useCallback(async () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(user_id || "")}/`,
@@ -108,7 +111,7 @@ const user_id = localStorage.getItem("user_id");
     } catch (error) {
       console.error("Failed to fetch break data:", error);
     }
-  };
+    }, [user_id, token, router])
 
   useEffect(() => {
     const countdownIntervalId = setInterval(() => {
@@ -131,33 +134,34 @@ const user_id = localStorage.getItem("user_id");
  
   const userPrivilege = getUserPrivilege();
  
-  async function updateChecker() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&user_id=${Decryptor(user_id || "")}&account_id=${account_id}`,{
+  const updateChecker = useCallback(async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&user_id=${Decryptor(user_id || "")}&account_id=${account_id}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json"
       }
     });
-    if (response.status === 200) {
-      const data = await response.json();
-      if (data?.account_id === Number(account_id)) {
-        fetchBreakData();
-      } else if (data.account_id != "NO UPDATE" && array_account_id.includes(data.account_id?.toString())) {
-        fetchBreakData();
-      } else if (data?.status == "NEW UPDATE" && userPrivilege.includes("manage_users")) {
-        fetchBreakData();
-      }
-    }else if(response.status === 401 || response.status === 404){
-      localStorage.clear();
-      router.push("/");
+
+    if (response.status !== 200) return;
+    const data = await response.json();
+    const shouldUpdate =
+      data?.account_id === Number(account_id) ||
+      (data.account_id !== "NO UPDATE" &&
+        array_account_id.includes(data.account_id?.toString())) ||
+      (data?.status === "NEW UPDATE" &&
+        userPrivilege.includes("manage_users"));
+
+    if (shouldUpdate) {
+      fetchBreakData();
     }
-  }
+  },  [user_id, account_id, array_account_id, userPrivilege, fetchBreakData]);
+
 
   useEffect(() => {
     if (status !== "login") return;
     const fetchIntervalId = setInterval(updateChecker, 3000);
     return () => clearInterval(fetchIntervalId);
-  }, []);
+  }, [status, updateChecker]);
 
   const formatTime = (time: number) => {
     const absoluteTime = Math.abs(time);
@@ -179,10 +183,25 @@ const user_id = localStorage.getItem("user_id");
   };
 
   const filteredBreaks = breaks.filter(
-    (breakItem) =>
-      breakItem.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      breakItem.breaktype.toLowerCase().includes(searchQuery.toLowerCase())
+  (breakItem) =>
+    breakItem.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    breakItem.breaktype.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+  const breakOrder = {
+    "First Break": 1,
+    "Second Break": 2,
+    "Lunch": 3,
+  };
+
+  const sortedFilteredBreaks = [...filteredBreaks].sort((a, b) => {
+  if (a.duration < BREAK_DURATION_THRESHOLD && b.duration >= BREAK_DURATION_THRESHOLD) return -1;
+  if (a.duration >= BREAK_DURATION_THRESHOLD && b.duration < BREAK_DURATION_THRESHOLD) return 1;
+  return (
+    breakOrder[a.breaktype as keyof typeof breakOrder] -
+    breakOrder[b.breaktype as keyof typeof breakOrder]
   );
+});
 
   return (
     <div className="workforce px-4">
@@ -248,18 +267,7 @@ const user_id = localStorage.getItem("user_id");
                 </tr>
               </thead>
               <tbody>
-                {filteredBreaks
-                  .sort((a, b) => {
-                    if (a.duration < 300 && b.duration >= 300) return -1;
-                    if (a.duration >= 300 && b.duration < 300) return 1;
-                    const breakOrder = {
-                      "First Break": 1,
-                      "Second Break": 2,
-                      "Lunch": 3
-                    };
-                    return breakOrder[a.breaktype as keyof typeof breakOrder] - breakOrder[b.breaktype as keyof typeof breakOrder];
-                  })
-                  .map((instance) => (
+               {sortedFilteredBreaks.map((instance) => (
                     <tr
                       style={{
                         backgroundColor:
@@ -275,14 +283,14 @@ const user_id = localStorage.getItem("user_id");
                       }}
                       key={instance.name}
                     >
-                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < BREAK_DURATION_THRESHOLD  ? "blink-background" : ""}>
                         {instance.name}
                       </td>
-                      {userPrivilege.includes("manage_users") && <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>{instance.acctname}</td>}
-                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                      {userPrivilege.includes("manage_users") && <td style={{ backgroundColor: "inherit" }} className={instance.duration < BREAK_DURATION_THRESHOLD  ? "blink-background" : ""}>{instance.acctname}</td>}
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < BREAK_DURATION_THRESHOLD  ? "blink-background" : ""}>
                         {instance.start}
                       </td>
-                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < BREAK_DURATION_THRESHOLD  ? "blink-background" : ""}>
                         {instance.end}
                       </td>
                       <td
@@ -291,11 +299,11 @@ const user_id = localStorage.getItem("user_id");
                           color: instance.duration < 0 ? "#be1243 " : "",
                           fontWeight: instance.duration < 0 ? "bold" : "",
                         }}
-                        className={instance.duration < 300 ? "blink-background" : ""}
+                        className={instance.duration < BREAK_DURATION_THRESHOLD  ? "blink-background" : ""}
                       >
                         {formatTime(instance.duration)}
                       </td>
-                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < 300 ? "blink-background" : ""}>
+                      <td style={{ backgroundColor: "inherit" }} className={instance.duration < BREAK_DURATION_THRESHOLD  ? "blink-background" : ""}>
                         {instance.breaktype}
                       </td>
                     </tr>
