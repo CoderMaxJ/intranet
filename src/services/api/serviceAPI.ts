@@ -1,13 +1,11 @@
 import { getUserToken } from "../UserToken/authUserToken";
-import { useRouter } from "next/navigation";
-
 
 class ApiService {
  
   private baseUrl = process.env.NEXT_PUBLIC_BACKEND;
   private token = getUserToken();
 
- async get(endpoint: string): Promise<any> {
+ async get<T = unknown>(endpoint: string): Promise<T | number>{
   const response = await fetch(`${this.baseUrl}${endpoint}`, {
     method: "GET",
     headers: {
@@ -20,8 +18,8 @@ class ApiService {
   }else if(response.status === 401){
     return response.status;
   }
+  throw new Error(`GET ${endpoint} failed`);
 }
-
 
   async post(endpoint:string, data:string) {
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -50,15 +48,8 @@ async patch(endpoint: string, empno: string | number) {
     }
     else if(response.status === 204){
      return 204;
-    }
-    
+    }  
   }
-
-
 }
-
-
-
-
 
 export default ApiService;

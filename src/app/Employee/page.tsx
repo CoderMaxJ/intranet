@@ -75,8 +75,6 @@ export default function CreateUD() {
   const router = useRouter();
   const api = new ApiService()
 
-  
- 
    const GetEmployee = useCallback (async (page: number) => {
     const user_id = localStorage.getItem("user_id");
     const response = await fetch(
@@ -100,15 +98,12 @@ export default function CreateUD() {
         router.push("/");
       }
     }
-
-
   },[router]);
 
    useEffect(() => {
   GetEmployee(currentPage);
 }, [listener, currentPage, GetEmployee]);
 
-   
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -118,7 +113,6 @@ export default function CreateUD() {
     draggable: true,
     progress: undefined,
   });
-
 
   const errorToast = (msg: string) => toast.error(msg, {
     position: "top-right",

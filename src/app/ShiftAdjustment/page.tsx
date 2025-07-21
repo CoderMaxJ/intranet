@@ -97,7 +97,8 @@ export default function Adjustment() {
         alert('Session Expired!')
         localStorage.clear();
         router.push('/');
-      }      
+      }   
+         
       if (response.ok) {
         const data = await response.json();
         setData(data.data);

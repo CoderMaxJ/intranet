@@ -8,6 +8,7 @@ interface Schedule {
   shiftstart: string;
   shiftend: string;
 }
+
 interface AddEmployeeData {
   empno: number;
   fname: string;
@@ -170,7 +171,6 @@ useEffect(() => {
       console.warn(e);
     }
   },[])
-
 
   useEffect(() => {
     fetchPrivileges();
@@ -364,7 +364,6 @@ useEffect(() => {
 
   return (
     <div>
-    
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
           <div className="modal-header">
@@ -670,7 +669,6 @@ useEffect(() => {
               <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
             )}
           </div>
-
           <div className="align-items-center justify-content-center mt-4">
             {mode === "edit" && (
               <div className="d-flex flex-wrap schedule-details gap-4 px-4">

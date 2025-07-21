@@ -9,7 +9,6 @@ export const getUserPrivilege = ()=>{
     array_privilege.forEach((data) => {
       user_privilege.push(data);
     });
-   
   }
    return user_privilege;
 }

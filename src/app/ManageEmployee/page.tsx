@@ -1,8 +1,8 @@
 "use client";
-import Dashboard from "../Dashboard/page";
-import AddEmp from "../component/AddEmployee";
+import Dashboard from "../../component/Dashboard/page";
+import AddEmp from "../../component/AddEmployee";
 import { useEffect, useState, useMemo, useCallback } from "react";
-import Header from "../component/Header";
+import Header from "../../component/Header";
 import { ToastContainer, toast } from 'react-toastify';
 import { IdentifyUser } from "../user_identifier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
