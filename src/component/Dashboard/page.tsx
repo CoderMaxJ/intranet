@@ -72,7 +72,6 @@ export default function Dashboard() {
     };
 
     const applySidebarState = (isMinimized: boolean) => {
-        if (typeof window !== "undefined") {
         const visible = !isMinimized;
         setNavWidth(visible);
         setShowDashboard(visible);
@@ -91,11 +90,9 @@ export default function Dashboard() {
         setShowPoweredby(visible);
         setShiftAdjustment(visible);
         localStorage.setItem("sidebarMinimized", isMinimized.toString());
-
         const menu = document.getElementById("dashboard-menu");
         if (visible) menu?.classList.add("is-minimize");
         else menu?.classList.remove("is-minimize");
-        }
     };
 
     useEffect(() => {

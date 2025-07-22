@@ -42,13 +42,8 @@ export default function CreateUD() {
     const [totalPages, setTotalPages] = useState(1);
     const [total, setTotal] = useState(0);
     const [listener, setListener] = useState(false);
-    const [token, setToken] = useState("");
     const router = useRouter();
-    // const token = localStorage.getItem("token");
-    useEffect(() => {
-        const storedToken = localStorage.getItem("token");
-        if (storedToken) setToken(storedToken);
-    }, []);
+    const token = localStorage.getItem("token");
     
         const GetEmployee = useCallback(async (page: number) => {
         const token = localStorage.getItem("token");
