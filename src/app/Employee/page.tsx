@@ -73,7 +73,8 @@ export default function CreateUD() {
   const token = getUserToken();
   const userPrivilege = getUserPrivilege();
   const router = useRouter();
-  const api = new ApiService()
+  const api = useMemo(() => new ApiService(), []);
+  // const api = new ApiService()
 
    const GetEmployee = useCallback (async (page: number) => {
     const user_id = localStorage.getItem("user_id");
@@ -98,7 +99,7 @@ export default function CreateUD() {
         router.push("/");
       }
     }
-  },[router]);
+  },[router, token]);
 
    useEffect(() => {
   GetEmployee(currentPage);
@@ -126,7 +127,6 @@ export default function CreateUD() {
 
   const id = localStorage.getItem("user_id");
   const debouncedSearch = useMemo(() => {
-
     return debounce(async (value: string) => {
         if(value.trim() === "" || value.trim() === undefined ){
         GetEmployee(currentPage);
@@ -135,7 +135,7 @@ export default function CreateUD() {
         setEmployees(response.data);
          }
     }, 300);
-  }, [currentPage, id, token]);
+    }, [currentPage, id, GetEmployee, api]);
 
   useEffect(() => {
     return () => {

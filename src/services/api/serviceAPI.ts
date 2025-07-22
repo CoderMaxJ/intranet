@@ -5,7 +5,7 @@ class ApiService {
   private baseUrl = process.env.NEXT_PUBLIC_BACKEND;
   private token = getUserToken();
 
- async get<T = unknown>(endpoint: string): Promise<T | number>{
+ async get(endpoint: string): Promise<any>{
   const response = await fetch(`${this.baseUrl}${endpoint}`, {
     method: "GET",
     headers: {
@@ -18,7 +18,6 @@ class ApiService {
   }else if(response.status === 401){
     return response.status;
   }
-  throw new Error(`GET ${endpoint} failed`);
 }
 
   async post(endpoint:string, data:string) {
