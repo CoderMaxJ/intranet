@@ -52,7 +52,7 @@ const getInitialFormData = (empData: AddEmployeeData): AddEmployeeData => ({
   contactno: empData.contactno || "",
   address: empData.address || "",
   acctid: empData.acctid || 0,
-  role_id: empData.role_id || 0,
+  role_id: empData.role_id || 9,
   status: empData.status,
   acctname: empData.acctname,
   isdayshift: empData.isdayshift ?? 0,
@@ -60,7 +60,6 @@ const getInitialFormData = (empData: AddEmployeeData): AddEmployeeData => ({
   un: empData.un || ""
 });
 
-  const token = getUserToken();
   interface Position {
     position: string;
   }
@@ -83,6 +82,7 @@ const getInitialFormData = (empData: AddEmployeeData): AddEmployeeData => ({
 
   const user_priviledge = Decryptor(localStorage.getItem("user_privilege") || "");
   const array_privilege = user_priviledge.split(",")
+  const token = getUserToken();
 
   useEffect(() => {
     if (array_privilege.includes("manage_users")) {
@@ -244,7 +244,7 @@ useEffect(() => {
         },
         body: JSON.stringify(formDataWithToken),
       });
-
+      console.log(response.status);
       if (response.status === 201) {
         successToast("Created successfully!");
         onButtonClick("created");
@@ -260,7 +260,14 @@ useEffect(() => {
       alert(e);
     }
   }
+  const formDataWithToken = {
+    ...formData,
+    token: token,
+    user_priviledge: Decryptor(localStorage.getItem("user_privilege") || ""),
+    user_id: Decryptor(localStorage.getItem("user_id") || "")
+  }
 
+  console.log(formDataWithToken)
   async function Update() {
     const empno = empData.empno;
     try {
@@ -287,12 +294,6 @@ useEffect(() => {
     } catch (e) {
       console.warn(e);
     }
-  }
-  const formDataWithToken = {
-    ...formData,
-    token: token,
-    user_priviledge: Decryptor(localStorage.getItem("user_privilege") || ""),
-    user_id: Decryptor(localStorage.getItem("user_id") || "")
   }
 
   const handleSubmitForm = async (e: React.FormEvent) => {
