@@ -137,10 +137,8 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
                 successToast("Account created successfully.");
                 setShowForm(false);
                 fetchAccountList();
-                if (typeof window !== "undefined") {
                 const btnClose = document.getElementById("buttonClose")
-                btnClose?.click();
-                }
+                btnClose?.click();               
             }
         } catch (e) {
             console.warn(e);

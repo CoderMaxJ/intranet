@@ -151,10 +151,8 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
             if (typeof onDeclineComplete === "function" && data?.requestid) {
                 onDeclineComplete(data.requestid);
             }
-            if (typeof document !== "undefined") {
                 const btnClose = document.getElementById("buttonclose");
-                btnClose?.click();
-            }
+                btnClose?.click();         
         } else {
             toast.error("Failed to decline request.", {
                 autoClose: 2000,
@@ -180,11 +178,9 @@ export default function Pending({ data, onApproveComplete, onDeclineComplete }: 
             successToast("Request approved successfully.");
             if (typeof onApproveComplete === "function" && data?.requestid) {
                 onApproveComplete(data.requestid);
-            }
-             if (typeof document !== "undefined") {
+            }   
                  const btnClose = document.getElementById("buttonclose");
-                 btnClose?.click();
-            }
+                 btnClose?.click();            
         } else {
             errorToast("Failed to approve request.");
             router.push("/");

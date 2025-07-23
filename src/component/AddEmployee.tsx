@@ -248,10 +248,8 @@ useEffect(() => {
         successToast("Created successfully!");
         onButtonClick("created");
         setTimeout(() => {
-          if (typeof window !== "undefined") {
           const btnClose = document.getElementById("buttonclose");
-          btnClose?.click();
-          }
+          btnClose?.click();         
           clearInputs();
         }, 100);
       } else {
@@ -280,10 +278,8 @@ useEffect(() => {
         successToast("Updated successfully!");
         onButtonClick("updated");
         setTimeout(() => {
-          if (typeof window !== "undefined") {
           const btnClose = document.getElementById("buttonclose");
-          btnClose?.click();
-          }
+          btnClose?.click();       
         }, 100);
       } else {
         const message = await response.json();
