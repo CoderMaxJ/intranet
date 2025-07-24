@@ -243,7 +243,6 @@ useEffect(() => {
         },
         body: JSON.stringify(formDataWithToken),
       });
-      console.log(response.status);
       if (response.status === 201) {
         successToast("Created successfully!");
         onButtonClick("created");
@@ -267,7 +266,6 @@ useEffect(() => {
     user_id: Decryptor(localStorage.getItem("user_id") || "")
   }
 
-  console.log(formDataWithToken)
   async function Update() {
     const empno = empData.empno;
     try {
