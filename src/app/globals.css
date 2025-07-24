@@ -470,7 +470,8 @@ body {
   border-radius: 4px;
   margin-bottom: 20px;
   outline: none;
-  width: 300px;
+  width: 100%;
+  min-width: 300px;
   margin-top: 5px;
 }
 
