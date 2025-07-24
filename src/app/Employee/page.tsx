@@ -73,10 +73,9 @@ export default function CreateUD() {
   const token = getUserToken();
   const userPrivilege = getUserPrivilege();
   const router = useRouter();
-  const api = new ApiService()
+  const api = useMemo(() => new ApiService(), []);
+  // const api = new ApiService()
 
-  
- 
    const GetEmployee = useCallback (async (page: number) => {
     const user_id = localStorage.getItem("user_id");
     const response = await fetch(
@@ -100,15 +99,12 @@ export default function CreateUD() {
         router.push("/");
       }
     }
-
-
-  },[router]);
+  },[router, token]);
 
    useEffect(() => {
   GetEmployee(currentPage);
 }, [listener, currentPage, GetEmployee]);
 
-   
   const successToast = (msg: string) => toast.success(msg, {
     position: "top-right",
     autoClose: 2000,
@@ -118,7 +114,6 @@ export default function CreateUD() {
     draggable: true,
     progress: undefined,
   });
-
 
   const errorToast = (msg: string) => toast.error(msg, {
     position: "top-right",
@@ -132,7 +127,6 @@ export default function CreateUD() {
 
   const id = localStorage.getItem("user_id");
   const debouncedSearch = useMemo(() => {
-
     return debounce(async (value: string) => {
         if(value.trim() === "" || value.trim() === undefined ){
         GetEmployee(currentPage);
@@ -141,7 +135,7 @@ export default function CreateUD() {
         setEmployees(response.data);
          }
     }, 300);
-  }, [currentPage, id, token]);
+    }, [currentPage, id, GetEmployee, api]);
 
   useEffect(() => {
     return () => {

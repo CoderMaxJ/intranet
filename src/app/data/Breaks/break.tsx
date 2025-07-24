@@ -71,8 +71,8 @@ function BreakDataTable() {
       
     }
   };
-  document.addEventListener("visibilitychange", handleVisibilityChange);
 
+  document.addEventListener("visibilitychange", handleVisibilityChange);
   return () => {
     document.removeEventListener("visibilitychange", handleVisibilityChange);
   };
@@ -162,7 +162,6 @@ const fetchBreakData = useCallback(async () => {
     const fetchIntervalId = setInterval(updateChecker, 3000);
     return () => clearInterval(fetchIntervalId);
   }, []);
-
 
   const formatTime = (time: number) => {
     const absoluteTime = Math.abs(time);

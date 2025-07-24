@@ -90,7 +90,6 @@ export default function Dashboard() {
         setShowPoweredby(visible);
         setShiftAdjustment(visible);
         localStorage.setItem("sidebarMinimized", isMinimized.toString());
-
         const menu = document.getElementById("dashboard-menu");
         if (visible) menu?.classList.add("is-minimize");
         else menu?.classList.remove("is-minimize");

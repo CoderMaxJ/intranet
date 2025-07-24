@@ -8,6 +8,7 @@ interface Schedule {
   shiftstart: string;
   shiftend: string;
 }
+
 interface AddEmployeeData {
   empno: number;
   fname: string;
@@ -171,7 +172,6 @@ useEffect(() => {
     }
   },[])
 
-
   useEffect(() => {
     fetchPrivileges();
   }, [fetchPrivileges])
@@ -233,7 +233,6 @@ useEffect(() => {
     progress: undefined,
   });
 
-  const btnClose = document.getElementById("buttonclose");
   async function Create() { 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/employee/create/`, {
@@ -249,7 +248,8 @@ useEffect(() => {
         successToast("Created successfully!");
         onButtonClick("created");
         setTimeout(() => {
-          btnClose?.click();
+          const btnClose = document.getElementById("buttonclose");
+          btnClose?.click();         
           clearInputs();
         }, 100);
       } else {
@@ -285,7 +285,8 @@ useEffect(() => {
         successToast("Updated successfully!");
         onButtonClick("updated");
         setTimeout(() => {
-          btnClose?.click();
+          const btnClose = document.getElementById("buttonclose");
+          btnClose?.click();       
         }, 100);
       } else {
         const message = await response.json();
@@ -365,7 +366,6 @@ useEffect(() => {
 
   return (
     <div>
-    
       <div className="addemployee-form">
         <form onSubmit={handleSubmitForm}>
           <div className="modal-header">
@@ -671,7 +671,6 @@ useEffect(() => {
               <h6 className="form-section-label schedule-detials px-4">Schedule Details</h6>
             )}
           </div>
-
           <div className="align-items-center justify-content-center mt-4">
             {mode === "edit" && (
               <div className="d-flex flex-wrap schedule-details gap-4 px-4">

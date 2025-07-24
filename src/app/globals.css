@@ -317,7 +317,6 @@ rounded d-flex justify-content-center align-items-center:root {
 .generate.active,
 .generate.active .nav-font {
   background-color: #1c1f2a;
-  /* or any theme color */
   border-left: 4px solid #00bcd4;
   color: #fff !important;
 }
@@ -3626,6 +3625,7 @@ body.dark-mode .time-icon-group::before {
 }
 
 .assign-employees,
+.logout-label,
 .clearall,
 .selectall,
 .login-label,
@@ -3645,6 +3645,8 @@ body.dark-mode .time-icon-group::before {
 .form-label,
 .form-label-ti,
 .form-label-timeout1,
+.drawer-label,
+.drawer-label1,
 .drawer-label,
 .offcanvas-header,
 .tablogs {

@@ -17,6 +17,7 @@ interface DepartmentProps {
     manager: [];
     empno: number;
 }
+
 interface ManagerProps {
     empno: number;
     fname: string;
@@ -32,8 +33,8 @@ export default function ManageDepartment() {
     const [targetID, setTargetID] = useState<number>(0);
     const [showModal, setShowModal] = useState(false);
     const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-    // const [add,] = useState(false);
     const [filter, setFilter] = useState('');
+    
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(event.target.value);
     };
@@ -116,7 +117,7 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         createAccount();
         setAccountName("");
     };
-    const btnClose = document.getElementById("buttonClose")
+  
     const createAccount = async () => {
         try {
             const requestBody = {
@@ -136,7 +137,8 @@ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
                 successToast("Account created successfully.");
                 setShowForm(false);
                 fetchAccountList();
-                btnClose?.click();
+                const btnClose = document.getElementById("buttonClose")
+                btnClose?.click();               
             }
         } catch (e) {
             console.warn(e);
