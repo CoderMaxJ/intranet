@@ -316,7 +316,7 @@ const fetchBreakData = useCallback(async () => {
       <div className="logs-wrapper mt-4">
         <div className="logs-maindiv px-3">
           <div className="agentheader-container gap-2 d-flex flex-wrap flex-direction-row align-items-center">
-            <div className="align-items-center col-5 py-3">
+            <div className="align-items-center col-5 mt-1">
               <h3 className="logs-headername text-light px-3">
                 Logs Today
                 <span className="text-light small ms-2">
@@ -326,7 +326,7 @@ const fetchBreakData = useCallback(async () => {
             </div>
             <div className="agentslog-search d-flex align-items-center">
               <div
-                className="searchbar-container">
+                className="searchbar-container py-2 px-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"

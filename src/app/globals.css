@@ -213,6 +213,11 @@ rounded d-flex justify-content-center align-items-center:root {
   .b-repodrts1 {
     height: 100% !important;
   }
+
+  .manage-table {
+    height: 100% !important;
+    min-height: 80vh !important;
+  }
 }
 
 @media (max-width: 991px) {
@@ -470,7 +475,8 @@ body {
   border-radius: 4px;
   margin-bottom: 20px;
   outline: none;
-  width: 300px;
+  width: 100%;
+  min-width: 300px;
   margin-top: 5px;
 }
 
@@ -805,14 +811,6 @@ input:focus {
   padding-right: 28px !important;
 }
 
-
-@media only screen and (max-width: 991px) {
-  .modal-dialog {
-    --bs-modal-width: 340px !important;
-    max-width: var(--bs-modal-width) !important;
-  }
-}
-
 @media only screen and (max-width: 1020px) {
   .emp-table {
     font-size: small !important;
@@ -820,6 +818,11 @@ input:focus {
 }
 
 @media only screen and (max-width: 991px) {
+ .modal-dialog {
+    --bs-modal-width: 550px !important;
+    max-width: var(--bs-modal-width) !important;
+  }
+
   .tablogs {
     width: calc(100% + 1000px) !important;
   }
@@ -835,6 +838,10 @@ input:focus {
   .adjustment-table {
     width: calc(100% + 100px) !important;
   }
+  .table-scrollx
+  {
+    width: calc(100% + 100px) !important;
+  }
 
   .approved-tabale-data,
   .rejected-table-data {
@@ -846,8 +853,6 @@ input:focus {
   .login-logo {
     width: 100px !important;
   }
-
-
 
   .searchbar-wrapper {
     display: flex;
@@ -1783,10 +1788,10 @@ table {
   background-color: #ffffff;
   box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.2);
   margin: 20px auto;
-  padding-bottom: 10px !important;
   border-radius: 4px;
   width: 100% !important;
-  height: 799px;
+  height: au;
+  min-height: 830px;
   padding-right: 11px;
   padding-left: 24px;
 }
@@ -1963,7 +1968,7 @@ table {
 
 
 .accounts-table {
-  max-height: 686px;
+  max-height: 710px;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -2259,6 +2264,7 @@ table {
   flex-direction: column;
   z-index: 20;
   min-height: 100vh;
+  height: 100%;
   gap: 4px;
   transition: width 0.3s ease-in-out;
 }

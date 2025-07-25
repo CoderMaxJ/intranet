@@ -26,7 +26,6 @@ export default function Login() {
     async function login() {
         const credentials = { username: username, password: password };
         try {
-
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/intranet/`, {
                 method: "POST",
                 headers: {
