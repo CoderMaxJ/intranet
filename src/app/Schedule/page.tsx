@@ -130,7 +130,7 @@ export default function CreateUD() {
                                 <header>
                                     <div className="manageemployee-button w-100 d-flex flex-wrap">
                                         <div className="time d-flex gap-1 flex-wrap px-3">
-                                            <div className="searchbar-container">
+                                            <div className="searchbar-container py-2">
                                                 <input
                                                     className="form-control form-control--search"
                                                     id="search-employee"

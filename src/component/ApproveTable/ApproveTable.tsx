@@ -128,7 +128,7 @@ useEffect(() => {
 
   return (
     <div>
-      <table className="table table-striped table-hover table-bordered">
+      <table className="table-scrollx table table-striped table-hover table-bordered">
         <thead>
           <tr>
             <th>Name</th>
