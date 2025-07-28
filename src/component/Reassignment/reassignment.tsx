@@ -320,7 +320,7 @@ export default function Reassignment() {
                                                   </div>
                                                   <button
                                                        type="button"
-                                                       className="selectall"
+                                                       className="selectall mb-2"
                                                        onClick={HandleSelectAll}
                                                   >
                                                        Select All
@@ -375,7 +375,7 @@ export default function Reassignment() {
                                                             onChange={handleSearchEmployee}
                                                        />
                                                   </div>
-                                                  <button type="button" className="clearall" onClick={() => setSelectedEmployees([])} >Clear All</button>
+                                                  <button type="button" className="clearall mb-2" onClick={() => setSelectedEmployees([])} >Clear All</button>
                                              </div>
                                              <div className=" list-group w-100">
                                                   {Array.isArray(selectedEmployees) && selectedEmployees.filter(Boolean)
