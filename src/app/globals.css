@@ -818,7 +818,6 @@ input:focus {
 }
 
 @media only screen and (max-width: 460px) {
-  
  .modal-dialog {
     --bs-modal-width: 550px !important;
     max-width: var(--bs-modal-width) !important;
