@@ -134,31 +134,30 @@ const fetchBreakData = useCallback(async () => {
  
   const userPrivilege = getUserPrivilege();
  
-  const updateChecker = useCallback(async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&user_id=${Decryptor(user_id || "")}&account_id=${account_id}`, {
+   async function updateChecker() {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&user_id=${Decryptor(user_id || "")}&account_id=${account_id}`,{
       method: "GET",
       headers: {
         "Content-type": "application/json"
       }
     });
 
-    if (response.status !== 200) return;
-    const data = await response.json();
-    const shouldUpdate =
+    if (response.status === 200) {
+      const data = await response.json();
+      const shouldUpdate =
       data?.account_id === Number(account_id) ||
-      (data.account_id !== "NO UPDATE" &&
-        array_account_id.includes(data.account_id?.toString())) ||
-      (data?.status === "NEW UPDATE" &&
-        userPrivilege.includes("manage_users"));
+      (data.account_id !== "NO UPDATE" && array_account_id.includes(data.account_id.toString())) ||
+      (data?.status === "NEW UPDATE" && userPrivilege.includes("overall_supervisor"));
 
     if (shouldUpdate) {
-      fetchBreakData();
+      fetchBreakData(); 
     }
-  },  [user_id, account_id, array_account_id, userPrivilege, fetchBreakData]);
-
-
+    }
+  }
+  
  useEffect(() => {
     if (status !== "login") return;
+    updateChecker();
     const fetchIntervalId = setInterval(updateChecker, 3000);
     return () => clearInterval(fetchIntervalId);
   }, []);
