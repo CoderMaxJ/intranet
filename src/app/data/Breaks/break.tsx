@@ -79,7 +79,7 @@ function BreakDataTable() {
 }, []);
 
 const user_id = localStorage.getItem("user_id");
-const fetchBreakData = useCallback(async () => {
+async function fetchBreakData(){
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND}/break/list/${Decryptor(user_id || "")}/`,
@@ -111,7 +111,7 @@ const fetchBreakData = useCallback(async () => {
     } catch (error) {
       console.warn("Failed to fetch break data:", error);
     }
-    }, [user_id, token, router])
+    }
 
   useEffect(() => {
     const countdownIntervalId = setInterval(() => {
@@ -130,11 +130,14 @@ const fetchBreakData = useCallback(async () => {
   const status = localStorage.getItem("status");
   const account_id = Decryptor(localStorage.getItem("account_id") || "");
   const account_id_list = Decryptor(localStorage.getItem("account_id_list") || "");
-  const array_account_id = account_id_list?.split(',')
- 
+  const array_account_id: number[] = account_id_list
+  .split(',')
+  .map(id => Number(id.trim()))
+  .filter(id => !isNaN(id));
+
   const userPrivilege = getUserPrivilege();
  
-  const updateChecker = useCallback(async () => {
+  async function updateChecker() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND}/listener/?render=${isRenderRef.current}&user_id=${Decryptor(user_id || "")}&account_id=${account_id}`, {
       method: "GET",
       headers: {
@@ -144,22 +147,22 @@ const fetchBreakData = useCallback(async () => {
 
     if (response.status !== 200) return;
     const data = await response.json();
-    const shouldUpdate =
-      data?.account_id === Number(account_id) ||
-      (data.account_id !== "NO UPDATE" &&
-        array_account_id.includes(data.account_id?.toString())) ||
-      (data?.status === "NEW UPDATE" &&
-        userPrivilege.includes("manage_users"));
-
-    if (shouldUpdate) {
-      fetchBreakData();
-    }
-  },  [user_id, account_id, array_account_id, userPrivilege, fetchBreakData]);
+      if(data?.account_id === Number(account_id)){
+        fetchBreakData();
+      } 
+      if(data?.status === "NEW UPDATE" && array_account_id.includes(data.account_id)){
+          fetchBreakData();
+      }
+      if(data?.status === "NEW UPDATE" && userPrivilege.includes("manage_users")){
+        fetchBreakData();
+      }
+      
+  };
 
 
  useEffect(() => {
     if (status !== "login") return;
-    const fetchIntervalId = setInterval(updateChecker, 3000);
+    const fetchIntervalId = setInterval(updateChecker, 4000);
     return () => clearInterval(fetchIntervalId);
   }, []);
 
