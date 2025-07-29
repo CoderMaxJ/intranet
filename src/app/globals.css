@@ -817,12 +817,14 @@ input:focus {
   }
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 460px) {
  .modal-dialog {
     --bs-modal-width: 550px !important;
     max-width: var(--bs-modal-width) !important;
   }
+}
 
+@media only screen and (max-width: 991px) {
   .tablogs {
     width: calc(100% + 1000px) !important;
   }
