@@ -1,4 +1,4 @@
-rounded d-flex justify-content-center align-items-center:root {
+:root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -3059,10 +3059,10 @@ table {
 .form-controll::after {
   content: "\1F552";
   position: absolute;
-  top: 50%;
+  top: 49%;
   right: 10px;
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 20px;
   color: black;
   pointer-events: none;
 }
@@ -3081,10 +3081,10 @@ table {
 .form-controll-toupdate::after {
   content: "\1F552";
   position: absolute;
-  top: 50%;
+  top: 49%;
   left: calc(100% - 31px);
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 20px;
   color: black !important;
   pointer-events: none;
 }
@@ -3131,10 +3131,10 @@ table {
 .form-controll-timeout1::after {
   content: "\1F552";
   position: absolute;
-  top: 50%;
+  top: 49%;
   left: calc(100% - 31px);
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 20px;
   color: black !important;
   pointer-events: none;
 }
@@ -3151,10 +3151,10 @@ table {
 .form-controll-timeout::after {
   content: "\1F552";
   position: absolute;
-  top: 50%;
+  top: 49%;
   right: 10px;
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 20px;
   color: black;
   pointer-events: none;
 }
@@ -3225,9 +3225,9 @@ body.dark-mode .has-calendar-icon input[type="date"]::before {
   content: "\1F552";
   position: absolute;
   right: 12px;
-  top: 50%;
+  top: 49%;
   transform: translateY(-50%);
-  font-size: 16px;
+  font-size: 20px;
   color: #0d6efd;
   pointer-events: none;
   z-index: 10;
@@ -3241,10 +3241,10 @@ body.dark-mode .time-icon-group::before {
 .form-controll-timein::after {
   content: "\1F552";
   position: absolute;
-  top: 50%;
+  top: 49%;
   left: calc(100% - 31px);
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 20px;
   color: black !important;
   pointer-events: none;
 }
@@ -3267,10 +3267,10 @@ body.dark-mode .time-icon-group::before {
 .form-control-ti::after {
   content: "\1F552";
   position: absolute;
-  top: 50%;
+  top: 49%;
   left: calc(100% - 31px);
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 20px;
   color: black !important;
   pointer-events: none;
 }
@@ -3288,11 +3288,11 @@ body.dark-mode .time-icon-group::before {
 .form-controll-ti::after {
   content: "\1F552";
   position: absolute;
-  top: 50%;
+  top: 49%;
   right: 10px;
   /* Position icon from right edge */
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 20px;
   color: black;
   pointer-events: none;
 }
@@ -3655,7 +3655,6 @@ body.dark-mode .time-icon-group::before {
 .form-label-timeout1,
 .drawer-label,
 .drawer-label1,
-.drawer-label,
 .offcanvas-header,
 .tablogs {
   font-family: 'Geist', sans-serif !important;
