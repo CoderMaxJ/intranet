@@ -8,6 +8,7 @@ import { Decryptor } from "@/security";
 import debounce from 'lodash.debounce';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { getUserToken } from "@/services/UserToken/authUserToken";
 
 interface Schedule {
     shiftstart: string;
@@ -43,10 +44,33 @@ export default function CreateUD() {
     const [total, setTotal] = useState(0);
     const [listener, setListener] = useState(false);
     const router = useRouter();
-    const token = localStorage.getItem("token");
+
+    useEffect(()=>{
+        document.addEventListener('contextmenu', (e) => e.preventDefault()); // 
+            document.addEventListener("keydown", (event) => {
+        
+                if ((event.ctrlKey && event.key === "r") || event.key === "F5") {
+                    event.preventDefault();
+                    
+                }
+                
+                if (event.ctrlKey && (event.key === "r" || event.key === "R")) {
+                event.preventDefault();
+                }
+                if(event.key === "F12"){
+                        event.preventDefault()
+                }
+                if ((event.ctrlKey && event.shiftKey && event.key === 'I') || 
+                        (event.ctrlKey && event.shiftKey && event.key === 'J')) {
+                        event.preventDefault(); 
+                }
+                });
+    })
+
+
+    const token = getUserToken();
     
         const GetEmployee = useCallback(async (page: number) => {
-        const token = localStorage.getItem("token");
         const user_id = localStorage.getItem("user_id");
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND}/employee/list/schedule/${Decryptor(user_id || "")}/?page=${page}`,
@@ -54,7 +78,7 @@ export default function CreateUD() {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${Decryptor(token || "")}`,
+                    Authorization: `Bearer ${token}`,
                 },
             }
         );
@@ -88,7 +112,7 @@ export default function CreateUD() {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${Decryptor(token || '')}`
+                        Authorization: `Bearer ${token}`
                     }
                 });
 

@@ -56,6 +56,27 @@ export default function Reports() {
         progress: undefined,
     });
 
+     useEffect(()=>{
+       document.addEventListener('contextmenu', (e) => e.preventDefault()); // 
+          document.addEventListener("keydown", (event) => {
+    
+               if ((event.ctrlKey && event.key === "r") || event.key === "F5") {
+                 event.preventDefault();
+                 
+               }
+             
+               if (event.ctrlKey && (event.key === "r" || event.key === "R")) {
+               event.preventDefault();
+               }
+               if(event.key === "F12"){
+                    event.preventDefault()
+               }
+               if ((event.ctrlKey && event.shiftKey && event.key === 'I') || 
+                    (event.ctrlKey && event.shiftKey && event.key === 'J')) {
+                    event.preventDefault(); 
+               }
+             });
+  })
     const getCredentials = () => {
         return {
             account_id: localStorage.getItem("user_id") || "",
