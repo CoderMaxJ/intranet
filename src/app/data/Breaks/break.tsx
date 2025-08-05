@@ -155,7 +155,6 @@ async function fetchBreakData(){
       }
       else if(data?.status === "NEW UPDATE" && userPrivilege.includes("manage_users")){
         fetchBreakData();
-        console.log('trigger');
       }
       
   };
@@ -163,7 +162,7 @@ async function fetchBreakData(){
 
  useEffect(() => {
     if (status !== "login") return;
-    const fetchIntervalId = setInterval(updateChecker, 3000);
+    const fetchIntervalId = setInterval(updateChecker, 4000);
     return () => clearInterval(fetchIntervalId);
   }, []);
 
