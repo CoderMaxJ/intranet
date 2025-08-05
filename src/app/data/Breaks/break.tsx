@@ -112,7 +112,7 @@ async function fetchBreakData(){
       console.warn("Failed to fetch break data:", error);
     }
     }
-d
+
   useEffect(() => {
     const countdownIntervalId = setInterval(() => {
       setBreaks((prevBreaks) => {
