@@ -150,11 +150,12 @@ async function fetchBreakData(){
       if(data?.account_id === Number(account_id)){
         fetchBreakData();
       } 
-      if(data?.status === "NEW UPDATE" && array_account_id.includes(data.account_id)){
+      else if(data?.status === "NEW UPDATE" && array_account_id.includes(data.account_id)){
           fetchBreakData();
       }
-      if(data?.status === "NEW UPDATE" && userPrivilege.includes("manage_users")){
+      else if(data?.status === "NEW UPDATE" && userPrivilege.includes("manage_users")){
         fetchBreakData();
+        console.log('trigger');
       }
       
   };
@@ -162,7 +163,7 @@ async function fetchBreakData(){
 
  useEffect(() => {
     if (status !== "login") return;
-    const fetchIntervalId = setInterval(updateChecker, 4000);
+    const fetchIntervalId = setInterval(updateChecker, 3000);
     return () => clearInterval(fetchIntervalId);
   }, []);
 
