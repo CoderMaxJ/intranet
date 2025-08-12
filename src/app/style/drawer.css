@@ -1,0 +1,142 @@
+
+.drawer-label {
+    font-family: 'Geist', sans-serif;
+    white-space: nowrap !important;
+}
+
+.drawer-labell {
+    font-family: 'Geist', sans-serif;
+    white-space: nowrap !important;
+    margin-left: 21px;
+}
+
+.drawer-label1 {
+    font-family: 'Geist', sans-serif;
+    white-space: nowrap !important;
+    margin-left: 20px;
+}
+
+.drawer-label--attendance {
+    font-family: 'Geist', sans-serif;
+    white-space: nowrap !important;
+    transform: translateX(-6px);
+}
+
+.reason {
+    font-family: 'Geist', sans-serif;
+}
+
+.input-time-field {
+    font-family: 'Geist', sans-serif;
+    padding: 4px;
+    border-radius: 4px;
+    border: none;
+    background-color: #E9ecef;
+    text-align: center;
+    color: #171616;
+    width: 100%;
+    min-width: 145px;
+}
+
+.label-container {
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 4px;
+    text-align: center;
+    display: flex;
+    background-color: #EDF1F4;
+    border-radius: 4px;
+}
+
+.label-container .login-label {
+    color: #0F62EE;
+    font-family: 'Geist', sans-serif;
+    font-size: 15px;
+}
+
+.label-container2 {
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    background-color: #FFE4E3;
+    border-radius: 4px;
+}
+
+.drawer-adjustment {
+    width: 600px !important;
+}
+
+.break11-label,
+.label-container2 .break1-label {
+    color: #ED3B2F;
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+}
+
+.label-container3 {
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    background-color: #FCF2D6;
+    border-radius: 4px;
+}
+
+.lunch-in-label {
+    font-family: 'Geist', sans-serif;
+    color: #FDAA00;
+}
+
+.break11-label {
+    white-space: nowrap;
+    font-size: 15px;
+}
+
+.break22-label {
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.label-container4 {
+    background-color: #EDF4ED;
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    border-radius: 4px;
+}
+
+.break22-label,
+.break2-label {
+    font-family: 'Geist', sans-serif;
+    color: #31A750;
+}
+
+.break2-label {
+    font-size: 15px;
+}
+
+.label-container5 {
+    background-color: #EDF1F4;
+    border: none;
+    outline: none;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    display: flex;
+    border-radius: 4px;
+}
+
+.logout-label {
+    color: #0F62EE;
+    font-family: 'Geist', sans-serif;
+    font-size: 15px;
+}
