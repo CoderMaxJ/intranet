@@ -1,33 +1,33 @@
 
 .drawer-label {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     white-space: nowrap !important;
 }
 
 .drawer-labell {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     white-space: nowrap !important;
     margin-left: 21px;
 }
 
 .drawer-label1 {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     white-space: nowrap !important;
     margin-left: 20px;
 }
 
 .drawer-label--attendance {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     white-space: nowrap !important;
     transform: translateX(-6px);
 }
 
 .reason {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
 }
 
 .input-time-field {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     padding: 4px;
     border-radius: 4px;
     border: none;
@@ -51,7 +51,7 @@
 
 .label-container .login-label {
     color: #0F62EE;
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     font-size: 15px;
 }
 
@@ -73,7 +73,7 @@
 .break11-label,
 .label-container2 .break1-label {
     color: #ED3B2F;
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     font-size: 14px;
 }
 
@@ -89,7 +89,7 @@
 }
 
 .lunch-in-label {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     color: #FDAA00;
 }
 
@@ -116,7 +116,7 @@
 
 .break22-label,
 .break2-label {
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     color: #31A750;
 }
 
@@ -137,6 +137,6 @@
 
 .logout-label {
     color: #0F62EE;
-    font-family: 'Geist', sans-serif;
+    font-family: 'Geist-Custom-Font';
     font-size: 15px;
 }

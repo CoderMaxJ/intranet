@@ -63,12 +63,12 @@
 
 .manage-label {
   color: rgb(0, 0, 0);
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 
 }
 
 .btn-primary {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 
   font-weight: 500 !important;
 }
@@ -83,7 +83,7 @@
 
 .acc-label,
 .emp-label {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   color: black;
   transition: color 0.3s ease;
 }
@@ -141,13 +141,13 @@
 }
 
 .legends span {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .totalbreak {
   padding: 10px;
   margin-left: 10px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   background-color: #b3efb2;
   text-align: center;
 }
@@ -161,7 +161,7 @@
   align-items: center;
   gap: 4px;
   padding: 6px 12px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: 14px;
@@ -248,7 +248,7 @@
 }
 
 @font-face {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   src: url('./fonts/Geist-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
@@ -295,13 +295,13 @@
 }
 
 .updatep {
-  font-family: 'Geist', sans-serif;
+  font-family:'Geist-Custom-Font';
   color: black;
   transition: color 0.3s ease;
 }
 
 .logoutbutton {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 /* Flexible layout inside nav-fontt */
@@ -354,7 +354,7 @@ body {
   background: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .workforce {
@@ -612,7 +612,7 @@ input:focus {
 }
 
 .form-control {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .form-control--password-input {
@@ -962,7 +962,7 @@ input:focus {
   box-shadow: 0 2px 4px rgba(97, 97, 97, 0.1);
   background-color: #f0f0f0;
   color: #000000;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   margin-bottom: 3px;
   padding-left: 34px;
   padding-top: 10px;
@@ -1056,7 +1056,7 @@ input:focus {
   padding-right: 16px;
   padding-top: 10px;
   padding-bottom: 10px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   font-size: 14px;
   box-sizing: border-box;
 }
@@ -1105,7 +1105,7 @@ input:focus {
   margin: 0;
   font-weight: bold;
   font-size: 23px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   margin-right: 10px;
   color: #ffffff;
 }
@@ -1198,12 +1198,13 @@ input:focus {
 
 .breaks-table td {
   font-size: 14px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
+  
 }
 
 .breaks-table th {
   background-color: #0a85ed !important;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   color: #ffffff !important;
 }
 
@@ -1250,7 +1251,7 @@ input:focus {
 
 .logs-container th {
   background-color: #0a85ed !important;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   color: #ffffff !important;
 }
 
@@ -1280,12 +1281,12 @@ input:focus {
 }
 
 .logs-total label {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   font-size: 13px;
 }
 
 .logs-headername {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   font-weight: bold;
   font-size: 1.5rem;
   white-space: nowrap;
@@ -1331,7 +1332,7 @@ input:focus {
 
 .report-data td {
   white-space: nowrap;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .background-report {
@@ -1349,8 +1350,7 @@ input:focus {
   border-radius: 4px;
   color: white;
   background-color: #0ebb39;
-  transition: background-color 0.3s ease;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .daterange-button:hover {
@@ -1605,7 +1605,7 @@ tbody td {
 .form-control.form-control--search {
   border: 3px solid #dbdbdb;
   background-color: #ffffff;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .form-control--searchreport {
@@ -1640,7 +1640,7 @@ tbody td {
   position: sticky;
   top: 0;
   z-index: 1;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .monitoring-container {
@@ -1690,7 +1690,7 @@ table {
 }
 
 .updateschedule-label {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   font-weight: bold;
   color: #ffffff;
 }
@@ -1828,7 +1828,7 @@ table {
 
 .username-label-profile {
   color: white;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   font-size: 40px;
   letter-spacing: 1px;
   font-weight: bold;
@@ -1925,7 +1925,7 @@ table {
 }
 
 .manageemployee-button span {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .manageaccount-dashboard {
@@ -1981,7 +1981,7 @@ table {
 }
 
 .effectivitydate {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .employee-information {
@@ -1989,11 +1989,11 @@ table {
 }
 
 .modal-title {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .input-group-text {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .employee-total p {
@@ -2007,12 +2007,12 @@ table {
 
 .adjustment-total {
   color: rgb(88, 87, 87);
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 
 .employee-total span {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .employee-pagination {
@@ -2033,7 +2033,7 @@ table {
 }
 
 .tabemp th {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .emp-table th {
@@ -2054,12 +2054,12 @@ table {
   z-index: 10;
   transform: translateY(-1px);
   white-space: nowrap;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .manage-tbody td {
   font-size: 500;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .manageemployee-division {
@@ -2198,7 +2198,7 @@ table {
   letter-spacing: 1px;
   font-weight: bold;
   color: white;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .delete {
@@ -2292,7 +2292,7 @@ table {
 .dash {
   margin-left: 10px;
   color: gray;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .dashboard a {
@@ -2407,7 +2407,7 @@ table {
 .generate label {
   color: rgb(0, 0, 0);
   margin-left: 10px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .manage-div {
@@ -2639,7 +2639,7 @@ table {
   font-weight: 600;
   color: #ffffff;
   margin-bottom: 4px;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .employee-anchor svg.active {
@@ -2850,7 +2850,7 @@ table {
 .reports-container th {
   background-color: #0a85ed !important;
   color: white !important;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .reports-container td {
@@ -2893,7 +2893,7 @@ table {
 }
 
 .download label {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .download:hover {
@@ -2935,7 +2935,7 @@ table {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .reportheader {
@@ -3456,7 +3456,7 @@ body.dark-mode .time-icon-group::before {
 .shiftadjustment-table th {
   color: #ffffff !important;
   background-color: #0a85ed !important;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .shiftadjustment-table {
@@ -3464,7 +3464,7 @@ body.dark-mode .time-icon-group::before {
 }
 
 .tbody-data {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .shiftadjustment-container {
@@ -3475,7 +3475,7 @@ body.dark-mode .time-icon-group::before {
 .form-label--shiftadjustment-header {
   border: none;
   background: none;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 #reassignment .list-group-item {
@@ -3621,7 +3621,7 @@ body.dark-mode .time-icon-group::before {
 
 .form-select {
   width: 100%;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .form-select--filter {
@@ -3657,7 +3657,7 @@ body.dark-mode .time-icon-group::before {
 .drawer-label1,
 .offcanvas-header,
 .tablogs {
-  font-family: 'Geist', sans-serif !important;
+  font-family: 'Geist-Custom-Font' !important;
 }
 
 .edit-schedule-btn {
@@ -3696,7 +3696,7 @@ body.dark-mode .time-icon-group::before {
 .shiftadjustment-table td {
   line-height: 1;
   vertical-align: middle;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   font-size: 14px;
 }
 
@@ -3812,7 +3812,7 @@ body.dark-mode .time-icon-group::before {
 }
 
 .months {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
   font-size: medium;
   font-weight: 500;
 }
@@ -3841,7 +3841,7 @@ body.dark-mode .time-icon-group::before {
 
 .compress span,
 .fullscreen span {
-  font-family: 'Geist', sans-serif;
+  font-family: 'Geist-Custom-Font';
 }
 
 .icon-circlee {
